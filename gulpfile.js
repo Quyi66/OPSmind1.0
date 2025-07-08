@@ -196,8 +196,9 @@ gulp.task('serve', function serve() {
     connect.server({
         root: dirs.dist.webapp,
         port: 8888,
-        livereload: true
-    });
+        livereload: true,
+        host: '0.0.0.0'
+        });
 });
 
 gulp.task('build-icons', function buildIcons(cb) {
