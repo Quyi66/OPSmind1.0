@@ -1,0 +1,39 @@
+.uwidget {
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .jumbotron {
+    padding: 12px;
+
+    h1 {
+      font-size: 48px;
+    }
+  }
+
+  &.uwtype-input,
+  &.uwtype-button,
+  &.uwtype-timer {
+    display: inline-block;
+  }
+
+  & + .uwtype-input,
+  & + .uwtype-button,
+  & + .uwtype-timer {
+    //margin-left: 0.5em;
+  }
+
+  .uib-datepicker {
+    .btn {
+      border: 0;
+      border-radius: 0;
+    }
+  }
+}
+
+.op-datepicker {
+  > input.form-control {
+    //20200911: do not use !important because it can be overriden by style
+    width: 10rem;
+  }
+}

@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "summernote";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/summernote.eot?dbafe969167589eda84514394d126413");
+  src: url("../fonts/summernote.eot?#iefix") format("embedded-opentype"), url("../fonts/summernote.woff?dbafe969167589eda84514394d126413") format("woff"), url("../fonts/summernote.ttf?dbafe969167589eda84514394d126413") format("truetype")
+}
+
+.udp-pd-visual-mode .uwidget.uwtype-wysiwyg {
+  .uw-content {
+    overflow: auto;
+  }
+}
+
+.udp-wysiwyg-var {
+  cursor: default;
+  display: inline-block;
+  max-width: 8em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.note-ext-faicon-list {
+  display: block;
+  width: 205px;
+  height: 200px;
+  overflow: auto;
+  padding-left: 5px;
+}
+
+.note-ext-faicon-list button {
+  border: 1px solid #999;
+  border-radius: 5px;
+  color: #333;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+  font-size: 16px;
+}
+
+.note-ext-faicon-list button:hover {
+  background-color: #fff;
+}
+
+
+.note-ext-faicon-search {
+  margin: 5px;
+}

@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <h4 class="modal-title"> {{jobResultToRuleCtrlVm.views.hostKey}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"
+            ng-click="jobResultToRuleCtrlVm.views.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cac-history-find-dialog">
+    <div>
+        <!--ng-hide="jobResultToRuleCtrlVm.views.ruleName == null || jobResultToRuleCtrlVm.views.ruleName == 'null'">-->
+        <strong class="d-inline-block" style="width:6em;">{{'cac.template.detail.audit_params' | translate}}</strong>
+        <span> {{jobResultToRuleCtrlVm.views.metricName}}</span>
+    </div>
+    <div>
+        <strong class="d-inline-block" style="width:6em;">{{'cac.common.result' | translate}}</strong>
+        <span ng-class='jobResultToRuleCtrlVm.views.metricStatusClass'> {{jobResultToRuleCtrlVm.views.metricStatus}}</span>
+    </div>
+    <div>
+        <strong>{{'cac.result.output' | translate}}</strong>
+    </div>
+    <div class="bg-light p-3">
+        <pre style="white-space: pre-wrap">{{jobResultToRuleCtrlVm.views.metricValue}}</pre>
+    </div>
+    <!--<form name="cac-select-history-find-form">-->
+    <!--<div class="table-responsive">-->
+    <!--&lt;!&ndash;<table id="cacHistoryFindTable"&ndash;&gt;-->
+    <!--&lt;!&ndash;class="cac-history-find-table table opx-table">&ndash;&gt;-->
+    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+    <!--<table class="table opx-table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>检查项</th>-->
+    <!--&lt;!&ndash;<th>检查结果</th>&ndash;&gt;-->
+    <!--<th>脚本输出</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr ng-repeat="row in jobResultToRuleCtrlVm.views.tableData" class="op-hover-trigger">-->
+    <!--<td style="width:2rem;">-->
+    <!--{{row.metricName}}-->
+    <!--</td>-->
+    <!--&lt;!&ndash;<td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<label ng-class='jobResultToRuleCtrlVm.views.metricStatusClass' style='white-space: pre;'>{{jobResultToRuleCtrlVm.views.metricStatus}}</label>&ndash;&gt;-->
+    <!--&lt;!&ndash;</td>&ndash;&gt;-->
+    <!--<td class="cac-text-overflow">-->
+    <!--<span class='code' style='white-space: pre' title="{{row.metricValue}}">{{row.metricValue}}</span>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--<td valign="top" colspan="2" class="text-center" ng-if="jobResultToRuleCtrlVm.views.tableData.length == 0"><p class="text-muted"><i class="fa fa-inbox"></i> 没有数据</p></td>-->
+    <!--</tbody>-->
+    <!--</table>-->
+
+    <!--&lt;!&ndash; ng-if="!cacResultFindMetricVm.views.ruleTableData"&ndash;&gt;-->
+    <!--&lt;!&ndash;  <table ng-if="cacResultFindMetricVm.views.ruleTableData" class="table opx-table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>指标名称</th>-->
+    <!--<th>指标结果</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
+    <!--<tr ng-repeat="row in cacResultFindMetricVm.views.ruleTableData" class="op-hover-trigger">-->
+    <!--<td style="width:2rem;">-->
+    <!--{{row.metricName}}-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<span class='code' style='white-space: pre;'>{{row.metricValue}}</span>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>&ndash;&gt;-->
+    <!--</div>-->
+    <!--</form>-->
+</div>
+<div class="modal-footer" style="display: block;">
+    <div ng-if="jobResultToRuleCtrlVm.checkWhiteList" class="pull-left">
+        <a class="btn {{jobResultToRuleCtrlVm.btnStyle}}"
+           ng-click="jobResultToRuleCtrlVm.saveAndDelCheckWhiteList()">
+            <i class="fa"
+               ng-class="jobResultToRuleCtrlVm.checkWhiteListType === 'add' ? 'fa-plus' : 'fa-trash-alt'"></i>
+            {{jobResultToRuleCtrlVm.checkWhiteListType === 'add' ? ('cac.profile.add_white_list' | translate) :
+            ('cac.profile.remove_white_list' | translate)}}
+        </a>
+    </div>
+    <div class="pull-right">
+        <button type="button" class="btn btn-default" ng-click="jobResultToRuleCtrlVm.views.cancel()">
+            {{'common.entity.action.close' | translate}}
+        </button>
+    </div>
+</div>
+

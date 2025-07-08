@@ -1,0 +1,113 @@
+<style type="text/css">
+    html {
+        font-family: "Microsoft YaHei", sans-serif;
+        color: #333;
+    }
+
+    pre {
+        font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+        padding: 0.5em;
+        background-color: #f0f0f0;
+    }
+
+    a, a:visited, a:focus {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    ul.jao-host-list {
+        padding-left: 1rem;
+    }
+
+    ul.jao-host-list > li {
+        list-style-type: none;
+    }
+
+    ul.jao-host-list > li.jao-unreachable {
+        list-style-type: "\274C" !important;
+        list-style-position: inside;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .text-danger, .jao-unreachable, li.jao-unreachable > a {
+        color: #dc3545 !important;
+    }
+
+    .jao-play, .jao-task, .jao-host {
+        padding-left: 1em;
+    }
+
+    /*
+    https://www.htmlsymbols.xyz/ascii-symbols
+    http://unicode.org/emoji/charts/full-emoji-list.html
+    */
+    .jao-play > h3:before {
+        content: '\1F4D8';
+        padding-right: 0.5em;
+    }
+
+    .jao-host > h4 {
+        color: steelblue;
+    }
+
+    .jao-host > h4:before {
+        /*content: '\1F5A5';*/
+        /*padding-right: 0.5em;*/
+    }
+
+    .jao-task > h5:before {
+        content: '\27A5';
+        padding-right: 0.5em;
+    }
+
+    .jao-back-toc {
+        float: right;
+    }
+</style>
+<div>
+    <h2 id="toc">{{'common.term.index' | translate}}</h2>
+    <ul>
+        <li ng-repeat="batchNodes in $ctrl.exdata.allBatches track by $index">
+            <a href="#playbook-{{$index}}">Playbook {{$index+1}}</a>
+            <ul>
+                <li ng-repeat="playNode in batchNodes track by $index">
+                    <a href="#playbook-{{$parent.$index}}-play-{{$index}}">{{playNode.title}}</a>
+                    <ul class="jao-host-list">
+                        <li ng-repeat="hostNode in playNode.children track by $index"
+                            ng-class="{'jao-unreachable':hostNode.data.unreachable}">
+                            <!--                            <strong ng-if="hostNode.data.unreachable" class="text-danger"></strong>-->
+                            <a href="#playbook-{{$parent.$parent.$index}}-play-{{$parent.$index}}-host-{{$index}}">{{hostNode.title}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div>
+        <div ng-repeat="batchNodes in $ctrl.exdata.allBatches track by $index" class="jao-playbook">
+            <h2 id="playbook-{{$index}}">Playbook {{$index+1}}</h2>
+            <div ng-repeat="playNode in batchNodes track by $index" class="jao-play">
+                <h3 id="playbook-{{$parent.$index}}-play-{{$index}}">{{playNode.title}}</h3>
+                <div ng-repeat="hostNode in playNode.children track by $index" class="jao-host">
+                    <h4 id="playbook-{{$parent.$parent.$index}}-play-{{$parent.$index}}-host-{{$index}}"
+                        ng-class="{'jao-unreachable':hostNode.data.unreachable}">
+                        {{hostNode.title}}</h4>
+                    <div ng-repeat="task in hostNode.tasks track by $index" class="jao-task">
+                        <h5>{{'jao.common.task' | translate}}：{{task.name}} <a href="#toc" class="jao-back-toc">{{'common.entity.action.back' | translate}} &#x2191;</a></h5>
+                        <pre ng-if="task.output"
+                             ng-class="{'alert-danger':hostNode.data.unreachable}">{{task.output}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

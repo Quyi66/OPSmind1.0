@@ -1,0 +1,22 @@
+{
+  "id": "5ZQkgY",
+  "tenantId": "ff808081727a047f017292d0d72e0004",
+  "code": null,
+  "folderId": null,
+  "title": "【OS】首页",
+  "html": "<div widget-layout=\"layout-flex\" id=\"w-15871236103733\" uw-type=\"layout-flex\">\n    <uwidget uw-type=\"pageheader\" id=\"w-16623543312701\">\n        <div class=\"form-inline ms-auto uw-include-container op-pageheader-actions\" data-uw-placeholder=\"actions\"></div>\n    </uwidget>\n    <div widget-layout=\"layout-flex\" id=\"w-16618416086852\" uw-type=\"layout-flex\" uw-props=\"{&quot;display&quot;:{&quot;cardMode&quot;:true},&quot;title&quot;:&quot;系统升级&quot;}\">\n        <uwidget uw-type=\"kpi\" id=\"w-16618416303414\" uw-props=\"{&quot;_v&quot;:&quot;1.2&quot;,&quot;dataset&quot;:{&quot;id&quot;:&quot;OS_JAO_TEMPLATE_COUNT&quot;,&quot;params&quot;:[]},&quot;interaction&quot;:{&quot;actions&quot;:[]},&quot;display&quot;:{&quot;rules&quot;:[{&quot;expr&quot;:&quot;${total} >= 10&quot;,&quot;theme&quot;:&quot;danger&quot;},{&quot;expr&quot;:&quot;${total} <10 &amp;&amp; ${total} >= 5&quot;,&quot;theme&quot;:&quot;warning&quot;},{&quot;expr&quot;:&quot;${total} <5&quot;,&quot;theme&quot;:&quot;secondary&quot;}],&quot;title&quot;:&quot;&quot;,&quot;text&quot;:&quot;&quot;,&quot;theme&quot;:&quot;default&quot;,&quot;rowNum&quot;:5},&quot;fields&quot;:{&quot;text&quot;:{&quot;field&quot;:&quot;name&quot;},&quot;title&quot;:{&quot;field&quot;:null,&quot;convertFn&quot;:&quot;js:'<div><span title=\\&quot;执行次数\\&quot;>'+${total}+'</span></div>'&quot;}}}\"></uwidget>\n        <uwidget uw-type=\"datatable\" id=\"w-16618418306855\" uw-props=\"{&quot;fields&quot;:[{&quot;field&quot;:&quot;name&quot;,&quot;label&quot;:&quot;名称&quot;},{&quot;field&quot;:&quot;id&quot;,&quot;hidden&quot;:true},{&quot;field&quot;:&quot;hosts&quot;,&quot;label&quot;:&quot;主机数量&quot;,&quot;convertFn&quot;:&quot;js:function totalHost(){\\n   var arrayHost = angular.fromJson(${hosts});\\n   var total = arrayHost?arrayHost.length:0;\\n   return total;\\n}&quot;},{&quot;field&quot;:&quot;step_ids&quot;,&quot;label&quot;:&quot;节点统计&quot;,&quot;convertFn&quot;:&quot;js:function totalStep(){\\n   var arrayStep = angular.fromJson(${step_ids});\\n   var total = arrayStep?arrayStep.length:0;\\n   return total;\\n}&quot;},{&quot;field&quot;:&quot;global_params_json&quot;,&quot;hidden&quot;:true},{&quot;field&quot;:&quot;created_at&quot;,&quot;label&quot;:&quot;开始时间&quot;,&quot;convertFn&quot;:&quot;js:function parseDate(){\\n  var d = $$.formatDate(${created_at},\\&quot;YYYY-MM-DD HH:mm:ss\\&quot;)\\n  return d;\\n}\\n\\n&quot;},{&quot;field&quot;:&quot;created_by&quot;,&quot;label&quot;:&quot;执行人&quot;},{&quot;field&quot;:&quot;tenant_id&quot;,&quot;hidden&quot;:true},{&quot;field&quot;:&quot;job_flow_id&quot;,&quot;hidden&quot;:true}],&quot;display&quot;:{&quot;rules&quot;:[],&quot;cellrules&quot;:[],&quot;cardMode&quot;:false},&quot;dataset&quot;:{&quot;id&quot;:&quot;OS_RUN_RECORD&quot;,&quot;params&quot;:[]},&quot;title&quot;:&quot;执行记录&quot;}\"></uwidget>\n    </div>\n</div>",
+  "setting": "{}",
+  "starred": null,
+  "tags": null,
+  "status": null,
+  "home": "0",
+  "description": null,
+  "created_by": "admin",
+  "created_name": "管理員",
+  "created_at": "2022-08-30 14:40:39",
+  "modified_by": "admin",
+  "modified_name": "管理員",
+  "modified_at": "2022-09-05 13:15:02",
+  "access_control": null,
+  "applet_code": "OS"
+}

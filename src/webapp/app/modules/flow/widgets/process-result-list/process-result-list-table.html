@@ -1,0 +1,18 @@
+<div class="wrapper h-100" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <opx-datatable table-config="$ctrl.tableConfig" class="p-3">
+        <button class="btn btn-danger" ng-click="$ctrl.terminateProcess()"
+                uaa-has-permission="flow:edit:*"
+                ng-disabled="!$ctrl.hasRunningInstance">
+            <i class="fa fa-stop"></i> {{'flow.process.terminate_all' | translate}}
+        </button>
+        <button class="btn btn-danger" ng-click="$ctrl.deleteBatch()" 
+                uaa-has-permission="flow:edit:*"
+                ng-disabled="$ctrl.tableConfig.selectedItems.length === 0">
+            <i class="fa fa-trash-alt"></i> {{ 'common.action.delete' | translate }}
+        </button>
+    </opx-datatable>
+</div>
+
+<div class="in-page-overlayer" ng-if="$ctrl.options.inPage && !$ctrl.processId">
+    <p class="w-100"><i class="fa fa-info-circle link-warning mr-3"></i>{{'udp.w.flow.process.no-process-lint' | translate}}</p>
+</div>

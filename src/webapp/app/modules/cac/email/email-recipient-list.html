@@ -1,0 +1,20 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cac.common.mail_configuration' | translate}}</div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" style="width:3rem;height:1.4rem;cursor: pointer;float: right;margin-left: 10px;" type="checkbox" value="true" ng-click="on_off()" ng-model="vm.isTheEmailEnabled"/>
+<!--            <button title="自定义附件名称" class="btn btn-outline-primary" ng-click="vm.customContent()" style="height: 24px;line-height: 10px;margin-top: 2px;"><i-->
+<!--                    class="fa fa-envelope"></i>-->
+<!--                自定义-->
+<!--            </button>-->
+        </div>
+    </nav>
+    <div class="card-body">
+        <udp-page-view class="flex-fill scroll-y" page-id="'/cac/assets/udp/cac-email'" page-source="file"
+                       uaa-has-permission="cac:view:*"
+                       uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+        </udp-page-view>
+    </div>
+</div>
+
+

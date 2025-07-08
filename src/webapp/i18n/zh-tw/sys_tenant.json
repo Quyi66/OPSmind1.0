@@ -1,0 +1,22 @@
+{
+  "sys_tenant": {
+    "home": {
+      "title": "租戶管理",
+      "createLabel": "建立租戶",
+      "createTenant": "建立租戶",
+      "editTenant": "編輯租戶"
+    },
+    "created": "租戶 {{ param }} 建立成功",
+    "updated": "租戶 {{ param }} 更新成功",
+    "deleted": "租戶 {{ param }} 刪除成功",
+    "delete": {
+      "question": "確定刪除 租戶 {{ name }} 嗎？"
+    },
+    "detail": {
+      "title": "租戶詳情"
+    },
+    "name": "名稱",
+    "code": "編碼",
+    "description": "描述"
+  }
+}

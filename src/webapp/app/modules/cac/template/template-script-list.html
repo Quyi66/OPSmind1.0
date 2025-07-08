@@ -1,0 +1,19 @@
+
+<div class="modal-header">
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ng-click="cacTemplateScriptVm.views.cancel()"><span aria-hidden="true"></span></button>
+    <h4 class="modal-title"> {{'cac.index.select_scripts' | translate}}</h4>
+</div>
+<div class="modal-body cac-template-script-dialog">
+    <form name="cac-select-template-script-form">
+        <div class="table-responsive">
+            <table id="cac-template-script-table" class="cac-template-script-table table opx-table"></table>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <p class="text-right">
+        <button type="reset" class="btn btn-default" ng-click="cacTemplateScriptVm.views.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+        <button type="submit" class="btn btn-success" ng-click="cacTemplateScriptVm.views.save()">{{'common.entity.action.save' | translate}}</button>
+    </p>
+</div>
+

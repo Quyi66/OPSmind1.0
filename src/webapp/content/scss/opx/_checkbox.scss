@@ -1,0 +1,412 @@
+// Checkboxes and radios
+// To replace i-checks
+// originally borrowed from https://github.com/flatlogic/awesome-bootstrap-checkbox
+// @author leoliaolei, 2018/06
+//
+// Change Logs
+// -----------
+// 20200324:
+// - Use `rem` instead of `px`
+// - Code refactor
+//
+// --------------------------------------------------
+
+$op_checkbox_check_icon: "\f00c";
+$op_checkbox_check_icon_size: $font-size-base;
+$op_checkbox_radio_icon_size: 70%; //$font-size-base;
+$op_checkbox_size: 1.125rem;
+$op_checkbox_radius: 0.25rem;
+$op_checkbox_border_width: 0.125rem;
+$op_checkbox_offset_y: 0.125rem;
+$op_checkbox_padding_y: 0.25rem;
+$op_label_padding: 0.5rem;
+$op_radio_size: $op_checkbox_size;
+$op_radio_inner_size: 0.625rem;
+
+//@mixin op-checkbox-position($isInput:false) {
+//  position: absolute;
+//  width: $op_checkbox_size;
+//  height: $op_checkbox_size;
+//  //top: $op-checkbox-offset-y;
+//  @if $isInput==true {
+//    left: 0;
+//  } @else {
+//    left: -$op_checkbox_size;
+//  }
+//}
+
+@mixin checkbox-variant($name, $color) {
+  .checkbox-#{$name} input[type="checkbox"]:checked + label,
+  .checkbox-#{$name} input[type="radio"]:checked + label {
+    &::before {
+      background-color: $color;
+      border-color: $color;
+    }
+
+    &::after {
+      color: #fff;
+    }
+  }
+}
+
+@mixin radio-variant($name, $color) {
+  .radio-#{$name} input[type="radio"] {
+    + label {
+      &::after {
+        //background-color: $color;
+      }
+    }
+
+    &:checked + label {
+      &::before {
+        //border-color: $color;
+      }
+
+      &::after {
+        background-color: $color;
+        border-radius: 50%;
+        //color: $color;
+        //color: color-yiq($color);
+      }
+    }
+  }
+}
+
+.checkbox.op-select-chip, .radio.op-select-chip {
+  padding-left: 0 !important;
+
+  label {
+    border: 1px solid $border-color;
+    padding: .25rem .5rem;
+    border-radius: $border-radius;
+    height: auto;
+
+    &:hover {
+      cursor: pointer;
+      //background-color: $secondary;
+      //color: $white;
+    }
+  }
+
+  label:before {
+    display: none;
+  }
+
+  label:after {
+    display: none;
+  }
+
+  input[type="checkbox"]:checked + label {
+    background-color: $secondary;
+    color: $white;
+  }
+
+  input[type="checkbox"], input[type="radio"] {
+    display: none;
+  }
+}
+
+//.checkbox, .radio {
+//  padding-left: $op_checkbox_size !important;
+//  // Need relative position to use absolute position of children input and label
+//  position: relative;
+//
+//  .form-control-wrapper & {
+//    // 20200406: Make same height and middle alignment with text input control.
+//    height: $input-height;
+//    padding-top: $op_checkbox_padding_y;
+//    padding-bottom: $op_checkbox_padding_y;
+//
+//    input[type="checkbox"], input[type="radio"] {
+//      top: $op_checkbox_offset_y + $op_checkbox_padding_y + $op_checkbox_border_width;
+//    }
+//  }
+//
+//  label {
+//    display: inline-block;
+//    vertical-align: middle;
+//    position: relative;
+//    padding-left: $op_label_padding;
+//    white-space: nowrap;
+//    // Override bs4 default
+//    margin-bottom: 0;
+//    // LEO@20200324: Need set height for empty label whose height is 0.
+//    // In that case, the :after y position will be incorrect with 0 height label.
+//    height: $font-size-base * $line-height-base;
+//  }
+//
+//  label::before {
+//    content: "";
+//    display: inline-block;
+//    border: $op_checkbox_border_width solid $input-border-color;
+//    background-color: $input-bg;
+//    //@include transition(border 0.15s ease-in-out, color 0.15s ease-in-out);
+//    @include transition(border 0.15s ease-in-out);
+//    @include op-checkbox-position;
+//  }
+//
+//  label::after {
+//    display: inline-block;
+//    text-align: center;
+//    line-height: $op-checkbox-size;
+//    @include op-checkbox-position;
+//  }
+//}
+//
+//.checkbox label:after {
+//  color: $input-color;
+//}
+//
+//.radio label:after {
+//  background-color: $input-color;
+//}
+//
+//.checkbox-inline, .radio-inline {
+//  display: inline-block;
+//
+//  &:not(:last-child) {
+//    margin-right: $spacer*2;
+//  }
+//}
+//
+//.checkbox {
+//  &.checkbox-circle label::before {
+//    border-radius: 50%;
+//  }
+//
+//  label::before {
+//    border-radius: $op_checkbox_radius;
+//  }
+//
+//  input[type="checkbox"]:checked + label::after {
+//    @include opx-fa-icon($op_checkbox_check_icon);
+//  }
+//}
+//
+//.radio {
+//  label::before {
+//    border-radius: 50%;
+//  }
+//
+//  input[type="radio"]:checked + label::after {
+//    content: '';
+//    display: inline-block;
+//    width: $op_radio_inner_size;
+//    height: $op_radio_inner_size;
+//    border-radius: 50%;
+//    left: (-$op_radio_size  + (($op_radio_size  ) - $op_radio_inner_size)/2);
+//    top: ($op_radio_size - $op_radio_inner_size) / 2;
+//    //background-color: ;
+//
+//
+//    //font-family: $op-iconfont-family;
+//    //content: $op-checkbox-radio-icon;
+//    //font-size: $op-checkbox-radio-icon-size;
+//  }
+//}
+//
+//.input-group-text {
+//  &.checkbox input[type="checkbox"], &.radio input[type="radio"] {
+//    position: relative;
+//  }
+//}
+//
+//.checkbox input[type="checkbox"], .radio input[type="radio"] {
+//  //LEO@20200324: If display:none, sometimes cannot click, strange
+//  // Use opacity 0 and z-index 1 to make input element invisible but clickable.
+//  // display: none;
+//  opacity: 0;
+//  z-index: 1;
+//  // Make the input element the same size and position as those of label:before
+//  @include op-checkbox-position(true);
+//
+//  &:disabled {
+//    cursor: not-allowed;
+//  }
+//
+//  &:disabled + label {
+//    opacity: 0.65;
+//
+//    &::before {
+//      background-color: $input-disabled-bg;
+//      cursor: not-allowed;
+//    }
+//  }
+//}
+//
+//@each $name, $color in $theme-colors {
+//  @include checkbox-variant($name, $color);
+//  @include radio-variant($name, $color);
+//}
+
+//LEO: for compatible with i-checks
+//.checkbox label.i-checks::before {
+//  display: none
+//}
+
+.opx-check-group {
+  display: inline-flex;
+
+  input[type="radio"], input[type="checkbox"] {
+    display: none;
+  }
+
+  label {
+    user-select: none;
+    display: inline-block;
+    border: 1px solid $gray-400;
+    border-collapse: collapse;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-bottom: 0;
+    border-radius: 0;
+    @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, 0); //$btn-border-radius);
+    margin-left: -1px;
+
+    &:nth-child(2) {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+      margin-left: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+
+  &:not(.btn-group) label {
+    @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $border-radius);
+
+    &:not(:last-child) {
+      margin-right: $spacer;
+    }
+  }
+
+  input[type="radio"]:checked + label,
+  input[type="checkbox"]:checked + label {
+    //@include button-variant($primary, $primary);
+    @include button-variant($secondary, $secondary); //, $secondary);
+  }
+
+  @each $color, $value in $theme-colors {
+    &.opx-#{$color} {
+      input[type="radio"]:checked + label,
+      input[type="checkbox"]:checked + label {
+        @include button-variant($value, $value);
+      }
+    }
+  }
+}
+
+// From bs5
+
+
+//
+// Check/radio
+//
+
+.checkbox {
+  display: block;
+  min-height: $form-check-min-height;
+  padding-left: $form-check-padding-start;
+  margin-bottom: $form-check-margin-bottom;
+
+  > input[type="checkbox"] {
+    float: left;
+    margin-left: $form-check-padding-start * -1;
+  }
+}
+
+//.form-check-input {
+.checkbox > input, .radio > input {
+  width: $form-check-input-width;
+  height: $form-check-input-width;
+  margin-top: ($line-height-base - $form-check-input-width) * .5; // line-height minus check height
+  vertical-align: top;
+  background-color: $form-check-input-bg;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: $form-check-input-border;
+  appearance: none;
+  color-adjust: exact; // Keep themed appearance for print
+  @include transition($form-check-transition);
+
+  &[type="checkbox"] {
+    @include border-radius($form-check-input-border-radius);
+  }
+
+  &[type="radio"] {
+    // stylelint-disable-next-line property-disallowed-list
+    border-radius: $form-check-radio-border-radius;
+  }
+
+  &:active {
+    filter: $form-check-input-active-filter;
+  }
+
+  &:focus {
+    border-color: $form-check-input-focus-border;
+    outline: 0;
+    box-shadow: $form-check-input-focus-box-shadow;
+  }
+
+  &:checked {
+    background-color: $form-check-input-checked-bg-color;
+    border-color: $form-check-input-checked-border-color;
+
+    &[type="checkbox"] {
+      @if $enable-gradients {
+        background-image: escape-svg($form-check-input-checked-bg-image), var(--#{$variable-prefix}gradient);
+      } @else {
+        background-image: escape-svg($form-check-input-checked-bg-image);
+      }
+    }
+
+    &[type="radio"] {
+      @if $enable-gradients {
+        background-image: escape-svg($form-check-radio-checked-bg-image), var(--#{$variable-prefix}gradient);
+      } @else {
+        background-image: escape-svg($form-check-radio-checked-bg-image);
+      }
+    }
+  }
+
+  &[type="checkbox"]:indeterminate {
+    background-color: $form-check-input-indeterminate-bg-color;
+    border-color: $form-check-input-indeterminate-border-color;
+
+    @if $enable-gradients {
+      background-image: escape-svg($form-check-input-indeterminate-bg-image), var(--#{$variable-prefix}gradient);
+    } @else {
+      background-image: escape-svg($form-check-input-indeterminate-bg-image);
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    filter: none;
+    opacity: $form-check-input-disabled-opacity;
+  }
+
+  // Use disabled attribute in addition of :disabled pseudo-class
+  // See: https://github.com/twbs/bootstrap/issues/28247
+  &[disabled],
+  &:disabled {
+    ~ .form-check-label {
+      opacity: $form-check-label-disabled-opacity;
+    }
+  }
+}
+
+.checkbox > label {
+  color: $form-check-label-color;
+  cursor: $form-check-label-cursor;
+}
+
+
+.checkbox.checkbox-inline, .radio.radio-inline {
+  display: inline-block;
+  margin-right: $form-check-inline-margin-end;
+}

@@ -1,0 +1,31 @@
+<div ng-if="$ctrl.theHosts.length>0">
+    <div class="d-flex flex-nowrap align-items-center">
+        <div class="btn btn-sm btn-default d-inline-block op-hover-trigger" style="position:relative;width:10em;">
+            <span class="op-hover-to-show pull-right" ng-click="$ctrl.clearAll()" title="{{'jao.flow.detail.remove_all' | translate}}"><i
+                class="fa fa-times"></i></span>
+            <span class="d-block"
+                  ng-click="$ctrl.openSelectorDialog()">{{'jao.flow.in_total' | translate:{ count: $ctrl.theHosts.length } }}</span>
+        </div>
+        <!--        <div class="btn-group">-->
+        <!--            <button type="button" class="btn btn-sm btn-default" ng-click="$ctrl.openSelectorDialog()">共<strong>{{$ctrl.theHosts.length}}</strong>项-->
+        <!--            </button>-->
+        <!--            <button type="button" class="btn btn-sm btn-default" ng-click="$ctrl.clearAll()" title="移除所有"><i-->
+        <!--                    class="fa fa-times"></i></button>-->
+        <!--        </div>-->
+        <op-searchbox search-text="$ctrl.filter" class="ms-auto autohide"></op-searchbox>
+    </div>
+    <ul class="list list-unstyled list-inline" style="max-height:10rem; overflow-y:auto;">
+        <li ng-repeat="host in $ctrl.theHosts | filter: $ctrl.filter track by $index"
+            class="op-hover-trigger mb-3">
+            <div class="badge bg-secondary op-text-normal op-cursor-default py-2 px-2">{{$ctrl.options.useString?host:host.key}}
+                <a ng-click="$ctrl.removeItem($index)" class="text-muted op-hover-to-show"></a></div>
+        </li>
+    </ul>
+</div>
+<div ng-if="$ctrl.theHosts.length===0" class="op-blank-slate bg-light p-3">
+    <div class="op-blank-slate-icon"><i class="fal fa-server" style="font-size:4rem;"></i></div>
+    <div>
+        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.openSelectorDialog()">{{'jao.job.selector.select_device' | translate}}
+        </button>
+    </div>
+</div>

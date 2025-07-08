@@ -1,0 +1,48 @@
+<style>
+    #mergely-splash {
+        display: none;
+    }
+
+    .file-change-status.tab-container .tab-content {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+</style>
+<div>
+    <div ng-include="'app/modules/gfs/file-change-status-basic.html'" ng-if="!$ctrl.showDiff"></div>
+
+    <uib-tabset class="tab-container file-change-status" active="1" ng-if="$ctrl.showDiff">
+        <uib-tab index="1" heading="{{'gfs.status.basic_operation' | translate}}">
+            <div ng-include="'app/modules/gfs/file-change-status-basic.html'"></div>
+        </uib-tab>
+        <uib-tab index="2" heading="{{'gfs.status.difference_comparison' | translate}}" select="$ctrl.compareFile()">
+            <div class="alert alert-warning alert-dismissible" role="alert" ng-show="!$ctrl.showDiff">
+                {{'gfs.status.difference_comparison_warn' | translate}}
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div style="position: relative; min-height: 300px;">
+                <div class="mergely-full-screen-8">
+                    <div class="mergely-resizer">
+                        <div id="mergely" class="compareArea">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="3" heading="{{'gfs.status.script_syntax_detection' | translate}}" select="$ctrl.shellCheck()">
+            <div style="pointer-events: none;">
+                <op-code-editor the-model="$ctrl.shellCheckResult" options="{syntax:'shell'}"
+                                style="height:20rem;"></op-code-editor>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    <div class="text-right">
+        <button type="button" class="btn btn-primary opx-btn-ok me-3" ng-click="$ctrl.submit()"
+                ng-disabled="!$ctrl.model.status || $ctrl.isSaving">{{'gfs.common.sure' | translate}}
+        </button>
+        <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()">{{'gfs.common.cancel' | translate}}
+        </button>
+    </div>
+</div>

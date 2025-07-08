@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myParamLabel">
+        {{'cac3.button.runInspection' | translate}}
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.clear()"></button>
+</div>
+
+<form name="editForm" role="form" show-validation>
+    <div class="modal-body">
+        <div class="form-control-wrapper">
+            <div class="w-full">
+                <acm-device-selector the-model="$ctrl.hostList" ci-types="'[auto]'" mcheck-type="'map'" is-selected="true"></acm-device-selector>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.runJob()">
+            {{'cac3.table_fields.performSinglePatrolInspection' | translate}}
+        </button>
+        <button type="button" class="btn btn-default opx-btn-cancel" data-dismiss="modal" ng-click="$ctrl.clear()">{{'cmd.job.button_cancel' | translate}}</button>
+    </div>
+
+</form>

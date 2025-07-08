@@ -1,0 +1,153 @@
+<div class="opx-layout-vflex">
+    <div class="mb-3">
+        <!--        <button class="btn btn-outline-default" ng-click="$ctrl.addAttr()"><i class="fa fa-plus"></i> {{ 'umd.attrs.add_attr' | translate}}</button>-->
+        <button class="btn btn-outline-primary" ng-click="$ctrl.addAttrGroup()"><i class="fa fa-folder-plus"></i> {{ 'umd.attrs.add_attr_group' | translate}}
+        </button>
+    </div>
+    <div class="opx-flex-fill">
+        <div class="opx-layout-hflex">
+            <div class="opx-flex-fill px-2" ui-sortable="{handle:'.js-group-sort-handle'}"
+                 ng-model="$ctrl.groupedAttrs">
+                <div class="card mb-3 js-group-sort-handle" ng-repeat="ga in $ctrl.groupedAttrs track by $index" ng-class="{'active':ga.__isNew}">
+                    <div class="card-header js-group-sort-handle bg-light py-2">
+                        <div ng-if="$ctrl.groupInEdit!==ga.group"
+                             class="d-flex align-items-center op-hover-trigger">
+                            <button type="button" class="btn btn-default opx-btn-icon opx-btn-flat" ng-click="ga.__collapsed=!ga.__collapsed"><i class="far" ng-class="ga.__collapsed?'fa-angle-up':'fa-angle-down'"></i></button>
+                            <span class="me-auto"><a href="" ng-click="$ctrl.renameAttrGroup(ga.group)" title="{{ 'umd.attrs.rename_attr_group' | translate}}">{{ga.group}}</a></span>
+                            <div class="ms-3 op-hover-to-show">
+                                <button class="btn btn-default" ng-click="$ctrl.addAttr(ga.group)" title="{{ 'umd.attrs.add_attr' | translate}}"><i
+                                        class="fa fa-plus"></i></button>
+                                <!--                                <button class="btn btn-default" ng-click="$ctrl.renameAttrGroup(ga.group)" title="分组重命名"><i-->
+                                <!--                                        class="fa fa-pencil"></i></button>-->
+                                <button class="btn btn-default" ng-click="$ctrl.deleteAttrGroup(ga.group)" title="{{ 'umd.attrs.delete_attr_group' | translate}}">
+                                    <i
+                                            class="fa fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                        <div ng-if="$ctrl.groupInEdit===ga.group" class="d-flex align-items-center">
+                            <div>
+                                <input type="text" ng-model="$ctrl.newGroupName" class="form-control">
+                            </div>
+                            <div class="ms-3">
+                                <button class="btn btn-primary opx-btn-ok" ng-click="$ctrl.doRenameAttrGroup(ga.group)">
+                                    {{ 'umd.attrs.confirm' | translate}}
+                                </button>
+                                <button class="btn btn-default opx-btn-cancel"
+                                        ng-click="$ctrl.cancelRenameAttrGroup(ga.group)">{{ 'umd.attrs.cancel' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body form form-horizontal op-smartform js-sortable-container"
+                         ui-sortable="$ctrl.sortableOptions" ng-model="ga.attrs" ng-hide="ga.__collapsed">
+                        <div ng-repeat="attr in ga.attrs track by $index"
+                             ng-click="$ctrl.clickAttr(attr)"
+                             class="d-block p-3 d-flex align-items-center op-hover-trigger umd-attr-item"
+                             ng-class="{'active':attr.__active}">
+                            <div class="op-hover-to-show me-3">
+                                <i class="fa fa-bars fa-fw op-drag-handle text-muted js-attr-sort-handle"></i>
+                            </div>
+                            <umd-model-attr the-attr="attr" class="flex-fill"
+                                            xxxoptions="{readonly:true}"></umd-model-attr>
+                            <div class="ms-3 d-flex align-items-center">
+                                <div class="text-danger text-center" style="width:2rem;"><i
+                                        ng-if="$ctrl.errorsByAttr[attr.code]"
+                                        class="fa fa-exclamation-circle"></i></div>
+                                <div class="op-hover-to-show">
+                                    <button class="btn btn-default opx-btn-icon opx-btn-flat" title="{{ 'common.entity.action.delete' | translate}}"
+                                            ng-if="!attr.internal"
+                                            ng-click="$ctrl.deleteAttr(attr)"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:20rem; min-height: 30rem;" class="ms-3 card">
+                <div class="card-header bg-dark text-light">{{ 'umd.attrs.attr_config' | translate}}</div>
+                <div class="card-body bg-light" ng-if="!$ctrl.activeModelAttr">
+                    <div class="op-blank-slate">
+                        <div class="op-blank-slate-icon"><i class="fa fa-tasks-alt fa-4x"></i></div>
+                        <p>{{ 'umd.attrs.left_to_edit_attr' | translate}}</p>
+                    </div>
+                </div>
+                <!--                    <div class="card-header">{{ 'umd.attrs.attr_config' | translate}}</div>-->
+                <div class="card-body scroll-y op-smartform bg-light" ng-if="$ctrl.activeModelAttr">
+                    <fieldset opx-foldable>
+                        <legend>{{ 'umd.attrs.base' | translate}}</legend>
+                        <div class="form-group">
+                            <label class="control-label">Code</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" ng-model="$ctrl.activeModelAttr.code" class="form-control" ng-required="true"
+                                       ng-disabled="$ctrl.activeModelAttr.internal"
+                                       ng-class="{'is-invalid':$ctrl.errorsByAttr[$ctrl.activeModelAttr.code].code}">
+                                <div class="invalid-feedback"
+                                     ng-if="$ctrl.errorsByAttr[$ctrl.activeModelAttr.code].code">
+                                    {{$ctrl.errorsByAttr[$ctrl.activeModelAttr.code].code}}</divp>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{ 'umd.attrs.title' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" ng-model="$ctrl.activeModelAttr.title" class="form-control"
+                                       ffffng-required="true">
+                            </div>
+                        </div>
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label class="control-label">{{ 'umd.attrs.date_type' | translate}}</label>-->
+                        <!--                            <div class="form-control-wrapper">-->
+                        <!--                                <select class="form-select" ng-model="$ctrl.activeModelAttr.data_type">-->
+                        <!--                                    <option value="string">{{ 'umd.attrs.String' | translate}}</option>-->
+                        <!--                                    <option value="number">{{ 'umd.attrs.num' | translate}}</option>-->
+                        <!--                                    <option value="ip">IP</option>-->
+                        <!--                                </select>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="form-group">
+                            <label class="control-label">{{ 'umd.attrs.constraint' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <div class="checkbox checkbox-inline">
+                                    <input type="checkbox" ng-model="$ctrl.activeModelAttr.unique" id="mc_unique">
+                                    <label for="mc_unique">{{ 'umd.attrs.unique' | translate}}</label>
+                                </div>
+                                <div class="checkbox checkbox-inline">
+                                    <input type="checkbox" ng-model="$ctrl.activeModelAttr.required"
+                                           id="mc_required">
+                                    <label for="mc_required">{{ 'umd.attrs.required' | translate}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset opx-foldable>
+                        <legend>{{ 'umd.attrs.data_input' | translate}}</legend>
+                        <uinput-setting-datacontrol
+                                ng-model="$ctrl.activeModelAttr.input"
+                                options="{disableEvent:true}"></uinput-setting-datacontrol>
+
+                    </fieldset>
+                    <fieldset opx-foldable>
+                        <legend>{{ 'umd.attrs.display_data' | translate}}</legend>
+                        <div class="form-group">
+                            <label class="control-label">{{ 'umd.attrs.data_conversion' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <udp-data-converter the-model="$ctrl.activeModelAttr.display.converter"
+                                                    options="{kinds:'js,str'}"></udp-data-converter>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Click</label>
+                            <div class="form-control-wrapper">
+                                <select class="form-select" ng-model="$ctrl.activeModelAttr.display.onclick">
+                                    <option value="">None</option>
+                                    <option value="ViewDetail">View Detail</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

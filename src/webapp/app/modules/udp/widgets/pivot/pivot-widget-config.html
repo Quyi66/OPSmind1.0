@@ -1,0 +1,35 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+   <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" ng-model="uwProps.display.disableUi" id="pwc_disableui">
+                        <label for="pwc_disableui">{{'udp.w.pivot.config.disable_ui'|translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'common.term.title'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" ng-model="uwProps.display.title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.pivot.config.axis_label'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control w-sm" type="text" ng-model="uwProps.display.axisXlabel">
+                    <input class="form-control w-sm" type="text" ng-model="uwProps.display.axisYlabel">
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

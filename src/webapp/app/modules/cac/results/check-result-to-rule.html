@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title"> {{checkResultToRuleCtrlVm.views.hostKey}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"
+            ng-click="checkResultToRuleCtrlVm.views.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cac-history-find-dialog">
+    <div>
+        <strong class="d-inline-block" style="width:6em;">{{'cac.template.detail.audit_params' | translate}}</strong>
+        <span> {{checkResultToRuleCtrlVm.views.metricName}}</span>
+    </div>
+    <div>
+        <strong class="d-inline-block" style="width:6em;">{{'cac.common.result' | translate}}</strong>
+        <span ng-class='checkResultToRuleCtrlVm.views.metricStatusClass'> {{checkResultToRuleCtrlVm.views.metricStatus}}</span>
+    </div>
+    <div>
+        <strong>{{'cac.result.output' | translate}}</strong>
+    </div>
+    <div class="bg-light p-3">
+        <pre style="white-space: pre-wrap">{{checkResultToRuleCtrlVm.views.metricValue}}</pre>
+    </div>
+   
+</div>
+<div class="modal-footer">
+    <p class="text-right">
+        <button type="button" class="btn btn-default" ng-click="checkResultToRuleCtrlVm.views.cancel()">{{'common.entity.action.close' | translate}}</button>
+    </p>
+</div>
+
+

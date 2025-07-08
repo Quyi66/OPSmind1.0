@@ -1,0 +1,20 @@
+<form name="deleteForm" ng-submit="vm.confirmDelete(vm.tag.id)">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'adm.content.ok_delete' | translate}}</h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()"></button>
+    </div>
+    <div class="modal-body">
+        <!--<jhi-alert-error></jhi-alert-error>-->
+        <p>{{'adm.content.are_you_sure_to_delete' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span>{{'common.action.cancel'|translate}}</span>
+        </button>
+        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+            <span>{{'common.action.delete'|translate}}</span>
+        </button>
+    </div>
+
+</form>

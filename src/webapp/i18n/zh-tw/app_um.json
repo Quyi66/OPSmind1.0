@@ -1,0 +1,59 @@
+{
+  "app_um": {
+    "title":"使用者管理",
+    "scan_host":"掃描主機",
+    "scan_host_count": "主機數",
+    "scan_user_count": "使用者數",
+    "scan_user_group_count": "使用者組數",
+    "system_user": "系統賬戶",
+    "regular_user": "普通賬戶",
+    "enabled_user": "啟用",
+    "disabled_user": "禁用",
+    "status": "狀態",
+    "action_user": "操作人",
+    "remark": "備註",
+    "start_time": "開始時間",
+    "end_time": "結束時間",
+    "import": {
+      "template": "批次建立使用者模板",
+      "import_user": "匯入使用者",
+      "text": "如需批次建立使用者，請下載批次建立使用者Excel模板後填寫內容，匯入填寫後的Excel內容"
+    },
+    "user": {
+      "username": "使用者名稱",
+      "home": "使用者家目錄",
+      "comment": "使用者註釋",
+      "password": "使用者密碼",
+      "primary_group": "主組",
+      "secondary_groups": "附屬組",
+      "password_last_change": "密碼上次修改",
+      "expired_date": "過期時間"
+    },
+    "text": {
+      "delete_group_comment": "確認刪除所選使用者組？",
+      "delete_user_comment": "確認刪除所選使用者？",
+      "enabled_user_comment": "確認啟動所選使用者？",
+      "disabled_user_comment": "確認禁用所選使用者？",
+      "create_user_comment": "在主機上建立的使用者名稱稱",
+      "create_user_home_comment": "不填，則為預設",
+      "create_user_comment_comment": "可不填，用於寫入/etc/passwd檔案第五個位置",
+      "create_user_id_comment": "在主機上建立的使用者id，不填則系統預設分配",
+      "create_user_gid_comment": "在主機上建立的使用者組gid，不填則系統預設分配",
+      "create_user_pass_comment": "建立使用者對應的密碼",
+      "create_user_group_comment": "不填，則為預設。若使用者組不存在，則建立該使用者組"
+    },
+    "action": {
+      "title": "操作",
+      "create_user": "新建使用者",
+      "delete_user": "刪除",
+      "enable_user": "啟用",
+      "disable_user": "禁用",
+      "change_password": "修改密碼"
+    },
+    "menu": {
+      "user": "使用者",
+      "usergroup": "使用者組",
+      "log": "操作日誌"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "jhi_reset.request.title": "Reset Your Password",
+    "jhi_reset.request.form.button": "Reset Password",
+    "jhi_reset.request.messages.info": "Please enter the email address you used to register",
+    "jhi_reset.request.messages.success": "Instructions to reset your password have been sent to your email, please check your email.",
+    "jhi_reset.request.messages.notfound": "<strong>There is no account associated with this email address.</strong> Please use another email address",
+    "jhi_reset.finish.title": "Reset Password",
+    "jhi_reset.finish.form.button": "OK",
+    "jhi_reset.finish.messages.info": "Please set a new password",
+    "jhi_reset.finish.messages.success": "<strong>Your password has been reset.</strong> Please <a class=\"alert-link\" href=\"\" ng-click =\"vm.login()\">Login</a>.",
+    "jhi_reset.finish.messages.keymissing": "Invalid reset password request.",
+    "jhi_reset.finish.messages.error": "Could not reset password. You must reset your password within 24 hours of requesting it."
+}

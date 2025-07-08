@@ -1,0 +1,35 @@
+{
+  "name": "docsify-combine",
+  "version": "1.0.0",
+  "description": "Combine docsify site to a single markdown file",
+  "main": "index.js",
+  "author": {
+    "name": "Duckegg",
+    "email": "leoliaolei@gmail.com",
+    "url": "https://github.com/meff34"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meff34/docsify-to-pdf-converter.git"
+  },
+  "bin": {
+    "converter": ".bin/cli.js",
+    "docsify-pdf-converter": ".bin/cli.js"
+  },
+  "scripts": {
+    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+  },
+  "keywords": [
+    "docsify",
+    "combine"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.3.3",
+    "harmonize": "^2.0.0",
+    "is-url": "^1.2.4",
+    "lodash": "^4.17.11",
+    "markdown-link-extractor": "^1.2.0",
+    "rcfile": "^1.0.3"
+  }
+}

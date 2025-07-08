@@ -1,0 +1,56 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">
+                    Console
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="opx-flex-fill p-3">
+        <div class="navbar-nav ms-auto" style="float:right">
+            <div>
+                <button type="button" ng-click="vm.history()"
+                        class="btn btn-primary"><i
+                        class="fad fa-history fa-fw"></i>{{'cmd.index.log' | translate}}
+                </button>
+            </div>
+        </div>
+
+        <label class="control-label" for="field_type">{{'common.entity.variable.host' | translate}}</label>
+        <acm-device-selector ci-types="'[auto]'" the-model="vm.hosts" mcheck-type="'map'"></acm-device-selector>
+
+        <form name="editForm" role="form" novalidate ng-submit="vm.runCommand()">
+            <fieldset ng-disabled="vm.viewMode==='view'">
+                <div class="form-group">
+                    <label class="control-label" for="field_type">{{'cmd.list.grammar' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select id="field_type" name="type" class="form-select w-md" ng-model="vm.command.type"
+                                ng-mouseleave="vm.cacheConsoleData()">
+                            <option value="{{type}}" ng-repeat="type in vm.allTypes">
+                                {{type}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"
+                    <label class="control-label" for="field_value">{{'cmd.index.command' | translate}}</label>
+                    <op-code-editor id="field_value" ng-mouseleave="vm.cacheConsoleData()" the-model="vm.command.cmd" style="height:30rem;"></op-code-editor>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="navbar-nav ms-auto" style="float:right">
+            <div>
+                <button type="button" ng-click="vm.runCommand()"
+                        class="btn btn-primary opx-btn-ok">{{'cmd.list.button_run' | translate}}
+                </button>
+                <button type="button" class="btn btn-default opx-btn-cancel" ng-click="vm.clear()">
+                    {{'common.entity.action.back' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

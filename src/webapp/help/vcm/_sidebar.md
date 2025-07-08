@@ -1,0 +1,5 @@
+- [vCenter Manager](vcm/index.md)
+    - [快速入门](vcm/quickstart.md)
+    - [使用指南](vcm/guide.md)
+    - [设置和管理](vcm/config.md)
+    - [常见问题](vcm/faq.md)

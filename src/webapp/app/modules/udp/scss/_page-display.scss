@@ -1,0 +1,156 @@
+//==============================================================================
+// Page Display for both view and design
+//==============================================================================
+udp-page-view {
+  display: flex;
+  flex-direction: column;
+  //width: 100%;
+  height: 100%;
+}
+
+.udp-openpage-container {
+  // It contains page actions with absolute position
+  position: relative;
+}
+
+.udp-page-popover {
+  max-width: 200px;
+  max-height: 600px;
+  //z-index: 10;
+  position: absolute;
+  overflow: auto;
+}
+
+.uw-resize-height {
+  overflow-y: auto;
+}
+
+.op-fixed-pageheader > .uwidget.uwtype-pageheader + .uwtype-layout-flex {
+  flex: 1;
+  overflow-y: auto;
+}
+
+udp-page-view {
+  // 20200415: use 100% min-height instead of 100% height. 100% height will cause page cannot fill over-long content
+  // TODO: 如果设置height: 100%，那么内容超过100%时，页面背景不能填满。如果不设置height 100%，那么无法做到左右布局的左侧栏全高
+  //height: 100%;
+  //min-height: 100%;
+
+  // flex will make old row-col wrong.
+  //display: flex;
+  //flex-direction: column;
+  //align-items: start;
+
+  // 20200415: do not add padding to page view directly, otherwise we cannot make top aligned navbar or left aligned sidebar.
+  // For old layout-row and layout-col mode, add padding to the container row
+  // For new layout-flex mode, add padding to flex with widget props.
+  //padding-top: 8px;
+  //padding-bottom: 8px;
+  .uwtype-layout-row:first-child {
+    padding: 0.5rem;
+  }
+
+  .navbar {
+    label.control-label {
+      font-weight: normal !important;
+    }
+  }
+
+  label.control-label {
+    //font-weight: bold;
+  }
+
+  .uwtype-layout-flex:first-child:last-child {
+    //Do not flex fill 1, it will make uw-buttons of single flex column in page bottom
+    //flex: 1;
+  }
+}
+
+.btn.udp-btn-page-actions {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
+// TODO: remove it?
+.udp-float-actions {
+  position: absolute;
+  z-index: $udp-zindex-float-actions;
+  right: 0;
+  //top: -40px;
+  opacity: 0.25;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .udp-on-mobile & {
+    display: none;
+  }
+}
+
+.udp-widget-error {
+  &.popover {
+    max-width: 400px;
+
+    .popover-content {
+      overflow: auto;
+      max-height: 300px;
+    }
+  }
+}
+
+udp-page-selector {
+  width: 100%;
+}
+
+
+udp-page-actions {
+  //position: absolute;
+  //top: 0;
+  //right: 0;
+  // LEO@20181227: To ensure page actions button (and its dropdown menu) is always visible and not clipped by other elements,
+  // `udp-page-actions` shall have a higher z-index than other visible elements in the page.
+  // As I've found, bootstrap `.input-group .form-control` z-index is 2
+  z-index: 3;
+
+  udp-page-view & {
+    // LEO@20181227: page has padding. In embedded page content, actions shall offset right.
+    right: -14px;
+  }
+
+  .modal-header & {
+    //position: absolute;
+    //right: 32px;
+    //top: 8px;
+  }
+
+  .navbar & {
+
+  }
+}
+
+.udp-wm-full {
+  width: 100%;
+}
+
+span.udp-isrestricted {
+  color: #bbb;
+  background-color: #efefef;
+  padding: 0 0.5rem;
+  border-radius: 500rem;
+}
+
+
+//udp-theme-selector {
+//  .theme-selector {
+//    color: white;
+//
+//    &.bg-default, &.bg-_CUSTOM {
+//      background-color: white;
+//    }
+//
+//    &.bg-white, &.bg-light, &.bg-default, &.bg-_CUSTOM {
+//      color: black;
+//    }
+//  }
+//}
+

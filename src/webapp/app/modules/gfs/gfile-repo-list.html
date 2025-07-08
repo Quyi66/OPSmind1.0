@@ -1,0 +1,24 @@
+<div class="modal-header" xmlns="http://www.w3.org/1999/html">
+    <h4 class="modal-title">{{'gfs.list.git_list' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="note-modal-header dropdown ms-auto">
+    <button class="btn btn-danger opx-btn-flat ms-2" type="button"
+            ng-click="$ctrl.resetSettingClose()">
+        <i class="fa fa-fw fa-undo"></i>{{'gfs.settings.reset' | translate}}
+    </button>
+    <div uaa-has-permission="gfs:edit:*" class="dropdown ms-auto">
+        <a class="btn btn-primary opx-btn-flat m2" title="{{'gfs.common.add' | translate}}"
+           ng-click="$ctrl.openRepoSettings()"><i
+                class="fa fa-cogs"></i> {{'gfs.common.add' | translate}}</a>
+    </div>
+    <button uaa-has-permission="gfs:edit:*" ng-click="$ctrl.deleteModels()" style="margin-right: 0.6rem"
+            class="btn btn-secondary opx-btn-flat ms-2" title="{{'common.entity.action.delete' | translate}}"
+            ng-disabled="!$ctrl.selectedModels.length>0"><i
+            class="fa fa-trash">{{'common.entity.action.delete' | translate}}</i></button>
+</div>
+
+<div>
+    <opx-datatable table-config="$ctrl.tableConfig" class="p-3"></opx-datatable>
+</div>

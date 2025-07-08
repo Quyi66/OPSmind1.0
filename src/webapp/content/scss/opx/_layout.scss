@@ -1,0 +1,206 @@
+.opx-sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 10rem;
+  overflow-y: auto;
+  // Disable x scroll
+  overflow-x: unset;
+  border-right: 1px solid $card-border-color;
+
+  &.bg-dark {
+    border-right: 0;
+  }
+
+  .op-foldable-toggle.btn {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.opx-sidebar-collapsed {
+    width: 48px !important;
+
+    .opx-treenav-item-icon {
+      font-size: 1.25rem;
+    }
+
+    .opx-treenav-item-title {
+      display: none;
+    }
+
+    .opx-sidebar-header {
+      // Remove x paddings which make toggler narrow
+      padding-left: 0;
+      padding-right: 0;
+      justify-content: center;
+
+      > :not(.opx-sidebar-toggler) {
+        display: none;
+      }
+
+      .opx-sidebar-toggler {
+        .expand-btn {
+          display: unset;
+        }
+
+        .collapse-btn {
+          display: none;
+        }
+      }
+    }
+
+    .opx-sidebar-body {
+      .list-group-item {
+        text-align: center;
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    .opx-sidebar-collapsed-hidden {
+      display: none;
+    }
+  }
+
+  &.opx-sidebar-collapsed, &:not(.opx-sidebar-collapsed) {
+    transition-property: width;
+    transition-duration: 0.3s;
+  }
+
+  .opx-sidebar-header.opx-sidebar-header-fixed + .opx-sidebar-body {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+
+  .opx-sidebar-header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    //padding: $navbar-padding-y $navbar-padding-x;
+    padding: $navbar-padding-y 1rem;
+    height: $op-navbar-height;
+    min-height: $op-navbar-height;
+
+    > :not(:first-child) {
+      // Add space between elements
+      margin-left: 0.5rem;
+    }
+
+    .opx-sidebar-toggler .expand-btn {
+      display: none;
+    }
+
+
+    &.opx-sidebar-header-mode-form {
+      .opx-sidebar-title {
+        display: none;
+      }
+
+      .enter-search-btn {
+        display: none;
+      }
+    }
+
+    &.opx-sidebar-header-mode-title {
+      .opx-sidebar-search {
+        display: none;
+      }
+
+      .exit-search-btn {
+        display: none;
+      }
+    }
+  }
+
+  .opx-sidebar-title, .opx-sidebar-search {
+    flex: 1 1 0%;
+  }
+
+
+  &:not(.opx-sidebar-collapsed) .opx-sidebar-expand-hidden {
+    display: none;
+  }
+}
+
+.opx-treenav {
+  //.opx-treenav-item.with-space {
+  .opx-treenav-item {
+    padding: 0.25rem 0.25rem 0 .25rem;
+
+    > a {
+      border-radius: .25rem;
+
+      &:hover {
+        background-color: $opx-list-active-bgcolor;
+      }
+    }
+  }
+
+  .opx-treenav-item > a, a.opx-treenav-item {
+    padding: 0.75rem 0.75rem;
+    display: block;
+    position: relative;
+    border-left: 0.25rem solid transparent;
+
+    &:hover {
+      background-color: $opx-list-hover-bgcolor;
+    }
+
+    &.active {
+      background-color: $opx-list-active-bgcolor;
+      border-left-color: $opx-list-hover-bgcolor;
+    }
+  }
+}
+
+.opx-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+/*layout*/
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+
+//==============================================================================
+// Flex layout
+//==============================================================================
+
+// Flex layout in horizontal direction (left aside, main)
+.opx-layout-hflex {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  &.align-items-center {
+    align-items: center;
+  }
+
+  // 20200527: When fill region is too wide and no-wrap, need limit max width and scroll.
+  > .opx-flex-fill {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+// Flex layout in vertical direction (top nav, main)
+.opx-layout-vflex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.opx-flex-fill {
+  //20200901: Do not use flex: 1 (whose flex-base=0) will cause element invisible in IE 11.
+  //20200903: https://github.com/philipwalton/flexbugs#flexbug-4
+  //flex: 1 1 auto;
+  //flex: 1 1 0%;
+  flex: 1;
+}

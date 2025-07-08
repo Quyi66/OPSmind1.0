@@ -1,0 +1,41 @@
+{
+  "totalRecords": 4,
+  "aaData": [
+    {
+      "id": 1,
+      "hostName": "localhost",
+      "jobId": 1,
+      "metricName": "CPU",
+      "metricType": "cup>=80",
+      "endedAt": "2018-01-08T06:53:58.822Z",
+      "metricValue": "cup>=80"
+    },
+    {
+      "id": 2,
+      "hostName": "localhost",
+      "jobId": 2,
+      "metricName": "CPU",
+      "metricType": "cup>=81",
+      "endedAt": "2018-02-08T06:53:58.822Z",
+      "metricValue": "value2"
+    },
+    {
+      "id": 3,
+      "hostName": "localhost",
+      "jobId": 3,
+      "metricName": "CPU",
+      "metricType": "cup>=82",
+      "endedAt": "2018-03-08T06:53:58.822Z",
+      "metricValue": "value3"
+    },
+    {
+      "id": 4,
+      "hostName": "localhost",
+      "jobId": 4,
+      "metricName": "CPU",
+      "metricType": "cup>=83",
+      "endedAt": "2018-04-08T06:53:58.822Z",
+      "metricValue": "value4"
+    }
+  ]
+}

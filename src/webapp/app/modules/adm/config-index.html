@@ -1,0 +1,53 @@
+<div class="opx-layout-hflex" uaa-has-permission="adm:view:*" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <div class="opx-sidebar">
+        <nav class="opx-sidebar-header navbar">
+            <span class="navbar-brand"> {{'adm.title' | translate}}</span>
+        </nav>
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.adm.config.param" ui-sref-active="active"><i class="fa fa-fw fa-brackets-curly"></i>
+                        {{'adm.menu.params' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.adm.config.tenant" ui-sref-active="active"><i class="fa fa-fw fa-sitemap"></i>
+                        {{'adm.menu.tenants' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.adm.config.team" ui-sref-active="active"><i class="fa fa-fw fa-sitemap"></i>
+                        {{'adm.menu.teams' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面内容块-->
+    <div ui-view="config_main_view" class="opx-flex-fill scroll-y">
+        <div class="bg-light p-5 d-flex justify-content-center h-100 align-items-center">
+            <div class="card op-feature-card">
+                <div class="card-img-top"><i
+                        class="fad fa-brackets-curly"></i></div>
+                <a class="card-body" style="height:8rem;"
+                   ui-sref-active="active">
+                    <h3 class="card-title">{{'adm.menu.params' | translate}}</h3>
+                    <p class="card-text">{{'adm.content.mcd_config_index1' | translate}}</p>
+                </a>
+            </div>
+            <div class="card op-feature-card ms-5">
+                <div class="card-img-top"><i
+                        class="fa fa-sitemap fa-fw fa-5x"></i></div>
+                <a class="card-body" style="height:8rem;">
+                    <h3 class="card-title">{{'adm.content.data_maintenance' | translate}}</h3>
+                    <p class="card-text">{{'adm.content.mcd_config_index2' | translate}}</p>
+                </a>
+            </div>
+            <div class="card op-feature-card ms-5">
+                <div class="card-img-top"><i
+                        class="fa fa-sitemap fa-fw fa-5x"></i></div>
+                <a class="card-body" style="height:8rem;">
+                    <h3 class="card-title">{{'adm.menu.teams' | translate}}</h3>
+                    <p class="card-text">{{'adm.content.mcd_config_index3' | translate}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

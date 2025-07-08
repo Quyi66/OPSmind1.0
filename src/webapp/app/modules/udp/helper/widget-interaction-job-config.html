@@ -1,0 +1,36 @@
+<!--<div class="form-group">-->
+<!--    <label class="control-label" op-help-info="用于识别一个作业被谁调用的，支持<code>${变量}</code>形式的变量">作业CallId</label>-->
+<!--    <idgen ng-model="$ctrl.props.callId" class="form-control-wrapper"></idgen>-->
+<!--</div>-->
+<jao-job-selector the-model="$ctrl.props.code" selected-job="$ctrl.selectedJob"></jao-job-selector>
+<div ng-if="!($ctrl.selectedJob.$paramsConfig|isEmpty)">
+    <div class="my-3">
+        <strong>{{'common.term.parameter' | translate}}</strong>
+    </div>
+    <div class="form-group" ng-repeat="(name,config) in $ctrl.selectedJob.$paramsConfig track by $index">
+        <label class="control-label" title="{{name}}">{{name}}</label>
+        <div class="form-control-wrapper">
+            <udp-data-converter the-model="$ctrl.props.params[name]" options="{kinds:'js,str'}"
+                                class="w-100"></udp-data-converter>
+            <p class="help-block" ng-if="config.desc">{{config.desc}}</p>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label"></label>
+    <div class="form-control-wrapper">
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" ng-model="$ctrl.props.evalObject" id="wijc_evalObject">
+            <label for="wijc_evalObject">
+                {{'jao.job.widget.eval_object'|translate}}
+            </label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label"></label>
+    <div class="form-control-wrapper">
+        <div class="checkbox checkbox-inline"><input type="checkbox" ng-model="$ctrl.props.showOutput" id="wijc_showoutput"><label for="wijc_showoutput" op-help-info="{{'jao.job.widget.show_output_desc'|translate}}">{{'jao.job.widget.show_output'|translate}}</label></div>
+    </div>
+</div>
+<udp-widget-interaction-postproc proc-props="$ctrl.props.postproc"></udp-widget-interaction-postproc>

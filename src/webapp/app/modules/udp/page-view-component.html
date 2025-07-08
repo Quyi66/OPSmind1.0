@@ -1,0 +1,6 @@
+<div class="op-blank-slate bg-light" ng-if="$ctrl.error">
+    <div class="op-blank-slate-icon"><i class="fa fa-4x fa-exclamation-triangle"></i></div>
+    <p> {{'udp.page.view.load_page_error' | translate}} {{$ctrl.error.message}}</p>
+</div>
+<udp-page-view page-id="$ctrl.pageId" page-params="$ctrl.pageParams" options="{navbar:false}" style="flex:1;"
+               ng-if="!$ctrl.error"></udp-page-view>

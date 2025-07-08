@@ -1,0 +1,12 @@
+{
+    "sys_param.home.title": "Parameter Configuration",
+    "sys_param.home.createLabel": "Add",
+    "sys_param.home.createParam": "Add",
+    "sys_param.home.editParam": "Edit Param",
+    "sys_param.delete.question": "Are you sure you want to delete {{ name }}? ",
+    "sys_param.detail.title": "Parameter Details",
+    "sys_param.domain": "Subject",
+    "sys_param.name": "Parameter Name",
+    "sys_param.value": "Parameter Value",
+    "sys_param.description": "Description"
+}

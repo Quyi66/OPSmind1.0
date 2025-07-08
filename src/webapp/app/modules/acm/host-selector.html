@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h4 class="modal-title"> 选择主机</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="pointer-events: auto;"
+            ng-click="cmHostSelectorCtrlVm.views.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cm-host-dialog">
+    <div >
+        <div class="opx-flex-fill table-responsive">
+            <table id="cm-host-table" class="cm-table table opx-table"></table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer text-right">
+    <button type="reset" class="btn btn-default" ng-click="cmHostSelectorCtrlVm.views.cancel()">{{'common.action.cancel'|translate}}</button>
+    <button type="submit" class="btn btn-success" ng-click="cmHostSelectorCtrlVm.views.confirm()">{{'common.action.ok'|translate}}</button>
+</div>

@@ -1,0 +1,267 @@
+<div class="opx-layout-vflex" uaa-has-permission="{{$ctrl.pagePermission}}"
+     uaa-deny-message="{{'jao.job_edit' | translate}}"
+     ng-class="{'opx-readonly':!$ctrl.isEditMode}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.appman.job">{{'jao.index.list' | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">{{'jao.job.edit' | translate}}</li>
+            </ol>
+        </div>
+        <div class="ms-auto">
+            <div class="dropdown" ng-if="$ctrl.job.id">
+                <a class="btn btn-default opx-btn-icon opx-btn-flat" title="{{'jao.job.history' | translate}}"
+                   ng-click="$ctrl.listRunLogs()"
+                   data-bs-toggle="dropdown"><i class="fa fa-list-alt"></i></a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-header">{{'jao.job.recent_10_history' | translate}}</div>
+                    <a class="dropdown-item" ng-repeat="log in $ctrl.runLogs | limitTo: 10" href=""
+                       ng-click="$ctrl.viewRunResult(log.id)">{{log.startTime
+                    | fromNow }} <span
+                            class="text-muted">{{log.username}}</span></a>
+                </div>
+            </div>
+            <button ng-if="$ctrl.isEditMode"
+                    type="button" class="btn btn-danger opx-btn-icon opx-btn-flat"
+                    ng-click="$ctrl.deleteJob()" uaa-has-permission="jao:edit:*"
+                    title="{{'jao.job.delete' | translate}}"><i
+                    class="fa fa-trash-alt"></i>
+            </button>
+            <button ng-if="$ctrl.isEditMode"
+                    type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.save()"
+                    ng-disabled="jobForm.$invalid" uaa-has-permission="jao:edit:*"> {{'jao.job.save' | translate}}
+            </button>
+            <button ng-if="$ctrl.isEditMode"
+                    type="button" class="btn btn-default opx-btn-cancel"
+                    ng-click="$ctrl.cancel()">{{'common.entity.action.back' | translate}}
+            </button>
+            <a ng-if="!$ctrl.isEditMode"
+               type="button" class="btn btn-outline-primary"
+               ui-sref="app.appman.job.edit({id:$ctrl.job.id})" uaa-has-permission="jao:edit:*"><i
+                    class="fa fa-fw fa-pencil"></i> {{'jao.job.edit' | translate}}
+            </a>
+        </div>
+    </nav>
+    <div class="bg-white opx-flex-fill scroll-y p-3">
+        <form class="op-smartform form-vertical op-bold-label" name="jobForm"
+              op-sectioned-form
+              id="js-job-edit-{{$ctrl.job.id||'new'}}">
+            <fieldset ng-disabled="!$ctrl.isEditMode">
+                <legend>{{'jao.job.detail.base' | translate}}</legend>
+                <!--                <div class="form-group">-->
+                <!--                    <label class="control-label">Code</label>-->
+                <!--                    <div class="form-control-wrapper">-->
+                <!--                        <input type="text" class="form-control" ng-change="$ctrl.checkCode()"-->
+                <!--                             ng-model="$ctrl.job.code">-->
+                <!--                        <p class="help-block">标记作业的唯一代码，字母开头，只允许数字、小写字母、下划线、连线</p>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <div class="form-group">
+                    <label class="control-label">{{'common.entity.detail.title' | translate}} <span
+                            class="cac-text-required">*</span></label>
+                    <div class="form-control-wrapper">
+                        <input class="form-control" ng-model="$ctrl.job.title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'common.entity.detail.description' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <textarea class="form-control" ng-model="$ctrl.job.description" rows="3"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Type specific config begin -->
+            <jao-script-job-config ng-if="$ctrl.job.type=='script'"
+                                   the-model="$ctrl.jobConfig"
+                                   edit-mode="$ctrl.isEditMode"
+                                   config-interceptor="$ctrl.jobConfigInterceptor"></jao-script-job-config>
+            <jao-rest-job-config ng-if="$ctrl.job.type=='rest'"
+                                 the-model="$ctrl.jobConfig"
+                                 edit-mode="$ctrl.isEditMode"
+                                 config-interceptor="$ctrl.jobConfigInterceptor"></jao-rest-job-config>
+            <jao-command-job-config ng-if="$ctrl.job.type=='command'"
+                                    the-model="$ctrl.jobConfig"
+                                    edit-mode="$ctrl.isEditMode"></jao-command-job-config>
+            <jao-process-job-config ng-if="$ctrl.job.type==='process'"
+                                    the-model="$ctrl.jobConfig"
+                                    edit-mode="$ctrl.isEditMode"
+                                    config-interceptor="$ctrl.jobConfigInterceptor"></jao-process-job-config>
+            <!-- Type specific config end -->
+            <fieldset ng-disabled="!$ctrl.isEditMode" ng-if="$ctrl.job.type!='command'">
+                <legend>{{'jao.job.detail.params' | translate}}<span
+                        op-help-info="{{'jao.job.detail.params_info' | translate}}"></span></legend>
+                <div class="form-group">
+                    <div class="d-flex">
+                        <button class="btn btn-outline-primary"
+                                title="{{'jao.job.detail.analysis_param_info' | translate}}"
+                                ng-click="$ctrl.addParamAuto()"><i class="fa fa-brackets-curly"></i>
+                            {{'jao.job.detail.analysis_param' | translate}}
+                        </button>
+                        <button class="btn btn-sm btn-default opx-btn-icon ms-auto me-3"
+                                title="{{'jao.job.detail.add_param' | translate}}"
+                                ng-if="$ctrl.isEditMode">
+                            <i class="fa fa-plus" ng-click="$ctrl.addParam()"></i></button>
+                    </div>
+                    <table class="op-param-table table" ng-if="$ctrl.job.params|isNotEmpty">
+                        <thead>
+                        <tr>
+                            <th>{{'jao.common.param' | translate}}</th>
+                            <th>{{'jao.job.detail.display_name' | translate}}</th>
+                            <th>{{'common.entity.detail.description' | translate}}</th>
+                            <th op-help-info="{{'jao.job.detail.default_info' | translate}}">
+                                {{'jao.job.detail.default' | translate}}
+                            </th>
+                            <th>{{'common.entity.detail.type' | translate}}</th>
+                            <th>{{'jao.common.secret' | translate}}</th>
+                            <th class="text-right" ng-if="$ctrl.isEditMode">
+                                <!--                            <button class="btn btn-sm btn-default opx-btn-icon " title="添加参数"-->
+                                <!--                                    ng-if="$ctrl.isEditMode">-->
+                                <!--                                <i class="fa fa-plus" ng-click="$ctrl.addParam()"></i></button>-->
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="param in $ctrl.job.params track by $index">
+                            <td><input class="form-control" ng-model="param.name" required="true"></td>
+                            <td><input class="form-control" ng-model="param.label"></td>
+                            <td><input class="form-control" ng-model="param.description"></td>
+                            <td><input class="form-control" ng-model="param.defaultValue"></td>
+                            <td>
+                                <select class="form-select" ng-model="param.type"
+                                        ng-options="def.type as def.title for def in $ctrl.paramTypeList">
+                                </select>
+                            </td>
+                            <td>
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" ng-model="param.secret" id="je_secret_{{$index}}">
+                                    <label for="je_secret_{{$index}}"></label>
+                                </div>
+                            </td>
+                            <td class="text-right" ng-if="$ctrl.isEditMode">
+                                <button class="btn btn-sm btn-default opx-btn-icon "
+                                        title="{{'jao.job.delete_param' | translate}}"
+                                        ng-click="$ctrl.deleteParam(param)">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>{{'jao.job.detail.audit_and_log' | translate}}</legend>
+                <div class="form-group">
+                    <label class="control-label">{{'jao.job.detail.approve_and_review' | translate}}</label>
+                    <div class="form-control-wrapper op-combo">
+                        <div class="checkbox checkbox-secondary">
+                            <input type="checkbox" ng-model="$ctrl.job.needApprove" id="je_needApprove"
+                                   ng-disabled="!$ctrl.isEditMode || $ctrl.job.needReview">
+                            <label for="je_needApprove"
+                                   op-help-info="{{'jao.job.detail.approve_info' | translate}}">{{'jao.job.detail.approve' | translate}}</label>
+                        </div>
+                        <div class="checkbox checkbox-secondary">
+                            <input type="checkbox" ng-model="$ctrl.job.needReview" id="je_needReview"
+                                   ng-disabled="!$ctrl.isEditMode || $ctrl.job.needApprove">
+                            <label for="je_needReview"
+                                   op-help-info="{{'jao.job.detail.review_info' | translate}}">{{'jao.job.detail.review' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.job.type!='command'">
+                    <div class="form-group">
+                        <label class="control-label">{{'jao.job.detail.log' | translate}}</label>
+                        <div class="form-control-wrapper">
+                            <div class="checkbox checkbox-secondary">
+                                <input type="checkbox" ng-model="$ctrl.jobConfig.audit.enabled" id="je_auditenabled"
+                                       ng-disabled="!$ctrl.isEditMode">
+                                <label for="je_auditenabled"
+                                       op-help-info="{{'jao.job.detail.log_info' | translate}}">{{'jao.job.detail.enable_log' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="op-form-subgroup d-flex" ng-if="$ctrl.jobConfig.audit.enabled">
+                            <div class="form-control-wrapper op-combo">
+                                <label class="control-label"
+                                       op-help-info="{{'jao.job.detail.module_info' | translate}}">{{'jao.job.detail.module' | translate}}</label>
+                                <input type="text" class="form-control" ng-model="$ctrl.jobConfig.audit.module"
+                                       maxlength="50">
+                                <label class="control-label"
+                                       op-help-info="{{'jao.job.detail.action_info' | translate}}">{{'jao.job.detail.action' | translate}}</label>
+                                <input type="text" class="form-control" ng-model="$ctrl.jobConfig.audit.action"
+                                       maxlength="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'jao.job.detail.delayed' | translate}}</label>
+                    <div class="form-control-wrapper op-combo">
+                        <div class="checkbox checkbox-secondary">
+                            <input type="checkbox" ng-model="$ctrl.job.needDelayed" id="je_needDelayed"
+                                   ng-disabled="!$ctrl.isEditMode">
+                            <label for="je_needDelayed"
+                                   op-help-info="{{'jao.job.detail.delayed_info' | translate}}">{{'jao.job.detail.need_delayed' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset ng-if="$ctrl.isEditMode" uaa-has-permission="jao:edit">
+                <legend>{{'jao.job.detail.test' | translate}}</legend>
+                <div class="d-flex mb-3 align-items-center justify-content-start">
+                    <div ng-if="$ctrl.jobStatus">
+                        <button class="btn btn-default rounded-pill jao-jobrun-status-btn status-{{$ctrl.jobStatus.name}} ani-outlined"
+                                ng-click="$ctrl.viewRunResult($ctrl.runId)"
+                                style="width:8rem; font-size:1rem;">
+                            <i class="fa fa-fw text-{{$ctrl.jobStatus.color}}" ng-class="$ctrl.jobStatus.icon"></i>
+                            <span>{{$ctrl.jobStatus.title}}</span>
+                        </button>
+                    </div>
+                    <div class="ms-auto">
+                        <button class="btn btn-outline-primary" ng-click="$ctrl.runJob()" style="width:10rem;"
+                                ng-disabled="$ctrl.jobInRunning" uaa-has-permission="jao:run:*">
+                            <i class="fa fa-fw fa-chevron-right"></i>
+                            {{'jao.job.detail.run_test' | translate}}
+                        </button>
+                    </div>
+                    <!--                <i class="fa fa-spinner fa-pulse text-primary"></i>-->
+                    <!--                <i class="fa fa-check-circle text-success"></i>-->
+                    <!--                <i class="fa fa-exclamation-triangle text-danger"></i>-->
+                    <!--                <div class="ms-auto" ng-if="$ctrl.job.type=='script' && $ctrl.runResult.runId">-->
+                    <!--                    <button type="button" class="btn btn-default"-->
+                    <!--                            ng-click="$ctrl.viewRunResult($ctrl.runResult.runId)">-->
+                    <!--                        &lt;!&ndash;                        <span class="jao-jobrun {{$ctrl.jobStatus}}"></span>&ndash;&gt;-->
+                    <!--                        <i ng-class="$ctrl.jobStatus.css"></i>-->
+                    <!--                        {{$ctrl.jobStatus.title}}-->
+                    <!--                    </button>-->
+                    <!--                </div>-->
+                </div>
+                <div class="overflow-auto w-100 mt-3 mb-3 p-3 bg-secondary text-light code text-break"
+                     ng-if="$ctrl.runResult|isNotEmpty"
+                     style="white-space: pre-wrap;max-height: 20rem; overflow:auto;">{{$ctrl.runResult | json}}
+                </div>
+            </fieldset>
+            <!--            <fieldset ng-if="$ctrl.job.id && $ctrl.job.type!='command'">-->
+            <!--                <legend>API</legend>-->
+            <!--                <div class="form-group d-flex">-->
+            <!--                    <div class="me-5">-->
+            <!--                        <i class="fa fa-directions fa-3x text-muted"></i>-->
+            <!--                    </div>-->
+            <!--                    <div class="flex-fill">-->
+            <!--                        执行作业API-->
+            <!--                        <pre class="p-2 bg-light w-100" style="white-space: pre-wrap; ">{{$ctrl.apiCurl}}</pre>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </fieldset>-->
+            <!--            <div class="mt-5">-->
+            <!--                <button ng-if="$ctrl.isEditMode"-->
+            <!--                        type="button" class="btn btn-outline-danger"-->
+            <!--                        ng-click="$ctrl.deleteJob()" uaa-has-permission="jao:edit:*"><i class="fa fa-trash-alt"></i>-->
+            <!--                    删除此作业-->
+            <!--                </button>-->
+            <!--            </div>-->
+        </form>
+    </div>
+</div>

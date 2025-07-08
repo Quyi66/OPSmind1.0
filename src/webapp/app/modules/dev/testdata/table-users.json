@@ -1,0 +1,510 @@
+[
+  {
+    "id": "ff808081787937650178ca94e235001c",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff808081787937650178ca94e254001e",
+    "login": "demopriv",
+    "fullName": "demopriv",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-04-13T09:34:18Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-13T09:34:18Z",
+    "roles": [
+      {
+        "id": "ff80808178726f41017873cab1920001",
+        "name": "ROLE_PRIVUSER",
+        "visibility": "PUBLIC",
+        "description": "高权用户",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "3",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "40289f147314936f017314f09f29000f",
+    "login": "admin",
+    "fullName": "管理员",
+    "authMode": "LOCAL",
+    "department": "系统",
+    "email": "",
+    "mobile": null,
+    "telephoneNumber": "",
+    "imageUrl": "/portal/avatar/1604976533061-avatar.jpg",
+    "activated": true,
+    "langKey": "en",
+    "createdBy": "system",
+    "createdDate": "2020-07-03T16:26:09Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-02-02T06:53:52Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff808081781bb2370178488a4d89000e",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff808081781bb2370178488a4d9c0010",
+    "login": "demouser",
+    "fullName": "Demo User",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-03-19T03:32:07Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-13T09:35:21Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff80808176fa671c01771ed2fbc90005",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff80808176fa671c01771ed2fbe60007",
+    "login": "yangbin",
+    "fullName": "阳斌",
+    "authMode": "LOCAL",
+    "department": "安全室",
+    "email": "yangbin@famessoft.com",
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-01-20T08:04:39Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-19T07:04:18Z",
+    "roles": [
+      {
+        "id": "ff80808178641a1f01786d21325f0004",
+        "name": "ROLE_DEVELOPER",
+        "visibility": "PUBLIC",
+        "description": "开发人员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff808081781bb2370178488ac0650011",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff808081781bb2370178488ac0780013",
+    "login": "demodev",
+    "fullName": "Demo Developer",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-03-19T03:32:36Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-03-19T03:33:25Z",
+    "roles": [
+      {
+        "id": "ff80808178641a1f01786d21325f0004",
+        "name": "ROLE_DEVELOPER",
+        "visibility": "PUBLIC",
+        "description": "开发人员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff8080817739c15b0177be638fc80032",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff8080817739c15b0177be638fe10034",
+    "login": "chenshubin",
+    "fullName": "陈树彬",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-02-20T07:42:12Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-14T03:26:08Z",
+    "roles": [
+      {
+        "id": "ff80808178641a1f01786d21325f0004",
+        "name": "ROLE_DEVELOPER",
+        "visibility": "PUBLIC",
+        "description": "开发人员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "f7436ac0713911e9be349cb6d0115736",
+        "name": "ROLE_TENANT_ADMIN",
+        "visibility": "PRIVATE",
+        "description": "团队管理员",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff808081787937650178ce88d50e0027",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff808081787937650178ce8f21a4002c",
+    "login": "wuqiang",
+    "fullName": "伍强",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-04-14T03:59:37Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-14T03:59:37Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff8080817879376501791252882200a5",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff8080817879376501791252883600a7",
+    "login": "abcde",
+    "fullName": "abcde",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-04-27T07:54:29Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-27T07:54:29Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "2c908088759cae150175abda966a0003",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff80808176fa671c0177248ecde0000b",
+    "login": "chenrongji",
+    "fullName": "陈荣基",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2020-11-09T15:13:51Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-27T10:24:28Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff808081781bb2370178488afe050014",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff808081781bb2370178488afe290016",
+    "login": "demoadmin",
+    "fullName": "Demo Admin",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-03-19T03:32:52Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-03-19T03:32:52Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "f7436ac0713911e9be349cb6d0115736",
+        "name": "ROLE_TENANT_ADMIN",
+        "visibility": "PRIVATE",
+        "description": "团队管理员",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff8080817739c15b01776180e57d0003",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff8080817739c15b01776181ef4b0006",
+    "login": "breckin",
+    "fullName": "breckin",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-02-02T06:49:33Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-03-29T01:31:18Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "f7436ac0713911e9be349cb6d0115736",
+        "name": "ROLE_TENANT_ADMIN",
+        "visibility": "PRIVATE",
+        "description": "团队管理员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "ff80808178641a1f01786d21325f0004",
+        "name": "ROLE_DEVELOPER",
+        "visibility": "PUBLIC",
+        "description": "开发人员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "ff80808178726f41017873cab1920001",
+        "name": "ROLE_PRIVUSER",
+        "visibility": "PUBLIC",
+        "description": "高权用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "2c908088759cae150175c4d8d3f80009",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "2c908088759cae150175c4d9153c000b",
+    "login": "leo",
+    "fullName": "Leo",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2020-11-14T11:42:26Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-03-19T03:24:17Z",
+    "roles": [
+      {
+        "id": "ff80808178641a1f01786d21325f0004",
+        "name": "ROLE_DEVELOPER",
+        "visibility": "PUBLIC",
+        "description": "开发人员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff808081781bb237017833a356b00001",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff808081781bb237017833a356f20003",
+    "login": "chinasa",
+    "fullName": "ChinaSA",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-03-15T02:07:26Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-03-15T02:07:48Z",
+    "roles": [
+      {
+        "id": "ff80808178641a1f01786d21325f0004",
+        "name": "ROLE_DEVELOPER",
+        "visibility": "PUBLIC",
+        "description": "开发人员",
+        "users": null,
+        "permissions": null
+      },
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  },
+  {
+    "id": "ff80808178641a1f01786d27592a0006",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "tenantUserId": "ff80808178641a1f01786d2759480008",
+    "login": "demoauditor",
+    "fullName": "Demo Auditor",
+    "authMode": "LOCAL",
+    "department": null,
+    "email": null,
+    "mobile": null,
+    "telephoneNumber": null,
+    "imageUrl": null,
+    "activated": true,
+    "langKey": "zh-cn",
+    "createdBy": "admin",
+    "createdDate": "2021-03-26T06:09:59Z",
+    "lastModifiedBy": "admin",
+    "lastModifiedDate": "2021-04-22T06:19:26Z",
+    "roles": [
+      {
+        "id": "2",
+        "name": "ROLE_USER",
+        "visibility": "PRIVATE",
+        "description": "普通用户",
+        "users": null,
+        "permissions": null
+      }
+    ],
+    "tenantCodes": null
+  }
+]

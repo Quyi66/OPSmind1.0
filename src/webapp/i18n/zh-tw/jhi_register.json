@@ -1,0 +1,38 @@
+{
+    "jhi_register": {
+        "title": "註冊",
+        "form": {
+            "button": "註冊"
+        },
+        "messages": {
+            "validate": {
+                "login": {
+                    "required": "您的賬號是必填項.",
+                    "minlength": "您的賬號長度至少要有1個字元",
+                    "maxlength": "您的賬號長度不能超過50個字元",
+                    "pattern": "你的賬號只能使用小寫英文以及數字"
+                },
+                "fullname": {
+                    "required": "您的名字是必填項.",
+                    "minlength": "您的名字長度至少要有1個字元",
+                    "maxlength": "您的名字長度不能超過50個字元"
+                },
+                "department": {
+                    "maxlength": "部門名稱長度不能超過500個字元"
+                },
+                "mobile": {
+                    "maxlength": "手機號長度不能超過50個字元"
+                },
+                "telephoneNumber": {
+                    "maxlength": "座機號長度不能超過50個字元"
+                }
+            },
+            "success": "<strong>註冊成功!</strong> 請檢查您的郵箱.",
+            "error": {
+                "fail": "<strong>註冊失敗!</strong> 請稍後再試.",
+                "userexists": "<strong>賬號已被註冊!</strong> 請選擇其它賬號.",
+                "emailexists": "<strong>郵件已經被註冊!</strong> 請選擇其它郵件."
+            }
+        }
+    }
+}

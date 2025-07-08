@@ -1,0 +1,34 @@
+//=============================================================================
+// Font colors, background colors, themes
+// @author leoliaolei, 2020/03/30, created
+//=============================================================================
+
+// Background
+@each $theme, $color in $theme-colors {
+  //20200330: bs4 default bg-* does not handle font and link color
+  //20200331: Do NOT set forecolor globally on .bg-* because it will conflict color in elements like popover, dropdown, list-group
+  //color: color-contrast($color);
+  //a:not(.btn) {
+  //  color: color-contrast($color);
+  //}
+  .bg-#{$theme}.opx-autocolor {
+    color: rgba(color-contrast($color), 0.6);
+
+    a:not(.btn) {
+      color: rgba(color-contrast($color), 0.87);
+
+      &:hover {
+        color: color-contrast($color);
+      }
+    }
+
+    .text-muted {
+      // Use !important to override bs4 default
+      color: rgba(color-contrast($color), 0.5) !important;
+    }
+
+    a.text-muted:hover {
+      color: color-contrast($color) !important;
+    }
+  }
+}

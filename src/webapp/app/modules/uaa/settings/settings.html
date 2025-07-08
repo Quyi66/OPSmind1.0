@@ -1,0 +1,151 @@
+<div class="h-100 p-3">
+    <div class="d-flex">
+        <div style="width:10rem;" class="me-5">
+            <a ngf-select ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-change="vm.uploadAvatar($file)">
+                <img class="w-100 h-100 img-thumbnail" ng-src="{{::vm.avatarPath}}" ng-if="vm.avatarPath">
+            </a>
+        </div>
+
+        <div class="form-vertical op-smartform">
+            <div class="form-group">
+                <label class="control-label" data-translate="sys_userSettings.form.username">User
+                    Name</label>
+                <div class="form-control-wrapper">
+                    <p class="form-control-static">{{vm.settingsAccount.login}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label"
+                       data-translate="sys_userSettings.form.password">Password</label>
+                <div class="form-control-wrapper">
+                    <p class="form-control-static">
+                        ********
+                    </p>
+                    <a class="ms-3 text-primary" ng-if="vm.authMode != 'AD'" ng-click="vm.changePassword()"
+                       data-translate="sys_userSettings.form.changepwd">Change Password</a>
+                    <a class="ms-3 text-primary" ng-if="vm.authMode != 'AD'"
+                       ng-click="vm.showQRCode()">查看OTP二维码</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form name="form"  novalidate ng-submit="vm.save()" show-validation>
+        <div class="form-group">
+            <label class="control-label" for="fullName" data-translate="sys_userSettings.form.fullname">Full
+                Name</label>
+            <input type="text" class="form-control" id="fullName" name="fullName"
+                   placeholder="{{'sys_userSettings.form.fullname.placeholder' | translate}}"
+                   ng-model="vm.settingsAccount.fullName" ng-minlength=1 ng-maxlength=50 required
+                   maxlength="50">
+            <div ng-show="form.fullName.$dirty && form.fullName.$invalid">
+                <p class="help-block"
+                   ng-show="form.fullName.$error.required"
+                   data-translate="sys_userSettings.messages.validate.fullname.required">
+                    Your full name is required.
+                </p>
+                <p class="help-block"
+                   ng-show="form.fullName.$error.minlength"
+                   data-translate="sys_userSettings.messages.validate.fullname.minlength">
+                    Your full name is required to be at least 1 character.
+                </p>
+                <p class="help-block"
+                   ng-show="form.fullName.$error.maxlength"
+                   data-translate="sys_userSettings.messages.validate.fullname.maxlength">
+                    Your full name cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="department"
+                   data-translate="sys_userSettings.form.department">Department</label>
+            <input type="text" class="form-control" id="department" name="department"
+                   placeholder="{{'sys_userSettings.form.department.placeholder' | translate}}"
+                   ng-model="vm.settingsAccount.department" ng-maxlength=500 maxlength="500">
+            <div ng-show="form.department.$dirty && form.department.$invalid">
+                <p class="help-block"
+                   ng-show="form.department.$error.maxlength"
+                   data-translate="sys_userSettings.messages.validate.department.maxlength">
+                    Your department cannot be longer than 500 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="email" data-translate="global.form.email">Email</label>
+            <div class="form-control-wrapper">
+                <input type="email" class="form-control" id="email" name="email"
+                       placeholder="{{'global.form.email.placeholder' | translate}}"
+                       ng-model="vm.settingsAccount.email" ng-maxlength=100 maxlength="100">
+                <div ng-show="form.email.$dirty && form.email.$invalid">
+                    <!-- <p class="help-block"
+                       ng-show="form.email.$error.required" data-translate="global.messages.validate.email.required">
+                        Your email is required.
+                    </p>-->
+                    <p class="help-block"
+                       ng-show="form.email.$error.email"
+                       data-translate="global.messages.validate.email.invalid">
+                        Your email is invalid.
+                    </p>
+                    <p class="help-block"
+                       ng-show="form.email.$error.minlength"
+                       data-translate="global.messages.validate.email.minlength">
+                        Your email is required to be at least 5 characters.
+                    </p>
+                    <p class="help-block"
+                       ng-show="form.email.$error.maxlength"
+                       data-translate="global.messages.validate.email.maxlength">
+                        Your email cannot be longer than 100 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="mobile"
+                   data-translate="sys_userSettings.form.mobile">Mobile</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" id="mobile" name="mobile"
+                       placeholder="{{'sys_userSettings.form.mobile.placeholder' | translate}}"
+                       ng-model="vm.settingsAccount.mobile" ng-maxlength=50 maxlength="50">
+                <div ng-show="form.mobile.$dirty && form.mobile.$invalid">
+                    <p class="help-block"
+                       ng-show="form.mobile.$error.maxlength"
+                       data-translate="sys_userSettings.messages.validate.mobile.maxlength">
+                        Your mobile cannot be longer than 50 characters.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--            <div class="form-group">-->
+        <!--                <label class="control-label" for="telephoneNumber"-->
+        <!--                       data-translate="sys_userSettings.form.telephoneNumber">TelephoneNumber</label>-->
+        <!--                <div class="form-control-wrapper">-->
+        <!--                    <input type="text" class="form-control" id="telephoneNumber" name="telephoneNumber"-->
+        <!--                           placeholder="{{'sys_userSettings.form.telephoneNumber.placeholder' | translate}}"-->
+        <!--                           ng-model="vm.settingsAccount.telephoneNumber" ng-maxlength=50 maxlength="50">-->
+        <!--                    <div ng-show="form.telephoneNumber.$dirty && form.telephoneNumber.$invalid">-->
+        <!--                        <p class="help-block"-->
+        <!--                           ng-show="form.telephoneNumber.$error.maxlength"-->
+        <!--                           data-translate="sys_userSettings.messages.validate.telephoneNumber.maxlength">-->
+        <!--                            Your telephoneNumber cannot be longer than 500 characters.-->
+        <!--                        </p>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <div class="form-group">
+            <label class="control-label" for="langKey" data-translate="sys_userSettings.form.language">Language</label>
+            <div class="form-control-wrapper">
+                <select id="langKey" name="langKey" class="form-select"
+                        ng-model="vm.settingsAccount.langKey"
+                        ng-controller="LangSwitchController as languageVm"
+                        ng-options="code as (code | findLanguageFromKey) for code in languageVm.languages"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary opx-btn-ok"
+                    data-translate="sys_userSettings.form.button">Save
+            </button>
+        </div>
+    </form>
+</div>

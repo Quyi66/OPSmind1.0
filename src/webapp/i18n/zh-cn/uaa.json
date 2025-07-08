@@ -1,0 +1,15 @@
+{
+  "uaa": {
+    "user": {
+      "double_review": "双人复核",
+      "action": "复核人输入密码后执行",
+      "account_password_review": "账号密码复核",
+      "message_otp": "复核人输入一次性密码后执行。OTP二维码位于账号管理--查看OTP二维码",
+      "otp_review": "OTP复核",
+      "reviewer": "复核人",
+      "password": "密码",
+      "wrong_password": "密码错误",
+      "message_wrong_password": "请确认您的密码再试。"
+    }
+  }
+}

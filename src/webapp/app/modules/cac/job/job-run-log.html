@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        {{'cac.job.detail.status' | translate}}
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="cacJobRunLogVm.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <jao-job-result-view run-id="cacJobRunLogVm.runId"></jao-job-result-view>
+<!--    <p class="mb-3">作业ID :<span class="badge bg-secondary ms-5">{{cacJobRunLogVm.views.job.taskId || '无法获取'}}</span></p>-->
+
+<!--    <div class="op-blank-slate" ng-show="!cacJobRunLogVm.views.isResult">-->
+<!--        <div class="op-blank-slate-icon"><i class="fa fa-inbox fa-4x"></i></div>-->
+<!--        <p>无日志</p>-->
+<!--    </div>-->
+<!--    <jao-ansible-output contents="cacJobRunLogVm.views.job.jsonResult" ng-if="cacJobRunLogVm.views.isResult" style="display: block;height: 450px;"></jao-ansible-output>-->
+<!--    &lt;!&ndash;<pre class="cac-job-result-pre" ng-if="!cacJobRunLogVm.views.isResult">{{cacJobRunLogVm.views.isResult}}</pre>&ndash;&gt;-->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default opx-btn-cancel" data-dismiss="modal" ng-click="cacJobRunLogVm.cancel()">{{'common.entity.action.close' | translate}}</button>
+</div>
+
+

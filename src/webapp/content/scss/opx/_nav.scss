@@ -1,0 +1,314 @@
+// Compatibility with bs3 ui-bootstrap tabs. Its active is placed on `nav-item`
+.nav-tabs > .uib-tab.nav-item {
+  &.active .nav-link {
+    color: $nav-tabs-link-active-color;
+    background-color: $nav-tabs-link-active-bg;
+    border-color: $nav-tabs-link-active-border-color;
+  }
+}
+
+
+.nav {
+  margin-bottom: 0;
+  padding-left: 0; // Override default ul/ol
+  list-style: none;
+  // &:extend(.clearfix all);
+
+  > li {
+    position: relative;
+    display: block;
+
+    > a {
+      position: relative;
+      display: block;
+      padding: $nav-link-padding-y $nav-link-padding-x;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background-color: $nav-link-hover-bg;
+      }
+    }
+
+    // Disabled state sets text to gray and nukes hover/tab effects
+  //   &.disabled > a {
+  //     color: @nav-disabled-link-color;
+
+  //     &:hover,
+  //     &:focus {
+  //       color: @nav-disabled-link-hover-color;
+  //       text-decoration: none;
+  //       background-color: transparent;
+  //       cursor: @cursor-disabled;
+  //     }
+  //   }
+  }
+
+  // Open dropdowns
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      background-color: $nav-link-hover-bg;
+      border-color: $link-color;
+    }
+  }
+
+  // Nav dividers (deprecated with v3.0.1)
+  //
+  // This should have been removed in v3 with the dropping of `.nav-list`, but
+  // we missed it. We don't currently support this anywhere, but in the interest
+  // of maintaining backward compatibility in case you use it, it's deprecated.
+  // .nav-divider {
+  //   .nav-divider();
+  // }
+
+  // Prevent IE8 from misplacing imgs
+  //
+  // See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
+  > li > a > img {
+    max-width: none;
+  }
+}
+
+.nav-pills {
+  > li {
+    float: left;
+
+    // Links rendered as pills
+    > a {
+      border-radius: $nav-pills-border-radius;
+    }
+    + li {
+      margin-left: 2px;
+    }
+
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $nav-pills-link-active-color;
+        background-color: $nav-pills-link-active-bg;
+      }
+    }
+  }
+}
+
+// Do not wrap text on nav
+.nav {
+  > li > a {
+    white-space: nowrap;
+  }
+}
+
+// Used with ui-bootstrap
+.modal-body > .tab-container {
+  padding: 0;
+}
+
+.tab-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  //margin-bottom: 15px;
+  &.op-content-no-padding {
+    .tab-content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  .tab-content {
+    padding: .5rem;
+    //20200905: background-color will prevent .opx-overflow-shadow in widget config modal body
+    //background-color: #fff;
+    border-top-width: 0;
+    border-radius: 0 0 $card-border-radius $card-border-radius;
+    flex: 1 1 0%;
+
+    .tab-pane {
+      height: 100%;
+      //overflow-y:auto;
+      //display: flex;
+      //flex-direction: column;
+      //align-items: start;
+    }
+  }
+
+  //20200829: when tabset within modal, let tab content y scroll.
+  &.op-tab-pane-scroll {
+    .tab-content {
+      overflow-y: auto;
+    }
+
+    .tab-pane {
+      overflow-y: auto;
+    }
+  }
+}
+
+//------------- Not reviewed
+
+.nav-pills > li > a {
+  padding: 8px 16px;
+  border-radius: 2px;
+}
+
+.nav.op-nav-pills-underline {
+  > li > a {
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  > li.active > a {
+    border-color: $primary;
+  }
+}
+
+$_mdc_underline_size: 3px;
+// Tab in material design
+.nav-mdc-op {
+  //box-shadow: 0 4px 4px -2px rgba(128, 128, 128, 0.25);
+  border-bottom: $_mdc_underline_size solid rgba(128, 128, 128, 0.2);
+
+  &.nav-justified {
+    border-bottom: 0;
+
+    > li {
+      border-bottom: $_mdc_underline_size solid rgba(128, 128, 128, 0.2);
+    }
+  }
+
+  > li {
+    float: left;
+    // Active state
+    &.active > a, > a.active {
+      border-bottom: $_mdc_underline_size solid $primary;
+      margin-bottom: -$_mdc_underline_size;
+      //border-bottom-color: $nav-pills-active-link-hover-bg;
+      &,
+      &:hover,
+      &:focus {
+        color: $primary;
+      }
+    }
+
+    > a {
+      // Height is 40px;
+      line-height: 1.25rem;
+      padding: ($op-navbar-height - 1.25rem )/2 1rem;
+      //border-bottom: 2px solid transparent;
+      font-weight: bold;
+    }
+  }
+
+  &.nav-justified {
+    @extend .nav-justified;
+    //@extend .nav-tabs-justified;
+  }
+}
+
+//
+// Responsive Tabs
+//
+
+$tabs-dropdown-toggle-width: 102px;
+// <div.rt-tabs-container>
+//   <div.rt-tabs-wrapper>
+//      <ul.rt-tabs.nav>
+//   <div.rt-tabs-dropdown>
+//      <a.dropdown-toggle>
+//      <ul.dropdown-menu>
+.rt-tabs-container {
+  position: relative;
+  display: flex;
+  //overflow: hidden;
+  .invisible {
+    display: none;
+  }
+
+  .rt-tabs-wrapper {
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    .invisible {
+      display: none;
+    }
+  }
+
+  .rt-tabs-dropdown {
+    display: none;
+  }
+
+  &.rt-has-more {
+    .rt-tabs-dropdown {
+      display: block;
+    }
+  }
+
+  .rt-tabs.nav {
+    display: flex;
+  }
+
+  .rt-tabs-dropdown {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .dropdown-menu {
+      max-height: 320px;
+      margin-top: -8px;
+      overflow-y: scroll;
+    }
+
+    @media only screen and (max-width: 767px) {
+      .dropdown-menu {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+        padding-top: 50px;
+        //overflow: hidden;
+        overflow-y: scroll;
+
+        .dropdown-header {
+          position: fixed;
+          left: 21px;
+          right: 21px;
+          background: #FFF;
+          margin-top: -50px;
+          padding-top: 18px;
+          border-radius: 4px 4px 0 0;
+        }
+
+        .close {
+          position: absolute;
+          top: 14px;
+          right: 20px;
+        }
+
+        .divider {
+          margin: 0;
+        }
+      }
+    }
+
+    .dropdown-toggle {
+      width: 24px;
+      text-align: right;
+      position: relative;
+      display: block;
+      padding: 10px 0;
+
+      .count {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+

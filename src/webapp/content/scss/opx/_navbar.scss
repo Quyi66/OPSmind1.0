@@ -1,0 +1,80 @@
+.navbar {
+  // No need vertical padding because elements are center aligned.
+  padding: 0 $spacer;
+  height: $op-navbar-height;
+  min-height: $op-navbar-height;
+
+  &.navbar-light {
+    background-color: $gray-100;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .op-nav-divider {
+    border-left: 1px solid rgba(128, 128, 128, 0.5);
+    height: 1.5rem;
+    display: block;
+    //background-color: #000;
+  }
+
+  .nav-link {
+    > .fa {
+      font-size: 1rem;
+    }
+  }
+
+  .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    height: $op-navbar-height;
+  }
+
+  .navbar-nav, .form-inline {
+    > :not(:first-child) {
+      margin-left: 0.25rem;
+    }
+  }
+}
+
+.opx-navbar-title {
+  .opx-sidebar-header &,
+  .navbar & {
+    font-size: 115%;
+    font-weight: bold;
+    color: rgba(0, 0, 0, .75);
+    word-break: keep-all;
+  }
+}
+
+// LEO@20211212: For segmented navbar
+.op-navbar-transparent {
+  background-color: rgba(0, 0, 0, 0.5);
+  //background: linear-gradient(180deg, rgba(0, 0, 0, 0.725) 0%, rgba(0, 0, 0, 0.5) 100%);
+
+  .btn.btn-default {
+    color: $gray-500;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .navbar-nav {
+    //background-color: $dark;
+    color: $gray-500;
+
+    .nav-item.active > {
+      .nav-link, .nav-link:hover {
+        color: lighten($primary, 20%);
+      }
+    }
+
+    .nav-link {
+      //padding-top: 0;
+      color: $gray-500;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+}

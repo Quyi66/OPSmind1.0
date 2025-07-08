@@ -1,0 +1,23 @@
+.uwtype-button {
+  .btn {
+    // 20200425: make button fill the content
+    width: 100%;
+    height: 100%;
+  }
+}
+@for $i from 1 through 5 {
+ .btn.opx-btn-size-#{$i} {
+    i {
+      font-size: ($i)+em;
+    }
+  }
+}
+
+
+.btn.icon-top {
+  i {
+    display: block;
+    margin-bottom: 0.2em;
+  }
+}
+

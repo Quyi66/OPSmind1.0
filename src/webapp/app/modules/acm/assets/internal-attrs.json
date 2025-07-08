@@ -1,0 +1,116 @@
+[
+  {
+    "type": "group",
+    "title": "内置分组"
+  },
+  {
+    "code": "IP",
+    "type": null,
+    "input": {
+      "control": "input"
+    },
+    "title": "纳管IP",
+    "unique": true,
+    "display": {},
+    "editable": false,
+    "internal": true,
+    "required": true
+  },
+  {
+    "code": "CONN_LATEST_STATUS",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "连通状态",
+    "unique": false,
+    "display": {
+      "converter": "js:function f() {\n    var status = ${CONN_LATEST_STATUS};\n    var color, icon;\n    if (typeof(status) != 'undefined' && status != null) {\n      status = status.toString();\n      if (status === '0') {\n          color = 'danger';\n          icon = 'fa fa-times-circle';\n      } else if (status === '1') {\n          color = 'success';\n          icon = 'fa fa-check-circle';\n      } else {\n          color = 'warning';\n          icon = 'fa fa-question-circle';\n      }\n    } else {\n          color = 'warning';\n          icon = 'fa fa-question-circle';\n      }\n    \n    return '<span class=\"text-' + color + '\"><i class=\"' + icon + '\"></i></span>';\n}"
+    },
+    "editable": false,
+    "internal": true,
+    "required": false
+  },
+  {
+    "code": "CONN_RATE",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "连通率",
+    "unique": false,
+    "display": {
+      "converter": "js:function f (){\n    var CONN_RATE=${CONN_RATE};\n    if (!CONN_RATE){\n      text='未测试';\n      css = 'secondary';\n      style='fa-times';\n    } else if (CONN_RATE>=50){\n      text= CONN_RATE +'%';\n      css = 'primary';\n      style='fa-check';\n    } else if (CONN_RATE>=0){\n      text= CONN_RATE  +'%';\n      css = 'warning';\n      style='fa-times';\n    } else {\n      text='未测试';\n      css = 'secondary';\n      style='fa-times';\n    }\n    return '<span class=\"text-'+css+'\">'+text+'</span>';\n  }"
+    },
+    "editable": false,
+    "internal": true,
+    "required": false
+  },
+  {
+    "code": "ANSIBLE_USER",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "Ansible登录用户",
+    "unique": false,
+    "editable": false,
+    "internal": true,
+    "required": false
+  },
+  {
+    "code": "ANSIBLE_SSH_PASS",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "Ansible登录用户密码",
+    "unique": false,
+    "editable": false,
+    "internal": true,
+    "required": false
+  },
+  {
+    "code": "ANSIBLE_BECOME_USER",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "Ansible执行用户",
+    "unique": false,
+    "editable": false,
+    "internal": true,
+    "required": false
+  },
+  {
+    "code": "ANSIBLE_BECOME_PASS",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "Ansible执行用户密码",
+    "unique": false,
+    "editable": false,
+    "internal": true,
+    "required": false
+  },
+  {
+    "code": "INSTANCE_GROUP",
+    "type": null,
+    "input": {
+      "control": "hidden",
+      "datatype": "string"
+    },
+    "title": "Ansible执行节点",
+    "unique": false,
+    "editable": false,
+    "internal": true,
+    "required": false
+  }
+]

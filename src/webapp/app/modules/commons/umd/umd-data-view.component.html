@@ -1,0 +1,46 @@
+<div ng-if="$ctrl.error">
+    <div class="alert alert-danger">{{$ctrl.error}}</div>
+</div>
+<div ng-if="!$ctrl.error" class="h-100">
+    <div ng-if="['detail','editor'].indexOf($ctrl.viewType)>-1" class="h-100">
+        <uib-tabset class="tab-container h-100 scroll-y op-tab-pane-scroll" type="mdc-op">
+            <uib-tab ng-repeat="ga in $ctrl.groupedAttrs track by $index">
+                <uib-tab-heading>{{ga.group}}</uib-tab-heading>
+                <div class="p-3 form op-smartform op-bold-label" ng-class="$ctrl.options.editMode?'form-vertical':'form-horizontal'">
+                    <div class="form-group" ng-repeat="attr in ga.attrs track by $index"
+                         ng-show="attr.input.control!=='hidden'">
+                        <label class="control-label">
+                            <span class="text-danger" ng-if="attr.required"> * </span>
+                            {{attr.title || attr.code}}
+                        </label>
+                        <div class="form-control-wrapper">
+                            <udp-input ng-if="$ctrl.options.editMode"
+                                       ng-model="$ctrl.viewData[attr.code]"
+                                       the-config="attr.input"
+                                       $controlonly="true"></udp-input>
+                            <span ng-if="!$ctrl.options.editMode"
+                                  ng-bind-html="$ctrl.viewData[attr.code]" class="py-2"></span>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab ng-if="$ctrl.viewType==='detail' && $ctrl.operations|isNotEmpty">
+                <uib-tab-heading>Operations</uib-tab-heading>
+                <div class="p-3 d-flex flex-row align-items-start" style="gap:1rem;">
+                    <div ng-repeat="operation in $ctrl.operations track by $index">
+                        <button class="btn btn-default opx-icon-card" ng-click="$ctrl.clickOperation(operation,$event)">
+                            <i class="far {{operation.icon}}"></i>
+                            <span>{{operation.title}}</span>
+                        </button>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div ng-if="$ctrl.viewType==='list'">
+        <opx-datatable table-config="$ctrl.tableConfig"></opx-datatable>
+    </div>
+    <div ng-if="$ctrl.viewType==='selector'">
+        <opx-datatable table-config="$ctrl.tableConfig"></opx-datatable>
+    </div>
+</div>

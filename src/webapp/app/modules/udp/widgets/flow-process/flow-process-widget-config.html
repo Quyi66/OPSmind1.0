@@ -1,0 +1,110 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+
+        <div class="form-group">
+            <label class="control-label">{{'udp.page.attrs.view' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select op-select
+                        class="w-50"
+                        ng-model="uwProps.mode"
+                        ng-options="item.code as item.label for item in modeArr"
+                        >
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="uwProps.mode === 'design'">
+            <label class="control-label">{{'common.table.type' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select op-select
+                        class="w-50"
+                        ng-model="uwProps.design.designType"
+                        ng-options="item.code as item.label for item in designType"
+                        >
+                        <option></option>
+                </select>
+            </div>
+        </div>
+
+        <flow-process-selector 
+                ng-if="uwProps.design.designType !== 'add'"
+                the-model="uwProps.processId" 
+                selected-process="uwProps.selectedProcess"></flow-process-selector>
+
+        <div class="form-group" ng-if="uwProps.mode === 'result' || uwProps.mode === 'detail'">
+            <label class="control-label">{{'udp.uinput.attrs.binding' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control op-w-sm" ng-model="uwProps[uwProps.mode].pageParamName">
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="uwProps.mode === 'result' || uwProps.mode === 'detail'">
+            <label class="control-label">{{'udp.w.param.config.eventtorefresh' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control op-w-sm" ng-model="uwProps[uwProps.mode].pageEvent">
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="uwProps.mode === 'result'">
+            <label class="control-label">{{'gfs.selector.operation_mode' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="opx-check-group">
+                    <input type="radio" ng-model="uwProps.result.viewMode" value="fixed" id="js_fwc_viewmode_1">
+                    <label for="js_fwc_viewmode_1">{{'udp.designer.actions.pin_widget' | translate}}</label>
+                    <input type="radio" ng-model="uwProps.result.viewMode" value="drawer" id="js_fwc_viewmode_2">
+                    <label for="js_fwc_viewmode_2">{{'udp.w.flow.process.viewmode.drawer' | translate}}</label>
+                    <input type="radio" ng-model="uwProps.result.viewMode" value="hidden" id="js_fwc_viewmode_3">
+                    <label for="js_fwc_viewmode_3">{{'udp.uinput.control.hidden' | translate}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="uwProps.mode === 'result'">
+            <label class="control-label">{{'app_vcm.entity.refresh_interval' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" min="1" max="60" class="form-control op-w-sm" ng-model="uwProps[uwProps.mode].refreshInterval">
+            </div>
+        </div>
+        <!-- <udp-params-control-config the-model="uwProps.wparams" options="{labelByDefault:true}"
+                                   params-config="selectedProcess.$paramsConfig"></udp-params-control-config> -->
+    </uib-tab>
+
+    <uib-tab ng-if="uwProps.mode === 'detail' || uwProps.mode === 'run'">
+        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}</uib-tab-heading>
+        <!-- <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param',enableAutoActive:true}"
+                                       param-vars="mapValue">
+        </udp-widget-config-interaction> -->
+
+        <fieldset ng-if="uwProps.mode === 'detail'">
+            <legend>{{'jao.common.run' | translate}}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>
+            <udp-page-link-config class="d-block" props="uwProps.detail.runBtn"></udp-page-link-config>
+        </fieldset>
+
+        <fieldset ng-if="uwProps.mode === 'detail'">
+            <legend>{{'flow.process.design' | translate}}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>
+            <udp-page-link-config class="d-block" props="uwProps.detail.designBtn"></udp-page-link-config>
+        </fieldset>
+
+        <fieldset ng-if="uwProps.mode === 'run'">
+            <legend>{{'udp.w.flow.process.run-landing' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>
+            <udp-page-link-config class="d-block" props="uwProps.run.runLanding"></udp-page-link-config>
+        </fieldset>
+    </uib-tab>
+
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'common.term.tag' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'jao.log.props_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

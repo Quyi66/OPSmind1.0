@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label class="control-label col-sm-2">图形色调</label>
+    <div class="col-sm-4" ng-init="">
+        <select class="form-select" ng-model="$ctrl.props.palette"
+                ng-options="id as p.title for (id,p) in $ctrl.palettes">
+        </select>
+    </div>
+    <div class="col-sm-6">
+                <span ng-repeat="color in $ctrl.palettes[$ctrl.props.palette].colors"
+                      style="background-color:{{color}};margin-right:4px;width:24px;height:24px;display:inline-block;">&nbsp;</span>
+    </div>
+</div>
+
+
+
+
+
+

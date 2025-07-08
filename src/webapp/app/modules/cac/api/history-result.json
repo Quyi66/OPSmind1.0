@@ -1,0 +1,37 @@
+{
+  "totalRecords": 4,
+  "aaData":[
+    {
+      "id": 1,
+      "hostName": "localhost",
+      "jobId": 1,
+      "ruleExpression": "cup>=80",
+      "endedAt": "2018-01-08T06:53:58.822Z",
+      "auditResult": "true"
+    },
+    {
+      "id": 2,
+      "hostName": "127.0.0.1",
+      "jobId": 2,
+      "ruleExpression": "cup>=81",
+      "endedAt": "2018-02-08T06:53:58.822Z",
+      "auditResult": "true"
+    },
+    {
+      "id": 3,
+      "hostName": "10.0.20.1",
+      "jobId": 3,
+      "ruleExpression": "cup>=82",
+      "endedAt": "2018-03-08T06:53:58.822Z",
+      "auditResult": "false"
+    },
+    {
+      "id": 4,
+      "hostName": "10.2.20.1",
+      "jobId": 4,
+      "ruleExpression": "cup>=83",
+      "endedAt": "2018-04-08T06:53:58.822Z",
+      "auditResult": "true"
+    }
+  ]
+}

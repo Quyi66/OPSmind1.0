@@ -1,0 +1,23 @@
+<style>
+    #strengthBar {
+        padding-left: 0px;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title"> OTP 二维码</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ng-click="qrcodeVm.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body m-auto">
+    <img class=""  ng-src="{{::qrcodeVm.qrcodeUrl}}" ng-if="qrcodeVm.qrcodeStatus === 'existed'">
+    <a class="m-l-md text-info " ng-click="qrcodeVm.generateQRCode()"
+        ng-if="qrcodeVm.qrcodeStatus === 'unexisted'">二维码不存在，点击重新生成</a>
+    <div op-loading="{style:'spinner'}" ng-if="qrcodeVm.qrcodeStatus === 'generating'"></div>
+</div>
+<div class="modal-body m-auto">
+    <button type="submit" ng-if="qrcodeVm.qrcodeStatus === 'existed'" class="btn btn-primary opx-btn-cancel"
+            data-translate="sys_userSettings.form.aginotp" ng-click="qrcodeVm.generateQRCode()">重新生成OTP二维码
+    </button>
+</div>
+<div class="modal-footer">
+
+</div>

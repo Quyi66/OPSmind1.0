@@ -1,0 +1,124 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <!--<label class="control-label" op-help-info="名称可以为空，如果别的控件需要关联此控件的数据，就需要设置一个整个页面唯一的名称">名称</label>-->
+            <!--<div class="col-sm-10 col-md-4">-->
+            <!--<input class="form-control" ng-model="uwProps.name" id="f_name">-->
+            <!--</div>-->
+            <label class="control-label" for="f_label">{{'udp.w.daterange.attrs.label' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="input-group">
+                    <span class="input-group-text"><input type="checkbox" ng-model="uwProps.showlabel"></span>
+                    <input class="form-control" ng-model="uwProps.label" id="f_label"
+                           ng-disabled="!uwProps.showlabel">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.daterange.attrs.begin_param' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control" ng-model="uwProps.nameofstart" id="f_nameofstart">
+            </div>
+            <label class="control-label">{{'udp.w.daterange.attrs.begin_initval' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="uwProps.initvalofstart" options="{kinds:'js'}"></udp-data-converter>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.daterange.attrs.end_param' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control" ng-model="uwProps.nameofend" id="f_nameofend">
+            </div>
+            <label class="control-label">{{'udp.w.daterange.attrs.end_initval' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="uwProps.initvalofend" options="{kinds:'js'}"></udp-data-converter>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.daterange.attrs.date_format' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="uwProps.formatter">
+                    <option value="YYYY-MM-DD">{{'udp.w.daterange.attrs.date_format_1' | translate}}</option>
+                    <option value="YYYY/MM/DD">{{'udp.w.daterange.attrs.date_format_2' | translate}}</option>
+                    <option value="YYYY-MM-DD HH:mm:ss">{{'udp.w.daterange.attrs.date_format_3' | translate}}</option>
+                    <option value="YYYY/MM/DD HH:mm:ss">{{'udp.w.daterange.attrs.date_format_4' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label"
+                   op-help-info="{{'udp.w.daterange.attrs.datatype_desc'|translate}}">{{'common.term.datatype' | translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <select class="form-select op-w-sm" ng-model="uwProps.format">
+                    <option value="string">{{'common.datatype.string' | translate}}</option>
+                    <option value="date">{{'common.datatype.date' | translate}}</option>
+                    <!--                    <option value="custom">{{'common.datatype.string'|translate}}</option>-->
+                </select>
+                <div>
+                    <udp-data-converter the-model="uwProps.converter" options="{kinds:'js'}" class="xop-w-full"
+                                        ng-if="uwProps.format==='custom'"></udp-data-converter>
+                </div>
+            </div>
+        </div>
+        <div ng-if="uwProps.source==='func' && uwProps.control==='select'" class="form-group">
+            <label class="control-label">{{'udp.w.daterange.attrs.sourcedef' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="uwProps.sourcedef"
+                                    options="{kinds:'js,yaml',varTypes:'pageparam'}"></udp-data-converter>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_datelimit"
+                   op-help-info="{{'udp.w.daterange.attrs.date_range_desc'|translate}}">{{'udp.w.daterange.attrs.date_range' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="input-group" style="width:15em;">
+                    <div class="input-group-text">
+                        <input type="checkbox" ng-model="uwProps.datelimit.enabled"></div>
+                    <input type="number" class="form-control" ng-model="uwProps.datelimit.maxspan" id="f_datelimit"
+                           ng-disabled="!uwProps.datelimit.enabled">
+                    <button type="button" class="btn btn-outline-default dropdown-toggle"
+                            data-bs-toggle="dropdown">
+                        {{uwProps.datelimit.maxunit || '&nbsp;'}}</button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" ng-repeat="unit in ::units track by $index"
+                           ng-click="uwProps.datelimit.maxunit=unit.key;">{{unit.label}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.daterange.attrs.width' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" ng-model="uwProps.width" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'common.term.style' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" id="dwc_readonly"
+                           ng-model="uwProps.readonly"><label
+                        for="dwc_readonly">{{'udp.w.daterange.attrs.readonly' | translate}}</label>
+                </div>
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" id="dwc_slider"
+                           ng-model="uwProps.display.style"><label
+                        for="dwc_slider">{{'udp.w.daterange.attrs.slider' | translate}}</label>
+                </div>
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" id="dwc_ranges"
+                           ng-model="uwProps.ranges"><label
+                        for="dwc_ranges">{{'udp.w.daterange.attrs.show_predefined' | translate}}</label>
+                </div>
+
+            </div>
+        </div>
+    </uib-tab>
+
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,30 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label" for="f_interval">{{'udp.w.clock.config.interval'|translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" class="form-control" ng-model="uwProps.interval" id="f_interval">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_event">{{'udp.w.clock.config.event' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control w-md" ng-model="uwProps.event" id="f_event">
+                <p class="help-block">{{'udp.w.clock.config.event_desc' | translate}}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_initstate">{{'udp.w.clock.config.init_state' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" id="f_initstate" ng-model="uwProps.autoStart"><label
+                        for="f_initstate">{{'udp.w.clock.config.auto_start' | translate}}</label>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

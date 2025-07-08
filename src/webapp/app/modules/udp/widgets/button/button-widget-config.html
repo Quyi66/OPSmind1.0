@@ -1,0 +1,32 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>
+        <udp-button-style-config ng-model="uwProps.display"></udp-button-style-config>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param,job,ajax,link,event,func,code'}"
+                                       param-vars="">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">#{udp.w.button.icon_size}</label>
+                <div class="form-control-wrapper">
+                    <input type="range" class="form-control-range w-25" min="1" max="5" step="1" ng-model="uwProps.display.iconSize">
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access'|translate}}</uib-tab-heading>
+        <udp-widget-access-config the-model="uwProps.accesscontrol"></udp-widget-access-config>
+        <udp-button-state-config the-model="uwProps.statecontrol"></udp-button-state-config>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

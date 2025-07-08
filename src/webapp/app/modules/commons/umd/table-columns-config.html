@@ -1,0 +1,248 @@
+<div>
+    <ul ng-sortable class="list list-unstyled list-inline">
+        <!-- It seems adding class to li will make ui-sortable unstable -->
+        <li class="mb-1" ng-repeat="field in uwProps.fields track by $index">
+                    <span class="badge op-text-normal p-3"
+                          ng-class="{'badge-dark':current.index === $index,'badge-secondary':current.index!==$index,'badge-light opx-font-strikethrough':field.hidden}">
+<!--                        <i class="fa fa-ban" ng-if="field.hidden"></i>-->
+                        <i class="far fa-exchange"
+                           xxstyle="font-size:8px;margin-top:-4px;vertical-align: middle;"
+                           ng-if="!field.dynamic && field.convertFn" title="{{'common.table.config.data_converted' | translate}}"></i>
+                        <i class="far fa-ellipsis-h"
+                           xxstyle="font-size:8px;margin-top:-4px;vertical-align: middle;"
+                           ng-if="field.dynamic" title="{{'common.table.config.dynamic_column' | translate}}"></i>
+                        <a ng-click="current.index=$index"
+                           ng-bind-html="field.dynamic?('common.table.config.dynamic_column' | translate):(field.label || field.field || '&nbsp;&nbsp;&nbsp;')"></a>
+                        <a ng-click="removeField($index)"></a>
+                    </span></li>
+    </ul>
+</div>
+<fieldset ng-if="current.index>=0" class="p-2">
+    <div class="form-group">
+        <label class="control-label">{{'common.noun.tag' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input class="form-control op-w-sm" ng-model="uwProps.fields[current.index].label">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'common.table.config.list_set' | translate}}</label>
+        <div class="form-control-wrapper op-combo flex-wrap">
+            <div class="checkbox checkbox-inline ms-3">
+                <!--<input type="checkbox"-->
+                <!--ng-model="uwProps.fields[current.index].hidden"><label>隐藏此列</label>-->
+                <input type="checkbox" id="dwc_hide" ng-model="uwProps.fields[current.index].hidden"><label
+                    for="dwc_hide">{{'common.table.config.hide_list' | translate}}</label>
+            </div>
+            <div class="checkbox checkbox-inline ms-3">
+                <input type="checkbox" id="dwc_mcheck"
+                       ng-model="uwProps.fields[current.index].mcheck"><label
+                    for="dwc_mcheck">{{'common.table.config.checkbox' | translate}}</label>
+            </div>
+            <div class="checkbox checkbox-inline ms-3">
+                <input type="checkbox" id="dwc_dynamic"
+                       ng-model="uwProps.fields[current.index].dynamic"><label
+                    for="dwc_dynamic" op-help-info="{{'common.table.config.message_list' | translate}}">{{'common.table.config.data_converted' | translate}}</label>
+            </div>
+            <div class="checkbox checkbox-inline ms-3">
+                <input type="checkbox" id="dwc_isrestricted"
+                       ng-model="uwProps.fields[current.index].isrestricted"><label
+                    for="dwc_isrestricted" op-help-info="{{'common.table.config.message_secrecy' | translate}}">{{'common.table.config.secrecy_msg' | translate}}</label>
+            </div>
+            <div class="checkbox checkbox-inline ms-3"
+                 ng-if="!uwProps.dataset._type && uwProps.dataset.serverPage">
+                <input type="checkbox" id="dwc_sortable"
+                       ng-model="uwProps.fields[current.index].orderable"><label
+                    for="dwc_sortable" op-help-info="{{'common.table.config.message_sort' | translate}}">{{'common.table.config.can_sort' | translate}}</label>
+            </div>
+            <div class="checkbox checkbox-inline ms-3"
+                 ng-if="!uwProps.dataset._type && uwProps.dataset.serverPage">
+                <input type="checkbox" id="dwc_searchable"
+                       ng-model="uwProps.fields[current.index].searchable"><label
+                    for="dwc_searchable" op-help-info="{{'common.table.config.message_search' | translate}}">{{'common.table.config.can_search' | translate}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-if="uwProps.fields[current.index].dynamic">
+        <label class="control-label" op-help-info="{{'common.table.config.message_list_properties' | translate}}
+                <ul class='list-unstyled'>
+                <li><code>field</code>：{{'common.table.config.column_name' | translate}}</li>
+                <li><code>label</code>：{{'common.table.config.list_name' | translate}}</li>
+                <li><code>show</code>：{{'common.table.config.whether_to_show' | translate}}</li>
+                <li><code>hide</code>：{{'common.table.config.whether_to_hide' | translate}}</li>
+                <li><code>searchable</code>：{{'common.table.config.allow_search' | translate}}</li>
+                <li><code>orderable</code>：{{'common.table.config.allow_sorting' | translate}}</li>
+                <li><code>css</code>：{{'common.table.config.css_style' | translate}}</li></ul>
+                {{'common.table.config.fill_in_list' | translate}}">{{'common.table.config.dynamic_column_definition' | translate}}</label>
+        <div class="form-control-wrapper">
+            <udp-data-converter the-model="uwProps.fields[current.index].dynamicDef"
+                                options="{kinds:'js,yaml'}" class="op-w-full"></udp-data-converter>
+        </div>
+    </div>
+    <div ng-if="!uwProps.fields[current.index].dynamic">
+        <div class="form-group">
+            <label class="control-label" op-help-info="{{'common.table.config.message_column' | translate}}">{{'common.table.config.data' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-dsfield-selector the-model="uwProps.fields[current.index].field" fields="selectedDs.fields"
+                                      options="{disableConverter:true}"></udp-dsfield-selector>
+                <div class="btn-group">
+                    <button type="button" class="btn ms-3"
+                            ng-class="showDataConverter[current.index]?'btn-secondary':'btn-outline-default'"
+                            ng-click="showDataConverter[current.index]=!showDataConverter[current.index]">
+                        {{'common.umd_config.data_conversion' | translate}}
+                    </button>
+                    <button type="button"
+                            ng-click="previewFieldsData(uwProps.fields,selectedDs.sampleRecord)" title="{{'common.table.config.data_preview' | translate}}"
+                            class="btn btn-outline-default"><i class="fa fa-grip-horizontal"></i>
+                    </button>
+                </div>
+
+                <div ng-if="showDataConverter[current.index]" class="op-form-subgroup mb-3 mt-3 w-100">
+                    <div class="form-group">
+                        <label class="control-label" ng-if="!uwProps.fields[current.index].mcheck"><span
+                                op-help-info="{{'common.table.config.message_data' | translate}}">{{'common.umd_config.show_data' | translate}}</span></label>
+                        <label class="control-label" ng-if="uwProps.fields[current.index].mcheck"><span
+                                op-help-info="{{'common.table.config.message_checkbox_properties' | translate}}">{{'common.table.config.properties_value'}}</span></label>
+                        <div class="form-control-wrapper">
+                            <!--                        <udp-dsfield-selector the-model="uwProps.fields[current.index]" fields="selectedDs.fields"-->
+                            <!--                                              class="w-full"-->
+                            <!--                                              options="{converter:{kinds:'js,str,link',varTypes:'field,pageparam,global'}}"></udp-dsfield-selector>-->
+                            <!--                        <div class="checkbox checkbox-inline">-->
+                            <!--                            <input type="checkbox" ng-model="uwProps.fields[current.index].enableConvertFn"-->
+                            <!--                                   id="dwc_enableconvertfn"><label for="dwc_enableconvertfn"></label></div>-->
+                            <udp-data-converter the-model="uwProps.fields[current.index].convertFn"
+                                                class="w-full"
+                                                options="{kinds:'js,str,link',varTypes:'field,pageparam,global'}"></udp-data-converter>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="!uwProps.dataset._type && uwProps.dataset.serverPage">
+                        <label class="control-label" op-help-info="{{'common.table.config.message_output' | translate}}">{{'common.table.config.output' | translate}}</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control code"
+                                   ng-model="uwProps.fields[current.index].dataSsp">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section ng-if="uwProps.fields[current.index].mcheck">
+        <div class="form-group">
+            <label class="control-label" op-help-info="{{'common.table.config.message_tag' | translate}}">{{'common.table.config.show_tag' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-dsfield-selector the-model="uwProps.fields[current.index].mcheckUnionFiled"
+                                      fields="selectedDs.fields"
+                                      options="{disableConverter:true}"></udp-dsfield-selector>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label"
+                   op-help-info="{{'common.table.config.message_output_parameter' | translate}}">{{'common.table.config.output_parameter' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" ng-model="uwProps.fields[current.index].mcheckParam"
+                       class="form-control op-w-sm me-3"/>
+                <select class="form-select op-w-sm" ng-model="uwProps.fields[current.index].mcheckType">
+                    <option value="">{{'common.variable.array' | translate}}</option>
+                    <option value="csv">{{'common.table.config.comma_separated_string' | translate}}</option>
+                    <!--                                <option value="json">数组JSON字符串</option>-->
+                </select>
+            </div>
+        </div>
+    </section>
+    <section ng-if="!uwProps.fields[current.index].mcheck">
+        <div class="form-group">
+            <label class="control-label">{{'common.table.config.default_content' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" ng-model="uwProps.fields[current.index].defaultContent"
+                       class="form-control op-w-md"/>
+            </div>
+        </div>
+        <!--New-->
+        <div class="form-group">
+            <label class="control-label">{{'common.table.config.sort' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-auto" ng-model="uwProps.fields[current.index].order">
+                    <option value="">{{'common.table.config.not_sort' | translate}}</option>
+                    <option value="asc">{{'common.table.config.ascending' | translate}}</option>
+                    <option value="desc">{{'common.table.config.descending' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'common.table.config.align_and_wrap'}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-auto" ng-model="uwProps.fields[current.index].align">
+                    <option value="">{{'common.table.config.automatic' | translate}}</option>
+                    <option value="left">{{'common.table.config.left' | translate}}</option>
+                    <option value="center">{{'common.table.config.centered' | translate}}</option>
+                    <option value="right">{{'common.table.config.right' | translate}}</option>
+                </select>
+                <!--</div>-->
+                <!--<div class="">-->
+                <select class="form-select op-w-auto" ng-model="uwProps.fields[current.index].wrap">
+                    <option value="">{{'common.word.default' | translate}}</option>
+                    <option value="nowrap">{{'common.table.config.no_line_break' | translate}}</option>
+                    <option value="wrap">{{'common.table.config.wrap' | translate}}</option>
+                </select>
+                <udp-css-editor the-model="uwProps.fields[current.index].css"
+                                options="{style:'dropdown',groups:'text'}"></udp-css-editor>
+                <input type="number" ng-model="uwProps.fields[current.index].linelimit" class="form-control"
+                       title="{{'common.table.config.show_rows' | translate}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" op-help-info="{{'common.table.config.message_cut_off' | translate}}">{{'common.table.config.cut_off_width' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" class="form-control" ng-model="uwProps.fields[current.index].cutoff"
+                       min="0">
+            </div>
+        </div>
+        <div class="form-group" xxng-if="uwProps.fields[current.index].type">
+            <label class="control-label"
+                   op-help-info="{{'common.table.config.message_format_data' | translate}}<code>0,000</code>，<code>0.00</code>">{{'common.table.config.show_format' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" ng-model="uwProps.fields[current.index].formatter"
+                       class="form-control op-w-md"/>
+            </div>
+        </div>
+        <div class="form-group" ng-if="uwProps.fields[current.index].type==='number'">
+            <label class="control-label">{{'common.table.config.numerical_ratio' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" ng-model="uwProps.fields[current.index].scale"
+                       class="form-control op-w-sm"
+                       style="width:100%;"/>
+            </div>
+        </div>
+        <div class="form-group" ng-if="uwProps.display.footer">
+            <label class="control-label">{{'common.table.config.summary' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="uwProps.fields[current.index].accum">
+                    <option value=""></option>
+                    <option value="MAX">{{'common.table.config.max' | translate}}</option>
+                    <option value="MIN">{{'common.table.config.min' | translate}}</option>
+                    <option value="COUNT">{{'common.table.config.count' | translate}}</option>
+                    <option value="SUM">{{'common.table.config.sum' | translate}}</option>
+                    <option value="AVERAGE">{{'common.table.config.average_value' | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </section>
+    </div>
+    <!--<div class="form-group">-->
+    <!--<label class="control-label col-sm-2">数据定义</label>-->
+    <!--<div class="col-sm-10">-->
+    <!--<udp-data-converter the-model="uwProps.fields[current.index].convertFn"-->
+    <!--options="{kinds:'js,str,link'}"></udp-data-converter>-->
+    <!--</div>-->
+    <!--</div>-->
+</fieldset>
+<div class="m-t">
+    <button type="button" class="btn btn-default btn-sm" ng-click="removeAllFields()"><i
+            class="fa fa-minus-square"></i> {{'common.table.config.delete_all_list' | translate}}
+    </button>
+    <button type="button" class="btn btn-outline-primary btn-sm" ng-click="addField()"><i
+            class="fa fa-plus-square"></i> {{'common.table.config.add_list'}}
+    </button>
+    <button type="button" class="btn btn-outline-primary btn-sm" ng-click="addAllFields(selectedDs.fields)"><i
+            class="fa fa-plus-square" title="{{'common.table.config.message_add_all_list' | translate}}"></i> {{'common.table.config.add_all_list' | translate}}
+    </button>
+</div>

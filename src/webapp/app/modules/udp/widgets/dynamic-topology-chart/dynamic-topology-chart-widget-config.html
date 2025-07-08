@@ -1,0 +1,167 @@
+<uib-tabset class="tab-container" xmlns="http://www.w3.org/1999/html">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> 节点字段设定</uib-tab-heading>
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">节点字段说明</h4>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>是否必填</th>
+                        <th>默认字段名</th>
+                        <th>默认值</th>
+                        <th>说明</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width: 10%">主键</td>
+                        <td style="width: 10%">是</td>
+                        <td style="width: 10%">id</td>
+                        <td style="width: 10%"></td>
+                        <td style="width: 60%">用于标识节点的唯一性</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">分类</td>
+                        <td style="width: 10%">是</td>
+                        <td style="width: 10%">category</td>
+                        <td style="width: 10%"></td>
+                        <td style="width: 60%">用于给节点分类，相当于图形上的图例</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">图标</td>
+                        <td style="width: 10%">否</td>
+                        <td style="width: 10%">icon</td>
+                        <td style="width: 10%"></td>
+                        <td style="width: 60%;word-break:break-all;">
+                            可以通过 'path://' 将图标设置为任意的矢量路径,例如:
+                            <p><code>'path://M30.9,53.2C16.8,53.2,5.3,41.7,5.3,27.6S16.8,2,30.9,2C45,2,56.4,13.5,56.4,27.6S45,53.2,30.9,53.2z M30.9,3.5C17.6,3.5,6.8,14.4,6.8,27.6c0,13.3,10.8,24.1,24.101,24.1C44.2,51.7,55,40.9,55,27.6C54.9,14.4,44.1,3.5,30.9,3.5z M36.9,35.8c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H36c0.5,0,0.9,0.4,0.9,1V35.8z M27.8,35.8 c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H27c0.5,0,0.9,0.4,0.9,1L27.8,35.8L27.8,35.8z'</code></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">图标颜色</td>
+                        <td style="width: 10%">否</td>
+                        <td style="width: 10%">iconColor</td>
+                        <td style="width: 10%"></td>
+                        <td style="width: 60%">节点图标的颜色，支持HEX或者RGB，例如<code>'#121212'、'rgb(0,0,0)'</code></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">图标大小</td>
+                        <td style="width: 10%">否</td>
+                        <td style="width: 10%">iconSize</td>
+                        <td style="width: 10%">40</td>
+                        <td style="width: 60%"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">文字</td>
+                        <td style="width: 10%">否</td>
+                        <td style="width: 10%">text</td>
+                        <td style="width: 10%"></td>
+                        <td style="width: 60%"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">文字颜色</td>
+                        <td style="width: 10%">否</td>
+                        <td style="width: 10%">textColor</td>
+                        <td style="width: 10%"></td>
+                        <td style="width: 60%">文字颜色，支持HEX或者RGB，例如<code>'#121212'、'rgb(0,0,0)'</code></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%">文字大小</td>
+                        <td style="width: 10%">否</td>
+                        <td style="width: 10%">textSize</td>
+                        <td style="width: 10%">12</td>
+                        <td style="width: 60%"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <table class="table op-param-table">
+            <tbody>
+            <tr ng-repeat="field in ::nodeFields track by $index">
+                <td>{{::field.label}}</td>
+                <td>
+                    <udp-dsfield-selector the-model="uwProps.fields[field.name]"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cogs'></i> 节点关系设定</uib-tab-heading>
+        <div>
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">内置关系说明</h4>
+                <p>节点数据可以使用link字段配置与其他节点的关系。link字段的值需要满足以下格式:</p>
+                <code>
+                    <p>[{</p>
+                    <p>&nbsp;&nbsp;target: "必填，目标节点的主键值",</p>
+                    <p>&nbsp;&nbsp;linkWidth: "非必填，连线宽度，默认宽度为1",</p>
+                    <p>&nbsp;&nbsp;linkColor: '非必填，连线颜色，支持HEX或者RGB',</p>
+                    <p>&nbsp;&nbsp;linkType: '非必填，连线类型，solid(实线)、dashed(虚线)、dotted(点线)'</p>
+                    <p>},</p>
+                    <p>{...}]</p>
+                </code>
+            </div>
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">关系映射说明</h4>
+                <p>使用JS表达式配置节点关系，<code>${字段名}</code>可以用来调用字段值</p>
+                <p>例如：</p>
+                <p><code>${nodeName} === "simpleNode"、${nodeSize} > 0</code></p>
+            </div>
+            <div class="form-inline">
+                <button type="button" class="btn btn-outline-primary mb-2" ng-click="addLineRule()"><i
+                        class="fa fa-plus"></i> 添加关系映射
+                </button>
+            </div>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>源节点</td>
+                        <td>目标节点</td>
+                        <td>连线颜色</td>
+                        <td>连线宽度</td>
+                        <td>连线风格</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="rule in uwProps.lineRules ">
+                        <td style="width:35%"><input class="form-control" ng-model="rule.sourceRule"></td>
+                        <td style="width:35%"><input class="form-control" ng-model="rule.targetRule"></td>
+                        <td style="width:8%">
+                            <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                              ng-model="rule.lineColor"></udp-color-picker>
+                        </td>
+                        <td style="width:8%"><input type="tel" class="form-control" ng-model="rule.lineWidth" ></td>
+                        <td style="width:9%">
+                            <select class="form-select" ng-model="rule.lineType">
+                            <option value="solid">实线</option>
+                            <option value="dashed">虚线</option>
+                            <option value="dotted">点线</option>
+                            </select>
+                        </td>
+                        <td style="width: 5%">
+                            <button type="button" class="btn btn-danger" ng-click="removeLineRule($index)"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

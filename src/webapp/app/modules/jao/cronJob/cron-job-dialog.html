@@ -1,0 +1,145 @@
+<style>
+    .jao-cron-input-style{
+        width: 94%;
+        margin: auto;
+        margin-bottom: 16px;
+    }
+</style>
+<div class="modal-header m-t-xs">
+    <h4 class="modal-title" id="myAssetNetworkLabel">
+        <span ng-show="!vm.cron.id">{{ 'task_scheduling.add_CRON' | translate}}</span>
+        <span ng-show="vm.cron.id">{{ 'task_scheduling.edit_CRON' | translate}}  ID: {{vm.cron.id}}</span>
+        <span>
+            <a type="button" class="btn-close" style="margin: 10px;float: right;" data-dismiss="modal" ng-click="vm.cancel()"></a>
+        </span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.datatable.job_desc' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control" ng-model="vm.cron.jobDesc">
+        </div>
+    </div>
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.output_log' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+            <select class="form-select"  ng-model="vm.cron.logOutput">
+               <option ng-repeat="option in logOutputs" value="{{option.value}}">
+                    {{option.label}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.is_encrypt' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+            <select class="form-select"  ng-model="vm.cron.isEncrypt" ng-disabled="vm.jaoHighPower">
+                <option ng-repeat="option in isEncrypts" value="{{option.value}}">
+                    {{option.label}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.datatable.schedule_conf' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+                  <input type="text" class="form-control" ng-model="vm.cron.scheduleConf">
+<!--            <span class="input-group-btn">-->
+                 <button ng-click="vm.CronDialogBox()" style="height: 30px;border: 1px solid #ced4da;" class="btn btn-default"
+                         title="{{ 'task_scheduling.title_desc_one' | translate}}">
+                    <i class="fa fa-calendar-alt"></i>
+                </button>
+<!--            </span>-->
+        </div>
+    </div>
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'adm.menu.appres' | translate}}</span>
+        </label>
+        <div class="form-control-wrapper">
+            <select class="form-select" ng-model="vm.cron.appCode">
+                <option value="">
+                </option>
+                <option ng-repeat="option in appletsList" value="{{option.name}}">
+                    {{option.title}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.execution_job_type' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+            <select class="form-select " ng-model="vm.cron.jobType" ng-change="showTemplate()">
+                <option ng-repeat="option in jobTypes" value="{{option.value}}">
+                    {{option.label}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.select_execute_job' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+
+            <select ng-if="vm.displayType" op-select class="form-select" ng-model="vm.cron.jobId" ng-change="showJobParameter()">
+                <option ng-repeat="option in jobList" value="{{option.id}}">
+                    {{option.id.length > 20 ? option.templateName : option.title}}
+                </option>
+            </select>
+            <div ng-if="!vm.displayType && 'cac' === vm.cron.jobType" class="form-control-wrapper">
+                <select ng-model="vm.ccfIds" class="form-select"
+                        op-select multiple
+                        ng-options="city.id as city.templateName for city in jobList"></select>
+            </div>
+            <div ng-if="!vm.displayType && 'cmd' === vm.cron.jobType" class="form-control-wrapper">
+                <select ng-model="vm.ccfIds" class="form-select"
+                        op-select multiple
+                        ng-options="city.id as city.name for city in jobList"></select>
+            </div>
+<!--            <div ng-if="!vm.displayType && 'flows' === vm.cron.jobType" class="form-control-wrapper">-->
+<!--                <select ng-model="vm.ccfIds" class="form-select"-->
+<!--                        op-select multiple-->
+<!--                        ng-options="city.id as city.name for city in jobList"></select>-->
+<!--            </div>-->
+            <div ng-if="!vm.displayType && 'flows' === vm.cron.jobType" class="form-control-wrapper">
+                <select op-select class="form-select" ng-model="vm.ccfIds[0]">
+                    <option ng-repeat="option in jobList" value="{{option.id}}">
+                        {{option.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <div class="form-group w-100 m-b-sm">
+        <button class="btn btn-outline-primary" style="margin-left:3%;" ng-if="vm.cron.jobId != '' || vm.cron.jobType == 'cmd' || vm.cron.jobType == 'cac'"
+                title="{{ 'task_scheduling.title_desc_two' | translate}}" ng-click="vm.JobOperatingParam()"><i
+                class="fa fa-diagnoses"></i>
+            {{ 'task_scheduling.operating_param' | translate}}
+        </button>
+        <button type="reset" class="btn btn-default pull-right" style="margin-right: 20px;" ng-click="vm.cancel()">
+            <i class="fa fa-reply"></i>
+            {{ 'common.entity.action.back' | translate}}
+        </button>
+        <button class="btn btn-primary pull-right" style="margin-right: 6px;" ng-click="vm.save()"
+                ng-disabled="(!vm.cron.jobId && vm.ccfIds.length < 1) || !vm.cron.jobType || !vm.cron.scheduleConf || !vm.cron.jobDesc || !vm.cron.logOutput || !vm.cron.isEncrypt">
+            <i class="fa fa-check"></i>
+            {{ 'common.entity.action.save' | translate}}
+        </button>
+    </div>
+</div>

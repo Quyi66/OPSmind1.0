@@ -1,0 +1,54 @@
+/*!
+ * Bootstrap v5.1.3 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+// scss-docs-start import-stack
+// Configuration
+@import "bs5/functions";
+@import "bs5/variables";
+@import "bs5/mixins";
+@import "bs5/utilities";
+
+// Layout & components
+@import "bs5/root";
+@import "bs5/reboot";
+@import "bs5/type";
+@import "bs5/images";
+@import "bs5/containers";
+@import "bs5/grid";
+@import "bs5/tables";
+@import "bs5/forms";
+@import "bs5/buttons";
+@import "bs5/transitions";
+@import "bs5/dropdown";
+@import "bs5/button-group";
+@import "bs5/nav";
+@import "bs5/navbar";
+@import "bs5/card";
+//@import "bs5/accordion";
+@import "bs5/breadcrumb";
+@import "bs5/pagination";
+@import "bs5/badge";
+@import "bs5/alert";
+@import "bs5/progress";
+@import "bs5/list-group";
+@import "bs5/close";
+//@import "bs5/toasts";
+@import "bs5/modal";
+@import "bs5/tooltip";
+@import "bs5/popover";
+//@import "bs5/carousel";
+//@import "bs5/spinners";
+@import "bs5/offcanvas";
+//@import "bs5/placeholders";
+
+// Helpers
+@import "bs5/helpers";
+
+// Utilities
+@import "bs5/utilities/api";
+
+// scss-docs-end import-stack

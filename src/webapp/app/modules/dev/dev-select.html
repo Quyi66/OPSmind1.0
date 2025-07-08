@@ -1,0 +1,214 @@
+<div class="row wrapper h-100 scroll-y">
+    <div class="card col">
+        <div class="card-header">
+            Single Selection
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled bg-light p-3">
+                <li>selectedCity: <code>{{selectVm.selectedCity | json}}</code></li>
+            </ul>
+            <div class="form-group">
+                <label class="control-label">Chip Style <code>.opx-check-group</code> </label>
+                <div class="form-control-wrapper">
+                    <div class="opx-check-group opx-secondary btn-group">
+                        <input ng-repeat-start="city in selectVm.cities track by $index"
+                               type="radio" name="formSelectedCity" value="{{city.code}}"
+                               id="form-radio-opt-{{$index}}"
+                               ng-model="selectVm.selectedCity">
+                        <label ng-repeat-end for="form-radio-opt-{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Button Group Style <code>.opx-check-group.btn-group</code></label>
+                <div class="form-control-wrapper">
+                    <div class="opx-check-group btn-group opx-primary">
+                        <input ng-repeat-start="city in selectVm.cities track by $index"
+                               type="radio" name="formSelectedCityBtnGroup" value="{{city.code}}"
+                               id="form_radiobtngroup_opt_{{$index}}"
+                               ng-model="selectVm.selectedCity">
+                        <label ng-repeat-end for="form_radiobtngroup_opt_{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Style <code>.radio</code> </label>
+                <div class="form-control-wrapper">
+                    <div ng-repeat="city in selectVm.cities track by $index"
+                         class="radio radio-inline radio-primary">
+                        <input type="radio" value="{{city.code}}" id="form-radio2-opt-{{$index}}"
+                               name="formSeclectedCity2"
+                               ng-model="selectVm.selectedCity">
+                        <label for="form-radio2-opt-{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card col">
+        <div class="card-header">Multiple Selection</div>
+        <div class="card-body">
+            <ul class="list-unstyled bg-light p-3">
+                <li>selectedCityObject: <code>{{selectVm.selectedCityObject | json}}</code></li>
+                <li>selectedCityList: <code>{{selectVm.selectedCityList | json}}</code></li>
+                <li>selectedCityString: <code>{{selectVm.selectedCityString | json}}</code></li>
+            </ul>
+
+            <div class="form-group">
+                <label class="control-label">Object result</label>
+                <div class="form-control-wrapper">
+                    <div ng-repeat="city in selectVm.cities track by $index"
+                         class="checkbox checkbox-inline checkbox-primary">
+                        <input type="checkbox" value="{{city.code}}" id="form-check-{{$index}}"
+                               ng-model="selectVm.selectedCityObject[city.code]">
+                        <label for="form-check-{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Array result</label>
+                <div class="form-control-wrapper">
+                    <div ng-repeat="city in selectVm.cities track by $index"
+                         class="checkbox checkbox-inline checkbox-primary">
+                        <input type="checkbox" id="form-check2-{{$index}}" multiple
+                               checkbox-model="selectVm.selectedCityList" checkbox-value="city.code">
+                        <label for="form-check2-{{$index}}">{{city.name}}</label>
+                    </div>
+                    <button type="button" class="btn btn-default"
+                            ng-click="selectVm.selectedCityList=['beijing','shanghai']">Manual Set
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Array result (chip style)</label>
+                <div class="form-control-wrapper">
+                    <div ng-repeat="city in selectVm.cities track by $index"
+                         class="checkbox checkbox-inline checkbox-primary op-select-chip">
+                        <input type="checkbox" id="form-check2-{{$index}}" multiple
+                               checkbox-model="selectVm.selectedCityList" checkbox-value="city.code">
+                        <label for="form-check2-{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Chip Style</label>
+                <div class="form-control-wrapper">
+                    <div class="opx-check-group">
+                        <input type="checkbox" id="form-check4-{{$index}}" xxmultiple
+                               ng-repeat-start="city in selectVm.cities track by $index"
+                               value="{{city.code}}"
+                               ng-model="selectVm.selectedCityObject[city.code]"
+                               xxcheckbox-model="selectVm.selectedCityList" checkbox-value="city.code">
+                        <label ng-repeat-end for="form-check4-{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Button Group Style</label>
+                <div class="form-control-wrapper">
+                    <div class="opx-check-group btn-group">
+                        <input type="checkbox" id="form-check5-{{$index}}" xxmultiple
+                               ng-repeat-start="city in selectVm.cities track by $index"
+                               value="{{city.code}}"
+                               ng-model="selectVm.selectedCityObject[city.code]"
+                               xxcheckbox-model="selectVm.selectedCityList" checkbox-value="city.code">
+                        <label ng-repeat-end for="form-check5-{{$index}}">{{city.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">String result: NOT WORK</label>
+                <div class="form-control-wrapper">
+                    <div ng-repeat="city in selectVm.cities track by $index"
+                         class="checkbox checkbox-inline checkbox-primary">
+                        <input type="checkbox" id="form-check3-{{$index}}" multiple
+                               value="{{city.code}}"
+                               checkbox-model="selectVm.selectedCityString" checkbox-value="city.code"
+                               model-datatype="dsv" model-datatype-option="comma">
+                        <label for="form-check3-{{$index}}">{{city.name}}</label>
+                    </div>
+                    <button type="button" class="btn btn-default"
+                            ng-click="selectVm.selectedCityString='beijing,shanghai'">Manual Set
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Select (Array)</label>
+                <div class="form-control-wrapper">
+                    <select ng-model="selectVm.selectedCityList" class="form-select"
+                            op-select multiple
+                            ng-options="city.code as city.name for city in selectVm.cities"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Select (CSV)</label>
+                <div class="form-control-wrapper">
+                    <select ng-model="selectVm.selectedCityString" class="form-select"
+                            op-select="{datatype:'string'}" multiple
+                            ng-options="city.code as city.name for city in selectVm.cities"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Checkbox <code>.input-group</code></label>
+                <div class="form-control-wrapper">
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <div class="checkbox">
+                                <input type="checkbox" value="foo" id="dc_checkbox_foo">
+                                <label for="dc_checkbox_foo"></label>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card col">
+        <div class="card-header">表格内</div>
+        <div class="card-body">
+            <h5>In table</h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="th-check">
+                            <label for="th-check"></label>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="radio radio-inline">
+                            <input type="radio" id="th-radio">
+                            <label for="th-radio"></label>
+                        </div>
+                    </th>
+                    <th>City</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="city in selectVm.cities track by $index">
+                    <td>
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" value="{{city.code}}" id="td-check-{{$index}}"
+                                   ng-model="selectVm.selectedCityObject[city.code]">
+                            <label for="td-check-{{$index}}">{{$index === 10 ? city.name : ''}}</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="radio radio-inline">
+                            <input type="radio" name="tableSelectedCity" value="{{city.code}}"
+                                   id="td-radio-{{$index}}"
+                                   ng-model="selectVm.selectedCity">
+                            <label for="td-radio-{{$index}}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        {{city.name}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'sys_log.sys_log' | translate}}</div>
+    </nav>
+
+    <div class="mb-1">
+        <ul class="nav nav-mdc-op" op-tab-bar style="width:100%;" op-tab-bar>
+            <li class="nav-item">
+                <a class="nav-link" ng-click="activeTab = 'login'" ng-class="{active: activeTab === 'login'}">{{'sys_log.login_log' | translate}}</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" ng-click="activeTab = 'operation'" ng-class="{active: activeTab === 'operation'}">{{'sys_log.operation_log' | translate}}</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="card-body" ng-show="activeTab === 'login'" uaa-has-permission="sysadmin:param:*">
+        <opx-datatable table-config="sysTableConfig">
+        </opx-datatable>
+    </div>
+
+    <div class="card-body" ng-show="activeTab === 'operation'" uaa-has-permission="sysadmin:param:*">
+        <opx-datatable table-config="operationTableConfig">
+        </opx-datatable>
+    </div>
+</div>

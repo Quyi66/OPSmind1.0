@@ -1,0 +1,11 @@
+<div class="p-5 h-100 scroll-y">
+    <div id="js_table_container" class="bg-white h-100" style="overflow:auto;">
+        <table class="table table-striped">
+            <tbody xvs-repeat="{size:48, scrollParent:'#js_table_container'}">
+            <tr ng-repeat="dataItem in vsVm.dataList" style="height:48px;">
+                <td ng-repeat="(key, value) in dataItem" nowrap="nowrap">{{value}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

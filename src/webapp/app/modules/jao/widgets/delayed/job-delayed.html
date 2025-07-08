@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'jao.job.detail.need_delayed' | translate}}</h3>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.dismiss()"></button>
+</div>
+
+
+<div class="modal-body">
+    <input class="form-control ng-valid ng-not-empty ng-dirty ng-valid-date ng-touched"
+           step=1 type="datetime-local"
+           ng-model="$ctrl.cronTime"  aria-invalid="false" style="">
+</div>
+
+<div class="modal-footer">
+    <!--<button class="btn btn-secondary" type="button" ng-click="$ctrl.pushJobToSchedule()">{{'common.entity.action.cancel' | translate}}</button>-->
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.pushJobToSchedule()"
+            >{{'jao.job.detail.submit_delayed' | translate}}</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.rungOnce()"
+    >{{'jao.job.detail.run_once' | translate}}</button>
+</div>

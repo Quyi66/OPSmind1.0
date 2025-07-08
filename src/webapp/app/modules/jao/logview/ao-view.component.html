@@ -1,0 +1,65 @@
+<div class="opx-layout-hflex" style="height: 100%; min-width: 400px;">
+    <div class="opx-sidebar border" style="width: 14rem;">
+        <nav class="opx-sidebar-header opx-sidebar-header-fixed px-3">
+            <op-searchbox on-search="$ctrl.filterHost($ctrl.filterText)" search-text="$ctrl.filterText"
+                          xxxstyle="width:8em;" class="d-flex align-items-center">
+                <div class="dropdown ms-3">
+                    <button type="button" class="btn btn-sm btn-default opx-btn-icon opx-btn-flat"
+                            data-bs-toggle="dropdown"><i
+                            class="fa fa-ellipsis-v"></i></button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" ng-click="$ctrl.exportData()"><i
+                                class="far fa-fw fa-file-export me-3"></i><span>{{'jao.log.export_html' | translate}}</span></a>
+                        <a class="dropdown-item d-flex align-items-center" ng-if="$ctrl.contents.length>1"
+                           ng-click="$ctrl.toggleMergeMode()"><i
+                                class="far fa-fw fa-object-ungroup me-3"></i><span>{{'jao.log.merge_mode' | translate}}</span>
+                            <i class="ms-auto fa fa-check" ng-if="$ctrl.isBatchMerged"></i></a>
+                        <a class="dropdown-item" ng-click="$ctrl.expandOrCollapseAll()"><i class="far fa-fw me-3"
+                                                                                           ng-class="$ctrl.isExpandedAll?'fa-compress-alt':'fa-expand-alt'"></i><span>{{($ctrl.isExpandedAll ? 'jao.job.log.collapse_all' : 'jao.job.log.expand_all') | translate}}</span></a>
+
+                    </div>
+                </div>
+            </op-searchbox>
+        </nav>
+        <div class="opx-sidebar-body js-aoview-tree" style="max-height: 495px">
+        </div>
+    </div>
+    <div class="opx-flex-fill px-3">
+        <pre ng-if="$ctrl.detailView==='rawOutput'">{{$ctrl.output | json}}</pre>
+        <div ng-if="$ctrl.selectedNode.type==='play'">{{$ctrl.selectedNode.title}}</div>
+        <div ng-if="$ctrl.selectedNode.type==='host'" class="h-100 opx-layout-vflex">
+            <div class="d-flex flex-row align-items-center mb-3">
+                <h4 class="me-3 mb-0">{{$ctrl.selectedNode.title}}</h4>
+                <ul class="list-inline list-unstyled me-auto mb-0">
+                    <li ng-repeat="(key,value) in $ctrl.nodeTasksStats">
+                    <span class="op-cursor-hand"
+                          ng-class="$ctrl.statusFilter==key?'badge bg-'+$ctrl.statusDefs[key].color:'font-weight-bold small text-'+$ctrl.statusDefs[key].color"
+                          ng-click="$ctrl.toggleStatusFilter(key)"
+                          title="{{$ctrl.statusDefs[key].tooltip}}">{{$ctrl.statusDefs[key].text}} {{value}}</span>
+                    </li>
+                </ul>
+                <op-searchbox search-text="$ctrl.outputFilterText" style="width:8em;"></op-searchbox>
+            </div>
+            <div class="opx-flex-fill scroll-y __list-group">
+                <div ng-repeat="task in $ctrl.selectedNode.data.tasks | filter: {status:$ctrl.statusFilter}
+                | filterAny:'name,output':$ctrl.outputFilterText track by $index"
+                     __class="list-group-item p-3"
+                     class="card mb-3"
+                     ng-class="{'list-group-item-warning':task.status==='unreachable','list-group-item-danger':task.status==='failed','list-group-item-light':task.status==='ignored' || task.status==='skipped'}">
+                    <div class="card-header d-flex align-items-center">
+                        <div>
+                            <span ng-if="task.delegateHost" class="badge bg-secondary">{{task.delegateHost}}</span>
+                            {{task.name}}
+                        </div>
+                        <div class="ms-auto">
+                            <span class="badge bg-{{$ctrl.statusDefs[task.status].color}}">{{$ctrl.statusDefs[task.status].text}}</span>
+                        </div>
+                    </div>
+                    <div class="card-body" ng-if="task.output">
+                        <pre class="py-3 text-break mb-0">{{task.output}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

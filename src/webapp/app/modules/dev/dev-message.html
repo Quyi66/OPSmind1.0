@@ -1,0 +1,75 @@
+<div class="p-3">
+    <div class="mb-3">
+        <button class="btn btn-default" ng-click="messageVm.openConfirm()">确认框</button>
+        <button class="btn btn-default" ng-click="messageVm.openAlert()">提示框</button>
+    </div>
+    <div class="mb-3">
+        <!--        <label class="control-label">对话框大小</label>-->
+        <!--        <div class="form-control-wrapper">-->
+        <!--            <select class="form-select w-sm d-inline-block" ng-model="messageVm.modalSize"-->
+        <!--                    ng-options="size as size for size in messageVm.modalSizes"></select>-->
+        <button class="btn btn-default me-3" ng-click="messageVm.openModal(size)"
+                ng-repeat="size in messageVm.modalSizes">Modal对话框 {{size}}
+        </button>
+        <!--        </div>-->
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">Loading</div>
+        <div class="card-body" style="height:10rem;">
+            <div class="op-blank-slate">
+                <div class="op-blank-slate-icon">
+                    <i class="fa fa-4x fa-pulse fa-spinner fa-fw"></i>
+                </div>
+                <p class="op-flashing-text">正在加载</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <div style="opacity: .25; text-align: center;">
+                        <div class="lds-ellipsis">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <h5>style:default</h5>
+                    <div op-loading></div>
+                    <h5>style:ellipsis</h5>
+                    <div op-loading="{style:'ellipsis'}"></div>
+                    <h5>style:spinner</h5>
+                    <div op-loading="{style:'spinner'}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body op-blank-slate">
+                    <div class="op-blank-slate-body">
+                        <div class="op-blank-slate-icon">
+                            <i class="fa fa-4x fa-inbox"></i>
+                        </div>
+                        <p>空白内容提示，用于在没有内容的时候丰富页面显示，应该左右上下居中</p>
+                        <button class="btn btn-primary" type="button">新建内容</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="card">
+                <div class="card-body op-blank-slate">
+                    <div class="op-blank-slate-body">
+                        <div class="op-blank-slate-icon">
+                            <i class="fa fa-4x fa-inbox"></i>
+                        </div>
+                        <p>空白内容提示，用于在没有内容的时候丰富页面显示，应该左右上下居中</p>
+                        <button class="btn btn-primary" type="button">新建内容</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h4 class="modal-title">Apply ApiKey</h4>
+  <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body">
+  <div class="form op-smartform">
+
+    <div class="form-group">
+      <label class="control-label">{{'common.entity.detail.name' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.apiKey.name"></input>
+        <p class="help-block" ng-if="!$ctrl.apiKey.name">{{'common.entity.validation.required' | translate}}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'sys_userManagement.apikey.target_api' | translate}}</label>
+      <div class="form-control-wrapper">
+        <textarea row="10" class="form-control" ng-model="$ctrl.apiKey.targetApi"></textarea>
+        <p class="help-block" ng-if="!$ctrl.apiKey.targetApi">{{'common.entity.validation.required' | translate}}</p>
+        <p class="help-block">(Split By < , >)</p>
+      </div>
+    </div>
+
+    <div class="form-group op-align-horizontal">
+      <!-- <label class="control-label">{{'.' | translate}}</label> -->
+      <div class="form-control-wrapper">
+          <div class="checkbox checkbox-inline">
+              <input type="checkbox" id="cbxIsEternal" 
+                ng-checked="$ctrl.apiKey.isEternal"
+                ng-click="$ctrl.apiKey.isEternal = !$ctrl.apiKey.isEternal">
+              <label for="cbxIsEternal">{{'sys_userManagement.apikey.eternal_expired' | translate}}</label>
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="!$ctrl.apiKey.isEternal">
+      <label class="control-label">{{'sys_userManagement.apikey.expire_count' | translate}}</label>
+      <div class="form-control-wrapper">
+          <input type="number" minlength="1" maxlength="4" class="form-control" ng-model="$ctrl.apiKey.expireCount"></input>
+          <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="!$ctrl.apiKey.isEternal">
+      <label class="control-label">{{'app_um.user.expired_date' | translate}}</label>
+      <div class="form-control-wrapper">
+          <input type="datetime-local" class="form-control" ng-model="$ctrl.apiKey.expireTime"></input>
+          <p class="help-block"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer text-right">
+  <button type="submit" class="btn btn-primary opx-btn-ok" ng-disabled="!$ctrl.apiKey.name || !$ctrl.apiKey.targetApi" ng-click="$ctrl.confirm()">确定</button>
+  <button type="reset" class="btn btn-default opx-btn-cancel" ng-click="$ctrl.cancel()">取消</button>
+</div>

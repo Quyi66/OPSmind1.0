@@ -1,0 +1,22 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{ 'task_scheduling.cron_job_list' | translate}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">{{ 'task_scheduling.menu.home' | translate}}</li>
+            </ol>
+        </div>
+    </nav>
+    <div class="card-body">
+        <opx-datatable table-config="$ctrl.tableConfig">
+            <button uaa-has-permission="jao:edit:*" type="button" class="btn btn-outline-primary" ui-sref="app.jao.cron_job.new({id:''})">
+                <i class="fa fa-plus"></i>
+                <span>{{ 'task_scheduling.menu.add' | translate}}</span>
+            </button>
+
+            <button uaa-has-permission="jao:edit:*" type="button" class="btn btn-outline-primary" ng-click="$ctrl.batchStartStopCron()" ng-disabled="!$ctrl.selectedCrons.length>0">
+                <i class="fab fa-uikit"></i>
+                <span>{{ 'task_scheduling.batch_start_stop_CRON' | translate}}</span>
+            </button>
+        </opx-datatable>
+    </div>
+</div>

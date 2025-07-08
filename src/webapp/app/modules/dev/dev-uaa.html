@@ -1,0 +1,37 @@
+<div class="p-3">
+    <div class="m-b">
+        <button type="button" class="btn btn-primary" ng-click="uaaVm.login('ADMIN')"><i
+                class="fa fa-user-circle-o"></i>
+            以管理员登录
+        </button>
+        <button type="button" class="btn btn-info" ng-click="uaaVm.login()"><i class="fa fa-user-o"></i> 以普通用户登录
+        </button>
+        <button type="button" class="btn btn-warning" ng-click="uaaVm.logout()"><i class="fa fa-sign-out"></i> Log out
+        </button>
+    </div>
+    <div class="m-b">
+        Current User:
+        <code>{{$root.$global.currentUser}}</code>
+        <ul class="list list-unstyled">
+            <li>ID: <span class="badge bg-secondary">{{$root.$global.currentUser.loginId}}</span></li>
+            <li>用户名: <span class="badge bg-secondary">{{$root.$global.currentUser.displayName}}</span></li>
+            <li>头像: <img ng-src="{{$root.$global.currentUser.avatar}}"/></li>
+        </ul>
+    </div>
+    <div class="alert alert-success" ng-if="$root.$global.currentUser.isAuthenticated">
+        这段文字只有登录用户才能看到
+    </div>
+    <div class="alert alert-danger" ng-if="!$root.$global.currentUser.isAuthenticated">
+        还未登录
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="du_perm">是否有权限: <span
+                class="badge bg-info">{{$root.$global.currentUser.hasPermission(uaaVm.permission)}}</span></label>
+        <input type="text" class="form-control" id="du_perm" ng-model="uaaVm.permission">
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="du_role">是否有角色: <span
+                class="badge bg-info">{{$root.$global.currentUser.hasRole(uaaVm.role)}}</span></label>
+        <input type="text" class="form-control" id="du_role" ng-model="uaaVm.role">
+    </div>
+</div>

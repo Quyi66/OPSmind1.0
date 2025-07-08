@@ -1,0 +1,16 @@
+<div class="opx-layout-hflex">
+    <div class="opx-sidebar border-right bg-light" style="width:12rem;" ng-if="$ctrl.showApplet">
+        <div class="opx-sidebar-body">
+            <applet-selector applet-code="$ctrl.appletCode" on-change="$ctrl.onAppletSelectorChange"
+                             options="{viewAs:'list', showAll:true, includeAllAndNull:true}"></applet-selector>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y p-3">
+        <opx-datatable table-config="$ctrl.tableConfig">
+            <button type="button" class="btn btn-secondary" ng-disabled="$ctrl.tableConfig.selectedItems.length<1"
+                    ng-click="$ctrl.moveDataset()" ng-if="$ctrl.showApplet"><i class="fa fa-sign-in"></i>
+                {{'dts.dataset.action.move_dataset' | translate}}
+            </button>
+        </opx-datatable>
+    </div>
+</div>

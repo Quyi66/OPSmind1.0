@@ -1,0 +1,102 @@
+{
+  "global": {
+    "menu": {
+      "account": {
+        "settings": "账户设置",
+        "password": "密码",
+        "login": "登录",
+        "logout": "退出"
+      },
+      "admin": {
+        "tenantManagement": "租户管理",
+        "tenantDataConfig": "租户数据",
+        "parameterConfiguration": "参数配置",
+        "userManagement": "用户管理",
+        "roleManagement": "角色管理",
+        "dataPermissionManagement": "数据权限",
+        "subordinate": "Subordinate",
+        "logs": "日志",
+        "apidocs": "API"
+      }
+    },
+    "form": {
+      "username": "账号",
+      "username.placeholder": "您的账号",
+      "fullname": "名字",
+      "fullname.placeholder": "您的姓名",
+      "department": "部门",
+      "department.placeholder": "部门名称",
+      "mobile": "手机",
+      "mobile.placeholder": "手机号",
+      "telephoneNumber": "座机",
+      "telephoneNumber.placeholder": "座机号",
+      "newpassword": "新密码",
+      "newpassword.placeholder": "新密码",
+      "confirmpassword": "确认密码",
+      "confirmpassword.placeholder": "确认密码",
+      "email": "邮箱",
+      "email.placeholder": "您的邮箱"
+    },
+    "messages": {
+      "info": {
+        "authenticated": "如果您要<a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">登录</a>, 您可以使用默认账号:<br/>- 管理员 (账号=\"admin\"和密码=\"admin\") <br/>- 普通用户 (账号=\"user\"和密码=\"user\")."
+      },
+      "error": {
+        "dontmatch": "您输入的密码和确认密码不匹配!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "您的密码是必填项.",
+          "minlength": "您的密码长度至少要有8个字符",
+          "maxlength": "您的密码长度不能超过32个字符",
+          "strength": "密码强度:",
+          "qualified": "密码必须包含大小写字母、数字和特殊字符的组合"
+        },
+        "confirmpassword": {
+          "required": "您的确认密码是必填项.",
+          "minlength": "您的确认密码长度至少要有8个字符",
+          "maxlength": "您的确认密码长度不能超过32个字符"
+        },
+        "email": {
+          "required": "您的电子邮件是必填项.",
+          "invalid": "您的电子邮件格式格式不正确.",
+          "minlength": "您的电子邮件长度至少要有5个字符",
+          "maxlength": "您的电子邮件长度不能超过50个字符"
+        }
+      }
+    },
+    "item-count": "显示第 {{first}} - {{second}} 条，共 {{total}} 条"
+  },
+  "entity": {
+    "action": {
+      "back": "返回",
+      "cancel": "取消",
+      "delete": "删除",
+      "edit": "编辑",
+      "save": "保存",
+      "copy": "复制",
+      "view": "查看",
+      "confirm": "确认"
+    },
+    "delete": {
+      "title": "确认删除"
+    },
+    "validation": {
+      "required": "本字段不能为空.",
+      "minlength": "本字段最短长度为 {{min}} 个字符.",
+      "maxlength": "本字段最大长度为 {{max}} 个字符.",
+      "min": "本字段不能小于 {{min}}.",
+      "max": "本字段不能大于 {{max}}.",
+      "minbytes": "本字段不少于 {{min}} 字符.",
+      "maxbytes": "本字段不多余 {{max}} 字符.",
+      "pattern": "本字段必须符合模式 {{pattern}}.",
+      "number": "本字段必须为数字.",
+      "datetimelocal": "本字段必须为日期和时间."
+    }
+  },
+  "error": {
+    "userexists": "该用户名已存在!",
+    "emailexists": "该邮箱已被使用!"
+  },
+  "footer": "这里是页脚"
+}

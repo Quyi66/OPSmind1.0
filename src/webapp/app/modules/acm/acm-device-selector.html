@@ -1,0 +1,54 @@
+<div ng-if="$ctrl.viewAs==='dropdown'" class="dropdown" style="z-index: 1030">
+    <button class="btn btn-outline-default" title="{{'jao.job.selector.select_device' | translate}}"
+            data-bs-toggle="dropdown" opx-popdrop
+            data-bs-auto-close="outside"
+            ng-disabled="$ctrl.readonly">
+        <i class="far fa-server fa-fw"></i>
+        <span ng-if="$ctrl.theHosts|isEmpty">{{$ctrl.theOptions.label || ''}}</span>
+        <span ng-if="$ctrl.theHosts|isNotEmpty">
+            <strong class="text-primary">{{$ctrl.theHosts[0].value || $ctrl.theHosts[0]}}</strong>
+            <span class="badge bg-secondary mb-2" ng-if="$ctrl.theHosts.length>1">{{$ctrl.theHosts.length}}</span>
+        </span>
+        <i class="far fa-angle-down"></i>
+    </button>
+    <div class="dropdown-menu" style="width:26rem;padding:.5rem;max-height:30rem;overflow:auto;">
+        <acm-list-ci asset-types="$ctrl.assetType" the-model="$ctrl.theHosts" options="$ctrl.theOptions"
+                     mcheck-type="$ctrl.mcheckType"></acm-list-ci>
+    </div>
+</div>
+<div ng-if="$ctrl.viewAs==='btndlg'">
+    <div ng-if="$ctrl.theHosts.length>0">
+        <div class="d-flex flex-nowrap align-items-center">
+            <div class="btn btn-sm btn-default d-inline-block op-hover-trigger"
+                 ng-class="{'pe-none': $ctrl.readonly}"
+                 style="position:relative;width:10em;">
+            <span class="op-hover-to-show pull-right" ng-click="$ctrl.emptyItems()"
+                  ng-show="!$ctrl.readonly"
+                  title="{{'common.umd_config.move_all' | translate}}"><i
+                    class="fa fa-times"></i></span>
+                <span class="d-block"
+                      ng-click="$ctrl.openDeviceSelectorDialog()">{{ 'acm.common.selector.total' | translate}}<strong>{{$ctrl.theHosts.length}}</strong>{{ 'acm.common.selector.item' | translate}}</span>
+            </div>
+            <op-searchbox search-text="$ctrl.filter" class="ms-auto autohide"></op-searchbox>
+        </div>
+        <ul class="list list-unstyled list-inline" style="max-height:10rem; overflow-y:auto;">
+            <li ng-repeat="host in $ctrl.theHosts | filter: $ctrl.filter track by $index"
+                class="op-hover-trigger mb-3">
+                <div class="badge bg-secondary op-text-normal op-cursor-default py-2 px-2">
+                    {{host.value || host}}
+                    <span ng-if="host.runType.length>0"> [{{host.runType}}]</span>
+                    <span ng-if="host.runType.length>0" style="color: #10d070;">({{host.total_hosts}})</span>
+                    <!--<a ng-click="$ctrl.removeItem($index)" class="text-muted op-hover-to-show">&times;</a>-->
+                    <a ng-click="$ctrl.removeItem($index)" ng-show="!$ctrl.readonly">&times;</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div ng-if="!$ctrl.theHosts || $ctrl.theHosts.length===0" __class="op-blank-slate bg-light p-3">
+        <!--        <div class="op-blank-slate-icon"><i class="fal fa-server" style="font-size:4rem;"></i></div>-->
+        <button type="button" class="btn btn-outline-default" ng-click="$ctrl.openDeviceSelectorDialog()"><i
+                class="fal fa-server" ng-disabled="$ctrl.readonly"></i> {{$ctrl.theOptions.label || ''}}
+        </button>
+        <!--        </div>-->
+    </div>
+</div>

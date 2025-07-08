@@ -1,0 +1,61 @@
+<div class="form-group" style="margin-bottom: 1rem">
+    <div class="form-control-wrapper">{{'gfs.basic.file_path' | translate}}：</div>
+</div>
+<div class="form-group" ng-repeat="file in $ctrl.fileInfo.file">
+    {{$ctrl.fileInfo.dir || '~'}} <strong>&nbsp;&nbsp;/&nbsp;&nbsp;{{$ctrl.fileInfo.name || file.name}}</strong>
+</div>
+<div class="form-group" ng-if="$ctrl.isNew">
+    <div class="form-control-wrapper">
+        <label class="btn btn-outline-primary">
+            <input type="file" ngf-select ngf-max-size="$ctrl.ngf.maxSize" ngf-pattern="$ctrl.ngf.pattern"
+                   ng-model="$ctrl.fileInfo.file" name="file" style="display:none;" multiple="multiple">
+            {{'gfs.basic.select_file' | translate}}
+        </label>
+        <p class="help-block" style="margin-top: 1rem">
+            {{'gfs.basic.file_max_size' | translate}}{{$ctrl.ngf.maxSize}}<strong>{{$ctrl.ngf.pattern}}</strong>。
+            {{'gfs.basic.file_same_waring' | translate}}。<br>
+            {{'gfs.basic.file_upload_pattern' | translate}}
+        </p>
+    </div>
+</div>
+<div class="form-group op-align-horizontal" ng-if="$ctrl.isZipFile" style="display: block">
+    <div class="alert alert-success" style="margin-bottom: auto">
+        <p class="help-block ">
+            <strong class="d-block">{{'gfs.list.desc' | translate}}:</strong><br>
+            <strong class="d-block">{{'gfs.basic.no_unzip_desc' | translate}}</strong>
+            <strong class="d-block">{{'gfs.basic.unzip_subdirectory_extract_without_dir_desc' | translate}}</strong>
+            <strong class="d-block">{{'gfs.basic.unzip_subdirectory_extract_to_dir_desc' | translate}}</strong>
+        </p>
+    </div>
+    <label class="control-label w-auto text-left">{{'gfs.basic.compressed_file_options' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="opx-check-group opx-primary">
+            <input type="radio" name="unzip" ng-model="$ctrl.fileInfo.unzipMode" value="ExtractToDir"
+                   id="gem_unzip_opt2">
+            <label for="gem_unzip_opt2">{{'gfs.basic.unzip_subdirectory_extract_to_dir' | translate}}</label>
+            <input type="radio" name="unzip"
+                   ng-model="$ctrl.fileInfo.unzipMode"
+                   value="ExtractWithoutDir" id="gem_unzip_opt1"><label
+                for="gem_unzip_opt1">{{'gfs.basic.unzip_subdirectory_extract_without_dir' | translate}}</label>
+            <input type="radio" name="unzip"
+                   ng-model="$ctrl.fileInfo.unzipMode"
+                   value="" id="gem_unzip_opt3"><label
+                for="gem_unzip_opt3">{{'gfs.basic.no_unzip' | translate}}</label>
+        </div>
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.repoType.toLowerCase()==='git'">
+    <label class="control-label"
+           op-help-info="gfs.basic.param_config_info">{{'gfs.basic.param_config' | translate}}</label>
+    <div class="form-control-wrapper">
+        <input type="text" class="form-control code" ng-model="$ctrl.fileInfo.config">
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.repoType.toLowerCase()==='git'">
+    <label class="control-label"
+           op-help-info="gfs.basic.desc_info">{{'gfs.basic.desc' | translate}}</label>
+    <div class="form-control-wrapper">
+        <textarea class="form-control" ng-model="$ctrl.fileInfo.description" rows="3" style="resize: none;"></textarea>
+    </div>
+</div>
+</div>

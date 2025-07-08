@@ -1,0 +1,34 @@
+<div>
+    <div class="form-group">
+        <label class="control-label" op-help-info="{{'udp.wc.intx.ajax.repeat_helpinfo'|translate}}">{{'udp.wc.intx.ajax.repeat'|translate}}</label>
+        <div class="form-control-wrapper">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <input id="js_wiac_repeatenabled" type="checkbox" ng-model="$ctrl.props.ajax.repeat.enabled">
+                </div>
+                <input type="text" class="form-control" ng-model="$ctrl.props.ajax.repeat.var"
+                       ng-disabled="!$ctrl.props.ajax.repeat.enabled">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="js_wiacp_url">URL</label>
+        <div class="form-control-wrapper op-combo">
+            <select id="js_wiac_method" class="form-select" ng-model="$ctrl.props.ajax.method" style="width:6em;">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+            <udp-data-converter id="js_wiacp_url"  class="w-full" the-model="$ctrl.props.ajax.url" options="{kinds:'js,str'}"></udp-data-converter>
+            <!--<input id="js_wiacp_url" type="text" class="form-control" ng-model="$ctrl.props.ajax.url">-->
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.interacdtion.ajax.param'|translate}}</label>
+        <div class="form-control-wrapper">
+            <udp-page-params-config params-json="$ctrl.props.ajax.params" class="op-w-full"></udp-page-params-config>
+        </div>
+    </div>
+    <udp-widget-interaction-postproc proc-props="$ctrl.props.ajax.postproc"></udp-widget-interaction-postproc>
+</div>

@@ -1,0 +1,9 @@
+{
+    "jhi_activate": {
+        "title": "啟用",
+        "messages": {
+            "success": "<strong>您的賬號已啟用.</strong> 請 <a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">登入</a>.",
+            "error": "<strong>您的賬號無法啟用.</strong> 請重新註冊."
+        }
+    }
+}

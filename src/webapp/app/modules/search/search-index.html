@@ -1,0 +1,131 @@
+<div class="app search-app-header-fixed">
+    <div id="content" class="app-content" role="main" style="margin: 20px">
+        <div class="app-content-body ">
+            <div class="search-tab-content">
+                <h1 class="m-n font-thin h3" style="text-align: center;margin: 20px 0">
+                    <i class="fab fa-searchengin fa-2x"></i>
+                    &nbsp;<strong>Oplus System Search Center</strong>
+                </h1>
+            </div>
+            <div class="search-tab-content">
+                <form action="#" class="search-m-b-md">
+                    <div class="input-group">
+                        <input type="text" ng-model="$ctrl.keyword" class="form-control input-lg search"
+                               placeholder="Search keyword">
+                        <div class="form-control-wrapper">
+                            <select id="field_type" name="type" class="form-select op-w-sm search"
+                                    class="search-major"
+                                    ng-model="$ctrl.searchType">
+                                <option class="search-major" value="{{key}}"
+                                        ng-repeat="(key,value) in $ctrl.searchTypes">
+                                    {{value}}
+                                </option>
+                            </select>
+                        </div>
+                        <span class="input-group-btn"><button
+                                class="btn btn-lg btn-secondary search" type="button"
+                                ng-click="$ctrl.search($ctrl.keyword)">
+                            <i class="fa fa-search" style="margin-right: 5px"></i>Search</button></span>
+                    </div>
+                </form>
+                <p class="search-m-b-md" ng-if="$ctrl.searchResultCount > 0 && $ctrl.keyword">
+                    <span><strong
+                            style="color: #2a9292">{{$ctrl.searchResultCount}}</strong> Results found for keyword: <strong>{{$ctrl.keyword}}</strong></span>
+                    <span class="text-secondary" style="float: right">
+                        <i class="fa fa-trash" style="margin-right: 2px"></i>
+                        <a ng-click="$ctrl.clean()">{{'search.index.clean_result' | translate}}</a></span>
+                </p>
+                <div class="search-tab-container"
+                     ng-if="$ctrl.searchResultCount === undefined && $ctrl.historySearchRecord.length > 0 && !$ctrl.loading">
+                    <p class="search-m-b-md"><i class="fa fa-history"
+                                                style="margin-right: 2px"></i><strong>{{'search.index.history_record' | translate}}:</strong>
+                        <span class="text-secondary" style="float: right"><i class="fa fa-trash"
+                                                                             style="margin-right: 2px"></i>
+                        <a ng-click="$ctrl.cleanHistorySearch()">{{'search.index.clean_history_record' | translate}}</a></span>
+                    </p>
+                    <div class="udp-linelimit">
+                        <a class="badge badge-secondary" style="margin: 0 15px 10px;padding: 5px 10px;"
+                           ng-repeat="record in $ctrl.historySearchRecord track by $index"
+                           target="_blank" ng-click="$ctrl.historySearch(record)">{{record}}</a><br>
+                    </div>
+                </div>
+                <div class="tab-container search-tab-container" ng-if="$ctrl.searchResultCount > 0">
+                    <ul class="nav nav-tabs search-nav search-nav-tabs">
+                        <li ng-class="{'active': $index === 0}"
+                            ng-repeat="(key, value) in $ctrl.searchMap track by $index">
+                            <a href data-toggle="tab" data-target="#href{{key}}">
+                                {{key}}<span class="badge badge-sm search-m-l-xs search-message"
+                                             ng-class="$ctrl.showSearchStyle(key)">{{value.length}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content search-tab-content">
+                        <div ng-class="{'tab-pane' :true,'active': $index === 0}" id="href{{k}}"
+                             ng-repeat="(k, v) in $ctrl.searchMap track by $index">
+                            <ul class="list-group no-borders pull-in m-b-none">
+                                <li class="list-group-item" style="border: none"
+                                    ng-repeat="search in v track by $index">
+                                    <span class="h4 text-primary m-b-sm m-t-sm block">
+<!--                                          <a class="search-highlight-text">{{search.moduleName}}</a>-->
+                                          <a class="search-highlight-text" ng-click="$ctrl.showDetail(search)"
+                                             ng-if="search.linkType === 'route'">{{search.highlight}}</a>
+                                          <a class="search-highlight-text"
+                                             udp-widget-interaction="{{search.linkParams}}"
+                                             ng-if="search.linkType === 'page'">{{search.highlight}}</a>
+                                           <span class="fa fa-eye search-view"
+                                                 ng-if="search.linkType === 'page'"
+                                                 udp-widget-interaction="{{search.linkParams}}"
+                                                 ng-click="$event"></span>
+                                            <span class="fa fa-eye search-view"
+                                                  ng-if="search.linkType === 'route'"
+                                                  ng-click="$ctrl.showDetail(search)"></span>
+                                    </span>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-3"
+                                                 ng-repeat="(k,v) in (search.moduleData) track by $index"
+                                                 style="margin-top: 5px;width: auto">
+                                                <span class="search-major">{{k}}</span>&nbsp;:&nbsp;
+                                                <span ng-class="{'search-highlight search-major':v.indexOf($ctrl.keyword)!==-1 && v.indexOf('+')===-1}">
+                                                    {{v}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p ng-class=" {'search-show-data':!$last}"><span
+                                            class="search-label search-bg-primary search-pos-rlt search-m-r search-inline search-wrapper-xs"><i
+                                            class="search-arrow right arrow-primary"></i>  Module:</span>
+                                        <a class="search-highlight-text"
+                                           ng-click="$ctrl.showDetail(search.module)">{{search.tag}}</a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="height:10rem;" ng-if="$ctrl.loading">
+                    <div class="op-blank-slate">
+                        <div class="op-blank-slate-icon">
+                            <i class="fa fa-4x fa-pulse fa-spinner fa-fw"></i>
+                        </div>
+                        <p class="op-flashing-text">{{'search.index.searching' | translate}}</p>
+                    </div>
+                </div>
+                <div class="card" style="border: none; margin-top: 100px" ng-if="$ctrl.searchResultCount===0">
+                    <div class="card-body op-blank-slate">
+                        <div class="op-blank-slate-body">
+                            <div class="op-blank-slate-icon">
+                                <i class="fa fa-4x fa-inbox"></i>
+                            </div>
+                            <p>{{'search.index.by_keyword' | translate}}<strong style="color: red">&nbsp;{{$ctrl.keyword}}&nbsp;</strong>
+                                {{'search.index.not_found' | translate}}
+                            </p>
+                            <button class="btn m-b-xs btn-sm btn-danger" ng-click="$ctrl.clean()">
+                                <i class="fa fa-trash" style="margin-right: 5px"></i>{{'search.index.clean' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <umd-selector   the-model="uwProps.modelCode" 
+                        selected-data="uwProps.selectedData"></umd-selector>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>
+
+
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction' | translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page'}"
+                                       param-vars="{}">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'common.term.tag' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+         <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

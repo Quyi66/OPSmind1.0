@@ -1,0 +1,59 @@
+{
+  "app_um": {
+    "title":"用户管理",
+    "scan_host":"扫描主机",
+    "scan_host_count": "主机数",
+    "scan_user_count": "用户数",
+    "scan_user_group_count": "用户组数",
+    "system_user": "系统账户",
+    "regular_user": "普通账户",
+    "enabled_user": "启用",
+    "disabled_user": "禁用",
+    "status": "状态",
+    "action_user": "操作人",
+    "remark": "备注",
+    "start_time": "开始时间",
+    "end_time": "结束时间",
+    "import": {
+      "template": "批量创建用户模板",
+      "import_user": "导入用户",
+      "text": "如需批量创建用户，请下载批量创建用户Excel模板后填写内容，导入填写后的Excel内容"
+    },
+    "user": {
+      "username": "用户名",
+      "home": "用户家目录",
+      "comment": "用户注释",
+      "password": "用户密码",
+      "primary_group": "主组",
+      "secondary_groups": "附属组",
+      "password_last_change": "密码上次修改",
+      "expired_date": "过期时间"
+    },
+    "text": {
+      "delete_group_comment": "确认删除所选用户组？",
+      "delete_user_comment": "确认删除所选用户？",
+      "enabled_user_comment": "确认启动所选用户？",
+      "disabled_user_comment": "确认禁用所选用户？",
+      "create_user_comment": "在主机上创建的用户名称",
+      "create_user_home_comment": "不填，则为默认",
+      "create_user_comment_comment": "可不填，用于写入/etc/passwd文件第五个位置",
+      "create_user_id_comment": "在主机上创建的用户id，不填则系统默认分配",
+      "create_user_gid_comment": "在主机上创建的用户组gid，不填则系统默认分配",
+      "create_user_pass_comment": "创建用户对应的密码",
+      "create_user_group_comment": "不填，则为默认。若用户组不存在，则创建该用户组"
+    },
+    "action": {
+      "title": "操作",
+      "create_user": "新建用户",
+      "delete_user": "删除",
+      "enable_user": "启用",
+      "disable_user": "禁用",
+      "change_password": "修改密码"
+    },
+    "menu": {
+      "user": "用户",
+      "usergroup": "用户组",
+      "log": "操作日志"
+    }
+  }
+}

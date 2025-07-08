@@ -1,0 +1,33 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'udp.uinput.attrs.binding' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" ng-model="uwProps.core.exportParam">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.flow.applet' | translate}} </label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="uwProps.tasks.appletCode"  op-select
+                        ng-options="applet.code as applet.title for applet in applets">
+                </select>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.w.flow.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'common.term.tag' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

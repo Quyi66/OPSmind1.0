@@ -1,0 +1,86 @@
+<uib-tabset class="tab-container" ng-init="uwProps.items=uwProps.items||[];uwProps.display=uwProps.display||{}">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label" op-help-info="{{'udp.w.nav.config.key_desc'|translate}}">{{'udp.w.nav.config.key'|translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" ng-model="uwProps.key" class="form-control op-w-sm">
+            </div>
+        </div>
+        <ul class="nav" ng-class="'nav-'+(uwProps.display.style||'tabs')"
+            ui-sortable="{handle:'.op-drag-handle'}" ui-sortable-stop="sortStop"
+            ng-model="uwProps.items">
+            <li ng-repeat="item in uwProps.items track by $index" class="nav-item">
+                <a ng-click="selectNavItem($index)" style="padding-left:2px;" class="nav-link"
+                   ng-class="{active:indexInEdit===$index}">
+                    <i class="fa text-muted op-drag-handle"
+                       ng-class="item.link.type==='url'?'fa-link':'fa-sort fa-rotate-90 fa-fw'"></i>
+                    <span ng-bind-html="item.title"></span></a>
+            </li>
+        </ul>
+        <div class="mt-5">
+            <button type="button" ng-click="addNavItem()" class="btn btn-primary pull-right"><i
+                    class="fa fa-plus"></i> {{'udp.w.nav.config.add_navitem'|translate}}
+            </button>
+            <div class="form-group">
+                <label class="control-label"
+                       op-help-info="{{'udp.w.nav.config.navitem_key_desc'|translate}}">{{'udp.w.nav.config.navitem_key'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" ng-model="itemInEdit.key" class="form-control op-w-sm">
+                    <!--remove class  btn-link-->
+                    <button type="button" class="btn btn-outline-danger" ng-click="deleteNavItem(indexInEdit)"><i
+                            class="fa fa-times"></i> {{'udp.w.nav.config.delete_navitem'|translate}}
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.nav.config.navitem_label'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" ng-model="itemInEdit.title" class="form-control op-w-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.nav.config.navitem_link'|translate}}</label>
+                <div class="form-control-wrapper op-combo">
+                    <select class="form-select op-w-sm" ng-model="itemInEdit.link.type">
+                        <option value="">{{'udp.w.nav.config.navitem_link_type_page'|translate}}</option>
+                        <option value="url">{{'udp.w.nav.config.navitem_link_type_url'|translate}}</option>
+                    </select>
+                    <udp-data-converter ng-if="itemInEdit.link.type==='url'" the-model="itemInEdit.link.url"
+                                        class="op-w-full"
+                                        options="{kinds:'js,str'}"></udp-data-converter>
+                    <udp-page-selector ng-if="itemInEdit.link.type!=='url'" page-id="itemInEdit.link.pageId"
+                                       class="op-w-full"
+                                       on-change="onPageSelectorChange"
+                                       excluded="[currentPageId]"></udp-page-selector>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.nav.config.navitem_params'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-page-params-config params-json="itemInEdit.link.params"
+                                            class="op-w-full"></udp-page-params-config>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.list.config.control_type'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.display.style">
+                        <option value="tabs">{{'udp.w.list.config.control_tab'|translate}}</option>
+                        <option value="pills">{{'udp.w.list.config.control_pill'|translate}}</option>
+                        <option value="mdc-op">{{'udp.w.list.config.control_indicator'|translate}}</option>
+                        <option value="navbar">{{'udp.w.list.config.control_navbar'|translate}}</option>
+                    </select>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

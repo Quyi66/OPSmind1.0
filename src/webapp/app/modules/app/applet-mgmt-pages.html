@@ -1,0 +1,16 @@
+<div class="opx-layout-vflex" ui-view="app_mgmt_page_view">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'udp.page.title' | translate}}</div>
+        <div class="navbar-nav ms-auto">
+            <div class="nav-item me-2">
+<!--                <a class="btn btn-outline-primary" ui-sref="app.appman.page.create"-->
+                <a class="btn btn-primary opx-btn-flat" ui-sref="app.appman.page.create"
+                   uaa-has-permission="udp:edit:*"><i
+                        class="fa fa-plus"></i> {{'common.action.create' | translate}}</a>
+            </div>
+        </div>
+    </nav>
+    <div class="opx-flex-fill">
+        <page-list show-applet="false" applet-code="$ctrl.appletCode" options="{enableEdit:true}"></page-list>
+    </div>
+</div>

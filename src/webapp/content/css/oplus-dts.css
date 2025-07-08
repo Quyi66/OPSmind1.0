@@ -1,0 +1,36 @@
+@charset "UTF-8";
+.fa-datasource-jdbc:before {
+  content: "";
+}
+
+.fa-datasource-orientdb:before {
+  content: "";
+}
+
+.fa-datasource-join:before {
+  content: "";
+}
+
+.fa-datasource-rest:before {
+  content: "";
+}
+
+.fa-datasource-file:before {
+  content: "";
+}
+
+.fa-datasource-es:before {
+  content: "";
+}
+
+.fa-datasource-hbase:before {
+  content: "";
+}
+
+.fa-datasource-mongo:before {
+  content: "";
+}
+
+.fa-datasource-localexcel:before {
+  content: "";
+}

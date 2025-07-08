@@ -1,0 +1,49 @@
+<style type="text/css">
+    gfs-gfile-content .CodeMirror {
+        height: 400px;
+    }
+</style>
+<div class="d-flex flex-nowrap m-b" ng-if="$ctrl.options.showExtraInfo">
+    <button class="btn btn-default btn-sm opx-btn-icon" ng-click="$ctrl.switchViewMode()" ng-if="$ctrl.renderView"
+            title="{{'gfs.content.switch_view' | translate}}">
+        <i class="fa" ng-class="$ctrl.viewMode==='raw'?'fa-file-chart-line':'fa-code'"></i></button>
+    <div class="ms-auto me-3">
+        <span class="small me-3">{{$ctrl.file.lastModified | fromNow}}</span>
+        <span class="small me-3">{{$ctrl.file.size | filesize:0}}</span>
+        <div class="dropdown">
+            <button class="btn btn-default btn-sm opx-btn-icon dropdown-toggle" data-bs-toggle="dropdown"><i
+                    class="fa fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" ng-click="$ctrl.downloadFile()">
+                    <i class="fa fa-download"></i> {{'gfs.content.download' | translate}}</a>
+                <a class="dropdown-item" ng-click="$ctrl.editFile()">
+                    <i class="fa fa-edit"></i> {{'gfs.vtable.modify_info' | translate}}</a>
+                <a class="dropdown-item" ngclipboard
+                   data-clipboard-text="{{$ctrl.file.url}}">
+                    <i class="fa fa-copy"></i> {{'gfs.content.copy_link' | translate}}</a>
+            </div>
+        </div>
+    </div>
+    <!--    <select class="form-select d-inline-block" ng-model="$ctrl.mode" ng-options="m for m in $ctrl.cmModes"-->
+    <!--            ng-change="$ctrl.modeChanged()"></select>-->
+</div>
+<div ng-if="$ctrl.viewMode==='render'" class="w-full">
+    <div ng-if="$ctrl.renderView==='playbook'">
+        <jao-playbook-view playbook="$ctrl.file.path"></jao-playbook-view>
+    </div>
+    <div ng-if="$ctrl.renderView==='image'" class="text-center">
+        <img ng-src="{{$ctrl.file.url}}" style="max-width: 100%;">
+    </div>
+    <div ng-if="$ctrl.renderView==='html'">
+        <iframe id="js-html-content" class="w-full border-0" style="height:400px;"></iframe>
+    </div>
+    <div ng-if="$ctrl.renderView==='markdown'" ng-bind-html="$ctrl.file.content|markdown" class="gfs-markdown-content">
+    </div>
+    <div ng-if="$ctrl.renderView==='sheet'">
+        <div id="js-sheet-content" class="w-100 h-100 p-0 m-0" style="position:absolute;left: 0;top: 0;"></div>
+    </div>
+</div>
+<div ng-if="$ctrl.viewMode==='raw'" class="w-full">
+    <textarea ui-codemirror="$ctrl.cmOptions" rows="10" id="input_query" ng-model="$ctrl.file.content"></textarea>
+</div>

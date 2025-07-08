@@ -1,0 +1,83 @@
+<div ng-if="$ctrl.config.viewMode==='browser'">
+    <gfs-gfile-list repo-type="$ctrl.gfileListOptions.repoType" dir="$ctrl.currentDir"
+                    options="$ctrl.gfileListOptions"></gfs-gfile-list>
+</div>
+<div ng-if="$ctrl.config.viewMode==='dialog'">
+    <div ng-if="$ctrl.fileList.length>0">
+        <button ng-if="$ctrl.config.multipleSelect" type="button" class="btn btn-sm btn-default" ng-disabled="$ctrl.disableFileButton"
+                ng-click="$ctrl.openSelectorDialog()" title="{{'gfs.selector.remove_file' | translate}}">
+            {{ 'gfs.example.all' | translate}}<strong>{{$ctrl.fileList.length}}</strong>{{'gfs.selector.files' | translate}}
+        </button>
+        <table class="table opx-table op-param-table __mt-3 op-with-scroll-body borderx">
+            <tbody ng-repeat="file in $ctrl.fileList track by $index" style="max-height: 16rem;"  ng-init="file_index = $index">
+            <tr>
+                <td>
+                    <div class="gfs-missing-file" ng-if="$ctrl.fileStatusMap[file.path]||false">
+                        <span class="gfs-ff-name">{{file.path}}</span>
+                        <span class="gfs-ff-warn"
+                              title="{{'gfs.selector.file_not_exist' | translate}}"></span>
+                    </div>
+                    <div ng-if="!$ctrl.fileStatusMap[file.path]||false" style="white-space: normal;">
+                        {{file.path}}
+                    </div>
+                </td>
+                <td ng-if="$ctrl.config.showFileConfig"><input type="text" class="form-control" ng-model="file.config"  placeholder="{{'jao.job.run.ansible-playbook' | translate}}" >
+                </td>
+                <td ng-if="!$ctrl.config.doNotShowTagsParam"><input type="text" class="form-control" ng-model="file.tag" placeholder="{{'jao.job.run.ansible-playbook-tag' | translate}}"  title="tag">
+                </td>
+                <td style="width:3rem;" class="text-right">
+                    <button type="button" class="btn btn-sm btn-default opx-btn-icon"
+                            title="{{'gfs.selector.remove_file' | translate}}"
+                            ng-click="$ctrl.removeFile(file,$index)"><i
+                            class="fa fa-minus"></i></button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div ng-if="$ctrl.modelConverter.hostGroup">
+            <fieldset >
+                <div class="mb-3">
+                    <button class="my-sm-2 btn btn-sm btn-default" ng-click="$ctrl.addServerGroup()"><i class="text-primary fa fa-plus-circle"></i>  {{'jao.job.process.create_group' | translate}}
+                    </button>
+                </div>
+                <div class="card mb-3" ng-repeat="group in $ctrl.groups track by $index"  ng-init="group_index = $index">
+                    <div class="card-header d-flex p-2 bg-light border-bottom">
+                        <input type="text" ng-model="group.group" class="form-control me-auto font-weight-bold">
+                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.openTextModal(group.host_vars, group_index, 'host_vars')" title="host_vars"><i class="far fa-comment-alt-edit"></i></button>
+                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.openTextModal(group.group_vars, group_index, 'group_vars')" title="group_vars"><i class="far fa-comment-alt-edit"></i></button>
+                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.removeServerGroup(group_index)" title="{{'jao.job.process.delete_group' | translate}}"><i
+                                class="fa fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-3">
+                        <acm-device-selector the-model="group.hosts"  ci-types="'[auto]'" mcheck-type="'map'"></acm-device-selector>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div ng-if="!$ctrl.modelConverter.hostGroup && $ctrl.ifGroupDiv">
+            <fieldset ng-if="$ctrl.groups.length >0">
+                <div class="card mb-3" ng-repeat="group in $ctrl.groups track by $index"  ng-init="group_index = $index">
+                    <div class="card-header d-flex p-2 bg-light border-bottom">
+                        <input type="text" title="主机分组" ng-model="group.group" class="form-control me-auto font-weight-bold" />
+                    </div>
+<!--                    <div class="card-header d-flex p-2 bg-light border-bottom">-->
+<!--                        <textarea rows="2" title="group_vars" ng-model="group.group_vars" class="form-control me-auto font-weight-bold"> </textarea>-->
+<!--                        <textarea rows="2" title="host_vars" ng-model="group.host_vars" class="form-control me-auto font-weight-bold"> </textarea>-->
+<!--                    </div>-->
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+    <div ng-if="$ctrl.fileList.length===0" class="op-blank-slate bg-light p-3">
+        <div class="op-blank-slate-icon"><i class="fal fa-file-alt" style="font-size:4rem;"></i></div>
+        <!--    <div>没有选中的文件</div>-->
+        <div>
+            <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.openSelectorDialog()">
+                {{'gfs.selector.select_file' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<style>
+    mac-message-header .op-badge { 
+        background-color: #dc3545; 
+        position: absolute;
+        border-radius: 999px;
+        width: 0.5rem;
+        height: 0.5rem;
+        right: 0.2rem;
+        top: 0.4rem;
+    }
+</style>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+        <i class="fa fa-bell"></i>
+        <span class="op-badge" ng-if="$ctrl.newMessageCount > 0"></span>
+    </a>
+    <mac-message-panel class="dropdown-menu dropdown-menu-end" new-message-count="$ctrl.newMessageCount"></mac-message-panel>
+</li>

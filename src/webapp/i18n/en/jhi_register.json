@@ -1,0 +1,18 @@
+{
+    "jhi_register.title": "Sign Up",
+    "jhi_register.form.button": "Sign Up",
+    "jhi_register.messages.validate.login.required": "Your account number is required.",
+    "jhi_register.messages.validate.login.minlength": "Your account length must be at least 1 character",
+    "jhi_register.messages.validate.login.maxlength": "Your account length cannot exceed 50 characters",
+    "jhi_register.messages.validate.login.pattern": "Your account can only use lowercase English and numbers",
+    "jhi_register.messages.validate.fullname.required": "Your name is required.",
+    "jhi_register.messages.validate.fullname.minlength": "Your name must be at least 1 character long",
+    "jhi_register.messages.validate.fullname.maxlength": "Your name cannot exceed 50 characters in length",
+    "jhi_register.messages.validate.department.maxlength": "Department name length cannot exceed 500 characters",
+    "jhi_register.messages.validate.mobile.maxlength": "The length of the phone number cannot exceed 50 characters",
+    "jhi_register.messages.validate.telephoneNumber.maxlength": "Landline number length cannot exceed 50 characters",
+    "jhi_register.messages.success": "<strong>Successful registration!</strong> Please check your email.",
+    "jhi_register.messages.error.fail": "<strong>Registration failed!</strong> Please try again later.",
+    "jhi_register.messages.error.userexists": "<strong>The account has been registered!</strong> Please select another account.",
+    "jhi_register.messages.error.emailexists": "<strong>The email has been registered!</strong> Please select another email."
+}

@@ -1,0 +1,128 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light" style="height: 3rem">
+        <span class="opx-navbar-title">{{'jao.flow.edit' | translate}}</span>
+        <div class="ms-auto">
+            <button ng-if="$ctrl.task" type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.startFlow()"
+                    ng-disabled="flowForm.$invalid">{{'jao.flow.detail.step.run' | translate}}
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-click="$ctrl.cancel()">{{'common.entity.action.cancel' | translate}}
+            </button>
+        </div>
+    </nav>
+
+    <form class="op-smartform form-vertical  op-bold-label p-5 bg-white opx-flex-fill scroll-y" name="flowForm"
+          id="js-flow-edit-{{$ctrl.task.id||'new'}}">
+        <fieldset>
+            <legend>主机信息</legend>
+            <div class="form-group">
+                <div class=mb-3" ng-repeat="task in $ctrl.step.config.tasks track by $index">
+                    <div class="card mb-3" ng-repeat="group in task.groups track by $index">
+                        <div class="card-header d-flex p-2 bg-light border-bottom">
+                            <label class="control-label">
+                                <pre>{{task.scripts[$index].location}}</pre>
+                            </label>
+                            <input ng-disabled="true" type="text" ng-model="group.group"
+                                   class="form-control me-auto font-weight-bold"/>
+                            <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat"
+                                    ng-click="$ctrl.openTextModal($parent.$index, $index,group.host_vars, 'host_vars')"
+                                    title="host_vars: {{group.host_vars}}"><i class="far fa-comment-alt-edit"></i>
+                            </button>
+                            <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat"
+                                    ng-click="$ctrl.openTextModal($parent.$index, $index, group.group_vars, 'group_vars')"
+                                    title="group_vars: {{group.group_vars}}"><i class="far fa-comment-alt-edit"></i>
+                            </button>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="form-group">
+                                <div class="mt-3">
+                                    <!--                                        <textarea row="5" style="width: 100%">-->
+                                    <!--                                           $parent.$index:  {{$parent.$index}} \n-->
+                                    <!--                                           $index:  {{$index}} \n-->
+                                    <!--                                           host: {{$ctrl.step.config.tasks[$parent.$index]['groups'][$index].hosts}}-->
+                                    <!--                                        </textarea>-->
+                                    <jao-dynamic-host-selector
+                                            the-model="$ctrl.step.config.tasks[$parent.$index]['groups'][$index].hosts"
+                                            the-data="$ctrl.hostStatusList[$parent.$index][$index][group.group]"></jao-dynamic-host-selector>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>步骤信息</legend>
+            <div class="form-group">
+                <div class="card card-default op-action-card op-w-full">
+                    <div class="card-body">
+                        <div class="form-group op-align-horizontal">
+                            <label class="control-label">步骤名</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control op-w-lg" ng-model="$ctrl.task.name"
+                                       ng-disabled="true">
+                            </div>
+
+                            <label class="control-label"
+                                   op-help-info="{{'jao.job.process.timeout_info' | translate}}">
+                                任务超时</label>
+                            <div class="form-control-wrapper">
+                                <div class="input-group w-md">
+                                    <input type="number" ng-model="$ctrl.task.config.taskTimeout" class="form-control"
+                                           min="-1"
+                                           step="1">
+                                    <div class="input-group-append"><span class="input-group-text">秒</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group op-align-horizontal">
+                            <label class="control-label">自动执行下一步</label>
+                            <div class="form-control-wrapper">
+                                <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" ng-model="$ctrl.step.autoNext" id="je_secret_0"
+                                           class="ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false">
+                                    <label for="je_secret_0"></label>
+                                </div>
+                            </div>
+
+                            <!--                            <label class="control-label">详细输出</label>-->
+                            <!--                            <div class="form-control-wrapper">-->
+                            <!--                                <div class="checkbox checkbox-primary">-->
+                            <!--                                    <input type="checkbox" ng-model="$ctrl.task.config.verbosity" id="je_verbosity"-->
+                            <!--                                           class="ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false">-->
+                            <!--                                    <label for="je_verbosity"></label>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <label class="control-label"
+                                   op-help-info="{{'jao.job.script.verbose_info' | translate}}">{{'jao.job.script.verbose' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <select ng-model="$ctrl.task.config.verbosity" id="je_verbosity" aria-label="选择输入"
+                                        class="form-select op-w-auto">
+                                    <option value=0>{{'jao.job.run.ansible.verbose.normal' | translate}}</option>
+                                    <option class="" value=1>{{'jao.job.run.ansible.verbose.detailed' | translate}}</option>
+                                    <option class="" value=2>{{'jao.job.run.ansible.verbose.more_details' | translate}}</option>
+                                    <option class="" value=3>{{'jao.job.run.ansible.verbose.debug' | translate}}</option>
+                                    <option class="" value=4>{{'jao.job.run.ansible.verbose.connection_debugging' | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group op-align-horizontal"
+                             ng-repeat="tasks in $ctrl.task.config.tasks">
+                            <label class="control-label">脚本 {{$index + 1}}
+                            </label>
+                            <div class="form-control-wrapper">
+                                <gfs-file-selector the-model="tasks" class="w-full"
+                                                   model-converter="$ctrl.fileModelConverter"
+                                                   disable-file-button="true"
+                                                   if-group-div="false"
+                                                   config="$ctrl.fileSelectorConfig"></gfs-file-selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

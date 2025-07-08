@@ -1,0 +1,28 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cac3.navigation.patrol_item_list' | translate}}</div>
+        <div class="navbar-nav ms-auto" uaa-has-permission="cac:edit:*">
+            <a href="#" ng-click="vm.downloadTemplate($event)">
+                <button class="btn btn-secondary">
+                    <i class="fa fa-download"></i> {{'cac3.button.template_download' | translate}}
+                </button>
+            </a>
+            <a href="javascript:;" ng-click="vm.exportInspectionItems($event)">
+                <button class="btn btn-success">
+                    <i class="fa fa-file-import"></i> {{'cac3.button.export_inspection_items' | translate}}
+                </button>
+            </a>
+            <button class="btn btn-primary" ng-click="vm.importInspection()">
+                <i class="fa fa-file-upload"></i> {{'cac3.button.import_patrol_items' | translate}}
+            </button>
+        </div>
+    </nav>
+    <div class="card-body">
+        <opx-datatable table-config="vm.tableConfig">
+            <button class="btn btn-primary"
+                    ui-sref="app.cac3.inspection.add"><i class="fa fa-plus"></i> {{'cac3.button.new_inspection_items' | translate}}
+            </button>
+        </opx-datatable>
+    </div>
+</div>
+

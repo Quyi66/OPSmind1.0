@@ -1,0 +1,34 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4358351 */
+  src: url('../webfonts/icon-font.woff2') format('woff2'),
+  url('../webfonts/icon-font.woff') format('woff'),
+  url('../webfonts/icon-font.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 64px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-portal-icon-fenghuobiaoshi:before {
+  content: "\e6cf";
+}
+
+.icon-icon_logo:before {
+  content: "\e685";
+}
+
+.icon-H3C:before {
+  content: "\e60f";
+}
+
+.icon-huawei:before {
+  content: "\e67d";
+}
+
+.icon-cisco:before {
+  content: "\e62c";
+}

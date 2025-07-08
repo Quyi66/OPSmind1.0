@@ -1,0 +1,53 @@
+{
+  "total": 26,
+  "records": [
+    {
+      "path": "/GD/Guangzhou/Tianhe",
+      "total": 10,
+      "name": "天河"
+    },
+    {
+      "path": "/GD/Guangzhou/Tianhe",
+      "total": 1,
+      "name": "Duplicated 天河"
+    },
+    {
+      "path": "/",
+      "total": 200,
+      "name": "Root"
+    },
+    {
+      "path": "/GD/Guangzhou",
+      "total": 2,
+      "name": "广州"
+    },
+    {
+      "path": "/GD/Shantou/Longhu",
+      "total": 20,
+      "name": "龙湖"
+    },
+    {
+      "path": "/JX/Ganzhou/Nankang",
+      "name": "南康"
+    },
+    {
+      "path": "/JX",
+      "name": "江西"
+    },
+    {
+      "path": "/GD/Guangzhou/Conghua",
+      "total": 50,
+      "name": "从化"
+    },
+    {
+      "path": "/GD/Shenzhen",
+      "total": 0,
+      "name": "深圳"
+    },
+    {
+      "path": "/GD/Shenzhen/Nanshan",
+      "total": 0,
+      "name": "南山"
+    }
+  ]
+}

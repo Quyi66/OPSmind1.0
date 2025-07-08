@@ -1,0 +1,95 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'jao.log.data_from' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="uwProps.dataset.source">
+                    <option value="jaorunlist">{{'jao.log.jao_run_list' | translate}}</option>
+                    <option value="jaolastrun">{{'jao.log.jao_last_run' | translate}}</option>
+                    <option value="jaorunid">{{'jao.log.jao_run_id' | translate}}</option>
+                    <option value="opslog">{{'jao.log.jao_oplog_list' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div ng-if="uwProps.dataset.source==='opslog'">
+            <div class="form-group">
+                <label class="control-label">{{'jao.log.opslog.module' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" ng-model="uwProps.dataset.opslog.module" class="form-control">
+                    <!-- <p class="help-block">{{'jao.log.opslog.module_desc' | translate}}</p> -->
+                    <!--                    <p class="help-block"></p>-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'jao.log.opslog.operation' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-data-converter the-model="uwProps.dataset.opslog.operation" options="{kinds:'js,str'}"
+                                        class="op-w-full"></udp-data-converter>
+                    <!--                    <p class="help-block">{{'jao.log.opslog.operation_desc' | translate}}</p>-->
+                    <!--                    <p class="help-block"></p>-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'jao.log.opslog.filter_status' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-data-converter the-model="uwProps.dataset.opslog.filter_status" options="{kinds:'js,str'}"
+                                        class="op-w-full"></udp-data-converter>
+                    <p class="help-block">{{'jao.log.opslog.filter_status_desc' | translate}}</p>
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'jao.log.opslog.filter_day' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-data-converter the-model="uwProps.dataset.opslog.filter_day" options="{kinds:'js,str'}"
+                                        class="op-w-full"></udp-data-converter>
+                    <p class="help-block">{{'jao.log.opslog.filter_day_desc' | translate}}</p>
+                    <p class="help-block"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">{{'jao.log.opslog.action_column' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-data-converter the-model="uwProps.dataset.opslog.action_column"
+                                        class="w-full"
+                                        options="{kinds:'link',varTypes:'field'}"></udp-data-converter>
+                </div>
+            </div>
+        </div>
+        <div ng-if="uwProps.dataset.source==='jaorunlist'||uwProps.dataset.source==='jaolastrun'">
+            <jao-job-selector the-model="uwProps.jobId" selected-job="selectedJob"></jao-job-selector>
+        </div>
+        <div ng-if="uwProps.dataset.source==='jaorunid'">
+            <div ng-bind-html="'jao.log.need_param' | translate"></div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction' | translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param,job,ajax,link,event,func,code'}"
+                                       param-vars="">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'jao.log.show_mode' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select" ng-model="uwProps.display.viewas">
+                        <option value="dialog">{{'jao.log.show_mode.dialog' | translate}}</option>
+                        <option value="plain">{{'jao.log.show_mode.plain' | translate}}</option>
+                    </select>
+                </div>
+            </div>
+            <div ng-if="uwProps.display.viewas==='dialog'">
+                <udp-button-style-config ng-model="uwProps.display.button"></udp-button-style-config>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'jao.log.props_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

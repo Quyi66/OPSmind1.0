@@ -1,0 +1,108 @@
+<!--Single file approval history-->
+<div class="modal-header" ng-if="$ctrl.historyModal === 'singleFile'">
+    <h4 class="modal-title">{{'gfs.modal.audit_record' | translate}} - {{$ctrl.file.name}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body" ng-if="$ctrl.historyModal === 'singleFile'">
+    <table class="opx-table table table-hover">
+        <thead>
+        <tr>
+            <th>{{'gfs.modal.time' | translate}}</th>
+            <th style="width:6rem;">{{'gfs.modal.remark' | translate}}</th>
+            <th style="width:30em;">{{'gfs.modal.approve_results' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in $ctrl.historys track by $index" class="op-hover-trigger">
+            <td>
+                {{record.actionDate}}
+            </td>
+            <td>
+                {{record.comment}}
+            </td>
+            <td>
+                {{record.action}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--All approval history-->
+<div class="modal-header" ng-if="$ctrl.historyModal === 'all'">
+    <h4 class="modal-title">{{'gfs.modal.audit_record' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body" ng-if="$ctrl.historyModal === 'all'">
+    <table class="opx-table table table-hover">
+        <thead>
+        <tr>
+            <th>{{'gfs.modal.time' | translate}}</th>
+            <th>{{'gfs.modal.file_count' | translate}}</th>
+            <th>{{'gfs.modal.approval_by' | translate}}</th>
+            <th>{{'gfs.modal.approve_results' | translate}}</th>
+            <th>{{'gfs.modal.remark' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in $ctrl.historys track by $index" class="op-hover-trigger">
+            <td>
+                {{record.actionDate}}
+            </td>
+            <td>
+                    <span class="btn-link js-op-button text-primary btn-sm"
+                          ng-click="$ctrl.showApprovalDetail(record.id)">{{record.approvalFileCount}}</span>
+            </td>
+            <td>
+                {{record.approvalBy}}
+            </td>
+            <td>
+                {{record.action}}
+            </td>
+            <td>
+                {{record.comment}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--Approval history details display-->
+<div class="modal-header" ng-if="$ctrl.historyModal === 'approvalDetail'">
+    <h4 class="modal-title">{{'gfs.modal.approval_files' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body" style="overflow-x: auto" ng-if="$ctrl.historyModal === 'approvalDetail'">
+    <table class="opx-table table table-hover">
+        <thead>
+        <tr>
+            <th>{{'gfs.basic.file_path' | translate}}</th>
+            <th>{{'gfs.modal.time' | translate}}</th>
+            <th>{{'gfs.modal.approval_by' | translate}}</th>
+            <th>{{'gfs.modal.approve_results' | translate}}</th>
+            <th>{{'gfs.modal.remark' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in $ctrl.detail.paths track by $index" class="op-hover-trigger">
+            <td>
+                   <span class="btn-link js-op-button text-primary btn-sm"
+                         ng-click="$ctrl.goFile(record)">{{record}}</span>
+            </td>
+            <td>
+                {{$ctrl.detail.actionDate}}
+            </td>
+            <td>
+                {{$ctrl.detail.approverBy}}
+            </td>
+            <td>
+                {{$ctrl.detail.action}}
+            </td>
+            <td>
+                {{$ctrl.detail.comment}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,203 @@
+// Make button same height as input form-control
+$op-btn-height: $input-height;
+$op-btn-height-lg: $input-height-lg;
+$op-btn-height-sm: $input-height-sm;
+// Color
+$op-btn-border-color: $input-border-color;
+$op-btn-color: $body-color;
+$op-btn-hover-color: darken($op-btn-color, 20%);
+$op-btn-bg: $gray-200;
+$op-btn-hover-bg: darken($op-btn-bg, 5%);
+
+// Dark color
+$op-btn-dark-border-color: $op-component-dark-border-color;
+$op-btn-dark-color: lighten($op-btn-dark-border-color, 30%);
+$op-btn-dark-hover-color: lighten($op-btn-dark-color, 20%);
+$op-btn-dark-bg: $op-component-dark-bg;
+$op-btn-dark-hover-bg: lighten($op-btn-dark-bg, 5%);
+
+.btn {
+  // Disable wrap
+  white-space: nowrap;
+
+  &.disabled,
+  &:disabled {
+    filter: grayscale(100%);
+  }
+
+  &.opx-btn-ok {
+    &:before {
+      @include opx-fa-icon('\f00c');
+      margin-right: 0.25rem;
+    }
+  }
+
+  &.opx-btn-cancel {
+    &:before {
+      @include opx-fa-icon('\f3e5');
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+//==================================================
+// btn-default
+// A useful style for not important buttons
+//==================================================
+
+.btn-default {
+  @include button-variant($op-btn-bg, $op-btn-bg, $op-btn-color,
+          $op-btn-hover-bg, $op-btn-hover-bg, $op-btn-hover-color,
+          $op-btn-hover-bg, $op-btn-hover-bg, $op-btn-hover-color);
+
+  &.opx-btn-flat, &.opx-btn-table {
+    background: transparent;
+    border-color: transparent;
+
+    &:hover, &:active,
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active {
+      background-color: $op-btn-hover-bg;
+    }
+  }
+
+  .bg-dark & {
+    @include button-variant($op-btn-dark-bg, $op-btn-dark-bg, $op-btn-dark-color,
+            $op-btn-dark-hover-bg, $op-btn-dark-hover-bg, $op-btn-dark-hover-color,
+            $op-btn-dark-hover-bg, $op-btn-dark-hover-bg, $op-btn-dark-hover-color);
+
+    &.opx-btn-flat, &.opx-btn-table {
+      &:hover, &:active,
+      &:not(:disabled):not(.disabled):active,
+      &:not(:disabled):not(.disabled).active {
+        background-color: $op-btn-dark-hover-bg;
+      }
+    }
+  }
+}
+
+.btn-outline-default {
+  @include button-outline-variant($op-btn-color, $op-btn-hover-color,
+          $op-btn-bg, $op-btn-border-color, $op-btn-color);
+  border-color: $op-btn-border-color;
+
+  .bg-dark & {
+    @include button-outline-variant($op-btn-dark-color, $op-btn-dark-hover-color,
+            $op-btn-dark-bg, $op-btn-dark-border-color, $op-btn-dark-color);
+    border-color: $op-btn-dark-border-color;
+  }
+}
+
+.navbar .btn-default {
+  background: transparent;
+  border-color: transparent;
+
+  &:hover {
+    background-color: rgba($gray-500, 0.25);
+    border-color: rgba($gray-500, 0.25);
+  }
+}
+
+
+//==================================================
+// Special button outlook: square, rounded, flat
+//==================================================
+// Icon only button, make it square
+.opx-btn-icon {
+  //20210513: Set x-padding 0 to make icon center aligned horizontally
+  width: $op-btn-height;
+  padding-left: 0;
+  padding-right: 0;
+  //Limit min-width to ensure same width when placed in inline-flex layout because it has no x-padding.
+  min-width: $op-btn-height;
+  height: $op-btn-height;
+
+  &.btn-sm {
+    width: $op-btn-height-sm;
+    min-width: $op-btn-height-sm;
+    height: $op-btn-height-sm;
+  }
+
+  &.btn-lg {
+    width: $op-btn-height-lg;
+    min-width: $op-btn-height-lg;
+    height: $op-btn-height-lg;
+  }
+}
+
+a.opx-btn-icon > i {
+  //LEO@20210506: not work with a.btn-sm.opx-btn-icon
+  //line-height: $op-btn-height;
+}
+
+// Flat button has no border or background
+@each $color, $value in $theme-colors {
+  .opx-btn-flat.btn-#{$color},
+  .opx-btn-table.btn-#{$color} {
+    //LEO@20210507: Set border color transparent instead of remove border, to make same height as normal button.
+    border: 0;
+    //border-color: transparent;
+    background: transparent;
+
+    &, &:hover, &:active, &:focus {
+      box-shadow: none;
+    }
+
+    @include button-outline-variant($value);
+  }
+}
+
+
+//.opx-icon-card-list{
+//  display: flex;
+//  flex-direction: row;
+//  flex-wrap: wrap;
+//  align-items: start;
+//  gap:1rem;
+//}
+.opx-icon-card.btn {
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > i {
+    font-size: 3em;
+    //height:3em;
+    //width:3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  > i + span {
+    margin-top: 1em;
+  }
+}
+
+.btn-group {
+  // LEO: prevent wrap in td
+  // https://github.com/twbs/bootstrap/issues/9939
+  td & {
+    white-space: nowrap;
+
+    .btn {
+      float: none;
+      display: inline-block;
+    }
+  }
+}
+
+.op-close-window.btn-default {
+  &:hover {
+    background-color: $danger;
+    color: $white;
+  }
+
+  &:active {
+    background-color: darken($danger, 20%) !important;
+    color: $white !important;
+  }
+}

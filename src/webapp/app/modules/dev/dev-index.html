@@ -1,0 +1,24 @@
+<div class="opx-layout-hflex">
+    <div class="opx-sidebar">
+        <div class="opx-sidebar-header opx-sidebar-header-fixed border-bottom">
+            <div class="opx-navbar-title">开发测试</div>
+        </div>
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item" ng-repeat="com in components | orderBy:'toString()' track by $index">
+                    <a ui-sref="app.dev.component({component:com})" ui-sref-active="active">{{com}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    <nav class="opx-layout-vflex-header navbar navbar-expand navbar-light bg-light border-bottom">-->
+    <!--        <div class="opx-navbar-title">开发测试</div>-->
+    <!--        <ul class="navbar-nav">-->
+    <!--            <li class="nav-item" ng-repeat="com in components | orderBy:'toString()' track by $index">-->
+    <!--                <a class="nav-link" ui-sref="app.dev.component({component:com})">{{com}}</a>-->
+    <!--            </li>-->
+    <!--        </ul>-->
+    <!--    </nav>-->
+    <div class="opx-flex-fill scroll-y h-full bg-light" ui-view="component">
+    </div>
+</div>

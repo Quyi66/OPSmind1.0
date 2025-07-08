@@ -1,0 +1,62 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light opx-layout-hflex flex-nowrap">
+        <button class="btn btn-outline-primary mr-2" ng-if="!$ctrl.options.inPage" ng-click="$ctrl.back()">
+            <i class="fa fa-arrow-circle-left"></i> {{'common.action.back' | translate}}
+        </button>
+
+        <div class="opx-layout-hflex h-75"
+             style="width: 30%;">
+            <select op-select="{ placeholder: ('flow.scene.select_placeholder' | translate) }"
+                    style="width: 60%"
+                    ng-model="$ctrl.currentScene"
+                    ng-options="scene.name for scene in $ctrl.sceneList"
+                    ng-change="$ctrl.changeScene()"
+                    >
+                <option></option>
+            </select>
+
+            <button uaa-has-permission="flow:run:*" class="btn btn-outline-primary ml-2 rounded-circle" ng-disabled="!$ctrl.allChecked" ng-click="$ctrl.saveScene('add')"><i class="fa fa-plus"></i></button>
+            <button uaa-has-permission="flow:run:*" class="btn btn-outline-success ml-2 rounded-circle" ng-if="$ctrl.currentScene" ng-click="$ctrl.saveScene('edit')"><i class="fa fa-edit"></i></button>
+            <button uaa-has-permission="flow:run:*" class="btn btn-outline-danger ml-2 rounded-circle" ng-if="$ctrl.currentScene" ng-click="$ctrl.deleteScene()"><i class="fa fa-trash-alt"></i></button>
+            <!-- <button class="btn btn-outline-secondary ml-1" ng-if="$ctrl.processAttrs['singleton'] !== 'true'"  ng-click="$ctrl.queryRunningRunDetails()">
+                <i class="fa fa-sync-alt"></i>
+            </button> -->
+        </div>
+        
+        <p class="fw-bolder fs-4 ml-3 mr-3 m-0 w-100">{{ $ctrl.process.processName }}</p>
+        
+        <!-- <button class="btn btn-outline-success rounded-circle" uaa-has-permission="flow:run:*" ng-disabled="!$ctrl.allChecked" ng-click="$ctrl.execProcess($event)">
+            <i class="fa fa-play"></i>
+        </button> -->
+
+        <button class="btn btn-outline-success" uaa-has-permission="flow:run:*" ng-disabled="!$ctrl.allChecked" ng-click="$ctrl.execProcess($event)">
+            <i class="fa fa-play"></i> {{'jao.common.run' | translate}}
+        </button>
+    </nav>
+
+    <div class="opx-layout-hflex" style="height: calc( 100% - 2.5rem );">
+        <flow-viewer    bpmn-xml="$ctrl.processDetail.processXml" 
+                        style="width: 80%;"></flow-viewer>
+
+        <div id="operation-panel" class="opx-layout-vflex p-3 scroll-y" style="width: 20%;">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title fs-3 fw-bolder" ng-class="{'mb-2': $ctrl.currentNode.task}">{{$ctrl.currentNode.element.businessObject.name || $ctrl.currentNode.element.id || ''}}</h5>
+                    <!-- <div class="card-text fs-4 text-muted">{{$ctrl.currentNode.element.businessObject.name ? $ctrl.currentNode.element.id : ''}}</div> -->
+                </div>
+            </div> 
+            
+            <flow-params    current-node="$ctrl.currentNode" 
+                            params="$ctrl.params" 
+                            params-arr="$ctrl.paramsArr" 
+                            need-edit="false"
+                            params-changed="$ctrl.paramsChangedFunc(paramsFake)"
+                            ng-show="$ctrl.currentNode.task.needParams"
+                            ></flow-params>
+        </div>
+    </div>
+
+    <div class="in-page-overlayer" ng-if="$ctrl.options.inPage && !$ctrl.processId">
+      <p class="w-100"><i class="fa fa-info-circle link-warning mr-3"></i>{{'udp.w.flow.process.no-process-lint' | translate}}</p>
+    </div>
+</div>

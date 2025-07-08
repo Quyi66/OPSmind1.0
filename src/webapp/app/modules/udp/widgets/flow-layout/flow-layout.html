@@ -1,0 +1,158 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <span class="opx-navbar-title">{{'jao.flow.edit' | translate}}</span>
+        <div class="ms-auto">
+            <button type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.save()" ng-if="!$ctrl.isInstance"
+                    ng-disabled="flowForm.$invalid" >{{'common.entity.action.save' |
+                translate}}
+            </button>
+            <button ng-if="$ctrl.isInstance" type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.startFlow()"
+                    ng-disabled="flowForm.$invalid" >{{'jao.flow.run' | translate}}
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-click="$ctrl.cancel()">{{'common.entity.action.cancel' | translate}}
+            </button>
+        </div>
+    </nav>
+    <form class="op-smartform form-vertical  op-bold-label p-5 bg-white opx-flex-fill scroll-y" name="flowForm"
+          id="js-flow-edit-{{$ctrl.theFlow.id||'new'}}">
+        <fieldset>
+            <legend>基本信息</legend>
+            <div class="form-group">
+                <label class="control-label">名称 <span
+                        class="cac-text-required">*</span></label>
+                <div class="form-control-wrapper">
+                    <input class="form-control" ng-model="$ctrl.theFlow.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">描述</label>
+                <div class="form-control-wrapper">
+                    <textarea class="form-control" ng-model="$ctrl.theFlow.description" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-group" ng-if="$ctrl.hostScope !== 'step' || $ctrl.theFlow.hosts.length >0 ">
+                <label class="control-label">{{'jao.common.host' | translate}}<span
+                        op-help-info="{{'jao.flow.detail.host_info' | translate}}"></span></label>
+                <div class="form-control-wrapper">
+                    <div class="w-full">
+                        <div class="mt-3">
+                            <acm-device-selector the-model="$ctrl.theFlow.hosts" ci-types="'[auto]'"
+                                                 mcheck-type="'map'"></acm-device-selector>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset ng-disabled="$ctrl.isInstance">
+            <legend>步骤设置</legend>
+            <div class="form-group">
+                <div class="d-flex mb-3">
+                    <label class="control-label" ng-click="$ctrl.changeStepFold()">步骤
+                        <i class="fa fa-angle-double-down" ng-if="!$ctrl.isFoldAllSteps"></i>
+                        <i class="fa fa-angle-double-left" ng-if="$ctrl.isFoldAllSteps"></i>
+                    </label>
+                    <button class="btn btn-sm btn-default ms-3"
+                            ng-click="$ctrl.addStep()"><i class="text-primary fa fa-plus-circle"></i> 新增步骤
+                    </button>
+                </div>
+                <div>
+                    <div class="card card-default op-action-card op-w-full" ng-repeat="step in $ctrl.theFlow.steps">
+                        <div class="card-header" ng-click="$ctrl.stepFoldList[$index] = !$ctrl.stepFoldList[$index]">
+                            <h4 class="card-title">步骤 {{$index + 1}}
+                                <span ng-if="$ctrl.stepFoldList[$index]"> : {{step.name}}</span>
+                                <span ng-if="$ctrl.stepFoldList[$index]"> 任务数: {{step.config.tasks.length}}</span>
+                            </h4>
+                            <button class="btn btn-sm btn-default pull-right"
+                                    ng-disabled="$ctrl.theFlow.steps.length == 1"
+                                    ng-click="$ctrl.removeStep($index)">删除步骤
+                            </button>
+                        </div>
+                        <div class="card-body" ng-show="!$ctrl.stepFoldList[$index]">
+                            <div class="form-group op-align-horizontal">
+                                <label class="control-label">步骤名</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control op-w-sm" ng-model="step.name">
+                                </div>
+
+                                <label class="control-label"
+                                       op-help-info="{{'jao.job.process.timeout_info' | translate}}">
+                                    任务超时</label>
+                                <div class="form-control-wrapper">
+                                    <div class="input-group w-sm">
+                                        <input type="number" ng-model="step.config.taskTimeout" class="form-control"
+                                               min="-1"
+                                               step="1">
+                                        <div class="input-group-append"><span class="input-group-text">秒</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group op-align-horizontal">
+                                <label class="control-label">自动执行下一步</label>
+                                <div class="form-control-wrapper">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" ng-model="step.autoNext" id="je_secret_{{$index}}"
+                                               class="ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false">
+                                        <label for="je_secret_{{$index}}"></label>
+                                    </div>
+                                </div>
+
+                                <label class="control-label"
+                                       op-help-info="{{'jao.job.script.verbose_info' | translate}}">{{'jao.job.script.verbose' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <select ng-model="step.config.verbosity" id="template-verbosity-{{$index}}" aria-label="选择输入" class="form-select op-w-auto">
+                                        <option class="" value=0>{{'jao.job.run.ansible.verbose.normal' | translate}}</option>
+                                        <option class="" value=1>{{'jao.job.run.ansible.verbose.detailed' | translate}}</option>
+                                        <option class="" value=2>{{'jao.job.run.ansible.verbose.more_details' | translate}}</option>
+                                        <option class="" value=3>{{'jao.job.run.ansible.verbose.debug' | translate}}</option>
+                                        <option class="" value=4>{{'jao.job.run.ansible.verbose.connection_debugging' | translate}}</option>
+                                    </select>
+<!--                                    <div class="checkbox checkbox-primary">-->
+<!--                                        <input type="checkbox" ng-model="step.config.verbosity" id="je_verbosity"-->
+<!--                                               class="ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false">-->
+<!--                                        <label for="je_verbosity"></label>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+                            <div ng-if="step.type === 'script'">
+                                <div ng-if="$ctrl.hostScope === 'step'">
+                                    <button class="btn btn-sm btn-default"
+                                            ng-click="$ctrl.addTask($index)"><i
+                                            class="text-primary fa fa-plus-circle"></i> 新增脚本
+                                    </button>
+                                    <div class="form-group op-align-horizontal" ng-repeat="task in step.config.tasks">
+                                        <label class="control-label">脚本 {{$index + 1}}
+                                            <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat"
+                                                    ng-click="$ctrl.removeTask($parent.$index, $index)"
+                                                    ng-disabled="step.config.tasks.length === 1"
+                                                    title="{{'jao.job.process.delete_group' | translate}}">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </label>
+                                        <div class="form-control-wrapper">
+                                            <gfs-file-selector the-model="task" class="w-full"
+                                                               model-converter="$ctrl.fileModelConverter"
+                                                               config="$ctrl.fileSelectorConfig"></gfs-file-selector>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group op-align-horizontal"
+                                     ng-if="$ctrl.hostScope !== 'step'">
+                                    <label class="control-label">{{'jao.common.script' | translate}}</label>
+                                    <div class="form-control-wrapper">
+                                        <gfs-file-selector the-model="step.config.tasks[0].scripts" class="w-full"
+                                                           model-converter="$ctrl.fileModelConverter"
+                                                           config="$ctrl.fileSelectorConfig"></gfs-file-selector>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

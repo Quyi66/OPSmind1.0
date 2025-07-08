@@ -1,0 +1,22 @@
+<div class="h-100 opx-layout-vflex" ng-if="true">
+    <ul class="nav nav-justified op-nav-pills-underline">
+        <li class="nav-item" ng-repeat="wg in ::$ctrl.widgetGroups track by $index"
+            ng-class="{active:$ctrl.activeTab===$index}">
+            <a class="nav-link" ng-click="$ctrl.showTab($index)" data-target="#pd-toolbox-tab-{{$index}}"
+               data-toggle="tab" style="padding:.5rem;"
+               title="{{'udp.designer.wg.'+wg.group|translate}}"><i class="far {{::wg.icon}}"
+                                                                    style="font-size: 120%;"></i></a>
+        </li>
+    </ul>
+    <div class="tab-content opx-flex-fill scroll-y">
+        <div ng-repeat="wg in ::$ctrl.widgetGroups track by $index"
+             class="tab-pane p-2 js-udp-palette-group" id="pd-toolbox-tab-{{$index}}"
+             ng-class="{active:$ctrl.activeTab==$index}">
+            <div ng-repeat="w in ::wg.widgets" class="uw-symbol position-relative" uw-type="{{w.type}}"
+                 title="{{'udp.w.'+w.type+'.desc'|ttt:''}}">
+                <span ng-if="w.tag" class="badge bg-secondary position-absolute" style="right:0;">{{w.tag}}</span>
+                <i class="uw-icon uwtype-{{::w.type}}"></i> {{'udp.w.' + w.type + '.name' | translate}}
+            </div>
+        </div>
+    </div>
+</div>

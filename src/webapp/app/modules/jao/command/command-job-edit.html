@@ -1,0 +1,68 @@
+<div class="opx-layout-vflex" uaa-has-permission="cmd:view:*"
+     ng-class="{'opx-readonly':!$ctrl.isEditMode}">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand" ng-if="$ctrl.isEditMode">{{'jao.command_job_edit_html.edit_job' | translate}}</span>
+        <span class="navbar-brand" ng-if="!$ctrl.isEditMode">{{'jao.command_job_edit_html.job_settings' | translate}}</span>
+    </nav>
+    <form class="op-smartform form-vertical  op-bold-label p-5 bg-white opx-flex-fill scroll-y" name="jobForm"
+          id="js-cmd-edit-{{$ctrl.job.id||'new'}}">
+        <fieldset ng-disabled="!$ctrl.isEditMode">
+            <legend>{{'cmd.job.job_set' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label">{{'common.entity.detail.title' | translate}} <span
+                        class="cac-text-required">*</span></label>
+                <div class="form-control-wrapper">
+                    <input class="form-control" ng-model="$ctrl.job.title" required ng-minlength=1>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'common.entity.detail.description' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <textarea class="form-control" ng-model="$ctrl.job.description" rows="3"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <!-- Type specific config begin -->
+        <jao-command-job-config the-model="$ctrl.jobConfig"
+                                ng-if="$ctrl.job.type=='command'" edit-mode="$ctrl.isEditMode"></jao-command-job-config>
+        <fieldset ng-if="!$ctrl.isEditMode" >
+            <legend>{{'cmd.job.run_job' | translate}}</legend>
+            <div class="align-items-center justify-content-start">
+                <div class="ms-auto" style="float: right">
+                    <button class="btn btn-outline-primary" ng-click="$ctrl.runJob()"
+                            ng-disabled="$ctrl.jobInRunning">
+                        <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+                        {{'cmd.job.run_job' | translate}}
+                    </button>
+                    <a ng-if="!$ctrl.isEditMode" uaa-has-permission="cmd:edit:*"
+                       type="button" class="btn btn-outline-primary"
+                       ui-sref="app.jao_cmd.job_list.edit({id:$ctrl.job.id})">
+                        <i class="fa fa-pencil"></i>
+                        {{'cmd.job.edit_job' | translate}}
+                    </a>
+                </div>
+                <button type="button" class="btn btn-outline-danger" style="float: left" uaa-has-permission="cmd:edit:*"
+                        ng-click="$ctrl.deleteJob()">
+                    <i class="fa fa-trash-alt"></i>
+                    {{'cmd.job.delete_job' | translate}}
+                </button>
+            </div>
+
+            <div class="overflow-auto w-100 mt-3 mb-3 p-3 bg-secondary text-light code text-break"
+                 ng-if="$ctrl.runResult|isNotEmpty"
+                 style="white-space: pre-wrap;max-height: 20rem; overflow:auto;">{{$ctrl.runResult|json}}
+            </div>
+        </fieldset>
+        <div class="ms-auto" ng-if="$ctrl.isEditMode">
+            <div style="float: right">
+                <button type="button" class="btn btn-primary opx-btn-ok"
+                        ng-click="$ctrl.save()"
+                        ng-disabled="jobForm.$invalid">{{'cmd.job.save_job' | translate}}
+                </button>
+                <button type="button" class="btn btn-default"
+                        ng-click="$ctrl.cancel()">{{'cmd.job.button_cancel' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

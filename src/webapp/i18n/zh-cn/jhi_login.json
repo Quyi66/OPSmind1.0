@@ -1,0 +1,20 @@
+{
+  "jhi_login.title": "登录",
+  "jhi_login.form.username": "用户名",
+  "jhi_login.form.password": "密码",
+  "jhi_login.form.password.placeholder": "您的密码",
+  "jhi_login.form.rememberme": "保持登录状态",
+  "jhi_login.form.button": "登录",
+  "jhi_login.action.submit": "登录",
+  "jhi_login.messages.error.authentication": "<strong>登录失败!</strong> 请检查您的登录信息, 并重试一次.",
+  "jhi_login.password.forgot": "忘记密码?",
+  "jhi_login.form.otp": "OTP Code",
+  "jhi_login.form.login_failure":"登录失败",
+  "jhi_login.form.login_info_error":"请确认您的登录信息再试",
+  "jhi_login.form.udne_or_pdne":"用户名不存在或密码错误",
+  "jhi_login.form.user_not_register_tenant":"用户未注册到当前租户",
+  "jhi_login.form.user_invalid":"用户已失效",
+  "jhi_login.form.confirm_otp":"请确认您的OTP Code",
+  "jhi_login.form.error_five_times_lock": "当前用户已被锁定，请在1小时后重新登录!"
+
+}

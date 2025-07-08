@@ -1,0 +1,39 @@
+<div class="form-group">
+    <label class="control-label"
+           op-help-info="{{'udp.wc.dataset.datax.expr_helpinfo'|translate}}">{{'udp.wc.dataset.datax.expr'|translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-data-converter the-model="$ctrl.theModel.expr" options="{kinds:'js,yaml'}"
+                            class="op-w-full"></udp-data-converter>
+    </div>
+    <button type="button" class="btn btn-outline-primary ms-3" ng-click="$ctrl.testExpr()" title="{{'udp.wc.dataset.datax.test_helpinfo'|translate}}">{{'udp.wc.dataset.datax.test'|translate}}
+    </button>
+</div>
+<div class="form-group" id="js-dataex-tester" ng-if="$ctrl.theModel.metaparams | isNotEmpty">
+    <label class="control-label">{{'udp.wc.dataset.datax.test_params'|translate}}</label>
+    <div class="form-control-wrapper">
+        <table class="table op-param-table">
+            <tbody>
+            <tr ng-repeat="(key, value) in $ctrl.theModel.metaparams track by $index">
+                <td class="text-right"><label class="badge bg-secondary" for="wcddf_{{$index}}">{{key}}</label></td>
+                <td>
+                    <div class="input-group">
+                        <input id="wcddf_{{$index}}" type="text" class="form-control"
+                               ng-model="$ctrl.theModel.metaparams[key]">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-default opx-btn-icon"
+                                    ng-click="$ctrl.removeInputVar(key)"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label" op-help-info="{{'udp.wc.dataset.datax.metafields_helpinfo'|translate}}">{{'udp.wc.dataset.datax.metafields'|translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-data-converter the-model="$ctrl.theModel.metafields" options="{kinds:'yaml'}"
+                            class="op-w-full"></udp-data-converter>
+    </div>
+</div>

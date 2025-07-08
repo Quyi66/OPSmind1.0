@@ -1,0 +1,311 @@
+//=============================================================================
+// Modification upon bootstrap 3.3.7
+// @author Leo Liao (leoliaolei@gmail.com), 06/25/2017 moved from css
+// @author Leo Liao (leoliaolei@gmail.com), 10/27/2017 moved from less
+//=============================================================================
+
+//-----------------------------
+// 20220123: bs4 form-group
+//-----------------------------
+.form-group {
+  margin-bottom: 1rem;
+  //width: 100%;
+}
+
+// bs3's help-block removed from bs4
+.help-block {
+  color: $text-muted;
+  margin-bottom: 0;
+  font-size: 85%;
+}
+
+label.control-label {
+  // Override bs3 default margin-bottom. Make label middle alignment with input (height 35px)
+  margin-bottom: 0;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+
+  .op-bold-label & {
+    font-weight: bold;
+  }
+}
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center; // Prevent shorter elements from growing to same height as others (e.g., small buttons growing to normal sized button height)
+
+  textarea {
+    // Equals to a text box
+    height: $input-height;
+  }
+
+  .form-group {
+    display: inline-block;
+    margin-right: 0;
+    margin-bottom: 2px;
+    margin-top: 2px;
+
+    .control-label {
+      margin-right: $op-label-margin-h;
+      //padding-top: 0;
+      white-space: nowrap;
+    }
+  }
+}
+
+.opx-readonly {
+  .help-block {
+    display: none;
+  }
+
+  .form-control {
+    &:disabled, &[readonly] {
+      border: 0;
+    }
+  }
+
+  fieldset[disabled] {
+    .input-group-text {
+      border: 0;
+      background-color: $input-disabled-bg;
+    }
+  }
+}
+
+.form-control-wrapper {
+  // Control size
+  .form-control {
+    //20200424: do not 100% width
+    //width: auto;
+    //&.inline {
+    //  display: inline-block;
+    //  width: auto;
+    //}
+
+    &[type="number"] {
+      width: 6em;
+    }
+
+    vertical-align: middle;
+  }
+
+  .op-w-auto {
+    width: auto !important;
+  }
+
+  // Ultra small, less than 4 characters
+  .op-w-xs {
+    width: 8em !important;
+  }
+
+  .op-w-sm {
+    //width: 10em !important;
+    width: 25% !important;
+    min-width: 8em;
+
+    &.input-group {
+      min-width: 12em;
+    }
+  }
+
+  .op-w-md {
+    width: 50% !important;
+  }
+
+  .op-w-lg {
+    width: 75% !important;
+  }
+
+  .op-w-full {
+    width: 100% !important;
+  }
+}
+
+.op-w-md.btn {
+  width: 8rem;
+}
+
+fieldset[disabled="disabled"] {
+  [ng-click] {
+    pointer-events: none;
+  }
+}
+
+// Smart form supports inline, horizontal, vertical layout
+.op-smartform {
+  fieldset {
+    legend {
+      font-size: $font-size-base;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      background-color: rgba($gray-500, 0.125);
+      border-left: 0.25rem solid $card-border-color;
+      padding: 0.25rem 0.5rem;
+      border-bottom: 0;
+    }
+  }
+
+  .op-form-subgroup {
+    background-color: $light;
+    padding: 0.5rem;
+    //border-left: solid .25rem darken($light, 10%);
+    position: relative;
+    //https://css-tricks.com/snippets/css/css-triangle/
+    &:before {
+      content: '';
+      border-left: 0.5rem solid transparent;
+      border-right: 0.5rem solid transparent;
+      border-bottom: 0.5rem solid $light;
+      display: inline-block;
+      position: absolute;
+      top: -0.5rem;
+      left: 4em;
+    }
+
+    > .form-group:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    //@media (max-width: $screen-xs-max) {
+    //  flex-wrap: wrap;
+    //}
+
+    .form-group {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .form-control-wrapper {
+      flex-wrap: nowrap;
+      display: inline-flex !important;
+      align-items: center;
+      margin-right: $op-control-margin-h;
+
+      .help-block {
+        display: none;
+      }
+    }
+
+    .uwtype-button {
+      margin-right: $op-label-margin-h;
+    }
+  }
+
+  .form-control-wrapper {
+    display: flex;
+    // Use wrap to ensure help-block in new row
+    flex-wrap: wrap;
+
+    &.op-combo {
+      // Multiple controls in a wrapper
+      flex-wrap: nowrap;
+
+      > :not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      .control-label {
+        width: auto;
+        white-space: nowrap;
+      }
+    }
+
+    .help-block {
+      // To force wrap in flex form-control-wrapper
+      width: 100%;
+    }
+
+    > .control-label {
+      width: auto;
+    }
+
+    // LEO@20200323:
+    // If there are multiple horizontal elements in a wrapper, add margin between them.
+    // There will be problem to use :not(:first-child) and margin-left, because chosen will
+    // generate a div after original select element.
+    // Use :last-child may also have problem...
+    > :not(:last-child) {
+      //margin-right: $op-control-margin-h;
+    }
+
+    > .form-control + .help-block {
+      //margin-right: $op-control-margin-h;
+    }
+  }
+
+  &.form-inline {
+    .uwidget {
+      display: inline-block !important;
+      vertical-align: middle;
+    }
+  }
+
+  &.form-horizontal, &.form-vertical {
+    .form-group.op-form-actions {
+      display: block;
+      clear: both;
+      text-align: right;
+    }
+
+    .uwidget {
+      display: block;
+
+      &.uwtype-button {
+        display: inline-block;
+      }
+    }
+  }
+
+  &.form-inline, &.form-horizontal, &.form-vertical {
+    .control-label {
+      margin-right: $op-label-margin-h;
+    }
+  }
+
+  &.form-horizontal, .form-group.op-align-horizontal {
+    .control-label {
+      width: 8em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      //text-align: right;
+    }
+
+    .form-control-wrapper {
+      flex: 1 1 0%;
+      // Align with col-sm-*
+      //margin-left: 15px;
+      margin-left: 8px;
+    }
+  }
+
+  &.form-horizontal .form-group, .form-group.op-align-horizontal {
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    // 20200403: align center will cause wired label alignment with
+    // multi-line control like textarea, input with help, parameters table
+    //align-items: center;
+  }
+}
+
+.form-control-wrapper > udp-input {
+  width: 100%;
+}
+
+.form-inline .form-group {
+  > .form-control-wrapper {
+    display: inline-block;
+  }
+
+  > label.control-label {
+    //20211013: override display:flex in line 281 \scss\bs4\_forms.scss
+    display: inline-block;
+  }
+}

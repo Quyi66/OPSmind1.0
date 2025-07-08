@@ -1,0 +1,21 @@
+{
+  "search": {
+    "type": {
+      "all": "所有类型",
+      "jao": "一键作业",
+      "gfs": "脚本管理",
+      "udp": "自助页面",
+      "dts": "数据服务",
+      "acm": "资产管理"
+    },
+    "index": {
+      "clean_result": "清空搜索结果",
+      "history_record": "历史搜索记录",
+      "clean_history_record": "清空历史搜索记录",
+      "searching": "正在搜索",
+      "by_keyword": "根据关键字",
+      "clean": "清空",
+      "not_found": "搜索，暂未搜索到相关数据"
+    }
+  }
+}

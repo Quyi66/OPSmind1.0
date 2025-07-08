@@ -1,0 +1,56 @@
+
+$opx-list-active-bgcolor: rgba($gray-500, 0.25);
+$opx-list-hover-bgcolor: rgba($gray-500, 0.5);
+$op-component-active-box-shadow: 0 0 0 0.2rem lighten($component-active-bg, 20%);
+
+// Spacing
+$op-small-space: 8px;
+$op-label-margin-h: $op-small-space;
+$op-control-margin-h: 2*$op-label-margin-h;
+
+// Control sizes
+$op-control-height: 1.75rem;
+$op-control-height-sm: 1.5rem;
+$op-control-height-lg: 2.5rem;
+$op-navbar-height: 2.5rem !default; // 48px
+$op-modal-header-height: 2rem;
+$op-modal-aspect-ratio: 1.6;
+
+// Dark mode color
+$op-component-dark-bg: lighten($dark, 10%);
+$op-component-dark-border-color: lighten($op-component-dark-bg, 5%);
+
+// Color for selection and highlight
+$op-highlight-bg: shift-color($primary, -80%);
+$op-highlight-border-color: shift-color($primary, -70%);
+$op-error-border-color: shift-color($danger, -70%);
+
+//----------------------------------------------------------------
+// Bootstrap4 ml-*, mr-*, pl-*, pr-*
+//----------------------------------------------------------------
+$utilities: (
+        "padding-left": (
+                responsive: true,
+                property: padding-left,
+                class: pl,
+                values: $spacers
+        ),
+        "padding-right": (
+                responsive: true,
+                property: padding-right,
+                class: pr,
+                values: $spacers
+        ),
+        "margin-left": (
+                responsive: true,
+                property: margin-left,
+                class: ml,
+                values: map-merge($spacers, (auto: auto))
+        ),
+        "margin-right": (
+                responsive: true,
+                property: margin-right,
+                class: mr,
+                values: map-merge($spacers, (auto: auto))
+        )
+) !default;

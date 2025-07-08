@@ -1,0 +1,31 @@
+<div class="form-group">
+    <div class="form-control-wrapper">
+        <div class="checkbox checkbox-inline checkbox-primary">
+            <input type="checkbox" id="wpc_enabled" ng-model="$ctrl.theModel.enabled">
+            <label for="wpc_enabled" op-help-info="{{'udp.wc.access.enable_access_helpinfo'|translate}}">{{'udp.wc.access.enable_access'|translate}}</label></div>
+
+    </div>
+</div>
+<fieldset ng-disabled="!$ctrl.theModel.enabled">
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.access.method'|translate}}</label>
+        <div class="form-control-wrapper d-flex flex-nowrap">
+            <select class="form-select op-w-sm" ng-model="$ctrl.theModel.by" title="{{'udp.wc.access.method_helpinfo'|translate}}">
+                <option value="role">{{'udp.wc.access.method_role'|translate}}</option>
+                <option value="permission">{{'udp.wc.access.method_permission'|translate}}</option>
+            </select>
+            <input type="text" ng-model="$ctrl.theModel.allow" class="form-control ms-3" title="{{'udp.wc.access.allow_value'|translate}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.access.no_access_handler'|translate}}</label>
+        <div class="form-control-wrapper">
+            <select class="form-select op-w-sm" ng-model="$ctrl.theModel.state">
+                <option value="">{{'udp.wc.access.no_access_handler_hide'|translate}}</option>
+                <option value="disabled">{{'udp.wc.access.no_access_handler_disable'|translate}}</option>
+                <option value="notice">{{'udp.wc.access.no_access_handler_notice'|translate}}</option>
+            </select>
+        </div>
+    </div>
+</fieldset>
+

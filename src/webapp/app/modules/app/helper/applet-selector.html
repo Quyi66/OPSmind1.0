@@ -1,0 +1,21 @@
+<div ng-if="$ctrl.options.viewAs!=='list'">
+    <select op-select="{width:'100%'}"
+            ng-model="$ctrl.appletCode" class="form-control"
+            data-placeholder-text-single="{{'applet.selector.select_applet'|translate}}"
+            ng-options="applet.name as applet.title for applet in $ctrl.applets"></select>
+</div>
+<div ng-if="$ctrl.options.viewAs==='list'">
+    <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed" ng-if="$ctrl.options.showFilter">
+        <op-searchbox search-text="$ctrl.filter" style="width:10rem;" class="me-2"></op-searchbox>
+    </nav>
+    <div class="list-group list-group-flush op-styled-highlight op-styled-highlight-right">
+        <a ng-repeat="applet in $ctrl.applets | filter: $ctrl.filter track by $index "
+           href=""
+           class="list-group-item list-group-item-action op-hover-trigger d-flex align-items-center"
+           title="{{applet.title || 'Untitled'}}"
+           ng-class="{'active': (applet.name===$ctrl.selectedItem || (!$ctrl.selectedItem && !applet.name))}"
+           ng-click="$ctrl.selectItem(applet)"> <i class="fa fa-fw me-3" ng-class="applet.icon"></i>
+            <div class="text-ellipsis m-0">{{ applet.title || 'Untitled' }}</div>
+        </a>
+    </div>
+</div>

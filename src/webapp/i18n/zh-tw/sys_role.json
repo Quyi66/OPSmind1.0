@@ -1,0 +1,26 @@
+{
+  "sys_role": {
+    "home": {
+      "title": "角色",
+      "createLabel": "建立角色",
+      "createRole": "建立角色",
+      "editRole": "編輯角色",
+      "search": "查詢 角色"
+    },
+    "created": "角色 {{ param }} 建立成功",
+    "updated": "角色 {{ param }} 更新成功",
+    "deleted": "角色 {{ param }} 刪除成功",
+    "delete": {
+      "question": "確定刪除 角色 {{ name }} 嗎？"
+    },
+    "detail": {
+      "title": "角色詳情"
+    },
+    "name": "名稱",
+    "visibility": "可見性",
+    "target": "目標",
+    "description": "描述",
+    "permissions": "許可權",
+    "users": "使用者"
+  }
+}

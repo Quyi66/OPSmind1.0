@@ -1,0 +1,169 @@
+//=============================================================================
+// Modified styles from vendor lib
+// @author Leo Liao (leoliaolei@gmail.com), 06/25/2017 moved from css
+//=============================================================================
+
+.CodeMirror {
+  //height: 20rem;
+  width: 100%;
+  font-family: $font-family-monospace;
+
+  pre {
+    font-family: $font-family-monospace;
+    font-size: 16px;
+  }
+
+  .cm-string {
+    word-break: break-all;
+  }
+
+  .cm-opx-text-success {
+    color: $success;
+  }
+
+  .cm-opx-text-info {
+    color: $info;
+  }
+
+  .cm-opx-text-warning {
+    color: $warning;
+  }
+
+  .cm-opx-text-danger {
+    color: $danger;
+  }
+
+  .cm-opx-text-muted {
+    color: $text-muted;
+  }
+
+  .cm-opx-bg-muted {
+    background-color: $text-muted;
+  }
+
+  .cm-opx-bg-danger {
+    background-color: $danger;
+  }
+
+  //::-webkit-scrollbar-track {
+  //  background-color: rgba(128, 128, 128, 0.2);
+  //}
+  //
+  //::-webkit-scrollbar-thumb {
+  //  background-color: rgba(128, 128, 128, 0.5);
+  //}
+}
+
+// opluscode theme modified upon https://codemirror.net/theme/dracula.css
+.cm-s-opluscode {
+  &.CodeMirror, .CodeMirror-gutters {
+    background-color: #282a36 !important;
+    color: #f8f8f2 !important;
+    border: none;
+  }
+
+  .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar, .CodeMirror-hscrollbar {
+    background-color: rgba(128, 128, 128, 0.1);
+  }
+
+  .CodeMirror-gutters {
+    color: #282a36;
+  }
+
+  .CodeMirror-cursor {
+    border-left: 2px solid #f8f8f0;
+  }
+
+  .CodeMirror-linenumber {
+    color: #6D8A88;
+  }
+
+  .CodeMirror-selected {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection {
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection {
+    background: rgba(255, 255, 255, 0.10);
+  }
+
+  span.cm-comment {
+    color: #6272a4;
+  }
+
+  span.cm-string, span.cm-string-2 {
+    color: #f1fa8c;
+  }
+
+  span.cm-number {
+    color: #bd93f9;
+  }
+
+  span.cm-variable {
+    color: #50fa7b;
+  }
+
+  span.cm-variable-2 {
+    color: white;
+  }
+
+  span.cm-def {
+    color: #50fa7b;
+  }
+
+  span.cm-operator {
+    color: #ff79c6;
+  }
+
+  span.cm-keyword {
+    color: #ff79c6;
+  }
+
+  span.cm-atom {
+    color: #bd93f9;
+  }
+
+  span.cm-meta {
+    color: #f8f8f2;
+  }
+
+  span.cm-tag {
+    color: #ff79c6;
+  }
+
+  span.cm-attribute {
+    color: #50fa7b;
+  }
+
+  span.cm-qualifier {
+    color: #50fa7b;
+  }
+
+  span.cm-property {
+    color: #66d9ef;
+  }
+
+  span.cm-builtin {
+    color: #50fa7b;
+  }
+
+  span.cm-variable-3, span.cm-type {
+    color: #ffb86c;
+  }
+
+  .CodeMirror-activeline-background {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  //.CodeMirror-matchingbracket {
+  // text-decoration: underline;
+  // color: white !important;
+  //}
+  .CodeMirror-matchingbracket {
+    outline: 1px solid #A9B7C6;
+    color: yellow !important;
+  }
+}

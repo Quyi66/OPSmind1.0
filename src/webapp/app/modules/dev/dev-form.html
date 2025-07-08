@@ -1,0 +1,212 @@
+<div class="row wrapper">
+    <div class="col-sm-12">
+        <div class="card card-default">
+            <div class="card-header">
+                <h4 class="card-title">内嵌布局：<code>.form-inline</code></h4></div>
+            <div class="card-body">
+                <form class="op-smartform form-inline">
+                    <ng-include src="'dev/dev-form-content.html'"></ng-include>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card card-default">
+            <div class="card-header">
+                <h4 class="card-title">水平布局：<code>.form-horizontal</code></h4>
+            </div>
+            <div class="card-body">
+                <form class="op-smartform form-horizontal">
+                    <ng-include src="'dev/dev-form-content.html'"></ng-include>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card card-default">
+            <div class="card-header">
+                <h4 class="card-title">垂直布局：<code>.form-vertical</code></h4>
+            </div>
+            <div class="card-body">
+                <form class="op-smartform form-vertical">
+                    <ng-include src="'dev/dev-form-content.html'"></ng-include>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-sm-6">-->
+    <!--<div class="card card-default">-->
+    <!--<div class="card-header">-->
+    <!--<h4 class="card-title">两列垂直布局 form-vertical</h4>-->
+    <!--</div>-->
+    <!--<div class="card-body">-->
+    <!--<form class="form-vertical with-cols-2">-->
+    <!--<ng-include src="'dev/dev-form-content.html'"></ng-include>-->
+    <!--<ng-include src="'dev/dev-form-content.html'"></ng-include>-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<script type="text/ng-template" id="dev/dev-form-content.html">
+    <div class="form-group">
+        <label class="control-label">OP下拉选择</label>
+        <div class="form-control-wrapper">
+            <op-select the-model="$ctrl.select" multiple option-groups="formVm.cssGroups"></op-select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">单行文本输入</label>
+        <div class="form-control-wrapper"><input type="text" class="form-control">
+            <p class="help-block">对输入控件的说明和帮助文字</p>
+        </div>
+        <!--        <p class="help-block">对输入控件的说明和帮助文字</p>-->
+    </div>
+    <div class="form-group">
+        <label class="control-label">标签很长的单行文本输入</label>
+        <div class="form-control-wrapper"><input type="text" class="form-control"></div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">复选框</label>
+        <div class="form-control-wrapper">
+            <div class="checkbox checkbox-inline"><input type="checkbox" id="js-checkbox1" name="checkboxes"><label
+                    for="js-checkbox1">复选1</label>
+            </div>
+            <div class="checkbox checkbox-inline"><input type="checkbox" id="js-checkbox2" name="checkboxes"><label
+                    for="js-checkbox2">复选2</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">单选框</label>
+        <div class="form-control-wrapper">
+            <div class="radio radio-inline"><input type="radio" id="js-radio1" name="radios"><label
+                    for="js-radio1">单选1</label></div>
+            <div class="radio radio-inline"><input type="radio" id="js-radio2" name="radios"><label
+                    for="js-radio2">单选2</label></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">普通单选</label>
+        <div class="form-control-wrapper">
+            <select class="form-select op-w-sm">
+                <option>Item 1</option>
+                <option>Item 2</option>
+                <option>Item 3</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">OP下拉单选</label>
+        <div class="form-control-wrapper">
+            <select op-select class="form-select op-w-sm" ng-model="formVm.myselect">
+                <option>Item 1</option>
+                <option>Item 2</option>
+                <option>Item 3</option>
+            </select>
+            <!--            <p class="help-block">当页面有滚动条的时候，Chosen控件存在位置偏移的问题</p>-->
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">数字输入</label>
+        <div class="form-control-wrapper"><input type="number" class="form-control"></div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">输入组合</label>
+        <div class="form-control-wrapper">
+            <div class="input-group">
+                <div class="input-group-text"><input type="checkbox"></div>
+                <input type="text" class="form-control">
+                <button type="button" class="btn btn-outline-default">单位 <i
+                        class="fa fa-angle-down"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">多个控件组合</label>
+        <div class="form-control-wrapper op-combo">
+            <div class="input-group op-w-sm">
+                <div class="input-group-text"><input type="checkbox"></div>
+                <input type="text" class="form-control">
+                <button type="button" class="btn btn-outline-default">单位 <i
+                        class="fa fa-angle-down"></i></button>
+            </div>
+            <input type="text" class="form-control">
+            <udp-color-picker ng-model="color" title="背景色"></udp-color-picker>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">颜色选择</label>
+        <div class="form-control-wrapper">
+            <udp-color-picker ng-model="color" title="背景色" class="me-3"></udp-color-picker>
+            <udp-color-picker ng-model="color" title="前景色"></udp-color-picker>
+            <!--<input type="color" class="form-control">-->
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">范围</label>
+        <div class="form-control-wrapper">
+            <input type="range" class="form-range">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">控件op-w-sm</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control op-w-sm">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">控件op-w-md</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control op-w-md">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">控件op-w-lg</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control op-w-lg">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Select2 {{formVm.selectValue}}</label>
+        <div class="form-control-wrapper">
+            <select op-select class="form-select" ng-model="formVm.selectValue">
+                <option value="111">AAA</option>
+                <option value="222">BBB</option>
+                <option value="333">CCC</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Select op-w-md</label>
+        <div class="form-control-wrapper">
+            <select op-select class="form-select op-w-md" ng-model="formVm.selectValue">
+                <option>Item 1</option>
+                <option>Item 2</option>
+                <option>Item 3</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">多行文本输入</label>
+        <div class="form-control-wrapper">
+            <textarea class="form-control" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="form-group op-align-horizontal">
+        <label class="control-label">强制水平排列</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <!--    <div class="form-group op-align-vertical">-->
+    <!--        <label class="control-label">强制垂直排列</label>-->
+    <!--        <div class="form-control-wrapper">-->
+    <!--            <input type="text" class="form-control">-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="form-group op-form-actions">
+        <button type="button" class="btn btn-primary opx-btn-ok me-3">{{'common.action.ok' | translate}}</button>
+        <button type="button" class="btn btn-default opx-btn-cancel">{{'common.action.cancel' | translate}}</button>
+    </div>
+</script>

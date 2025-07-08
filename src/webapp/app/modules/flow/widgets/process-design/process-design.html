@@ -1,0 +1,43 @@
+  
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <ul class="nav nav-mdc-op" op-tab-bar style="width:100%;" op-tab-bar>
+        <li class="nav-item" ng-repeat="tab in $ctrl.tabs track by $index">
+            <a class="nav-link" ng-click="$ctrl.changeTabs(tab.name)"
+                ng-class="{active: $ctrl.activeTab === tab.name}">{{tab.title}}</a>
+        </li>
+    </ul>
+
+    <nav class="navbar navbar-light opx-layout-hflex flex-nowrap">
+        <button class="btn btn-outline-primary" ng-click="$ctrl.back()"><i class="fa fa-arrow-circle-left"></i> {{'common.action.back' | translate}}</button>
+
+        <p class="fw-bolder fs-4 ml-3 mr-3 m-0 w-100">{{ $ctrl.processName }}</p>
+
+        <button class="btn btn-outline-secondary mr-3" 
+                ng-if="$ctrl.options.inPage && $ctrl.type === 'edit'" 
+                uaa-has-permission="flow:edit:*" 
+                ng-click="$ctrl.edit()">
+            <i class="fa fa-edit"></i> {{'common.action.edit' | translate}}
+        </button>
+
+        <button class="btn btn-outline-primary" 
+                ng-disabled="$ctrl.hasError"
+                uaa-has-permission="flow:edit:*" 
+                ng-click="$ctrl.save()">
+            <i class="fa fa-save"></i> {{'common.action.save' | translate}}
+        </button>
+    </nav>
+    
+    <flow-modeler ng-show="$ctrl.activeTab === 'modeler'" 
+                    type="$ctrl.type" 
+                    bpmn-xml="$ctrl.processDetail.processXml" 
+                    bpmn-modeler="$ctrl.bpmnModeler"
+                    style="height: calc(100% - 5.2rem); width:100%;"></flow-modeler>
+
+    <flow-bpmn-xml ng-show="$ctrl.activeTab === 'xml'" 
+                    bpmn-xml="$ctrl.processDetail.processXml"
+                    style="height: calc(100% - 5.2rem); width:100%;"></flow-bpmn-xml>
+    
+    <div class="in-page-overlayer" ng-if="$ctrl.options.inPage && $ctrl.type === 'edit' && !$ctrl.processId">
+        <p class="w-100"><i class="fa fa-info-circle link-warning mr-3"></i>{{'udp.w.flow.process.no-process-lint' | translate}}</p>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div ng-if="$ctrl.getData().length > 0">
+    <div class="d-flex flex-nowrap align-items-center">
+        <div class="btn btn-sm btn-default d-inline-block op-hover-trigger"
+                ng-class="{'pe-none': $ctrl.readonly}"
+                style="position:relative;width:10em;">
+        <span class="op-hover-to-show pull-right" ng-click="$ctrl.emptyItems()"
+                ng-show="!$ctrl.readonly"
+                title="{{'common.umd_config.move_all' | translate}}"><i
+                class="fa fa-times"></i></span>
+            <span class="d-block"
+                    ng-click="$ctrl.openDeviceSelectorDialog()">{{ 'acm.common.selector.total' | translate}}<strong>{{$ctrl.getData().length}}</strong>{{ 'acm.common.selector.item' | translate}}</span>
+        </div>
+        <op-searchbox search-text="$ctrl.filter" class="ms-auto autohide"></op-searchbox>
+    </div>
+    <ul class="list list-unstyled list-inline" style="max-height:10rem; overflow-y:auto;">
+        <li ng-repeat="data in $ctrl.getData() | filter: $ctrl.filter track by $index"
+            class="op-hover-trigger mb-3">
+            <div class="badge bg-secondary op-text-normal op-cursor-default py-2 px-2">
+                {{data}}
+                <a ng-click="$ctrl.removeItem($index)" ng-show="!$ctrl.readonly">&times;</a>
+            </div>
+        </li>
+    </ul>
+</div>
+<div ng-if="!$ctrl.getData() || $ctrl.getData().length === 0" __class="op-blank-slate bg-light p-3">
+    <!--        <div class="op-blank-slate-icon"><i class="fal fa-server" style="font-size:4rem;"></i></div>-->
+    <button type="button" class="btn btn-outline-default" ng-click="$ctrl.openDeviceSelectorDialog()"><i
+            class="fal fa-server" ng-disabled="$ctrl.readonly"></i> {{$ctrl.theOptions.thisLabel || ''}}
+    </button>
+    <!--        </div>-->
+</div>

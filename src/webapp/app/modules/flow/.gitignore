@@ -1,0 +1,10 @@
+node_modules/
+flow-modeler.css
+
+*.hot-update.*
+
+dist/*.woff
+dist/*.woff2
+dist/*.ttf
+dist/*.eot
+dist/*.svg

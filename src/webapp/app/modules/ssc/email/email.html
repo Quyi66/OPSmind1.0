@@ -1,0 +1,60 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{ 'adm.content.electronic_mail_config' | translate}}</div>
+    </nav>
+    <div class="card-body">
+        <form class="op-smartform form-vertical" ng-submit="submitForm()">
+            <div class="form-group col-6">
+                <label class="control-label">{{ 'acm.common.header.user_name' | translate}}<span class="text-danger align-middle"> * </span></label>
+                <input type="email" class="form-control" placeholder="Enter email" ng-model="vm.emails.username" required>
+            </div>
+            <div class="form-group col-6">
+                <label class="control-label">{{ 'common.menu.account.password' | translate}}<span class="text-danger align-middle"> * </span></label>
+                <input type="test" style="-webkit-text-security: disc;"  class="form-control" placeholder="Password" ng-model="vm.emails.password" required>
+            </div>
+            <div class="form-group col-6">
+                <label class="control-label">{{ 'adm.content.mail_server' | translate}}<span class="text-danger align-middle"> * </span></label>
+                <input type="text" class="form-control" placeholder="Mail server" ng-model="vm.emails.host" required>
+            </div>
+            <div class="form-group col-6">
+                <label class="control-label">{{ 'adm.content.server_port' | translate}}<span class="text-danger align-middle"> * </span></label>
+                <input type="number" class="form-control" placeholder="Server port" ng-model="vm.port" required>
+            </div>
+            <div class="form-group col-6">
+                <label class="control-label">{{ 'adm.content.sender_name' | translate}}<span class="text-danger align-middle"> * </span></label>
+                <input type="email" class="form-control" placeholder="The value is the same as the user name" ng-model="vm.emails.from" required>
+            </div>
+            <div class="form-group col-6">
+                <div class="form-control-wrapper pull-left">
+                    <label class="control-label">
+                        {{ 'adm.content.debug_mode' | translate}}
+                    </label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" style="width:3rem;height:1.4rem;cursor: pointer;" type="checkbox" value="true" ng-model="vm.debug_on_off" />
+                    </div>
+                </div>
+                <div class="form-control-wrapper pl-5">
+                    <label class="control-label">
+                        {{ 'adm.content.ssl_auth' | translate}}
+                    </label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" style="width:3rem;height:1.4rem;cursor: pointer;" type="checkbox" value="true" ng-model="vm.ssl_on_off" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-6">
+                <label class="control-label">{{ 'adm.content.type_of_receiver' | translate}}</label>
+                <select class="form-select " ng-model="vm.emails.recipient_type">
+                    <option ng-repeat="option in recipientTypes" value="{{option.value}}">
+                        {{option.label}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary opx-btn-ok me-3">{{ 'common.entity.action.save' | translate}}</button>
+                <button type="button" class="btn btn-default me-3" ng-click="testEmail()">
+                    <i class="fa fa-shipping-fast"></i> {{ 'adm.content.test_run' | translate}}</button>
+            </div>
+        </form>
+    </div>
+</div>

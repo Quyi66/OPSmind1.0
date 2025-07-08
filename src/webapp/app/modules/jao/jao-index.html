@@ -1,0 +1,51 @@
+<div class="opx-layout-hflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission_desc' | translate}}">
+    <div class="opx-sidebar bg-light">
+        <!--        <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed">-->
+        <!--            <span class="opx-navbar-title">{{'jao.index.do_job' | translate}}</span>-->
+        <!--        </nav>-->
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.job_list_v2({type:'script'})" ui-sref-active="active"><i
+                            class="fad fa-laptop-code fa-fw"></i> {{'jao.index.list' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.flow_list" ui-sref-active="active"><i
+                            class="fad fa-water fa-fw"></i> {{'jao.index.schedule' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.myApprove" ui-sref-active="active"><i class="fad fa-hand-paper fa-fw"></i>
+                        {{'jao.index.my_approve' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.jobApprove" ui-sref-active="active"><i class="fad fa-clipboard-check fa-fw"></i>
+                        {{'jao.index.approve' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.runlogs" ui-sref-active="active"><i class="fad fa-history fa-fw"></i>
+                        {{'jao.index.run_logs' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.stats" ui-sref-active="active"><i class="fad fa-analytics fa-fw"></i>
+                        {{'jao.index.stats' | translate}}</a>
+                </div>
+<!--                <div class="opx-treenav-item">-->
+<!--                    <a ui-sref="app.jao.data_model" ui-sref-active="active"><i class="fad fa-bring-front fa-fw"></i>-->
+<!--                        {{'jao.index.data_model' | translate}}</a>-->
+<!--                </div>-->
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.jao.cron_job" ui-sref-active="active"><i class="fad fa-calendar-alt fa-fw"></i>
+                        {{'jao.index.cron' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill fade-in" ui-view="jaoMainView">
+        <div class="opx-align-center">
+            <div class="rounded-circle bg-secondary opx-align-center"
+                 style="width:10rem;height:10rem;opacity: .5;"><i
+                    class="text-light fad fa-fw fa-7x fa-oplus-jao"></i>
+            </div>
+        </div>
+    </div>
+</div>

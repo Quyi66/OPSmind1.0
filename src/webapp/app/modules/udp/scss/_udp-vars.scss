@@ -1,0 +1,8 @@
+$udp-widget-highlight-outline-size: 4px;
+$udp-zindex-widget-highlight: 9;
+$udp-zindex-float-actions: 1;
+$udp-zindex-uwtype-float: 39;
+// Greater than float widget z-index to make sure all uw-buttons are above all widgets when force show buttons in designer
+// Greater than dropdown
+$udp-zindex-uwbuttons: 1040;
+

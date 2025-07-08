@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h4 class="modal-title"> {{'cac.index.select_hosts' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="pointer-events: auto;"
+            ng-click="cacTemplateHostVm.views.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cac-template-host-dialog">
+    <div class="opx-layout-hflex">
+        <div class="p-2">
+            <div class="opx-sidebar-body">
+                <div class="list-group">
+                    <a ui-sref-active="active" ng-class="{active:cacTemplateHostVm.views.category==''}"
+                        class="list-group-item list-group-item-action"
+                        ng-click="cacTemplateHostVm.views.refreshTableByCategory('')">
+                        <i class="fa fa-list-alt"></i>
+                        {{'common.term.all' | translate}}
+                    </a>
+                    <a ui-sref-active="active" ng-class="{active:cacTemplateHostVm.views.category=='{{category}}'}"
+                       ng-repeat="category in cacTemplateHostVm.views.allCategory | filter:cacTemplateHostVm.views.categoryName"
+                       ng-click="cacTemplateHostVm.views.refreshTableByCategory(category)"
+                       class="list-group-item list-group-item-action">
+                        {{category}}
+                    </a>
+                    <a ui-sref-active="active" ng-class="{active:cacTemplateHostVm.views.category=='adhoc'}"
+                       ng-click="cacTemplateHostVm.views.refreshTableByCategory('adhoc')"
+                       class="list-group-item list-group-item-action">
+                        {{'common.term.others' | translate}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="opx-flex-fill table-responsive">
+            <table id="cac-template-host-table" class="cac-template-host-table table opx-table"></table>
+        </div>
+    </div>
+    <div class="modal-footer text-right">
+        <button type="reset" class="btn btn-default" ng-click="cacTemplateHostVm.views.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+        <button type="submit" class="btn btn-success" ng-click="cacTemplateHostVm.views.save()">{{'common.entity.action.save' | translate}}</button>
+    </div>
+</div>

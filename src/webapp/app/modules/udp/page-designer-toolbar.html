@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand navbar-light bg-light" udp-confirm-on-exit>
+    <!--    <ul class="navbar-nav">-->
+    <!--        <li class="nav-item" ng-if="$parent.udp.moduleTitle"><a class="nav-link" ui-sref="app.udp">{{$parent.udp.moduleTitle}}</a>-->
+    <!--        </li>-->
+    <!--    </ul>-->
+    <div class="navbar-nav">
+        <!-- <a ui-sref="app.udp" -->
+        <a ng-click="onClickBackBtn()"
+           class="btn opx-btn-icon opx-btn-flat btn-default"
+           title="{{'common.action.back'|translate}}"><i class="fa fa-arrow-left"></i></a>
+        <button type="button" class="btn opx-btn-icon btn-default"
+                ng-class="$parent.showToolbox?'active':''"
+                ng-click="toggleToolbox()" title="{{'udp.designer.actions.toggle_toolbox'|translate}}"><i
+                class="fa fa-bars"></i></button>
+        <button type="button" class="btn opx-btn-icon opx-btn-flat btn-default" ui-sref="app.appman.page.create"
+                title="{{'common.action.create'|translate}}" uaa-has-permission="udp:edit:*"><i class="fa fa-file"></i>
+        </button>
+    </div>
+    <form class="form-inline ms-3" ng-submit="savePage()" role="form"
+          action="javascript:void(0)">
+        <input ui-focus="{{!page.title}}" type="text" class="form-control"
+               style="width:12em;"
+               ng-model="page.title" title="{{'udp.page.attrs.title'|translate}}"
+               placeholder="{{'udp.page.attrs.title'|translate}}">
+        <button ng-if="hasEditPermission(page.action)" type="submit" class="btn btn-primary opx-btn-icon"
+                title="{{'common.action.save'|translate}}"><i
+                class="fa fa-save"></i>
+        </button>
+        <button type="button" ng-click="configPage()" class="btn btn-default opx-btn-icon opx-btn-flat "
+                title="{{'udp.page.actions.setting'|translate}}"><i
+                class="fa fa-cog"></i>
+        </button>
+    </form>
+    <div class="navbar-nav ms-auto">
+        <button type="button" ng-click="$parent.showMoreSpace=!$parent.showMoreSpace"
+                class="btn navbar-btn btn-default opx-btn-icon"
+                ng-class="$parent.showMoreSpace?'active':''" title="{{'udp.designer.actions.show_space'|translate}}"><i
+                class="fa fa-th"></i>
+        </button>
+        <button type="button" ng-click="$parent.showWidgetOutline=!$parent.showWidgetOutline"
+                class="btn navbar-btn btn-default opx-btn-icon"
+                ng-class="$parent.showWidgetOutline?'active':''"
+                title="{{'udp.designer.actions.widget_outline'|translate}}"><i class="fa fa-anchor"></i>
+        </button>
+        <div class="btn-group">
+            <button class="btn opx-btn-icon btn-outline-default" ng-click="$parent.inMode='edit'"
+                    title="{{'udp.designer.actions.visual_mode'|translate}}"
+                    ng-class="{active:!$parent.inMode || $parent.inMode==='edit'}"><i class="fa fa-pencil"></i></button>
+            <button class="btn opx-btn-icon btn-outline-default" ng-click="$parent.inMode='source';genSourceCode();"
+                    ng-class="{active:$parent.inMode=='source'}"
+                    title="{{'udp.designer.actions.source_mode'|translate}}"><i class="fa fa-code"></i></button>
+            <button class="btn btn-outline-default"
+                    ng-click="$parent.inMode=($parent.inMode==='preview'?'edit':'preview')"
+                    ng-class="{active:$parent.inMode=='preview'}" title="{{'udp.designer.actions.preview'|translate}}">
+                <i
+                        class="fa fa-eye"></i> {{'udp.designer.actions.preview' | translate}}
+            </button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default opx-btn-icon opx-btn-flat" data-bs-toggle="dropdown">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" ui-sref='app.udp_pageview_full({pageId:page.id})' target="_blank"><i
+                        class="fa fa-external-link-square"></i> {{'udp.designer.actions.open_newwindow_full' | translate}}
+                </a>
+                <a class="dropdown-item" ui-sref='app.udp_pageview({pageId:page.id})' target="_blank"><i
+                        class="fa fa-external-link"></i> {{'udp.designer.actions.open_newwindow' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

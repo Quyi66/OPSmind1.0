@@ -1,0 +1,255 @@
+@charset "UTF-8";
+jao-job-result-view {
+  position: relative;
+  display: block;
+  height: 100%;
+}
+jao-job-result-view > .tab-container > .tab-content {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.jao-jobrun-status-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  border-radius: 50% !important;
+  padding: 0;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  font-size: 0.75rem;
+  vertical-align: middle;
+}
+.jao-jobrun-status-icon.status-running {
+  background-color: #0d6efd;
+  animation: ani-scale 2s infinite;
+}
+.jao-jobrun-status-icon.status-completed {
+  background-color: #198754;
+}
+.jao-jobrun-status-icon.status-completed:before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+.jao-jobrun-status-icon.status-interrupted {
+  background-color: #212529;
+}
+.jao-jobrun-status-icon.status-interrupted:before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+.jao-jobrun-status-icon.status-error {
+  background-color: #ffc107;
+}
+.jao-jobrun-status-icon.status-error:before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+.jao-jobrun-status-icon.status-failed {
+  background-color: #dc3545;
+}
+.jao-jobrun-status-icon.status-failed:before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+.jao-jobrun-status-icon.status-waiting {
+  background-color: #6c757d;
+}
+.jao-jobrun-status-icon.status-waiting:before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+
+.jao-jobrun-status-btn.status-running.btn.disabled, .jao-jobrun-status-btn.status-running.btn:disabled {
+  background-color: #adb5bd;
+  border-color: #adb5bd;
+  color: white;
+  opacity: 1;
+  filter: grayscale(0);
+}
+.jao-jobrun-status-btn.ani-outlined.status-running {
+  animation: ani-glow-primary 2s infinite;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.75);
+}
+.jao-jobrun-status-btn.ani-outlined.status-completed {
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.75);
+}
+.jao-jobrun-status-btn.ani-outlined.status-error {
+  box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.75);
+}
+.jao-jobrun-status-btn.ani-outlined.status-failed {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.75);
+}
+.jao-jobrun-status-btn.ani-outlined.status-interrupted {
+  box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.75);
+}
+
+@keyframes ani-scale {
+  0% {
+    transform: scale(0.4);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(0.4);
+  }
+}
+@keyframes ani-glow-primary {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 0.25rem theme-color("primary");
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+@keyframes ani-glow-success {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 0.25rem theme-color("success");
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+@keyframes ani-glow-warning {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 0.25rem theme-color("warning");
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+@keyframes ani-glow-danger {
+  0% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 0.25rem theme-color("danger");
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+.long-arrow {
+  height: 3px;
+  width: 30px;
+  background: #ced4da;
+  margin: 0 auto;
+  position: relative;
+}
+.long-arrow:before, .long-arrow:after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 15px;
+  display: block;
+  background: #ced4da;
+}
+.long-arrow:before {
+  right: -3px;
+  bottom: -4px;
+  transform: rotate(-45deg);
+}
+.long-arrow:after {
+  right: -3px;
+  top: -4px;
+  transform: rotate(45deg);
+}
+
+.op-flowchart-nodelist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.op-flowchart-node {
+  margin-right: 2rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.op-flowchart-node .op-flowchart-shape-arrow {
+  position: absolute;
+  top: 50%;
+  right: -30px;
+}
+.op-flowchart-node .op-flowchart-node-detail {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  padding: 0.5rem;
+  top: 2.5rem;
+  border: 1px solid #e9ecef;
+  background-color: white;
+  font-family: Consolas, "Courier New", monospace;
+  white-space: pre;
+  font-size: 85%;
+}
+.op-flowchart-node.detail-expanded > .card-header {
+  background-color: #cfe2ff !important;
+}
+.op-flowchart-node.detail-expanded > .op-flowchart-node-detail {
+  display: block;
+}
+.op-flowchart-node.node-type-task {
+  max-width: 12em;
+}
+.op-flowchart-node.node-type-task > .card-header {
+  background-color: #f8f9fa;
+}
+.op-flowchart-node.node-type-taskgroup {
+  border-style: dashed;
+}
+.op-flowchart-node.node-type-play {
+  border: 0;
+}
+.op-flowchart-node.node-type-play > .card-header {
+  color: #0d6efd;
+}
+
+.jao-pmd-canvas .jao-pmd-node-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+}
+.jao-pmd-canvas .jao-pmd-task-node.card {
+  width: 16rem;
+  min-width: 16rem;
+  height: 8rem;
+  margin: 1rem 2rem;
+  user-select: none;
+  border-color: rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.jao-pmd-canvas .jao-pmd-task-node.card.highlight {
+  background-color: #cfe2ff;
+  animation: ani-glow-primary 2s infinite;
+}
+.jao-pmd-canvas .jao-pmd-task-placeholder {
+  border: 1px dotted #0d6efd;
+  background-color: #cfe2ff;
+}

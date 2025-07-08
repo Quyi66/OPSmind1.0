@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb my-0 bg-transparent">
+            <li class="breadcrumb-item active">
+                <span data-translate="jhi_configuration.title">Configuration</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper" uaa-has-permission="sysadmin:framework:*">
+    <div class="mb-5">
+        <span data-translate="jhi_configuration.filter">Filter (by prefix)</span>
+        <input type="text" ng-model="filter" class="form-control">
+    </div>
+
+    <div class="card card-default" ng-hide="filteredConfig.length === 0">
+        <div class="card-header">
+            <div class="card-title">
+                <span>Spring configuration</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th ng-click="predicate = 'prefix'; reverse=!reverse" class="w-50"><span data-translate="jhi_configuration.table.prefix">Prefix</span></th>
+                    <th data-translate="jhi_configuration.table.properties" class="w-50">Properties</th>
+                </tr>
+                </thead>
+
+                <tr ng-repeat="entry in filtered = (vm.configuration | filter:filter | orderBy:predicate:reverse)">
+                    <td><span>{{entry.prefix}}</span></td>
+                    <td>
+                        <div class="row" ng-repeat="(key, value) in entry.properties">
+                            <div class="col-4">{{key}}</div>
+                            <div class="col-8">
+                                <span class="pull-right badge bg-success break">{{value}}</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card card-default" ng-repeat="(key, value) in vm.allConfiguration" ng-hide="filtered.length === 0">
+        <div class="card-header">
+            <div class="card-title">
+                <span>{{key}}</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="w-50">Property</th>
+                    <th class="w-50">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in filtered = (value | filter:filter)">
+                    <td class="break">{{item.key}}</td>
+                    <td class="break">
+                        <span class="pull-right badge bg-success break">{{item.val}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

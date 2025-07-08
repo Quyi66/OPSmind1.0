@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myParamLabel" ng-if="!vm.detailSign">
+        <span ng-show="vm.tag.id == null">{{'adm.content.udp_tag_add'|translate}}</span>
+        <span ng-show="vm.tag.id != null">{{'adm.content.udp_tag_edit'|translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
+    </button>
+</div>
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label" for="field_name">{{'adm.content.udp.tag.name'|translate}}</label>
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.tag.name" required/>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="control-label" for="field_name">{{'adm.content.udp_tag_type'|translate}}</label>-->
+<!--            <select class="form-select op-w-sm" name="type" ng-model="vm.tag.type" required>-->
+<!--                <option value="S">{{'adm.content.udp_tag_type.system'|translate}}</option>-->
+<!--                <option value="C">{{'adm.content.udp_tag_type.custom'|translate}}</option>-->
+<!--            </select>-->
+<!--        </div>-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span>{{'common.action.cancel'|translate}}</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary"
+                uaa-has-permission="adm:edit:*">
+            <span>{{'common.action.save'|translate}}</span>
+        </button>
+    </div>
+
+</form>

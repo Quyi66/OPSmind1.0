@@ -1,0 +1,44 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light bg-light">
+        <div class="navbar-item">
+            <button class="btn btn-primary btn-sm cac-title-button-l" uaa-has-permission="cac:*:*"
+                    ng-click="cacHostListCtrlVm.views.addHost()"><i class="fa fa-plus m-r-xs"></i>{{'cac.host.create' | translate}}
+            </button>
+        </div>
+        <div class="ms-auto">
+            <!-- <input type="file" style="display: none" class="cac-host-file" ngf-select ngf-change="cacHostListCtrlVm.views.uploadHostExcel()">-->
+            <!-- <input type="file" style="display: none;" class="emptyFile" >-->
+            <button id="uploadHostExcel" type="file" ngf-select
+                    ngf-change="cacHostListCtrlVm.views.uploadHostExcel($file)"
+                    class="btn btn-default btn-sm">
+                <i class="fa fa-upload"></i> {{'common.entity.action.import' | translate}}
+            </button>
+            <!--<a href="app/modules/cac/host/host-template.xlsx">-->
+            <!--<botton type="button"-->
+            <!--class="btn btn-default btn-sm">-->
+            <!--<i class="fa fa-download"></i>模板下载-->
+            <!--</botton>-->
+            <!--</a>-->
+            <button ng-click="cacHostListCtrlVm.views.exportHosts($event)"
+                    class="btn btn-default btn-sm">
+                <i class="fa fa-download"></i> {{'common.entity.action.export' | translate}}
+            </button>
+            <!-- ng-click="cacHostListCtrlVm.views.clickUploadFileButton()"-->
+            <!--  <a href="#" ng-click="cacRuleListCtrlVm.views.exportRules($event)">
+                  <button class="btn btn-default btn-sm">
+                      <i class="fa fa-download"></i> 导出
+                  </button>
+              </a>-->
+        </div>
+    </nav>
+    <div class="opx-flex-fill wrapper">
+        <!--        <div class="card card-default">-->
+        <!--            <div class="card-body">-->
+        <!--                <div class="table-responsive">-->
+        <table id="cacHostTable"
+               class="opx-table table host-table"></table>
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>

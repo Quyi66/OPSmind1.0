@@ -1,0 +1,8 @@
+.dropdown {
+  // Do not use nowrap because some dropdown contains list like css editor
+  // Prevent dropdown button wrap
+  //white-space: nowrap;
+  display: inline-block;
+  //20220121: Strange, if not vertical-align, the position of other buttons in the row will lower when dropdown menu open.
+  vertical-align: middle;
+}

@@ -1,0 +1,47 @@
+<div class="form-group">
+    <div class="checkbox checkbox-inline checkbox-primary">
+        <input type="checkbox" id="wpc_enabled_highlight" ng-model="$ctrl.model.enabledYaxisHighlight"
+               ng-disabled="$ctrl.model.enabledDoubleX">
+        <label for="wpc_enabled_highlight"
+               op-help-info="{{'udp.w.echart.line_condfmt.enable_desc'|translate}}">{{'udp.w.echart.line_condfmt.enable' | translate}}</label>
+    </div>
+
+</div>
+<div ng-if="$ctrl.model.enabledYaxisHighlight">
+    <div class="form-group">
+        <button type="button" class="btn btn-primary me-5" ng-click="$ctrl.addRule()"><i
+                class="fa fa-plus"></i> {{'udp.w.echart.line_condfmt.add_range' | translate}}
+        </button>
+        <input class="form-control" type="text"
+               ng-model="$ctrl.currentPiece.gt"
+               title="{{'udp.w.echart.line_condfmt.range_begin'|translate}}"
+               placeholder="{{'udp.w.echart.line_condfmt.range_begin'|translate}}" style="width: 20%"/>
+        <span class="mx-3">-</span>
+        <input class="form-control" type="text"
+               ng-model="$ctrl.currentPiece.lte"
+               title="{{'udp.w.echart.line_condfmt.range_end'|translate}}"
+               placeholder="{{'udp.w.echart.line_condfmt.range_end'|translate}}" style="width: 20%"/>
+        <udp-color-picker title="{{'udp.w.echart.line_condfmt.line_color'|translate}}" class="ms-3"
+                          ng-model="$ctrl.currentPiece.color"></udp-color-picker>
+    </div>
+    <div ng-transclude></div>
+    <ul ui-sortable="sortableOptions" ng-model="$ctrl.model.yAxes" class="nav nav-pills">
+        <!-- It seems adding class to li will make ui-sortable unstable -->
+        <li ng-repeat="field in $ctrl.model.yAxes track by $index">
+                    <span class="badge op-text-normal rounded-0"
+                          ng-class="$ctrl.currentYaxisIndex === $index?'badge-dark':'badge-default'">
+                        <i ng-if="!field.field" class="fa fa-bolt"></i>
+                        <a ng-click="$ctrl.selectYAxis($index)">{{ field.legend || label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>
+                    </span></li>
+    </ul>
+    <div class="list-group m-t" ng-show="$ctrl.currentVisualMap.pieces.length>0" ui-sortable>
+        <a ng-repeat="rule in $ctrl.currentVisualMap.pieces track by $index"
+           class="list-group-item"
+           ng-style="{'background-color':rule.color,'color':'black'}"
+           ng-click="$ctrl.selectVisualMap($index)">
+            <i class="fa fa-sort op-drag-handle text-muted"></i>
+            <span class="pull-right" ng-click="$ctrl.removeRule($index)"><i class="fa fa-times text-muted"></i></span>
+            {{rule.gt}}&nbsp;&nbsp;~&nbsp;&nbsp;{{rule.lte}}
+        </a>
+    </div>
+</div>

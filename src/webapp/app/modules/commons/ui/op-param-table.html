@@ -1,0 +1,43 @@
+<table class="op-param-table table">
+    <thead>
+    <tr>
+        <th>{{'common.table.parameter' | translate}}</th>
+        <th>{{'common.table.show_name' | translate}}</th>
+        <th>{{'common.table.describe' | translate}}</th>
+        <th op-help-info="{{'jao.jao.detail.default_info' | translate}}">{{'common.table.default_value' | translate}}</th>
+        <th>{{'common.table.type' | translate}}</th>
+        <th>{{'common.table.secret' | translate}}</th>
+        <th class="text-right">
+            <button class="btn btn-sm btn-primary opx-btn-icon " title="{{'common.table.new_parameter' | translate}}"
+                    ng-click="$ctrl.addParam()">
+                <i class="fa fa-plus"></i>
+            </button>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="param in $ctrl.theParamList track by $index">
+        <td><input class="form-control" ng-model="param.name" required="true"></td>
+        <td><input class="form-control" ng-model="param.label"></td>
+        <td><input class="form-control" ng-model="param.description"></td>
+        <td><input class="form-control" ng-model="param.defaultValue"></td>
+        <td>
+            <select class="form-select" ng-model="param.type"
+                    ng-options="def.type as def.title for def in $ctrl.paramTypeList">
+            </select>
+        </td>
+        <td>
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" ng-model="param.secret" id="je_secret_{{$index}}">
+                <label for="je_secret_{{$index}}"></label>
+            </div>
+        </td>
+        <td class="text-right">
+            <button class="btn btn-sm btn-default opx-btn-icon " title="{{'common.table.delete_parameter' | translate}}"
+                    ng-click="$ctrl.removeParam($index)">
+                <i class="fa fa-minus"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>

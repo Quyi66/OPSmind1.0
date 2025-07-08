@@ -1,0 +1,9 @@
+{
+    "jhi_sessions.title": "[<B>{{username}} Active Sessions</B>]",
+    "jhi_sessions.table.ipaddress": "IP Address",
+    "jhi_sessions.table.useragent": "Useragent",
+    "jhi_sessions.table.date": "Date",
+    "jhi_sessions.table.button": "Inactive",
+    "jhi_sessions.messages.success": "<Strong>Session Expired!</Strong>",
+    "jhi_sessions.messages.error": "<strong>An error occurred!</strong> Session could not be invalidated."
+}

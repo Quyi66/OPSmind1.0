@@ -1,0 +1,29 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'sys_userManagement.home.title' | translate}}</div>
+        <div class="ms-auto" uaa-has-permission="sysadmin:user:*">
+            <button class="btn btn-default" ui-sref="app.ssc.user-allocate-role">
+                <i class="fa fa-fw fa-user-tag"></i> {{'sys_userManagement.allocateRole' | translate}}
+            </button>
+            <!--关联用户-->
+            <button class="btn btn-primary" type="button" ng-if="!vm.isAdminUI" link-tenant-user
+                    tenant-id="{{vm.tenantId}}" on-update="vm.onAddUser">
+                <i class="fa fa-fw fa-plus"></i> {{'sys_userManagement.home.createUser' | translate}}
+            </button>
+            <!--创建用户-->
+            <button class="btn btn-primary" ng-if="vm.isAdminUI" create-user tenant-id="{{vm.tenantId}}"
+                    on-update="vm.onAddUser">
+                <i class="fa fa-fw fa-plus"></i> {{'sys_userManagement.home.createUser' | translate}}
+            </button>
+            <button ng-hide="vm.isLdapSyncing" class="btn btn-info" ng-click="vm.syncLdapUsers()"
+                    ng-if="vm.enableSyncLdapUser">
+                <i class="fa fa-fw fa-sync"></i>
+                <span>{{vm.isLdapSyncing ? ('sys_userManagement.synchronizing' | translate) : ('sys_userManagement.syncDomainAccount' | translate)}}</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="card-body" uaa-has-permission="sysadmin:user:*">
+        <opx-datatable table-config="vm.tableConfig"></opx-datatable>
+    </div>
+</div>

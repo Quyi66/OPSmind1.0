@@ -1,0 +1,18 @@
+<div class="h-full" ng-if="!instanceViewTag">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'udp.w.flow.manager.list.instance' | translate}}</div>
+    </nav>
+    <div class="p-3">
+        <opx-datatable id="flowInstanceTable" table-config="tableConfig"></opx-datatable>
+    </div>
+</div>
+
+
+<div class="h-full" ng-if="instanceViewTag">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'jao.log.detail' | translate}}</div>
+    </nav>
+    <flow-instance the-model="$ctrl.flow" options="instanceOption"></flow-instance>
+</div>
+
+

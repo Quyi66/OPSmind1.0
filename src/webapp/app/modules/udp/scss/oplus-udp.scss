@@ -1,0 +1,35 @@
+@import "src/webapp/content/scss/config";
+@import "src/webapp/content/scss/opx/forms";
+@import "udp-vars";
+@import "page-mgmt";
+@import "page-display";
+@import "page-display-mobile";
+@import "page-designer";
+@import "widget";
+@import "widget-size";
+@import "widget-icons";
+@import "widget-form";
+@import "widget-dnd";
+@import "uwtype-input";
+@import "uwtype-layout";
+@import "uwtype-kpi";
+@import "uwtype-param";
+@import "uwtype-daterange";
+@import "uwtype-calendar";
+@import "uwtype-text";
+@import "uwtype-datatable";
+@import "uwtype-job";
+@import "uwtype-card";
+@import "uwtype-circle";
+@import "uwtype-button";
+@import "uwtype-wysiwyg";
+@import "uwtype-nav";
+@import "uwtype-pivot";
+@import "uwtype-flow-process";
+@import "uwtype-flow-process-result";
+@import "components";
+@import "ustep";
+
+[udp-widget-interaction] {
+  cursor: pointer;
+}

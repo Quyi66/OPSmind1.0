@@ -1,0 +1,58 @@
+{
+  "name": "oplus-flow",
+  "version": "1.0.0",
+  "description": "Oplus Flow",
+  "private": true,
+  "cacheDirectories": [
+    "node_modules"
+  ],
+  "author": {
+    "name": "chy"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.1.0",
+    "@babel/runtime": "^7.2.0",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-angularjs-annotate": "^0.9.0",
+    "bpmn-auto-layout": "^0.1.0",
+    "bpmn-js": "^6.1.2",
+    "bpmn-js-properties-panel": "^0.37.2",
+    "bpmn-js-token-simulation": "^0.10.0",
+    "bpmn-js-transaction-boundaries": "^0.1.1",
+    "bpmnlint": "^7.2.1",
+    "bpmnlint-loader": "^0.1.5",
+    "bpmnlint-plugin-oplus": "file:components/bpmnlint-plugin-oplus",
+    "css-loader": "^3.6.0",
+    "diagram-js": "^6.7.0",
+    "diagram-js-direct-editing": "^1.6.1",
+    "diagram-js-minimap": "^2.0.3",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^1.2.1",
+    "stylus-loader": "^3.0.2",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.28.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.11.3",
+    "webpack-serve": "^2.0.3"
+  },
+  "engines": {
+    "node": "^4.3"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack-dev-server.config.js",
+    "build-dev": "webpack --config webpack.config.js --progress --colors",
+    "build": "webpack --config webpack-production.config.js --progress --colors"
+  },
+  "dependencies": {}
+}

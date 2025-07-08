@@ -1,0 +1,18 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'adm.menu.teams' | translate}}</div>
+        <div class="ms-auto" uaa-has-permission="adm:edit:*">
+            <button class="btn btn-outline-primary" ui-sref="app.ssc.config.team.new">
+                <span class="fa fa-plus"></span> <span>{{'team.home.createTeam' | translate}}</span>
+            </button>
+        </div>
+    </nav>
+    <!--<div class="card-body">
+        <div class="table-responsive">
+            <table class="team-table table table-striped table-hover"></table>
+        </div>
+    </div>-->
+    <div class="card-body">
+        <opx-datatable table-config="tableConfig"></opx-datatable>
+    </div>
+</div>

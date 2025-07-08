@@ -1,0 +1,318 @@
+
+{
+  "hosts": [
+    {"hostKey":"39.10.102.130"},
+    {"hostKey":"39.10.102.131"},
+    {"hostKey":"39.10.102.132"},
+    {"hostKey":"39.10.102.133"},
+    {"hostKey":"39.10.102.134"},
+    {"hostKey":"39.10.102.135"},
+    {"hostKey":"39.10.102.136"}
+  ],
+  "rules": [
+    {
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "ruleName": "连接数检查(非正常)"
+    },
+    {
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "ruleName": "主机Mem/Cpu用量(正常)"
+    },
+    {
+      "ruleExpression": "$db_pool=20",
+      "ruleName": "数据库连接池"
+    },
+    {
+      "ruleExpression": "$disk < 70",
+      "ruleName": "磁盘空间(正常)"
+    },
+    {
+      "ruleExpression": "$timeout < 20000",
+      "ruleName": "未超时时间"
+    },
+    {
+      "ruleExpression": "$tomcat_pool=20"
+      ,"ruleName": "Tomcat连接数量"
+    },
+    {
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "ruleName": "WAS健康检查(非正常)"
+    },
+    {
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "ruleName": "主机Mem/Cpu用量(非正常)"
+    }
+  ],
+  "results": [
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$tomcat_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.130",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$tomcat_pool=20",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.131",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$tomcat_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.132",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$tomcat_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.133",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$tomcat_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.134",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$tomcat_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.135",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$conn_num < 20 && $conn_num > 100",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$mem_rate >= 0 && $mem_rate <= 80 && $cpu_use >= 0 && $cpu_use <= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$db_pool=20",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$disk < 70",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$conn_pool>=10 && $conn_pool<=15",
+      "auditResult": "false"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$mem_rate > 80 && $cpu_use >= 80",
+      "auditResult": "true"
+    },
+    {
+      "hostName": "39.10.102.136",
+      "ruleExpression": "$timeout < 20000",
+      "auditResult": null
+    }
+  ]
+}

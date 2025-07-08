@@ -1,0 +1,11 @@
+{
+    "jhi_logs": {
+        "title": "日誌",
+        "nbloggers": "共有 {{ total }} 條日誌.",
+        "filter": "篩選",
+        "table": {
+            "name": "名稱",
+            "level": "等級"
+        }
+    }
+}

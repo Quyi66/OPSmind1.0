@@ -1,0 +1,11 @@
+<select ng-model="$ctrl.selectedTheme" class="form-select d-inline-block bg-{{$ctrl.selectedTheme}} opx-autocolor"
+        style="width:10rem;">
+    <option class="bg-{{theme.id}} opx-autocolor" value="{{theme.id}}" ng-repeat="theme in ::$ctrl.themeColors">
+        {{theme.title}}
+    </option>
+</select>
+<div ng-if="$ctrl.selectedTheme==='_CUSTOM'" class="d-inline-block ms-3" style="vertical-align: top">
+    <udp-color-picker ng-model="$ctrl.theModel.backColor"
+                      title="{{'common.term.background'|translate}}"></udp-color-picker>
+    <udp-color-picker ng-model="$ctrl.theModel.fontColor" title="{{'common.term.font'|translate}}"></udp-color-picker>
+</div>

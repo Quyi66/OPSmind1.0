@@ -1,0 +1,20 @@
+<div>
+    <div class="p-3 bg-light">
+        <pre ng-if="!$ctrl.editMode" style="height:20rem;">{{$ctrl.theModel | json}}</pre>
+    </div>
+    <form name="editorForm">
+        <op-code-editor ng-if="$ctrl.editMode" the-model="$ctrl.model.json"
+                        options="{syntax:'javascript'}"></op-code-editor>
+    </form>
+</div>
+<div class="mt-2">
+    <button type="button" class="btn btn-outline-default opx-btn-icon" ng-click="$ctrl.edit()" ng-if="!$ctrl.editMode"
+            title="{{'udp.wc.props.edit_desc'|translate}}"><i class="fa fa-pencil"></i></button>
+    <button type="button" class="btn btn-default m-t-sm" ng-click="$ctrl.cancel()" ng-if="$ctrl.editMode">
+        {{'common.action.exit' | translate}}
+    </button>
+    <button type="button" class="btn btn-default m-t-sm" ng-click="$ctrl.refresh()" ng-if="$ctrl.editMode">
+        {{'common.action.refresh' | translate}}
+    </button>
+</div>
+

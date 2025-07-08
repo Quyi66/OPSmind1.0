@@ -1,0 +1,5 @@
+- [RHEL装机](ra/index.md)
+    - [快速入门](ra/quickstart.md)
+    - [使用指南](ra/guide.md)
+    - [设置和管理](ra/config.md)
+    - [常见问题](ra/faq.md)

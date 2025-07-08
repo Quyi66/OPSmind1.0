@@ -1,0 +1,193 @@
+@import "src/webapp/content/scss/config";
+
+table.gfs-repo-stage {
+}
+
+// ff stands for File Field
+.gfs-ff-warn {
+  &::before {
+    @include opx-fa-icon('');
+  }
+}
+
+.gfs-missing-file {
+  .gfs-ff-name {
+    text-decoration: line-through;
+  }
+
+  .gfs-ff-warn::before {
+    content: '\f06a';
+    color: $danger;
+  }
+}
+
+.gfs-missing-rec {
+  .gfs-ff-name {
+    font-style: italic;
+  }
+
+  .gfs-ff-warn::before {
+    content: '\f059';
+    color: $warning;
+  }
+}
+
+.gfs-ff-stage {
+  &::before {
+    @include opx-fa-icon('\f05a');
+    //font-size: 0.5rem;
+  }
+
+  .gfs-stage-rejected &::before {
+    color: $warning !important;
+    margin-right: 0.25rem;
+  }
+
+  .gfs-stage-exist &::before {
+    color: $primary;
+    margin-right: 0.25rem;
+  }
+}
+
+.gfs-ff-master {
+
+}
+
+.gfs-ff-desc {
+  p, ul, ol, dl {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.gfs-ff-warn {
+}
+
+.gfs-ff-status::before {
+  @include opx-fa-icon('');
+}
+
+.gfs-ff-stage-status::before {
+  @include opx-fa-icon('');
+}
+
+.gfs-master-disabled {
+  .gfs-ff-name {
+    color: #aaa;
+  }
+
+  .gfs-ff-status::before {
+    content: '\f05e';
+    color: $secondary;
+  }
+}
+
+.gfs-master-published {
+  .gfs-ff-status::before {
+    content: '\f111';
+    color: $success;
+  }
+}
+
+.gfs-stage-exist {
+  .gfs-ff-status::before {
+    content: '\f111';
+  }
+
+  &.gfs-master-disabled .gfs-ff-status::before {
+    content: '\f05e';
+  }
+}
+
+dl.gfs-help-doc {
+  dt {
+    font-weight: normal;
+    float: left;
+    clear: left;
+    width: 6em;
+    text-align: right;
+    margin-right: 1em;
+
+    & > div {
+      display: inline-block;
+    }
+
+    //&::after {
+    //  content: ": ";
+    //}
+  }
+}
+
+.gfs-markdown-content {
+  h1 {
+    font-size: 150%;
+  }
+
+  h2 {
+    font-size: 125%;
+  }
+
+  h3 {
+    font-size: 112.5%;
+  }
+
+  h4 {
+    font-size: 100%;
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: bold;
+    margin-bottom: .5rem;
+    margin-top: 1rem;
+  }
+
+  table {
+    width: 100%;
+    margin-bottom: $spacer;
+    color: $table-color;
+    background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+    border: $table-border-width solid $table-border-color;
+
+    th, td {
+      padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
+      vertical-align: top;
+      //border-top: $table-border-width solid $table-border-color;
+      border: $table-border-width solid $table-border-color;
+    }
+
+    thead th {
+      vertical-align: bottom;
+      //border-bottom: (2 * $table-border-width) solid $table-border-color;
+    }
+
+    thead tr {
+      background-color: rgba($gray-500, 0.25);
+    }
+
+    tbody + tbody {
+      border-top: (2 * $table-border-width) solid $table-border-color;
+    }
+
+    thead {
+      th, td {
+        border-bottom-width: 2 * $table-border-width;
+      }
+    }
+  }
+
+  blockquote {
+    background-color: $gray-100;
+    border-left: .25rem solid $gray-200;
+    padding: .5rem;
+  }
+
+  ul, ol, dl {
+    margin-bottom: .5rem;
+  }
+
+  pre {
+    background-color: $gray-200;
+    padding: .25rem;
+    margin-top: .25rem;
+    margin-bottom: .5rem;
+  }
+}

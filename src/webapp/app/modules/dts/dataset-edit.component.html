@@ -1,0 +1,123 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.appman.dataset">{{'dts.dataset.title' | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">{{'dts.dataset.action.edit' | translate}}</li>
+            </ol>
+        </div>
+        <!--        <div class="dropdown">-->
+        <!--            <a class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-info"></i></a>-->
+        <!--            <div class="dropdown-menu dropdown-menu-left p-3">-->
+        <!--                <div class="form-group">-->
+        <!--                    <label class="control-label">{{'common.attr.created_by' | translate}}</label>-->
+        <!--                    <div class="control-label">-->
+        <!--                        {{dataset.creatorName}}-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <!--                    <label class="control-label">{{'common.attr.updated_by' | translate}}</label>-->
+        <!--                    <div class="control-label">-->
+        <!--                        {{dataset.modifierName}}-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <!--                    <label class="control-label">{{'common.attr.created_at' | translate}}</label>-->
+        <!--                    <div class="control-label">{{dataset.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <!--                    <label class="control-label">{{'common.attr.updated_at' | translate}}</label>-->
+        <!--                    <div class="control-label">-->
+        <!--                        {{dataset.modifiedAt | date:'yyyy-MM-dd HH:mm:ss'}}-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="navbar-nav ms-auto">
+            <button class="btn btn-primary opx-btn-ok" type="button" ng-click="saveDataset()" ng-if="editAction"
+                    uaa-has-permission='dts:edit'>{{'common.action.save' | translate}}
+                <!--                    uaa-data-has-permission='{"total":"{{dataset.action}}", "target":"w"}'>保存数据集 -->
+            </button>
+            <button class="btn btn-primary opx-btn-ok" type="button" ng-click="saveDataset()" ng-if="isAction">
+                {{'common.action.save' | translate}}
+            </button>
+            <a class="btn btn-default opx-btn-cancel" type="button" ui-sref="app.appman.dataset">
+                {{'common.action.cancel' | translate}}
+            </a>
+        </div>
+    </nav>
+    <div class="opx-flex-fill p-3 scroll-y">
+        <form class="op-smartform form-horizontal" ng-submit="saveDataset()">
+            <fieldset>
+                <legend>{{'dts.dataset.edit.basic' | translate}}</legend>
+                <div class="form-group">
+                    <label class="control-label" for="f_code" required
+                           op-help-info="{{'dts.dataset.edit.code_helpinfo'|translate}}">{{'dts.dataset.edit.code' | translate}}
+                        *</label>
+                    <div class="form-control-wrapper">
+                        <input placeholder="{{'dts.dataset.edit.code_placeholder'|translate}}" ng-readonly="editing"
+                               ng-model="dataset.code"
+                               class="form-control" id="f_code">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="f_name" required>{{'dts.dataset.edit.name' | translate}} *</label>
+                    <div class="form-control-wrapper">
+                        <input ng-model="dataset.name" class="form-control" id="f_name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           for="f_description">{{'dts.dataset.edit.description' | translate}}</label>
+                    <div class="form-control-wrapper"><textarea type="text" ng-model="dataset.description"
+                                                                class="form-control" id="f_description"
+                                                                rows="3"></textarea></div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="f_datasource" required>{{'dts.dataset.edit.datasource' | translate}}
+                        *</label>
+                    <div class="form-control-wrapper">
+                        <select op-select ng-model="selectedDatasource" class="form-select" id="f_datasource"
+                                ng-options="ds as ds.name +' [' + ds.type + ']' for ds in datasources"></select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>{{'dts.dataset.edit.query' | translate}}</legend>
+                <div ng-if="selectedDatasource.type != '' && selectedDatasource.type != null"
+                     ng-include="'app/modules/dts/dataset-query-'+selectedDatasource.type+'.html'"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>{{'dts.dataset.edit.test' | translate}}</legend>
+                <div class="form-group">
+                    <div class="form-control-wrapper text-right">
+                        <!--<button ng-show="isRunning" type="button" class="btn btn-info  pull-right">-->
+                        <!--<i class="fa fa-refresh fa-spin"></i>-->
+                        <!--</button>-->
+                        <button ng-disabled="isRunning" type="button"
+                                ng-click="queryMeta('data',selectedDatasource.type)"
+                                class="btn btn-outline-primary"><i class="far fa-vial">{{'dts.dataset.edit.test_run' | translate}}</i>
+                        </button>
+                        &nbsp;&nbsp;
+                        <button ng-disabled="isRunning" type="button"
+                                ng-click="exportData()"
+                                class="btn btn-outline-primary"><i class="far fa-file-export">{{'udp.w.datatable.action.export_result' | translate}}</i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card card-default">
+                    <div class="card-header">
+                        <div class="card-title">{{'dts.dataset.edit.test_result' | translate}}</div>
+                    </div>
+                    <div class="card-body">
+                        <div id="dataTable" class="table-responsive"></div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

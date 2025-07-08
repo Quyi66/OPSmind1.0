@@ -1,0 +1,13 @@
+<div class="row no-gutters">
+    <div class="col-sm-6" xxstyle="padding-right:0;">
+        <select op-select="{width:'100%'}"
+                ng-model="$ctrl.pageId" class="form-control"
+                data-placeholder-text-single="{{'udp.page.selector.select_page'|translate}}"
+                ng-options="page.id as page.title for page in $ctrl.pages"></select>
+    </div>
+    <div class="col-sm-6"><span class="control-label"
+                                style="margin-left:0.5rem;">{{'common.term.or' | translate}}</span>
+        <udp-data-converter the-model="$ctrl.pageId" options="$ctrl.options.converter"
+                            style="width: calc(100% - 3em); display: inline-block;"></udp-data-converter>
+    </div>
+</div>

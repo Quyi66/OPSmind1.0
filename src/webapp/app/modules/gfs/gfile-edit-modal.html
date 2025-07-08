@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.isNew ? 'gfs.modal.add_file' : 'gfs.modal.edit_file' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body op-smartform" ng-if="$ctrl.isNew">
+    <div ng-include="'app/modules/gfs/gfile-edit-modal-basic.html'"></div>
+</div>
+<div class="modal-body op-smartform mt-n4" ng-if="!$ctrl.isNew">
+    <uib-tabset class="tab-container wrapper" active="1">
+        <uib-tab index="1" heading="{{'gfs.modal.base_info' | translate}}">
+            <div ng-include="'app/modules/gfs/gfile-edit-modal-basic.html'"></div>
+        </uib-tab>
+        <uib-tab index="2" heading="{{'gfs.modal.script_content' | translate}}" select="$ctrl.showFileContent()">
+            <div class="alert alert-warning alert-dismissible" role="alert" ng-show="!$ctrl.isFileContentEditable">
+                {{'gfs.modal.file_not_edit' | translate}}
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-default" type="button" ng-click="$ctrl.editFileContent()"
+                        ng-if="$ctrl.isFileContentEditable" ng-disabled="$ctrl.isEditFileContent">
+                    {{'gfs.modal.edit_content' | translate}}
+                </button>
+            </div>
+            <gfs-gfile-content file="$ctrl.fileInfo.fileContent" options="{editable:$ctrl.isEditFileContent}"
+                               class="d-block" ng-if="$ctrl.isShowFileContent"></gfs-gfile-content>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary opx-btn-ok" type="button" ng-click="$ctrl.saveClose()"
+            ng-disabled="($ctrl.isNew && !$ctrl.fileInfo.file) || $ctrl.isSaving">{{'gfs.common.sure' | translate}}
+    </button>
+    <button class="btn btn-default opx-btn-cancel" type="button" ng-click="$ctrl.cancel()">{{'gfs.common.cancel' | translate}}</button>
+</div>

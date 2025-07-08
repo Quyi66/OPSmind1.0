@@ -1,0 +1,70 @@
+<div class="bg-white">
+    <nav class="navbar navbar-light bg-light">
+        <div class="navbar-brand">页头样式</div>
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">首页</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">一级菜单</a></li>
+                <li class="breadcrumb-item active">二级菜单</li>
+            </ol>
+        </div>
+        <ul class="navbar-nav ms-5">
+            <li class="nav-item"><a class="nav-link"><i class="fa fa-chevron-left"></i></a></li>
+            <li class="nav-item"><a class="nav-link">连接</a></li>
+        </ul>
+        <div class="form-inline ms-auto">
+            <div class="dropdown">
+                <a class="btn btn-default opx-btn-icon" title="执行历史"
+                   data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+                <div class="dropdown-menu dropdown-menu-left" style="max-height:10rem; overflow-y:auto;">
+                    <div class="dropdown-header">最近10次执行记录</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Label</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-default opx-btn-icon"><i class="fa fa-link"></i></a>
+                <a class="btn btn-default">文字连接</a>
+                <a class="btn btn-default"><i class="fa fa-link"></i> 文字</a>
+            </div>
+            <button class="btn btn-default opx-btn-icon"><i class="fa fa-rocket-launch"></i></button>
+            <button class="btn btn-default"><i class="fa fa-trash"></i> 删除内容</button>
+            <button class="btn btn-outline-primary"><i class="fa fa-plus"></i> 添加内容</button>
+        </div>
+    </nav>
+    <div class="p-3">
+        <section>
+            <div class="card card-default">
+                <div class="card-header">
+                    <h4 class="card-title">Tabs样式</h4></div>
+                <div class="card-body">
+                    <div ng-repeat="style in navVm.tabStyles track by $index" class="mb-5">
+                        <h4>{{style.name}}</h4>
+                        <ul class="nav {{style.css}}" op-tab-bar style="width:100%;" op-tab-bar>
+                            <li class="nav-item" ng-repeat="item in navVm.tabItems track by $index"><a class="nav-link"
+                                                                                                       ng-click="navVm.activeItem=$index"
+                                                                                                       ng-class="{active:navVm.activeItem===$index}">{{item}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="card">
+                <div class="card-body">
+                    <h4> op-searchbox</h4>
+                    <op-searchbox search-text="searchText"></op-searchbox>
+                    <h4> op-searchbox autohide</h4>
+                    <op-searchbox search-text="searchText" class="autohide"></op-searchbox>
+                    <h4> op-searchbox sm</h4>
+                    <op-searchbox search-text="searchText" class="autohide"></op-searchbox>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

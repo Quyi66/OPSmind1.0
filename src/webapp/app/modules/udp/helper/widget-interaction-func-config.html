@@ -1,0 +1,23 @@
+<div class="form-group">
+    <label class="control-label" for="wifc_name">{{'udp.wc.intx.func.name' | translate}}</label>
+    <div class="form-control-wrapper">
+        <select id="wifc_name" class="form-select op-w-md" ng-model="$ctrl.props.name">
+            <option value=""></option>
+            <option value="closeme">{{'udp.wc.intx.func.closeme' | translate}}</option>
+            <!--            <option value="download">Download</option>-->
+        </select>
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.props.name==='closeme'">
+    <label class="control-label"
+           op-help-info="{{'udp.wc.intx.func.closeme_helpinfo'|translate}}">{{'udp.wc.intx.func.closeme_param' | translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-page-params-config params-json="$ctrl.props.params" class="w-100"></udp-page-params-config>
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.props.name==='download'">
+    <label class="control-label">{{'udp.wc.intx.func.download_url' | translate}}</label>
+    <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.props.download.url">
+    </div>
+</div>

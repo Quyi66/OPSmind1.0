@@ -1,0 +1,94 @@
+<div class="modal-header">
+    <h4 class="modal-title">About</h4>
+</div>
+<div class="modal-body op-smartform" ng-if="!$ctrl.isNew" style="height:30rem;">
+    <uib-tabset class="tab-container h-100" type="mdc-op" active="1">
+        <uib-tab index="1">
+            <uib-tab-heading>版本信息</uib-tab-heading>
+            <div class="modal-body">
+                <table class="table opx-table">
+                    <thead>
+                    <tr>
+                        <th>{{'adm.content.sysinfo_name' | translate}}</th>
+                        <th>{{'adm.content.sysinfo_edition' | translate}}</th>
+                        <th>{{'adm.content.sysinfo_pack_time' | translate}}</th>
+                        <th>{{'adm.content.sysinfo_code_edition' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="version in $ctrl.viewVersions track by $index">
+                        <td>{{version.module}}</td>
+                        <td>{{version.version}}</td>
+                        <td>{{version.build ? '#' + version.build : ''}}</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="version in $ctrl.serverVersions track by $index">
+                        <td>{{version.projectName}}</td>
+                        <td>{{version.projectVersion}}</td>
+                        <td>{{version.buildTime ? '#' + version.buildTime : ''}}</td>
+                        <td>{{version.codeVersion ? version.codeVersion : ''}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+
+        <uib-tab ng-if="$ctrl.isEnableLicense">
+            <uib-tab-heading>授权许可</uib-tab-heading>
+            <div>
+                <span>授权给：<span>{{$ctrl.license.licenseContent.subject}}</span></span><br><br>
+                <span>激活码到期时间：<span>{{$ctrl.license.licenseContent.notAfter}}</span></span><br><br>
+                <span>授权MAC地址：<span>{{$ctrl.license.licenseContent.extra.macList}}</span></span><br><br>
+                <span>授权模块信息：<span>{{$ctrl.license.licenseContent.extra.modules}}</span></span><br><br>
+            </div>
+        </uib-tab>
+
+        <uib-tab ng-if="$ctrl.isEnableLicense">
+            <uib-tab-heading>更新激活码</uib-tab-heading>
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <p class="help-block  text-danger">
+                        {{$ctrl.msg}}
+                    </p>
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label class="control-label" op-help-info="请提供部署主机mac地址给厂商获取激活码">激活码</label>
+                <div class="form-control-wrapper">
+                        <textarea class="form-control" ng-model="$ctrl.license.activationCode" rows="11"
+                                  style="resize: none;" required></textarea>
+                </div>
+            </div> -->
+
+
+            <div class="form-group">
+                <label class="control-label" op-help-info="请提供部署主机mac地址给厂商获取授权文件">授权文件</label>
+                <div class="form-control-wrapper">
+                    <label class="btn btn-outline-primary">
+                        <input type="file" ngf-select ngf-max-size="$ctrl.ngf.maxSize" ngf-pattern="$ctrl.ngf.pattern"
+                            ng-model="$ctrl.fileInfo.file" name="file" style="display:none;"">
+                        {{'gfs.basic.select_file' | translate}}
+                    </label>
+
+                    <div class="align-content-center ml-3">
+                        <strong>{{ $ctrl.fileInfo.file.name }}</strong>
+                    </div>
+
+                    <p class="help-block" style="margin-top: 1rem">
+                        {{'gfs.basic.file_max_size' | translate}}{{$ctrl.ngf.maxSize}}<strong>{{$ctrl.ngf.pattern}}</strong>。
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary opx-btn-ok float-end" type="button" ng-click="$ctrl.register()">更新激活码
+                </button>
+            </div>
+
+        </uib-tab>
+    </uib-tabset>
+</div>
+
+
+
+

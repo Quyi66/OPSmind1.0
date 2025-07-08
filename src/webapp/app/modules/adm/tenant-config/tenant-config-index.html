@@ -1,0 +1,14 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand">{{'adm.content.data_maintenance' | translate}}</span>
+    </nav>
+    <div class="card-body">
+        <opx-datatable table-config="tableConfig">
+            <div uaa-has-permission="sysadmin:tenant:*">
+                <button class="btn btn-primary" ui-sref="tenantConfig.tenant_import">
+                    <span class="fa fa-plus"></span> <span>{{'common.action.import' | translate}}</span>
+                </button>
+            </div>
+        </opx-datatable>
+    </div>
+</div>

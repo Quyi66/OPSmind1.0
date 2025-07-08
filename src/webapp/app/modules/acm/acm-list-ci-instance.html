@@ -1,0 +1,47 @@
+<div ng-if="$ctrl.useOpxDatatable" class="flex-fill scroll-y">
+    <div class="opx-layout-vflex">
+        <div class="mb-3 d-flex align-items-center bg-light px-3 py-2">
+            <strong class="me-3">{{ 'acm.common.list.filter' | translate}}</strong>
+            <acm-list-ci-group  ng-model="$ctrl.theModel"
+                               options="{groupCallBack:$ctrl.onClickGroup,showAs:'dropdown'}"
+                               ci-type="$ctrl.ciType"
+                               class="me-3"></acm-list-ci-group>
+            <acm-list-ci-tag
+                             ng-model="$ctrl.theModel"
+                             options="{tagCallback:$ctrl.onClickTag,view:'dropdown'}"
+                             ci-type="$ctrl.ciType"
+                             class="me-3"></acm-list-ci-tag>
+            <!--<acm-list-ci-condition-->
+            <!--options="{clickCallback:$ctrl.onClickTagDynamicTag,view:'dropdown'}"-->
+            <!--asset-type="$ctrl.ciType">-->
+            <!--</acm-list-ci-condition>-->
+        </div>
+        <opx-datatable table-config="$ctrl.tableConfig"></opx-datatable>
+    </div>
+</div>
+<udp-page-view page-id="'$CUSTOM_PAGE$'" page-source="code" ng-if="!$ctrl.useOpxDatatable"
+               udp-page-data="$ctrl.udpPageData"
+               udp-callback-on-loaded="$ctrl.callbackOnLoaded" class="flex-fill scroll-y">
+    <div class="opx-layout-vflex">
+        <div class="mb-3 d-flex align-items-center bg-light px-3 py-2">
+            <strong class="me-3" style="width: 2rem;">{{ 'acm.common.list.filter' | translate}}</strong>
+            <acm-list-ci-group ng-model="$ctrl.theModel"
+                               options="{groupCallBack:$ctrl.onClickGroup,showAs:'dropdown'}"
+                               ci-type="$ctrl.ciType"
+                               class="me-3"></acm-list-ci-group>
+            <acm-list-ci-tag ng-model="$ctrl.theModel"
+                             options="{tagCallback:$ctrl.onClickTag,view:'dropdown'}"
+                             ci-type="$ctrl.ciType"
+                             class="me-3"></acm-list-ci-tag>
+
+            <!--            <acm-device-selector the-model="$ctrl.theModel" options="{groupCallBack:$ctrl.onClickGroup,tagCallback:$ctrl.onClickTag, view:'dropdown'}" view-as="dropdown" ci-types="$ctrl.ciType" ></acm-device-selector>-->
+            <!--<acm-list-ci-condition-->
+            <!--options="{clickCallback:$ctrl.onClickTagDynamicTag,view:'dropdown'}"-->
+            <!--asset-type="$ctrl.ciType">-->
+            <!--</acm-list-ci-condition>-->
+        </div>
+        <div ng-if="datatableProps">
+            <uwidget uw-type="datatable" id="datatable" uw-props="datatableProps"></uwidget>
+        </div>
+    </div>
+</udp-page-view>

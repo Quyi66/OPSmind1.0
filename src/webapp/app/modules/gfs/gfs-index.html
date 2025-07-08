@@ -1,0 +1,51 @@
+<div class="opx-layout-hflex" ng-init="useStaticFs=true" uaa-has-any-permission="gfs:view:*,gfs:approve:*"
+     uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <div class="opx-sidebar">
+<!--        <nav class="opx-sidebar-header navbar">-->
+<!--            <a ui-sref="app.gfs"><span class="opx-navbar-title">{{ 'gfs.index.file_service' | translate}}</span></a>-->
+<!--        </nav>-->
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item" uaa-has-permission="gfs:view:*">
+                    <a ui-sref="app.gfs.git_repo_dir({repo:'$tnt',dir:''})" ui-sref-active="active"><i
+                            class="fad fa-fw fa-code-merge"></i> {{ 'gfs.index.script_library' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item" ng-if="useStaticFs" uaa-has-permission="gfs:view:*">
+                    <a ui-sref="app.gfs.staticfs_dir({repo:'$tnt',dir:''})" ui-sref-active="active"><i
+                            class="fa fa-archive fa-fw"></i> {{ 'gfs.index.file_library' | translate}}</a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="gfs:approve:*">
+                    <a ui-sref="app.gfs.git_repo_dir_approve({repo:'$tnt',dir:''})" ui-sref-active="active"><i
+                            class="fad fa-fw fa-box-check"></i> {{ 'gfs.index.script_review' | translate}}</a>
+                </div>
+                <!--                <div class="opx-treenav-item">-->
+                <!--                    <a ui-sref="app.gfs.example" ui-sref-active="active">示例</a>-->
+                <!--                </div>-->
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y">
+        <div class="h-100" ui-view="gfs_main">
+            <div class="bg-light p-5 d-flex justify-content-center h-100 align-items-center">
+                <a class="card op-feature-card" ui-sref="app.gfs.git_repo_dir({repo:'$tnt',dir:''})"
+                   ui-sref-active="active">
+                    <div class="card-img-top"><i
+                            class="fad fa-oplus-gfs-script"></i></div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ 'gfs.index.script_library' | translate}}</h3>
+                        <p class="card-text">{{ 'gfs.index.script_library_desc' | translate}}</p>
+                    </div>
+                </a>
+                <a class="card op-feature-card ms-5" ng-if="useStaticFs"
+                   ui-sref="app.gfs.staticfs_dir({repo:'$tnt',dir:''})">
+                    <div class="card-img-top"><i
+                            class="fad fa-oplus-gfs-staticfs"></i></div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ 'gfs.index.file_library' | translate}}</h3>
+                        <p class="card-text">{{ 'gfs.index.file_library_desc' | translate}}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

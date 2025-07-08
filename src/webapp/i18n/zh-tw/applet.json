@@ -1,0 +1,15 @@
+{
+  "applet": {
+    "selector": {
+      "title": "選擇應用",
+      "all": "所有應用",
+      "unsorted": "未分類",
+      "select_applet": "請選擇應用"
+    },
+    "list": {
+      "quit_sort": "退出排序",
+      "sort": "應用排序",
+      "show_disabled": "顯示停用的應用"
+    }
+  }
+}

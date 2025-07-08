@@ -1,0 +1,342 @@
+{
+  "id": "test",
+  "code": "linux_server",
+  "title": "Linux主机",
+  "alias": "主机清单, Linux Server",
+  "attrs": [
+    {
+      "type": "group",
+      "title": "内置分组"
+    },
+    {
+      "code": "IP",
+      "title": "纳管IP",
+      "type": null,
+      "unique": true,
+      "required": true,
+      "editable": false,
+      "internal": true,
+      "display": {},
+      "input": {
+        "control": "input"
+      }
+    },
+    {
+      "code": "CONN_LATEST_STATUS",
+      "title": "连通状态",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": false,
+      "internal": true,
+      "input": {
+        "control": "hidden",
+        "datatype": "string"
+      }
+    },
+    {
+      "code": "CONN_RATE",
+      "title": "连通率",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": false,
+      "internal": true,
+      "input": {
+        "control": "hidden",
+        "datatype": "string"
+      }
+    },
+    {
+      "type": "group",
+      "title": "自动化采集组"
+    },
+    {
+      "code": "os_version",
+      "title": "操作系统版本",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "os_distro",
+      "title": "操作系统",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "hostname",
+      "title": "主机名",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {
+        "onclick": "ViewDetail"
+      },
+      "input": {}
+    },
+    {
+      "code": "all_ipv4_addresses",
+      "title": "ipv4",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {
+        "datatype": "json"
+      }
+    },
+    {
+      "code": "arch",
+      "title": "系统架构",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "cpu_vcpus",
+      "title": "cpu数量",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "kernel",
+      "title": "内核版本",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "memtotal_mb",
+      "title": "系统总内存(MB)",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "memfree_mb",
+      "title": "可用系统内存(MB)",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "swaptotal_mb",
+      "title": "swap总内存(MB)",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "swapfree_mb",
+      "title": "swap可用内存(MB)",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "system-serial-number",
+      "title": "系统序列号",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    },
+    {
+      "code": "fadn",
+      "title": "fadn",
+      "type": null,
+      "unique": false,
+      "required": false,
+      "editable": true,
+      "internal": false,
+      "display": {},
+      "input": {}
+    }
+  ],
+  "views": [
+    {
+      "type": "list",
+      "config": {
+        "columns": [
+          {
+            "attr": "hostname"
+          },
+          {
+            "attr": "IP"
+          },
+          {
+            "attr": "CONN_LATEST_STATUS"
+          },
+          {
+            "attr": "CONN_RATE"
+          },
+          {
+            "attr": "os_version"
+          },
+          {
+            "attr": "os_distro"
+          },
+          {
+            "attr": "all_ipv4_addresses"
+          },
+          {
+            "attr": "arch"
+          },
+          {
+            "attr": "cpu_vcpus"
+          },
+          {
+            "attr": "kernel"
+          },
+          {
+            "attr": "memtotal_mb"
+          },
+          {
+            "attr": "memfree_mb"
+          },
+          {
+            "attr": "swaptotal_mb"
+          },
+          {
+            "attr": "swapfree_mb"
+          },
+          {
+            "attr": "system-serial-number"
+          },
+          {
+            "attr": "fadn"
+          }
+        ]
+      }
+    },
+    {
+      "type": "selector",
+      "config": {
+        "columns": [
+          {
+            "attr": "hostname"
+          },
+          {
+            "attr": "IP"
+          },
+          {
+            "attr": "fadn"
+          }
+        ],
+        "_selection": {
+          "1valueData": "ip",
+          "labelData": "hostname",
+          "preselected": ""
+        }
+      }
+    },
+    {
+      "type": "detail",
+      "config": {
+        "data": ""
+      },
+      "data": "js:$$.ajax(\"GET\",\"http://81.71.132.81/oplus-portal/acm/api/acm/ci/attr/{id}\",{id:${id}},null,function(data){return data;})"
+    },
+    {
+      "type": "editor",
+      "config": {}
+    }
+  ],
+  "operations": [
+    {
+      "title": "List Users",
+      "icon": "fa-users",
+      "config": {
+        "actions": [
+          "job"
+        ],
+        "job": {
+          "code": "ajePYh",
+          "params": {
+            "hosts": "js:${id}"
+          },
+          "showOutput": true,
+          "waitJobCompletion": false
+        }
+      },
+      "disabled": true
+    },
+    {
+      "title": "查看系统服务",
+      "icon": "fa-list-ul",
+      "config": {
+        "actions": [
+          "page"
+        ],
+        "page": {
+          "pageId": "V2rItK",
+          "target": "_dialog",
+          "params": {
+            "model": "linux_service"
+          }
+        }
+      }
+    },
+    {
+      "title": "查看系统性能",
+      "icon": "fa-terminal",
+      "config": {
+        "actions": [
+          "page"
+        ],
+        "page": {
+          "code": "V2rItK",
+          "params": {
+            "data_owner": "${ip}"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+<div class="form-group">
+    <label class="control-label">{{'udp.uinput.attrs.control_type' | translate}} <i class="fa fa-keyboard"></i></label>
+
+    <div class="form-control-wrapper">
+        <select class="form-select op-w-sm" ng-model="$ctrl.props.control">
+            <option value="input">{{'udp.uinput.control.input' | translate}}</option>
+            <option value="password">{{'udp.uinput.control.password' | translate}}</option>
+            <option value="select">{{'udp.uinput.control.select' | translate}}</option>
+            <option value="typeahead">{{'udp.uinput.control.typeahead' | translate}}</option>
+            <option value="datepicker">{{'udp.uinput.control.datapicker' | translate}}</option>
+            <option value="iconpicker">{{'udp.uinput.control.iconpicker' | translate}}</option>
+            <option value="radio">{{'udp.uinput.control.radio' | translate}}</option>
+            <option value="checkbox">{{'udp.uinput.control.checkbox' | translate}}</option>
+            <option value="textarea">{{'udp.uinput.control.textarea' | translate}}</option>
+            <option value="text">{{'udp.uinput.control.text' | translate}}</option>
+            <option value="device">{{'udp.uinput.control.device' | translate}}</option>
+            <option value="file">{{'udp.uinput.control.file' | translate}}</option>
+            <option value="hidden">{{'udp.uinput.control.hidden' | translate}}</option>
+        </select>
+        <!--        <div class="checkbox checkbox-inline ms-3">-->
+        <!--            <input type="checkbox" ng-model="$ctrl.props.isrestricted" id="usb_isrestricted"><label-->
+        <!--                for="usb_isrestricted" op-help-info="如果内容保密，在演示模式下将不显示，目前仅对文本框有效">保密信息</label>-->
+        <!--        </div>-->
+    </div>
+</div>
+<div class="op-form-subgroup mb-3 js-control-options" ng-show="$ctrl.hasControlOptions">
+    <div ng-if="$ctrl.props.control==='textarea'">
+        <div class="form-group">
+            <label class="control-label">{{'udp.uinput.attrs.diplay.viewas' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="$ctrl.props.viewas">
+                    <option value="">{{'udp.uinput.display.viewas_default' | translate}}</option>
+                    <option value="inputbtn">{{'udp.uinput.display.viewas_inputbtn' | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div ng-if="$ctrl.props.control==='device'">
+        <div class="form-group" ng-show="$ctrl.props.viewas">
+            <label class="control-label" op-help-info="{{'udp.uinput.device.type'|translate}}"></label>
+            <div class="form-control-wrapper">
+                <!--                <select op-select multiple class="form-select" ng-model="$ctrl.props.devicetype"-->
+                <!--                <select op-select multiple class="form-select" ng-model="$ctrl.props.__citarray"-->
+                <!--                        ng-options="cit.value as cit.title for cit in $ctrl.ciTypes">-->
+                <!--                </select>-->
+                <udp-data-converter the-model="$ctrl.props.devicetype" options="{kinds:'js,str'}"
+                                    class="op-w-full"></udp-data-converter>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.uinput.display.viewas' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="$ctrl.props.viewas">
+                    <option value="btndlg">{{'udp.uinput.device.viewas_btndlg' | translate}}</option>
+                    <option value="dropdown">{{'udp.uinput.device.viewas_dropdown' | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div ng-if="$ctrl.props.control==='radio' || $ctrl.props.control==='checkbox'">
+        <div class="form-group">
+            <label class="control-label"
+                   op-help-info="{{'udp.uinput.attrs.options_helpinfo'|translate}}">{{'udp.uinput.attrs.options' | translate}}</label>
+
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="$ctrl.props.sourcedef" class="op-w-full"
+                                    options="{kinds:'js,yaml',varTypes:'pageparam,global'}"></udp-data-converter>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.uinput.attrs.layout' | translate}}</label>
+
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="$ctrl.props.layout">
+                    <option value="inline">{{'udp.uinput.attrs.layout_inline' | translate}}</option>
+                    <option value="even-1">{{'udp.uinput.attrs.layout_even1' | translate}}</option>
+                    <option value="even-2">{{'udp.uinput.attrs.layout_even2' | translate}}</option>
+                    <option value="even-3">{{'udp.uinput.attrs.layout_even3' | translate}}</option>
+                    <option value="even-4">{{'udp.uinput.attrs.layout_even4' | translate}}</option>
+                </select>
+            </div>
+            <label class="control-label">{{'udp.uinput.attrs.style' | translate}}</label>
+
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="$ctrl.props.options.style">
+                    <option value="">{{'udp.uinput.attrs.style_default' | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div ng-if="$ctrl.props.control==='select' || $ctrl.props.control==='typeahead'">
+        <div class="form-group">
+            <label class="control-label" op-help-info="{{'udp.uinput.attrs.sourcedef_select_helpinfo'|translate}}">{{'udp.uinput.attrs.sourcedef_select'|translate}}</label>
+
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="$ctrl.props.sourcedef" class="op-w-full"
+                                    options="{kinds:'js,yaml',varTypes:'pageparam,global'}"></udp-data-converter>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!$ctrl.options.disableEvent">
+            <label class="control-label"
+                   op-help-info="{{'udp.uinput.attrs.etosource_helpinfo'|translate}}">{{'udp.uinput.attrs.etosource' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control" ng-model="$ctrl.props.etosource"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-if="$ctrl.props.control==='typeahead'">
+        <label class="control-label"></label>
+        <div class="form-control-wrapper">
+            <div class="checkbox">
+                <input type="checkbox" id="usb_keephis" ng-model="$ctrl.props.options.history"><label
+                    for="usb_keephis">{{'udp.uinput.typeahead.keep_history' | translate}}</label>
+            </div>
+        </div>
+    </div>
+    <!--    <div class="form-group" ng-if="$ctrl.props.control==='device' || $ctrl.props.control==='select'">-->
+    <div class="form-group" ng-if="$ctrl.props.control==='select'">
+        <label class="control-label"></label>
+        <div class="form-control-wrapper">
+            <div class="checkbox checkbox-inline">
+                <input type="checkbox" ng-model="$ctrl.props.ismultiple" id="usb_ismultiple"><label
+                    for="usb_ismultiple">{{'udp.uinput.select.allow_multiple' | translate}}</label>
+            </div>
+            <div class="checkbox checkbox-inline">
+                <input type="checkbox" ng-model="$ctrl.props.istags" id="usb_istags"><label
+                    for="usb_istags">{{'udp.uinput.select.allow_tags' | translate}}</label>
+            </div>
+        </div>
+    </div>
+    <div ng-if="$ctrl.props.control==='datepicker'" class="form-group">
+        <label class="control-label">{{'udp.uinput.datepicker.format' | translate}}</label>
+
+        <div class="form-control-wrapper">
+            <select class="form-select op-w-sm" ng-model="$ctrl.props.formatter">
+                <option value="YYYY-MM-DD">{{'udp.uinput.datepicker.format_yyyymmdd' | translate}}</option>
+                <option value="YYYY-MM-DD HH:mm:ss">{{'udp.uinput.datepicker.format_ymdhms' | translate}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.props.control!=='file'">
+    <div class="form-group">
+        <label class="control-label" op-help-info="{{'udp.uinput.attrs.datatype_helpinfo'|translate}}">{{'udp.uinput.attrs.datatype' | translate}} <i
+                class="fa fa-font-case"></i></label>
+
+        <div class="form-control-wrapper op-combo">
+            <select class="form-select op-w-sm" ng-model="$ctrl.props.datatype"
+                    ng-options="datatype.value as datatype.label for datatype in $ctrl.availDatatypes">
+            </select>
+            <div ng-if="$ctrl.props.datatype==='dsv' || ($ctrl.props.datatype==='string' && ($ctrl.props.ismultiple||$ctrl.props.control==='checkbox'))"
+                 class="ms-3">
+                <label>{{'udp.uinput.data.delim'|translate}}</label>
+                <select class="form-select d-inline op-w-sm" ng-model="$ctrl.props.formatdsv">
+                    <option value="comma">{{'udp.uinput.data.delim_comma'|translate}}</option>
+                    <option value="space">{{'udp.uinput.data.delim_space'|translate}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.uinput.data.initval'|translate}}</label>
+        <div class="form-control-wrapper">
+            <udp-data-converter the-model="$ctrl.props.initval" class="op-w-full"
+                                options="{kinds:'js,str',varTypes:'pageparam,global'}"></udp-data-converter>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.uinput.attrs.width'|translate}}</label>
+
+        <div class="form-control-wrapper">
+            <input type="number" ng-model="$ctrl.props.width" class="form-control" min="2" max="20">
+        </div>
+    </div>
+</div>

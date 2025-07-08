@@ -1,0 +1,19 @@
+<div class="modal-header" ng-class="{'bg-dark':$ctrl.applet.theme==='dark'}" ng-dblclick="$ctrl.restoreOrMaxWindow()">
+    <h4 class="modal-title"><i class="fad {{$ctrl.applet.icon}}"></i> {{$ctrl.applet.title}}</h4>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)"><i
+            class="far fa-minus"></i></button>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window"
+            ng-click="$ctrl.closeWindow($event)" data-dismiss="modal"><i class="far fa-times"></i></button>
+</div>
+<div class="modal-body" ng-if="$ctrl.applet.launchError">
+    <div class="p-3 text-center">{{$ctrl.applet.launchError}}</div>
+</div>
+<div class="modal-body" ng-if="!$ctrl.applet.launchError && $ctrl.applet.entry.type!=='InternalState'">
+    <applet-content the-applet="$ctrl.applet"></applet-content>
+</div>
+<div class="modal-body" ng-if="!$ctrl.applet.launchError && $ctrl.applet.entry.type==='InternalState'"
+     ui-view="{{'modal_main_view_'+$ctrl.applet.code}}">
+    <div class="op-blank-slate bg-light">
+        <div class="op-blank-slate-icon"><i class="fad fa-10x fa-ramp-loading"></i></div>
+    </div>
+</div>

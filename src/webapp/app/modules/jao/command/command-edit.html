@@ -1,0 +1,89 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a
+                        ui-sref="app.jao_cmd.command_list">{{'cmd.list.command_list' | translate}}</a></li>
+                <li class="breadcrumb-item active opx-navbar-title" ng-if="vm.viewMode==='view'">
+                    {{'common.entity.action.detail' | translate}}
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title" ng-if="vm.viewMode==='create'">
+                    {{'common.entity.action.create' | translate}}
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title" ng-if="vm.viewMode==='edit'">
+                    {{'common.entity.action.edit' | translate}}
+                </li>
+            </ol>
+        </div>
+        <div class="navbar-nav ms-auto" uaa-has-permission="cmd:edit:*">
+            <div ng-if="vm.viewMode==='view'">
+                <button class="btn btn-outline-primary" ui-sref="app.jao_cmd.command_edit({id:vm.command.id})"><i
+                        class="fa fa-pencil"></i> {{'cmd.approve.edit_command' | translate}}
+                </button>
+                <button class="btn btn-outline-primary" ui-sref="app.jao_cmd.command_list"><i
+                        class="fa fa-chevron-left"></i> {{'common.action.back' | translate}}
+                </button>
+            </div>
+            <div ng-if="vm.viewMode!=='view'">
+                <button type="button" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="vm.save()"
+                        class="btn btn-primary opx-btn-ok">{{'common.entity.action.save' | translate}}
+                </button>
+                <button type="button" class="btn btn-default opx-btn-cancel" ng-click="vm.clear()">
+                    {{'common.entity.action.back' | translate}}
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="opx-flex-fill p-3">
+        <form name="editForm" role="form" novalidate ng-submit="vm.save()">
+            <fieldset ng-disabled="vm.viewMode==='view'">
+                <div class="form-group">
+                    <label class="control-label" for="field_name">{{'common.entity.detail.name' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control w-md" name="name" id="field_name" required ng-minlength=1
+                               ng-maxlength=50 ng-model="vm.command.name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_type">{{'cmd.list.grammar' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select id="field_type" name="type" class="form-select w-md" ng-model="vm.command.type">
+                            <option value="{{type}}" ng-repeat="type in vm.allTypes">
+                                {{type}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_value">{{'common.entity.action.detail' | translate}}</label>
+                    <op-code-editor id="field_value" the-model="vm.command.command" style="height:10rem;"
+                                    options="{syntax:vm.command.type, readonly:vm.viewMode==='view'}"></op-code-editor>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           for="field_description">{{'common.entity.detail.description' | translate}}</label>
+                    <textarea type="text" class="form-control" name="description" id="field_description"
+                              ng-minlength=1
+                              ng-maxlength=1000 ng-model="vm.command.description"
+                              style="min-height: 60px; max-height: 290px;"></textarea>
+                    <p class="help-block" ng-show="editForm.description.$error.maxlength"
+                       data-translate="entity.validation.maxlength"
+                       translate-value-max="1000">This field cannot be longer than 1000 characters.
+                    </p>
+                </div>
+                <div class="form-group" ng-if="vm.viewMode==='view'">
+                    <label class="control-label"
+                           for="field_unapprovedReason">{{'cmd.approve.reason' | translate}}</label>
+                    <textarea type="text" class="form-control" name="unapprovedReason" id="field_unapprovedReason"
+                              ng-minlength=1
+                              ng-maxlength=1000 ng-model="vm.command.unapprovedReason"
+                              style="min-height: 60px; max-height: 290px;"></textarea>
+                    <p class="help-block" ng-show="editForm.unapprovedReason.$error.maxlength"
+                       data-translate="entity.validation.maxlength"
+                       translate-value-max="1000">This field cannot be longer than 1000 characters.
+                    </p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

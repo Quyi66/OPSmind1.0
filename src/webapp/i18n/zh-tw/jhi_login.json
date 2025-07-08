@@ -1,0 +1,19 @@
+{
+  "jhi_login.title": "登入",
+  "jhi_login.form.username": "使用者名稱",
+  "jhi_login.form.password": "密碼",
+  "jhi_login.form.password.placeholder": "您的密碼",
+  "jhi_login.form.rememberme": "保持登入狀態",
+  "jhi_login.form.button": "登入",
+  "jhi_login.action.submit": "登入",
+  "jhi_login.messages.error.authentication": "<strong>登入失敗!</strong> 請檢查您的登入資訊, 並重試一次.",
+  "jhi_login.password.forgot": "忘記密碼?",
+  "jhi_login.form.otp": "OTP Code",
+  "jhi_login.form.login_failure":"登入失敗",
+  "jhi_login.form.login_info_error":"請確認您的登入資訊再試",
+  "jhi_login.form.udne_or_pdne":"使用者名稱不存在或密碼錯誤",
+  "jhi_login.form.user_not_register_tenant":"使用者未註冊到當前租戶",
+  "jhi_login.form.user_invalid":"使用者已失效",
+  "jhi_login.form.confirm_otp":"請確認您的OTP Code",
+  "jhi_login.form.error_five_times_lock": "當前使用者已被鎖定，請在1小時後重新登入!"
+}

@@ -1,0 +1,69 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>
+        <div class="js-sample">
+            <div class="list-group" style="width:200px">
+                <div class="list-group-item">
+                    <span class="badge">{{'udp.w.list.config.badge'|translate}}</span>
+                    <div class="pull-left bg-light text-center img-circle m-r" xstyle="width:48px">
+                        <i class="fa fa-3x fa-info-circle"></i>
+                    </div>
+                    <h4 class="list-group-item-heading">{{'udp.w.list.config.title'|translate}}</h4>
+                    <p class="list-group-item-text">{{'udp.w.list.config.text'|translate}}</p>
+                </div>
+            </div>
+        </div>
+        <table class="table op-param-table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{{'common.term.field'|translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="param in ::params track by $index">
+                <td>{{::param.title}}</td>
+                <td>
+                    <udp-dsfield-selector the-model="uwProps.fields[param.name]"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param,event,job',enableAutoActive:true}">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.list.config.filter'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="lwc_showfilter" ng-model="uwProps.display.filter">
+                        <label for="lwc_showfilter">{{'udp.w.list.config.filter_enable'|translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.list.config.control'|translate}}</label>
+                <div class="col-sm-4">
+                    <select class="form-select" ng-model="uwProps.display.control" ng-options="style.value as style.title for style in controlStyles">
+                    </select>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

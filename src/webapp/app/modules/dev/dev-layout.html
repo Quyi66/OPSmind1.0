@@ -1,0 +1,79 @@
+<div class="opx-layout-hflex">
+    <div class="opx-layout-vflex bg-light">
+        <div class="opx-sidebar opx-resizable opx-collapsible  w-lg"  ng-class="{'opx-sidebar-collapsed':layoutVm.sidebarCollapsed}">
+            <!--        <div class="opx-sidebar-header opx-sidebar-header-fixed border-bottom" ng-if="!layoutVm.hideSidebarHeader">-->
+            <!--            <div>标题</div>-->
+            <!--            <input type="text" class="form-control op-w-sm">-->
+            <!--            <button type="button" class="btn btn-default opx-btn-icon"><i class="fa fa-bars"></i></button>-->
+            <!--            <button type="button" class="btn btn-default opx-btn-icon"><i class="fa fa-ellipsis-v"></i></button>-->
+            <!--        </div>-->
+            <nav class="opx-sidebar-header bg-light"
+                 ng-if="!layoutVm.hideSidebarHeader">
+                <button type="button" class="btn btn-default opx-btn-icon opx-sidebar-toggler"
+                        title="点此可以收起或展开sidebar。最好能够保存sidebar的收起或展开状态，下次用户进入的时候能够自动收起或展开。"
+                        ng-click="layoutVm.sidebarCollapsed=!layoutVm.sidebarCollapsed"><i class="fa"
+                                                                                           ng-class="layoutVm.sidebarCollapsed?'fa-chevron-right':'fa-bars'"></i>
+                </button>
+                <input ng-if="layoutVm.sidebarHeaderMode==='form'" type="text" class="form-control op-w-sm">
+                <button ng-if="layoutVm.sidebarHeaderMode==='form'" type="button" class="btn btn-default opx-btn-icon">
+                    <i class="fa fa-plus" title="sidebar-header里面的按钮不要超过两个，如果有更多的操作，放到dropdown下拉框里面。"></i></button>
+                <div ng-if="layoutVm.sidebarHeaderMode==='text'" class="me-auto" title="文字标题左对齐">文字标题</div>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-default opx-btn-icon dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-ellipsis-v" title="用dropdown下拉框来显示更多的操作"></i></button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">sidebar-header样式</li>
+                        <li><a ng-click="layoutVm.sidebarHeaderMode='form'">带搜索框</a></li>
+                        <li><a ng-click="layoutVm.sidebarHeaderMode='text'">纯文字标题</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="opx-sidebar-body">
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action"
+                       ng-click="layoutVm.hideSidebarHeader=!layoutVm.hideSidebarHeader">切换header
+                    </a>
+                </div>
+                <div class="list-group" ng-if="layoutVm.showSidebarNav">
+                    <a class="list-group-item list-group-action" ng-repeat="link in layoutVm.links">{{link.label}}</a>
+                </div>
+                <div style="height:800px; background-color:#eee;" class="wrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-layout-vflex opx-flex-fill scroll-y bg-white">
+        <nav class="navbar navbar-light navbar-expand bg-light">
+            <div class="navbar-brand">页面左右布局</div>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="javascript:void(0);">普通Link</a></li>
+            </ul>
+            <div class="nav-item">
+                <button class="btn btn-secondary">左侧按钮</button>
+            </div>
+            <div class="navbar-text">这是内容区域的工具条，可以设为固定位置或者随内容滚动</div>
+            <div class="ms-auto">
+                <button type="button" class="btn btn-secondary opx-btn-icon opx-btn-flat"><i
+                        class="fa fa-share"></i></button>
+                <button type="button" class="btn btn-primary opx-btn-icon opx-btn-flat"><i
+                        class="fa fa-plus"></i></button>
+                <button type="button" class="btn btn-danger opx-btn-icon opx-btn-flat"><i
+                        class="fa fa-trash"></i></button>
+                <button type="button" class="btn btn-default opx-btn-icon "><i
+                        class="fa fa-ellipsis-v"></i></button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-rocket"></i> 右侧按钮
+                </button>
+            </div>
+        </nav>
+        <section style="min-height:1000px;background-color:#eee;" class="p-3">
+            <p>这个页面只是用来演示常见的页面左右布局要素，并非可以照抄HTML代码，在实现中要通过angular标签尽量简化HTML代码。</p>
+            <p>设计要求</p>
+            <ol>
+                <li>内容区域和sidebar都可以单独滚动</li>
+                <li>sidebar如果设置了<code>.opx-sidebar-header-fixed</code>， 那么只有sidebar-body滚动，sidebar-header固定保持不动。</li>
+                <!--                <li>sidebar如果设置了<code>.opx-resizable</code>，可以左右拖动宽度</li>-->
+            </ol>
+            <p>侧栏的导航菜单要使用侧栏菜单组件，或者设计一个样式<code>.opx-vertical-nav</code>用于垂直布局的层级导航菜单，这里用<code>list-group</code>只是简单示例</p>
+        </section>
+    </div>
+</div>

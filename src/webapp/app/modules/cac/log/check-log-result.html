@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        {{'cac.job.detail.status' | translate}}
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="cacCheckLogResultVm.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <jao-job-result-view run-id="cacCheckLogResultVm.runId"></jao-job-result-view>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default opx-btn-cancel" data-dismiss="modal" ng-click="cacCheckLogResultVm.cancel()">{{'common.entity.action.close' | translate}}</button>
+</div>
+
+

@@ -1,0 +1,41 @@
+<div class="wrapper">
+    <div class="card card-default">
+        <nav class="navbar navbar-light">
+            <div class="opx-navbar-title">{{'adm.content.param_desc' | translate}}</div>
+        </nav>
+        <!--<div class="card-header">
+            <h3 class="card-title">
+                <span>{{'adm.content.param_desc' | translate}}</span>
+            </h3>
+        </div>-->
+        <div class="card-body">
+            <uib-tabset class="tab-container row wrapper">
+                    <div class="col-md-12">
+                        <dl class="dl-horizontal jh-entity-details">
+                            <dt><span>ID:</span></dt>
+                            <dd>
+                                <span>{{vm.param.id}}</span>
+                            </dd>
+                            <dt><span>{{'adm.content.param_name' | translate}}:</span></dt>
+                            <dd>
+                                <span>{{vm.param.name}}</span>
+                            </dd>
+                            <dt><span >{{'adm.content.param_value' | translate}}:</span></dt>
+                            <dd>
+                                <textarea rows="10" cols="170" readonly>{{vm.param.value}}</textarea>
+                            </dd>
+                            <dt><span>{{'common.entity.detail.description' | translate}}:</span></dt>
+                            <dd>
+                                <span>{{vm.param.description}}</span>
+                            </dd>
+                        </dl>
+                    </div>
+            </uib-tabset>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" ui-sref="app.ssc.config.param" class="btn btn-default">
+                <span class="fa fa-arrow-left"></span>&nbsp;<span>{{'common.entity.action.back' | translate}}</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span>{{'cac.result.output' | translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cacResultOutputLogCtrlVm.views.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <p>{{'cac.result.detail.job_id' | translate}} </p>
+    <p>
+        <span class="badge {{cacResultOutputLogCtrlVm.views.output.id!=null?'badge-default':'badge-warning'}}">{{cacResultOutputLogCtrlVm.views.output.id || ('common.term.none' | translate)}}</span>
+    </p>
+
+    <p>{{'cac.result.output' | translate}}</p>
+    <!--<div class="op-blank-slate" ng-if="cacResultOutputListCtrlVm.views.isResult">
+        <div class="op-blank-slate-icon"><i class="fa fa-inbox fa-4x"></i></div>
+        <p>无日志</p>
+    </div>-->
+    <pre class="cac-job-result-pre">{{cacResultOutputLogCtrlVm.views.output.output}}</pre>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cacResultOutputLogCtrlVm.views.cancel()">{{'common.entity.action.close' | translate}}</button>
+</div>
+
+

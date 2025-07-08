@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{($ctrl.title ? $ctrl.title : 'common.entity.action.edit') | translate}}</h4>
+  <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body">
+  <div class="form op-smartform" ng-if="$ctrl.mode === 'process'">
+
+    <!-- <div class="form-group">
+      <label class="control-label">流程 Key</label>
+      <div class="form-control-wrapper">
+        <input type="text" readonly class="form-control" ng-model="$ctrl.data.processKey"></input>
+        <p class="help-block"></p>
+      </div>
+    </div> -->
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.process.name' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.data.processName"></input>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.process.abbr' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.data.processAbbr"></input>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'gfs.modal.remark' | translate}}</label>
+      <div class="form-control-wrapper">
+        <textarea row="10" class="form-control" ng-model="$ctrl.data.remarks"></textarea>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form op-smartform form-horizontal" ng-if="$ctrl.mode === 'processDetail'">
+    <div class="form-group">
+      <label class="control-label">{{'flow.process.version_remarks' | translate}}</label>
+      <div class="form-control-wrapper">
+        <textarea row="10" class="form-control" ng-model="$ctrl.data.remark"></textarea>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.scene.copy_scene' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="checkbox" class="checkbox checkbox-inline" ng-model="$ctrl.data.copyScenes"></input>
+        <p class="help-block">{{'flow.scene.copy_scene_desc' | translate}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form op-smartform" ng-if="$ctrl.mode === 'runDetail'">
+    <div class="form-group">
+      <label class="control-label">{{'flow.result.run_remark' | translate}}</label>
+      <div class="form-control-wrapper">
+        <textarea row="10" class="form-control" ng-model="$ctrl.data.remark"></textarea>
+        <p class="help-block"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form op-smartform" ng-if="$ctrl.mode === 'processClone'">
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.process.name' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.data.processName"></input>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.process.abbr' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.data.processAbbr"></input>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'gfs.modal.remark' | translate}}</label>
+      <div class="form-control-wrapper">
+        <textarea row="10" class="form-control" ng-model="$ctrl.data.remarks"></textarea>
+        <p class="help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group form-inline">
+      <label class="control-label">{{'flow.scene.copy_scene' | translate}}</label>
+      <div class="form-control-wrapper ml-4">
+        <input type="checkbox" class="checkbox checkbox-inline" ng-model="$ctrl.data.copyScenes"></input>
+        <p class="help-block">{{'flow.scene.copy_scene_desc' | translate}}</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+<div class="modal-footer text-right">
+  <button type="submit" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.confirm()">{{'common.action.ok' | translate}}</button>
+  <button type="reset" class="btn btn-default opx-btn-cancel" ng-click="$ctrl.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+</div>

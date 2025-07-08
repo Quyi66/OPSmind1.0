@@ -1,0 +1,82 @@
+<div class="opx-layout-hflex">
+    <div class="opx-sidebar">
+        <!--        <nav class="opx-sidebar-header navbar">-->
+        <!--            <a ui-sref="app.ssc"><span class="opx-navbar-title">{{ 'ssc.title' | translate}}</span></a>-->
+        <!--        </nav>-->
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+
+                <div class="opx-treenav-item" uaa-has-permission="sysadmin:user:*">
+                    <a ui-sref="app.ssc.user" ui-sref-active="active">
+                        <i class="fa fa-fw fa-users-cog"></i> {{'sys_userManagement.home.title' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.config.team" ui-sref-active="active">
+                        <i class="fa fa-fw fa-sitemap"></i> {{'adm.menu.teams' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.config.applet-manage" ui-sref-active="active">
+                        <i class="fa fa-fw fa-archive"></i> {{'ssc.applet.manage' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.config.tag" ui-sref-active="active">
+                        <i class="fa fa-fw fa-tags"></i> {{'adm.menu.tags' | translate}}
+                    </a>
+                </div>
+
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.config.param" ui-sref-active="active">
+                        <i class="fa fa-brackets-curly fa-fw"></i> {{'adm.menu.params' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.appres" ui-sref-active="active">
+                        <i class="fa fa-fw fa-boxes"></i> {{ 'adm.menu.appres' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.config.email" ui-sref-active="active">
+                        <i class="fa fa-fw fa-mail-bulk"></i> {{ 'adm.content.electronic_mail' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="dts:view:*">
+                    <a ui-sref="app.ssc.datasource" ui-sref-active="active">
+                        <i class="fa fa-fw fa-code-merge"></i> {{ 'dts.datasource.title' | translate}}
+                    </a>
+                </div>
+                <!--                <div class="opx-treenav-item" uaa-has-permission="sysadmin:dataperm:*">-->
+                <!--                    <a ui-sref="app.ssc.dataPermission" ui-sref-active="active">-->
+                <!--                      <i class="fa fa-fw fa-tags"></i> {{'global.menu.admin.dataPermissionManagement' | translate}}-->
+                <!--                    </a>-->
+                <!--                </div>-->
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.engine" ui-sref-active="active">
+                        <i class="fa fa-car-battery"></i> {{'adm.engine.title' | translate}}
+                    </a>
+                </div>
+
+                <div class="opx-treenav-item" uaa-has-permission="adm:view:*">
+                    <a ui-sref="app.ssc.config.syslog" ui-sref-active="active">
+                        <i class="fa fa-fw fa-clock"></i> {{'sys_log.sys_log' | translate}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y" ui-view="ssc_main">
+        <div class="opx-align-center">
+            <div class="rounded-circle bg-secondary opx-align-center" style="width:10rem;height:10rem;opacity: .5">
+                <i class="text-light fad fa-cog fa-7x"></i>
+            </div>
+        </div>
+        <!--        <div class="bg-light p-5 h-100 d-flex justify-content-center align-items-center">-->
+        <!--            <div class="rounded-lg bg-secondary p-3 text-center text-light d-flex align-items-center justify-content-center"-->
+        <!--                 style="width:10rem;height:10rem;opacity: .5;"><i-->
+        <!--                    class="fad fa-fw fa-7x fa-cog"></i>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>

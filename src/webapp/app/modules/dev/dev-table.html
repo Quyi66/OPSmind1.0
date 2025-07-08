@@ -1,0 +1,88 @@
+<div class="p-3">
+    <uib-tabset class="tab-container" type="mdc-op">
+
+        <uib-tab heading="Simple" index="1">
+            <div class="card mb-3">
+                <div class="card-header">Promise数据</div>
+                <div class="card-body">
+                    <button type="button" ng-click="tableVm.reloadTableData()" class="btn btn-default">Reload Table Data
+                    </button>
+                    <div class="form-group">
+                        <label class="control-label">输入JSON格式数组</label>
+                        <div class="form-control-wrapper">
+                            <div class="input-group">
+                                <input type="text" ng-model="tableVm.selected" class="form-control">
+                                <div class="input-group-append">
+                                    <button type="button" ng-click="tableVm.setTableSelected(tableVm.selected)"
+                                            class="btn btn-outline-default">
+                                        Set Selected Items
+                                    </button>
+                                </div>
+                            </div>
+                            <p>格式为<code>[{"id":"..."}]</code></p>
+                        </div>
+                    </div>
+
+                    <opx-datatable table-config="tableVm.tableConfig"></opx-datatable>
+                    <div class="alert alert-light mt-3">
+                        tableVm.tableConfig.selectedItems=
+                        <pre>{{tableVm.tableConfig.selectedItems | json}}</pre>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+
+        <!--        <uib-tab heading="长内容和导出Excel" index="2">-->
+        <!--            <div class="alert alert-info">多行内容，很长的内容，以及导出Excel的样式</div>-->
+        <!--            <div class="card mb-3">-->
+        <!--                <div class="card-body">-->
+        <!--                    <opx-datatable table-config="tableVm.longContentTableConfig">-->
+        <!--                    </opx-datatable>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </uib-tab>-->
+
+        <!--        <uib-tab heading="静态HTML">-->
+        <!--            <div class="card mb-3">-->
+        <!--                <div class="card-header">静态HTML</div>-->
+        <!--                <div class="card-body">-->
+        <!--                    <div class="table-responsive">-->
+        <!--                        <table id="dev-table-html" class="table opx-table">-->
+        <!--                            <thead>-->
+        <!--                            <tr>-->
+        <!--                                <th>账号</th>-->
+        <!--                                <th>姓名</th>-->
+        <!--                                <th>部门</th>-->
+        <!--                                <th>最后修改时间</th>-->
+        <!--                                <th class="text-center">操作</th>-->
+        <!--                            </tr>-->
+        <!--                            </thead>-->
+        <!--                            <tbody>-->
+        <!--                            <tr>-->
+        <!--                                <td>chenshubin</td>-->
+        <!--                                <td>陈树彬</td>-->
+        <!--                                <td>玖誉\DB</td>-->
+        <!--                                <td>2020-04-16T01:41:31Z</td>-->
+        <!--                                <td class="text-center">-->
+        <!--                                    <div class="btn-group">-->
+        <!--                                        <button type="button" ng-click="showClickMessage('你选择了陈树彬')"-->
+        <!--                                                class="btn btn-default btn-sm">查看-->
+        <!--                                        </button>-->
+        <!--                                    </div>-->
+        <!--                                </td>-->
+        <!--                            </tr>-->
+        <!--                            </tbody>-->
+        <!--                        </table>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </uib-tab>-->
+        <!--        <uib-tab heading="很多列的表格">-->
+        <!--            <div class="card mb-3">-->
+        <!--                <div class="card-body">-->
+        <!--                    <opx-datatable table-config="tableVm.manyColTableConfig"></opx-datatable>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </uib-tab>-->
+    </uib-tabset>
+</div>

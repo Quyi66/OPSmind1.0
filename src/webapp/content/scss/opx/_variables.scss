@@ -1,0 +1,6 @@
+// LEO: $grid-float-breakpoint is widely used for collapsible navbar
+// Bootstrap's responsive navbar sucks, so I just disable it
+$grid-float-breakpoint: 0 !default;
+$grid-gutter-width: 16px !default;
+
+$zindex-dropdown: $zindex-modal + 10 !default;

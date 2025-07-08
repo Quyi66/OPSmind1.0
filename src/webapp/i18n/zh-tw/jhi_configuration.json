@@ -1,0 +1,10 @@
+{
+    "jhi_configuration": {
+        "title": "配置",
+        "filter": "過濾 (按字首)",
+        "table": {
+            "prefix": "字首",
+            "properties": "屬性"
+        }
+    }
+}

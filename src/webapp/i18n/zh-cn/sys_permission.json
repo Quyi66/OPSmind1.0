@@ -1,0 +1,26 @@
+{
+  "sys_permission": {
+    "home": {
+      "title": "权限管理",
+      "createLabel": "创建权限",
+      "createPermission": "创建权限",
+      "editPermission": "编辑权限",
+      "search": "查找 权限"
+    },
+    "created": "权限 {{ param }} 创建成功",
+    "updated": "权限 {{ param }} 更新成功",
+    "deleted": "权限 {{ param }} 删除成功",
+    "delete": {
+      "question": "确定删除权限 【{{ domain }} : {{ action }} : {{ target }}】 吗？"
+    },
+    "detail": {
+      "title": "权限详情"
+    },
+    "domain": "主体",
+    "action": "操作",
+    "target": "目标",
+    "description": "描述",
+    "configJson": "JSON配置",
+    "role": "角色"
+  }
+}

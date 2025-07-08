@@ -1,0 +1,91 @@
+//=============================================================================
+// Modified styles from vendor lib
+// @author Joker liu (qdjoker@hpcmb.com), 06/25/2017 moved from css
+//=============================================================================
+$opx-listmenu-item-height: 2rem;
+
+ul.fancytree-container {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  border: 0;
+  background-color: unset;
+  padding: 0;
+
+  ul {
+    padding-top: 0;
+  }
+}
+
+// Height
+span.fancytree-node {
+  height: $opx-listmenu-item-height;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  // For border
+  padding-left: .25rem;
+}
+
+span.fancytree-title,
+span.fancytree-expander,
+span.fancytree-icon, span.fancytree-custom-icon, span.fancytree-checkbox {
+  //line-height: $opx-listmenu-item-height;
+}
+
+.op-as-selector {
+  span.fancytree-title {
+    cursor: default;
+  }
+
+  .fancytree-node:hover .fancytree-title {
+    //background-color: unset !important;
+  }
+}
+
+// Highlight
+span.fancytree-title {
+  color: inherit;
+  line-height: $opx-listmenu-item-height;
+  border-left: .25rem solid transparent;
+
+  span.fancytree-focused & {
+    outline: 0 dotted $gray-500;
+  }
+
+  span.fancytree-node:hover & {
+    background-color: $opx-list-hover-bgcolor;
+  }
+
+  span.fancytree-active &,
+  .fancytree-treefocus span.fancytree-active & {
+    color: unset;
+    background-color: $opx-list-active-bgcolor;
+    border-left-color: $opx-list-hover-bgcolor;
+  }
+
+  span.fancytree-selected & {
+    background-color: $op-highlight-bg !important;
+    border-left-color: $op-highlight-border-color !important;
+    color: $primary !important;
+  }
+}
+
+// Icons
+span.fancytree-icon, span.fancytree-custom-icon {
+  //font-size: 0.875rem;
+  width: 1rem;
+  //height: 1rem;
+}
+
+// Checkbox
+span.fancytree-checkbox {
+}
+
+span.fancytree-expander {
+  cursor: default;
+}
+
+#fancytree-drop-marker {
+  left: 8px !important;
+  color: $primary;
+}

@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myParamLabel">
+        <span ng-if="$ctrl.type == 'runCommand'">{{'cmd.list.button_run' | translate}}</span>
+        <span ng-if="$ctrl.type != 'runCommand'">{{'cmd.list.button_create_job' | translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.clear()"></button>
+</div>
+
+<form name="editForm" role="form" novalidate ng-submit="$ctrl.saveJob()" show-validation>
+    <div class="modal-body">
+        <div class="form-group" ng-if="$ctrl.type == 'createJob'">
+            <label class="control-label" for="field_name">{{'common.entity.detail.title' | translate}}</label>
+            <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1
+                   ng-maxlength=50 ng-model="$ctrl.title"/>
+        </div>
+        <div class="form-group" ng-if="$ctrl.type == 'createJob'">
+            <label class="control-label" for="field_description">{{'common.entity.detail.description' | translate}}</label>
+            <textarea type="text" class="form-control" name="description" id="field_description" rows="5"
+                      ng-model="$ctrl.description"></textarea>
+        </div>
+        <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'common.entity.variable.host' | translate}}</label>
+        <div class="form-control-wrapper">
+            <div class="w-full">
+                <!--                <jao-host-selector the-model="$ctrl.hostList"></jao-host-selector>-->
+                <!--<acm-device-selector the-model="$ctrl.hostList"></acm-device-selector>-->
+                <acm-device-selector the-model="$ctrl.hostList" ci-types="'[auto]'" mcheck-type="'map'" is-selected="true"></acm-device-selector>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary opx-btn-ok" data-dismiss="modal"
+                ng-if="$ctrl.type == 'createJob'">{{'cmd.job.save_job' | translate}}
+        </button>
+        <button type="button" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.runJob()"
+                ng-if="$ctrl.type == 'runCommand'">{{'cmd.job.run_job' | translate}}
+        </button>
+        <button type="button" class="btn btn-default opx-btn-cancel" data-dismiss="modal" ng-click="$ctrl.clear()">{{'cmd.job.button_cancel' | translate}}</button>
+    </div>
+
+</form>

@@ -1,0 +1,14 @@
+<div ng-if="$ctrl.options.showAs==='dropdown'" class="dropdown">
+    <button class="btn btn-outline-default" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+        <span ng-if="$ctrl.selectedGroup|isEmpty"><!--<i class="far fa-server fa-fw"></i> -->{{$ctrl.options.dropdownText}} {{ 'acm.common.list.choose_group' | translate}}</span>
+        <span ng-if="$ctrl.selectedGroup|isNotEmpty">{{ 'acm.common.list.group' | translate}}
+            <strong class="text-primary">{{$ctrl.selectedGroup[0]}}</strong>
+            <span class="badge bg-secondary mb-2" ng-if="$ctrl.options.selector==='multiple'">{{$ctrl.selectedGroup.length}}</span>
+        </span>
+    </button>
+    <div class="dropdown-menu">
+        <div style="width:21rem; max-height:300px; overflow-y:auto;" id="{{$ctrl.treeId}}">
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.options.showAs!=='dropdown'" id="{{$ctrl.treeId}}"></div>

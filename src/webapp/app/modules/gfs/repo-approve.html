@@ -1,0 +1,6 @@
+<div class="p-3 bg-white" uaa-has-permission="gfs:approve"
+     uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <!--    <div class="alert alert-secondary">下面是待审核的文件</div>-->
+    <gfs-gfile-list repo="$ctrl.repo" dir="$ctrl.dir" options="$ctrl.options" repo-type="$ctrl.repoType"
+                    hide-dir=false></gfs-gfile-list>
+</div>

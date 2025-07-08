@@ -1,0 +1,19 @@
+<div class="wrapper bg-light">
+    <div class="page-header">
+        <h1>Page for widgets test
+            <small>uwidget is awesome</small>
+        </h1>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+<!--            <uwidget uw-type="fileselector" uw-props="widgetsVm.fileselectorProps"></uwidget>-->
+            <gfs-file-selector the-model="widgetsVm.selectedFiles"></gfs-file-selector>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <uwidget uw-type="hostselector" uw-props="widgetsVm.hostselectorProps"></uwidget>
+            <uwidget uw-type="uinput" uw-props="widgetsVm.hostselectorProps"></uwidget>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<form class="form-horizontal">
+    <div class="modal-header">
+        <h4 class="modal-title">REST API</h4>
+        <!--        <button ng-click="publish()" type="button" class="btn btn-default btn-sm">-->
+        <!--            发布-->
+        <!--        </button>-->
+        <button type="button" class="btn-close" data-dismiss="modal" ng-click="dismissModal()">×</button>
+    </div>
+
+
+    <div class="modal-body">
+
+        <uib-tabset>
+            <uib-tab>
+                <uib-tab-heading><i class='fa fa-link'></i> URL <span class="badge bg-warning">GET</span>
+                </uib-tab-heading>
+                <div class="p-2">
+                    <p>
+                        {{'dts.rest.interface_access_address' | translate}}
+                    </p>
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               ng-model="getUrl" id="js-text1">
+                        <!--                        <span class="input-group-btn">-->
+                        <button type="button"
+                                class="btn btn-defaul"
+                                ngclipboard=""
+                                data-clipboard-target="#js-text1">
+                            <i class="fa fa-clipboard"></i></button>
+                        <button type="button" class="btn btn-default">
+                            <a ng-href="{{getUrl}}" target="_blank"><i class="fa fa-link"></i></a></button>
+                        <!--                        </span>-->
+
+                    </div>
+                    <br>
+                    <p>
+                        curl{{'dts.rest.access_mode' | translate}}
+                    </p>
+                    <div>
+                        {{curlGetUrl}}
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading><i class='fa fa-link'></i> URL <span class="badge bg-warning">POST</span>
+                </uib-tab-heading>
+                <div class="p-2">
+                    <p>
+                        {{'dts.rest.interface_access_address' | translate}}
+                    </p>
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               ng-model="restApi" id="js-text2">
+<!--                        <span class="input-group-btn">-->
+                                <button type="button"
+                                        class="btn btn-defaul"
+                                        ngclipboard=""
+                                        data-clipboard-target="#js-text2">
+                                    <i class="fa fa-clipboard"></i></button>
+
+<!--                            </span>-->
+                    </div>
+                    <br>
+                    <p>
+                        {{'dts.rest.interface_access_parameters' | translate}}
+                    </p>
+
+                    <div>
+                        <pre>{{params | json}}</pre>
+                    </div>
+                    <br>
+                    <p>
+                        curl{{'dts.rest.access_mode' | translate}}
+                    </p>
+                    <div style="font-variant: all-petite-caps;">
+                        {{curlPostUrl}}
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+
+    </div>
+
+
+</form>

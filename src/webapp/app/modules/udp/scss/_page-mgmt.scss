@@ -1,0 +1,47 @@
+//==============================================================================
+// Page Management and Others
+//==============================================================================
+
+// Card view for page list item
+$udp-card-icon-size: 2.5rem;
+$udp-card-icon-hover-size: $udp-card-icon-size*1.2;
+
+.udp-card {
+  position: relative;
+  border-radius: .25rem;
+  //border:0;
+  //box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  .card-body{
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+  }
+  &.udp-card-with-icon {
+    .card-title {
+      padding-right: $udp-card-icon-hover-size + 0.2rem;
+      font-weight: 500;
+    }
+  }
+  .udp-card-icon {
+    -webkit-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    font-size: $udp-card-icon-size;
+    opacity: 0.25;
+  }
+  &:hover .udp-card-icon {
+    font-size: $udp-card-icon-hover-size;
+  }
+}
+
+.op-udp-page-list.list-group .list-group-item:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top-width: 0;
+}
+
+.op-udp-page-list .active {
+  background-color: $component-active-bg !important;
+}

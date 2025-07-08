@@ -1,0 +1,10 @@
+{
+    "mac.title": "Message Center",
+    "mac.action.handle": "Handle Now",
+    "mac.action.view": "View Details",
+    "mac.action.ignore": "Ignore",
+    "mac.action.more": "Get More",
+    "mac.message.no_more": "No More",
+    "mac.message.no_news": "No News",
+    "mac.message.view_history": "View History Messages"
+}

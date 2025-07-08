@@ -1,0 +1,24 @@
+<div class="op-searchbox"
+     ng-class="{'with-focused':$ctrl.isFocused,'with-text':$ctrl.searchText, 'with-collapsed':$ctrl.collapsed}">
+    <label for="{{$ctrl.inputId}}" class="op-searchbox-prepend">
+        <i class="fa fa-search op-searchbox-icon" ng-click="$ctrl.isFocused=true;$ctrl.collapsed=false;"></i>
+        <i class="fa fa-caret-down op-searchbox-icon ps-2" ng-if="$ctrl.searchHistory.length>0"
+           data-bs-toggle="dropdown"></i>
+        <div class="dropdown-menu" ng-if="$ctrl.searchHistory.length>0">
+            <div class="dropdown-header">{{'common.messages.history_record' | translate}}</div>
+            <a ng-repeat="item in $ctrl.searchHistory track by $index"
+               ng-click="$ctrl.selectHistory(item)"><span class="badge bg-secondary">{{item}}</span></a>
+            <div class="divider"></div>
+            <a class="dropdown-item" ng-click="$ctrl.clearHistory()"><i
+                    class="fa fa-trash-alt"></i>{{'common.messages.clear_records' | translate}}</a>
+        </div>
+    </label>
+    <input type="search" id="{{$ctrl.inputId}}" class="op-searchbox-input op-input-highlight-not-empty"
+           __style="background:transparent;" placeholder=" "
+           ng-model="$ctrl.searchText" ng-focus="$ctrl.isFocused=true"
+           ng-blur="$ctrl.isFocused=false" xxxng-if="$ctrl.isFocused || !$ctrl.options.autoExpand">
+    <button type="button" title="{{'common.messages.clear' | translate}}" class="btn op-searchbox-append"
+            ng-click="$ctrl.searchText=undefined;$ctrl.isFocused=false;"><i
+            class="fa fa-times"></i></button>
+</div>
+<ng-transclude class="d-flex flex-row" ng-hide="$ctrl.isFocused && $ctrl.options.autoExpand"></ng-transclude>

@@ -1,0 +1,19 @@
+<div class="p-3">
+    <div class="card mb-3">
+        <div class="card-header">代码编辑器 <code>op-code-editor</code></div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="control-label">Syntax</label>
+                <div class="form-control-wrapper">
+                    <select ng-model="editorVm.syntax" class="form-select"
+                            ng-options="syntax as syntax for syntax in editorVm.availSyntaxes">
+                    </select>
+                </div>
+            </div>
+            <textarea ng-model="editorVm.theCode" class="form-control mb-3 code" rows="5"></textarea>
+            <op-code-editor the-model="editorVm.theCode" style="height:20rem;"
+                            options="{syntax:editorVm.syntax,readonly:!true,toolbar:true}"></op-code-editor>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary" ng-click="editorVm.openModal()">Open Modal</button>

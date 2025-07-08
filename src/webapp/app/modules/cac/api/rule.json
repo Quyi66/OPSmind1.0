@@ -1,0 +1,28 @@
+{
+  "totalRecords": 3,
+  "aaData": [
+    {
+      "createdAt": "2018-04-08T06:53:58.980Z",
+      "createdBy": "zml",
+      "description": "test1",
+      "id": 1,
+      "ruleExpression": "cup>=80",
+      "ruleName": "test1"
+    },
+    {
+      "createdAt": "2018-04-08T06:53:58.980Z",
+      "createdBy": "zml",
+      "description": "test2",
+      "id": 2,
+      "ruleExpression": "cup>=82",
+      "ruleName": "test2"
+    },{
+      "createdAt": "2018-04-08T06:53:58.980Z",
+      "createdBy": "zml",
+      "description": "test3",
+      "id": 3,
+      "ruleExpression": "cup>=83",
+      "ruleName": "test3"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        {{'cac.job.detail.status' | translate}}
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="fixDataShowControllerVm.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <opx-datatable table-config="fixDataShowControllerVm.tableConfig">
+    </opx-datatable>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default opx-btn-cancel" data-dismiss="modal" ng-click="fixDataShowControllerVm.cancel()">{{'common.entity.action.close' | translate}}</button>
+</div>

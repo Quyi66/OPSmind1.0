@@ -1,0 +1,145 @@
+<table class="table op-param-table">
+    <thead>
+    <tr>
+        <th>{{'common.term.position' | translate}}</th>
+        <th>{{'udp.w.echart.axis.label' | translate}}</th>
+        <th>{{'udp.w.echart.axis.value_range' | translate}}</th>
+        <th>{{'udp.w.echart.axis.type' | translate}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="yaxis in ::$ctrl.yaxes track by $index">
+        <td>{{yaxis.title}}</td>
+        <td>
+            <div class="form-inline">
+                <input type="text" ng-model="$ctrl.model.yaxes[$index].label" class="form-control me-2"
+                       style="width:8em;">
+                <select class="form-select" ng-model="$ctrl.model.yaxes[$index].labelPos">
+                    <option value="">{{'udp.w.echart.axis.label_none' | translate}}</option>
+                    <option value="end">{{'udp.w.echart.axis.label_top' | translate}}</option>
+                    <option value="center">{{'udp.w.echart.axis.label_middle' | translate}}</option>
+                    <option value="start">{{'udp.w.echart.axis.label_bottom' | translate}}</option>
+                </select>
+            </div>
+        </td>
+        <td>
+            <div class="form-inline">
+                <input type="text" class="form-control me-2" style="width:6em;"
+                       ng-model="$ctrl.model.yaxes[$index].min"
+                       placeholder="{{'udp.w.echart.axis.value_range_placeholder'|translate}}"
+                       title="{{'udp.w.echart.axis.value_min'|translate}}">
+                <input type="text" class="form-control" style="width:6em;"
+                       ng-model="$ctrl.model.yaxes[$index].max"
+                       placeholder="{{'udp.w.echart.axis.value_range_placeholder'|translate}}"
+                       title="{{'udp.w.echart.axis.value_max'|translate}}">
+            </div>
+        </td>
+        <td>
+            <select ng-model="$ctrl.model.yaxes[$index].type" class="form-select">
+                <option value="">{{'udp.w.echart.axis.type_liner' | translate}}</option>
+                <option value="log">{{'udp.w.echart.axis.type_log' | translate}}</option>
+            </select>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <div>
+        <div class="checkbox checkbox-inline checkbox-primary">
+            <input type="checkbox" id="wpc_hidden_y" ng-model="$ctrl.props.hiddenYaxes">
+            <label for="wpc_hidden_y"
+                   op-help-info="udp.w.echart.axis.hide_yaxis_desc">{{'udp.w.echart.axis.hide_yaxis' | translate}}</label>
+        </div>
+
+    </div>
+    <div>
+        <div class="checkbox checkbox-inline checkbox-primary">
+            <input type="checkbox" id="wpc_enabled_doublex" ng-model="$ctrl.props.enabledDoubleX"
+                   ng-disabled="($ctrl.props.xAxis.field === null && !$ctrl.props.xAxis.convertFn)||$ctrl.props.xAxis.axisType==='time'||$ctrl.props.enabledYaxisHighlight">
+            <label for="wpc_enabled_doublex"
+                   op-help-info="udp.w.echart.axis.double_x_desc">{{'udp.w.echart.axis.double_x' | translate}}</label>
+        </div>
+    </div>
+<!--  TODO: Duplicate code with widget-config-chart-metrics, need move x-axis config to a reusable component  -->
+    <div ng-if="$ctrl.props.enabledDoubleX">
+        <fieldset>
+            <legend>{{'udp.w.echart.elem.x_axis' | translate}}</legend>
+            <div>
+                <div class="form-group">
+                    <label class="control-label">{{'common.term.data' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <udp-dsfield-selector the-model="$ctrl.props.xAxis2"
+                                              fields="$ctrl.fields"></udp-dsfield-selector>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.echart.axis.label_angle' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" ng-model="$ctrl.props.xAxis2.labelAngle">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'udp.w.echart.metric.metric' | translate}}</legend>
+            <div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-outline-primary btn-sm" ng-click="$ctrl.addYAxis()"><i
+                            class="fa fa-plus-square"></i> {{'udp.w.echart.metric.add_metric' | translate}}
+                    </button>
+                </div>
+                <ul ui-sortable="sortableOptions" ng-model="$ctrl.props.yAxes2" class="nav nav-pills">
+                    <!-- It seems adding class to li will make ui-sortable unstable -->
+                    <li ng-repeat="field in $ctrl.props.yAxes2 track by $index">
+                    <span class="badge op-text-normal rounded-0"
+                          ng-class="$ctrl.currentYaxesIndex === $index?'badge-info':'badge-default'">
+                        <i ng-if="!field.field" class="fa fa-bolt"></i>
+                        <a ng-click="$ctrl.selectYAxis($index)">{{ field.legend || label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>
+                        <a ng-click="$ctrl.removeYAxis($index)"></a>
+                    </span></li>
+                </ul>
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.echart.elem.legend' | translate}}</label>
+                    <div class="form-control-wrapper op-combo">
+                        <input class="form-control op-w-sm" ng-model="$ctrl.currentYaxis.legend">
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" class="form-control" id="wccm_yishidden"
+                                   ng-model="$ctrl.currentYaxis.hidden">
+                            <label for="wccm_yishidden">{{'udp.w.echart.metric.hide' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'common.term.data' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <udp-dsfield-selector the-model="$ctrl.currentYaxis"
+                                              fields="$ctrl.fields"></udp-dsfield-selector>
+                    </div>
+                </div>
+
+                <div id="cfg-line-style" class="form-group">
+                    <label class="control-label">{{'udp.w.echart.line.type' | translate}}</label>
+                    <div class="form-control-wrapper op-combo">
+                        <select class="form-select op-w-xs" title="{{'udp.w.echart.line.shape'|translate}}"
+                                ng-options="type.name as type.label for type in $ctrl.styles.lineTypes"
+                                ng-model="$ctrl.currentYaxis.lineType"></select>
+                        <input type="number" class="form-control" title="{{'udp.w.echart.line.width'|translate}}"
+                               min="1"
+                               ng-model="$ctrl.currentYaxis.lineWidth"/>
+                        <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                          ng-model="$ctrl.currentYaxis.lineColor"></udp-color-picker>
+                        <input type="number" class="form-control"
+                               title="{{'udp.w.echart.line.fill_opacity'|translate}}"
+                               min="0" max="10" ng-model="$ctrl.currentYaxis.fillOpacity" style="width:4em;">
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" ng-model="$ctrl.currentYaxis.smooth" id="wccm_ysmooth">
+                            <label for="wccm_ysmooth">{{'udp.w.echart.line.smooth' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+

@@ -1,0 +1,76 @@
+
+
+<div class="modal-header">
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cacScriptEditVm.views.cancel()">
+        &times;
+    </button>
+    <h4 class="modal-title">
+        {{'cac.script.edit' | translate}}
+    </h4>
+</div>
+<div class="modal-body">
+    <form name="editScriptForm " class="form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'cac.script.name' | translate}} <span class="cac-text-required">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="scriptName"
+                       ng-model="cacScriptEditVm.views.script.scriptName"><!--readonly-->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'cac.script.detail.param' | translate}} </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" 
+                       ng-model="cacScriptEditVm.views.script.scriptParams">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'cac.script.notice.0' | translate}} </label>
+            <div class="col-sm-10">
+                <p><strong>{{'cac.script.notice.1' | translate}}</strong>  </p>
+                <p>{{'cac.script.notice.2' | translate}}</p>
+                <p>{{'cac.script.notice.3' | translate}}</p>
+                <p>{{'cac.script.notice.4' | translate}}</p>
+                <p>{{'cac.script.notice.5' | translate}}</p>
+            </div>
+        </div>
+
+        <!--<div class="form-group">
+            <label class="col-sm-2 control-label">脚本类型 <span class="text-required">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" 
+                       ng-model="cacScriptEditVm.views.script.scriptType" required>
+            </div>
+        </div>-->
+        <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label">创建人</label>-->
+            <!--<div class="col-sm-10">-->
+                <!--<input type="text" class="form-control" -->
+                       <!--ng-model="cacScriptEditVm.views.script.createdBy">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">
+            <label class="col-sm-2 control-label">脚本说明</label>
+            <div class="col-sm-10">
+                <textarea type="textarea" class="form-control"  rows="3"
+                       ng-model="cacScriptEditVm.views.script.description" >
+                </textarea>
+            </div>
+        </div>-->
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cacScriptEditVm.views.cancel()">{{'common.entity.action.cancel' | translate}}
+    </button>
+    <button type="button" class="btn btn-success" ng-click="cacScriptEditVm.views.save()"
+            ng-disabled="editScriptForm.$invalid">
+        {{'common.entity.action.save' | translate}}
+    </button>
+</div>
+
+

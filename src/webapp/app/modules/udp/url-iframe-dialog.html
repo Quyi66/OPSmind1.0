@@ -1,0 +1,20 @@
+<div class="modal-header" ng-if="$ctrl.applet" ng-class="{'bg-dark':$ctrl.applet.theme==='dark'}" ng-dblclick="$ctrl.restoreOrMaxWindow()">
+    <h4 class="modal-title"><i class="fad {{$ctrl.applet.icon}}"></i> {{$ctrl.applet.title}}</h4>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)"><i
+            class="far fa-minus"></i></button>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window"
+        ng-click="$ctrl.closeWindow($event)" data-dismiss="modal"><i class="far fa-times"></i></button>
+</div>
+
+<div class="modal-header justify-content-end" ng-if="!$ctrl.applet">
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.openInNewWindow()">
+        <i class="far fa-external-link-square"></i>
+    </button>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window" ng-click="$ctrl.dismissModal()" data-dismiss="modal">
+        <i class="far fa-times"></i>
+    </button>
+</div>
+
+<div class="modal-body">
+    <iframe ng-src="{{ $ctrl.url }}" style="width:100%;height:99%;border:0;"></iframe>
+</div>

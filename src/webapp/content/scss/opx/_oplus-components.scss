@@ -1,0 +1,20 @@
+ansible-log-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+op-code-editor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+  //height: 100%;
+
+  > .CodeMirror {
+    // CodeMirror full fill the editor
+    //height: 100%;
+    flex: 1;
+  }
+}

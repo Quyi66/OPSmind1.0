@@ -1,0 +1,10 @@
+<style>
+    [ui-view=navbar] {
+        display: none;
+    }
+</style>
+<div class="text-center" style="padding-top: 40vh" ng-if="!appHelpVm.isHelpDocExisting">
+    <h2>{{'app.help.noDoc' | translate}}</h2>
+</div>
+
+<div id="pdf-container" class="h-full w-full" ng-if="appHelpVm.isHelpDocExisting"></div>

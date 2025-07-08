@@ -1,0 +1,17 @@
+<div class="opx-layout-hflex h-100" uaa-has-permission="dts:view:*" uaa-deny-message="无权访问">
+    <div class="opx-sidebar bg-light">
+        <nav class="opx-sidebar-header border-bottom">
+            <div class="opx-navbar-title">{{'dts.datasource.title' | translate}}</div>
+            <a ng-click="createDatasource()" class="ms-auto btn btn-primary opx-btn-flat opx-btn-icon"
+               title="{{'dts.datasource.action.create_datasource'}}">
+                <i class="fa fa-plus"></i></a>
+        </nav>
+        <div class="opx-sidebar-body">
+            <div id="dts-datasource-tree">
+            </div>
+        </div>
+    </div>
+
+    <div ui-view="dts_main_datasource_content" class="opx-flex-fill scroll-y">
+    </div>
+</div>

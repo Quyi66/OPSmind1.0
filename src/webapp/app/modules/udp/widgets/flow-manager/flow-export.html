@@ -1,0 +1,17 @@
+<div class="h-full">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'jao.flow.list' | translate}}</div>
+        <div class="ms-auto">
+            <button type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.exportFlow()">{{'udp.w.datatable.column.data_export' | translate}}
+            </button>
+        </div>
+    </nav>
+
+    <div class="p-3">
+        <opx-datatable id="flowInstanceTable" table-config="tableConfig"></opx-datatable>
+    </div>
+</div>
+
+
+

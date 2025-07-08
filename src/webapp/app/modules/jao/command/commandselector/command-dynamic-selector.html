@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h4 class="modal-title"> {{'cmd.job.button_command' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="pointer-events: auto;"
+            ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cm-host-dialog">
+    <div >
+        <div class="opx-flex-fill table-responsive">
+            <table id="command-list-table" class="cm-table table opx-table"></table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer text-right">
+    <button type="reset" class="btn btn-default" ng-click="$ctrl.cancel()">{{'cmd.job.button_cancel' | translate}}</button>
+    <button type="submit" class="btn btn-success" ng-click="$ctrl.confirm()">{{'cmd.job.button_sure' | translate}}</button>
+</div>

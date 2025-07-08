@@ -1,0 +1,113 @@
+<div class="p-3">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header">实时输出</div>
+            <div class="card-body">
+                <button class="btn btn-secondary" ng-click="jaoVm.openStaticLog()">打开静态日志</button>
+                <button class="btn btn-secondary" ng-click="jaoVm.openRealtimeLog()">打开实时日志</button>
+                <!--                <jao-process-modeler process-model="jaoVm.testProcessModel" options="{readonly:true}"></jao-process-modeler>-->
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">流程编排</div>
+            <div class="card-body">
+                <button class="btn btn-secondary" ng-click="jaoVm.openProcessModal()">打开流程图</button>
+                <!--                <jao-process-modeler process-model="jaoVm.testProcessModel" options="{readonly:true}"></jao-process-modeler>-->
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">状态、图标、颜色、样式</div>
+            <div class="card-body">
+                <h5 class="card-title">执行按钮</h5>
+                <ul id="js-btnlist" class="list-inline list-unstyled mb-0">
+                    <li>
+                        <button type="button" class="btn btn-primary"><i
+                                class="fa fa-fw fa-chevron-right"></i> 开始执行
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-outline-primary"><i
+                                class="fa fa-fw fa-chevron-right"></i> 开始执行
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary opx-btn-icon"><i
+                                class="far fa-fw fa-play-circle"></i></button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-default opx-btn-icon"><i
+                                class="fa fa-fw fa-play-circle"></i></button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">状态指示（点击改变按钮状态）</h5>
+                <!--                <select class="form-select" ng-model="jaoVm.btnRunStyle">-->
+                <!--                    <option value="GLOW">呼吸</option>-->
+                <!--                    <option value="OUTLINE">边框</option>-->
+                <!--                    <option value="INNER_ICON">图标</option>-->
+                <!--                </select>-->
+                <ul class="list-inline list-unstyled mb-0">
+                    <li ng-repeat="(status, statusDef) in jaoVm.allRunStatusDefs"><span
+                            class="jao-jobrun-status-icon status-{{statusDef.name}}"
+                            title="{{statusDef.title}}" ng-click="jaoVm.changeButtonStyle(status)"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">按钮加状态</h5>
+                <ul class="list-inline list-unstyled mb-0">
+                    <li ng-repeat="statusDef in jaoVm.allRunStatusDefs">
+                        <button class="btn btn-default rounded-pill jao-jobrun-status-btn ani-outlined status-{{statusDef.name}}">
+                            <i class="fa fa-fw text-{{statusDef.color}}" ng-class="statusDef.icon"></i>
+                            <span>{{statusDef.title}}</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Ansible任务状态</h5>
+                <ul class="list-inline list-unstyled mb-0">
+                    <li ng-repeat="def in jaoVm.taskStatusDefs"><i class="{{def.icon}} text-{{def.color}}"
+                                                                   title="{{def.tooltip}}"></i>
+                        {{def.text}}
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Ansible主机状态</h5>
+                <ul class="list-inline list-unstyled mb-0">
+                    <li ng-repeat="def in jaoVm.hostStatusDefs"><i class="{{def.icon}} text-{{def.color}}"
+                                                                   title="{{def.tooltip}}"></i>
+                        {{def.text}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="card mb-3">
+            <div class="card-header">查看Ansible输出</div>
+            <div class="card-body" style="height:30rem;">
+                <!--                <jao-ao-view contents="jaoVm.contents"></jao-ao-view>-->
+                <jao-job-result-view result-data="jaoVm.resultData"></jao-job-result-view>
+                <!--                <jao-job-result-view run-id="'86d64e47b3c044e4993788a45b05cd54'"-->
+                <!--                                     xxxresult-data="jaoVm.resultData"></jao-job-result-view>-->
+            </div>
+        </div>
+        <!--        <div class="card mb-3">-->
+        <!--            <div class="card-header">解析Playbook</div>-->
+        <!--            <div class="card-body scroll-y" style="height:400px;">-->
+        <!--                <jao-playbook-view playbook="jaoVm.playbookPath"></jao-playbook-view>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </section>
+    <section>
+        <div class="card mb-3">
+            <div class="card-header">测试运行</div>
+            <div class="card-body">
+                <jao-script-test-run file="jaoVm.scriptFile"></jao-script-test-run>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,12 @@
+<div>
+    <umd-data-view  the-data="$ctrl.data"
+                    model-def="$ctrl.model"
+                    view-type="editor"
+                    options="{editMode:true}">
+    </umd-data-view>
+
+    <div class="card-footer text-left" >
+        <button ng-click="$ctrl.save()" ng-disabled="!$ctrl.allChecked" class="btn btn-primary no-animate">{{'common.action.save' | translate}}</button>
+        <button ng-click="$ctrl.close()" class="btn btn-secondary no-animate">{{'common.action.cancel' | translate}}</button>
+    </div>
+</div>

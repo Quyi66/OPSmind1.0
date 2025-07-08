@@ -1,0 +1,115 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">初始化選項</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="uwProps.parse.init">
+                    <option value="true">是</option>
+                    <option value="false">否</option>
+                </select>
+            </div>
+        </div>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+<!--        <div class="form-group">-->
+<!--            <label class="control-label">{{'udp.uinput.attrs.binding' | translate}}</label>-->
+<!--            <div class="form-control-wrapper">-->
+<!--                <input type="text" class="form-control" ng-model="uwProps.core.exportParam">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label class="control-label">設置頁面參數</label>-->
+<!--            <div class="form-control-wrapper">-->
+<!--                <udp-data-converter the-model="uwProps.parse.data" class="op-w-full"-->
+<!--                                    options="{kinds:'js,str',varTypes:'pageparam,global'}"></udp-data-converter>-->
+<!--            </div>-->
+<!--        </div>-->
+<!-- -->
+<!--        <div class="form-group">-->
+<!--            <label class="control-label"-->
+<!--                   op-help-info="udp.w.param.config.eventtorefresh_desc">{{'udp.w.param.config.eventtorefresh'|translate}}</label>-->
+<!--            <div class="form-control-wrapper">-->
+<!--                <input class="form-control op-w-md" ng-model="uwProps.etovalue"/>-->
+<!--            </div>-->
+<!--        </div>-->
+    </uib-tab>
+
+
+    <!--     交互设定-->
+    <!--    <uib-tab>-->
+    <!--        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>-->
+    <!--        <udp-widget-config-interaction the-model="uwProps.interaction"-->
+    <!--                                       options="{supports:'page,param,event',enableAutoActive:true}">-->
+    <!--        </udp-widget-config-interaction>-->
+    <!--    </uib-tab>-->
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.kpi.color'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-theme-selector the-model="uwProps.display" customizable="true"></udp-theme-selector>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" op-help-info="{{'udp.w.kpi.row_num_helpinfo'|translate}}">{{'udp.w.kpi.row_num'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="number" ng-model="uwProps.display.rowNum" class="form-control" min="1" max="12">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.kpi.search'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.display.search">
+                        <option value="">{{'udp.w.kpi.search_none'|translate}}</option>
+                        <option value="right">{{'udp.w.kpi.search_right'|translate}}</option>
+                    </select>
+                </div>
+            </div>
+            <fieldset>
+                <legend>{{'udp.w.kpi.layout'|translate}}</legend>
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.kpi.config.icon'|translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select class="form-select op-w-sm" ng-model="uwProps.display.icon">
+                            <option value="none">{{'udp.w.kpi.config.icon_none'|translate}}</option>
+                            <option value="center">{{'udp.w.kpi.config.icon_center'|translate}}</option>
+                            <option value="left">{{'udp.w.kpi.config.icon_left'|translate}}</option>
+                            <option value="right">{{'udp.w.kpi.config.icon_right'|translate}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.kpi.config.title'|translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select class="form-select op-w-sm" ng-model="uwProps.display.title"
+                                ng-options="pos.key as 'udp.w.kpi.config.title_'+(pos.key||'bottom')|translate for pos in titlePositions"></select>
+                        <label class="control-label op-w-auto ms-3">{{'udp.w.kpi.config.title_size'|translate}}</label>
+                        <udp-font-editor the-model="uwProps.fields.title.size"></udp-font-editor>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.kpi.config.text'|translate}}</label>
+                    <div class="form-control-wrapper">
+                        <!--                    <label class="control-label op-w-auto">位置</label>-->
+                        <select class="form-select op-w-sm" ng-model="uwProps.display.text"
+                                ng-options="pos.key as 'udp.w.kpi.config.text_'+(pos.key||'show')|translate for pos in textPositions"></select>
+                        <label class="control-label op-w-auto ms-3">{{'udp.w.kpi.config.text_size'|translate}}</label>
+                        <udp-font-editor the-model="uwProps.fields.text.size"></udp-font-editor>
+                    </div>
+                </div>
+            </fieldset>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-retweet'></i> {{'udp.wc.tab.condfmt'|translate}}</uib-tab-heading>
+        <p>{{'udp.wc.condfmt.helpinfo'|translate}}</p>
+        <div>
+            <udp-widget-config-format-rule the-model="uwProps.display.rules"
+                                           formats="{theme:true,backColor:true,fontColor:true}"></udp-widget-config-format-rule>
+        </div>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

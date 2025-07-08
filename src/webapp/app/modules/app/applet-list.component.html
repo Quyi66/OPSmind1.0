@@ -1,0 +1,71 @@
+<div ng-if="$ctrl.ctrlError" class="h-100 p-5">
+    <div class="alert alert-danger">{{$ctrl.ctrlError}}</div>
+</div>
+<div ng-if="!$ctrl.ctrlError" class="h-100 opx-layout-vflex">
+    <nav class="navbar" ng-class="{'justify-content-center':$ctrl.options.viewAs==='launcher'}">
+        <form class="form-inline">
+            <op-searchbox search-text="$ctrl.query"></op-searchbox>
+            <div id="applet_tag_list_ul" class="form-control-wrapper">
+                <ul class="list list-inline">
+                    <li ng-class="{'mt-4':$ctrl.options.viewAs!=='launcher'}" ng-repeat="tag in $ctrl.tags">
+                        <button type="button" class="btn btn-radius btn-sm btn-secondary"
+                                ng-click="$ctrl.setTag($event, tag)"
+                                value="{{tag}}">
+                            {{tag.name}}
+                        </button>
+<!--                        <button type="button" class="btn btn-radius btn-sm btn-secondary"-->
+<!--                                ng-class="tag.status?'btn-primary':'btn-secondary'"-->
+<!--                                ng-click="tag.status=!tag.status;$ctrl.setTag(tag)"-->
+<!--                                value="{{tag}}">-->
+<!--                            {{tag.name}}-->
+<!--                        </button>-->
+                    </li>
+                </ul>
+            </div>
+
+        </form>
+        <div class="navbar-nav" ng-if="$ctrl.options.viewAs!=='launcher'">
+            <button ng-if="$ctrl.showActions" uaa-has-permission="app:edit:*" class="btn btn-outline-primary"
+                    ui-sref="app.applist.create">
+                <i class="fa fa-plus"></i> {{'common.action.create' | translate}}
+            </button>
+            <button ng-if="$ctrl.showActions" uaa-has-permission="app:edit:*" class="btn"
+                    ng-class="{'btn-secondary':$ctrl.isInSortMode,'btn-default':!$ctrl.isInSortMode}"
+                    ng-click="$ctrl.sortApplet()">
+                <i class="fa fa-exchange"></i>
+                <span>{{$ctrl.isInSortMode ? ('applet.list.quit_sort' | translate) : ('applet.list.sort' | translate) }}</span>
+            </button>
+            <button ng-if="$ctrl.showActions" class="btn rounded-pill" ng-click="$ctrl.toggleDisabledApplets()"
+                    ng-class="{'btn-default':!$ctrl.showDisabled,'btn-success':$ctrl.showDisabled}">
+                {{'applet.list.show_disabled' | translate}}
+            </button>
+            <button class="btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.showActions=!$ctrl.showActions">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+        </div>
+    </nav>
+    <div class="flex-fill scroll-y p-3">
+        <div class="op-blank-slate" ng-hide="$ctrl.applets.length>=0">
+            <div op-loading></div>
+        </div>
+        <div class="d-flex flex-wrap gallery applet-container">
+            <div ng-repeat="applet in $ctrl.applets | filter:{'title':($ctrl.query||'')}"
+                class="d-block" ng-class="{'ignore-elements': !applet.order}"
+                data-type="{{ applet.sourceType }}"
+                data-id="{{ applet.id }}" data-order="{{ applet.order }}">
+                <opx-applet-item applet-def="applet" on-click-applet="$ctrl.openApplet(applet.code,$event)">
+                    <div class="op-hover-to-show" ng-if="$ctrl.options.viewAs!=='launcher' && applet._canUpdate"
+                        style="position: absolute;right:.5rem;top:-.5rem;">
+                        <a class="btn btn-default opx-btn-flat opx-btn-icon"
+                        ui-sref="app.appman.setting({appletCode: applet.code})"
+                        ng-click="$ctrl.editApplet(applet.code,$event)"
+                        title="{{'common.action.modify'|translate}}"><i
+                                class="fa fa-pencil fa-fw"></i></a>
+                    </div>
+                </opx-applet-item>
+            </div>
+        </div>
+    </div>
+</div>
+
+

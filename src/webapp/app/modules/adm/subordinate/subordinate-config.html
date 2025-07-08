@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb my-0 bg-transparent">
+            <li class="breadcrumb-item">
+                <a ui-sref="subordinate" data-translate="subordinate.home.title">Subordinate Management</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <span data-translate="subordinate.config.title">Subordinate Config</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title">
+                <span>关系列表</span>
+
+                <button type="button" ng-disabled="subordinateConfigVm.views.currentLeader == null || vm.isSaving" class="btn btn-primary btn-sm pull-right" ng-click="subordinateConfigVm.views.save()">
+                    <span data-translate="common.action.save">Save</span>
+                </button>
+
+                <button type="button" class="btn btn-default btn-sm pull-right m-r-sm" data-dismiss="modal" ng-click="subordinateConfigVm.views.cancel()">
+                    <span data-translate="common.action.cancel">Cancel</span>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 col-sm-12">
+                    <div class="form-group">
+                        <label>请选择上级</label>
+
+                        <tm-select-user-tree check-type="radio"
+                                             default-selected="subordinateConfigVm.views.currentLeaders"
+                                             on-select="subordinateConfigVm.views.onLeaderChosen">
+                        </tm-select-user-tree>
+                    </div>
+                </div>
+                <div class="col-md-2 hidden-sm text-center" style="margin-top: 30%;">
+                    <i class="fa fa-sitemap fa-rotate-270 fa-2x"></i>
+                </div>
+                <div class="col-md-5 col-sm-12">
+                    <div class="form-group" ng-show="subordinateConfigVm.views.currentLeader != null">
+                        <label>请选择下属</label>
+                        <tm-select-user-tree check-type="checkbox"
+                                             default-selected="subordinateConfigVm.views.selectedUsers"
+                                             disabled-users="subordinateConfigVm.views.disabledUsers"
+                                             on-select="subordinateConfigVm.views.onUserChosen">
+                        </tm-select-user-tree>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

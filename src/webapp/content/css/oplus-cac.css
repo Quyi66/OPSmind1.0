@@ -1,0 +1,262 @@
+.bg-gray{
+    background: #a5a5a5;
+    color:#58666e;
+}
+.btn-gray{
+    background: #eaeaef;
+}
+.cac-table-line-height tr td{
+    line-height: 29.4px!important;
+}
+
+.cac-text-required,.cac-warning {
+    color: red;
+}
+.cac-body-right{
+    background: #eaeaef;
+    min-height: 850px;
+}
+
+/*巡检模块-矩阵图*/
+.cac-disable-click{
+    pointer-events: none;
+}
+.cac-click{
+    cursor:pointer;
+}
+.cac-template-tile{
+    color: white;
+}
+.cac-div-panel {
+    margin: 10px 10px;
+}
+.cac-div-panel .panel-heading {
+    /* background-color: #41bdd0;*/
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.cac-template-square-tile-l{
+    width: 95%;
+    float: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.cac-template-square-tile-r{
+    width: 20%;
+}
+.cac-template-square-body{
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 8px;
+}
+.cac-template-square-tile-info{
+    margin-top: 35px;
+}
+
+.cac-template-square-font{
+    font-size: 35px;
+}
+.cac-template-square-info-font{
+    font-size: 13px;
+}
+.cac-template-square-info{
+    float: left;
+    width: 50%;
+    /*margin-bottom: -10px;*/
+    border-right: 1px solid #adabab;
+    text-align: center;
+}
+.cac-template-square-info p{
+    margin-bottom:4px;
+}
+.cac-template-square-info-last{
+    border-right: none;
+}
+
+
+/*巡检模板-卡片*/
+.cac-template-user-card{
+    text-align: center;
+    height: 200px;
+    padding-left: 15px;
+    margin-top: 15px;
+}
+
+.cac-template-user-card .card-header{
+    height: 100px;
+    background: #e2f0fd;
+}
+.card-header .card-title{
+    width: 100%;
+    font-size: 22px;
+    text-align: left;
+    padding: 10px 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+}
+.card-header .card-header-pic{
+    width: 50%;
+    height: 50px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.card-header .card-header-pic span{
+    display: block;
+    text-align: right;
+    margin-right: 20px;
+    color: green;
+    font-size: 60px;
+}
+
+.card-header .card-time-info{
+    text-align: left;
+    display: block;
+    width: 100%;
+    padding-left: 20px;
+    margin-top: 15px;
+    position: absolute;
+    top: 50px;
+}
+
+.cac-template-user-card .card-body{
+    height: 100px;
+    background: white;
+}
+
+.card-body .card-body-info{
+    border-right: 1px solid #e2f0fd;
+    height: 80%;
+    padding: 20px 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.card-body-info span{
+    display: block;
+    margin: 8px 0;
+}
+
+.cac-result-square {
+    max-height: 500px;
+    overflow: auto;
+}
+.cac-text-overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.cac-output-td {
+    max-width: 100px;
+}
+/*巡检结果-table*/
+.cac-result-table{
+    width: 99%;
+    border: none;
+    table-layout: fixed;
+}
+.cac-table{
+    width: 99%;
+    table-layout: fixed;
+}
+.cac-r-b-m{
+    margin-left: 50px;
+}
+
+/*.cac-result-table-break {*/
+/*    word-break: break-all;*/
+/*    white-space: normal;*/
+/*}*/
+
+.cac-result-table table th td:first-child{
+    width: 120px!important;
+}
+.cac-result-table > tbody > tr > th,.cac-result-table > tbody > tr > td,.cac-result-table > thead > tr > td{
+    border-color: white;
+    overflow: hidden;
+    text-align: center;
+}
+.cac-result-table > tbody > tr > th,.cac-result-table > thead > tr > td{
+    text-overflow: ellipsis;
+}
+
+.cac-result-th{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 30px!important;
+    cursor: pointer;
+}
+
+/*任务结果展示*/
+.cac-job-result-pre {
+    white-space: pre-wrap;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.cac-result-first-td{
+    width: 30px!important;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+   /* color: black!important;*/
+    display: inline-block;
+}
+
+/*巡检规则*/
+.cac-rule-expression  .CodeMirror{
+    height: 200px;
+}
+
+.cac-rule-applicability .CodeMirror{
+    height: 100px;
+}
+
+/*巡检脚本*/
+.cac-script-codemirror  + .CodeMirror{
+    height: 500px;
+}
+.cac-title-button-l{
+    float: none!important;
+}
+
+/*job index html*/
+.cac-job-index ul li label:before, .cac-template-host-dialog ul li label:before {
+    font-family: "FontAwesome";
+    color: grey;
+    content: "\f002";
+    position: absolute;
+    left: 10px;
+    top: 5px;
+}
+input.template-filter{
+    padding-left: 35px;
+}
+
+.cac-bg-grey{
+    background: grey;
+}
+
+.cac-bg-light-grey{
+    background:lightgrey;
+}
+
+/*模板-主机弹出框*/
+.cac-template-host-dialog .nav > li.active > a {
+    color: #fff !important;
+    background-color: #007bff !important;
+}
+
+#cac-template-host-table_filter label {
+    margin-right: 10px;
+}
+
+.cac-template-host-dialog .collapse-button{
+    display: none;
+}

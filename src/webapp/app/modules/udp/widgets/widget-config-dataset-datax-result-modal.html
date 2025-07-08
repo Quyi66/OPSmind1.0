@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'udp.wc.dataset.datax.test_result'|translate}}</h4>
+</div>
+<div class="modal-body">
+    <pre style="height:360px;overflow: auto;">{{result|json}}</pre>
+</div>
+<div class="modal-footer text-right">
+    <button type="button" class="btn btn-primary" ng-click="useAsFields()">{{'udp.wc.dataset.datax.result_ok'|translate}}</button>
+    <button type="button" class="btn btn-default" ng-click="cancelModal()">{{'common.action.cancel'|translate}}</button>
+</div>

@@ -1,0 +1,55 @@
+<nav class="navbar navbar-light bg-light b-b">
+    <div class="navbar-header" style="width: 100%; padding-left: 20px;">
+        <ol class="breadcrumb">
+            <li>
+                <span data-translate="subordinate.home.title">Subordinate Management</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper">
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title">
+                <span>关系列表</span>
+                <span class="pull-right m-t-n-xs">
+                    <button class="btn btn-default" ui-sref="subordinate.config">
+                        <span class="fa fa-cog"></span><span class="m-l-sm" data-translate="subordinate.home.edit">Config Subordinate RelationShip</span>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="jh-table table table-striped">
+                    <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th jh-sort-by="leaderFullName"><span data-translate="subordinate.leaderFullName">Leader Name</span> <span class="fa fa-sort"></span></th>
+                        <th jh-sort-by="userFullName"><span data-translate="subordinate.userFullName">User Name</span> <span class="fa fa-sort"></span></th>
+                        <!--<th></th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="subordinate in vm.subordinates track by subordinate.id">
+                        <td>{{subordinate.leaderFullName}}</td>
+                        <td>{{subordinate.userFullName}}</td>
+                        <!--<td class="text-right">-->
+                            <!--<div class="btn-group flex-btn-group-container">-->
+                                <!--<button type="submit" ui-sref="subordinate.delete({id:subordinate.id})" class="btn btn-danger btn-sm">-->
+                                    <!--<span class="fa fa-times-circle"></span>-->
+                                    <!--<span class="hidden-sm-down" data-translate="common.action.delete"></span>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+                <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

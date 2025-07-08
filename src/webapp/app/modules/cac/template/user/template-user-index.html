@@ -1,0 +1,46 @@
+<nav class="navbar navbar-light bg-light">
+        <div class="navbar-header">
+            <ol class="breadcrumb">
+                <li>
+                    <a ui-sref="app.cac.template">{{'cac.index.square' | translate}}</a>
+                </li>
+                <li class="active">
+                    <a ui-sref="app.cac.template.templateList">{{'cac.index.template' | translate}}</a>
+                </li>
+            </ol>
+        </div>
+        <div class="btn-group pull-right m-t-sm" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ui-sref="app.cac.script"><i class="fa fa-calendar m-r-sm"></i>{{'cac.template.user.script_config' | translate}}</button>
+            <button type="button" class="btn btn-default" ui-sref="app.cac.rule"><i class="fa fa-calendar m-r-sm"></i>{{'cac.common.rule_config' | translate}}</button>
+            <button type="button" class="btn btn-default" ui-sref="app.cac.job">{{'cac.template.user.square_config' | translate}}<i class="fa fa-cogs ms-2"></i></button>
+        </div>
+</nav>
+<div class="hbox hbox-auto-xs hbox-auto-sm" ui-view="template">
+    <div class="cac-template-user-list" ng-repeat="item in cacTemplateUserCtrlVm.views.templateList">
+        <div class="cac-template-user-card col-sm-3">
+            <div class="card-header">
+                <div class="card-title" title="{{item.templateName}}">
+                    {{item.templateName}}
+                </div>
+                <div class="card-header-pic">
+                    <span class="fa fa-check"></span>
+                </div>
+                <span class="card-time-info">{{'cac.template.user.execute_by' | translate}}</span>
+            </div>
+            <div class="card-body">
+                <div class="col-sm-4 card-body-info">
+                    <span>13{{item.auditParams.hosts.script}}</span>
+                    <span>{{'cac.common.device' | translate}}</span>
+                </div>
+                <div class="col-sm-4 card-body-info">
+                    <span>8{{item.auditParams.hosts.ruleExpressions}}</span>
+                    <span>{{'cac.common.rule' | translate}}</span>
+                </div>
+                <div class="col-sm-4 card-body-info">
+                    <span>0{{item.auditParams.hosts.length}}</span>
+                    <span>{{'cac.common.not_compliance' | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

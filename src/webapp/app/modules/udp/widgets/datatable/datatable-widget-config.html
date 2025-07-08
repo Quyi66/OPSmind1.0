@@ -1,0 +1,350 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"
+                                   options="{allowServerPage:true,allowClientLimit:false}"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>
+        <div>
+            <ul ng-sortable class="list list-unstyled list-inline">
+                <!-- It seems adding class to li will make ui-sortable unstable -->
+                <li class="mb-1" ng-repeat="field in uwProps.fields track by $index">
+                    <span class="badge op-text-normal p-3"
+                          ng-class="{'badge-dark':current.index === $index,'badge-secondary':current.index!==$index,'badge-light opx-font-strikethrough':field.hidden}">
+                        <i class="far fa-exchange"
+                           ng-if="!field.dynamic && field.convertFn"
+                           title="{{'udp.w.datatable.config.field_is_converted'|translate}}"></i>
+                        <i class="far fa-ellipsis-h"
+                           ng-if="field.dynamic" title="{{'udp.w.datatable.column.dynamic'|translate}}"></i>
+                        <a ng-click="current.index=$index"
+                           ng-bind-html="field.dynamic?('udp.w.datatable.column.dynamic'|translate):(field.label || field.field || '&nbsp;&nbsp;&nbsp;')"></a>
+                        <a ng-click="removeField($index)">&times;</a>
+                    </span></li>
+            </ul>
+        </div>
+        <fieldset ng-if="current.index>=0" class="p-2">
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.datatable.column.label' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control op-w-sm" ng-model="uwProps.fields[current.index].label">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.datatable.column.setting' | translate}}</label>
+                <div class="form-control-wrapper op-combo flex-wrap">
+                    <div class="checkbox checkbox-inline ms-3">
+                        <input type="checkbox" id="dwc_hide" ng-model="uwProps.fields[current.index].hidden"><label
+                            for="dwc_hide">{{'udp.w.datatable.column.hide' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline ms-3">
+                        <input type="checkbox" id="dwc_mcheck"
+                               ng-model="uwProps.fields[current.index].mcheck"><label
+                            for="dwc_mcheck">{{'udp.w.datatable.column.mcheck' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline ms-3">
+                        <input type="checkbox" id="dwc_dynamic"
+                               ng-model="uwProps.fields[current.index].dynamic"><label
+                            for="dwc_dynamic"
+                            op-help-info="{{'udp.w.datatable.column.dynamic_helpinfo'|translate}}">{{'udp.w.datatable.column.dynamic' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline ms-3">
+                        <input type="checkbox" id="dwc_isrestricted"
+                               ng-model="uwProps.fields[current.index].isrestricted"><label
+                            for="dwc_isrestricted"
+                            op-help-info="{{'udp.w.datatable.column.secret_helpinfo'|translate}}">{{'udp.w.datatable.column.secret' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline ms-3">
+<!--                         ng-if="!uwProps.dataset._type && uwProps.dataset.serverPage">-->
+                        <input type="checkbox" id="dwc_sortable"
+                               ng-model="uwProps.fields[current.index].orderable"><label
+                            for="dwc_sortable"
+                            op-help-info="{{'udp.w.datatable.column.sortable_helpinfo'|translate}}">{{'udp.w.datatable.column.sortable' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline ms-3">
+<!--                         ng-if="!uwProps.dataset._type && uwProps.dataset.serverPage">-->
+                        <input type="checkbox" id="dwc_searchable"
+                               ng-model="uwProps.fields[current.index].searchable"><label
+                            for="dwc_searchable"
+                            op-help-info="{{'udp.w.datatable.column.searchable_helpinfo'|translate}}">{{'udp.w.datatable.column.searchable' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="uwProps.fields[current.index].dynamic">
+                <label class="control-label" op-help-info="{{'udp.w.datatable.column.dynamicdef_helpinfo'|translate}}">{{'udp.w.datatable.column.dynamic_definition' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <udp-data-converter the-model="uwProps.fields[current.index].dynamicDef"
+                                        options="{kinds:'js,yaml'}" class="op-w-full"></udp-data-converter>
+                </div>
+            </div>
+            <div ng-if="!uwProps.fields[current.index].dynamic">
+                <div class="form-group">
+                    <label class="control-label"
+                           op-help-info="{{'udp.w.datatable.column.data_helpinfo'|translate}}">{{'udp.w.datatable.column.data' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <udp-dsfield-selector the-model="uwProps.fields[current.index].field" fields="selectedDs.fields"
+                                              options="{disableConverter:true}"></udp-dsfield-selector>
+                        <div class="btn-group">
+                            <button type="button" class="btn ms-3"
+                                    ng-class="showDataConverter[current.index]?'btn-secondary':'btn-outline-default'"
+                                    ng-click="showDataConverter[current.index]=!showDataConverter[current.index]">
+                                {{'udp.w.datatable.column.data_convert' | translate}}
+                            </button>
+                            <button type="button"
+                                    ng-click="previewFieldsData(uwProps.fields,selectedDs.sampleRecord)"
+                                    title="{{'udp.w.datatable.column.data_preview'|translate}}"
+                                    class="btn btn-outline-default"><i class="fa fa-grip-horizontal"></i>
+                            </button>
+                        </div>
+
+                        <div ng-if="showDataConverter[current.index]" class="op-form-subgroup mb-3 mt-3 w-100">
+                            <div class="form-group">
+                                <label class="control-label" ng-if="!uwProps.fields[current.index].mcheck"><span
+                                        op-help-info="{{'udp.w.datatable.column.data_display_helpinfo' | translate}}">{{'udp.w.datatable.column.data_display' | translate}}</span></label>
+                                <label class="control-label" ng-if="uwProps.fields[current.index].mcheck"><span
+                                        op-help-info="{{'udp.w.datatable.column.data_mcheck_helpinfo'|translate}}">{{'udp.w.datatable.column.data_mcheck'|translate}}</span></label>
+                                <div class="form-control-wrapper">
+                                    <udp-data-converter the-model="uwProps.fields[current.index].convertFn"
+                                                        class="w-full"
+                                                        options="{kinds:'js,str,link',varTypes:'field,pageparam,global'}"></udp-data-converter>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="!uwProps.dataset._type && uwProps.dataset.serverPage">
+                                <label class="control-label" op-help-info="{{'udp.w.datatable.column.data_export_helpinfo'|translate}}">{{'udp.w.datatable.column.data_export'|translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control code"
+                                           ng-model="uwProps.fields[current.index].dataSsp">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section ng-if="uwProps.fields[current.index].mcheck">
+                <div class="form-group">
+                    <label class="control-label" op-help-info="udp.w.datatable.column.mcheck_selected_label_helpinfo">{{'udp.w.datatable.column.mcheck_selected_label'|translate}}</label>
+                    <div class="form-control-wrapper">
+                        <udp-dsfield-selector the-model="uwProps.fields[current.index].mcheckUnionFiled"
+                                              fields="selectedDs.fields"
+                                              options="{disableConverter:true}"></udp-dsfield-selector>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           op-help-info="udp.w.datatable.column.mcheck_export_param_helpinfo">{{'udp.w.datatable.column.mcheck_export_param'|translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" ng-model="uwProps.fields[current.index].mcheckParam"
+                               class="form-control op-w-sm me-3"/>
+                        <select class="form-select op-w-sm" ng-model="uwProps.fields[current.index].mcheckType">
+                            <option value="">{{'common.datatype.array'|translate}}</option>
+                            <option value="csv">{{'common.datatype.csv'|translate}}</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            <section ng-if="!uwProps.fields[current.index].mcheck">
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.datatable.column.default_content' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" ng-model="uwProps.fields[current.index].defaultContent"
+                               class="form-control op-w-md"/>
+                    </div>
+                </div>
+                <!--New-->
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.datatable.column.sort' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select class="form-select op-w-auto" ng-model="uwProps.fields[current.index].order">
+                            <option value="">{{'udp.w.datatable.column.sort_disabled' | translate}}</option>
+                            <option value="asc">{{'udp.w.datatable.column.sort_asc' | translate}}</option>
+                            <option value="desc">{{'udp.w.datatable.column.sort_desc' | translate}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">{{'udp.w.datatable.column.align' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select class="form-select op-w-auto" ng-model="uwProps.fields[current.index].align">
+                            <option value="">{{'udp.w.datatable.column.align_auto' | translate}}</option>
+                            <option value="left">{{'udp.w.datatable.column.align_left' | translate}}</option>
+                            <option value="center">{{'udp.w.datatable.column.align_center' | translate}}</option>
+                            <option value="right">{{'udp.w.datatable.column.align_right' | translate}}</option>
+                        </select>
+                        <!--</div>-->
+                        <!--<div class="">-->
+                        <select class="ms-2 form-select op-w-auto" ng-model="uwProps.fields[current.index].wrap">
+                            <option value="">{{'common.term.default' | translate}}</option>
+                            <option value="nowrap">{{'udp.w.datatable.column.wrap_disabled' | translate}}
+                            </option>
+                            <option value="wrap">{{'udp.w.datatable.column.wrap_auto' | translate}}</option>
+                        </select>
+                        <udp-css-editor class="ms-2" the-model="uwProps.fields[current.index].css"
+                                        options="{style:'dropdown',groups:'text'}"></udp-css-editor>
+                        <input type="number" ng-model="uwProps.fields[current.index].linelimit" class="ms-2 form-control"
+                               title="#{udp.w.datatable.column.linelimit}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           op-help-info="{{'udp.w.datatable.column.trim_helpinfo'|translate}}">{{'udp.w.datatable.column.trim' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="number" class="form-control" ng-model="uwProps.fields[current.index].cutoff"
+                               min="0">
+                    </div>
+                </div>
+                <div class="form-group" xxng-if="uwProps.fields[current.index].type">
+                    <label class="control-label"
+                           op-help-info="{{'udp.w.datatable.column.format_helpinfo'|translate}}">{{'udp.w.datatable.column.format' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" ng-model="uwProps.fields[current.index].formatter"
+                               class="form-control op-w-md"/>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="uwProps.fields[current.index].type==='number'">
+                    <label class="control-label">#{udp.w.datatable.column.scale}</label>
+                    <div class="form-control-wrapper">
+                        <input type="number" ng-model="uwProps.fields[current.index].scale"
+                               class="form-control op-w-sm"
+                               style="width:100%;"/>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="uwProps.display.footer">
+                    <label class="control-label">{{'udp.w.datatable.column.footer' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select class="form-select op-w-sm" ng-model="uwProps.fields[current.index].accum">
+                            <option value=""></option>
+                            <option value="MAX">{{'udp.w.datatable.column.footer_max' | translate}}</option>
+                            <option value="MIN">{{'udp.w.datatable.column.footer_min' | translate}}</option>
+                            <option value="COUNT">{{'udp.w.datatable.column.footer_count' | translate}}</option>
+                            <option value="SUM">{{'udp.w.datatable.column.footer_sum' | translate}}</option>
+                            <option value="AVERAGE">{{'udp.w.datatable.column.footer_average' | translate}}</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<label class="control-label col-sm-2">数据定义</label>-->
+            <!--<div class="col-sm-10">-->
+            <!--<udp-data-converter the-model="uwProps.fields[current.index].convertFn"-->
+            <!--options="{kinds:'js,str,link'}"></udp-data-converter>-->
+            <!--</div>-->
+            <!--</div>-->
+        </fieldset>
+        <div class="m-t">
+            <button type="button" class="btn btn-default btn-sm" ng-click="removeAllFields()"><i
+                    class="fa fa-minus-square"></i> {{'udp.w.datatable.config.remove_all_columns' | translate}}
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" ng-click="addField()"><i
+                    class="fa fa-plus-square"></i> {{'udp.w.datatable.config.add_column' | translate}}
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" ng-click="addAllFields(selectedDs.fields)"><i
+                    class="fa fa-plus-square"
+                    title="{{'udp.w.datatable.config.add_all_columns_helpinfo'|translate}}"></i>
+                {{'udp.w.datatable.config.add_all_columns' | translate}}
+            </button>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}
+        </uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <!--            <div class="form-group">-->
+            <!--                <label class="control-label" op-help-info="只支持px和vh单位，例如200px, 50vh">高度</label>-->
+            <!--                <div class="form-control-wrapper">-->
+            <!--                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.height" placeholder="高度">-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.datatable.config.border_and_background' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <!--                    <div class="checkbox checkbox-inline">-->
+                    <!--                        <input type="checkbox" name="display_noborder" id="dwc_dis-border"-->
+                    <!--                               ng-model="uwProps.display.noBorder"><label for="dwc_dis-border">无边框</label>-->
+                    <!--                    </div>-->
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" name="display_nogrid" id="dwc_dis-grid"
+                               ng-model="uwProps.display.noGrid"><label
+                            for="dwc_dis-grid">{{'udp.w.datatable.config.border_nogrid' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.datatable.config.header' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" ng-model="uwProps.display.noHeader" id="dwc_dis_noheader">
+                        <label for="dwc_dis_noheader">{{'udp.w.datatable.config.header_hide' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.datatable.config.controls' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="dwc_dis_nosearch" name="display_search"
+                               ng-model="uwProps.display.noSearch"><label
+                            for="dwc_dis_nosearch">{{'udp.w.datatable.config.controls_nosearch' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="dwc_dis_footer"
+                               ng-model="uwProps.display.footer"><label for="dwc_dis_footer"
+                                                                        op-help-info="{{'udp.w.datatable.config.controls_footer_helpinfo'|translate}}">{{'udp.w.datatable.config.controls_footer' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="dwc_dis_exfilter"
+                               ng-model="uwProps.display.exfilter"><label for="dwc_dis_exfilter"
+                                                                          op-help-info="{{'udp.w.datatable.config.controls_exfilter_helpinfo'|translate}}">{{'udp.w.datatable.config.controls_exfilter' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="dwc_dis_showrefresh"
+                               ng-model="uwProps.display.showrefresh"><label
+                            for="dwc_dis_showrefresh">{{'udp.w.datatable.config.controls_refresh' | translate}}</label>
+                    </div>
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="dwc_dis_showexport"
+                               ng-model="uwProps.display.showexport"><label
+                            for="dwc_dis_showexport">{{'udp.w.datatable.config.controls_export' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.datatable.config.pagination' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-auto" ng-model="uwProps.display.pagination">
+                        <option value="none">{{'udp.w.datatable.config.pagination_none' | translate}}</option>
+                        <option value="default">{{'udp.w.datatable.config.pagination_default' | translate}}</option>
+                        <option value="simple">{{'udp.w.datatable.config.pagination_simple' | translate}}</option>
+                        <option value="full">{{'udp.w.datatable.config.pagination_full' | translate}}</option>
+                        <option value="listbox">{{'udp.w.datatable.config.pagination_listbox' | translate}}</option>
+                        <option value="input">{{'udp.w.datatable.config.pagination_input' | translate}}</option>
+                    </select>
+                    <!--</div>-->
+                    <div class="checkbox checkbox-inline ms-5">
+                        <input type="checkbox" id="dwc_dis-pager" name="display_pagesize"
+                               ng-model="uwProps.display.noPageSize"><label
+                            for="dwc_dis-pager">{{'udp.w.datatable.config.pagination_no_pagesize' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-retweet'></i> {{'udp.wc.tab.condfmt' | translate}}
+        </uib-tab-heading>
+        <p>{{'udp.w.datatable.config.condfmt.cell_style' | translate}}</p>
+        <udp-widget-config-format-rule the-model="uwProps.display.cellrules"
+                                       formats="{theme:false,backColor:false,fontColor:false,css:true,style:true}">
+        </udp-widget-config-format-rule>
+        <p class="help-block" ng-bind-html="'udp.w.datatable.config.condfmt.cell_style_helpinfo'|translate"></p>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access' | translate}}</uib-tab-heading>
+        <udp-widget-access-config the-model="uwProps.accesscontrol"></udp-widget-access-config>
+        <udp-button-state-config the-model="uwProps.statecontrol"></udp-button-state-config>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading>{{'udp.wc.tab.props'|translate}}</uib-tab-heading>
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

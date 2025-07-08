@@ -1,0 +1,14 @@
+<op-code-editor the-model="$ctrl.content"
+                options="{theme: 'opluscode', syntax: 'ansiblelog', readonly: true, linewrap: false, toolbar: true}"
+                class="flex-fill"
+                __style="height:100%" on-loaded="$ctrl.editorLoaded">
+    <button type="button" class="me-2 btn opx-btn-icon" ng-click="$ctrl.toggleScroll()"
+            ng-class="$ctrl.autoScroll ? 'btn-default active' : 'btn-outline-default' "><i class="fa fa-arrows-alt-v"></i>
+    </button>
+    <a type="button" class="me-2 btn opx-btn-icon btn-outline-default" href="{{ $ctrl.download() }}">
+        <i class="fa fa-file-download"></i>
+    </a>
+    <button type="button" class="me-2 btn" ng-click="$ctrl.viewBatch(batch)" ng-repeat="batch in $ctrl.allBatches"
+            ng-class="$ctrl.activeBatch === batch ? 'btn-primary active' : 'btn-outline-default' "><span>{{batch}}</span>
+    </button>
+</op-code-editor>

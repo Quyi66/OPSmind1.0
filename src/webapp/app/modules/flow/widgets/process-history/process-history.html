@@ -1,0 +1,22 @@
+<!-- <div class="modal-header">
+  <h4 class="modal-title">{{'gfs.list.history_version' | translate}}</h4>
+  <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body">
+  <div class="wrapper h-100" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <opx-datatable table-config="$ctrl.tableConfig" class="p-3"></opx-datatable>
+  </div>
+</div> -->
+
+  
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+  <nav class="navbar navbar-light opx-layout-hflex flex-nowrap">
+      
+    <button class="btn btn-outline-primary" ng-click="$ctrl.back()"><i class="fa fa-arrow-circle-left"></i> {{'common.action.back' | translate}}</button>
+
+    <p class="fw-bolder fs-4 ml-3 mr-3 m-0 w-100">{{$ctrl.processName + '  ' + ('gfs.list.history_version' | translate)}}</p>
+    
+  </nav>
+
+  <opx-datatable table-config="$ctrl.tableConfig" class="p-3"></opx-datatable>
+</div>

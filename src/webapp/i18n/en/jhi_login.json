@@ -1,0 +1,20 @@
+{
+  "jhi_login.title": "Sign In",
+  "jhi_login.form.username": "Username",
+  "jhi_login.form.password": "Password",
+  "jhi_login.form.password.placeholder": "Your Password",
+  "jhi_login.form.rememberme": "Keep me logged in",
+  "jhi_login.form.button": "Sign In",
+  "jhi_login.action.submit": "Sign In",
+  "jhi_login.messages.error.authentication": "<strong>Login failed!</strong> Please check your login information and try again.",
+  "jhi_login.password.forgot": "Forgot Your Password?",
+  "jhi_login.form.otp": "OTP Code",
+  "jhi_login.form.login_failure":"Login failure",
+  "jhi_login.form.login_info_error":"Please confirm your login information and try again",
+  "jhi_login.form.udne_or_pdne":"The user name does not exist or the password is incorrect",
+  "jhi_login.form.user_not_register_tenant":"The user is not registered with the current tenant",
+  "jhi_login.form.user_invalid":"User invalid",
+  "jhi_login.form.confirm_otp":"Please confirm your OTP Code",
+  "jhi_login.form.error_five_times_lock": "The current user has been locked, please log in again in 1 hour!"
+
+}

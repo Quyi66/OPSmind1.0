@@ -1,0 +1,82 @@
+<div class="opx-layout-hflex cac-job-index">
+    <div class="opx-sidebar border-right bg-light">
+        <nav class="opx-sidebar-header border-bottom">
+            <input type="text" class="form-control xtemplate-filter"
+                   ng-model="cacJobCtrlVm.views.templateName">
+            <div class="dropdown">
+                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-sort" aria-hidden="true"></i>
+                    <!--<span class="caret"></span>-->
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item"
+                       ng-click="cacJobCtrlVm.views.changeTemplateOrder('-templateName')">{{'cac.job.order.name_down' | translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacJobCtrlVm.views.templateOrder == '-templateName'"></span>
+                    </a>
+                    <a class="dropdown-item"
+                       ng-click="cacJobCtrlVm.views.changeTemplateOrder('templateName')">{{'cac.job.order.name_up' | translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacJobCtrlVm.views.templateOrder == 'templateName'"></span>
+                    </a>
+                    <a class="dropdown-item"
+                       ng-click="cacJobCtrlVm.views.changeTemplateOrder('executedAt')">{{'cac.job.order.execute_at_up' | translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacJobCtrlVm.views.templateOrder == 'executedAt'"></span>
+                    </a>
+                    <a class="dropdown-item"
+                       ng-click="cacJobCtrlVm.views.changeTemplateOrder('-executedAt')">{{'cac.job.order.execute_at_down' | translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacJobCtrlVm.views.templateOrder == '-executedAt'"></span>
+                    </a>
+                </div>
+            </div>
+            <!--<button style="width: 50px;" class="btn btn-default btn-sm" ng-click="cacJobCtrlVm.views.templateOrderEdit()"> 排序</button>-->
+        </nav>
+        <div class="opx-flex-fill scroll-y">
+            <div class="opx-treenav">
+                <!--<li style="padding-left: 8px;top: 6px;padding-right: 8px">-->
+                <!--<label style="width: 100%">-->
+                <!--<input type="search" class="form-control template-filter"-->
+                <!--ng-model="cacJobCtrlVm.views.templateName">-->
+                <!--</label>-->
+                <!--</li>-->
+                <a class="opx-treenav-item"
+                   ui-sref-active="active"
+                   ui-sref="app.cac.job.list({templateId:''})"
+                   ng-click="cacJobCtrlVm.views.clearFilter()">
+                    <i class="fa fa-list-alt"></i>
+                    {{'common.term.all' | translate}}
+                </a>
+                <a class="opx-treenav-item"
+                   ng-repeat="item in cacJobCtrlVm.views.templateList | filter:{templateName:cacJobCtrlVm.views.templateName} | orderBy: cacJobCtrlVm.views.templateOrder"
+                   ui-sref-active="active"
+                   ui-sref="app.cac.job.list({templateId:'{{item.id}}'})">
+                    {{item.templateName}}
+                </a>
+            </div>
+            <div class="op-blank-slate"
+                 ng-if=cacJobCtrlVm.views.templateList==null||cacJobCtrlVm.views.templateList.length==0>
+                <div style="padding-top: 20px"><i class="fa fa-cog fa-spin"></i> {{'common.entity.loading' | translate}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-x scroll-y" ui-view="jobList" xxstyle="overflow: auto">
+        <!-- <div class="card card-default" ng-controller="CacJobListCtrl as cacJobListCtrlVm">
+             <div class="card-header" hidden>
+                 <div class="card-title">
+                     <span hidden>模板执行历史记录</span>
+                     &lt;!&ndash;<button class="btn btn-default btn-sm pull-right" ui-sref="app.cac.job.addJob"><i class="fa fa-plus m-r-xs"></i> 新增任务</button>&ndash;&gt;
+                 </div>
+             </div>
+             <div class="card-body">
+                 <div class="table-responsive">
+                     <table id="cacJobTable"
+                            class="job-table table table-striped table-hover table-bordered cac-table-line-height"></table>
+                 </div>
+             </div>
+         </div>-->
+    </div>
+</div>
+

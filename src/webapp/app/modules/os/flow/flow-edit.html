@@ -1,0 +1,174 @@
+<div class="opx-layout-vflex" uaa-has-permission="{{$ctrl.pagePermission}}" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light">
+        <span class="opx-navbar-title">{{'jao.flow.edit' | translate}}</span>
+        <div class="ms-auto">
+            <button type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.save()" ng-if="!$ctrl.isInstance"
+                    ng-disabled="flowForm.$invalid" uaa-has-permission="jao:edit:*">{{'common.entity.action.save' | translate}}
+            </button>
+            <button ng-if="$ctrl.isInstance" type="button" class="btn btn-primary opx-btn-ok"
+                    ng-click="$ctrl.startFlow()"
+                    ng-disabled="flowForm.$invalid" uaa-has-permission="jao:run:*">{{'jao.flow.run' | translate}}
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-click="$ctrl.cancel()">{{'common.entity.action.cancel' | translate}}
+            </button>
+        </div>
+    </nav>
+    <form class="op-smartform form-vertical  op-bold-label p-5 bg-white opx-flex-fill scroll-y" name="flowForm"
+          id="js-flow-edit-{{$ctrl.flow.id||'new'}}">
+        <fieldset>
+            <legend>{{'jao.flow.detail.base' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label">{{'common.entity.detail.title' | translate}} <span
+                        class="cac-text-required">*</span></label>
+                <div class="form-control-wrapper">
+                    <input class="form-control" ng-model="$ctrl.flow.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'common.entity.detail.description' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <textarea class="form-control" ng-model="$ctrl.flow.description" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'jao.common.host' | translate}}<span
+                        op-help-info="{{'jao.flow.detail.host_info' | translate}}"></span></label>
+                <div class="form-control-wrapper">
+                    <div class="w-full">
+                        <div class="mt-3">
+                            <!--                            <jao-host-selector the-model="$ctrl.flow.hosts"></jao-host-selector>-->
+                            <!--  TODO:update this's selector  -->
+                            <acm-device-selector the-model="$ctrl.flow.hosts" ci-types="'[auto]'" mcheck-type="'map'"></acm-device-selector>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <!--  TODO:暂时只考虑脚本作业 -->
+        <fieldset ng-disabled="$ctrl.isInstance">
+            <legend>{{'jao.flow.detail.step_settings' | translate}}</legend>
+            <div class="form-group">
+                <div class="d-flex mb-3">
+                    <label class="control-label" ng-click="$ctrl.changeStepFold()">{{'jao.flow.detail.step' | translate}}
+                        <i class="fa fa-angle-double-down" ng-if="!$ctrl.isFoldAllSteps"></i>
+                        <i class="fa fa-angle-double-left" ng-if="$ctrl.isFoldAllSteps"></i>
+                    </label>
+                    <button class="btn btn-sm btn-default ms-3"
+                            ng-click="$ctrl.addStep()"><i class="text-primary fa fa-plus-circle"></i> {{'jao.flow.detail.step.create' | translate}}
+                    </button>
+                </div>
+                <div>
+                    <div class="card card-default op-action-card op-w-full" ng-repeat="step in $ctrl.flow.steps">
+                        <div class="card-header" ng-click="$ctrl.stepFoldList[$index] = !$ctrl.stepFoldList[$index]">
+                            <h4 class="card-title">{{'jao.flow.detail.step' | translate}} {{$index + 1}} <span
+                                    ng-if="$ctrl.stepFoldList[$index]"> : {{step.name}}</span></h4>
+                            <button class="btn btn-sm btn-default pull-right"
+                                    ng-disabled="$ctrl.flow.steps.length == 1"
+                                    ng-click="$ctrl.removeStep($index)">{{'jao.flow.detail.step.delete' | translate}}
+                            </button>
+                        </div>
+                        <div class="card-body" ng-if="!$ctrl.stepFoldList[$index]">
+                            <div class="form-group op-align-horizontal">
+                                <label class="control-label">{{'jao.flow.detail.step.name' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control op-w-sm" ng-model="step.name">
+                                </div>
+                            </div>
+                            <div class="form-group op-align-horizontal">
+                                <label class="control-label">{{'jao.flow.detail.auto_next' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <!--<label class="i-switch pull-right">
+                                        <input type="checkbox" ng-model="step.autoNext" checked>
+                                        <i></i>
+                                    </label>-->
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" ng-model="step.autoNext" id="je_secret_0"
+                                               class="ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false">
+                                        <label for="je_secret_0"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group op-align-horizontal" ng-if="step.type == 'script'">
+                                <label class="control-label">{{'jao.common.script' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <gfs-file-selector the-model="step.config.tasks[0].scripts" class="w-full"
+                                                       model-converter="{type: 'attrmap', attrmap: {'location': 'path', 'argline': 'config'}, modelType: 'array'}"
+                                                       config="$ctrl.fileSelectorConfig"></gfs-file-selector>
+                                </div>
+                            </div>
+                            <div class="form-group op-align-horizontal">
+                                <label class="control-label">{{'jao.job.script.verbose' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" ng-model="step.config.verbosity" id="je_verbosity"
+                                               class="ng-pristine ng-untouched ng-valid ng-empty" aria-invalid="false">
+                                        <label for="je_verbosity"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group op-align-horizontal">
+                                <label class="control-label"
+                                       op-help-info="{{'jao.job.process.timeout_info' | translate}}">
+                                    {{'jao.job.process.timeout' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <div class="input-group w-sm">
+                                        <input type="number" ng-model="step.config.taskTimeout" class="form-control"
+                                               min="-1"
+                                               step="1">
+                                        <div class="input-group-append"><span class="input-group-text">{{'common.term.second' | translate}}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'jao.job.detail.params' | translate}}<span op-help-info="{{'jao.job.detail.params_info' | translate}}"></span></legend>
+            <div class="form-group">
+                <div class="d-flex">
+                    <button class="btn btn-sm btn-default" title="{{'jao.job.detail.analysis_param_info' | translate}}"
+                            ng-click="$ctrl.addParamAuto()"><i class="fa fa-brackets-curly text-primary"></i>
+                        {{'jao.job.detail.analysis_param' | translate}}
+                    </button>
+                    <button class="btn btn-sm btn-default opx-btn-icon ms-auto" title="{{'jao.job.detail.add_param' | translate}}">
+                        <i class="fa fa-plus" ng-click="$ctrl.addParam()"></i></button>
+                </div>
+                <table class="op-param-table table" ng-if="$ctrl.flow.globalParams|isNotEmpty">
+                    <thead>
+                    <tr>
+                        <th>{{'jao.job.detail.params' | translate}}</th>
+                        <th>{{'jao.job.detail.display_name' | translate}}</th>
+                        <th>{{'common.entity.detail.description' | translate}}</th>
+                        <th op-help-info="{{'jao.job.detail.default_info' | translate}}">{{'jao.job.detail.default' | translate}}</th>
+                        <th>{{'jao.common.secret' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="param in $ctrl.flow.globalParams track by $index">
+                        <td><input class="form-control" ng-model="param.name" required="true"></td>
+                        <td><input class="form-control" ng-model="param.label"></td>
+                        <td><input class="form-control" ng-model="param.description"></td>
+                        <td><input class="form-control" ng-model="param.defaultValue"></td>
+                        <td>
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox" ng-model="param.secret" id="je_secret_{{$index}}">
+                                <label for="je_secret_{{$index}}"></label>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <button class="btn btn-sm btn-default opx-btn-icon " title="{{'jao.job.detail.delete_param' | translate}}"
+                                    ng-click="$ctrl.deleteParam(param)">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+    </form>
+</div>

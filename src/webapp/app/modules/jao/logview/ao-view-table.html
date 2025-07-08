@@ -1,0 +1,10 @@
+<opx-datatable table-config="$ctrl.tableConfig">
+    <div class="form-group">
+        <div class="form-control-wrapper">
+            <select ng-model="$ctrl.playFilter" class="form-select" ng-change="$ctrl.reload()"
+                    ng-options="play.name as play.name for play in $ctrl.plays">
+                <option value="" ng-if="$ctrl.plays.length>1">{{'common.term.all' | translate}}</option>
+            </select>
+        </div>
+    </div>
+</opx-datatable>

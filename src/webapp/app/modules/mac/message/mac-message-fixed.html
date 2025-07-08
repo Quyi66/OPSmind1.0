@@ -1,0 +1,46 @@
+<style>
+    mac-message-fixed .op-badge { 
+        color: white;
+        background-color: #dc3545; 
+        position: absolute;
+        border-radius: 999px;
+        width: 1.2rem;
+        height: 1.2rem;
+        right: 0;
+        top: 0;
+        font-size: 12px;
+        line-height: 1.2rem;
+        text-align: center;
+    }
+
+    mac-message-fixed {
+      /* overflow: hidden; */
+      background-color: #fff !important;
+      color: #4b9cf3;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 4rem;
+      height: 4rem;
+      z-index: 2147000000;
+
+      box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
+      transition: box-shadow .08s linear,min-width .15s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    mac-message-fixed:hover{
+      box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+      background-color: #fafafb;
+    }
+</style>
+
+<div class="dropup w-100 h-100">
+    <a class="dropdown-toggle w-100 h-100 row justify-content-center align-content-center no-gutters" data-bs-toggle="dropdown">
+        <i class="fa fa-3x fa-envelope"></i>
+        <span class="op-badge" ng-if="$ctrl.newMessageCount > 0">{{$ctrl.newMessageCount > 99 ? 99 : $ctrl.newMessageCount}}</span>
+    </a>
+    
+    <mac-message-panel class="dropdown-menu dropdown-menu-end" new-message-count="$ctrl.newMessageCount"></mac-message-panel>
+</div>

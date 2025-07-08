@@ -1,0 +1,6 @@
+- [脚本管理](gfs/index.md)
+  - [快速入门](gfs/quickstart.md)
+  - [使用指南](gfs/guide.md)
+  - [设置和管理](gfs/config.md)
+  - [开发指南](gfs/dev.md)
+  - [常见问题](gfs/faq.md)

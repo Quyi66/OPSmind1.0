@@ -1,0 +1,41 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>
+        <udp-widget-config-chart-metrics uw-props="uwProps" axis-options="axisOptions"
+                                         fields="selectedDs.fields"></udp-widget-config-chart-metrics>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction' | translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page'}"
+                                       param-vars="{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <udp-widget-config-chart-display ng-model="uwProps.display"></udp-widget-config-chart-display>
+            <div class="form-group">
+                <label class="control-label col-sm-2">#{udp.w.barchart.layout}</label>
+                <div class="col-sm-10">
+                    <label class="i-checks checkbox-inline"><input type="checkbox"
+                                                                   ng-model="uwProps.display.horizontal"><i></i>#{udp.w.barchart.layout_horizontal}</label>
+                    <label class="i-checks checkbox-inline"><input type="checkbox"
+                                                                   ng-model="uwProps.display.stack"><i></i>#{udp.w.echart.display.data_stack}</label>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-bar-chart'></i> #{udp.w.echart.elem.axis}</uib-tab-heading>
+        <udp-widget-config-chart-axes the-model="uwProps.display" uw-props="uwProps"
+                                      fields="selectedDs.fields"></udp-widget-config-chart-axes>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+         <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

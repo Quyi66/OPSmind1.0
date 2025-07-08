@@ -1,0 +1,38 @@
+<div style="min-width: 20rem;height: 20rem;overflow-y: scroll;" ng-click="$ctrl.stopPropagation($event)">
+    <div ng-repeat="item in $ctrl.messages track by item.id" >
+        <div class="card" style="width: 90%;margin:0.4rem auto;">
+            <div class="card-body">
+                <h5 class="card-title">From: {{item.addresserName}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{item.createAt}}</h6>
+                <!-- <p class="card-text">{{$ctrl.getMessageText(item.content)}}</p> -->
+                <p class="card-text">{{item.content}}</p>
+
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-link" ng-if="item.status === 0" ng-click="$ctrl.handleMessage(item,false)">{{'mac.action.ignore' | translate}}</button>
+                    <button type="button" class="btn" 
+                            ng-class="{'btn-primary': item.status === 0, 'btn-secondary': item.status === 1}"
+                            ng-click="$ctrl.handleMessage(item, true)">
+                        {{ (item.status === 0 ? 'mac.action.handle' : 'mac.action.view') | translate }}
+                    </button>
+                </div>
+
+                <i class="fa fa-circle position-absolute" style="top:0.4rem;right:0.4rem;"
+                    ng-class="{'text-danger': item.status === 0, 'text-secondary': item.status === 1}"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center" ng-if="$ctrl.messages.length > 0 && $ctrl.hasMore">
+        <a class="dropdown-item text-primary card-link" ng-click="$ctrl.fetchMoreMessages()">{{'mac.action.more' | translate}}</a>
+    </div>
+
+    <div class="text-center" ng-if="$ctrl.messages.length > 0 && !$ctrl.hasMore">
+        <span class="text-secondary">{{'mac.message.no_more' | translate}}</span>
+    </div>
+
+    <div class="opx-content text-center justify-content-center align-content-center flex-wrap" 
+          ng-if="$ctrl.messages.length === 0">
+        <p class="col-md-12">{{'mac.message.no_news' | translate}}</p>
+        <a class="op-jumbo-link col-md-12 text-primary" ng-click="$ctrl.fetchMessages($ctrl.pageNum, $ctrl.pageSize, false)">{{'mac.message.view_history' | translate}}</a>
+    </div>
+</div>

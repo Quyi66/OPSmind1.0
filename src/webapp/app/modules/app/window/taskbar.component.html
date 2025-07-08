@@ -1,0 +1,27 @@
+<nav ng-style="{'background-color':$ctrl.barBackgroundColor}"
+     class="navbar navbar-expand opx-win-taskbar" ng-class="$ctrl.useWindowUI?'op-navbar-transparent':'bg-dark text-light'">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item">
+            <a class="navbar-brand px-3" ui-sref="app.home">
+                <img style="height:1.5rem;" ng-src="{{$ctrl.logoNavbarPath}}"/>
+            </a>
+        </li>
+        <li class="nav-item" ng-if="!$root.$global.isAdminUI">
+            <div class="dropdown">
+                <button type="button" class="btn btn-default" data-bs-toggle="dropdown">
+                    <i class="text-white fa fa-th"></i>
+                </button>
+                <div class="op-theme-dark dropdown-menu p-0 js-inside-click"
+                     style="width:50rem;height:37.5rem;z-index:100000;overflow:auto;border-radius: .5rem;background:transparent;border:1px solid #444;">
+                    <div id="opx-win-launcher" style="overflow:auto;height:100%;">
+                        <applet-list options="{viewAs:'launcher'}"></applet-list>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div ng-if="$ctrl.useWindowUI && !$root.$global.isAdminUI" class="op-nav-divider"></div>
+    <op-applet-dock ng-if="$ctrl.useWindowUI && !$root.$global.isAdminUI" class="px-3"></op-applet-dock>
+    <div class="navbar-nav ms-auto me-auto"></div>
+    <op-status-bar class="px-3"></op-status-bar>
+</nav>

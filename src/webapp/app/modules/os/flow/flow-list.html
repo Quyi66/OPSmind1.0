@@ -1,0 +1,67 @@
+<div class="opx-layout-hflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <div class="opx-sidebar" style="width: 15rem;">
+        <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed">
+            <op-searchbox search-text="$ctrl.jobFilter" style="width:10rem;" class="me-2"></op-searchbox>
+            <div class="dropdown ms-auto">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle opx-btn-icon"
+                        data-bs-toggle="dropdown">
+                    <i class="fa fa-line-height"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a ng-click="$ctrl.changeFlowOrderBy('name')">{{'common.entity.detail.name' | translate}}
+                            <i style="float: right;padding-top: 4px"
+                               ng-class="$ctrl.orderMethod ? 'fa fa-sort-alpha-down-alt':'fa fa-sort-alpha-up'"
+                               ng-if="$ctrl.orderName == 'name'"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.changeJobOrderBy('updatedAt')">{{'common.entity.detail.update_at' | translate}}
+                            <i style="float: right;padding-top: 4px"
+                               ng-class="$ctrl.orderMethod ? 'fa fa-sort-alpha-down-alt':'fa fa-sort-alpha-up'"
+                               ng-if="$ctrl.orderName == 'updatedAt'"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default btn-sm opx-btn-icon" ng-click="$ctrl.createFlow()"
+                    title="{{'jao.flow.create' | translate}}">
+                <i class="fa fa-plus"></i>
+            </button>
+        </nav>
+        <div class="opx-sidebar-body" uaa-has-permission="jao:view:*" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+            <div class="list-group list-group-flush op-styled-highlight">
+                <a ng-repeat="flow in $ctrl.flowList | filter:$ctrl.jobFilter | orderBy:[$ctrl.orderName,'createdAt']:$ctrl.orderMethod"
+                   ng-class="{'active':flow.id == $ctrl.activeFlow}"
+                   class="list-group-item list-group-item-action op-hover-trigger ng-scope" title="{{flow.name}}"
+                   style="position:relative;">
+                    <div ui-sref="app.os.flow_list.instance_list({id: flow.id})" ng-click="$ctrl.changeActiveFlow(flow)">
+                        <h5 class="text-ellipsis">{{flow.name}}</h5>
+                        <div class="small text-muted">
+                            {{(flow.updatedAt||flow.createdAt) | date }}
+                        </div>
+                    </div>
+                    <div class="op-hover-to-show" style="position:absolute;right:0.25rem;bottom:0.25rem;">
+                        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.createInstance(flow)"
+                                title="{{'jao.flow.run' | translate}}">
+                            <i class="fa fa-play-circle"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.editFlow(flow.id)" title="{{'common.entity.action.edit' | translate}}">
+                            <i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.deleteFlow(flow.name, flow.id)"
+                                class="m-r-sm" title="{{'common.entity.action.delete' | translate}}">
+                            <i class="fa fa-trash-alt"></i></button>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="opx-flex-fill fade-in" ui-view="flowDetailView">
+        <div class="h-100 bg-light op-blank-slate">
+            <div class="op-blank-slate-icon">
+                <i class="fa fa-inbox op-fa-8x"></i>
+            </div>
+            <p>{{'jao.flow.view' | translate}}</p>
+        </div>
+    </div>
+</div>

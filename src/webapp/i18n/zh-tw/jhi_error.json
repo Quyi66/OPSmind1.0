@@ -1,0 +1,19 @@
+{
+  "jhi_error": {
+    "title": "錯誤頁面!",
+    "http": {
+      "0": "服務不可用.",
+      "400": "請求失敗.",
+      "403": "您沒有許可權訪問此頁面.",
+      "404": "找不到資源 {{ param }}.",
+      "405": "不允許此方法訪問頁面.",
+      "500": "內部伺服器錯誤."
+    },
+    "concurrencyFailure": "出現併發提交. 您的提交被拒絕.",
+    "validation": "伺服器校驗失敗.",
+    "invalidPassword": "密碼錯誤.",
+    "loginAlreadyUsed": "登入名已被使用.",
+    "emailAlreadyUsed": "郵箱地址已被使用.",
+    "emailNotFound": "找不到郵箱."
+  }
+}

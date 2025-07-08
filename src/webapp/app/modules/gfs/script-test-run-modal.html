@@ -1,0 +1,8 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ 'gfs.list.test_run' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body op-smartform">
+    <jao-script-test-run file="$ctrl.file" on-close="$ctrl.onClose" options="{showInModal:true}"></jao-script-test-run>
+</div>

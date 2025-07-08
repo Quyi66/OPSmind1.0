@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'common.action.edit' | translate}}</h4>
+  <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body">
+  <div class="form op-smartform form-horizontal">
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.scene.name' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.scene.name"></input>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'flow.scene.default' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="checkbox" class="checkbox checkbox-inline" ng-model="$ctrl.scene.isDefault">
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="$ctrl.mode === $ctrl.sceneMode.edit">
+      <label class="control-label">{{'flow.scene.cover_param' | translate}}</label>
+      <div class="form-control-wrapper">
+        <input type="checkbox" class="checkbox checkbox-inline" ng-disabled="!$ctrl.allChecked" ng-model="$ctrl.scene.needCover"></input>
+        <p class="help-block">{{'flow.scene.cover_param_desc' | translate}}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer text-right">
+  <button type="submit" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.confirm()">{{'common.action.ok' | translate}}</button>
+  <button type="reset" class="btn btn-default opx-btn-cancel" ng-click="$ctrl.cancel()">{{'common.action.cancel' | translate}}</button>
+</div>

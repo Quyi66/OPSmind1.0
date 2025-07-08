@@ -1,0 +1,32 @@
+<div class="opx-layout-hflex">
+    <div class="opx-sidebar bg-light">
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.os.list" ui-sref-active="active"><i
+                            class="fad fa-water fa-fw"></i> 首页</a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.os.flow_list" ui-sref-active="active"><i class="fad fa-hand-paper fa-fw"></i>
+                        流程编辑</a>
+                </div>
+<!--                <div class="opx-treenav-item">-->
+<!--                    <a ui-sref="app.jao.jobApprove" ui-sref-active="active"><i class="fad fa-clipboard-check fa-fw"></i>-->
+<!--                        流程审核</a>-->
+<!--                </div>-->
+                <div class="opx-treenav-item">
+                    <a ui-sref="app.os.runlogs" ui-sref-active="active"><i class="fad fa-history fa-fw"></i>
+                        操作记录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill fade-in" ui-view="osMainView">
+        <div class="opx-align-center">
+            <div class="rounded-circle bg-secondary opx-align-center"
+                 style="width:10rem;height:10rem;opacity: .5;"><i
+                    class="text-light fad fa-fw fa-7x fa-oplus-jao"></i>
+            </div>
+        </div>
+    </div>
+</div>

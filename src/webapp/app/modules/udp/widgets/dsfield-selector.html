@@ -1,0 +1,18 @@
+<div ng-if="$ctrl.options.disableConverter">
+    <select op-select="{width:'16em',search_contains: true}" class="form-select"
+            ng-model="$ctrl.theModel"
+            ng-options="df.name as df.alias?df.alias+' ('+df.name+ ') ['+df.type+']':df.name+' ['+df.type+']' for df in $ctrl.fields | orderBy:'name'">
+    </select>
+</div>
+<div style="display: flex;" ng-if="!$ctrl.options.disableConverter">
+    <select op-select="{width:'16em',search_contains: true}" class="form-select"
+            ng-model="$ctrl.theModel.field"
+            ng-options="df.name as df.alias?df.alias+' ('+df.name+ ') ['+df.type+']':df.name+' ['+df.type+']' for df in $ctrl.fields | orderBy:'name'">
+        <option value="">--{{'udp.wc.dataset.custom_field_data'|translate}}--</option>
+    </select>
+    <udp-data-converter the-model="$ctrl.theModel.convertFn"
+                        options="$ctrl.options.converter"
+                        class="ms-2"
+                        style="flex:1;"
+                        disabled="$ctrl.theModel.field"></udp-data-converter>
+</div>

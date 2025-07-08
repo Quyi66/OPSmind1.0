@@ -1,0 +1,16 @@
+<div class="wrapper h-100">
+    <div class="table-responsive">
+        <table id="jaoFlowInstanceTable" class="table opx-table"></table>
+    </div>
+    <!--<div class="op-blank-slate" ng-if="$ctrl.instances===null">-->
+        <!--<div class="op-blank-slate-icon"><i class="fa fa-cog fa-spin fa-4x"></i></div>-->
+        <!--<p>没有数据</p>-->
+    <!--</div>-->
+    <div  class="op-blank-slate" ng-if="$ctrl.instances===null">
+        <div class="op-blank-slate-icon"><i class="fa fa-cog fa-spin fa-4x"></i></div>
+        <p>{{'common.entity.loading' | translate}}</p>
+    </div>
+</div>
+
+
+

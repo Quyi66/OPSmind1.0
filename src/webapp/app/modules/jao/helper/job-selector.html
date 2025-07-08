@@ -1,0 +1,23 @@
+<div class="form-group">
+    <label class="control-label">{{'jao.job.select' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="input-group">
+            <!--            <select chosen="{width:'calc(100% - 2rem)'}" class="form-select" ng-model="$ctrl.theModel"-->
+            <!--                    ng-options="job.id as job.title for job in $ctrl.jobs">-->
+            <!--                <option value=""></option>-->
+            <!--            </select>-->
+            <select op-select style="width:0" class="form-select flex-fill" ng-model="$ctrl.theModelFake"
+                    ng-disabled="$ctrl.disabled"
+                    ng-options="job.id as job.title for job in $ctrl.jobs">
+            </select>
+            <div class="input-group-append">
+                <button type="button" ng-if="$ctrl.showEdit"
+                        class="btn btn-outline-default opx-btn-icon no-animate" title="{{'jao.job.edit_job_def' | translate}} {{$ctrl.theModelFake}}" ng-click="$ctrl.editJobDef()">
+                    <i class="fa fa-pencil"></i>
+                </button>
+            </div>
+        </div>
+        <!--        <span class="badge bg-secondary" ng-if="$ctrl.selectedJob.id">{{$ctrl.selectedJob.id}}</span>-->
+    </div>
+</div>
+

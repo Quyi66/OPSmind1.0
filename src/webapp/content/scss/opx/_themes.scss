@@ -1,0 +1,58 @@
+// https://material.io/design/color/dark-theme.html#ui-application
+// Light text on dark backgrounds
+// ------------------------------
+// When light text appears on dark backgrounds (shown here as white on black) it should use the following opacity levels:
+// * High-emphasis text has an opacity of 87%
+// * Medium-emphasis text and hint text have opacities of 60%
+// * Disabled text has an opacity of 38%
+$opx-dark-theme-text-color: rgba(255, 255, 255, 0.6);
+$opx-dark-theme-text-color-emphasized: rgba(255, 255, 255, 0.87);
+$opx-dark-theme-text-color-muted: rgba(255, 255, 255, 0.38);
+
+// Used for css editor etc
+@mixin op-dark-card() {
+  background-color: $gray-900;
+  color: $opx-dark-theme-text-color;
+  > .card-header {
+    color: $opx-dark-theme-text-color-emphasized;
+  }
+}
+
+@mixin op-light-card() {
+}
+
+.op-theme-dark {
+  &.udp-page-view {
+    // https://material.io/design/color/dark-theme.html#properties
+    // The recommended dark theme surface color is #121212.
+    background-color: #121212;
+    color: $opx-dark-theme-text-color;
+  }
+
+  &.opx-sidebar {
+  }
+}
+
+.op-theme-light {
+  &.udp-page-view {
+    //background-color: #f5f9fc;
+    background-color: white;
+    color: #495057;
+  }
+}
+
+.op-theme-dark.udp-page-view .udp-card-mode:not(.op-theme-light),
+.op-theme-dark.udp-card-mode {
+  @include op-dark-card();
+}
+
+
+// Background
+@each $color, $value in $theme-colors {
+  //@include bg-variant(".ctx-bg-#{$color}", $value, true);
+}
+
+// Font color
+@each $color, $value in $theme-colors {
+  //@include text-emphasis-variant(".ctx-text-#{$color}", $value, true);
+}

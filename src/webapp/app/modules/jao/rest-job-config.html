@@ -1,0 +1,24 @@
+<fieldset  ng-disabled="!$ctrl.isEditMode">
+    <legend>{{'jao.job.rest.title' | translate}}</legend>
+    <div class="form-group">
+        <label class="control-label" for="rje_query">{{'jao.job.rest.curl' | translate}}</label>
+        <div class="">
+            <textarea ng-model="$ctrl.jobConfig.curl"
+                ui-codemirror="{mode:'shell', lineNumbers:false, theme:'opluscode', lineWrapping:true}"
+                rows="6" id="rje_query"></textarea>
+        </div>
+    </div>
+<!--    <div class="form-group">-->
+<!--        <div class="checkbox checkbox-inline">-->
+<!--            <input type="checkbox" id="rje_enable_post_action" ng-model="$ctrl.jobConfig.postActionEnabled"><label for="rje_enable_post_action">调用REST后对数据进行二次处理</label>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label class="control-label" for="rje_post_action">处理脚本</label>-->
+<!--        <div class="">-->
+<!--            <textarea ng-model="$ctrl.jobConfig.postAction"-->
+<!--                ui-codemirror="{mode:'javascript', lineNumbers:true, theme:'opluscode', lineWrapping:true}"-->
+<!--                rows="6" id="rje_post_action"></textarea>-->
+<!--        </div>-->
+<!--    </div>-->
+</fieldset>

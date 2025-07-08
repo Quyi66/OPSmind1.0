@@ -1,0 +1,86 @@
+
+<div class="modal-header">
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cacScriptUploadVm.views.cancel()">
+        &times;
+    </button>
+    <h4 class="modal-title">
+        {{'cac.script.upload.title' | translate}}
+    </h4>
+</div>
+<div class="modal-body">
+    <form name="addScriptForm " class="form-horizontal" enctype="multipart/form-data">
+
+         <!--<div class="fileDiv{{$index}}" ng-repeat="item in cacScriptUploadVm.views.scriptList">-->
+             <div class="form-group">
+                 <label class="col-sm-2 control-label">{{'cac.script.upload.file' | translate}}</label>
+                 <div class="col-sm-10">
+                     <input type="file" id="file{{$index}}" class="file" ngf-select ngf-change="cacScriptUploadVm.views.changeAttach($file,$index)">
+                     <p ng-show="cacScriptUploadVm.views.isExit" class="cac-text-required">{{'cac.script.upload.exists' | translate}}</p>
+                     <p ng-show="cacScriptUploadVm.views.isChinese" class="text-danger">{{'cac.script.upload.has_chinese' | translate}}</p>
+                    <!--{{cacScriptUploadVm.views.files[$index].name}}-->
+                 </div>
+             </div>
+
+             <!--<div class="col-sm-8">
+                 <a class="btn btn-info" ng-click="cacScriptUploadVm.views.addScript()"><i class="fa fa-plus"></i> </a>
+                 <a class="btn btn-info" ng-click="cacScriptUploadVm.views.reduceScript($index)"><i class="fa fa-minus"></i> </a>
+             </div>-->
+             <div class="form-group" hidden>
+                 <label class="col-sm-2 control-label">{{'cac.script.name' | translate}}</label>
+                 <div class="col-sm-10">
+                     <input type="text" name="file" ng-model="cacScriptUploadVm.views.script.scriptName" readonly/>
+                 </div>
+             </div>
+             <div class="form-group" hidden>
+                 <label class="col-sm-2 control-label">{{'cac.script.detail.type' | translate}}</label>
+                 <div class="col-sm-10">
+                     <input type="text" name="file" ng-model="cacScriptUploadVm.views.script.scriptFormat" readonly/>
+                 </div>
+             </div>
+            <!-- <div class="form-group">
+                 <label class="col-sm-2 control-label">脚本大小</label>
+                 <div class="col-sm-10">
+                     <input type="text" class="form-control" ng-model="cacScriptUploadVm.views.script.scriptSize"
+                            readonly/>
+                 </div>
+             </div>-->
+             <div class="form-group">
+                 <label class="col-sm-2 control-label">{{'cac.script.detail.param' | translate}}</label>
+                 <div class="col-sm-10">
+                     <input type="text" class="form-control" ng-model="cacScriptUploadVm.views.script.scriptParams"/>
+                 </div>
+             </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'cac.script.notice.0' | translate}} </label>
+            <div class="col-sm-10">
+                <p><strong>{{'cac.script.notice.1' | translate}}</strong>  </p>
+                <p>{{'cac.script.notice.2' | translate}}</p>
+                <p>{{'cac.script.notice.3' | translate}}</p>
+                <p>{{'cac.script.notice.4' | translate}}</p>
+                <p>{{'cac.script.notice.5' | translate}}</p>
+            </div>
+        </div>
+            <!-- <div class="form-group">
+                 <label class="col-sm-2 control-label">脚本分类</label>
+                 <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="cacScriptUploadVm.views.script.scriptType" />
+                 </div>
+             </div>
+-->
+         <!--</div>-->
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cacScriptUploadVm.views.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+    <button type="button" class="btn btn-success" ng-click="cacScriptUploadVm.views.save()"
+            ng-disabled="addScriptForm.$invalid">
+         {{'cac.script.upload.begin' | translate}}</button>
+    <button type="button" class="btn btn-primary" ng-click="cacScriptUploadVm.views.saveAndNew(false)"
+            ng-disabled="addScriptForm.$invalid">
+        {{'cac.script.upload.begin_and_new' | translate}}
+    </button>
+</div>
+
+

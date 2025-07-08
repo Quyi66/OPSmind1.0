@@ -1,0 +1,26 @@
+<form class="card card-default form-horizontal" ng-submit="saveDatasource()">
+    <div class="card-header">{{'dts.commons.file_type_datasource' | translate}} <span
+            class="badge bg-secondary">{{datasource.type}}</span></div>
+    <div class="card-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input_name">ID（{{'dts.commons.only' | translate}}）</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="datasource.name" class="form-control" id="input_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input_file">Excel{{'dts.commons.path' | translate}}URL</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="datasource.fileUri" class="form-control" id="input_file">
+                <p class="text-muted">{{'dts.commons.support_format' | translate}}：xls、xlsx、csv</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">{{'dts.commons.save' | translate}}</button>
+                <button type="button" class="btn btn-default" ng-click="cancel()">{{'common.action.cancel' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,68 @@
+<div ng-transclude></div>
+<fieldset>
+    <legend>{{'udp.wc.display.size_and_css' | translate}}</legend>
+    <div class="form-group">
+        <label class="control-label"
+               op-help-info="{{'udp.wc.display.size_helpinfo'|translate}}">{{'udp.wc.display.size' | translate}}</label>
+        <div class="form-control-wrapper">
+            <div class="input-group" style="width:10rem;">
+                <div class="input-group-text px-3"><i class="fa fa-arrows-h fa-fw"></i></div>
+                <input id="wcd_width" type="text"
+                       class="form-control"
+                       ng-model="uwProps.display.width"
+                       title="{{'udp.wc.display.width'|translate}}">
+            </div>
+            <!--            <span class="ms-2"><i class="fa fa-times"></i></span>-->
+            <div class="input-group ms-2" style="width:10rem;">
+                <div class="input-group-text px-3"><i class="fa fa-arrows-v fa-fw"></i></div>
+                <input id="wcd_height" type="text"
+                       class="form-control"
+                       ng-model="uwProps.display.height"
+                       title="{{'udp.wc.display.height'|translate}}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.display.css' | translate}}</label>
+        <div class="form-control-wrapper">
+            <udp-css-editor the-model="uwProps.display.css"></udp-css-editor>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend title="{{'udp.wc.display.border_and_background_helpinfo'|translate}}">
+        <div class="checkbox checkbox-primary checkbox-inline" style="padding-top:0">
+            <input type="checkbox" ng-model="uwProps.display.cardMode" id="wcd_cardmode"><label
+                for="wcd_cardmode"><strong>{{'udp.wc.display.border_and_background' | translate}}</strong></label>
+        </div>
+    </legend>
+    <div ng-if="uwProps.display.boxMode || uwProps.display.cardMode">
+        <div class="form-group">
+            <label class="control-label" for="input_widget_title"
+                   op-help-info="{{'udp.wc.display.title_helpinfo'|translate}}">{{'udp.wc.display.title' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" id="input_widget_title" ng-model="uwProps.title"
+                       placeholder="{{'udp.wc.display.title'|translate}}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.wc.display.controls' | translate}}</label>
+            <div class="col-sm-4">
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" id="wcd-zoom"
+                           ng-model="uwProps.display.cardControls"><label
+                        for="wcd-zoom">{{'udp.wc.display.allow_zoom' | translate}}</label>
+                </div>
+            </div>
+        </div>
+        <!-- 20200602: disable color for card mode -->
+        <div class="form-group">
+            <label class="control-label">{{'udp.wc.display.color' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-theme-selector the-model="uwProps.display" customizable="true"
+                                    theme-group="page"></udp-theme-selector>
+            </div>
+        </div>
+    </div>
+</fieldset>
+

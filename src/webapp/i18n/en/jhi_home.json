@@ -1,0 +1,13 @@
+{
+    "jhi_home.title": "Welcome, Java Hipster!",
+    "jhi_home.subtitle": "This is the homepage",
+    "jhi_home.logged.message": "You are currently logged in as \"{{username}}\".",
+    "jhi_home.question": "If you have any questions about JHipster, you can check out the following resources:",
+    "jhi_home.link.homepage": "JHipster Homepage",
+    "jhi_home.link.stackoverflow": "Stack Overflow discussion on JHipster",
+    "jhi_home.link.bugtracker": "JHipster'S Bug Tracker",
+    "jhi_home.link.chat": "JHipster public chat room",
+    "jhi_home.link.follow": "Contact @java_hipster on Twitter",
+    "jhi_home.like": "If you like JHipster, please remember to star us in",
+    "jhi_home.github": "GitHub"
+}

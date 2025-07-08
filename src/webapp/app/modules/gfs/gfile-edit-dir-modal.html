@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.isEdit ? 'gfs.modal.add_folder' : 'gfs.modal.edit_folder' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.close()"></button>
+</div>
+<div class="modal-body op-smartform" ng-if="$ctrl.isEdit">
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.folder_name' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control code" ng-model="$ctrl.folderName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.describe' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control code" ng-model="$ctrl.folderDesc">
+        </div>
+    </div>
+</div>
+<div class="modal-footer" ng-if="$ctrl.isEdit">
+    <button class="btn btn-primary opx-btn-ok" type="button" ng-click="$ctrl.saveDirClose()"
+            ng-disabled="!$ctrl.folderName">{{'gfs.common.sure' | translate}}
+    </button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.close()">{{'gfs.common.cancel' | translate}}</button>
+</div>
+
+<div class="modal-body op-smartform" ng-if="!$ctrl.isEdit">
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.folder_name' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" readonly="readonly" class="form-control code" ng-model="$ctrl.dirInfo.name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.describe' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control code" ng-model="$ctrl.dirInfo.desc">
+        </div>
+    </div>
+</div>
+<div class="modal-footer" ng-if="!$ctrl.isEdit">
+    <button class="btn btn-primary opx-btn-ok" type="button" ng-click="$ctrl.saveDirClose()"
+            ng-disabled="!$ctrl.dirInfo.name">{{'gfs.common.sure' | translate}}
+    </button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.close()">{{'gfs.common.cancel' | translate}}</button>
+</div>

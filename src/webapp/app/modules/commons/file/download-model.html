@@ -1,0 +1,17 @@
+<div class="modal-header" style="display: block;">
+    <div class="d-flex flex-nowrap w-full m-b">
+        <h4 class="modal-title">{{$ctrl.path}}</h4>
+        <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"></button>
+    </div>
+    <div class="m-b" style="display: grid; grid-template-columns: 1fr repeat(3, auto); grid-gap: 15px;">
+        <span class="small me-3">{{$ctrl.lastModifiedDate | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+        <span class="small me-3">{{$ctrl.size | filesize:0}}</span>
+        <a ng-click="$ctrl.downloadFile()"><i class="fa fa-download"></i> {{'common.entity.action' | translate}}</a>
+        <a ngclipboard data-clipboard-text="{{$ctrl.path}}"><i class="fa fa-copy"></i> {{'common.file.copy_link' | translate}}</a>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="w-full" style="height: 400px;">
+        <div ng-bind-html="$ctrl.content | markdown"></div>
+    </div>
+</div>

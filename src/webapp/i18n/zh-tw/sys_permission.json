@@ -1,0 +1,26 @@
+{
+  "sys_permission": {
+    "home": {
+      "title": "許可權管理",
+      "createLabel": "建立許可權",
+      "createPermission": "建立許可權",
+      "editPermission": "編輯許可權",
+      "search": "查詢 許可權"
+    },
+    "created": "許可權 {{ param }} 建立成功",
+    "updated": "許可權 {{ param }} 更新成功",
+    "deleted": "許可權 {{ param }} 刪除成功",
+    "delete": {
+      "question": "確定刪除許可權 【{{ domain }} : {{ action }} : {{ target }}】 嗎？"
+    },
+    "detail": {
+      "title": "許可權詳情"
+    },
+    "domain": "主體",
+    "action": "操作",
+    "target": "目標",
+    "description": "描述",
+    "configJson": "JSON配置",
+    "role": "角色"
+  }
+}

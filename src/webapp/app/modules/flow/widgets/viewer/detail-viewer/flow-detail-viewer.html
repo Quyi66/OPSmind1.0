@@ -1,0 +1,23 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light opx-layout-hflex flex-nowrap">
+
+        <p class="fw-bolder fs-4 ml-3 mr-3 m-0 w-100">{{ $ctrl.process.processName }}</p>
+        
+        <button class="btn btn-outline-primary rounded-pill btn-sm mr-2" uaa-has-permission="flow:edit:*" ng-click="$ctrl.designProcess($event)">
+            <i class="fa fa-pencil-ruler"></i> {{'flow.process.design' | translate}}
+        </button>
+
+        <button class="btn btn-outline-success rounded-pill btn-sm" uaa-has-permission="flow:run:*" ng-click="$ctrl.execProcess($event)">
+            <i class="fa fa-play"></i> {{'jao.common.run' | translate}}
+        </button>
+    </nav>
+
+    <div class="opx-layout-hflex" style="height: calc( 100% - 2.5rem );">
+        <flow-viewer    bpmn-xml="$ctrl.processDetail.processXml" 
+                        style="width: 100%;"></flow-viewer>
+    </div>
+
+    <div class="in-page-overlayer" ng-if="$ctrl.options.inPage && !$ctrl.processId">
+      <p class="w-100"><i class="fa fa-info-circle link-warning mr-3"></i>{{'udp.w.flow.process.no-process-lint' | translate}}</p>
+    </div>
+</div>

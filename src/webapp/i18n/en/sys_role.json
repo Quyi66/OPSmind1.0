@@ -1,0 +1,18 @@
+{
+    "sys_role.home.title": "Role",
+    "sys_role.home.createLabel": "Create Role",
+    "sys_role.home.createRole": "Create Role",
+    "sys_role.home.editRole": "Edit Role",
+    "sys_role.home.search": "Find Roles",
+    "sys_role.created": "Role {{ param }} created successfully",
+    "sys_role.updated": "role {{ param }} updated successfully",
+    "sys_role.deleted": "role {{ param }} deleted successfully",
+    "sys_role.delete.question": "Are you sure you want to delete role {{ name }}? ",
+    "sys_role.detail.title": "Character Details",
+    "sys_role.name": "Name",
+    "sys_role.visibility": "Visibility",
+    "sys_role.target": "Target",
+    "sys_role.description": "Description",
+    "sys_role.permissions": "Permissions",
+    "sys_role.users": "Users"
+}

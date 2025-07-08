@@ -1,0 +1,23 @@
+.op-pageheader {
+  &.navbar {
+    height: auto;
+    background-color: $gray-100;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .op-pageheader-breadcrumb {
+
+  }
+
+  .op-pageheader-actions {
+
+  }
+}
+
+.modal:not(.op-applet-window) {
+  .modal-body {
+    .op-pageheader .op-pageheader-breadcrumb {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,80 @@
+<div class="opx-layout-hflex">
+    <div class="p-3 bg-white border-right">
+        <div class="mb-3">
+            <button class="btn btn-default" ng-click="acmVm.selectedDevices=['/','/CentOS']">Set selectedArray</button>
+        </div>
+        <pre>{{acmVm | json}}</pre>
+    </div>
+    <div class="p-3 flex-fill scroll-y">
+        <!--        <div class="card mb-3">-->
+        <!--            <div class="card-header">资产多行搜索</div>-->
+        <!--            <div class="card-body">-->
+        <!--                <acm-ci-filter ng-model="$ctrl.searchResult"></acm-ci-filter>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="card mb-3">-->
+        <!--            <div class="card-header">资产模型编辑器</div>-->
+        <!--            <div class="card-body">-->
+        <!--                <acm-ci-model-editor cit-code=""></acm-ci-model-editor>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="card mb-3">
+            <div class="card-header">资产列表 <code>&lt;acm-list-ci&gt;</code></div>
+            <div class="card-body" style="max-height: 300px; overflow-y:auto;">
+                <acm-list-ci asset-types="'linux'" the-model="acmVm.selectedDevices"
+                             options="{selectMode:acmVm.selectMode, selector:'multiple'}"></acm-list-ci>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">选择器component <code>&lt;acm-device-selector&gt;</code></div>
+            <div class="card-body">
+                <div class="mb-3">按钮对话框形式（一般用于选择执行对象，支持设备、分组、标签、输入）</div>
+                <acm-device-selector view-as="btndlg" the-model="acmVm.selectedDevices" ci-types="'[all]'"
+                                 options="{label:'所有类型'}" class="d-block mb-3"></acm-device-selector>
+                <acm-device-selector view-as="btndlg" the-model="acmVm.selectedDevices" ci-types="'[auto]'"
+                                 options="{label:'所有支持自动化的类型'}"></acm-device-selector>
+            </div>
+            <div class="card-body">
+                <div>Dropdown形式（一般用于表格过滤，只能选择分组、标签）</div>
+                <div>显示linux和network_device</div>
+                <acm-device-selector view-as="dropdown" the-model="acmVm.selectedDevices"
+                                 ci-types="'linux,network_device'"></acm-device-selector>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">使用uinput输入控件 <code>&lt;udp-input type="device"&gt;</code></div>
+            <div class="card-body">
+                <udp-input type="host" ng-model="acmVm.selectedDevices" control="device"
+                           devicetype="linux,network_device"></udp-input>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">使用udp widget <code>&lt;uwidget uw-type="hostselector"&gt;</code></div>
+            <div class="card-body">
+                <div>
+                    按钮对话框形式
+                    <uwidget uw-type="device-selector" uw-props="acmVm.hostselectorPropsOfBtndlg"></uwidget>
+                </div>
+                <div>
+                    Dropdown形式
+                    <uwidget uw-type="device-selector" uw-props="acmVm.hostselectorPropsOfDropdown"></uwidget>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">通过js代码调用设备选择器</div>
+            <div class="card-body">
+                <button class="btn btn-default" ng-click="acmVm.selectDevice()">{{'jao.job.selector.select_device' | translate}}</button>
+                TODO
+            </div>
+        </div>
+        <!--        <div class="card mb-3">-->
+        <!--            <div class="card-header">通过列表</div>-->
+        <!--            <div class="card-body" style="height:10rem;overflow-y:auto;">-->
+        <!--                <acm-list-ci-group></acm-list-ci-group>-->
+        <!--                TODO-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>

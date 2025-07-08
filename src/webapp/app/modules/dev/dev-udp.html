@@ -1,0 +1,54 @@
+<div class="p-3 bg-light">
+    <div class="card mb-3">
+        <div class="card-header">uinput通用输入</div>
+        <div class="card-body op-smartform op-bold-label">
+            <p>根据参数自动生成控件</p>
+            {{udpVm.uinputValues}}
+            <udp-input ng-repeat="param in udpVm.uinputParams track by $index"
+                       type="{{param.type}}" control="{{udpVm.typeCtrls[param.type]||'input'}}"
+                       ng-model="udpVm.uinputValues[param.name]"
+                       label="{{param.label}}" showlabel="true"
+                       desc="{{param.desc}}" showdesc="true"></udp-input>
+            <!--            <udp-input type="{{udpVm.singleParam.type}}" control="input" ng-model="udpVm.uinputValues[udpVm.singleParam.name]"-->
+            <!--                       label="{{udpVm.singleParam.label}}" showlabel="true"-->
+            <!--                       desc="{{udpVm.singleParam.desc}}" showdesc="true"></udp-input>-->
+            <!--            <udp-input type="number" control="input" ng-model="udpVm.static"-->
+            <!--                       label="static number" showlabel="true"-->
+            <!--                       desc="属性没有用变量" showdesc="true"></udp-input>-->
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">Uinput使用变量</div>
+        <div class="card-body">
+            <udp-input control="{{udpVm.selectCtrl1.control}}" sourcedef="{{udpVm.selectCtrl1.sourcedef}}"
+                       ismultiple="'true'" ng-model="udpVm.select_1"></udp-input>
+            <udp-input control="{{udpVm.selectCtrl2.control}}" sourcedef="{{udpVm.selectCtrl2.sourcedef}}"
+                       ng-model="udpVm.select_2"></udp-input>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">手写udp页面</div>
+        <div class="card-body">
+            <udp-page-view page="udpVm.customPage"></udp-page-view>
+        </div>
+    </div>
+    <!--    <div class="card mb-3">-->
+    <!--        <div class="card-header">内嵌本地页面</div>-->
+    <!--        <div class="card-body">-->
+    <!--            <udp-page-view page-id="udpVm.localPageId" page-params="udpVm.pageParams"></udp-page-view>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="card">-->
+    <!--        <div class="card-header">内嵌页面，无navbar</div>-->
+    <!--        <div class="card-body">-->
+    <!--            <udp-page-view page-id="udpVm.pageId" page-params="udpVm.pageParams"-->
+    <!--                           options="{navbar:false}"></udp-page-view>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="card mb-3">-->
+    <!--        <div class="card-header">内嵌页面</div>-->
+    <!--        <div class="card-body">-->
+    <!--            <udp-page-view page-id="udpVm.pageId" page-params="udpVm.pageParams"></udp-page-view>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>

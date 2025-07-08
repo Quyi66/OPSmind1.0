@@ -1,0 +1,79 @@
+<style>
+    .help-block {
+        margin: 0px;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="myRoleLabel">
+        <span data-translate="sys_role.home.createRole" ng-show="vm.role.id == null">Create Role</span>
+        <span data-translate="sys_role.home.editRole" ng-show="vm.role.id != null">Edit Role</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
+    </button>
+</div>
+
+
+<div class="modal-body">
+    <form name="editForm" role="form" novalidate show-validation>
+        <uib-tabset class="tab-container wrapper" active="1">
+            <uib-tab index="1" heading="基本信息">
+                <div class="form-group">
+                    <label class="control-label" data-translate="sys_role.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1 ng-maxlength=50 ng-model="vm.role.name"/>
+                    <p class="help-block">
+                        <span ng-show="editForm.name.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                        <span ng-show="editForm.name.$error.maxlength" data-translate="entity.validation.maxlength" translate-value-max="50">This field cannot be longer than 50 characters.</span>
+                    </p>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<label class="control-label" data-translate="sys_role.visibility" for="field_visibility">Visibility</label>-->
+                <!--<input type="text" class="form-control" name="visibility" id="field_visibility" ng-model="vm.role.visibility"/>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label class="control-label" data-translate="sys_role.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description" required ng-minlength=1 ng-maxlength=100 ng-model="vm.role.description"/>
+                    <p class="help-block">
+                        <span ng-show="editForm.description.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                        <span ng-show="editForm.description.$error.maxlength" data-translate="entity.validation.maxlength"
+                              translate-value-max="100">This field cannot be longer than 100 characters.</span>
+                    </p>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="角色权限">
+                <div class="row" ng-if="vm.permissions != null && vm.permissions.length > 0">
+                    <div class="col-xs-6 col-sm-4 col-md-4" ng-repeat="permission in vm.permissions">
+                        <label class="i-checks">
+                            <input type="checkbox"
+                                   name="{{permission.id}}"
+                                   ng-checked="permission.isChecked"
+                                   ng-click="permission.isChecked = !permission.isChecked"/> <i></i>
+                        </label>
+                        <span class="">{{permission.domain}} : {{permission.action}} : {{permission.target}}</span>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="3" heading="角色用户" select="vm.showTenantSelect()">
+                <div class="row" ng-if="vm.users && vm.users.length > 0">
+                    <span class="col-xs-6 col-sm-4 col-md-3" ng-repeat="user in vm.users">
+                        <label class="i-checks">
+                            <input type="checkbox"
+                                   name="{{user.id}}"
+                                   ng-checked="user.isChecked"
+                                   ng-click="user.isChecked = !user.isChecked"/> <i></i>
+                        </label>
+                        <span class="">{{user.fullName}}</span>
+                    </span>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <span data-translate="common.action.cancel">Cancel</span>
+    </button>
+    <button type="button" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" ng-click="vm.save()">
+        <span data-translate="common.action.save">Save</span>
+    </button>
+</div>
+

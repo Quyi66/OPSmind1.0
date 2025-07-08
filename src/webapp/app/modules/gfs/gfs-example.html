@@ -1,0 +1,25 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar bg-light">
+        <h4>{{'gfs.example.usage_example' | translate}}</h4>
+    </nav>
+    <div class="opx-flex-fill scroll-y p-3">
+        <div class="card mb-3">
+            <div class="card-header">{{'gfs.example.title' | translate}} <code>&lt;gfs-file-selector&gt;</code> {{'gfs.example.mode' | translate}}</div>
+            <div class="card-body">
+                SelectedFiles: {{$ctrl.selectedFiles}}
+                <gfs-file-selector the-model="$ctrl.selectedFiles"
+                                   model-converter="{type: 'attrmap', attrmap: {'location': 'path', 'argline': 'config'}, modelType: 'object'}"
+                                   config="$ctrl.dialogFileSelectorConfig"></gfs-file-selector>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header">{{'gfs.example.title' | translate}} <code>&lt;gfs-file-selector&gt;</code> {{'gfs.example.mode' | translate}}</div>
+            <div class="card-body">
+                {{$ctrl.selectedFiles}}
+                <gfs-file-selector the-model="$ctrl.selectedFiles"
+                                   model-converter="{type: 'attrmap', attrmap: {'location': 'path', 'argline': 'config'}, modelType: 'object'}"
+                                   config="$ctrl.browserFileSelectorConfig"></gfs-file-selector>
+            </div>
+        </div>
+    </div>
+</div>

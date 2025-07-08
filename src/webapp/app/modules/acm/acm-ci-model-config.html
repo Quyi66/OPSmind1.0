@@ -1,0 +1,67 @@
+<form class="op-smartform form-vertical" name="modelConfigForm">
+    <uib-tabset class="tab-container" type="mdc-op">
+        <uib-tab>
+            <uib-tab-heading>{{ 'acm.common.header.base_info' | translate}}</uib-tab-heading>
+            <div class="form-group">
+                <label class="control-label">{{ 'acm.common.header.assert_code' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" ng-model="$ctrl.modelConfig.code" class="form-control"
+                           ng-disabled="$ctrl.DISABLE_CODE"
+                           ng-class="{'is-invalid':$ctrl.VALIDATE_CODE_ERROR}">
+                    <div class="invalid-feedback"
+                         ng-if="$ctrl.VALIDATE_CODE_ERROR">
+                        {{ 'acm.common.text.assert_code_validate_comment' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{ 'acm.common.header.model_name' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" ng-model="$ctrl.modelConfig.title" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{ 'acm.common.header.model_icon' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <op-iconpicker ng-model="$ctrl.modelConfig.icon"></op-iconpicker>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">{{ 'acm.common.header.is_automation' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select w-sm" ng-model="$ctrl.modelConfig.isAuto"
+                            ng-change="$ctrl.internalAttr($ctrl.modelConfig.isAuto)"
+                            ng-options="choose.value as choose.label for choose in $ctrl.IS_AUTO_MAP">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" ng-if="$ctrl.SHOW_TEMPLATE">
+                <label class="control-label">{{ 'acm.common.header.model_template' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select w-sm" ng-model="$ctrl.modelConfig.template_id"
+                            ng-options="choose.id as choose.title for choose in $ctrl.CIT_LIST">
+                    </select>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab>
+            <uib-tab-heading>{{ 'acm.common.header.model_attr' | translate}}</uib-tab-heading>
+            <umd-config-attrs ng-model="$ctrl.modelConfig.attrs" class="d-block"></umd-config-attrs>
+        </uib-tab>
+        <uib-tab>
+            <uib-tab-heading>{{ 'acm.common.header.view_info' | translate}}</uib-tab-heading>
+            <umd-config-view model-def="$ctrl.modelConfig"></umd-config-view>
+        </uib-tab>
+    </uib-tabset>
+    <div>
+        <button type="button" class="btn btn-primary opx-btn-ok"
+                ng-click="$ctrl.save($ctrl.modelConfig)"
+                ng-disabled="!modelConfigForm.$valid || $ctrl.VALIDATE_CODE_ERROR" uaa-has-permission="acm:edit:*">
+            {{ 'common.entity.action.save' | translate}}
+        </button>
+        <button type="button" class="btn btn-default opx-btn-cancel"
+                ng-click="$ctrl.go_back($ctrl.modelConfig)">{{ 'common.entity.action.cancel' | translate}}
+        </button>
+    </div>
+</form>

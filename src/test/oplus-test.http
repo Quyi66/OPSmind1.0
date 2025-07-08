@@ -1,0 +1,88 @@
+# curl 'http://192.168.43.10:8081/api/v1/user/login'
+#  -H 'Connection: keep-alive'
+#  -H 'Accept: application/json, text/plain, */*'
+#  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'
+#  -H 'Content-Type: application/x-www-form-urlencoded'
+#  -H 'Origin: http://192.168.43.10:8080'
+#  -H 'Referer: http://192.168.43.10:8080/'
+#  -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'
+#  --data-raw 'username=admin&password=admin'
+POST http://192.168.43.10:8081/api/v1/user/login
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36
+Origin: http://192.168.43.10:8080
+Referer: http://192.168.43.10:8080/
+Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=admin
+
+###
+
+# curl 'http://81.71.132.81/oplus-portal/udp/api/udp/applets?isPaging=true&cacheBuster=1645704286487'
+#  -H 'Connection: keep-alive'
+#  -H 'Accept: application/json, text/plain, */*'
+#  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MDI4OWYxNDczMTQ5MzZmMDE3MzE0ZjA5ZjI5MDAwZiIsInVzZXJJZCI6IjMiLCJsb2dpbiI6ImFkbWluIiwicGVybWlzc2lvbiI6IiIsInJvbGUiOiIiLCJ0ZW5hbnRJZCI6ImZmODA4MDgxNzI3YTA0N2YwMTcyOTJkMGQ3MmUwMDA0IiwiZXhwIjoxNjQ1NzkwMjU4fQ.xlukzRvPak0g3ePyMbh7wQPXUwmTmuZHoWvhMtmNy-_1WggvsU5hs2T_s0-KjlIh8LScMfRK9C6lYIk4aMT17w'
+#  -H 'Tenant-Id: ff808081727a047f017292d0d72e0004'
+#  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'
+#  -H 'Referer: http://81.71.132.81/oplus/base/'
+#  -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'
+#  --compressed
+GET http://81.71.132.81/oplus-portal/udp/api/udp/applets?isPaging=true&cacheBuster=1645704286487
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MDI4OWYxNDczMTQ5MzZmMDE3MzE0ZjA5ZjI5MDAwZiIsInVzZXJJZCI6IjMiLCJsb2dpbiI6ImFkbWluIiwicGVybWlzc2lvbiI6IiIsInJvbGUiOiIiLCJ0ZW5hbnRJZCI6ImZmODA4MDgxNzI3YTA0N2YwMTcyOTJkMGQ3MmUwMDA0IiwiZXhwIjoxNjQ1NzkwMjU4fQ.xlukzRvPak0g3ePyMbh7wQPXUwmTmuZHoWvhMtmNy-_1WggvsU5hs2T_s0-KjlIh8LScMfRK9C6lYIk4aMT17w
+Tenant-Id: ff808081727a047f017292d0d72e0004
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36
+Referer: http://81.71.132.81/oplus/base/
+Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+
+###
+
+# curl 'http://81.71.132.81/oplus-portal/udp/api/udp/applets?isPaging=true&cacheBuster=1645703792234'
+#  -H 'Connection: keep-alive'
+#  -H 'Accept: application/json, text/plain, */*'
+#  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZjgwODA4MTc4MWJiMjM3MDE3ODQ4OGFjMDc4MDAxMyIsInVzZXJJZCI6ImZmODA4MDgxNzgxYmIyMzcwMTc4NDg4YWMwNjUwMDExIiwibG9naW4iOiJkZW1vZGV2IiwicGVybWlzc2lvbiI6InVkcDp2aWV3OiosamFvOnZpZXc6KixjbTplZGl0OiosY21kOnJ1bjoqLGNtZDp2aWV3OiosYXBwOnZpZXc6KixqYW86cnVuOiosZ2ZzOmVkaXQ6KixjYWM6cnVuOiosYXBwOmVkaXQ6KixhZG06ZWRpdDoqLGFkbTp2aWV3OiosZ2ZzOnZpZXc6KixjYWM6dmlldzoqLGNtZDplZGl0OiosY2FjOmVkaXQ6KixqYW86ZWRpdDoqLGNtOnZpZXc6KixnZnM6cnVuOiosdWRwOmVkaXQ6KixkdHM6dmlldzoqLGR0czplZGl0OiosamFvOmFwcHJvdmU6KiIsInJvbGUiOiJST0xFX0RFVkVMT1BFUixST0xFX1VTRVIiLCJ0ZW5hbnRJZCI6ImZmODA4MDgxNzI3YTA0N2YwMTcyOTJkMGQ3MmUwMDA0IiwiZXhwIjoxNjQ1Nzg5ODU0fQ.f6CYUhzbm1UFQ_e6vKAJAk_b53vOuYDa2e5BwHa25Y75jpdaQe49d7Ysvsuho4LtNeFGDkdZXTITAa1ZHA5S9w'
+#  -H 'Tenant-Id: ff808081727a047f017292d0d72e0004'
+#  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'
+#  -H 'Origin: http://localhost:8080'
+#  -H 'Referer: http://localhost:8080/'
+#  -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'
+#  --compressed
+GET http://81.71.132.81/oplus-portal/udp/api/udp/applets?isPaging=true&cacheBuster=1645703792234
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZjgwODA4MTc4MWJiMjM3MDE3ODQ4OGFjMDc4MDAxMyIsInVzZXJJZCI6ImZmODA4MDgxNzgxYmIyMzcwMTc4NDg4YWMwNjUwMDExIiwibG9naW4iOiJkZW1vZGV2IiwicGVybWlzc2lvbiI6InVkcDp2aWV3OiosamFvOnZpZXc6KixjbTplZGl0OiosY21kOnJ1bjoqLGNtZDp2aWV3OiosYXBwOnZpZXc6KixqYW86cnVuOiosZ2ZzOmVkaXQ6KixjYWM6cnVuOiosYXBwOmVkaXQ6KixhZG06ZWRpdDoqLGFkbTp2aWV3OiosZ2ZzOnZpZXc6KixjYWM6dmlldzoqLGNtZDplZGl0OiosY2FjOmVkaXQ6KixqYW86ZWRpdDoqLGNtOnZpZXc6KixnZnM6cnVuOiosdWRwOmVkaXQ6KixkdHM6dmlldzoqLGR0czplZGl0OiosamFvOmFwcHJvdmU6KiIsInJvbGUiOiJST0xFX0RFVkVMT1BFUixST0xFX1VTRVIiLCJ0ZW5hbnRJZCI6ImZmODA4MDgxNzI3YTA0N2YwMTcyOTJkMGQ3MmUwMDA0IiwiZXhwIjoxNjQ1Nzg5ODU0fQ.f6CYUhzbm1UFQ_e6vKAJAk_b53vOuYDa2e5BwHa25Y75jpdaQe49d7Ysvsuho4LtNeFGDkdZXTITAa1ZHA5S9w
+Tenant-Id: ff808081727a047f017292d0d72e0004
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36
+Origin: http://localhost:8080
+Referer: http://localhost:8080/
+Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+
+###
+
+# curl 'http://81.71.132.81/oplus-dts/api/dts/q/data/GET_DC_DATA_BY_MODEL/?cacheBuster=1642467238786'
+#  -H 'Connection: keep-alive'
+#  -H 'Accept: application/json, text/plain, */*'
+#  -H 'Tenant-Id: ff808081727a047f017292d0d72e0004'
+#  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'
+#  -H 'Content-Type: application/json;charset=UTF-8'
+#  -H 'Origin: http://localhost:8080'
+#  -H 'Referer: http://localhost:8080/'
+#  -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7'
+#  --data-raw '{"params":{"model":"linux_service"}}'
+POST http://81.71.132.81/oplus-dts/api/dts/q/data/GET_DC_DATA_BY_MODEL/?cacheBuster=1642467238786
+Connection: keep-alive
+Accept: application/json, text/plain, */*
+Tenant-Id: ff808081727a047f017292d0d72e0004
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36
+Origin: http://localhost:8080
+Referer: http://localhost:8080/
+Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+Content-Type: application/json;charset=UTF-8
+
+{"params":{"model":"linux_service"}}
+
+###
+

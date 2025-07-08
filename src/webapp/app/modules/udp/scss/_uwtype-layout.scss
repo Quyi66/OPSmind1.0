@@ -1,0 +1,68 @@
+.uwtype-layout-float {
+  //z-index: $udp-widget-highlight-zindex + 10;
+  .uw-float {
+    min-width: 150px;
+    min-height: 80px;
+    padding: 16px;
+  }
+}
+
+.uwtype-layout-col.ui-resizable-resizing,
+.uwtype-layout-flex.ui-resizable-resizing {
+  // 20200414: layout col and flex use bs4 col-*. The flex attribute will override width
+  flex: none;
+  max-width: none;
+}
+
+.uwtype-layout-flex {
+  // Do not auto fill full-height/width parent
+  // flex:0 will disable col-* width...
+  flex: inherit;
+
+  &[ class*= "col-sm" ] {
+    //20210723: No padding
+    padding: 0;
+  }
+
+  > .uw-flex {
+    height: 100%;
+  }
+
+  &.col-sm-12 {
+    //flex: 1;
+  }
+}
+
+// 20200417: only one flex in the page
+udp-page-view > .uwtype-layout-flex.col-sm-12 {
+  flex: 0;
+}
+
+.uw-column.uw-flex {
+  display: flex;
+  flex-wrap: wrap;
+  // Default is stretch
+  align-items: start;
+  // 20200420: Default is stretch
+  align-content: start;
+  height: 100%;
+  // 20200904: overflow-y will cut off boxshadow of input control aligned at edge
+  //overflow-y: auto;
+  // 20210307: override bootstrap `col` padding
+  //>[class*="col-"]{
+  //  padding-left:0 !important;
+  //  padding-right:0 !important;
+  //}
+
+  //uwidget[uw-type=logview] {
+  //  flex: 1 1 0%;
+  //  width: 100%;
+  //}
+}
+
+
+.udp-on-mobile {
+  .uwtype-layout-row {
+    margin-bottom: 4px;
+  }
+}

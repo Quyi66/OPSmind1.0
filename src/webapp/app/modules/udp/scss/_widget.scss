@@ -1,0 +1,110 @@
+// Widget
+
+.uwidget {
+  // uwidget must be block otherwise the size cannot be calculated properly
+  display: block;
+  position: relative;
+  //max-width: 100%;
+  //vertical-align: top;
+
+  //.ui-resizable-handle:hover {
+  //background-color: $info;
+  //}
+
+
+}
+
+// Define height to make content area scrollable
+// layout-col has no uw-body
+//----------------------------
+.uwidget > .uw-body {
+  height: 100%;
+}
+
+.uwidget > .uw-body, .uwidget {
+  // non-card mode
+  > .uw-content {
+    height: 100%;
+    //20200418: do not auto scroll for widget content. Widget should be responsible of scrolling the content by it self.
+    //overflow-y: auto;
+  }
+
+  // Card mode
+  > .card {
+    height: 100%;
+
+    > .card-body {
+      height: 100%;
+
+      > .uw-content {
+        height: 100%;
+        //20200425: do not auto scroll
+        //overflow-y: auto;
+      }
+    }
+  }
+}
+
+.uwidget.udp-widget-fixed-height > .uw-body > .card > .card-body > .uw-content,
+.uwidget.udp-widget-fixed-height > .uw-body > .uw-content,
+.uwidget.widget-layout.udp-widget-fixed-height > .card > .card-body {
+  overflow-y: auto;
+}
+
+// Widget buttons
+.uw-buttons {
+  display: none;
+  position: absolute;
+  //20200415: do not -10px, the outer most widget button will be clipped by page container
+  // Left align buttons for visibility on small widgets like uw-button, timer
+  //top: -10px;
+  //right: 0;
+  z-index: $udp-zindex-uwbuttons;
+  //min-width: 80px;
+  // Disable buttons wrap
+  white-space: nowrap;
+
+  .dropdown-menu {
+    // 20200417: Override bs default margin. Leave no margin to make mouse movement to dropdown is still within button area
+    margin-top: 0;
+  }
+
+  .uwtype-layout-col > &, .uwtype-layout-flex > & {
+    bottom: 0;
+  }
+
+  .uw-drag {
+    cursor: move;
+  }
+
+  .uw-config {
+    cursor: pointer;
+  }
+}
+
+
+.uwidget.udp-widget-loading {
+  //background: rgba(196, 196, 196, 0.25);
+
+  .udp-wdiget-loading-indicator {
+    //position: absolute;
+    z-index: 1;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 4px;
+
+    .fa {
+      font-size: 24px;
+    }
+
+    p {
+      margin: 4px 0 0 0;
+      font-size: small;
+    }
+  }
+}
+
+.udp-card-mode.card > .card-header {
+  //font-size: large;
+}

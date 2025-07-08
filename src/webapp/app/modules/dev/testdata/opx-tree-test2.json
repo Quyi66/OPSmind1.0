@@ -1,0 +1,2467 @@
+[
+  {
+    "zh-cn": "资产管理",
+    "zh-tw": "資產管理",
+    "key": "acm.title"
+  },
+  {
+    "zh-cn": "属性",
+    "zh-tw": "屬性",
+    "key": "acm.common.filter.attr"
+  },
+  {
+    "zh-cn": "匹配以下数据",
+    "zh-tw": "匹配以下資料",
+    "key": "acm.common.filter.match_data"
+  },
+  {
+    "zh-cn": "请输入要搜索的值，支持多行，一行输入一个搜索值",
+    "zh-tw": "請輸入要搜尋的值，支援多行，一行輸入一個搜尋值",
+    "key": "acm.common.filter.match_comment"
+  },
+  {
+    "zh-cn": "其它分隔符",
+    "zh-tw": "其它分隔符",
+    "key": "acm.common.filter.other_separator"
+  },
+  {
+    "zh-cn": "开始查找",
+    "zh-tw": "開始查詢",
+    "key": "acm.common.filter.finding"
+  },
+  {
+    "zh-cn": "以下数据没有找到：",
+    "zh-tw": "以下資料沒有找到：",
+    "key": "acm.common.filter.data_not_found"
+  },
+  {
+    "zh-cn": "重新输入",
+    "zh-tw": "重新輸入",
+    "key": "acm.common.filter.enter_again"
+  },
+  {
+    "zh-cn": "按设备",
+    "zh-tw": "按裝置",
+    "key": "acm.common.filter.according_equipment"
+  },
+  {
+    "zh-cn": "按分组",
+    "zh-tw": "按分組",
+    "key": "acm.common.filter.according_group"
+  },
+  {
+    "zh-cn": "按标签",
+    "zh-tw": "按標籤",
+    "key": "acm.common.filter.according_tag"
+  },
+  {
+    "zh-cn": "手动输入",
+    "zh-tw": "手動輸入",
+    "key": "acm.common.filter.according_input"
+  },
+  {
+    "zh-cn": "按钮对话框",
+    "zh-tw": "按鈕對話方塊",
+    "key": "acm.common.filter.button_dialog"
+  },
+  {
+    "zh-cn": "下拉框",
+    "zh-tw": "下拉框",
+    "key": "acm.common.filter.drop-down_box"
+  },
+  {
+    "zh-cn": "空格",
+    "zh-tw": "空格",
+    "key": "acm.common.filter.blank_space"
+  },
+  {
+    "zh-cn": "逗号",
+    "zh-tw": "逗號",
+    "key": "acm.common.filter.comma"
+  },
+  {
+    "zh-cn": "选择",
+    "zh-tw": "選擇",
+    "key": "acm.common.selector.choose"
+  },
+  {
+    "zh-cn": "确认",
+    "zh-tw": "確認",
+    "key": "acm.common.selector.confirm"
+  },
+  {
+    "zh-cn": "移除所有的主机?",
+    "zh-tw": "移除所有的主機?",
+    "key": "acm.common.selector.delete_confirm"
+  },
+  {
+    "zh-cn": "共",
+    "zh-tw": "共",
+    "key": "acm.common.selector.total"
+  },
+  {
+    "zh-cn": "项",
+    "zh-tw": "項",
+    "key": "acm.common.selector.item"
+  },
+  {
+    "zh-cn": "选择动态标签",
+    "zh-tw": "選擇動態標籤",
+    "key": "acm.common.list.select_dynamic_tag"
+  },
+  {
+    "zh-cn": "所有",
+    "zh-tw": "所有",
+    "key": "acm.common.list.all"
+  },
+  {
+    "zh-cn": "分组",
+    "zh-tw": "分組",
+    "key": "acm.common.list.group"
+  },
+  {
+    "zh-cn": "选择分组",
+    "zh-tw": "選擇分組",
+    "key": "acm.common.list.choose_group"
+  },
+  {
+    "zh-cn": "选择标签",
+    "zh-tw": "選擇標籤",
+    "key": "acm.common.list.choose_tag"
+  },
+  {
+    "zh-cn": "过滤",
+    "zh-tw": "過濾",
+    "key": "acm.common.list.filter"
+  },
+  {
+    "zh-cn": "资产状态",
+    "zh-tw": "資產狀態",
+    "key": "acm.common.header.assert_status"
+  },
+  {
+    "zh-cn": "资产代码",
+    "zh-tw": "資產程式碼",
+    "key": "acm.common.header.assert_code"
+  },
+  {
+    "zh-cn": "模型名称",
+    "zh-tw": "模型名稱",
+    "key": "acm.common.header.model_name"
+  },
+  {
+    "zh-cn": "图标",
+    "zh-tw": "圖示",
+    "key": "acm.common.header.model_icon"
+  },
+  {
+    "zh-cn": "资产模板",
+    "zh-tw": "資產模板",
+    "key": "acm.common.header.model_template"
+  },
+  {
+    "zh-cn": "模型属性",
+    "zh-tw": "模型屬性",
+    "key": "acm.common.header.model_attr"
+  },
+  {
+    "zh-cn": "是否自动化",
+    "zh-tw": "是否自動化",
+    "key": "acm.common.header.is_automation"
+  },
+  {
+    "zh-cn": "资产数量",
+    "zh-tw": "資產數量",
+    "key": "acm.common.header.assert_count"
+  },
+  {
+    "zh-cn": "更新时间",
+    "zh-tw": "更新時間",
+    "key": "acm.common.header.update_time"
+  },
+  {
+    "zh-cn": "分组名称",
+    "zh-tw": "分組名稱",
+    "key": "acm.common.header.group_name"
+  },
+  {
+    "zh-cn": "分组路径",
+    "zh-tw": "分組路徑",
+    "key": "acm.common.header.group_path"
+  },
+  {
+    "zh-cn": "已有分组",
+    "zh-tw": "已有分組",
+    "key": "acm.common.header.existing_group"
+  },
+  {
+    "zh-cn": "上级分组",
+    "zh-tw": "上級分組",
+    "key": "acm.common.header.superior_group"
+  },
+  {
+    "zh-cn": "标签名称",
+    "zh-tw": "標籤名稱",
+    "key": "acm.common.header.tag_name"
+  },
+  {
+    "zh-cn": "已有标签",
+    "zh-tw": "已有標籤",
+    "key": "acm.common.header.existing_tag"
+  },
+  {
+    "zh-cn": "IP",
+    "zh-tw": "IP",
+    "key": "acm.common.header.IP"
+  },
+  {
+    "zh-cn": "执行引擎节点",
+    "zh-tw": "執行引擎節點",
+    "key": "acm.common.header.engine_node"
+  },
+  {
+    "zh-cn": "登录用户",
+    "zh-tw": "登入使用者",
+    "key": "acm.common.header.login_user"
+  },
+  {
+    "zh-cn": "执行用户",
+    "zh-tw": "執行使用者",
+    "key": "acm.common.header.run_user"
+  },
+  {
+    "zh-cn": "登录密码",
+    "zh-tw": "登入密碼",
+    "key": "acm.common.header.login_password"
+  },
+  {
+    "zh-cn": "执行密码",
+    "zh-tw": "執行密碼",
+    "key": "acm.common.header.run_password"
+  },
+  {
+    "zh-cn": "自动化配置信息",
+    "zh-tw": "自動化配置資訊",
+    "key": "acm.common.header.automation_config"
+  },
+  {
+    "zh-cn": "自动化配置名称",
+    "zh-tw": "自動化配置名稱",
+    "key": "acm.common.header.automation_config_name"
+  },
+  {
+    "zh-cn": "Ansible连接配置",
+    "zh-tw": "Ansible連線配置",
+    "key": "acm.common.header.ansible_config"
+  },
+  {
+    "zh-cn": "配置名称",
+    "zh-tw": "配置名稱",
+    "key": "acm.common.header.ansible_config_name"
+  },
+  {
+    "zh-cn": "配置信息",
+    "zh-tw": "配置資訊",
+    "key": "acm.common.header.ansible_config_info"
+  },
+  {
+    "zh-cn": "连通率",
+    "zh-tw": "連通率",
+    "key": "acm.common.header.connectivity_rate"
+  },
+  {
+    "zh-cn": "最近连通状态",
+    "zh-tw": "最近連通狀態",
+    "key": "acm.common.header.recently_connected_state"
+  },
+  {
+    "zh-cn": "运行ID",
+    "zh-tw": "執行ID",
+    "key": "acm.common.header.run_id"
+  },
+  {
+    "zh-cn": "执行时间",
+    "zh-tw": "執行時間",
+    "key": "acm.common.header.execution_time"
+  },
+  {
+    "zh-cn": "操作",
+    "zh-tw": "操作",
+    "key": "acm.common.header.action"
+  },
+  {
+    "zh-cn": "状态",
+    "zh-tw": "狀態",
+    "key": "acm.common.header.status"
+  },
+  {
+    "zh-cn": "结果",
+    "zh-tw": "結果",
+    "key": "acm.common.header.results"
+  },
+  {
+    "zh-cn": "用户",
+    "zh-tw": "使用者",
+    "key": "acm.common.header.user"
+  },
+  {
+    "zh-cn": "耗时",
+    "zh-tw": "耗時",
+    "key": "acm.common.header.time_consuming"
+  },
+  {
+    "zh-cn": "结束时间",
+    "zh-tw": "結束時間",
+    "key": "acm.common.header.end_time"
+  },
+  {
+    "zh-cn": "详情",
+    "zh-tw": "詳情",
+    "key": "acm.common.header.detail"
+  },
+  {
+    "zh-cn": "分组",
+    "zh-tw": "分組",
+    "key": "acm.common.header.group"
+  },
+  {
+    "zh-cn": "标签",
+    "zh-tw": "標籤",
+    "key": "acm.common.header.tag"
+  },
+  {
+    "zh-cn": "总计",
+    "zh-tw": "總計",
+    "key": "acm.common.header.total_count"
+  },
+  {
+    "zh-cn": "资产信息导出",
+    "zh-tw": "資產資訊匯出",
+    "key": "acm.common.header.export_assert"
+  },
+  {
+    "zh-cn": "基本信息",
+    "zh-tw": "基本資訊",
+    "key": "acm.common.header.base_info"
+  },
+  {
+    "zh-cn": "视图定义",
+    "zh-tw": "檢視定義",
+    "key": "acm.common.header.view_info"
+  },
+  {
+    "zh-cn": "所有异常设备",
+    "zh-tw": "所有異常裝置",
+    "key": "acm.common.header.filter_all"
+  },
+  {
+    "zh-cn": "当日异常设备",
+    "zh-tw": "當日異常裝置",
+    "key": "acm.common.header.filter_today"
+  },
+  {
+    "zh-cn": "最近一次连通失败设备",
+    "zh-tw": "最近一次連通失敗裝置",
+    "key": "acm.common.header.filter_recently"
+  },
+  {
+    "zh-cn": "连通率小于50%设备",
+    "zh-tw": "連通率小於50%裝置",
+    "key": "acm.common.header.filter_low"
+  },
+  {
+    "zh-cn": "组内设备列表",
+    "zh-tw": "組內裝置列表",
+    "key": "acm.common.header.group_asset"
+  },
+  {
+    "zh-cn": "标签内设备列表",
+    "zh-tw": "標籤內裝置列表",
+    "key": "acm.common.header.tag_asset"
+  },
+  {
+    "zh-cn": "团队名称",
+    "zh-tw": "團隊名稱",
+    "key": "acm.common.header.team_name"
+  },
+  {
+    "zh-cn": "资源组数",
+    "zh-tw": "資源組數",
+    "key": "acm.common.header.res_group_count"
+  },
+  {
+    "zh-cn": "用户数",
+    "zh-tw": "使用者數",
+    "key": "acm.common.header.user_count"
+  },
+  {
+    "zh-cn": "资源组名",
+    "zh-tw": "資源組名",
+    "key": "acm.common.header.res_group_name"
+  },
+  {
+    "zh-cn": "模块名称",
+    "zh-tw": "模組名稱",
+    "key": "acm.common.header.module_name"
+  },
+  {
+    "zh-cn": "可读",
+    "zh-tw": "可讀",
+    "key": "acm.common.header.readable"
+  },
+  {
+    "zh-cn": "可写",
+    "zh-tw": "可寫",
+    "key": "acm.common.header.writable"
+  },
+  {
+    "zh-cn": "可执行",
+    "zh-tw": "可執行",
+    "key": "acm.common.header.executable"
+  },
+  {
+    "zh-cn": "登录名",
+    "zh-tw": "登入名",
+    "key": "acm.common.header.login_name"
+  },
+  {
+    "zh-cn": "用户名",
+    "zh-tw": "使用者名稱",
+    "key": "acm.common.header.user_name"
+  },
+  {
+    "zh-cn": "邮箱地址",
+    "zh-tw": "郵箱地址",
+    "key": "acm.common.header.email"
+  },
+  {
+    "zh-cn": "自动化资产录入",
+    "zh-tw": "自動化資產錄入",
+    "key": "acm.common.button.entry_automatic_assert"
+  },
+  {
+    "zh-cn": "添加到标签",
+    "zh-tw": "新增到標籤",
+    "key": "acm.common.button.add_to_tag"
+  },
+  {
+    "zh-cn": "添加到分组",
+    "zh-tw": "新增到分組",
+    "key": "acm.common.button.add_to_group"
+  },
+  {
+    "zh-cn": "资产上线",
+    "zh-tw": "資產上線",
+    "key": "acm.common.button.be_online_assert"
+  },
+  {
+    "zh-cn": "资产下线",
+    "zh-tw": "資產下線",
+    "key": "acm.common.button.be_offline_assert"
+  },
+  {
+    "zh-cn": "删除",
+    "zh-tw": "刪除",
+    "key": "acm.common.button.remove_assert"
+  },
+  {
+    "zh-cn": "资产信息导入模板下载",
+    "zh-tw": "資產資訊匯入模板下載",
+    "key": "acm.common.button.template_assert"
+  },
+  {
+    "zh-cn": "资产信息导出",
+    "zh-tw": "資產資訊匯出",
+    "key": "acm.common.button.export_assert"
+  },
+  {
+    "zh-cn": "新增Ansible连接配置",
+    "zh-tw": "新增Ansible連線配置",
+    "key": "acm.common.button.add_ansible_config"
+  },
+  {
+    "zh-cn": "设备纳管",
+    "zh-tw": "裝置納管",
+    "key": "acm.common.button.inductive_management"
+  },
+  {
+    "zh-cn": "批量设备纳管",
+    "zh-tw": "批次裝置納管",
+    "key": "acm.common.button.batch_inductive_management"
+  },
+  {
+    "zh-cn": "检查连通性",
+    "zh-tw": "執行連通訊檢查",
+    "key": "acm.common.button.run_check_device_connectivity"
+  },
+  {
+    "zh-cn": "采集信息",
+    "zh-tw": "執行裝置資訊採集",
+    "key": "acm.common.button.run_collect_device_information"
+  },
+  {
+    "zh-cn": "模板下载",
+    "zh-tw": "模板下載",
+    "key": "acm.common.button.template_inductive"
+  },
+  {
+    "zh-cn": "新增模型",
+    "zh-tw": "新增模型",
+    "key": "acm.common.button.add_model"
+  },
+  {
+    "zh-cn": "导入模型",
+    "zh-tw": "匯入模型",
+    "key": "acm.common.button.import_model"
+  },
+  {
+    "zh-cn": "导入资产",
+    "zh-tw": "匯入資產",
+    "key": "acm.common.button.import_assert"
+  },
+  {
+    "zh-cn": "资产模型导入模板下载",
+    "zh-tw": "資產模型匯入模板下載",
+    "key": "acm.common.button.template_model"
+  },
+  {
+    "zh-cn": "移出分组内的设备",
+    "zh-tw": "移出分組內的裝置",
+    "key": "acm.common.button.remove_asset_from_group"
+  },
+  {
+    "zh-cn": "移出标签内的设备",
+    "zh-tw": "移出標籤內的裝置",
+    "key": "acm.common.button.remove_asset_from_tag"
+  },
+  {
+    "zh-cn": "进入管理员面板",
+    "zh-tw": "進入管理員面板",
+    "key": "acm.common.button.entry_admin"
+  },
+  {
+    "zh-cn": "新建",
+    "zh-tw": "新建",
+    "key": "acm.common.select.new"
+  },
+  {
+    "zh-cn": "选择已有",
+    "zh-tw": "選擇已有",
+    "key": "acm.common.select.existing"
+  },
+  {
+    "zh-cn": "注意：\n使用自动化设备录入需满足， 该资产模型的唯一模型属性有且只能是纳管IP\n支持文本格式的IP，文本格式支持：逗号分割、空格分割、换行分割中的一种或多种，同时支持网段录入。例如：192.168.1.0/26",
+    "zh-tw": "注意：\n使用自動化裝置錄入需滿足， 該資產模型的唯一模型屬性有且只能是納管IP\n支援文字格式的IP，文字格式支援：逗號分割、空格分割、換行分割中的一種或多種，同時支援網段錄入。例如：192.168.1.0/26",
+    "key": "acm.common.text.auto_asset_comment"
+  },
+  {
+    "zh-cn": "注意：\n自动化配置是针对每一个自动化资产的默认连接配置进行修改，使用场景如下：\n执行用户/密码、登录用户/密码、执行引擎节点配置等",
+    "zh-tw": "注意：\n自動化配置是針對每一個自動化資產的預設連線配置進行修改，使用場景如下：\n執行使用者/密碼、登入使用者/密碼、執行引擎節點配置等",
+    "key": "acm.common.text.automation_comment"
+  },
+  {
+    "zh-cn": "注意：\nAnsible连接配置是针对Oplus支持的自动化设备类型默认配置进行修改，使用场景如下：\n是否提权、提权方式、连接方式等",
+    "zh-tw": "注意：\nAnsible連線配置是針對Oplus支援的自動化裝置型別預設配置進行修改，使用場景如下：\n是否提權、提權方式、連線方式等",
+    "key": "acm.common.text.ansible_config_comment"
+  },
+  {
+    "zh-cn": "注意：\n请先下载资产模型属性导入Excel模板，Excel模板中Sheet名字即为资产模型代码，模板只能填写，属性代码、是否唯一、是否必填。\n如若需要设置模型属性的其他信息，请导入后编辑该资产模型。",
+    "zh-tw": "注意：\n請先下載資產模型屬性匯入Excel模板，Excel模板中Sheet名字即為資產模型程式碼，模板只能填寫，屬性程式碼、是否唯一、是否必填。\n如若需要設定模型屬性的其他資訊，請匯入後編輯該資產模型。",
+    "key": "acm.common.text.model_import_comment"
+  },
+  {
+    "zh-cn": "请输入以空格分隔的Ansible连接配置配置，例如：ansible_become=true ansible_connection=shh ansible_become_method=su",
+    "zh-tw": "請輸入以空格分隔的Ansible連線配置配置，例如：ansible_become=true ansible_connection=shh ansible_become_method=su",
+    "key": "acm.common.text.add_ansible_config_comment"
+  },
+  {
+    "zh-cn": "是否上线选中的资产信息，点击确定继续执行",
+    "zh-tw": "是否上線選中的資產資訊，點選確定繼續執行",
+    "key": "acm.common.text.be_online_assert_comment"
+  },
+  {
+    "zh-cn": "是否下线选中的资产信息，点击确定继续执行",
+    "zh-tw": "是否下線選中的資產資訊，點選確定繼續執行",
+    "key": "acm.common.text.be_offline_assert_comment"
+  },
+  {
+    "zh-cn": "是否删除选中的资产信息，点击确定继续执行",
+    "zh-tw": "是否刪除選中的資產資訊，點選確定繼續執行",
+    "key": "acm.common.text.remove_assert_comment"
+  },
+  {
+    "zh-cn": "请选择需要导出的资产类型",
+    "zh-tw": "請選擇需要匯出的資產型別",
+    "key": "acm.common.text.export_assert_comment"
+  },
+  {
+    "zh-cn": "连通性检查将花费几分钟到半小时不等的时间，点击确定开始",
+    "zh-tw": "連通性檢查將花費幾分鐘到半小時不等的時間，點選確定開始",
+    "key": "acm.common.text.run_check_device_connectivity_comment"
+  },
+  {
+    "zh-cn": "采集信息将花费几分钟到半小时不等的时间，点击确定开始",
+    "zh-tw": "採集資訊將花費幾分鐘到半小時不等的時間，點選確定開始",
+    "key": "acm.common.text.manually_collect_device_information_comment"
+  },
+  {
+    "zh-cn": "资产代码不能为空且仅支持英文大小写字母、数字或下划线",
+    "zh-tw": "資產程式碼不能為空且僅支援英文大小寫字母、數字或下劃線",
+    "key": "acm.common.text.assert_code_validate_comment"
+  },
+  {
+    "zh-cn": "不使用模板",
+    "zh-tw": "不使用模板",
+    "key": "acm.common.text.not_using_templates"
+  },
+  {
+    "zh-cn": "支持",
+    "zh-tw": "支援",
+    "key": "acm.common.text.support"
+  },
+  {
+    "zh-cn": "不支持",
+    "zh-tw": "不支援",
+    "key": "acm.common.text.not_support"
+  },
+  {
+    "zh-cn": "内置分组",
+    "zh-tw": "內建分組",
+    "key": "acm.common.text.inner_group"
+  },
+  {
+    "zh-cn": "此为Ansible或者Tower引擎节点",
+    "zh-tw": "此為Ansible或者Tower引擎節點",
+    "key": "acm.common.text.engine_node_comment"
+  },
+  {
+    "zh-cn": "选择团队",
+    "zh-tw": "選擇團隊",
+    "key": "acm.common.text.choose_team"
+  },
+  {
+    "zh-cn": "选择资源组",
+    "zh-tw": "選擇資源組",
+    "key": "acm.common.text.choose_group"
+  },
+  {
+    "zh-cn": "选择权限",
+    "zh-tw": "選擇許可權",
+    "key": "acm.common.text.choose_permission"
+  },
+  {
+    "zh-cn": "资产信息",
+    "zh-tw": "資產資訊",
+    "key": "acm.menu.assert_info.title"
+  },
+  {
+    "zh-cn": "资产模型",
+    "zh-tw": "資產模型",
+    "key": "acm.menu.assert_model.title"
+  },
+  {
+    "zh-cn": "数据管理",
+    "zh-tw": "資料管理",
+    "key": "acm.menu.data_management.title"
+  },
+  {
+    "zh-cn": "自动化配置",
+    "zh-tw": "自動化配置",
+    "key": "acm.menu.automation_configuration.title"
+  },
+  {
+    "zh-cn": "异常设备",
+    "zh-tw": "異常裝置",
+    "key": "acm.menu.abnormal_equipment.title"
+  },
+  {
+    "zh-cn": "资源权限",
+    "zh-tw": "許可權分發",
+    "key": "acm.menu.permission_distribution.title"
+  },
+  {
+    "zh-cn": "操作记录",
+    "zh-tw": "操作記錄",
+    "key": "acm.menu.log_report.title"
+  },
+  {
+    "zh-cn": "系统管理",
+    "zh-tw": "系統管理",
+    "key": "adm.title"
+  },
+  {
+    "zh-cn": "请通过右上方的”管理“菜单选择管理功能",
+    "zh-tw": "請透過右上方的”管理“選單選擇管理功能",
+    "key": "adm.sys_admin.desc"
+  },
+  {
+    "zh-cn": "租户数据",
+    "zh-tw": "租戶資料",
+    "key": "adm.menu.tenants"
+  },
+  {
+    "zh-cn": "应用资源",
+    "zh-tw": "應用資源",
+    "key": "adm.menu.appres"
+  },
+  {
+    "zh-cn": "参数配置",
+    "zh-tw": "參數配置",
+    "key": "adm.menu.params"
+  },
+  {
+    "zh-cn": "团队管理",
+    "zh-tw": "團隊管理",
+    "key": "adm.menu.teams"
+  },
+  {
+    "zh-cn": "应用资源管理",
+    "zh-tw": "應用資源管理",
+    "key": "adm.appres.title"
+  },
+  {
+    "zh-cn": "对页面、数据集、作业等资源进行管理，在这里可以对资源进行分类管理，不能创建和修改资源。如果要创建资源，需要到相应的应用中完成。",
+    "zh-tw": "對頁面、資料集、作業等資源進行管理，在這裡可以對資源進行分類管理，不能建立和修改資源。如果要建立資源，需要到相應的應用中完成。",
+    "key": "adm.appres.desc"
+  },
+  {
+    "zh-cn": "系统参数配置",
+    "zh-tw": "系統參數配置",
+    "key": "adm.content.sys_param_config"
+  },
+  {
+    "zh-cn": "参数名",
+    "zh-tw": "參數名",
+    "key": "adm.content.param_name"
+  },
+  {
+    "zh-cn": "参数值",
+    "zh-tw": "參數值",
+    "key": "adm.content.param_value"
+  },
+  {
+    "zh-cn": "说明",
+    "zh-tw": "說明",
+    "key": "adm.content.explain"
+  },
+  {
+    "zh-cn": "导出页面",
+    "zh-tw": "匯出頁面",
+    "key": "adm.content.export_page"
+  },
+  {
+    "zh-cn": "编码",
+    "zh-tw": "編碼",
+    "key": "adm.content.code"
+  },
+  {
+    "zh-cn": "数据维护",
+    "zh-tw": "資料維護",
+    "key": "adm.content.data_maintenance"
+  },
+  {
+    "zh-cn": "导入配置",
+    "zh-tw": "匯入配置",
+    "key": "adm.content.import_config"
+  },
+  {
+    "zh-cn": "导入配置信息",
+    "zh-tw": "匯入配置資訊",
+    "key": "adm.content.import_config_info"
+  },
+  {
+    "zh-cn": "请选择租户",
+    "zh-tw": "請選擇租戶",
+    "key": "adm.content.select_tenant"
+  },
+  {
+    "zh-cn": "租户信息",
+    "zh-tw": "租戶資訊",
+    "key": "adm.content.tenant_info"
+  },
+  {
+    "zh-cn": "选择要导入的文件",
+    "zh-tw": "選擇要匯入的檔案",
+    "key": "adm.content.select_import_file"
+  },
+  {
+    "zh-cn": "开始导出",
+    "zh-tw": "開始匯出",
+    "key": "adm.content.start_export"
+  },
+  {
+    "zh-cn": "创建参数",
+    "zh-tw": "建立參數",
+    "key": "adm.content.add"
+  },
+  {
+    "zh-cn": "新增参数",
+    "zh-tw": "新增參數",
+    "key": "adm.content.add_param"
+  },
+  {
+    "zh-cn": "修改参数",
+    "zh-tw": "修改參數",
+    "key": "adm.content.update_param"
+  },
+  {
+    "zh-cn": "参数详情",
+    "zh-tw": "參數詳情",
+    "key": "adm.content.param_desc"
+  },
+  {
+    "zh-cn": "只允许数字（0-9）、小写字母（a-z）、下划线（_)、横线（-).",
+    "zh-tw": "只允許數字（0-9）、小寫字母（a-z）、下劃線（_)、橫線（-).",
+    "key": "adm.content.param_value_tips"
+  },
+  {
+    "zh-cn": "删除成功",
+    "zh-tw": "刪除成功",
+    "key": "adm.content.delete_success"
+  },
+  {
+    "zh-cn": "删除失败!",
+    "zh-tw": "刪除失敗!",
+    "key": "adm.content.delete_error"
+  },
+  {
+    "zh-cn": "警告",
+    "zh-tw": "警告",
+    "key": "adm.content.warning"
+  },
+  {
+    "zh-cn": "确定删除",
+    "zh-tw": "確定刪除",
+    "key": "adm.content.ok_delete"
+  },
+  {
+    "zh-cn": "确定删除吗？",
+    "zh-tw": "確定刪除嗎？",
+    "key": "adm.content.are_you_sure_to_delete"
+  },
+  {
+    "zh-cn": "数据导入成功",
+    "zh-tw": "資料匯入成功",
+    "key": "adm.content.data_import_success"
+  },
+  {
+    "zh-cn": "数据导入失败",
+    "zh-tw": "資料匯入失敗",
+    "key": "adm.content.data_import_error"
+  },
+  {
+    "zh-cn": "用于管理设置租户需要使用到的参数信息。例如公共参数、系统默认参数等",
+    "zh-tw": "用於管理設定租戶需要使用到的參數資訊。例如公共參數、系統預設參數等",
+    "key": "adm.content.mcd_config_index1"
+  },
+  {
+    "zh-cn": "可配置租户相关的App、Page、DTS、一键作业等",
+    "zh-tw": "可配置租戶相關的App、Page、DTS、一鍵作業等",
+    "key": "adm.content.mcd_config_index2"
+  },
+  {
+    "zh-cn": "可配置团队及相关的资源组",
+    "zh-tw": "可配置團隊及相關的資源組",
+    "key": "adm.content.mcd_config_index3"
+  },
+  {
+    "zh-cn": "名称",
+    "zh-tw": "名稱",
+    "key": "adm.content.sysinfo_name"
+  },
+  {
+    "zh-cn": "版本",
+    "zh-tw": "版本",
+    "key": "adm.content.sysinfo_edition"
+  },
+  {
+    "zh-cn": "打包时间",
+    "zh-tw": "打包時間",
+    "key": "adm.content.sysinfo_pack_time"
+  },
+  {
+    "zh-cn": "代码版本",
+    "zh-tw": "程式碼版本",
+    "key": "adm.content.sysinfo_code_edition"
+  },
+  {
+    "zh-cn": "团队",
+    "zh-tw": "團隊",
+    "key": "team.home.title"
+  },
+  {
+    "zh-cn": "团队列表",
+    "zh-tw": "團隊列表",
+    "key": "team.home.list"
+  },
+  {
+    "zh-cn": "创建团队",
+    "zh-tw": "建立團隊",
+    "key": "team.home.createTeam"
+  },
+  {
+    "zh-cn": "编辑团队",
+    "zh-tw": "編輯團隊",
+    "key": "team.home.editTeam"
+  },
+  {
+    "zh-cn": "查找 角色",
+    "zh-tw": "查詢 角色",
+    "key": "team.home.search"
+  },
+  {
+    "zh-cn": "团队 {{ param }} 创建成功",
+    "zh-tw": "團隊 {{ param }} 建立成功",
+    "key": "team.created"
+  },
+  {
+    "zh-cn": "团队 {{ param }} 更新成功",
+    "zh-tw": "團隊 {{ param }} 更新成功",
+    "key": "team.updated"
+  },
+  {
+    "zh-cn": "团队 {{ param }} 删除成功",
+    "zh-tw": "團隊 {{ param }} 刪除成功",
+    "key": "team.deleted"
+  },
+  {
+    "zh-cn": "确定删除团队 {{ name }} 吗？",
+    "zh-tw": "確定刪除團隊 {{ name }} 嗎？",
+    "key": "team.delete.question"
+  },
+  {
+    "zh-cn": "团队详情",
+    "zh-tw": "團隊詳情",
+    "key": "team.detail.title"
+  },
+  {
+    "zh-cn": "名称",
+    "zh-tw": "名稱",
+    "key": "team.name"
+  },
+  {
+    "zh-cn": "目标",
+    "zh-tw": "目標",
+    "key": "team.target"
+  },
+  {
+    "zh-cn": "描述",
+    "zh-tw": "描述",
+    "key": "team.description"
+  },
+  {
+    "zh-cn": "权限",
+    "zh-tw": "許可權",
+    "key": "team.permissions"
+  },
+  {
+    "zh-cn": "用户",
+    "zh-tw": "使用者",
+    "key": "team.users"
+  },
+  {
+    "zh-cn": "租户",
+    "zh-tw": "租戶",
+    "key": "team.tenantName"
+  },
+  {
+    "zh-cn": "更新时间",
+    "zh-tw": "更新時間",
+    "key": "team.update_time"
+  },
+  {
+    "zh-cn": "操作",
+    "zh-tw": "操作",
+    "key": "team.operation"
+  },
+  {
+    "zh-cn": "资产",
+    "zh-tw": "資產",
+    "key": "app.nav.acm"
+  },
+  {
+    "zh-cn": "命令",
+    "zh-tw": "命令",
+    "key": "app.nav.cmd"
+  },
+  {
+    "zh-cn": "脚本",
+    "zh-tw": "腳本",
+    "key": "app.nav.gfs"
+  },
+  {
+    "zh-cn": "作业",
+    "zh-tw": "作業",
+    "key": "app.nav.jao"
+  },
+  {
+    "zh-cn": "应用",
+    "zh-tw": "應用",
+    "key": "app.nav.applet"
+  },
+  {
+    "zh-cn": "系统管理",
+    "zh-tw": "系統管理",
+    "key": "app.nav.adm"
+  },
+  {
+    "zh-cn": "应用资源",
+    "zh-tw": "應用資源",
+    "key": "app.nav.adm_appres"
+  },
+  {
+    "zh-cn": "数据源",
+    "zh-tw": "資料來源",
+    "key": "app.nav.adm_dts"
+  },
+  {
+    "zh-cn": "系统巡检",
+    "zh-tw": "系統巡檢",
+    "key": "app.nav.cac"
+  },
+  {
+    "zh-cn": "系统配置",
+    "zh-tw": "系統配置",
+    "key": "app.nav.adm_config"
+  },
+  {
+    "zh-cn": "自定义页面",
+    "zh-tw": "自定義頁面",
+    "key": "app.service.customPage"
+  },
+  {
+    "zh-cn": "内部页面",
+    "zh-tw": "內部頁面",
+    "key": "app.service.internalPage"
+  },
+  {
+    "zh-cn": "外部页面",
+    "zh-tw": "外部頁面",
+    "key": "app.service.externalPage"
+  },
+  {
+    "zh-cn": "找不到应用",
+    "zh-tw": "找不到應用",
+    "key": "app.service.messages.error.findAppletByCode.title"
+  },
+  {
+    "zh-cn": "<p>找不到应用{{name}}，可能的原因是：</p><ul><li>应用代码不存在</li></ul>",
+    "zh-tw": "<p>找不到應用{{name}}，可能的原因是：</p><ul><li>應用程式碼不存在</li></ul>",
+    "key": "app.service.messages.error.findAppletByCode.body"
+  },
+  {
+    "zh-cn": "对不起，该应用未上传帮助文档",
+    "zh-tw": "對不起，該應用未上傳幫助文件",
+    "key": "app.help.noDoc"
+  },
+  {
+    "zh-cn": "出错了",
+    "zh-tw": "出錯了",
+    "key": "app.help.messages.warn.findAppletByCode.error"
+  },
+  {
+    "zh-cn": "应用不存在",
+    "zh-tw": "應用不存在",
+    "key": "app.help.messages.warn.findAppletByCode.noExit"
+  },
+  {
+    "zh-cn": "未指定应用名称",
+    "zh-tw": "未指定應用名稱",
+    "key": "app.help.messages.warn.findAppletByCode.noName"
+  },
+  {
+    "zh-cn": "默认排序",
+    "zh-tw": "預設排序",
+    "key": "app.list.sort"
+  },
+  {
+    "zh-cn": "创建时间",
+    "zh-tw": "建立時間",
+    "key": "app.list.createdAt"
+  },
+  {
+    "zh-cn": "修改时间",
+    "zh-tw": "修改時間",
+    "key": "app.list.modifiedAt"
+  },
+  {
+    "zh-cn": "名称",
+    "zh-tw": "名稱",
+    "key": "app.list.title"
+  },
+  {
+    "zh-cn": "应用排序",
+    "zh-tw": "應用排序",
+    "key": "app.list.appSort"
+  },
+  {
+    "zh-cn": "退出排序",
+    "zh-tw": "退出排序",
+    "key": "app.list.exitSort"
+  },
+  {
+    "zh-cn": "停用",
+    "zh-tw": "停用",
+    "key": "app.list.stop"
+  },
+  {
+    "zh-cn": "应用【{{title}}】已删除",
+    "zh-tw": "應用【{{title}}】已刪除",
+    "key": "app.list.messages.info.deleteApplet"
+  },
+  {
+    "zh-cn": "提示",
+    "zh-tw": "提示",
+    "key": "app.list.messages.warn.viewApplet"
+  },
+  {
+    "zh-cn": "该应用未指定入口页面!",
+    "zh-tw": "該應用未指定入口頁面!",
+    "key": "app.list.messages.warn.viewApplet.noEntrance"
+  },
+  {
+    "zh-cn": "查询应用列表出错",
+    "zh-tw": "查詢應用列表出錯",
+    "key": "app.list.messages.error.loadApplets"
+  },
+  {
+    "zh-cn": "更新失败",
+    "zh-tw": "更新失敗",
+    "key": "app.list.messages.error.updateAppletOrder"
+  },
+  {
+    "zh-cn": "删除应用出错",
+    "zh-tw": "刪除應用出錯",
+    "key": "app.list.messages.error.deleteApplet"
+  },
+  {
+    "zh-cn": "删除应用",
+    "zh-tw": "刪除應用",
+    "key": "app.list.messages.confirm.deleteApplet.title"
+  },
+  {
+    "zh-cn": "确认删除应用【{{title}}】吗？",
+    "zh-tw": "確認刪除應用【{{title}}】嗎？",
+    "key": "app.list.messages.confirm.deleteApplet.question"
+  },
+  {
+    "zh-cn": "应用",
+    "zh-tw": "應用",
+    "key": "app.mgmt.name"
+  },
+  {
+    "zh-cn": "页面",
+    "zh-tw": "頁面",
+    "key": "app.mgmt.page"
+  },
+  {
+    "zh-cn": "自定义的页面",
+    "zh-tw": "自定義的頁面",
+    "key": "app.mgmt.page.title"
+  },
+  {
+    "zh-cn": "数据集",
+    "zh-tw": "資料集",
+    "key": "app.mgmt.dataset"
+  },
+  {
+    "zh-cn": "数据集",
+    "zh-tw": "資料集",
+    "key": "app.mgmt.dataset.title"
+  },
+  {
+    "zh-cn": "作业",
+    "zh-tw": "作業",
+    "key": "app.mgmt.job"
+  },
+  {
+    "zh-cn": "一键作业",
+    "zh-tw": "一鍵作業",
+    "key": "app.mgmt.job.title"
+  },
+  {
+    "zh-cn": "应用设置",
+    "zh-tw": "應用設定",
+    "key": "app.mgmt.appConfig"
+  },
+  {
+    "zh-cn": "应用设置",
+    "zh-tw": "應用設定",
+    "key": "app.setting.appConfig"
+  },
+  {
+    "zh-cn": "基本信息",
+    "zh-tw": "基本資訊",
+    "key": "app.setting.basicInfo"
+  },
+  {
+    "zh-cn": "标题",
+    "zh-tw": "標題",
+    "key": "app.setting.title"
+  },
+  {
+    "zh-cn": "Code",
+    "zh-tw": "Code",
+    "key": "app.setting.code"
+  },
+  {
+    "zh-cn": "只允许字母A-Z，下滑线，数字",
+    "zh-tw": "只允許字母A-Z，下滑線，數字",
+    "key": "app.setting.code.placeholder"
+  },
+  {
+    "zh-cn": "应用的唯一代码，保存之后不可更改",
+    "zh-tw": "應用的唯一程式碼，儲存之後不可更改",
+    "key": "app.setting.code_desc"
+  },
+  {
+    "zh-cn": "窗口大小",
+    "zh-tw": "視窗大小",
+    "key": "app.setting.window_size"
+  },
+  {
+    "zh-cn": "版本",
+    "zh-tw": "版本",
+    "key": "app.setting.version"
+  },
+  {
+    "zh-cn": "状态",
+    "zh-tw": "狀態",
+    "key": "app.setting.status"
+  },
+  {
+    "zh-cn": "停用",
+    "zh-tw": "停用",
+    "key": "app.setting.stop"
+  },
+  {
+    "zh-cn": "已发布",
+    "zh-tw": "已釋出",
+    "key": "app.setting.published"
+  },
+  {
+    "zh-cn": "图标和颜色",
+    "zh-tw": "圖示和顏色",
+    "key": "app.setting.icon"
+  },
+  {
+    "zh-cn": "描述",
+    "zh-tw": "描述",
+    "key": "app.setting.description"
+  },
+  {
+    "zh-cn": "内容和导航",
+    "zh-tw": "內容和導航",
+    "key": "app.setting.content"
+  },
+  {
+    "zh-cn": "入口",
+    "zh-tw": "入口",
+    "key": "app.setting.entrance"
+  },
+  {
+    "zh-cn": "入口页面",
+    "zh-tw": "入口頁面",
+    "key": "app.setting.pageEntrance"
+  },
+  {
+    "zh-cn": "页面参数",
+    "zh-tw": "頁面參數",
+    "key": "app.setting.pageParams"
+  },
+  {
+    "zh-cn": "页面地址",
+    "zh-tw": "頁面地址",
+    "key": "app.setting.pageAddress"
+  },
+  {
+    "zh-cn": "示例: #/cac/template/list",
+    "zh-tw": "示例: #/cac/template/list",
+    "key": "app.setting.pageAddress.placeholder1"
+  },
+  {
+    "zh-cn": "示例: http://famessoft.com/",
+    "zh-tw": "示例: http://famessoft.com/",
+    "key": "app.setting.pageAddress.placeholder2"
+  },
+  {
+    "zh-cn": "导航菜单",
+    "zh-tw": "導航選單",
+    "key": "app.setting.navigation"
+  },
+  {
+    "zh-cn": "左侧",
+    "zh-tw": "左側",
+    "key": "app.setting.left"
+  },
+  {
+    "zh-cn": "顶部",
+    "zh-tw": "頂部",
+    "key": "app.setting.top"
+  },
+  {
+    "zh-cn": "深色",
+    "zh-tw": "深色",
+    "key": "app.setting.darkColor"
+  },
+  {
+    "zh-cn": "浅色",
+    "zh-tw": "淺色",
+    "key": "app.setting.lightColor"
+  },
+  {
+    "zh-cn": "显示设置",
+    "zh-tw": "顯示設定",
+    "key": "app.setting.viewConfig"
+  },
+  {
+    "zh-cn": "不显示导航菜单",
+    "zh-tw": "不顯示導航選單",
+    "key": "app.setting.noNav"
+  },
+  {
+    "zh-cn": "不在首页显示",
+    "zh-tw": "不在首頁顯示",
+    "key": "app.setting.notInHome"
+  },
+  {
+    "zh-cn": "菜单项",
+    "zh-tw": "選單項",
+    "key": "app.setting.menu"
+  },
+  {
+    "zh-cn": "菜单项名",
+    "zh-tw": "選單項名",
+    "key": "app.setting.menuName"
+  },
+  {
+    "zh-cn": "关联页面",
+    "zh-tw": "關聯頁面",
+    "key": "app.setting.associatedPage"
+  },
+  {
+    "zh-cn": "图标",
+    "zh-tw": "圖示",
+    "key": "app.setting.menuIcon"
+  },
+  {
+    "zh-cn": "隐藏",
+    "zh-tw": "隱藏",
+    "key": "app.setting.hide"
+  },
+  {
+    "zh-cn": "菜单项名称",
+    "zh-tw": "選單項名稱",
+    "key": "app.setting.menuItem.placeholder"
+  },
+  {
+    "zh-cn": "删除此菜单项",
+    "zh-tw": "刪除此選單項",
+    "key": "app.setting.delItem.title"
+  },
+  {
+    "zh-cn": "帮助文档",
+    "zh-tw": "幫助文件",
+    "key": "app.setting.helpDoc"
+  },
+  {
+    "zh-cn": "上传帮助文档",
+    "zh-tw": "上傳幫助文件",
+    "key": "app.setting.uploadDoc"
+  },
+  {
+    "zh-cn": "删除文档",
+    "zh-tw": "刪除文件",
+    "key": "app.setting.delDoc.title"
+  },
+  {
+    "zh-cn": "注意：只支持pdf格式文件",
+    "zh-tw": "注意：只支援pdf格式檔案",
+    "key": "app.setting.docInfo"
+  },
+  {
+    "zh-cn": "其它",
+    "zh-tw": "其它",
+    "key": "app.setting.other"
+  },
+  {
+    "zh-cn": "删除此应用",
+    "zh-tw": "刪除此應用",
+    "key": "app.setting.delApp"
+  },
+  {
+    "zh-cn": "保存成功.",
+    "zh-tw": "儲存成功.",
+    "key": "app.setting.messages.info.appCreated"
+  },
+  {
+    "zh-cn": "删除成功.",
+    "zh-tw": "刪除成功.",
+    "key": "app.setting.messages.info.deletedApp"
+  },
+  {
+    "zh-cn": "文件上传成功, 应用保存之后生效.",
+    "zh-tw": "檔案上傳成功, 應用儲存之後生效.",
+    "key": "app.setting.messages.info.uploadFile"
+  },
+  {
+    "zh-cn": "帮助文档已移除",
+    "zh-tw": "幫助文件已移除",
+    "key": "app.setting.messages.info.removeDoc1"
+  },
+  {
+    "zh-cn": ", 应用保存之后生效",
+    "zh-tw": ", 應用儲存之後生效",
+    "key": "app.setting.messages.info.removeDoc2"
+  },
+  {
+    "zh-cn": "查询应用信息出错",
+    "zh-tw": "查詢應用資訊出錯",
+    "key": "app.setting.messages.error.queryApp"
+  },
+  {
+    "zh-cn": "判断应用名称是否占用出错",
+    "zh-tw": "判斷應用名稱是否佔用出錯",
+    "key": "app.setting.messages.error.jugeCode"
+  },
+  {
+    "zh-cn": "保存应用出错.",
+    "zh-tw": "儲存應用出錯.",
+    "key": "app.setting.messages.error.appCreated"
+  },
+  {
+    "zh-cn": "删除应用出错.",
+    "zh-tw": "刪除應用出錯.",
+    "key": "app.setting.messages.error.deletedApp"
+  },
+  {
+    "zh-cn": "文件上传出错.",
+    "zh-tw": "檔案上傳出錯.",
+    "key": "app.setting.messages.error.uploadFile"
+  },
+  {
+    "zh-cn": "文件移除出错",
+    "zh-tw": "檔案移除出錯",
+    "key": "app.setting.messages.error.removeFile"
+  },
+  {
+    "zh-cn": "Code被占用",
+    "zh-tw": "Code被佔用",
+    "key": "app.setting.messages.warn.codeUse.title"
+  },
+  {
+    "zh-cn": "请使用其它code",
+    "zh-tw": "請使用其它code",
+    "key": "app.setting.messages.warn.codeUse.body"
+  },
+  {
+    "zh-cn": "确认删除应用【{{title}}】吗?",
+    "zh-tw": "確認刪除應用【{{title}}】嗎?",
+    "key": "app.setting.messages.warn.deleteApp.question"
+  },
+  {
+    "zh-cn": "无效文件.",
+    "zh-tw": "無效檔案.",
+    "key": "app.setting.messages.warn.uploadFile"
+  },
+  {
+    "zh-cn": "文件大小超限",
+    "zh-tw": "檔案大小超限",
+    "key": "app.setting.messages.warn.uploadFile.title"
+  },
+  {
+    "zh-cn": "文件大小不能超过10MB",
+    "zh-tw": "檔案大小不能超過10MB",
+    "key": "app.setting.messages.warn.uploadFile.body"
+  },
+  {
+    "zh-cn": "帮助",
+    "zh-tw": "幫助",
+    "key": "app.view.help"
+  },
+  {
+    "zh-cn": "未设置应用入口",
+    "zh-tw": "未設定應用入口",
+    "key": "app.view.messages.info.entrance"
+  },
+  {
+    "zh-cn": "查询应用信息出错",
+    "zh-tw": "查詢應用資訊出錯",
+    "key": "app.view.messages.error.query"
+  },
+  {
+    "zh-cn": "选择应用",
+    "zh-tw": "選擇應用",
+    "key": "applet.selector.title"
+  },
+  {
+    "zh-cn": "所有应用",
+    "zh-tw": "所有應用",
+    "key": "applet.selector.all"
+  },
+  {
+    "zh-cn": "未分类",
+    "zh-tw": "未分類",
+    "key": "applet.selector.unsorted"
+  },
+  {
+    "zh-cn": "请选择应用",
+    "zh-tw": "請選擇應用",
+    "key": "applet.selector.select_applet"
+  },
+  {
+    "zh-cn": "退出排序",
+    "zh-tw": "退出排序",
+    "key": "applet.list.quit_sort"
+  },
+  {
+    "zh-cn": "应用排序",
+    "zh-tw": "應用排序",
+    "key": "applet.list.sort"
+  },
+  {
+    "zh-cn": "显示停用的应用",
+    "zh-tw": "顯示停用的應用",
+    "key": "applet.list.show_disabled"
+  },
+  {
+    "zh-cn": "密码管理",
+    "zh-tw": "密碼管理",
+    "key": "app_pms.title"
+  },
+  {
+    "zh-cn": "全部",
+    "zh-tw": "全部",
+    "key": "app_pms.common.header.filter_all"
+  },
+  {
+    "zh-cn": "待提交",
+    "zh-tw": "待提交",
+    "key": "app_pms.common.header.filter_new"
+  },
+  {
+    "zh-cn": "待审批",
+    "zh-tw": "待審批",
+    "key": "app_pms.common.header.filter_approving"
+  },
+  {
+    "zh-cn": "已拒绝",
+    "zh-tw": "已拒絕",
+    "key": "app_pms.common.header.filter_reject"
+  },
+  {
+    "zh-cn": "密码生成中",
+    "zh-tw": "密碼生成中",
+    "key": "app_pms.common.header.filter_processing"
+  },
+  {
+    "zh-cn": "密码生成失败",
+    "zh-tw": "密碼生成失敗",
+    "key": "app_pms.common.header.filter_failed"
+  },
+  {
+    "zh-cn": "密码已生成",
+    "zh-tw": "密碼已生成",
+    "key": "app_pms.common.header.filter_success"
+  },
+  {
+    "zh-cn": "密码生成异常",
+    "zh-tw": "密碼生成異常",
+    "key": "app_pms.common.header.filter_exception"
+  },
+  {
+    "zh-cn": "密码已回收",
+    "zh-tw": "密碼已回收",
+    "key": "app_pms.common.header.filter_recovered"
+  },
+  {
+    "zh-cn": "密码回收异常",
+    "zh-tw": "密碼回收異常",
+    "key": "app_pms.common.header.filter_fail_recovered"
+  },
+  {
+    "zh-cn": "用途",
+    "zh-tw": "用途",
+    "key": "app_pms.common.header.use"
+  },
+  {
+    "zh-cn": "申请人",
+    "zh-tw": "申請人",
+    "key": "app_pms.common.header.applicant_user"
+  },
+  {
+    "zh-cn": "申请账户",
+    "zh-tw": "申請賬戶",
+    "key": "app_pms.common.header.applicant_account"
+  },
+  {
+    "zh-cn": "审批时长",
+    "zh-tw": "審批時長",
+    "key": "app_pms.common.header.for_how_long"
+  },
+  {
+    "zh-cn": "申请时间",
+    "zh-tw": "申請時間",
+    "key": "app_pms.common.header.applicant_time"
+  },
+  {
+    "zh-cn": "申请主机",
+    "zh-tw": "申請主機",
+    "key": "app_pms.common.header.applicant_host"
+  },
+  {
+    "zh-cn": "账号",
+    "zh-tw": "賬號",
+    "key": "app_pms.common.header.login_user"
+  },
+  {
+    "zh-cn": "主机",
+    "zh-tw": "主機",
+    "key": "app_pms.common.header.host"
+  },
+  {
+    "zh-cn": "时长",
+    "zh-tw": "時長",
+    "key": "app_pms.common.header.duration"
+  },
+  {
+    "zh-cn": "到期时间",
+    "zh-tw": "到期時間",
+    "key": "app_pms.common.header.due_time"
+  },
+  {
+    "zh-cn": "状态",
+    "zh-tw": "狀態",
+    "key": "app_pms.common.header.state"
+  },
+  {
+    "zh-cn": "审批时间",
+    "zh-tw": "審批時間",
+    "key": "app_pms.common.header.approval_time"
+  },
+  {
+    "zh-cn": "操作",
+    "zh-tw": "操作",
+    "key": "app_pms.common.header.action"
+  },
+  {
+    "zh-cn": "类型",
+    "zh-tw": "型別",
+    "key": "app_pms.common.header.type"
+  },
+  {
+    "zh-cn": "名称",
+    "zh-tw": "名稱",
+    "key": "app_pms.common.header.name"
+  },
+  {
+    "zh-cn": "参数值",
+    "zh-tw": "參數值",
+    "key": "app_pms.common.header.value"
+  },
+  {
+    "zh-cn": "备注",
+    "zh-tw": "備註",
+    "key": "app_pms.common.header.comment"
+  },
+  {
+    "zh-cn": "运行ID",
+    "zh-tw": "執行ID",
+    "key": "app_pms.common.header.run_id"
+  },
+  {
+    "zh-cn": "操作人",
+    "zh-tw": "操作人",
+    "key": "app_pms.common.header.operation_user"
+  },
+  {
+    "zh-cn": "操作详情",
+    "zh-tw": "操作詳情",
+    "key": "app_pms.common.header.operation_detail"
+  },
+  {
+    "zh-cn": "操作概要",
+    "zh-tw": "操作概要",
+    "key": "app_pms.common.header.operation_info"
+  },
+  {
+    "zh-cn": "开始时间",
+    "zh-tw": "開始時間",
+    "key": "app_pms.common.header.start_time"
+  },
+  {
+    "zh-cn": "执行时间",
+    "zh-tw": "執行時間",
+    "key": "app_pms.common.header.execution_time"
+  },
+  {
+    "zh-cn": "状态",
+    "zh-tw": "狀態",
+    "key": "app_pms.common.header.status"
+  },
+  {
+    "zh-cn": "结束时间",
+    "zh-tw": "結束時間",
+    "key": "app_pms.common.header.end_time"
+  },
+  {
+    "zh-cn": "修改方式",
+    "zh-tw": "修改方式",
+    "key": "app_pms.common.header.modify_type"
+  },
+  {
+    "zh-cn": "生成方式",
+    "zh-tw": "生成方式",
+    "key": "app_pms.common.header.generation_type"
+  },
+  {
+    "zh-cn": "手工输入",
+    "zh-tw": "手工輸入",
+    "key": "app_pms.common.header.manual_input"
+  },
+  {
+    "zh-cn": "随机生成",
+    "zh-tw": "隨機生成",
+    "key": "app_pms.common.header.randomly_generated"
+  },
+  {
+    "zh-cn": "用户名称",
+    "zh-tw": "使用者名稱稱",
+    "key": "app_pms.common.header.username"
+  },
+  {
+    "zh-cn": "密码",
+    "zh-tw": "密碼",
+    "key": "app_pms.common.header.password"
+  },
+  {
+    "zh-cn": "密码失效时间",
+    "zh-tw": "密碼失效時間",
+    "key": "app_pms.common.header.password_expiration_time"
+  },
+  {
+    "zh-cn": "已选用户",
+    "zh-tw": "已選使用者",
+    "key": "app_pms.common.header.selected_user"
+  },
+  {
+    "zh-cn": "范围",
+    "zh-tw": "範圍",
+    "key": "app_pms.common.header.scope"
+  },
+  {
+    "zh-cn": "全部",
+    "zh-tw": "全部",
+    "key": "app_pms.common.header.filter_all_host"
+  },
+  {
+    "zh-cn": "选中服务器",
+    "zh-tw": "選中伺服器",
+    "key": "app_pms.common.header.filter_choose_host"
+  },
+  {
+    "zh-cn": "IP",
+    "zh-tw": "IP",
+    "key": "app_pms.common.header.IP"
+  },
+  {
+    "zh-cn": "主机名",
+    "zh-tw": "主機名",
+    "key": "app_pms.common.header.hostname"
+  },
+  {
+    "zh-cn": "密码状态",
+    "zh-tw": "密碼狀態",
+    "key": "app_pms.common.header.password_state"
+  },
+  {
+    "zh-cn": "密码最后修改时间",
+    "zh-tw": "密碼最後修改時間",
+    "key": "app_pms.common.header.last_change_time"
+  },
+  {
+    "zh-cn": "密码检查时间",
+    "zh-tw": "密碼檢查時間",
+    "key": "app_pms.common.header.last_check_time"
+  },
+  {
+    "zh-cn": "申请使用用户",
+    "zh-tw": "申請使用使用者",
+    "key": "app_pms.common.header.application_user"
+  },
+  {
+    "zh-cn": "申请使用时间(小时)",
+    "zh-tw": "申請使用時間(小時)",
+    "key": "app_pms.common.header.application_time"
+  },
+  {
+    "zh-cn": "参数类型",
+    "zh-tw": "參數型別",
+    "key": "app_pms.common.header.parameter_types"
+  },
+  {
+    "zh-cn": "参数名称",
+    "zh-tw": "參數名稱",
+    "key": "app_pms.common.header.parameter_name"
+  },
+  {
+    "zh-cn": "参数值",
+    "zh-tw": "參數值",
+    "key": "app_pms.common.header.parameter_value"
+  },
+  {
+    "zh-cn": "操作时间",
+    "zh-tw": "操作時間",
+    "key": "app_pms.common.header.action_time"
+  },
+  {
+    "zh-cn": "输出",
+    "zh-tw": "輸出",
+    "key": "app_pms.common.header.output"
+  },
+  {
+    "zh-cn": "返回",
+    "zh-tw": "返回",
+    "key": "app_pms.common.button.back_up"
+  },
+  {
+    "zh-cn": "新增模型",
+    "zh-tw": "新增模型",
+    "key": "app_pms.common.button.add_model"
+  },
+  {
+    "zh-cn": "导入模型",
+    "zh-tw": "匯入模型",
+    "key": "app_pms.common.button.import_model"
+  },
+  {
+    "zh-cn": "导入资产",
+    "zh-tw": "匯入資產",
+    "key": "app_pms.common.button.import_assert"
+  },
+  {
+    "zh-cn": "资产模型导入模板下载",
+    "zh-tw": "資產模型匯入模板下載",
+    "key": "app_pms.common.button.template_model"
+  },
+  {
+    "zh-cn": "申请临时密码",
+    "zh-tw": "申請臨時密碼",
+    "key": "app_pms.common.button.request_temporary_password"
+  },
+  {
+    "zh-cn": "进入管理员面板",
+    "zh-tw": "進入管理員面板",
+    "key": "app_pms.common.button.administrator_panel"
+  },
+  {
+    "zh-cn": "批量修改",
+    "zh-tw": "批次修改",
+    "key": "app_pms.common.button.batch_modify"
+  },
+  {
+    "zh-cn": "选择修改",
+    "zh-tw": "選擇修改",
+    "key": "app_pms.common.button.choose_modify"
+  },
+  {
+    "zh-cn": "检查密码状态",
+    "zh-tw": "檢查密碼狀態",
+    "key": "app_pms.common.button.check_password_state"
+  },
+  {
+    "zh-cn": "重置密码",
+    "zh-tw": "重置密碼",
+    "key": "app_pms.common.button.revert_password"
+  },
+  {
+    "zh-cn": "账户密码导出",
+    "zh-tw": "賬戶密碼匯出",
+    "key": "app_pms.common.button.export_password"
+  },
+  {
+    "zh-cn": "导入初始化密码",
+    "zh-tw": "匯入初始化密碼",
+    "key": "app_pms.common.button.import_init_password"
+  },
+  {
+    "zh-cn": "模板下载",
+    "zh-tw": "模板下載",
+    "key": "app_pms.common.button.template_down"
+  },
+  {
+    "zh-cn": "确认检查",
+    "zh-tw": "確認檢查",
+    "key": "app_pms.common.button.confirm_the_inspection"
+  },
+  {
+    "zh-cn": "确认重置密码",
+    "zh-tw": "確認重置密碼",
+    "key": "app_pms.common.button.confirm_the_revert_password"
+  },
+  {
+    "zh-cn": "提交",
+    "zh-tw": "提交",
+    "key": "app_pms.common.button.commit"
+  },
+  {
+    "zh-cn": "查看密码",
+    "zh-tw": "檢視密碼",
+    "key": "app_pms.common.button.cat_password"
+  },
+  {
+    "zh-cn": "再次申请",
+    "zh-tw": "再次申請",
+    "key": "app_pms.common.button.to_apply_for_again"
+  },
+  {
+    "zh-cn": "审批",
+    "zh-tw": "審批",
+    "key": "app_pms.common.button.approval"
+  },
+  {
+    "zh-cn": "操作历史",
+    "zh-tw": "操作歷史",
+    "key": "app_pms.common.button.action_history"
+  },
+  {
+    "zh-cn": "修改密码中",
+    "zh-tw": "修改密碼中",
+    "key": "app_pms.common.button.changing_the_password"
+  },
+  {
+    "zh-cn": "批准并执行",
+    "zh-tw": "批准並執行",
+    "key": "app_pms.common.button.approve_and_execute"
+  },
+  {
+    "zh-cn": "拒绝",
+    "zh-tw": "拒絕",
+    "key": "app_pms.common.button.reject"
+  },
+  {
+    "zh-cn": "新建",
+    "zh-tw": "新建",
+    "key": "app_pms.common.select.new"
+  },
+  {
+    "zh-cn": "选择已有",
+    "zh-tw": "選擇已有",
+    "key": "app_pms.common.select.existing"
+  },
+  {
+    "zh-cn": "支持",
+    "zh-tw": "支援",
+    "key": "app_pms.common.text.support"
+  },
+  {
+    "zh-cn": "不支持",
+    "zh-tw": "不支援",
+    "key": "app_pms.common.text.not_support"
+  },
+  {
+    "zh-cn": "内置分组",
+    "zh-tw": "內建分組",
+    "key": "app_pms.common.text.inner_group"
+  },
+  {
+    "zh-cn": "密码默认长度为8～16位，由数字、大小写字母、~!@$%&_组成",
+    "zh-tw": "密碼預設長度為8～16位，由數字、大小寫字母、~!@$%&_組成",
+    "key": "app_pms.common.text.password_comment"
+  },
+  {
+    "zh-cn": "密码修改成功后的有效时间，单位为小时。超过此时间密码将被重置。如果永久有效，填写0",
+    "zh-tw": "密碼修改成功後的有效時間，單位為小時。超過此時間密碼將被重置。如果永久有效，填寫0",
+    "key": "app_pms.common.text.password_expiration_time_comment"
+  },
+  {
+    "zh-cn": "是否提交?",
+    "zh-tw": "是否提交?",
+    "key": "app_pms.common.text.commit_comment"
+  },
+  {
+    "zh-cn": "是否删除申请单?",
+    "zh-tw": "是否刪除申請單?",
+    "key": "app_pms.common.text.delete_applicant_comment"
+  },
+  {
+    "zh-cn": "检查密码状态会验证数据库中的用户密码是否与服务器上的密码一致",
+    "zh-tw": "檢查密碼狀態會驗證資料庫中的使用者密碼是否與伺服器上的密碼一致",
+    "key": "app_pms.common.text.check_password_status_comment"
+  },
+  {
+    "zh-cn": "重置密码会根据密码重置策略，使用初始密码或者生成一个随机密码重新设置服务器上的用户密码",
+    "zh-tw": "重置密碼會根據密碼重置策略，使用初始密碼或者生成一個隨機密碼重新設定伺服器上的使用者密碼",
+    "key": "app_pms.common.text.revert_password_comment"
+  },
+  {
+    "zh-cn": "将需要修改的密码信息，按模板填写并上传。系统将根据文件中的信息，批量修改对应主机的用户密码。修改后的密码作为初始密码",
+    "zh-tw": "將需要修改的密碼資訊，按模板填寫並上傳。系統將根據檔案中的資訊，批次修改對應主機的使用者密碼。修改後的密碼作為初始密碼",
+    "key": "app_pms.common.text.import_password_comment"
+  },
+  {
+    "zh-cn": "申请审批",
+    "zh-tw": "申請審批",
+    "key": "app_pms.menu.apply_for_approval.title"
+  },
+  {
+    "zh-cn": "参数配置",
+    "zh-tw": "參數配置",
+    "key": "app_pms.menu.parameter_configuration.title"
+  },
+  {
+    "zh-cn": "操作记录",
+    "zh-tw": "操作記錄",
+    "key": "app_pms.menu.log_report.title"
+  },
+  {
+    "zh-cn": "软件管理",
+    "zh-tw": "軟體管理",
+    "key": "app_spm.title"
+  },
+  {
+    "zh-cn": "待升级软件包",
+    "zh-tw": "待升級軟體包",
+    "key": "app_spm.common.table_title.upgraded_package"
+  },
+  {
+    "zh-cn": "升级主机",
+    "zh-tw": "升級主機",
+    "key": "app_spm.common.table_title.upgraded_machine"
+  },
+  {
+    "zh-cn": "待回退软件包",
+    "zh-tw": "待回退軟體包",
+    "key": "app_spm.common.table_title.await_rollback_package"
+  },
+  {
+    "zh-cn": "回退主机",
+    "zh-tw": "回退主機",
+    "key": "app_spm.common.table_title.rollback_machine"
+  },
+  {
+    "zh-cn": "待卸载软件包",
+    "zh-tw": "待解除安裝軟體包",
+    "key": "app_spm.common.table_title.await_uninstall_package"
+  },
+  {
+    "zh-cn": "卸载主机",
+    "zh-tw": "解除安裝主機",
+    "key": "app_spm.common.table_title.uninstall_machine"
+  },
+  {
+    "zh-cn": "待安装软件包",
+    "zh-tw": "待安裝軟體包",
+    "key": "app_spm.common.table_title.await_install_package"
+  },
+  {
+    "zh-cn": "安装主机",
+    "zh-tw": "安裝主機",
+    "key": "app_spm.common.table_title.install_machine"
+  },
+  {
+    "zh-cn": "开始升级",
+    "zh-tw": "開始升級",
+    "key": "app_spm.common.button.start_upgrade"
+  },
+  {
+    "zh-cn": "点击确定将更新选定的软件包",
+    "zh-tw": "點選確定將更新選定的軟體包",
+    "key": "app_spm.common.button.start_upgrade_confirm"
+  },
+  {
+    "zh-cn": "开始回退",
+    "zh-tw": "開始回退",
+    "key": "app_spm.common.button.start_rollback"
+  },
+  {
+    "zh-cn": "点击确定将更新选定的软件包？",
+    "zh-tw": "點選確定將更新選定的軟體包？",
+    "key": "app_spm.common.button.start_rollback_confirm"
+  },
+  {
+    "zh-cn": "配置仓库",
+    "zh-tw": "配置倉庫",
+    "key": "app_spm.common.button.configure_repo"
+  },
+  {
+    "zh-cn": "是否将选定镜像源配置到选定主机，点击确定开始配置镜像源？",
+    "zh-tw": "是否將選定映象源配置到選定主機，點選確定開始配置映象源？",
+    "key": "app_spm.common.button.configure_repo_confirm"
+  },
+  {
+    "zh-cn": "安装选中软件包",
+    "zh-tw": "安裝選中軟體包",
+    "key": "app_spm.common.button.install_selected_packages"
+  },
+  {
+    "zh-cn": "确定将所选择软件包安装？",
+    "zh-tw": "確定將所選擇軟體包安裝？",
+    "key": "app_spm.common.button.install_selected_packages_confirm"
+  },
+  {
+    "zh-cn": "开始卸载",
+    "zh-tw": "開始解除安裝",
+    "key": "app_spm.common.button.start_uninstall"
+  },
+  {
+    "zh-cn": "点击确定将卸载选定的软件包",
+    "zh-tw": "點選確定將解除安裝選定的軟體包",
+    "key": "app_spm.common.button.start_uninstall_confirm"
+  },
+  {
+    "zh-cn": "开始安装",
+    "zh-tw": "開始安裝",
+    "key": "app_spm.common.button.start_install"
+  },
+  {
+    "zh-cn": "点击确定将安装选定的软件包",
+    "zh-tw": "點選確定將安裝選定的軟體包",
+    "key": "app_spm.common.button.start_install_confirm"
+  },
+  {
+    "zh-cn": "为主机配置仓库",
+    "zh-tw": "為主機配置倉庫",
+    "key": "app_spm.common.button.config_repo_machine"
+  },
+  {
+    "zh-cn": "点击确定开始配置仓库",
+    "zh-tw": "點選確定開始配置倉庫",
+    "key": "app_spm.common.button.config_repo_machine_confirm"
+  },
+  {
+    "zh-cn": "重新扫描仓库信息",
+    "zh-tw": "重新掃描倉庫資訊",
+    "key": "app_spm.common.button.re_scan_repo_info"
+  },
+  {
+    "zh-cn": "重新扫描仓库可用的补丁将花费几分钟时间，点确定开始扫描",
+    "zh-tw": "重新掃描倉庫可用的補丁將花費幾分鐘時間，點確定開始掃描",
+    "key": "app_spm.common.button.re_scan_repo_info_confirm"
+  },
+  {
+    "zh-cn": "添加仓库",
+    "zh-tw": "新增倉庫",
+    "key": "app_spm.common.button.add_repo"
+  },
+  {
+    "zh-cn": "重新进行软件包扫描",
+    "zh-tw": "重新進行軟體包掃描",
+    "key": "app_spm.common.button.re_scan_package"
+  },
+  {
+    "zh-cn": "重新扫描软件包将花费几分钟时间，点确定开始扫描",
+    "zh-tw": "重新掃描軟體包將花費幾分鐘時間，點確定開始掃描",
+    "key": "app_spm.common.button.re_scan_package_confirm"
+  },
+  {
+    "zh-cn": "为主机配置仓库",
+    "zh-tw": "為主機配置倉庫",
+    "key": "app_spm.common.button.machine_repo"
+  },
+  {
+    "zh-cn": "模板下载",
+    "zh-tw": "模板下載",
+    "key": "app_spm.common.button.template_download"
+  },
+  {
+    "zh-cn": "仓库录入",
+    "zh-tw": "倉庫錄入",
+    "key": "app_spm.common.button.repo_input"
+  },
+  {
+    "zh-cn": "仓库导入",
+    "zh-tw": "倉庫匯入",
+    "key": "app_spm.common.button.repo_import"
+  },
+  {
+    "zh-cn": "升级选中软件包",
+    "zh-tw": "升級選中軟體包",
+    "key": "app_spm.common.button.upgrade_selected_packages"
+  },
+  {
+    "zh-cn": "确定将所选择软件包升级？",
+    "zh-tw": "確定將所選擇軟體包升級？",
+    "key": "app_spm.common.button.upgrade_selected_packages_confirm"
+  },
+  {
+    "zh-cn": "回退选中软件包",
+    "zh-tw": "回退選中軟體包",
+    "key": "app_spm.common.button.rollback_selected_packages"
+  },
+  {
+    "zh-cn": "确定将所选择软件包回退？",
+    "zh-tw": "確定將所選擇軟體包回退？",
+    "key": "app_spm.common.button.rollback_selected_packages_confirm"
+  },
+  {
+    "zh-cn": "卸载选中软件包",
+    "zh-tw": "解除安裝選中軟體包",
+    "key": "app_spm.common.button.uninstall_selected_packages"
+  },
+  {
+    "zh-cn": "确定将所选择软件包卸载？",
+    "zh-tw": "確定將所選擇軟體包解除安裝？",
+    "key": "app_spm.common.button.uninstall_selected_packages_confirm"
+  },
+  {
+    "zh-cn": "批量删除",
+    "zh-tw": "批次刪除",
+    "key": "app_spm.common.button.batch_delete"
+  },
+  {
+    "zh-cn": "确认将所选基准主机删除？",
+    "zh-tw": "確認將所選基準主機刪除？",
+    "key": "app_spm.common.button.batch_delete_confirm"
+  },
+  {
+    "zh-cn": "选择基准主机",
+    "zh-tw": "選擇基準主機",
+    "key": "app_spm.common.button.choose_base_machine"
+  },
+  {
+    "zh-cn": "主机名",
+    "zh-tw": "主機名",
+    "key": "app_spm.common.header.host"
+  },
+  {
+    "zh-cn": "OS",
+    "zh-tw": "OS",
+    "key": "app_spm.common.header.os"
+  },
+  {
+    "zh-cn": "OS版本",
+    "zh-tw": "OS版本",
+    "key": "app_spm.common.header.os_version"
+  },
+  {
+    "zh-cn": "上一次扫描时间",
+    "zh-tw": "上一次掃描時間",
+    "key": "app_spm.common.header.last_scan_time"
+  },
+  {
+    "zh-cn": "执行时间",
+    "zh-tw": "執行時間",
+    "key": "app_spm.common.header.execute_time"
+  },
+  {
+    "zh-cn": "操作",
+    "zh-tw": "操作",
+    "key": "app_spm.common.header.operate"
+  },
+  {
+    "zh-cn": "状态",
+    "zh-tw": "狀態",
+    "key": "app_spm.common.header.status"
+  },
+  {
+    "zh-cn": "详情",
+    "zh-tw": "詳情",
+    "key": "app_spm.common.header.detail"
+  },
+  {
+    "zh-cn": "用户",
+    "zh-tw": "使用者",
+    "key": "app_spm.common.header.user"
+  },
+  {
+    "zh-cn": "结束时间",
+    "zh-tw": "結束時間",
+    "key": "app_spm.common.header.end_time"
+  },
+  {
+    "zh-cn": "耗时",
+    "zh-tw": "耗時",
+    "key": "app_spm.common.header.time_consume"
+  },
+  {
+    "zh-cn": "名称",
+    "zh-tw": "名稱",
+    "key": "app_spm.common.header.name"
+  },
+  {
+    "zh-cn": "软件包",
+    "zh-tw": "軟體包",
+    "key": "app_spm.common.header.software_package"
+  },
+  {
+    "zh-cn": "架构",
+    "zh-tw": "架構",
+    "key": "app_spm.common.header.arch"
+  },
+  {
+    "zh-cn": "发行号",
+    "zh-tw": "發行號",
+    "key": "app_spm.common.header.issue_number"
+  },
+  {
+    "zh-cn": "版本号",
+    "zh-tw": "版本號",
+    "key": "app_spm.common.header.version_number"
+  },
+  {
+    "zh-cn": "软件状态",
+    "zh-tw": "軟體狀態",
+    "key": "app_spm.common.header.software_status"
+  },
+  {
+    "zh-cn": "仓库",
+    "zh-tw": "倉庫",
+    "key": "app_spm.common.header.repo"
+  },
+  {
+    "zh-cn": "仓库ID",
+    "zh-tw": "倉庫ID",
+    "key": "app_spm.common.header.repo_id"
+  },
+  {
+    "zh-cn": "基准主机",
+    "zh-tw": "基準主機",
+    "key": "app_spm.common.header.base_machine"
+  },
+  {
+    "zh-cn": "配置文件",
+    "zh-tw": "配置檔案",
+    "key": "app_spm.common.header.config_file"
+  },
+  {
+    "zh-cn": "软件包数量",
+    "zh-tw": "軟體包數量",
+    "key": "app_spm.common.header.packages_count"
+  },
+  {
+    "zh-cn": "大小",
+    "zh-tw": "大小",
+    "key": "app_spm.common.header.size"
+  },
+  {
+    "zh-cn": "地址",
+    "zh-tw": "地址",
+    "key": "app_spm.common.header.address"
+  },
+  {
+    "zh-cn": "仓库状态",
+    "zh-tw": "倉庫狀態",
+    "key": "app_spm.common.header.repo_status"
+  },
+  {
+    "zh-cn": "仓库更新时间",
+    "zh-tw": "倉庫更新時間",
+    "key": "app_spm.common.header.repo_update_time"
+  },
+  {
+    "zh-cn": "信息更新时间",
+    "zh-tw": "資訊更新時間",
+    "key": "app_spm.common.header.info_update_time"
+  },
+  {
+    "zh-cn": "扫描时间",
+    "zh-tw": "掃描時間",
+    "key": "app_spm.common.header.scan_time"
+  },
+  {
+    "zh-cn": "启用",
+    "zh-tw": "啟用",
+    "key": "app_spm.common.header.enabled"
+  },
+  {
+    "zh-cn": "未启用",
+    "zh-tw": "未啟用",
+    "key": "app_spm.common.header.disabled"
+  },
+  {
+    "zh-cn": "已配置仓库",
+    "zh-tw": "已配置倉庫",
+    "key": "app_spm.common.header.configured_repo"
+  },
+  {
+    "zh-cn": "已配置主机",
+    "zh-tw": "已配置主機",
+    "key": "app_spm.common.header.configured_machine"
+  },
+  {
+    "zh-cn": "未配置主机",
+    "zh-tw": "未配置主機",
+    "key": "app_spm.common.header.un_configured_machine"
+  },
+  {
+    "zh-cn": "已安装软件包",
+    "zh-tw": "已安裝軟體包",
+    "key": "app_spm.common.header.installed_packages"
+  },
+  {
+    "zh-cn": "仓库名",
+    "zh-tw": "倉庫名",
+    "key": "app_spm.common.header.repo_name"
+  },
+  {
+    "zh-cn": "仓库文件",
+    "zh-tw": "倉庫檔案",
+    "key": "app_spm.common.header.repo_file"
+  },
+  {
+    "zh-cn": "仓库描述",
+    "zh-tw": "倉庫描述",
+    "key": "app_spm.common.header.repo_desc"
+  },
+  {
+    "zh-cn": "仓库地址",
+    "zh-tw": "倉庫地址",
+    "key": "app_spm.common.header.repo_address"
+  },
+  {
+    "zh-cn": "修改",
+    "zh-tw": "修改",
+    "key": "app_spm.common.header.edit"
+  },
+  {
+    "zh-cn": "删除",
+    "zh-tw": "刪除",
+    "key": "app_spm.common.header.delete"
+  },
+  {
+    "zh-cn": "启用",
+    "zh-tw": "啟用",
+    "key": "app_spm.common.header.enable"
+  },
+  {
+    "zh-cn": "禁用",
+    "zh-tw": "禁用",
+    "key": "app_spm.common.header.disable"
+  },
+  {
+    "zh-cn": "所有",
+    "zh-tw": "所有",
+    "key": "app_spm.common.header.all"
+  },
+  {
+    "zh-cn": "可升级",
+    "zh-tw": "可升級",
+    "key": "app_spm.common.header.upgradeable"
+  },
+  {
+    "zh-cn": "当前软件版本",
+    "zh-tw": "當前軟體版本",
+    "key": "app_spm.common.header.current_software_version"
+  },
+  {
+    "zh-cn": "当前软件版本",
+    "zh-tw": "當前軟體版本",
+    "key": "app_spm.common.header.install_version"
+  },
+  {
+    "zh-cn": "可升级版本",
+    "zh-tw": "可升級版本",
+    "key": "app_spm.common.header.upgradeable_version"
+  },
+  {
+    "zh-cn": "更新时间",
+    "zh-tw": "更新時間",
+    "key": "app_spm.common.header.update_time"
+  },
+  {
+    "zh-cn": "升级",
+    "zh-tw": "升級",
+    "key": "app_spm.common.header.upgrade"
+  }
+]

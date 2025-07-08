@@ -1,0 +1,476 @@
+//=============================================================================
+// Modified styles from vendor lib
+// @author Leo Liao (leoliaolei@gmail.com), 06/25/2017 moved from css
+//=============================================================================
+$_dt_footer_height: 40px;
+opx-datatable {
+  > .op-datatable-custctrl {
+    display: none;
+  }
+}
+
+.dataTables_wrapper {
+  //.dataTables_header {
+  //  margin-bottom: $spacer;
+  //}
+
+  .op-datatable-header {
+    display: flex;
+    align-items: center;
+    //20210513: X padding .25rem to make form-control box-shadow visible
+    padding: 0.25rem;
+
+    .form-inline {
+      > *:not(:first-child) {
+        margin-left: .5rem;
+      }
+    }
+
+    .dataTables_filter {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      text-align: right;
+
+      .js-dt-filter.op-filter-with-button {
+        padding-right: 2rem;
+      }
+
+      label {
+        font-weight: normal;
+        white-space: nowrap;
+        text-align: left;
+        position: relative;
+        // Override label margin in bootstrap 3
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+
+        &:before {
+          font-family: "Font Awesome 5 Pro";
+          content: "\f002";
+          font-weight: 400;
+          //font-size: $input-font-size;
+          color: grey;
+          position: absolute;
+          left: 0;
+          display: inline-block;
+          width: $input-height-sm;
+          text-align: center;
+          //line-height: $input-height-sm;
+        }
+
+        input {
+          //margin-left: 0.5rem;
+          display: inline-block;
+          width: auto;
+
+          &.form-control {
+            padding-left: $input-height-sm;
+          }
+        }
+      }
+
+      .btn {
+        //padding: 0;
+        //height: 1.75rem;
+        //width: 1.75rem;
+        //line-height: 1.5;
+        margin-left: 0.25rem;
+        // Icon
+        i {
+          //font-size: 1rem;
+        }
+
+        &.op-dt-clearfilter {
+          position: absolute;
+          right: 0;
+          margin-left: 0;
+          color: $text-muted;
+        }
+      }
+
+      .dt-buttons {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  .dataTables_length {
+    display: inline-block;
+    margin-right: 8px;
+
+    label {
+      font-weight: normal;
+      text-align: left;
+      white-space: nowrap;
+      // Override label margin in bootstrap 3
+      margin-bottom: 0;
+    }
+
+    select {
+      width: 5em;
+      display: inline-block;
+    }
+  }
+
+  .dataTables_info {
+    //padding-top: 8px;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: small;
+    //line-height: 35px;
+    //margin-right: 20px;
+  }
+
+  .dataTables_paginate {
+    margin: 0;
+    white-space: nowrap;
+    text-align: right;
+
+    ul.pagination {
+      margin: 2px 0;
+      white-space: nowrap;
+    }
+  }
+
+  .dataTables_processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
+    margin-top: -26px;
+    text-align: center;
+    padding: 1em 0;
+  }
+}
+
+.dataTables_scrollHead {
+  table.dataTable {
+    margin-bottom: 0 !important;
+  }
+
+  table.table-bordered {
+    border-bottom-width: 0;
+  }
+}
+
+.dataTables_scrollBody {
+  //20201128: Ensure bottom border in case of scrollable table body with scrollY
+  //border-bottom: $table-border-width solid $table-border-color;
+
+  > table {
+    //border-bottom-width: 0;
+  }
+}
+
+.dataTables_scrollBody table {
+  border-top: none;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
+  thead {
+    .sorting:after,
+    .sorting_asc:after,
+    .sorting_desc:after {
+      display: none;
+    }
+  }
+
+  tbody tr:first-child {
+    th, td {
+      border-top: none;
+    }
+  }
+}
+
+.dataTables_scrollFoot table {
+  margin-top: 0 !important;
+  border-top: none;
+}
+
+table.dataTable {
+  clear: both;
+  max-width: 100%;
+  //border-collapse: separate !important;
+  margin: 0;
+  box-sizing: border-box;
+
+  td, th {
+    -webkit-box-sizing: content-box;
+    //box-sizing: content-box;
+    box-sizing: border-box;
+  }
+
+  tbody {
+    td, th {
+      word-break: break-all;
+    }
+  }
+
+  td.dataTables_empty,
+  th.dataTables_empty {
+    text-align: center;
+    background-color: $gray-100;
+  }
+
+  &.nowrap th,
+  &.nowrap td {
+    white-space: nowrap;
+  }
+
+  thead th,
+  tbody td,
+  tfoot td {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  thead {
+    th, td {
+      vertical-align: middle;
+      //white-space: nowrap;
+      //text-overflow: ellipsis;
+      //&:active {
+      //  outline: none;
+      //}
+    }
+  }
+
+  thead, li[data-dtr-index] {
+    th.op-searchable {
+      font-weight: bold;
+    }
+
+    .sorting,
+    .sorting_asc,
+    .sorting_desc,
+    .sorting_asc_disabled,
+    .sorting_desc_disabled {
+      //font-weight: bold;
+      //cursor: pointer;
+      padding-right: 1.25rem;
+      position: relative;
+
+      &:after {
+        //font-family: 'FontAwesome';
+        font-family: "Font Awesome 5 Pro";
+        font-weight: bold;
+        position: absolute;
+        //bottom: 8px;
+        right: 8px;
+        top: 50%;
+        margin-top: -10px;
+        display: block;
+        width: 0.75rem;
+        text-align: right;
+        cursor: pointer;
+      }
+
+      &:hover:after {
+        //opacity: .75;
+      }
+    }
+
+    .sorting_asc:after {
+      content: "\f0de";
+      color: $primary;
+    }
+
+    .sorting_desc:after {
+      content: "\f0dd";
+      color: $primary;
+    }
+
+    .sorting:after {
+      content: "\f0dc";
+      opacity: 0.2;
+    }
+
+    .sorting_asc_disabled:after,
+    .sorting_desc_disabled:after {
+      color: #eee;
+    }
+  }
+
+  td > .udp-linelimit {
+    max-height: 3em;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &.expanded {
+      max-height: none;
+      //transition: max-height 0.5s ease-out;
+    }
+  }
+}
+
+table.dataTable {
+  &.table-condensed {
+    > thead > tr > th {
+      padding-right: 1.25rem;
+    }
+
+    .sorting:after,
+    .sorting_asc:after,
+    .sorting_desc:after {
+      top: 6px;
+      right: 6px;
+    }
+  }
+
+  &.table-bordered {
+    th,
+    td {
+      border-left-width: 0;
+    }
+
+    th:last-child, td:last-child {
+      border-right-width: 0;
+    }
+
+    tbody {
+      th,
+      td {
+        border-bottom-width: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+}
+
+.table-responsive > .dataTables_wrapper {
+  > .row {
+    margin: 0;
+
+    > div[class^="col-"] {
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+table.dataTable {
+  //modify by joker ad 20180429
+  width: 100% !important;
+  //modify by joker ad 20180429
+}
+
+//add by joker ad 20200429 to make table support scroll-x
+.dataTables_scroll .dataTable {
+  width: auto !important;
+  min-width: 100% !important;
+}
+
+//
+.op-datatable-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  //margin-top: 4px;
+  padding: 0.25rem 0.25rem;
+  background-color: $gray-100;
+  border-radius: $border-radius-sm;
+}
+
+// Datatables plugin: select
+.paginate_of, select.paginate_select {
+  line-height: 30px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+select.paginate_select {
+  font-weight: bold;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  color: $primary;
+
+  option {
+    color: black;
+  }
+}
+
+//add by joker ad 20200507 to make button size mach search input
+.dataTables_buttons {
+  .dt-buttons {
+    .btn-sm {
+      padding: 0.28rem 0.5rem;
+    }
+  }
+
+  .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background-color: #dde1e5;
+  }
+}
+
+table.dataTable span.highlight {
+  background-color: #FFFF88;
+  border-radius: 0.28571429rem;
+}
+
+table.dataTable span.column_highlight {
+  background-color: #ffcc99;
+  border-radius: 0.28571429rem;
+}
+
+//--- Input type pagination
+//https://datatables.net/plug-ins/pagination/input
+.dataTables_paginate.paging_input {
+  display: flex;
+  align-items: center;
+
+  .paginate_button {
+    //display: inline-block;
+    //width: 2rem;
+    //height: 2rem;
+    //text-align: center;
+    //cursor: pointer;
+
+    &:hover {
+      //background-color: $pagination-hover-bg;
+    }
+  }
+
+  > * {
+    //display: inline-block;
+    //height: 2rem;
+  }
+
+  input.paginate_input {
+    border: 0;
+    width: 2rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: right;
+    color: $primary;
+    background-color: transparent;
+
+    &:focus {
+      text-align: center;
+    }
+  }
+}
+
+ul.dt-button-collection.dropdown-menu > .active > a {
+  background-color: white;
+
+  &:after {
+    font-family: 'Font Awesome 5 Pro';
+    content: '\f14a';
+    display: inline-block;
+    position: absolute;
+    right: .25rem;
+    padding: 0 .25rem;
+  }
+}

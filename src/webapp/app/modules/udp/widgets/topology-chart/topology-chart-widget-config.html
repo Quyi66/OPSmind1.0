@@ -1,0 +1,134 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> 样式</uib-tab-heading>
+        <fieldset>
+            <legend>公共样式</legend>
+            <div class="form-group">
+                <label class="control-label">节点大小</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control op-w-sm" type="number" value="40"
+                           ng-model="uwProps.graph.common.node.size">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">节点颜色</label>
+                <div class="form-control-wrapper">
+                    <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                      ng-model="uwProps.graph.common.node.color"></udp-color-picker>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">节点文字大小</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control op-w-sm" type="number" value="12"
+                           ng-model="uwProps.graph.common.node.fontSize">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">节点文字颜色</label>
+                <div class="form-control-wrapper">
+                    <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                      ng-model="uwProps.graph.common.node.fontColor"></udp-color-picker>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">连线宽度</label>
+                <div class="form-control-wrapper">
+                    <input class="form-control op-w-sm" type="number" value="1"
+                           ng-model="uwProps.graph.common.line.width">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">连线颜色</label>
+                <div class="form-control-wrapper">
+                    <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                      ng-model="uwProps.graph.common.line.color"></udp-color-picker>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>自定义样式</legend>
+            <div class="row">
+                <div class="col-4">
+                    <table class="table table-bordered table-hover ">
+                        <tbody style="border-width: 1px;">
+                        <tr ng-repeat=" tr in uwProps.graph.tableData">
+                            <td ng-class="{'bg-info':currentNode.id === td.id}" ng-repeat="td in tr" ng-click="selectGraphNode(td)">{{td.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-7">
+                    <div class="form-group">
+                        <label class="control-label">节点图标</label>
+                        <div class="form-control-wrapper">
+                            <input class="form-control" ng-model="currentNode.symbol">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">节点大小</label>
+                        <div class="form-control-wrapper">
+                            <input class="form-control" ng-model="currentNode.symbolSize">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">节点颜色</label>
+                        <div class="form-control-wrapper">
+                            <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                              ng-model="currentNode.itemStyle.normal.color"></udp-color-picker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">文字大小</label>
+                        <div class="form-control-wrapper">
+                            <input class="form-control" ng-model="currentNode.label.fontSize">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">文字颜色</label>
+                        <div class="form-control-wrapper">
+                            <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                              ng-model="currentNode.label.color"></udp-color-picker>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="currentNode.target">
+                        <label class="control-label">连线</label>
+                        <div class="form-control-wrapper">
+                            <div class="col-4">
+                                <ul class="list-group" ng-repeat="link in currentNode.links">
+                                    <li class="list-group-item" ng-click="selectGraphLine(link)"
+                                        ng-class="{'active':currentLine.name===link.name}">{{link.name}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">连线宽度</label>
+                                    <div class="form-control-wrapper">
+                                        <input class="form-control op-w-sm" type="number" value="1"
+                                               ng-model="currentLine.lineStyle.normal.width">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">连线颜色</label>
+                                    <div class="form-control-wrapper">
+                                        <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}"
+                                                          ng-model="currentLine.lineStyle.normal.color"></udp-color-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </fieldset>
+    </uib-tab>
+</uib-tabset>

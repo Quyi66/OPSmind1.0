@@ -1,0 +1,52 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.applist" ui-sref-opts="{reload: true}" data-translate="app.mgmt.name"></a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">{{appSettingVm.applet.title | translate}}</li>
+            </ol>
+        </div>
+    </nav>
+    <div class="opx-layout-hflex opx-flex-fill scroll-y">
+        <div class="opx-sidebar bg-light" ddopx-foldable>
+            <div class="opx-sidebar-body">
+                <div class="opx-treenav">
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.appman.setting" ui-sref-active="active"
+                           title="{{'app.mgmt.appConfig' | translate}}"><i
+                                class="opx-treenav-item-icon fa fa-cog fa-fw"></i> <span class="opx-treenav-item-title">{{'app.mgmt.appConfig' | translate}}</span></a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.appman.page" ui-sref-active="active"
+                           title="{{'udp.page.title' | translate}}"><i
+                                class="opx-treenav-item-icon fa fa-oplus-udp-page fa-fw"></i>
+                            <span class="opx-treenav-item-title">{{'app.mgmt.page' | translate}}</span></a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.appman.job" ui-sref-active="active"
+                           title="{{'jao.job.title' | translate}}"><i
+                                class="opx-treenav-item-icon fa fa-oplus-jao-job fa-fw"></i>
+                            <span class="opx-treenav-item-title">{{'app.mgmt.job' | translate}}</span></a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.appman.dataset" ui-sref-active="active"
+                           title="{{'dts.dataset.title' | translate}}"><i
+                                class="opx-treenav-item-icon fa fa-oplus-dts-dataset fa-fw"></i>
+                            <span class="opx-treenav-item-title">{{'app.mgmt.dataset' | translate}}</span></a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.appman.datamodel" ui-sref-active="active"
+                           title="{{'jao.common.data_model' | translate}}"><i
+                                class="opx-treenav-item-icon fad fa-bring-front fa-fw"></i>
+                            <span class="opx-treenav-item-title">{{'app.mgmt.datamodel' | translate}}</span></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="opx-flex-fill opx-layout-vflex" ui-view="appman_main_view">
+        </div>
+    </div>
+</div>

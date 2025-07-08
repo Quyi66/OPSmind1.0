@@ -1,0 +1,71 @@
+<style>
+    span.fancytree-active span.fancytree-title {
+        background-color: #d4d4d4 !important;
+        color: #0a0a0a !important;
+    }
+
+    span.fancytree-active span.fancytree-icon {
+        color: #0a0a0a !important;
+    }
+
+    .context-menu-hover {
+        background-color: #d4d4d4 !important;
+        color: #0a0a0a !important;
+    }
+</style>
+<div class="op-listview hbox hbox-auto-x"  uaa-has-permission="sysadmin:dict:*">
+
+    <!-- column -->
+    <div class="col w-md pt-3" style="width:333px;">
+        <div class="vbox b-r">
+            <div>
+                <form class="navbar-form navbar-left no-padding " role="search" style="padding:unset">
+                    <div class="form-group p-l-sm m-l-sm">
+                        <input placeholder="请输入菜单名称" id="searchDict" type="text" class="form-control rounded" ng-model="query" style="width:275px;margin-right: 5px;">
+                    </div>
+                </form>
+                <a title="添加模块目录" class="btn btn-default navbar-btn" ng-click="vm.createModule()">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+
+            <div class="row-row">
+                <div class="cell scrollable hover">
+                    <div class="cell-inner bg-white">
+                        <div class="list-group no-border op-udp-page-list">
+                            <div id="dictTree" style="padding:15px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- column -->
+    <div class="col" style="width: 100%;">
+        <div class="vbox">
+            <div class="row-row">
+                <div ng-if="!vm.isDict" class="cell">
+                    <div id="templateId" class="cell-inner dk">
+                        <div style="position:relative" class="vbox h-full">
+                            <div class="op-blank-slate">
+                                <div class="op-blank-slate-body">
+                                    <div class="op-blank-slate-icon">
+                                        <i class="fa fa-inbox op-fa-8x"></i>
+                                    </div>
+                                    <h4>点击或者右键左边菜单编辑</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div ng-if="vm.isDict" style="padding-top: 25px;">
+                    <div ng-include="'app/modules/adm/dict/dict-edit.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

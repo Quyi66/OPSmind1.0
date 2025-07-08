@@ -1,0 +1,33 @@
+<!--<style type="text/css">-->
+<!--@keyframes rotating{-->
+<!--    from{transform:rotate(0)}-->
+<!--    to{transform:rotate(360deg)}-->
+<!--}-->
+<!--.icon-spining {animation:rotating 1.2s linear infinite}-->
+
+<!--</style>-->
+<div class="h-full">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cac.index.job' | translate}}</div>
+    </nav>
+    <!--    <div class="card card-default">-->
+    <!--<div class="card-header" hidden>-->
+    <!--<div class="card-title">-->
+    <!--<span hidden>任务列表</span>-->
+    <!--<button class="btn btn-default btn-sm pull-right" ui-sref="app.cac.job.addJob"><i class="fa fa-plus m-r-xs"></i> 新增任务</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="p-3">
+        <opx-datatable table-config="cacJobListCtrlVm.tableConfig"></opx-datatable>
+    </div>
+    <!--    <div class="table-responsive">-->
+    <!--        <table id="cacJobTable" class="table opx-table"></table>-->
+    <!--    </div>-->
+    <!--    <div class="op-blank-slate" ng-if=cacJobListCtrlVm.views.tableInstance==null>-->
+    <!--        &lt;!&ndash;<i class="fa fa-cog fa-spin"></i><p class="op-blank-slate-body">正在加载数据...</p>&ndash;&gt;-->
+    <!--        <div class="op-blank-slate-icon"><i class="fa fa-cog fa-spin fa-4x"></i></div>-->
+    <!--        <p>正在加载数据...</p>-->
+    <!--    </div>-->
+
+
+</div>

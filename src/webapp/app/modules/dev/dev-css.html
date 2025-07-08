@@ -1,0 +1,95 @@
+<div class="h-full scroll-y p-3">
+    <div class="card mb-3">
+        <div class="card-header">控件大小</div>
+        <div class="card-body op-smartform form-inline">
+            <div class="form-group">
+                <label class="control-label">form-control</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-md">
+                    <select class="form-select op-w-md ms-2">
+                        <option value="">1</option>
+                    </select>
+                    <button class="ms-2 btn btn-primary">btn-sm</button>
+                    <a href="" class="ms-2 btn btn-primary">a.btn</a>
+                    <button class="ms-2 btn btn-outline-default"><i class="fa fa-pencil"></i> btn-sm</button>
+                    <button class="ms-2 btn btn-default opx-btn-icon"><i class="fa fa-pencil"></i></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">form-control-sm</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control form-control-sm op-w-md">
+                    <select class="form-control form-select-sm op-w-md ms-2">
+                        <option value="">1</option>
+                    </select>
+                    <button class="ms-2 btn btn-sm btn-primary">btn-sm</button>
+                    <a href="" class="ms-2 btn btn-sm btn-primary">a.btn-sm</a>
+                    <button class="ms-2 btn btn-sm btn-outline-default"><i class="fa fa-pencil"></i> btn-sm
+                    </button>
+                    <button class="ms-2 btn btn-sm btn-default opx-btn-icon"><i class="fa fa-pencil"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">按钮样式</div>
+        <div class="card-body">
+            <div class="mb-3">
+                <button type="button" ng-click="cssVm.useDarkTheme=!cssVm.useDarkTheme"
+                        class="btn"
+                        ng-class="cssVm.useDarkTheme?'btn-dark':'btn-outline-default'">Use Dark Theme
+                </button>
+            </div>
+            <table class="table table-bordered" ng-class="{'bg-dark':cssVm.useDarkTheme}">
+                <thead>
+                <tr>
+                    <th>Color</th>
+                    <!--                    <th ng-repeat="btnCss in cssVm.btnClasses"><code>{{btnCss}}</code></th>-->
+                    <th ng-repeat="color in cssVm.btnColors">{{color}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="btnCss in cssVm.btnClasses">
+                    <!--                <tr ng-repeat="color in cssVm.btnColors">-->
+                    <!--                    <td class="bg-{{color}}">{{color}}</td>-->
+                    <td><code>{{btnCss}}</code></td>
+                    <!--                    <td ng-repeat="btnCss in cssVm.btnClasses">-->
+                    <td ng-repeat="color in cssVm.btnColors">
+                        <div ng-repeat="btnSize in cssVm.btnSizes" class="mb-2">
+                            <button type="button"
+                                    title="btn {{btnSize}} {{btnCss | replace:'?':color}}"
+                                    class="btn {{btnSize}} {{btnCss | replace:'?':color}}"><i
+                                    ng-if="btnCss.indexOf('opx-btn-icon')>=0"
+                                    class="fa fa-pencil"></i>{{btnCss.indexOf('opx-btn-icon') >= 0 ? '' : color}}
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--            <table class="table table-bordered">-->
+            <!--                <thead>-->
+            <!--                <tr>-->
+            <!--                    <th>Color</th>-->
+            <!--                    <th ng-repeat="btnCss in cssVm.btnClasses"><code>{{btnCss}}</code></th>-->
+            <!--                </tr>-->
+            <!--                </thead>-->
+            <!--                <tbody>-->
+            <!--                <tr ng-repeat="color in cssVm.btnColors">-->
+            <!--                    <td class="bg-{{color}}">{{color}}</td>-->
+            <!--                    <td ng-repeat="btnCss in cssVm.btnClasses">-->
+            <!--                        <div ng-repeat="btnSize in cssVm.btnSizes" class="mb-2">-->
+            <!--                            <button type="button"-->
+            <!--                                    title="btn {{btnSize}} {{btnCss | replace:'?':color}}"-->
+            <!--                                    class="btn {{btnSize}} {{btnCss | replace:'?':color}}"><i-->
+            <!--                                    ng-if="btnCss.indexOf('opx-btn-icon')>=0"-->
+            <!--                                    class="fa fa-pencil"></i>{{btnCss.indexOf('opx-btn-icon') >= 0 ? '' : color}}-->
+            <!--                            </button>-->
+            <!--                        </div>-->
+            <!--                    </td>-->
+            <!--                </tr>-->
+            <!--                </tbody>-->
+            <!--            </table>-->
+        </div>
+    </div>
+</div>

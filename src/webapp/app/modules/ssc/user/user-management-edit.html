@@ -1,0 +1,321 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myUserLabel" ng-if="!vm.detailSign">
+        <span data-translate="sys_userManagement.home.createUser" ng-show="vm.user.id == null">Create User</span>
+        <span data-translate="sys_userManagement.home.editUser" ng-show="vm.user.id != null">Edit User</span>
+    </h4>
+    <h4 class="modal-title" ng-if="vm.detailSign">
+        <span data-translate="sys_userManagement.detail.title">User Detail</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="vm.clear()">
+    </button>
+</div>
+<div class="modal-body">
+    <form name="editForm" class="form-horizontal op-smartform" role="form" novalidate show-validation>
+        <uib-tabset class="tab-container" type="mdc-op" active="1">
+            <uib-tab index="1" heading="{{'app.setting.basicInfo' | translate}}">
+                <div class="alert alert-danger" ng-show="vm.doNotMatch"
+                     data-translate="global.messages.error.dontmatch">
+                    The password and its confirmation do not match!
+                </div>
+                <div class="form-group">
+                    <label class="control-label" data-translate="sys_userManagement.login">Login</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" name="login" required
+                               ng-disabled="vm.user.id != null"
+                               ng-model="vm.user.login" ng-minlength=1 ng-maxlength=50
+                               ng-pattern="/^[_'.A-Za-z0-9-]*$/">
+                        <p class="help-block">
+                                    <span ng-show="editForm.login.$error.required"
+                                          data-translate="entity.validation.required">This field is required.</span>
+                            <span ng-show="editForm.login.$error.maxlength"
+                                  data-translate="entity.validation.maxlength"
+                                  translate-value-max="50">This field cannot be longer than 50 characters.</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" data-translate="sys_userManagement.fullName">Full
+                        Name</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" name="fullName" ng-model="vm.user.fullName"
+                               required ng-maxlength="50" ng-disabled="vm.detailSign">
+                        <p class="help-block">
+                    <span ng-show="editForm.fullName.$error.required" data-translate="entity.validation.required">
+                        This field is required.
+                    </span>
+                            <span ng-show="editForm.fullName.$error.maxlength"
+                                  data-translate="entity.validation.maxlength" translate-value-max="50">
+                        This field cannot be longer than 50 characters.
+                    </span>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="form-group" ng-if="vm.user.id != null && !vm.detailSign">
+                    <a ng-if="!vm.editPassword" class="text-primary"
+                       ng-click="vm.editPassword = true" data-translate="sys_userManagement.updatePassword">Update
+                        Password</a>
+                    <a ng-if="vm.editPassword" class="text-primary"
+                       ng-click="vm.editPassword = false" data-translate="sys_userManagement.cancelUpdatePassword">Cancel
+                        Update Password</a>
+                </div>
+
+                <div class="form-group" ng-if="vm.editPassword">
+                    <label class="control-label" for="password"
+                           data-translate="global.form.newpassword">New password</label>
+                    <i class="fa fa-info-circle text-warning ms-2" style="position: absolute;left: 58px;cursor: pointer;" title="{{'global.messages.validate.newpassword.qualified' | translate}}"></i>
+                    <div class="form-control-wrapper">
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="{{'global.form.newpassword.placeholder' | translate}}"
+                               ng-model="vm.user.password" ng-minlength=8 ng-maxlength=32 required>
+                        <div ng-show="editForm.password.$dirty && editForm.password.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.password.$error.required"
+                               data-translate="global.messages.validate.newpassword.required">
+                                Your password is required.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.password.$error.minlength"
+                               data-translate="global.messages.validate.newpassword.minlength">
+                                Your password is required to be at least 8 characters.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.password.$error.maxlength"
+                               data-translate="global.messages.validate.newpassword.maxlength">
+                                Your password cannot be longer than 32 characters.
+                            </p>
+                        </div>
+                       <!-- <div
+                           ng-show="vm.qualifiedPswd && !editForm.password.$error.minlength && !editForm.password.$error.maxlength"
+                           data-translate="global.messages.validate.newpassword.qualified">
+                            The value must contain a combination of uppercase and lowercase letters, digits, and special characters
+                        </div>-->
+                        <div>
+                            <ng-password-meter password="vm.user.password"></ng-password-meter>
+                        </div>
+                        <!--                        <password-strength-bar-->
+                        <!--                                password-to-check="vm.registerAccount.password"></password-strength-bar>-->
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="vm.editPassword">
+                    <label class="control-label" for="confirmPassword"
+                           data-translate="global.form.confirmpassword">New password confirmation</label>
+                    <div class="form-control-wrapper">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                               placeholder="{{'global.form.confirmpassword.placeholder' | translate}}"
+                               ng-model="vm.confirmPassword" ng-minlength=8 ng-maxlength=32 required>
+                        <div ng-show="editForm.confirmPassword.$dirty && editForm.confirmPassword.$invalid">
+                            <p class="help-block"
+                               ng-show="editForm.confirmPassword.$error.required"
+                               data-translate="global.messages.validate.confirmpassword.required">
+                                Your confirmation password is required.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.confirmPassword.$error.minlength"
+                               data-translate="global.messages.validate.confirmpassword.minlength">
+                                Your confirmation password is required to be at least 8 characters.
+                            </p>
+                            <p class="help-block"
+                               ng-show="editForm.confirmPassword.$error.maxlength"
+                               data-translate="global.messages.validate.confirmpassword.maxlength">
+                                Your confirmation password cannot be longer than 32 characters.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="!vm.detailSign">
+                    <a class="control-label"
+                       ng-click="vm.showOtherInfo = !vm.showOtherInfo">
+                        <span ng-show="!vm.showOtherInfo" data-translate="sys_userManagement.otherInformation">Other Information</span>
+                        <span ng-show="vm.showOtherInfo" data-translate="sys_userManagement.putAwayInformation">Put Away Information</span>
+                    </a>
+                </div>
+                <div ng-show="vm.showOtherInfo || vm.detailSign">
+                    <div class="form-group">
+                        <label class="control-label"
+                               data-translate="sys_userManagement.email">Email</label>
+                        <div class="form-control-wrapper">
+                            <input type="email" class="form-control" name="email" ng-model="vm.user.email"
+                                   ng-maxlength="100" ng-disabled="vm.detailSign">
+                            <p class="help-block">
+                                <!--                                <span ng-show="editForm.email.$error.required" data-translate="entity.validation.required">-->
+                                <!--                                    This field is required.-->
+                                <!--                                </span>-->
+                                <span ng-show="editForm.email.$error.maxlength"
+                                      data-translate="entity.validation.maxlength" translate-value-max="100">
+                                    This field cannot be longer than 100 characters.
+                                </span>
+                                <span ng-show="editForm.email.$error.email"
+                                      data-translate="global.messages.validate.email.invalid">
+                                    Your email is invalid.
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"
+                               data-translate="sys_userManagement.department">Department</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control" name="department"
+                                   ng-model="vm.user.department" ng-maxlength="500" ng-disabled="vm.detailSign">
+                            <p class="help-block" ng-show="editForm.department.$error.maxlength"
+                               data-translate="entity.validation.maxlength" translate-value-max="500">
+                                This field cannot be longer than 500 characters.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label"
+                               data-translate="sys_userManagement.mobile">Mobile</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control" name="mobile" ng-model="vm.user.mobile"
+                                   ng-maxlength="50" ng-disabled="vm.detailSign">
+                            <p class="help-block" ng-show="editForm.mobile.$error.maxlength"
+                               data-translate="entity.validation.maxlength" translate-value-max="50">
+                                This field cannot be longer than 50 characters.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label"
+                               data-translate="sys_userManagement.telephoneNumber">Telephone</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control" name="telephoneNumber"
+                                   ng-model="vm.user.telephoneNumber" ng-maxlength="50" ng-disabled="vm.detailSign">
+                            <p class="help-block" ng-show="editForm.telephoneNumber.$error.maxlength"
+                               data-translate="entity.validation.maxlength" translate-value-max="50"
+                               ng-disabled="vm.detailSign">
+                                This field cannot be longer than 50 characters.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="activated"
+                               data-translate="sys_userManagement.state">State</label>
+                        <div class="form-control-wrapper">
+                            <div class="checkbox checkbox-inline checkbox-primary">
+                                <input ng-disabled="vm.user.id === null || vm.detailSign" type="checkbox" id="activated"
+                                       name="activated" ng-model="vm.user.activated">
+                                <label data-translate="sys_userManagement.activated" for="activated">Activated</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" data-translate="sys_userManagement.authMode">Auth
+                            Mode</label>
+                        <div class="form-control-wrapper">
+                            <div class="opx-radio-group">
+                                <input type="radio" name="authMode" value="LOCAL" ng-model="vm.user.authMode"
+                                       id="umd_authmode_1" ng-disabled="vm.detailSign">
+                                <label data-translate="sys_userManagement.authModeOption.local"
+                                       for="umd_authmode_1">Local</label>
+                                <input type="radio" name="authMode" value="AD" ng-model="vm.user.authMode"
+                                       id="umd_authmode_2" ng-disabled="vm.detailSign">
+                                <label data-translate="sys_userManagement.authModeOption.ad" for="umd_authmode_2">Active
+                                    Directory</label>
+                                <input type="radio" name="authMode" value="UN" ng-model="vm.user.authMode"
+                                       id="umd_authmode_4" ng-disabled="vm.detailSign">
+                                <label for="umd_authmode_4" data-translate="sys_userManagement.unifiedAuthentication">Unified
+                                    Authentication</label>
+                                <input type="radio" name="authMode" value="MIX" ng-model="vm.user.authMode"
+                                       id="umd_authmode_3" ng-disabled="vm.detailSign">
+                                <label data-translate="sys_userManagement.authModeOption.adAndLocal"
+                                       for="umd_authmode_3">Mixed</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="{{'sys_userManagement.roles' | translate}}">
+                <div ng-if="vm.roles != null && vm.roles.length > 0">
+                    <div ng-repeat="role in vm.roles track by $index" ng-if="vm.isShowRole(role)">
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                            <input type="checkbox" id="umd_role_{{$index}}"
+                                   name="{{role.id}}"
+                                   ng-checked="role.isChecked"
+                                   ng-click="role.isChecked = !role.isChecked" ng-disabled="vm.detailSign"/>
+                            <label for="umd_role_{{$index}}">{{role.description}}</label>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="7" heading="{{'app.nav.applet' | translate}}">
+                <div ng-if="vm.applets != null && vm.applets.length > 0"  class="form-control-wrapper op-combo flex-wrap">
+                    <div ng-repeat="applet in vm.applets track by $index">
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                            <input
+                                    class="ng-pristine ng-untouched ng-valid ng-empty"
+                                    type="checkbox" id="applet_{{$index}}"
+                                   name="{{applet.id}}"
+                                   ng-checked="applet._user_applet"
+                                   ng-click="applet._user_applet = !applet._user_applet" ng-disabled="vm.detailSign"/>
+                            <label for="applet_{{$index}}">{{applet.title}}</label>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="3" heading="{{'sys_userManagement.userJurisdiction' | translate}}" ng-if="vm.detailSign">
+                <div class="row">
+                    <div class="col-md-3" ng-repeat="permission in vm.permissions">
+                        <span class="">{{permission.domain}} : {{permission.action}} : {{permission.target}}</span>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="4" heading="{{'adm.tenantName' | translate}}" ng-if="vm.isTenantAdminUI && !vm.user.id">
+                <div class="row">
+                    <div class="col-md-4" ng-repeat="tenant in vm.tenants track by $index">
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                            <input type="checkbox"
+                                   name="{{tenant.id}}"
+                                   ng-checked="tenant.isChecked"
+                                   ng-click="tenant.isChecked = !tenant.isChecked"/>
+                            <label title="{{tenant.description}}">{{tenant.code}}</label>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="5" heading="{{'OTP' | translate}}" ng-if="vm.user.id">
+                <div class="modal-body m-auto">
+                    <img class="" ng-src="{{::vm.qrcodeUrl}}" ng-if="vm.qrcodeStatus === 'existed'">
+                    <a class="m-l-md text-info " ng-click="vm.generateQRCode()"
+                       ng-if="vm.qrcodeStatus === 'unexisted' && !vm.detailSign">二维码不存在，点击重新生成</a>
+                    <div op-loading="{style:'spinner'}" ng-if="vm.qrcodeStatus === 'generating'"></div>
+                </div>
+                <div class="modal-body m-auto" style="padding-left:70px" ng-if="!vm.detailSign">
+                    <button type="submit" ng-if="vm.qrcodeStatus === 'existed'" class="btn btn-primary opx-btn-cancel"
+                            data-translate="sys_userSettings.form.aginotp" ng-click="vm.generateQRCode()">重新生成OTP二维码
+                    </button>
+                </div>
+            </uib-tab>
+
+            <uib-tab index="6" heading="ApiKey" ng-if="vm.detailSign">
+                <div class="modal-body m-auto">
+                    <button class="btn btn-outline-primary" ng-click="vm.applyApiKey()"><i class="fa fa-plus"></i> {{'common.action.create' | translate}}</button>
+                    <opx-datatable table-config="vm.apiKeyTableConfig"></opx-datatable>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </form>
+</div>
+<div class="modal-footer" ng-if="vm.detailSign">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <span class="fa fa-arrow-left">{{'common.entity.action.back' | translate}}</span>
+    </button>
+</div>
+<div class="modal-footer" ng-if="!vm.detailSign">
+    <button type="button" class="btn btn-primary opx-btn-ok" ng-disabled="editForm.$invalid" ng-click="vm.save()">
+        <span data-translate="common.action.save">Save</span>
+    </button>
+    <button type="button" class="btn btn-default opx-btn-cancel" data-dismiss="modal" ng-click="vm.clear()">
+        <span data-translate="common.action.cancel">Cancel</span>
+    </button>
+</div>
+
+

@@ -1,0 +1,14 @@
+<div class="op-hover-trigger opx-applet-item js-dropdown-click-to-close">
+    <a class="opx-applet-item-cover" href="" ng-click="$ctrl.clickApplet($event)">
+        <div class="opx-applet-item-icon"
+             ng-style="{'background-color': $ctrl.appletDef._colors.iconBackColor}">
+            <i class="fad {{$ctrl.appletDef.icon}} fa-fw"
+               ng-style="{color:$ctrl.appletDef._colors.iconColor}"></i>
+            <div ng-if="$ctrl.appletDef.status == 'O'" class="opx-applet-item-badge"><i
+                    class="fa fa-ban text-white"></i></div>
+        </div>
+    </a>
+    <a href="" class="opx-applet-item-title"
+       ng-click="$ctrl.clickApplet($event)">{{$ctrl.appletDef.title}}</a>
+    <div ng-transclude class="opx-applet-item-footer" style="position: relative"></div>
+</div>

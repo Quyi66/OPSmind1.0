@@ -1,0 +1,17 @@
+<div class="dropdown">
+    <button type="button" class="btn"
+            ng-class="($ctrl.selectedItems|anysize) >0?'btn-primary':'btn-default'" data-bs-toggle="dropdown">
+        {{'common.word.style' | translate}} {{$ctrl.selectedItems | anysize}} <span class="caret"></span>
+    </button>
+    <div class="dropdown-menu p-2" style="width:30rem;">
+        <div ng-repeat="(groupName, groupOptions) in $ctrl.optionGroups">
+            <h5>{{groupOptions.label}}</h5>
+            <ul class="list list-inline list-unstyled">
+                <li ng-repeat="option in groupOptions.options" class="mb-2 me-2">
+                    <a class="udp-css-chip {{option.css}}" ng-class="{'selected':$ctrl.selectedItems[option.css]}"
+                       ng-click="$ctrl.toggleSelect(option.css)">{{option.desc}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

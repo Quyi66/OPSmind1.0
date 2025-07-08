@@ -1,0 +1,21 @@
+udp-page-view .uwtype-param {
+  display: none;
+
+  //.udp-pd-preview-mode & {
+  //  display: none !important;
+  //}
+}
+
+udp-page-view#pd-canvas-zone .uwtype-param {
+  display: inline-block;
+
+  .udp-pd-preview-mode & {
+    display: none;
+  }
+}
+
+
+.uwtype-param-popover {
+  height: 300px;
+}
+

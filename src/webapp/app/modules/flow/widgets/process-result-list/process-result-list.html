@@ -1,0 +1,38 @@
+<div class="opx-layout-hflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    
+    <div class="opx-sidebar" style="width: 15rem;">
+        <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed">
+            <op-searchbox search-text="$ctrl.flowFilter" style="width:10rem;" class="me-2"></op-searchbox>
+
+            <button class="btn btn-outline-danger" ng-click="$ctrl.terminateAll()"
+                    uaa-has-permission="flow:edit:*" title="{{'flow.process.terminate_all' | translate}}">
+                <i class="fa fa-ban"></i>
+            </button>
+        </nav>
+        <div class="opx-sidebar-body">
+            <div class="list-group list-group-flush op-styled-highlight">
+                <a ng-repeat="process in $ctrl.processList | filter: $ctrl.flowFilter"
+                   ng-class="{'active':process.id == $ctrl.activeProcess}"
+                   class="list-group-item list-group-item-action op-hover-trigger ng-scope" 
+                   title="{{process.processName}}"
+                   style="position:relative;">
+                    <div ng-click="$ctrl.changeActiveProcess(process)">
+                        <h4 class="text-ellipsis">{{  process.processName }}</h4>
+
+                        <div class="small text-muted">
+                            {{ process.processAbbr || process.remarks || process.processKey }}
+                        </div>
+
+                        <!-- <div class="small text-muted">
+                            {{ process.createTime | date }}
+                        </div> -->
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="opx-flex-fill fade-in" ui-view="flowViewTable">
+        <div class="h-100 bg-light op-blank-slate"></div>
+    </div>
+</div>

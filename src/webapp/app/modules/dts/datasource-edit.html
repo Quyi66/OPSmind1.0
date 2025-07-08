@@ -1,0 +1,22 @@
+<div uaa-has-permission="dts:view:*">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a ui-sref="app.ssc.datasource">{{'dts.datasource.data_service' | translate}}</a></li>
+                <li class="breadcrumb-item active">{{'dts.datasource.edit_data_service' | translate}}</li>
+            </ol>
+        </div>
+    </nav>
+    <div>
+        <div ng-if="datasource.type != '' && datasource.type != null" class="wrapper"
+             ng-include="'app/modules/dts/datasource-edit-' + datasource.type + '.html'"></div>
+        <div class="wrapper" ng-if="datasourceResponseData">
+            <div class="card card-default">
+                <div class="card-header">{{'dts.datasource.test_result' | translate}}</div>
+                <div class="card-body">
+                    <pre style="max-height: 400px; overflow: auto">{{datasourceResponseData | json}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

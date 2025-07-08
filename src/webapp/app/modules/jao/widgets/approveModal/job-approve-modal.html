@@ -1,0 +1,142 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'jao.index.approve' | translate}}</h3>
+  <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <!-- 提交审批界面 -->
+  <form ng-if="$ctrl.needApprove || $ctrl.approveType === 'approve'">
+      <div class="form-group" ng-if="$ctrl.appName">
+          <label class="control-label">{{'jao.job.widget.applet' | translate}} :</label>
+          <label class="control-label">{{ $ctrl.appName | translate}}</label>
+      </div>
+    <div class="form-group">
+      <label class="control-label">{{'jao.approve.detail.job_name' | translate}} :</label>
+      <label class="control-label">{{$ctrl.resolve.job.title}}</label>
+    </div>
+    <div class="form-group">
+      <label class="control-label">{{'jao.approve.detail.approve_mode' | translate}} :</label>
+      <div class="form-control-wrapper d-inline-block">
+        <div class="opx-check-group opx-secondary btn-group">
+          <input type="radio" name="job_approveMode" value="noLimitParams"
+                ng-model="$ctrl.approve.approveMode"
+                ng-disabled="$ctrl.approveType === 'approve'"
+                id="job_approveMode_noLimitParams">
+          <label for="job_approveMode_noLimitParams">{{'jao.approve.detail.no_limit_params' | translate}}</label>
+          <input type="radio" name="job_approveMode" value="limitParams"
+                ng-model="$ctrl.approve.approveMode"
+                ng-if="$ctrl.paramsArr.length > 0"
+                ng-disabled="$ctrl.approveType === 'approve'"
+                id="job_approveMode_limitParams">
+          <label for="job_approveMode_limitParams" ng-if="$ctrl.paramsArr.length > 0">{{'jao.approve.detail.limit_params' | translate}}</label>
+        </div>
+      </div>
+
+      <div class="list-group" ng-if="$ctrl.approve.approveMode === 'limitParams'" style="margin: 1em 0 0 5em;">
+        <div ng-repeat="item in $ctrl.paramsArr">
+          <span class="badge bg-secondary text-light"
+                style="max-width:100%; overflow-wrap:break-word; white-space: pre-line; text-align: left; margin-bottom: 0.5em;"
+              >{{item[0]}} : {{item[1]}}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="$ctrl.approve.jobId">
+      <label class="control-label">{{ 'jao.job.type.script' | translate}} :</label>
+      <div class="form-control-wrapper d-inline-block">
+          <a ui-sref="app.appman.job.view({id:$ctrl.approve.jobId,appletCode:$ctrl.approve.appletCode})" target="_dialog">
+            <button type="button" class="btn btn-outline-primary"><i class="fa fa-eye"></i> {{ 'common.action.view' | translate}}</button>
+          </a>
+      </div>
+    </div>
+
+    <div class="form-group"  ng-if="$ctrl.approve.jobType === 'script'" ng-repeat="scriptPath in $ctrl.scriptPathList">
+      <label class="control-label">{{ 'gfs.modal.script_content' | translate}} :</label>
+      <div class="form-control-wrapper d-inline-block">
+          <button type="button" ng-click="$ctrl.goFile(scriptPath)" class="btn btn-outline-primary"><i class="fa fa-eye" ></i>
+              {{scriptPath}}</button>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="$ctrl.approve.approveMode !== 'limitParams'">
+      <label class="control-label">{{'jao.approve.detail.valid_hour' | translate}} :</label>
+      <div class="form-control-wrapper d-inline-block">
+        <div class="input-group w-sm">
+          <input type="number" ng-model="$ctrl.approve.validHour" class="form-control" min="1" max="999"
+                  step="1" op-help-info="{{'jao.approve.detail.valid_hour_info' | translate}}"
+                  ng-disabled="$ctrl.approveType === 'approve'">
+          <div class="input-group-append"><span class="input-group-text">{{'common.term.hour' | translate}}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">{{'common.entity.detail.description' | translate}} :</label>
+      <div class="form-control-wrapper">
+        <textarea class="form-control" ng-model="$ctrl.approve.description" ng-disabled="$ctrl.approveType === 'approve'" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="$ctrl.approveType === 'approve' && $ctrl.approve.status > 0">
+      <label class="control-label">{{'jao.approve.detail.expiration_time' | translate}} :</label>
+      <div class="form-control-wrapper">
+        {{ (($ctrl.approve.expirationTime === 'expired') ? 'jao.approve.detail.expired' : ($ctrl.approve.expirationTime ? $ctrl.approve.expirationTime :  '-----')) | translate | date:'yyyy-MM-dd HH:mm:ss'}}
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="$ctrl.approveType === 'approve' && $ctrl.approve.status > 0">
+      <label class="control-label">{{'jao.approve.detail.approver' | translate}} :</label>
+      <div class="form-control-wrapper">
+        {{$ctrl.approve.approver}}
+      </div>
+    </div>
+
+    <div class="form-group" ng-if="$ctrl.approveType === 'approve' && $ctrl.approve.status > 0">
+      <label class="control-label">{{'jao.approve.detail.approve_time' | translate}} :</label>
+      <div class="form-control-wrapper">
+        {{$ctrl.approve.approveTime | date:'yyyy-MM-dd HH:mm:ss' }}
+      </div>
+    </div>
+  </form>
+
+  <div ng-if="!$ctrl.needApprove && $ctrl.approveType !== 'approve'">
+    <p>{{'jao.approve.tips.0' | translate}}</p>
+    <p>{{'jao.approve.tips.1' | translate}}</p>
+  </div>
+
+</div>
+
+<div class="modal-footer" ng-if="$ctrl.approveType !== 'approve'">
+    <button class="btn btn-secondary" type="button" ng-click="$ctrl.dismiss()">{{'common.entity.action.close' | translate}}</button>
+
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.submitApprove()"
+            ng-if="$ctrl.needApprove"> {{'jao.approve.submit_btn' | translate}}</button>
+
+    <button class="btn btn-secondary" type="button" ng-click="$ctrl.cancelApprove()"
+            ng-if="$ctrl.checkResult.isApproving && !$ctrl.needApprove"
+            ng-show="$ctrl.approveType === 'my'">
+            <i class="fa fa-times-circle"></i> {{'jao.approve.cancel' | translate}}</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.goToMyApprove()"
+            ng-if="$ctrl.checkResult.isApproving && !$ctrl.needApprove"> {{'jao.approve.view_btn' | translate}}</button>
+
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.reApprove()"
+            ng-if="$ctrl.checkResult.canReApprove && !$ctrl.needApprove">
+            <i class="fa fa-redo-alt"></i> {{'jao.approve.re_approve_btn' | translate}}</button>
+</div>
+
+<div class="modal-footer" ng-if="$ctrl.approveType === 'approve'">
+    <button class="btn btn-secondary" type="button" ng-click="$ctrl.dismiss()">
+        {{'common.entity.action.close' | translate}}</button>
+
+    <button class="btn btn-success" type="button" ng-click="$ctrl.passApprove()"
+        ng-if="$ctrl.approve.status === 0">
+        <i class="fa fa-check-circle"></i> {{'jao.approve.pass_approve' | translate}}</button>
+    <button class="btn btn-danger" type="button" ng-click="$ctrl.refuseApprove()"
+        ng-if="$ctrl.approve.status === 0">
+        <i class="fa fa-minus-octagon"></i> {{'jao.approve.refuse' | translate}}</button>
+
+    <button class="btn btn-danger" type="button" ng-click="$ctrl.discardApprove()"
+        ng-if="$ctrl.approve.status === 1 && $ctrl.approve.expirationTime !== 'expired'">
+        <i class="fa fa-minus-octagon"></i> {{'jao.approve.discard' | translate}}</button>
+</div>

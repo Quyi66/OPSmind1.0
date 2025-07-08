@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span data-translate="sys_userManagement.detail.title">User Detail</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()"></button>
+</div>
+
+<div class="modal-body">
+    <uib-tabset class="tab-container wrapper" active="1">
+        <uib-tab index="1" heading="{{'app.setting.basicInfo' | translate}}">
+            <div class="row">
+                <dl class="dl-horizontal jh-entity-details">
+                    <dt><span data-translate="sys_userManagement.login">Login</span></dt>
+                    <dd>
+                        <span>{{vm.user.login}}</span>
+                        <span class="badge bg-danger" ng-show="!vm.user.activated" data-translate="sys_userManagement.deactivated">Deactivated</span>
+                        <span class="badge bg-success" ng-show="vm.user.activated" data-translate="sys_userManagement.activated">Activated</span>
+                    </dd>
+                    <dt><span data-translate="sys_userManagement.fullName">Full Name</span></dt>
+                    <dd>{{vm.user.fullName}}</dd>
+                    <dt><span data-translate="sys_userManagement.department">Department</span></dt>
+                    <dd>{{vm.user.department}}</dd>
+
+                    <dt><span data-translate="sys_userManagement.email">Email</span></dt>
+                    <dd>{{vm.user.email}}</dd>
+                    <dt><span data-translate="sys_userManagement.mobile">Mobile</span></dt>
+                    <dd>{{vm.user.mobile}}</dd>
+                    <dt><span data-translate="sys_userManagement.telephoneNumber">TelephoneNumber</span></dt>
+                    <dd>{{vm.user.telephoneNumber}}</dd>
+                </dl>
+                <dl class="dl-horizontal jh-entity-details">
+                    <dt><span data-translate="sys_userManagement.langKey">Lang Key</span></dt>
+                    <dd>{{vm.user.langKey}}</dd>
+                    <dt><span data-translate="sys_userManagement.authMode">Auth Mode</span></dt>
+                    <dd>
+                        <span class="badge bg-info" ng-show="vm.user.authMode === 'LOCAL'" data-translate="sys_userManagement.authModeOption.local">Local</span>
+                        <span class="badge bg-info" ng-show="vm.user.authMode === 'AD'" data-translate="sys_userManagement.authModeOption.ad">Active Directory</span>
+                        <span class="badge bg-info" ng-show="vm.user.authMode === 'MIX'" data-translate="sys_userManagement.authModeOption.adAndLocal">Mix</span>
+                        <span class="badge bg-info" ng-show="vm.user.authMode === 'UN'"  data-translate="sys_userManagement.unifiedAuthentication">Unified Authentication</span>
+                    </dd>
+                    <dt><span data-translate="sys_userManagement.createInfo">Created Info</span></dt>
+                    <dd>
+                        <span class="badge bg-secondary">{{vm.user.createdBy}}</span>
+                        <span class="ms-4">{{vm.user.createdDate | date:'yyyy-MM-dd HH:mm' }}</span>
+                    </dd>
+                    <dt><span data-translate="sys_userManagement.lastModify">Last Modify</span></dt>
+                    <dd>
+                        <span class="badge bg-secondary">{{vm.user.lastModifiedBy}}</span>
+                        <span class="ms-4">{{vm.user.lastModifiedDate | date:'yyyy-MM-dd HH:mm'}}</span>
+                    </dd>
+                </dl>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="{{'sys_userManagement.userRole' | translate}}">
+            <div class="col-md-12" ng-if="vm.user.roles != null && vm.user.roles.length > 0">
+                <span class="m-r-sm" ng-repeat="role in vm.user.roles">
+                    <span class="badge bg-info">{{role.description}}</span>
+                </span>
+            </div>
+        </uib-tab>
+        <uib-tab index="3" heading="{{'sys_userManagement.userJurisdiction' | translate}}">
+            <div class="col-md-12">
+            <span class="m-r-sm mb-3" ng-repeat="permission in vm.permissions">
+                 <span class="label text-default">{{permission.domain}} : {{permission.action}} : {{permission.target}}</span>
+            </span>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<div class="modal-footer text-right">
+    <button type="button" class="btn btn-default" ng-click="vm.clear()">
+        <span class="fa fa-arrow-left"></span>&nbsp;
+        <span data-translate="common.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,18 @@
+{
+    "sys_permission.home.title": "Permission Management",
+    "sys_permission.home.createLabel": "Create Permission",
+    "sys_permission.home.createPermission": "Create Permission",
+    "sys_permission.home.editPermission": "Edit Permission",
+    "sys_permission.home.search": "Search Permissions",
+    "sys_permission.created": "Permission {{ param }} created successfully",
+    "sys_permission.updated": "Permissions {{ param }} updated successfully",
+    "sys_permission.deleted": "Permission {{ param }} deleted successfully",
+    "sys_permission.delete.question": "Are you sure you want to delete permissions [{{ domain }} : {{ action }} : {{ target }}]? ",
+    "sys_permission.detail.title": "Permission Details",
+    "sys_permission.domain": "Subject",
+    "sys_permission.action": "Action",
+    "sys_permission.target": "Target",
+    "sys_permission.description": "Description",
+    "sys_permission.configJson": "JSON Config",
+    "sys_permission.role": "Role"
+}

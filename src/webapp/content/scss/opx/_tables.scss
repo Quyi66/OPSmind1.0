@@ -1,0 +1,228 @@
+.table {
+  > :not(:first-child) {
+    // Override bs5 default
+    //border-top: (2 * $table-border-width) solid $table-group-separator-color;
+    border-top: 0;
+  }
+
+  tbody td.pre {
+    white-space: pre !important;
+  }
+
+  tr.selected {
+    background-color: $op-highlight-bg;
+
+    td {
+      border-color: $op-highlight-border-color;
+    }
+  }
+}
+
+.table, .table-bordered {
+  thead {
+    th,
+    td {
+      // Override bs4 default 2
+      border-bottom-width: 1 * $table-border-width;
+    }
+  }
+}
+
+.table-hover > tbody > tr.selected:hover {
+  background-color: $op-highlight-bg;
+}
+
+// https://stackoverflow.com/questions/23989463/how-to-set-tbody-height-with-overflow-scroll
+table.op-with-scroll-body {
+  tbody {
+    display: block;
+    overflow: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+.opx-table {
+  //table-layout: fixed;
+
+  > thead > tr {
+    th {
+      white-space: nowrap;
+
+      &:focus {
+        // Override chrome default
+        outline: none;
+      }
+
+      // Use background instead of border
+      background-color: $table-head-bg;
+      color: $gray-600;
+      // Regardless of bs table-bordered
+      border-top: 0 !important;
+      border-bottom: 0 !important;
+      cursor: default;
+      font-weight: normal;
+
+      &:first-child {
+        border-radius: 4px 0 0 0;
+      }
+
+      &:last-child {
+        border-radius: 0 4px 0 0;
+      }
+    }
+  }
+
+  tbody > tr:first-child td {
+    border-top: 0;
+  }
+}
+
+//.opx-table.opx-scrollable {
+//  //  https://stackoverflow.com/questions/23989463/how-to-set-tbody-height-with-overflow-scroll
+//  tbody {
+//    display: block;
+//    //height:300px;
+//    overflow: auto;
+//  }
+//
+//  thead, tbody tr {
+//    display: table;
+//    width: 100%;
+//    table-layout: fixed;
+//  }
+//
+//  thead {
+//    width: calc(100% - 1rem)
+//  }
+//
+//  table {
+//    width: 400px;
+//  }
+//}
+
+.opx-table.table-hover {
+  .opx-table-tr {
+    //@include hover() {
+    //  color: $table-hover-color;
+    //  background-color: $table-hover-bg;
+    //}
+  }
+
+  > tbody > tr:not(.selected):hover {
+    box-shadow: 0 0 .25rem rgba(128, 128, 128, 0.5);
+
+    > td {
+      border-color: transparent;
+    }
+  }
+}
+
+@mixin sorting {
+  .sorting {
+    &:after {
+      font-family: 'FontAwesome';
+      position: absolute;
+      //bottom: 8px;
+      right: 8px;
+      top: 50%;
+      margin-top: -10px;
+      display: block;
+      opacity: 0.5;
+      width: 0.75rem;
+      text-align: right;
+      cursor: pointer;
+    }
+  }
+  .sorting_asc:after {
+    content: "\f0de";
+  }
+
+  .sorting_desc:after {
+    content: "\f0dd";
+  }
+
+  .sorting:after {
+    content: "\f0dc";
+    opacity: 0.2;
+  }
+}
+
+// Simulate table with div
+// TODO: is it necessary?
+div.opx-table {
+  .opx-table-tr {
+    display: flex;
+  }
+
+  .opx-table-tbody {
+    display: block;
+  }
+
+  .opx-table-thead .opx-table-th {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    @include sorting;
+
+    &:not(:last-child):after {
+      content: ' ';
+      width: 1px;
+      height: $line-height-base * $font-size-base;
+      border: 0 solid darken($table-head-bg, 20%);
+      display: block;
+      margin-left: auto;
+    }
+  }
+
+  .opx-table-thead {
+    display: block;
+    background-color: $table-head-bg;
+
+    &.thead-dark {
+      .opx-table-td, .opx-table-th {
+        //color: $table-dark-color;
+        //background-color: $table-dark-bg;
+        //border-color: $table-dark-border-color;
+      }
+    }
+  }
+
+  .opx-table-td, .opx-table-th {
+    padding: $table-cell-padding;
+    //border: 1px solid red;
+  }
+}
+
+// Parameter table
+//--------------------------------------
+.op-param-table.table {
+  margin-bottom: 0;
+
+  thead th {
+    // Top aligned with label.control-label
+    padding-top: 0.25rem;
+    font-weight: normal;
+    word-break: keep-all;
+    vertical-align: middle;
+    border-bottom-width: 0;
+    border-top-width: 0;
+  }
+
+  td {
+    border-top-width: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  th, td {
+    // Make content left aligned without padding
+    padding-left: 0;
+  }
+}

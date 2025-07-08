@@ -1,0 +1,16 @@
+{
+  "sys_log.sys_log": "系統日誌",
+  "sys_log.login_log": "登入日誌",
+  "sys_log.operation_log": "操作日誌",
+  "sys_log.login_user": "登入使用者",
+  "sys_log.login_time": "登入時間",
+  "sys_log.address": "登入地址",
+  "sys_log.login_status": "登入狀態",
+  "sys_log.device_info": "裝置資訊",
+  "sys_log.operator": "操作者",
+  "sys_log.operate_time": "操作時間",
+  "sys_log.app_module": "所屬模組",
+  "sys_log.operation_type": "操作型別",
+  "sys_log.description": "操作描述",
+  "sys_log.status": "狀態"
+}

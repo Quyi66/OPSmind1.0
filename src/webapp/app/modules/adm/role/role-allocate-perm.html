@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb bg-transparent my-auto">
+            <li class="breadcrumb-item">
+                <a ui-sref="role" data-translate="sys_role.home.title">Role Management</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <span>权限分配</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper">
+    <div class="card card-default">
+        <div class="card-body">
+            <opx-datatable table-config="allocatePermVm.tableConfig"></opx-datatable>
+            <div class="mt-3">
+                <button type="button" class="btn btn-default opx-btn-cancel" ng-click="allocatePermVm.clear()">
+                    <span data-translate="common.action.back">Back</span>
+                </button>
+                <button type="button" ng-click="allocatePermVm.save()" class="btn btn-primary opx-btn-ok">
+                    <span data-translate="common.action.save">Save</span>
+                </button>
+            </div>
+        </div>
+       <!-- <div class="card-body">
+            <div class="table-responsive">
+                <table class="op-datatable role-perm-table table table-striped stripe table-hover"></table>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" class="btn btn-default" ng-click="allocatePermVm.clear()">
+                <span data-translate="common.action.back">Back</span>
+            </button>
+            <button type="button" ng-click="allocatePermVm.save()" class="btn btn-primary">
+                <span data-translate="common.action.save">Save</span>
+            </button>
+        </div>-->
+    </div>
+</div>

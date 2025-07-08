@@ -1,0 +1,245 @@
+@charset "UTF-8";
+/*左边工具栏以及编辑节点的样式*/
+@import "../../components/bpmn-js/dist/assets/diagram-js.css";
+@import "../../components/bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "../../components/bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
+@import "../../components/bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+@import "../../components/bpmn-js-bpmnlint/assets/css/bpmn-js-bpmnlint.css";
+/** 缩略图样式 */
+@import "../../components/diagram-js-minimap/assets/diagram-js-minimap.css";
+@import "../../components/bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css";
+.processDesign {
+  border: solid 1px #cccccc;
+  width: 98%;
+  min-width: 1080px;
+  margin: 10px auto;
+}
+
+.centerClass {
+  min-height: 600px;
+  min-width: 600px;
+  overflow-x: scroll;
+}
+
+.designHeader {
+  margin: 0px auto;
+}
+
+.designFooter {
+  height: 100px;
+}
+
+.designRight {
+  position: relative;
+  border-top: solid 1px #cccccc;
+  border-bottom: solid 1px #cccccc;
+  border-left: solid 1px #cccccc;
+  margin-left: 10px;
+}
+
+.designLeft {
+  position: relative;
+}
+
+.bjsl-button {
+  top: 20px;
+  height: 30px;
+}
+
+.djs-minimap {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: solid 1px #ccc;
+  border-radius: 2px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.djs-minimap .map {
+  width: 250px;
+  height: 150px;
+}
+
+.djs-minimap:not(.open) .toggle {
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  background: url("./diagram_images/minmap.svg") 0 0 no-repeat;
+}
+
+.djs-minimap.open .toggle:before {
+  content: "关闭";
+}
+
+.djs-minimap:not(.open) .toggle:before {
+  content: "";
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.content > .message {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: table;
+  font-size: 16px;
+  color: #111;
+}
+.content > .message .note {
+  vertical-align: middle;
+  text-align: center;
+  display: table-cell;
+}
+.content > .message.error .details {
+  max-width: 500px;
+  font-size: 12px;
+  margin: 20px auto;
+  text-align: left;
+  color: #BD2828;
+}
+.content > .message.error pre {
+  border: solid 1px #BD2828;
+  background: #fefafa;
+  padding: 10px;
+  color: #BD2828;
+}
+.content:not(.with-error) .error, .content.with-error .intro, .content.with-diagram .intro {
+  display: none;
+}
+.content .canvas {
+  position: relative;
+  float: left;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 750px;
+  border: 1px solid red;
+}
+.content .properties-panel-parent {
+  display: none;
+}
+.content.with-diagram .canvas,
+.content.with-diagram .properties-panel-parent {
+  display: block;
+}
+
+.djs-container svg:nth-child(3) {
+  height: 100%;
+  min-height: 600px;
+  border: 1px solid #cccccc;
+  background: white;
+  overflow: auto;
+  background-image: linear-gradient(90deg, rgba(220, 220, 220, 0.5) 6%, transparent 0), linear-gradient(rgba(192, 192, 192, 0.5) 6%, transparent 0);
+  background-size: 12px 12px;
+  width: 100%;
+  height: calc(100vh - 82px);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.io-zoom-controls {
+  width: auto;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 100;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: solid 1px #ccc;
+  border-radius: 2px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.io-zoom-reset {
+  margin-bottom: 10px;
+}
+
+.io-control-list {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+
+.bjs-powered-by, .cjs-powered-by, .djs-powered-by, .io-control {
+  background: #FFF;
+  border-radius: 2px;
+  border: solid 1px #E0E0E0;
+  padding: 5px;
+}
+
+.io-editing-tools {
+  width: auto;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  display: none;
+  z-index: 100;
+}
+
+.fullscreenIcon {
+  cursor: pointer;
+  background: url("./diagram_images/fullscreen.svg") 0 0 no-repeat;
+}
+
+.keyboardIcon {
+  cursor: pointer;
+  background: url("./diagram_images/keyboard.svg") 0 0 no-repeat;
+}
+
+.control button {
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 26px;
+  color: #555;
+  background: none;
+  border: none;
+}
+
+.in-page .in-page-overlayer {
+  display: flex;
+  position: absolute;
+  z-index: 8;
+  background-color: #00000088;
+  width: 100%;
+  height: 100%;
+  color: white;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.entry[class*=fa-]::before,
+.entry[class*=fa-]::after {
+  display: inline-block;
+  font-size: 0.75em;
+}

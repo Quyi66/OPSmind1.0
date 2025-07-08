@@ -1,0 +1,122 @@
+{
+  "totalRecords": 4,
+  "aaData": [
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            },
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "($a < 100 || $b < 50) && $c > 100",
+              "ruleName": "rule1"
+            },
+            {
+              "ruleValue": "($a < 100 || $b < 50) && $c > 100",
+              "ruleName": "rule1"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host1",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "auditName": "string",
+      "createdAt": "2018-04-08T06:53:58.822Z",
+      "createdBy": "string",
+      "description": "string",
+      "id": 1,
+      "jobId": "2",
+      "templateName": "1"
+    },
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            },
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "($a < 100 || $b < 50) && $c > 100",
+              "ruleName": "rule1"
+            },
+            {
+              "ruleValue": "($a < 100 || $b < 50) && $c > 100",
+              "ruleName": "rule1"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host1",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "auditName": "string",
+      "createdAt": "2018-04-08T06:53:58.822Z",
+      "createdBy": "string",
+      "description": "string",
+      "id": 2,
+      "jobId": "2",
+      "templateName": "2"
+    },
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            },
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "($a < 100 || $b < 50) && $c > 100",
+              "ruleName": "rule1"
+            },
+            {
+              "ruleValue": "($a < 100 || $b < 50) && $c > 100",
+              "ruleName": "rule1"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host1",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "auditName": "string",
+      "createdAt": "2018-04-08T06:53:58.822Z",
+      "createdBy": "string",
+      "description": "string",
+      "id": 3,
+      "jobId": "3",
+      "templateName": "3"
+    }
+  ]
+}

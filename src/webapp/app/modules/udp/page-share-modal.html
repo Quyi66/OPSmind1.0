@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <button type="button" class="btn-close" data-dismiss="modal"
+            ng-click="vm.cancel()">
+    </button>
+    <h4 class="modal-title">{{'udp.page.share.title' | translate}}: {{vm.pageInfo.title}}</h4>
+</div>
+<div class="modal-body">
+    <!--<ul class="list list-unstyled list-inline">-->
+    <!--<li ng-if="vm.shareMethods.indexOf('zhdyh')>-1"><button type="button" class="btn btn-default"><i class="fa fa-vcard-o"></i> 招乎</button> </li>-->
+    <!--<li ng-if="vm.shareMethods.indexOf('link')>-1"><button type="button" class="btn btn-default"><i class="fa fa-envolope-o"></i> 邮件</button> </li>-->
+    <!--<li ng-if="vm.shareMethods.indexOf('url')>-1"><button type="button" class="btn btn-default"><i class="fa fa-link"></i> 复制链接</button> </li>-->
+    <!--</ul>-->
+    <div class="btn-group m-b" ng-if="vm.methodKeys.length>1">
+        <button type="button" class="btn btn-default" ng-class="{active:key===vm.method}"
+                ng-repeat="(key,sm) in vm.shareMethods" ng-click="vm.method=key">
+            {{sm.title}}
+        </button>
+    </div>
+    <section ng-if="vm.method==='email'">
+        <div class="form p-2">
+            <div class="form-group">
+                <label class="control-label xcol-sm-2">{{'udp.page.share.email_to' | translate}}</label>
+                <div class="xcol-sm-10">
+                    <input type="text" class="form-control" ng-model="vm.to">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="xcol-sm-12 text-right">
+                    <button type="button" class="btn btn-default" ng-click="vm.cancel()">
+                        {{'common.action.cancel' | translate}}
+                    </button>
+                    <button ng-disabled="!vm.to || vm.isSending" type="button" ng-click="vm.sendEmail()"
+                            class="btn btn-primary">
+                        {{'udp.page.share.send_email' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section ng-if="vm.method ==='url'">
+        <div class="p-2">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="vm.pageInfo.url" id="js-text1"/>
+                <!--                <span class="input-group-btn">-->
+                <button type="button" class="btn btn-default" ngclipboard
+                        data-clipboard-target="#js-text1"
+                        title="{{'udp.page.share.copy_url_desc'|translate}}"><i
+                        class="fa fa-clipboard"></i> {{'common.action.copy' | translate}}
+                </button>
+                <!--                </span>-->
+            </div>
+        </div>
+    </section>
+</div>

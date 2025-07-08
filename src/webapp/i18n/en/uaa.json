@@ -1,0 +1,11 @@
+{
+    "uaa.user.double_review": "Double Review",
+    "uaa.user.action": "The reviewer enters the password and executes",
+    "uaa.user.account_password_review": "Account Password Review",
+    "uaa.user.message_otp": "The reviewer enters the one-time password and executes it. The OTP QR code is located in Account Management--View OTP QR Code",
+    "uaa.user.otp_review": "OTP Review",
+    "uaa.user.reviewer": "Reviewer",
+    "uaa.user.password": "Password",
+    "uaa.user.wrong_password": "Wrong Password",
+    "uaa.user.message_wrong_password": "Please confirm your password and try again. "
+}

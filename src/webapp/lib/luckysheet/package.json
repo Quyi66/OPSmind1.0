@@ -1,0 +1,88 @@
+{
+  "_from": "luckysheet",
+  "_id": "luckysheet@2.1.13",
+  "_inBundle": false,
+  "_integrity": "sha512-ZotItRKh3fxEtYz0GrZxkf97jeQSGsJpFNAu1I0NMDQ6rVrHAWKeggFak5pClGQ3DP62Gi8kd+8rzOpyY/UNZw==",
+  "_location": "/luckysheet",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "luckysheet",
+    "name": "luckysheet",
+    "escapedName": "luckysheet",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/luckysheet/-/luckysheet-2.1.13.tgz",
+  "_shasum": "685d5fc790efddb12d8562294d5f4e41c5ba032d",
+  "_spec": "luckysheet",
+  "_where": "/Users/chy/Documents/chy/Java/Fame/oplus-modules",
+  "browser": "dist/luckysheet.umd.js",
+  "bundleDependencies": false,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.12.1",
+    "dayjs": "^1.9.6",
+    "flatpickr": "^4.6.6",
+    "jquery": "^2.2.4",
+    "numeral": "^2.0.6",
+    "pako": "^1.0.11"
+  },
+  "deprecated": false,
+  "description": "<div align=\"center\">",
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/runtime-corejs3": "^7.12.1",
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "@rollup/plugin-babel": "^5.2.1",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "browser-sync": "^2.26.7",
+    "commitizen": "^4.1.2",
+    "cross-env": "^7.0.2",
+    "delete": "^1.1.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-useref": "^4.0.1",
+    "http-proxy-middleware": "^1.0.6",
+    "rollup": "^2.32.1",
+    "rollup-plugin-terser": "^6.1.0",
+    "standard-version": "^8.0.2",
+    "vuepress": "^1.5.0",
+    "vuepress-plugin-baidu-autopush": "^1.0.1",
+    "vuepress-plugin-code-copy": "^1.0.6",
+    "vuepress-plugin-seo": "^0.1.4",
+    "vuepress-plugin-sitemap": "^2.3.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/luckysheet.cjs.js",
+  "module": "dist/luckysheet.esm.js",
+  "name": "luckysheet",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production gulp build",
+    "commit": "git-cz",
+    "dev": "cross-env NODE_ENV=development gulp dev",
+    "docs:build": "vuepress build docs",
+    "docs:dev": "vuepress dev docs",
+    "release": "standard-version"
+  },
+  "version": "2.1.13"
+}

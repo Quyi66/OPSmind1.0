@@ -1,0 +1,13 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{ 'task_scheduling.cron_job_list' | translate}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">{{ 'task_scheduling.menu.home' | translate}}</li>
+            </ol>
+        </div>
+    </nav>
+    <div class="card-body">
+        <opx-datatable table-config="$ctrl.tableConfig">
+        </opx-datatable>
+    </div>
+</div>

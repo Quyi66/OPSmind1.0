@@ -1,0 +1,15 @@
+{
+  "applet": {
+    "selector": {
+      "title": "选择应用",
+      "all": "所有应用",
+      "unsorted": "未分类",
+      "select_applet": "请选择应用"
+    },
+    "list": {
+      "quit_sort": "退出排序",
+      "sort": "应用排序",
+      "show_disabled": "显示停用的应用"
+    }
+  }
+}

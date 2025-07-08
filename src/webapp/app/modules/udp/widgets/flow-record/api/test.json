@@ -1,0 +1,40 @@
+{
+  "instance": {
+    "name": "系统升级测试模板-新参数",
+    "id": "2c9942a7836a0ceb01836a0e92010008",
+    "jobFlowId": "2c9942a78364f0aa018366053ac70033",
+    "hosts": null,
+    "globalParamsJson": null,
+    "createdAt": "2022-09-23T19:14:43.322+08:00",
+    "createdBy": "admin",
+    "tenantId": "ff808081727a047f017292d0d72e0004",
+    "steps": [
+      {
+        "id": "2c9942a78364f0aa018366053ac60031",
+        "name": "第一",
+        "flowId": "2c9942a78364f0aa018366053ac70033",
+        "runLogIds": "[\"e35f5a09a353450396b31f1531dbb57f\",\"6b3daeaecf134c16b7382deb0b375b50\"]",
+        "type": "script",
+        "configJson": "{\"tasks\":[{\"scripts\":[{\"location\":\"demo/echo.sh\",\"argline\":\"123\",\"tag\":\"456\"},{\"location\":\"demo/listsudo.sh\",\"argline\":null,\"tag\":\"65\"}],\"groups\":[{\"group\":\"gourp1 hh\",\"group_vars\":\"vars1=123\\nvars2=1234\",\"hosts\":[{\"key\":\"ff8080817e3e4cec017e42ccba450136\",\"value\":\"e111.oplus-example.com\",\"assetType\":\"linux\"},{\"key\":\"ff8080817e3e4cec017e42ccba450137\",\"value\":\"e270.oplus-example.com\",\"assetType\":\"linux\"},{\"key\":\"ff8080817e3e4cec017e42ccba450138\",\"value\":\"e045.oplus-example.com\",\"assetType\":\"linux\"}]},{\"group\":\"gourp4\",\"group_vars\":\"grroupvars=123\\nsghyu=456\",\"hosts\":[{\"key\":\"ff8080817e3e4cec017e42ccba400122\",\"value\":\"e178.oplus-example.com\",\"assetType\":\"linux\"},{\"key\":\"ff8080817e3e4cec017e42ccba450136\",\"value\":\"e111.oplus-example.com\",\"assetType\":\"linux\"}]}],\"$$hashKey\":\"object:7025\"},{\"scripts\":[{\"location\":\"demo/test.sh\",\"argline\":null,\"tag\":\"12345\"}],\"groups\":[{\"group\":\"group2\",\"group_vars\":\"ceeewrgrrou=pvars\\nasdas=123\\nggasdasd=0\",\"hosts\":[{\"key\":\"ff8080817e3e4cec017e42ccba400122\",\"value\":\"e178.oplus-example.com\",\"assetType\":\"linux\"},{\"key\":\"ff8080817e3e4cec017e42ccba450136\",\"value\":\"e111.oplus-example.com\",\"assetType\":\"linux\"},{\"key\":\"ff8080817e3e4cec017e42ccba450137\",\"value\":\"e270.oplus-example.com\",\"assetType\":\"linux\"},{\"key\":\"ff8080817e3e4cec017e42ccba450138\",\"value\":\"e045.oplus-example.com\",\"assetType\":\"linux\"}]}],\"$$hashKey\":\"object:7401\"}],\"verbosity\":1,\"taskTimeout\":5}",
+        "autoNext": false,
+        "config": null,
+        "status": "finished",
+        "appletCode": null
+      },
+      {
+        "id": "2c9942a783692c75018369f81f7600f9",
+        "name": "第二",
+        "flowId": "2c9942a78364f0aa018366053ac70033",
+        "runLogIds": "[]",
+        "type": "script",
+        "configJson": "{\"tasks\":[{\"scripts\":[{\"location\":\"demo/list-crontab.sh\",\"argline\":null}],\"groups\":[{\"group\":\"\",\"group_vars\":\"\",\"hosts\":[{\"key\":\"ff8080817b51ce10017b51d48ddc0387\",\"value\":\"d001.oplus-example.com\",\"assetType\":\"linux\"}]}],\"$$hashKey\":\"object:5611\"}],\"verbosity\":1,\"taskTimeout\":0}",
+        "autoNext": true,
+        "config": null,
+        "status": "unexecuted",
+        "appletCode": null
+      }
+    ],
+    "appletCode": "SUP"
+  },
+  "statusView": []
+}

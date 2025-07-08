@@ -1,0 +1,15 @@
+{
+    "jhi_error.title": "Error Page!",
+    "jhi_error.http.0": "Service Unavailable.",
+    "jhi_error.http.400": "Request Failed.",
+    "jhi_error.http.403": "You do not have permission to access this page.",
+    "jhi_error.http.404": "Resource not found {{ param }}.",
+    "jhi_error.http.405": "This method is not allowed to access the page.",
+    "jhi_error.http.500": "Internal Server Error.",
+    "jhi_error.concurrencyFailure": "Concurrent submission occurred. Your submission was rejected.",
+    "jhi_error.validation": "Server Validation Failed.",
+    "jhi_error.invalidPassword": "Invalid Password.",
+    "jhi_error.loginAlreadyUsed": "The login is already in use.",
+    "jhi_error.emailAlreadyUsed": "The email address is already in use.",
+    "jhi_error.emailNotFound": "Email Not Found."
+}

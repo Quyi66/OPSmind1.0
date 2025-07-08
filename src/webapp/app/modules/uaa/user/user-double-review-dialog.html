@@ -1,0 +1,51 @@
+<style>
+    #strengthBar {
+        padding-left: 0px;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title"> {{'uaa.user.double_review' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ng-click="userDoubleReviewVm.cancel()">
+        <span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body">
+
+    <form name="form" role="form" novalidate show-validation>
+        <div class="form-group">
+            <label class="radio-inline">
+                <input type="radio" name="review" ng-model="userDoubleReviewVm.reviewType" id="account_review" value="account" >
+                <label for="account_review" op-help-info="{{'uaa.user.action' | translate}}">{{'uaa.user.account_password_review' | translate}}</label>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="review" ng-model="userDoubleReviewVm.reviewType" id="otp_review" value="otp">
+                <label for="otp_review" op-help-info="{{'uaa.user.message_otp' | translate}}">{{'uaa.user.otp_review' | translate}}</label>
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'uaa.user.reviewer' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select op-select id="reviewUser" name="reviewUser" class="form-select"
+                        ng-model="userDoubleReviewVm.reviewUser" ng-options="u.login as u.fullName for u in userDoubleReviewVm.reviewUsers" required>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="userDoubleReviewVm.reviewType == 'account'">
+            <label class="control-label" for="accountPassword">{{'uaa.user.password' | translate}}</label>
+            <input type="password" class="form-control" id="accountPassword" name="accountPassword"
+                   ng-model="userDoubleReviewVm.password" ng-minlength=4 ng-maxlength=50 required>
+        </div>
+        <div class="form-group" ng-if="userDoubleReviewVm.reviewType == 'otp'">
+            <label class="control-label" for="otpPassword">{{'uaa.user.password' | translate}}</label>
+            <input type="password" class="form-control" id="otpPassword" name="otpPassword"
+                   ng-model="userDoubleReviewVm.password" ng-minlength=6 ng-maxlength=6 required>
+        </div>
+        <div class="alert text-danger ng-binding" ng-show="userDoubleReviewVm.authenticationError" aria-hidden="false"><strong>{{'uaa.user.wrong_password' | translate}}</strong>{{'uaa.user.message_wrong_password' | translate}}</div>
+    </form>
+</div>
+<div class="modal-footer">
+    <p class="text-right">
+        <button type="reset" class="btn btn-default" ng-click="userDoubleReviewVm.cancel()">{{'common.action.cancel'|translate}}</button>
+        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success" ng-click="userDoubleReviewVm.validate()">{{'common.action.ok'|translate}}</button>
+    </p>
+</div>
+

@@ -1,0 +1,82 @@
+{
+  "app_sudo": {
+    "title": "sudo許可權管理",
+    "menu": {
+      "sudo_list": {
+        "title": "sudo列表"
+      },
+      "sudo_apply": {
+        "title": "sudo申請"
+      },
+      "reset_password": {
+        "title": "重置密碼"
+      },
+      "function_settings": {
+        "title": "功能設定"
+      },
+      "operation_record": {
+        "title": "操作記錄"
+      }
+    },
+    "page_info": {
+      "scan_sudo_users": {
+        "title": "掃描sudo使用者",
+        "prompt_information": "選擇主機，掃描主機上具有sudo許可權的使用者資訊",
+        "start_scanning": "開始掃描"
+      },
+      "sudo_permission_list": {
+        "title": "sudo許可權列表",
+        "scanning_host": "掃描主機",
+        "form": {
+          "host": "主機",
+          "user_group": "使用者/使用者組",
+          "sudo_file": "sudo檔案",
+          "sudo_config": "sudo配置",
+          "update_time": "更新時間"
+        }
+      },
+      "add_user_jurisdiction": {
+        "title": "新增使用者Sudo許可權",
+        "effective_duration": "有效時長",
+        "days": "天數",
+        "valid_duration_of_permission": "許可權的有效時長",
+        "hour": "小時",
+        "minutes": "分鐘數",
+        "user": "使用者",
+        "help_description": "要新增許可權的使用者列表,多個使用者之間採用逗號，空格，換行分隔",
+        "start_implement": "開始執行"
+      },
+      "sudo_permission_application": {
+        "title": "sudo許可權申請",
+        "add_sudo": "新建sudo命令",
+        "form": {
+          "host": "主機",
+          "user": "使用者",
+          "permissions": "sudo許可權",
+          "state": "狀態",
+          "recovery_time": "回收時間",
+          "update_time": "更新時間",
+          "effective_duration": "有效時長/(分鐘)",
+          "configuration_time": "配置時間"
+        }
+      },
+      "password_complexity": {
+        "title": "密碼複雜度",
+        "password_length": "密碼長度",
+        "mno_lowercase_letters": "小寫字母最少個數",
+        "mno_capital_letters": "大寫字母最少個數",
+        "mno_numbers": "數字最少個數",
+        "mno_special_symbols": "特殊符號最少個數"
+      },
+      "reset_password": {
+        "title": "重置密碼",
+        "select_update_host": "選擇要修改的目標主機",
+        "update_username": "要修改的使用者名稱",
+        "reset_password_user": "重置密碼的使用者",
+        "password_min_max": "密碼最小長度8，最大長度16",
+        "random_password": "生成隨機密碼",
+        "start_reset": "開始重置"
+      }
+    }
+  }
+}

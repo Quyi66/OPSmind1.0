@@ -1,0 +1,49 @@
+<!-- <div class="opx-layout-vflex"> -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="opx-navbar-title">Translator</div>
+    </nav>
+    <div class="opx-layout-hflex" style="height: calc(100% - 40px);">
+        <div class="opx-sidebar border-right bg-light" style="width:12rem;">
+            <div class="opx-sidebar-body">
+                <div class="list-group list-group-flush op-styled-highlight op-styled-highlight-right">
+                    <op-searchbox search-text="$ctrl.searchModule" style="width:10rem;" class="m-3"></op-searchbox>
+
+                    <a ng-repeat="module in $ctrl.modules | filter:$ctrl.searchModule track by $index"
+                    href=""
+                    class="list-group-item list-group-item-action op-hover-trigger d-flex justify-content-between align-items-center"
+                    title="{{module.key || 'Untitled'}}"
+                    ng-class="{'active': ((!$ctrl.selectedModule && !module) || module.key === $ctrl.selectedModule)}"
+                    ng-click="$ctrl.selectModule(module.key)"> 
+                        <div class="text-ellipsis m-0">{{ module.key || 'Untitled' }}</div>
+                        <span class="badge badge-primary badge-pill">{{ module.count }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+<!--        <opx-tree tree-config="$ctrl.treeConfig"></opx-tree>-->
+        <div class="opx-flex-fill">
+            <opx-datatable table-config="$ctrl.tableConfig">
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.editTranslation(null, true)"> 
+                    <i class="fa fa-plus-circle"></i> Add </button>
+                <!-- <button type="button" class="btn btn-primary" ng-click="$ctrl.saveAll()"> 
+                    <i class="fa fa-save"></i> Save </button> -->
+                <button type="button" class="btn btn-outline-default" ng-click="$ctrl.reloadExternal(true)">
+                    <i class="fa fa-sync"></i> Reload External
+                </button>
+
+                <div class="dropdown">
+                    <button type="button" class="btn btn-outline-default dropdown-toggle" data-bs-toggle="dropdown" opx-popdrop>
+                        <i class="fa fa-sort" aria-hidden="true"></i>
+                        <span class="caret">Select to show other languages</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" ng-if="!lang.primary" ng-repeat="lang in $ctrl.langs track by $index"
+                            ng-click="$ctrl.changeColVisibility(lang)">{{ lang.code }}
+                            <span style="float: right;padding-top: 4px" ng-if="lang.visibility" class="fa fa-check"></span>
+                        </a>
+                    </div>
+                </div>
+            </opx-datatable>
+        </div>
+    </div>
+<!-- </div> -->

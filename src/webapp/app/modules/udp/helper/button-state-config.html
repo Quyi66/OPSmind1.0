@@ -1,0 +1,41 @@
+<div class="form-group">
+    <div class="form-control-wrapper">
+        <div class="checkbox checkbox-inline checkbox-primary">
+            <input type="checkbox" id="bsc_enabled" ng-model="$ctrl.theModel.enabled">
+            <label for="bsc_enabled"
+                   op-help-info="{{'udp.wc.state.enable_sc_helpinfo'|translate}}">{{'udp.wc.state.enable_sc' | translate}}</label>
+        </div>
+    </div>
+</div>
+<fieldset ng-disabled="!$ctrl.theModel.enabled">
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.state.expr' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" ng-model="$ctrl.theModel.allow" class="form-control code">
+            <div class="help-block">
+                <div ng-bind-html="'udp.wc.state.expr_desc'|translate"></div>
+                <details>
+                    <summary href="" class="text-primary">{{'udp.wc.state.expr_example' | translate}}
+                    </summary>
+                    <div ng-bind-html="'udp.wc.state.expr_example_detail'|translate">
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.state.expr_failed' | translate}}</label>
+        <div class="form-control-wrapper">
+            <div class="radio radio-inline radio-primary">
+                <input type="radio" name="state" ng-model="$ctrl.theModel.state" value="" id="bsc_statedefault"><label
+                    for="bsc_statedefault">{{'udp.wc.state.expr_failed_hide' | translate}}</label>
+            </div>
+            <div class="radio radio-inline radio-primary">
+                <input type="radio" name="state" ng-model="$ctrl.theModel.state" value="disabled"
+                       id="bsc_statedisabled"><label
+                    for="bsc_statedisabled">{{'udp.wc.state.expr_failed_disable' | translate}}</label>
+            </div>
+        </div>
+    </div>
+</fieldset>
+

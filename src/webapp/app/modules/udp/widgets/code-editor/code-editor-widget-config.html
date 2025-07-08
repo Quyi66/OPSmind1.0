@@ -1,0 +1,63 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label" for="usb_name"
+                op-help-info="{{'udp.uinput.attrs.name_helpinfo'|translate}}">{{'udp.uinput.attrs.name'|translate}}</label>
+
+            <div class="form-control-wrapper">
+                <input class="form-control op-w-sm" ng-model="uwProps.name" id="usb_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'cmd.list.grammar' | translate}} 
+                <i class="fa fa-atlas"></i>
+            </label>
+
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="uwProps.syntax"
+                        op-select
+                        ng-options="syntax for syntax in syntaxArr track by syntax">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="f_readonly">{{'udp.uinput.attrs.readonly' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" style="width:3rem;height:1.4rem;" type="checkbox" value="true"
+                        id="f_readonly" ng-model="uwProps.readonly">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="f_toolbar">{{'udp.w.code-editor.toolbar' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" style="width:3rem;height:1.4rem;" type="checkbox" value="true"
+                        id="f_toolbar" ng-model="uwProps.toolbar">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">{{'udp.uinput.data.initval'|translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="uwProps.initval" class="op-w-full"
+                    options="{kinds:'js,str',varTypes:'pageparam,global'}"></udp-data-converter>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+
+        <udp-widget-config-display options="{palette:false}">
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

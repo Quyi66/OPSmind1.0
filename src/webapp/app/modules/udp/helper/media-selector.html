@@ -1,0 +1,26 @@
+<div class="form-inline">
+    <select class="form-select" ng-model="$ctrl.theModel.type"
+            ng-options="type.type as type.name for type in $ctrl.mediaTypes">
+    </select>
+    <label class="control-label xcol-sm-2">{{'common.term.width' | translate}}</label>
+    <div class="input-group">
+        <input type="number" min="10" class="form-control"
+               ng-model="$ctrl.theModel.size">
+        <span class="input-group-addon">{{'common.term.pixel' | translate}}</span>
+    </div>
+</div>
+<div class="m-t-xs">
+    <div ng-if="$ctrl.theModel.type==='fa'">
+        <op-iconpicker ng-model="$ctrl.theModel.source"></op-iconpicker>
+    </div>
+    <div ng-if="$ctrl.theModel.type==='img'">
+        <ul class="list list-inline">
+            <li class="wrapper-xs" ng-class="{'bg-primary':$ctrl.theModel.source===image.source}"
+                ng-repeat="image in $ctrl.images" ng-click="$ctrl.theModel.source=image.source">
+                <img src="{{image.url}}"
+                     width="48"
+                     alt="{{image.source}}">
+            </li>
+        </ul>
+    </div>
+</div>

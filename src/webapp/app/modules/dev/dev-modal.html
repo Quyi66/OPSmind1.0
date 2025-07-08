@@ -1,0 +1,28 @@
+<div class="p-3">
+    <section>
+        <div class="card mb-3">
+            <div class="card-header">Modal</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="control-label">Options</label>
+                    <div class="form-control-wrapper">
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                            <input type="checkbox" ng-model="modalVm.isModaless" id="dm_modaless"><label
+                                for="dm_modaless">Modaless</label>
+                        </div>
+                        <div class="checkbox checkbox-inline checkbox-primary">
+                            <input type="checkbox" ng-model="modalVm.isResizable" id="dm_resizable"><label
+                                for="dm_resizable">Resizable</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-default me-3" ng-click="modalVm.openModal({size:size})"
+                        ng-repeat="size in modalVm.modalSizes">Size = {{size||'default'}}
+                </button>
+            </div>
+        </div>
+        <div class="mb-3">
+
+        </div>
+    </section>
+</div>

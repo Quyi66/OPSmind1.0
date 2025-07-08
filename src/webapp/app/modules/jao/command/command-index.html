@@ -1,0 +1,46 @@
+<div class="js-applet-window h-100">
+    <div class="js-applet-content opx-layout-hflex" data-appletcode="cmd" uaa-is-authenticated
+         uaa-deny-message="{{'jao.command_index' | translate}}">
+        <div class="opx-sidebar">
+<!--            <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed navbar-light">-->
+<!--                <span class="opx-navbar-title">{{'cmd.index.do_cmd' | translate}}</span>-->
+<!--            </nav>-->
+            <div class="opx-sidebar-body">
+                <div class="opx-treenav">
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.jao_cmd.command_list" ui-sref-active="active"><i
+                                class="fad fa-terminal fa-fw"></i>
+                            {{'cmd.index.list' | translate}}</a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.jao_cmd.job_list({type:'command'})" ui-sref-active="active"><i
+                                class="fad fa-cog fa-fw"></i>
+                            {{'cmd.index.command_job' | translate}}</a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.jao_cmd.command_review" ui-sref-active="active"><i
+                                class="fad fa-badge-check fa-fw"></i>{{'cmd.index.approve' | translate}}</a>
+                    </div>
+                    <div class="opx-treenav-item">
+                        <a ui-sref="app.jao_cmd.logs" ui-sref-active="active"><i
+                                class="fad fa-history fa-fw"></i>
+                            {{'cmd.index.log' | translate}}</a>
+                    </div>
+                    <div class="opx-treenav-item" uaa-has-permission="sysadmin:*:*">
+                        <a ui-sref="app.jao_cmd.console" ui-sref-active="active"><i
+                                class="fad fa-pencil"></i>
+                            Console</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="opx-flex-fill" ui-view="cmd_main_view">
+            <div class="bg-light p-5 h-100 d-flex justify-content-center align-items-center">
+                <div class="rounded-lg bg-secondary p-3 text-center text-light d-flex align-items-center justify-content-center"
+                     style="width:10rem;height:10rem;opacity: .5;"><i
+                        class="fad fa-fw fa-7x fa-terminal"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

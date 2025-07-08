@@ -1,0 +1,227 @@
+//==============================================================================
+// Widget Symbol Icons
+//==============================================================================
+
+.uw-icon {
+  &:before {
+    //font-family: 'FontAwesome';
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 300;
+    font-style: normal !important;
+    //margin-right: 0.5em;
+    font-size: 1.25em;
+    display: inline-block;
+  }
+
+  &.uwtype-text-header:before {
+    content: "\f1dc";
+  }
+
+  &.uwtype-text-p:before {
+    content: "\f1dd";
+  }
+
+  &.uwtype-text-blockquote:before {
+    content: "\f10d";
+  }
+
+  &.uwtype-text-list:before {
+    content: "\f03a";
+  }
+
+  &.uwtype-text-alert:before {
+    content: "\f4a3";
+  }
+
+  &.uwtype-text-jumbotron:before {
+    content: "\f034";
+  }
+
+  &.uwtype-layout-row:before {
+    content: "\f141";
+  }
+
+  &.uwtype-layout-col:before {
+    content: "\f142";
+  }
+
+  &.uwtype-layout-flex:before {
+    content: "\f009";
+  }
+
+  &.uwtype-layout-float:before {
+    content: "\f24d";
+  }
+
+  &.uwtype-datatable:before {
+    content: "\f0ce";
+  }
+
+  &.uwtype-route:before {
+    content: "\f072";
+  }
+
+  &.uwtype-radarchart:before {
+    content: "\f1eb";
+  }
+
+  &.uwtype-linechart:before {
+    content: "\f201";
+  }
+
+  &.uwtype-piechart:before {
+    content: "\f200";
+  }
+
+  &.uwtype-barchart:before {
+    content: "\f080";
+  }
+
+  &.uwtype-job:before {
+    content: "\f135";
+  }
+
+  &.uwtype-logview:before {
+    content: "\f865";
+  }
+
+  &.uwtype-jjob:before {
+    content: "\f1d8";
+  }
+
+  &.uwtype-umd-form:before {
+    content: "\f00b";
+  }
+
+  &.uwtype-map:before {
+    content: "\f57e";
+  }
+
+  &.uwtype-clock:before {
+    content: "\f017";
+  }
+
+  &.uwtype-timer:before {
+    content: "\f017";
+  }
+
+  &.uwtype-input:before {
+    content: "\f11c";
+  }
+
+  &.uwtype-param:before {
+    //content: "\f126";
+    content: "\f7ea";
+  }
+
+  &.uwtype-button:before {
+    content: "\f152";
+  }
+
+  &.uwtype-calendar:before {
+    content: "\f073";
+  }
+
+  &.uwtype-kpi:before {
+    content: "\f2bb";
+  }
+
+  &.uwtype-list:before {
+    content: "\f00b";
+  }
+
+  &.uwtype-nav:before {
+    content: "\f0c9";
+  }
+
+  &.uwtype-daterange:before {
+    content: "\f272";
+  }
+
+  &.uwtype-percent:before {
+    content: "\f295";
+  }
+
+  &.uwtype-gauge:before {
+    content: "\f0e4";
+  }
+
+  &.uwtype-wysiwyg:before {
+    //content: "\f1ea";
+    font-family: "Font Awesome 5 Brands";
+    content: "\f13b";
+  }
+
+  &.uwtype-sample:before {
+    content: "\f016";
+  }
+
+  &.uwtype-circle:before {
+    content: "\f1ce";
+  }
+
+  &.uwtype-googlemap:before {
+    content: "\f57e";
+  }
+
+  &.uwtype-card:before {
+    content: "\f389";
+  }
+
+  &.uwtype-rosechart:before {
+    content: "\f185";
+  }
+
+  &.uwtype-pivot:before {
+    content: "\f1ec";
+  }
+
+  &.uwtype-script:before {
+    content: "\f121";
+  }
+
+  &.uwtype-device-selector:before {
+    content: "\f233";
+  }
+
+  &.uwtype-fileselector:before {
+    content: "\f574";
+  }
+
+  &.uwtype-pageheader:before {
+    content: "\f2d0";
+  }
+
+  &.uwtype-tree:before {
+    content: "\f802";
+  }
+
+  &.uwtype-flow-layout:before {
+    content: "\f0cb";
+  }
+
+  &.uwtype-flow-manager:before {
+    content: "\f46d";
+  }
+
+  &.uwtype-flow-instance:before {
+    content: "\f1da";
+  }
+
+  &.uwtype-task-scheduling:before {
+    content: "\f073";
+  }
+
+  &.uwtype-flow-process:before {
+    content: "\f0ae";
+  }
+
+  &.uwtype-flow-process-result:before {
+    content: "\f682";
+  }
+
+  &.uwtype-code-editor:before {
+    content: "\f1c9";
+  }
+}
+

@@ -1,0 +1,61 @@
+{
+  "totalRecords": 6,
+  "aaData": [
+    {
+      "id": "40285181647e470a01647e57a9cc0005",
+      "hostKey": "39.108.158.150",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "failure",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e57a9cd0006",
+      "hostKey": "119.27.174.194",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "failure",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e57a9cd0007",
+      "hostKey": "119.27.174.194",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "failure",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e57a9cd0008",
+      "hostKey": "119.27.174.194",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "success",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e610098000e",
+      "hostKey": "39.108.158.150",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "failure",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e610099000f",
+      "hostKey": "119.27.174.194",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "failure",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e6100990010",
+      "hostKey": "119.27.174.194",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "failure",
+      "logInfo": null
+    },
+    {
+      "id": "40285181647e470a01647e6100990011",
+      "hostKey": "119.27.174.194",
+      "taskId": "a766a4ed-2961-4ba0-aec8-7a2299fa8633",
+      "status": "success",
+      "logInfo": null
+    }
+  ]
+}

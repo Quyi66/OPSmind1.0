@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.theMode}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal"
+            ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <div class="bg-light p-3" style="height:10rem;">modal-body</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-outline-primary" ng-click="$ctrl.openModal({modaless:false})">Open Another Modal
+    </button>
+    <button class="btn btn-primary" ng-click="$ctrl.openModal({modaless:true})">Open Another Modaless
+    </button>
+    <button class="btn btn-default opx-btn-ok" ng-click="$ctrl.cancel()">Close
+    </button>
+</div>

@@ -1,0 +1,48 @@
+<div class="opx-layout-hflex" __uaa-has-permission="cac:view:*">
+    <div class="opx-sidebar bg-light">
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'templates'" title="{{'cac3.navigation.patrol_item_template' | translate}}"
+                       ui-sref="app.cac3.templates.list"
+                       ui-sref-opts="{reload:'app.cac3.templates',notify:true}">
+                        <i class="fad fa-fw fa-warehouse"></i> {{'cac3.navigation.patrol_item_template' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'inspection'" title="{{'cac3.navigation.patrol_item_list' | translate}}"
+                       ui-sref="app.cac3.inspection.list"
+                       ui-sref-opts="{reload:'app.cac3.inspection',notify:true}">
+                        <i class="fad fa-fw fa-list-alt"></i> {{'cac3.navigation.patrol_item_list' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a
+                       ng-click="cacVm.views.chosed = 'check_log'" title="{{'cac3.navigation.inspection_results' | translate}}"
+                       ng-class="cacVm.views.chosed == 'check_log' ? 'active' : ''"
+                       title="{{'cac3.navigation.inspection_results' | translate}}"
+                       ui-sref="app.cac3.check_log.list({templateId:''})"
+                       ui-sref-opts="{reload:'app.cac3.check_log',notify:true}">
+                        <i class="fad fa-fw fa-history"></i> {{'cac3.navigation.inspection_results' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'fix'" title="{{'cac3.navigation.repair_results' | translate}}"
+                       ui-sref="app.cac3.fix.list"
+                       ui-sref-opts="{reload:'app.cac3.fix',notify:true}">
+                        <i class="fad fa-fw fa-toolbox"></i> {{'cac3.navigation.repair_results' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'export'" title="{{'cac3.navigation.export_configuration' | translate}}"
+                       ui-sref="app.cac3.export.list"
+                       ui-sref-opts="{reload:'app.cac3.export',notify:true}">
+                        <i class="fad fa-fw fa-cogs"></i> {{'cac3.navigation.export_configuration' | translate}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y" ui-view="cac3List">
+    </div>
+</div>

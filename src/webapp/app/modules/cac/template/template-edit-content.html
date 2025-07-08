@@ -1,0 +1,305 @@
+<div>
+    <div class="form-group">
+        <label class="control-label"><!--<span class="cac-text-required">*</span>-->{{'common.entity.detail.name' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control"
+                   ng-model="cacEditTemplateCtrlVm.views.template.templateName">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">{{'common.entity.detail.description' | translate}}</label>
+        <div class="form-control-wrapper">
+            <textarea type="text" class="form-control uneditable-input"
+                      ng-model="cacEditTemplateCtrlVm.views.template.description">
+            </textarea>
+        </div>
+    </div>
+
+    <!-- 取消普通脚本类型，巡检脚本类型统一playbook -->
+    <!--<div class="form-group">-->
+        <!--<label class="control-label">脚本类型</label>-->
+        <!--<div class="form-control-wrapper">-->
+            <!--<div class="opx-check-group btn-group">-->
+                <!--<input type="radio" name="scriptType" ng-model="cacEditTemplateCtrlVm.views.template.scriptType"-->
+                       <!--ng-disabled="cacEditTemplateCtrlVm.views.template.id"-->
+                       <!--id="tec-type-playbook"-->
+                       <!--value="playbook" ng-click="cacEditTemplateCtrlVm.views.changePlaybook()"><label-->
+                    <!--for="tec-type-playbook">Ansible-->
+                <!--Playbook</label>-->
+                <!--<input type="radio" name="scriptType" ng-model="cacEditTemplateCtrlVm.views.template.scriptType"-->
+                       <!--id="tec-type-script"-->
+                       <!--ng-disabled="cacEditTemplateCtrlVm.views.template.id"-->
+                       <!--value="adhoc"><label for="tec-type-script">普通脚本</label>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="form-group" ng-if="cacEditTemplateCtrlVm.views.jobStatus != 'adding'">
+        <label class="control-label">{{'common.entity.detail.icon' | translate}}</label>
+        <div class="form-control-wrapper">
+            <op-iconpicker ng-model="cacEditTemplateCtrlVm.views.template.icon"></op-iconpicker>
+        </div>
+    </div>
+    <!--<div class="form-group">-->
+    <!--<label class="control-label">颜色</label>-->
+    <!--<div class="form-control-wrapper">-->
+    <!--<select class="form-select" ng-model="cacEditTemplateCtrlVm.views.template.thumbcolor"-->
+    <!--ng-options="color as color for color in colors | orderBy:'toString()'"></select>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-sm-6" style="top: -20px">-->
+    <!--<div class="card udp-card udp-card-with-icon" style="width:300px;height: 100px">-->
+    <!--<div class="card-body opx-autocolor" ng-class="cacEditTemplateCtrlVm.views.template.thumbcolor || 'bg-light'" style="height: 100%;padding: 15px;padding-top: 20px">-->
+    <!--<h3 class="mb-3 font-weight-bold text-ellipsis" title="{{cacEditTemplateCtrlVm.views.template.templateName}}">{{cacEditTemplateCtrlVm.views.template.templateName}} </h3>-->
+    <!--<div class="udp-card-icon" style="right: 30px;top: 10px"><i class="fa" ng-class="cacEditTemplateCtrlVm.views.template.icon"></i>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="">
+        <!--            <label class="col-sm-1 control-label "></label>-->
+<!--        <div class="m-b-sm clearfix">-->
+<!--            <a class="btn btn-default pull-right"-->
+<!--               ng-if="cacEditTemplateCtrlVm.views.template.scriptType!=cacEditTemplateCtrlVm.views.playbookConstant"-->
+<!--               ng-click="cacEditTemplateCtrlVm.views.addParams()" title="添加检查项">-->
+<!--                <i class="fa fa-plus"></i>添加检查项</a>-->
+<!--            &lt;!&ndash;            <p class="pull-right text-danger m-t-xs">注：请选择对应的主机和脚本 &nbsp;</p>&ndash;&gt;-->
+<!--        </div>-->
+        <div class="card card-default op-action-card"
+             ng-repeat="item in cacEditTemplateCtrlVm.views.auditParams track by $index">
+            <div class="card-header" ng-click="cacEditTemplateCtrlVm.views.showAuditParamsDetails($index)">
+                <div style="flex:1">
+<!--                        <span class="d-inline-block" style="width:8em;"><strong>检查项{{$index+1}}</strong>-->
+<!--                        <span class="fa" ng-class="item.isCollapsed?'fa-angle-right':'fa-angle-down'"></span>-->
+<!--                        </span>-->
+                    <!--<span ng-if="cacEditTemplateCtrlVm.views.template.scriptType!=cacEditTemplateCtrlVm.views.playbookConstant"-->
+                          <!--style="margin-right:1em;"><span><i class="fa fa-random"></i> 规则 </span>-->
+                            <!--<strong style="font-size: large">{{item.ruleExpressions.length}} </strong></span>-->
+                    <span style="margin-right:1em;"><span><i class="fa fa-laptop"></i> {{'cac.common.host' | translate}} </span>
+                        <strong style="font-size: large">{{item.hosts.length}}</strong></span>
+                    <span><span><i class="fa fa-file-code-o"></i> {{'cac.common.script' | translate}} </span>
+                        <strong style="font-size: large">{{item.scripts.length}} </strong></span>
+                </div>
+<!--                <div class="text-right opx-flex-fill">-->
+<!--                    <a class="btn btn-default btn-sm" uaa-has-permission="cac:*:*"-->
+<!--                       ng-click="cacEditTemplateCtrlVm.views.deleteParams($index)" title="删除检查项"><i-->
+<!--                            class="fa fa-close"></i></a>-->
+<!--                </div>-->
+            </div>
+            <div class="card-body" ng-if="!item.isCollapsed"
+                 ng-init="cacEditTemplateCtrlVm.views.showRuleName = false;cacEditTemplateCtrlVm.views.showHostName = false">
+                <!--<section class="m-b-sm"-->
+                         <!--ng-if="cacEditTemplateCtrlVm.views.template.scriptType!=cacEditTemplateCtrlVm.views.playbookConstant">-->
+                    <!--<div class="m-b-sm" style="width:6em;" ng-init="">-->
+                        <!--规则 {{item.ruleExpressions.length || ''}}-->
+                        <!--<a class="btn btn-default btn-sm opx-btn-icon" uaa-has-permission="cac:*:*"-->
+                           <!--ng-click="cacEditTemplateCtrlVm.views.selectCacTemplateRules(item,$index)">-->
+                            <!--<i class="fa fa-plus"></i></a>-->
+                        <!--<div ng-if="item.ruleExpressions.length > 9">-->
+                            <!--<button class="btn btn-default btn-sm"-->
+                                    <!--ng-click="cacEditTemplateCtrlVm.views.showRuleName = true"-->
+                                    <!--ng-if="!cacEditTemplateCtrlVm.views.showRuleName && item.ruleExpressions.length > 9">-->
+                                <!--查看更多<i class="fa fa-angle-down"></i>-->
+                            <!--</button>-->
+                            <!--<button class="btn btn-default btn-sm" ng-if="cacEditTemplateCtrlVm.views.showRuleName"-->
+                                    <!--ng-click="cacEditTemplateCtrlVm.views.showRuleName = false">-->
+                                <!--收起 <i class="fa fa-angle-up"></i>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bg-light wrapper-xs">-->
+                        <!--<div class="op-blank-slate p-3" ng-if="item.ruleExpressions.length===0">-->
+                            <!--<div class="op-blank-slate-body">-->
+                                <!--<div class="op-blank-slate-icon">-->
+                                    <!--<i class="fa fa-3x fa-random"></i>-->
+                                <!--</div>-->
+                                <!--<p>没有定义规则</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<ul class="list list-unstyled list-inline">-->
+                            <!--<li ng-repeat="rule in item.ruleExpressions" style="padding:2px 4px;"-->
+                                <!--ng-if="$index < 10 || cacEditTemplateCtrlVm.views.showRuleName">-->
+                                <!--<span class="badge bg-secondary">{{rule.ruleName}}</span>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</section>-->
+
+                <!--<section class="m-b-sm">-->
+                    <!--<div class="m-b-sm" style="width:6em;">主机-->
+                        <!--<a class="btn btn-default btn-sm opx-btn-icon" uaa-has-permission="cac:*:*"-->
+                           <!--ng-click="cacEditTemplateCtrlVm.views.selectCacTemplateHosts(item,$index)">-->
+                            <!--<i class="fa fa-plus"></i></a>-->
+                        <!--<div ng-if="item.hosts.length > 9">-->
+                            <!--<button class="btn btn-default btn-sm"-->
+                                    <!--ng-click="cacEditTemplateCtrlVm.views.showHostKey = true"-->
+                                    <!--ng-if="!cacEditTemplateCtrlVm.views.showHostKey && item.hosts.length > 9">-->
+                                <!--查看更多 <i class="fa fa-angle-down"></i>-->
+                            <!--</button>-->
+                            <!--<button class="btn btn-default btn-sm"-->
+                                    <!--ng-click="cacEditTemplateCtrlVm.views.showHostKey = false"-->
+                                    <!--ng-if="cacEditTemplateCtrlVm.views.showHostKey">-->
+                                <!--收起 <i class="fa fa-angle-up"></i>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bg-light wrapper-xs">-->
+                        <!--<div class="op-blank-slate p-3" ng-if="item.hosts==''">-->
+                            <!--<div class="op-blank-slate-body">-->
+                                <!--<div class="op-blank-slate-icon">-->
+                                    <!--<i class="fa fa-3x fa-laptop"></i>-->
+                                <!--</div>-->
+                                <!--<p>没有定义主机</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<ul class="list list-unstyled list-inline">-->
+                            <!--<li ng-repeat="host in item.hosts" style="padding:2px 4px;"-->
+                                <!--ng-if="$index < 10 || cacEditTemplateCtrlVm.views.showHostKey">-->
+                                <!--<span class="badge bg-secondary">{{host.hostKey}}</span>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</section>-->
+                <div class="form-group op-align-horizontal">
+                    <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'cac.common.script' | translate}}</label>
+                    <gfs-file-selector the-model="item.scripts" class="w-full"
+                                       model-converter="{type: 'attrmap', attrmap: {'scriptPath': 'path', 'scriptParams': 'config'}, modelType: 'array'}"
+                                       config="cacEditTemplateCtrlVm.views.fileSelectorConfig"></gfs-file-selector>
+                </div>
+                <div class="form-group op-align-horizontal">
+                    <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'cac.common.host' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <div class="w-full">
+                            <div class="mt-3">
+                                <!--<jao-host-selector the-model="item.hosts"></jao-host-selector>-->
+                                <!--<acm-device-selector the-model="item.hosts" mcheck-type="'map'"></acm-device-selector>-->
+                                <acm-device-selector the-model="item.hosts" ci-types="'[auto]'" mcheck-type="'map'"></acm-device-selector>
+                                <!--<acm-device-selector the-model="item.hosts"></acm-device-selector>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<section class="m-b-sm">-->
+                    <!--<div class="m-b-sm" style="width:6em;">-->
+                        <!--脚本-->
+                        <!--&lt;!&ndash;                        <a ng-if="!cacV2.enabled" class="btn btn-default btn-sm opx-btn-icon"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                           uaa-has-permission="cac:*:*"&ndash;&gt;-->
+                        <!--&lt;!&ndash;                           ng-click="cacEditTemplateCtrlVm.views.selectCacTemplateScripts(item,$index,cacEditTemplateCtrlVm.views.template.scriptType)">&ndash;&gt;-->
+                        <!--&lt;!&ndash;                            <i class="fa fa-plus"></i></a>&ndash;&gt;-->
+                        <!--<a ng-if="cacV2.enabled" class="btn btn-default btn-sm opx-btn-icon"-->
+                           <!--ng-click="cacV2.selectScripts(item,$index,cacEditTemplateCtrlVm.views.template.scriptType)">-->
+                            <!--<i class="fa fa-plus"></i>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="bg-light wrapper-xs">-->
+                        <!--<div class="op-blank-slate p-3" ng-if="item.scripts.length===0">-->
+                            <!--<div class="op-blank-slate-body">-->
+                                <!--<div class="op-blank-slate-icon">-->
+                                    <!--<i class="fa fa-3x fa-file-code-o"></i>-->
+                                <!--</div>-->
+                                <!--<p>没有定义脚本</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<table ng-if="item.scripts.length>0" class="table table-sm op-param-table">-->
+                            <!--<tbody>-->
+                            <!--<tr ng-repeat="script in item.scripts" style="vertical-align: middle">-->
+                                <!--<td>{{script.scriptName}}</td>-->
+                                <!--<td style="width:100%;"><input type="text" class="form-control" title="脚本参数"-->
+                                                               <!--placeholder="脚本参数"-->
+                                                               <!--ng-model="script.scriptParams"-->
+                                                               <!--name="script_{{$index}}"></td>-->
+                                <!--<td style="vertical-align: middle">-->
+                                    <!--<button class="btn btn-default btn-sm opx-btn-icon"-->
+                                            <!--ng-click="cacEditTemplateCtrlVm.views.removeScript(script.id,$parent.$index)">-->
+                                        <!--<i class="fa fa-close" style="cursor: pointer"></i>-->
+                                    <!--</button>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</section>-->
+            </div>
+            <!--<div class="card-body" ng-if="!item.isCollapsed">-->
+                <!--<div class="form-group op-align-horizontal">-->
+                    <!--<label class="control-label font-weight-bold text-left" style="width:4rem;">执行频率</label>-->
+                        <!--<div class="d-inline-block">-->
+                            <!--<div class="opx-check-group opx-secondary btn-group">-->
+                                <!--<select ng-model="$ctrl.execRate" class="form-select">-->
+                                    <!--<option value="once">执行一次</option>-->
+                                    <!--<option value="year">每年</option>-->
+                                    <!--<option value="month">每月</option>-->
+                                    <!--<option value="week">每周</option>-->
+                                    <!--<option value="day">每日</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="d-inline-block">-->
+                            <!--<label style="margin-left: 10px">起始日期</label>-->
+                            <!--<div class="form-control-wrapper d-inline-block">-->
+                                <!--<div class="opx-check-group opx-secondary btn-group">-->
+                                    <!--<input class="form-control" type="date" ng-init="$ctrl.jobExec={}">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div ng-if="$ctrl.execRate === 'year'" class="d-inline-block">-->
+                            <!--<label style="margin-left: 10px">月</label>-->
+                            <!--<div class="form-control-wrapper d-inline-block">-->
+                                <!--<div class="opx-check-group opx-secondary btn-group">-->
+                                    <!--<select ng-model="$ctrl.jobExec.month" class="form-select">-->
+                                        <!--<option value="1">1</option>-->
+                                        <!--<option value="2">2</option>-->
+                                        <!--<option value="3">3</option>-->
+                                        <!--<option value="4">4</option>-->
+                                        <!--<option value="5">5</option>-->
+                                        <!--<option value="6">6</option>-->
+                                        <!--<option value="7">7</option>-->
+                                        <!--<option value="8">8</option>-->
+                                        <!--<option value="9">9</option>-->
+                                        <!--<option value="10">10</option>-->
+                                        <!--<option value="11">11</option>-->
+                                        <!--<option value="12">12</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div></div>-->
+                        <!--<div ng-if="$ctrl.execRate === 'week'" style="margin-left: 10px" class="d-inline-block">-->
+                            <!--<label>周</label>-->
+                            <!--<div class="form-control-wrapper d-inline-block">-->
+                                <!--<div class="opx-check-group opx-secondary btn-group">-->
+                                    <!--<select ng-model="$ctrl.jobExec.week" class="form-select">-->
+                                        <!--<option value="1">周一</option>-->
+                                        <!--<option value="2">周二</option>-->
+                                        <!--<option value="3">周三</option>-->
+                                        <!--<option value="4">周四</option>-->
+                                        <!--<option value="5">周五</option>-->
+                                        <!--<option value="6">周六</option>-->
+                                        <!--<option value="7">周日</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div ng-if="$ctrl.execRate === 'month' || $ctrl.execRate === 'year'" style="margin-left: 10px" class="d-inline-block"-->
+                             <!--uib-popover="" uib-popover-html="'0表示每月最后一天'" popover-trigger="'mouseenter'">-->
+                            <!--<label>日</label>-->
+                            <!--<div class="form-control-wrapper d-inline-block">-->
+                                <!--<div class="opx-check-group opx-secondary btn-group">-->
+                                    <!--<input type="number" ng-model="$ctrl.jobExec.day" min="0"-->
+                                           <!--step="1" max="31" class="form-control">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div ng-if="$ctrl.execRate" style="margin-left: 10px" class="d-inline-block">-->
+                            <!--<label>时</label>-->
+                            <!--<div class="form-control-wrapper d-inline-block">-->
+                                <!--<div class="opx-check-group opx-secondary btn-group">-->
+                                    <!--<input type="time" ng-model="$ctrl.jobExec.time" class="form-control">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>

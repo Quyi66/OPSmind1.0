@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Edit Operation
+    </h4>
+    <button type="button" ng-click="$ctrl.cancel()" class="btn btn-default opx-btn-icon opx-btn-flat op-close-window"><i
+            class="fa fa-times"></i></button>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label class="control-label">Title</label>
+        <div class="form-control-wrapper d-flex">
+            <op-iconpicker ng-model="$ctrl.theOperation.icon" class="me-3"></op-iconpicker>
+            <input type="text" class="form-control w-md" ng-model="$ctrl.theOperation.title">
+        </div>
+    </div>
+   <udp-widget-config-interaction the-model="$ctrl.theOperation.config"
+                                   options="{supports:'page,job,code'}"></udp-widget-config-interaction>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.submit()">
+        {{'common.action.ok' | translate}}
+    </button>
+    <button type="button" class="btn btn-default opx-btn-cancel" ng-click="$ctrl.cancel()">
+        {{'common.action.cancel' | translate}}
+    </button>
+</div>

@@ -1,0 +1,147 @@
+//TODO: change to btn-danger
+$op_applet_size: 10rem;
+$op_applet_size_sm: 8rem;
+$op_applet_icon_cover_size: 5rem;
+$op_applet_icon_cover_size_sm: 4rem;
+$op_applet_icon_font_size: 3.5em;
+$op_applet_icon_font_size_sm: 2.8em;
+
+.opx-win-dock {
+  .nav-item {
+    &.running {
+      background: rgba(128, 128, 128, 0.25);
+      border-top: 2px solid shift-color($secondary, -20%);
+      //> .nav-link {
+      //  color: $white;
+      //}
+      &.active {
+        border-top: 2px solid shift-color($primary, -20%);
+        background: rgba($primary, .2);
+
+        > .nav-link, .nav-link:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.opx-win-taskbar {
+  .dropdown-menu {
+    // Higher than modaless modal
+    z-index: 3000;
+  }
+}
+
+.opx-applet-item {
+  display: block;
+  border-radius: 0.25rem;
+  width: $op_applet_size;
+  height: $op_applet_size;
+  border: 1px solid transparent;
+
+  &:hover {
+    //background-color: rgba(128, 128, 128, .1);
+    border: 1px solid rgba(128, 128, 128, .125);
+    background: radial-gradient(ellipse at center, rgba(200, 200, 200, .1) 0%, rgba(128, 128, 128, .1) 100%);
+    //box-shadow: 2px 2px 5px rgba(0, 0, 0, .125);
+  }
+
+  .opx-applet-item-cover {
+    display: block;
+    padding: 1rem 0;
+    background: transparent;
+
+    .opx-applet-item-icon {
+      border-radius: 15%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: $op_applet_icon_cover_size;
+      width: $op_applet_icon_cover_size;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: .125rem .125rem .25rem rgba(0, 0, 0, .25);
+
+      .opx-applet-item-badge {
+        position: absolute;
+        top: -0.25rem;
+        right: -0.25rem;
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background: rgba(0, 0, 0, .5);
+        border-radius: 50%;
+        text-align: center;
+        padding: 0.125rem 0.25rem;
+      }
+
+      > i {
+        font-size: $op_applet_icon_font_size;
+      }
+    }
+  }
+
+  .opx-applet-item-title {
+    display: block;
+    text-align: center;
+    padding: 0 .25rem;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+#opx-win-launcher {
+  overflow-y: auto;
+  background-color: rgba($gray-900, .985);
+}
+
+op-desktop {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding-top: 40px;;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.opx-win-desktop {
+  height: 100%;
+
+  .opx-applet-item:hover {
+    .opx-applet-item-icon {
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .opx-applet-item-icon {
+    color: #efefef;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+#opx-win-launcher, .opx-win-desktop {
+  .opx-applet-item {
+    width: $op_applet_size_sm;
+    height: $op_applet_size_sm;
+
+    .opx-applet-item-icon {
+      width: $op_applet_icon_cover_size_sm;
+      height: $op_applet_icon_cover_size_sm;
+
+      > i {
+        font-size: $op_applet_icon_font_size_sm;
+      }
+    }
+
+    .opx-applet-item-title {
+      color: #efefef;
+      text-shadow: 0 0 0.2em #000, 0 0 0.2em #000;
+    }
+  }
+}

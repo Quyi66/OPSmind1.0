@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'udp.designer.edit.select_page_template' | translate}}</h4>
+</div>
+<div class="modal-body">
+    <div class="wrapper">
+        <div class="d-flex align-items-start justify-content-around">
+            <div ng-repeat="tpl in pageTemplates track by $index">
+                <div class="op-jumbo-link" ng-click="selectPageTemplate(tpl.code)">
+                    <div class="op-jumbo-link-icon small"><i class="far fa-4x" ng-class="tpl.icon"></i></div>
+                    <h4>{{'udp.designer.edit.template.' + tpl.code | translate}}</h4></div>
+                <p class="help-block">{{'udp.designer.edit.template.' + tpl.code + '_desc' | translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>

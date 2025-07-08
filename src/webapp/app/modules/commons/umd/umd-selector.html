@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label class="control-label">{{'umd.edit.select' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="input-group">
+            <select op-select="{placeholder: ('umd.edit.select_placeholder' | translate)}"
+                    style="width:calc(100% - 2rem)" 
+                    class="form-select" 
+                    ng-model="$ctrl.theModel"
+                    ng-options="data.code as data.title for data in $ctrl.dataList">
+                <option></option>
+            </select>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,6 @@
+<form class="op-smartform form-vertical">
+    <umd-data-view the-data="$ctrl.theData" model-def="$ctrl.theModel" options="{editMode:$ctrl.editMode}"></umd-data-view>
+    <div ng-if="$ctrl.editMode">
+        <button type="button" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.save($ctrl.theData)"  uaa-has-permission="acm:edit:*">{{ 'common.entity.action.save' | translate}}</button>
+    </div>
+</form>

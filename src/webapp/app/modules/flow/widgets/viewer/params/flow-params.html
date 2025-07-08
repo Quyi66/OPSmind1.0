@@ -1,0 +1,149 @@
+<div class="operation">
+    <div ng-if="$ctrl.currentNode.task.taskType === $ctrl.taskType.JobTask">
+        <div class="card shadow border-primary mt-2">
+            <div class="card-header fs-4" ng-click="$ctrl.needCollapse && ($ctrl.isCollapsed = !$ctrl.isCollapsed)">
+                {{'jao.job.detail.params' | translate}}
+            </div>
+            <div class="card-body" ng-if="!$ctrl.isCollapsed">
+                <jao-job-selector the-model="$ctrl.params[$ctrl.currentNode.element.id].jobId" 
+                                  selected-job="$ctrl.selectedJobs[$ctrl.currentNode.element.id]"
+                                  disabled="$ctrl.needEdit"
+                                  show-edit="$ctrl.isEditingParams"></jao-job-selector>
+                <jao-job-param  ng-if="$ctrl.selectedJobs[$ctrl.currentNode.element.id]"
+                                the-model="$ctrl.params[$ctrl.currentNode.element.id].params"
+                                params="$ctrl.selectedJobs[$ctrl.currentNode.element.id].params"
+                                readonly="!$ctrl.isEditingParams"></jao-job-param>
+            </div>
+            
+            
+            <div    class="card-footer text-right" 
+                    ng-if="$ctrl.canEdit && !$ctrl.isCollapsed && ($ctrl.currentNode.state === 'error' || $ctrl.currentNode.state === 'waiting')">
+                <button ng-click="$ctrl.editParam()" ng-if="!$ctrl.isEditingParams" class="btn btn-primary no-animate">{{'common.action.edit' | translate}}</button>
+                <button ng-click="$ctrl.cancelEditParam()" ng-if="$ctrl.isEditingParams" class="btn btn-secondary no-animate">{{'common.action.cancel' | translate}}</button>
+                <button ng-click="$ctrl.saveParam()" ng-if="$ctrl.isEditingParams" ng-disabled="!$ctrl.paramsFake[$ctrl.currentNode.task.taskId].checked" class="btn btn-success no-animate">{{'common.action.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div ng-if="$ctrl.currentNode.task.taskType !== $ctrl.taskType.JobTask">
+        <div class="card shadow border-primary mt-2">
+            <div class="card-header fs-4" ng-click="$ctrl.needCollapse && ($ctrl.isCollapsed = !$ctrl.isCollapsed)">
+                {{'jao.job.detail.params' | translate}}
+            </div>
+            <div class="card-body" ng-if="!$ctrl.isCollapsed">
+                <div ng-repeat="param in $ctrl.currentNode.params track by $index">
+                    <div ng-if="param.type === $ctrl.paramTypes.HOST">
+                        <label>{{(param.label || 'common.entity.variable.host') | translate}}</label>
+                        <acm-device-selector  view-as="btndlg" ci-types="'[auto]'"
+                                              the-model="$ctrl.params[$ctrl.currentNode.element.id][param.name]"
+                                              readonly="!$ctrl.isEditingParams">
+                        </acm-device-selector>
+                    </div>
+
+                    <div ng-if="param.type === $ctrl.paramTypes.INTEGER">
+                        <udp-input  datatype="number" 
+                                    label="{{ (param.label || param.name) | translate}}" 
+                                    showlabel="true" 
+                                    desc="{{ (param.desc || '') | translate}}" 
+                                    showdesc="{{ param.desc && true }}" 
+                                    initval="{{ param.defaultValue || '' }}"
+                                    ng-model="$ctrl.params[$ctrl.currentNode.element.id][param.name]" 
+                                    control="input"
+                                    readonly="{{ !$ctrl.isEditingParams }}">
+                        </udp-input>
+                    </div>
+
+                    <div ng-if="param.type === $ctrl.paramTypes.TEXT">
+                        <udp-input  datatype="string" 
+                                    label="{{ (param.label || param.name) | translate}}" 
+                                    showlabel="true" 
+                                    desc="{{ (param.desc || '') | translate}}" 
+                                    showdesc="{{ param.desc && true }}" 
+                                    initval="{{ param.defaultValue || '' }}"
+                                    ng-model="$ctrl.params[$ctrl.currentNode.element.id][param.name]" 
+                                    control="input"
+                                    readonly="{{ !$ctrl.isEditingParams }}">
+                        </udp-input>
+                    </div>
+
+                    <div ng-if="param.type === $ctrl.paramTypes.SWITCH">
+                        <udp-input datatype="boolean" label="{{ (param.label || param.name) | translate}}"
+                            showlabel="true" desc="{{ (param.desc || '') | translate}}"
+                            showdesc="{{ param.desc && true }}" initval="{{  param.defaultValue || false }}"
+                            ng-model="$ctrl.params[$ctrl.currentNode.element.id][param.name]" control="switch"
+                            readonly="{{ !$ctrl.isEditingParams }}">
+                        </udp-input>
+                    </div>
+
+                    <div ng-if="param.type === $ctrl.paramTypes.DATE">
+                        <udp-input datatype="date" label="{{ (param.label || param.name) | translate}}"
+                            showlabel="true" desc="{{ (param.desc || '') | translate}}"
+                            showdesc="{{ param.desc && true }}" initval="{{  param.defaultValue || false }}"
+                            ng-model="$ctrl.params[$ctrl.currentNode.element.id][param.name]" control="datepicker"
+                            formatter="YYYY-MM-DD HH:mm:ss"
+                            readonly="{{ !$ctrl.isEditingParams }}">
+                        </udp-input>
+                    </div>
+
+                    <div ng-if="param.type === $ctrl.paramTypes.APPROVE">
+                        <udp-input datatype="string" 
+                            label="{{ (param.label || param.name) | translate}}"
+                            showlabel="true" 
+                            desc="{{ (param.desc || '') | translate}}"
+                            showdesc="{{ param.desc && true }}" 
+                            initval="{{ param.defaultValue || '' }}"
+                            ng-model="$ctrl.params[$ctrl.currentNode.element.id][param.name]" 
+                            control="select"
+                            ismultiple="false"
+                            sourcedef="{{ $ctrl.approveArr }}"
+                            readonly="{{ !$ctrl.isEditingParams }}">
+                        </udp-input>
+                    </div>
+
+
+                    <div ng-if="param.type === $ctrl.paramTypes.PROCESS">
+                        <flow-process-selector 
+                            disabled="!$ctrl.isEditingParams"
+                            the-model="$ctrl.params[$ctrl.currentNode.element.id].processId"
+                            selected-process="$ctrl.selectedProcess[$ctrl.currentNode.element.id]"
+                            except-list="[$ctrl.processId]">
+                        </flow-process-selector>
+
+                        <flow-scene-selector
+                            disabled="!$ctrl.isEditingParams"
+                            ng-if="$ctrl.params[$ctrl.currentNode.element.id].processId"
+                            process-id="$ctrl.params[$ctrl.currentNode.element.id].processId"
+                            the-model="$ctrl.params[$ctrl.currentNode.element.id].sceneId"
+                            selected-scene="$ctrl.selectedScene[$ctrl.currentNode.element.id]">
+                        </flow-scene-selector>
+                    </div>
+                </div>
+            </div>
+
+
+            <div    class="card-footer text-right" 
+                    ng-if="$ctrl.canEdit && !$ctrl.isCollapsed && ($ctrl.currentNode.state === 'error' || $ctrl.currentNode.state === 'waiting' || ($ctrl.currentNode.state === 'active' && $ctrl.currentNode.task.type === $ctrl.taskType.ManualTask))">
+                <button ng-click="$ctrl.editParam()" ng-if="!$ctrl.isEditingParams" class="btn btn-primary no-animate">{{'common.action.edit' | translate}}</button>
+                <button ng-click="$ctrl.cancelEditParam()" ng-if="$ctrl.isEditingParams" class="btn btn-secondary no-animate">{{'common.action.cancel' | translate}}</button>
+                <button ng-click="$ctrl.saveParam()" ng-if="$ctrl.isEditingParams" ng-disabled="!$ctrl.paramsFake[$ctrl.currentNode.task.taskId].checked" class="btn btn-success no-animate">{{'common.action.save' | translate}}</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow border-secondary mt-2" ng-if="!$ctrl.isCollapsed">
+        <div class="card-body help-block" translate>
+            flow.task.built-in_arg_desc
+        </div>
+    </div>
+
+    <div class="card shadow border-secondary mt-2" ng-if="!$ctrl.isCollapsed && $ctrl.currentNode.task.remark">
+        <div class="card-header fs-4">
+            {{ 'flow.task.remark' | translate }}
+        </div>
+        <div class="card-body help-block" translate>
+            {{ $ctrl.currentNode.task.remark }}
+        </div>
+    </div>
+
+</div>

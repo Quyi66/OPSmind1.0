@@ -1,0 +1,108 @@
+####METRIC_BEGIN:yaml
+HOSTNAME: 'XIN13PRO'
+OS_ID: 'ubuntu'
+OS_VER: 18.04
+OS_VER_MAJOR: 18
+abrtd_service_is_active: false
+abrtd_service_is_enabled: false
+auditd_service_is_active: false
+auditd_service_is_enabled: false
+chronyd_service_is_active: false
+chronyd_service_is_enabled: false
+cpu_use_pcent: 5.9
+cpuspeed_service_is_active: false
+cpuspeed_service_is_enabled: false
+crond_service_is_active: false
+crond_service_is_enabled: false
+disk_use_pcent: 76
+fs_file_max: 1048576
+fs_nr_open: ''
+fs_json: '{"/":{"fs":"rootfs","size":104857596,"avail":25308696,"use_pcent":76},"/mnt/c":{"fs":"C:\\","size":104857596,"avail":25308696,"use_pcent":76},"/mnt/d":{"fs":"D:\\","size":393942012,"avail":145011620,"use_pcent":64}}'
+fs_overused_disk: ''
+fs_overused_inode: ''
+iostat: ''
+ip6tables_service_is_active: false
+ip6tables_service_is_enabled: false
+iptables_service_is_active: false
+iptables_service_is_enabled: false
+irqbalance_service_is_active: false
+irqbalance_service_is_enabled: false
+kdump_service_is_active: false
+kdump_service_is_enabled: false
+kernel_core_pattern: ''
+kernel_sysreq: ''
+kernel_tainted: ''
+mdmonitor_service_is_active: false
+mdmonitor_service_is_enabled: false
+mem_avail_mb: 6702
+mem_avail_pcent: 41.33
+mem_total_mb: 16214
+netstat_tcp_error: ''
+netstat_udp_error: ''
+ntp_server: ''
+pkg_numa: 'numactl is /usr/bin/numactl'
+postfix_service_is_active: false
+postfix_service_is_enabled: false
+proc_disksleep: ''
+proc_top_cpu: |
+  USER       PID %CPU %MEM COMMAND
+  root         1  0.0  0.0 /init
+  root         6  0.0  0.0 /init
+  leo          7  0.0  0.0 ./wsltermd /home/leo /bin/bash -l -i
+  leo          8  0.0  0.0 /bin/bash -l -i
+  leo       8999  0.0  0.0 /bin/bash ./check-rhel.sh
+proc_top_mem: |
+  USER       PID %CPU %MEM COMMAND
+  leo          8  0.0  0.0 /bin/bash -l -i
+  leo       9063  0.0  0.0 ps -Ao user,pid,pcpu,pmem,args --sort=-pmem
+  leo       8999  0.0  0.0 /bin/bash ./check-rhel.sh
+  leo       9064  0.0  0.0 head -n 6
+  leo          7  0.0  0.0 ./wsltermd /home/leo /bin/bash -l -i
+proc_zombie: ''
+rhnsd_service_is_active: false
+rhnsd_service_is_enabled: false
+rhsmcertd_service_is_active: false
+rhsmcertd_service_is_enabled: false
+route: |
+  Kernel IP routing table
+  Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+  192.168.23.0    0.0.0.0         255.255.255.0   U     256    0        0 eth2
+  192.168.23.1    0.0.0.0         255.255.255.255 U     256    0        0 eth2
+  192.168.23.255  0.0.0.0         255.255.255.255 U     256    0        0 eth2
+  224.0.0.0       0.0.0.0         240.0.0.0       U     256    0        0 eth2
+  255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 eth2
+  192.168.19.0    0.0.0.0         255.255.255.0   U     256    0        0 eth3
+  192.168.19.1    0.0.0.0         255.255.255.255 U     256    0        0 eth3
+  192.168.19.255  0.0.0.0         255.255.255.255 U     256    0        0 eth3
+  224.0.0.0       0.0.0.0         240.0.0.0       U     256    0        0 eth3
+  255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 eth3
+  127.0.0.0       0.0.0.0         255.0.0.0       U     256    0        0 lo
+  127.0.0.1       0.0.0.0         255.255.255.255 U     256    0        0 lo
+  127.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 lo
+  224.0.0.0       0.0.0.0         240.0.0.0       U     256    0        0 lo
+  255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 lo
+  0.0.0.0         192.168.1.1     255.255.255.255 U     0      0        0 wifi0
+  192.168.1.0     0.0.0.0         255.255.255.0   U     256    0        0 wifi0
+  192.168.1.7     0.0.0.0         255.255.255.255 U     256    0        0 wifi0
+  192.168.1.255   0.0.0.0         255.255.255.255 U     256    0        0 wifi0
+  224.0.0.0       0.0.0.0         240.0.0.0       U     256    0        0 wifi0
+  255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 wifi0
+rsyslogd_service_is_active: false
+rsyslogd_service_is_enabled: false
+swap_free_mb: 12734
+swap_free_pcent: 99.49
+swap_total_mb: 12799
+sys_runlevel: 'unknown'
+sys_uptime_day: ''
+sysstat_service_is_active: false
+sysstat_service_is_enabled: false
+tuned_service_is_active: false
+tuned_service_is_enabled: false
+tuned_profile: ''
+ulimit_max_user_processes: 7823
+ulimit_open_files: 1024
+vm_dirty_background_ratio: ''
+vm_dirty_ratio: ''
+vm_swappiness: 60
+vm_dirty_config: 'dirty_background_ratio=,dirty_ratio='
+####METRIC_END

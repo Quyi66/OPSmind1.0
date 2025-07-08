@@ -1,0 +1,37 @@
+<div class="opx-layout-hflex">
+    <div class="jao-pmd-canvas opx-flex-fill p-3 bg-secondary">
+        <div class="jao-pmd-node-container" ui-sortable="$ctrl.sortableOptions" >
+            <div ng-repeat="step in $ctrl.theFlows.steps track by $index"
+                 class="card jao-pmd-task-node"
+                 id="js-pm-tasknode-{{step.id}}"
+                 tabindex="-1"
+                 ng-class="{'active':$ctrl.selectedTaskNodes.indexOf($index)>=0}"
+                 ng-click="$ctrl.selectedNode(step, $index)"
+                >
+                <div class="card-header p-2 d-flex align-items-center" ng-click="$ctrl.clickTaskNode(step,$index)">
+                    <i class="text-muted fal fa-file-alt fa-fw me-2"></i>
+                    <span>{{step.name}}</span>
+                    <div  class =" ms-auto small text-center opx-autocolor {{$ctrl.statusMap[step.status].class}}">
+                        <i class="fa {{$ctrl.statusMap[step.status].iconClass}}"></i>
+                    </div>
+                </div>
+                <div class="card-body p-2 scroll-y">
+                    <div ng-repeat="task in step.config.tasks track by $index" class="small">
+                        <div ng-repeat="script in task.scripts track by $index" class="small">
+                            <strong>{{script.location}}</strong>
+                            <div class="text-ellipsis" title="参数">{{script.argline}}</div>
+                        </div>
+                        <div ng-if="task.groups"><i class="far fa-fw fa-server" title="主机信息"></i>
+                            <ul class="list-inline list-unstyled d-inline-block mb-0">
+                                <li ng-repeat="group in task.groups">
+                                    <span class="badge bg-secondary" title="{{group.group}}">{{group.hosts.length}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="jao-pmd-line-wrapper"></div>
+    </div>
+</div>

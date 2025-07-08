@@ -1,0 +1,22 @@
+<table class="table op-param-table">
+    <thead>
+    <tr>
+        <th>{{'udp.wc.field.name'|translate}}</th>
+        <th>{{'udp.wc.field.field'|translate}}</th>
+        <th>{{'udp.wc.field.label'|translate}}</th>
+        <th>{{'udp.wc.field.converter'|translate}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="field in $ctrl.options.fieldDefs track by $index">
+        <td>{{field.title}}</td>
+        <td>
+            <select chosen="{width:'100%'}" ng-model="$ctrl.props[field.name].field" class="form-select"
+                    ng-options="field.name as field.name +' [' + field.type + ']' for field in $ctrl.datasetFields">
+            </select>
+        </td>
+        <td><input ng-model="$ctrl.props[field.name].label" class="form-control"></td>
+        <td><input ng-model="$ctrl.props[field.name].convertFn" class="form-control"></td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,51 @@
+<div class="opx-layout-hflex">
+    <div class="opx-sidebar border-right bg-light" style="width:12rem;" ng-if="$ctrl.showNavigation">
+        <div class="opx-sidebar-body">
+            <applet-selector applet-code="$ctrl.appletCode" on-change="$ctrl.onAppletSelectorChange"
+                             options="{viewAs:'list', showAll:true, includeAllAndNull:true, showFilter:true}">
+            </applet-selector>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y" uaa-is-authenticated
+         uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+        <nav class="navbar navbar-light" ng-if="$ctrl.showApplet">
+            <div class="navbar-nav">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active opx-navbar-title">{{'jao.index.list' | translate}}</li>
+                </ol>
+            </div>
+            <div uaa-has-permission="jao:edit:*" class="dropdown ms-auto">
+                <a class="btn btn-primary opx-btn-flat dropdown-toggle" title="{{'jao.job.create' | translate}}"
+                   data-bs-toggle="dropdown"
+                   href="javascript:void(0);"><i
+                        class="fa fa-plus"></i> {{'jao.job.create' | translate}}</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" ng-repeat="(type,def) in $ctrl.jobTypeList"
+                       ui-sref="app.appman.job.create({type:type,appletCode:$ctrl.appletCode})"><i
+                            class="fa fa-fw {{def.icon}}"></i> {{def.title}}</a>
+                </div>
+            </div>
+            <button uaa-has-permission="jao:edit:*" ng-click="$ctrl.deleteJob()"
+                    class="btn btn-default opx-btn-flat ms-2"
+                    title="{{'common.entity.action.delete' | translate}}"
+                    ng-disabled="!$ctrl.tableConfig.selectedItems.length>0"><i class="fa fa-trash"></i></button>
+        </nav>
+
+        <applet-selector
+                style="margin-top: 10px;display: flex;text-align: center;justify-content: flex-end;flex-grow: 0;"
+                applet-code="$ctrl.appletCode" on-change="$ctrl.onAppletSelectorChange"
+                options="{ includeAllAndNull:true}"
+                class="op-w-full col"
+                ng-if="false"></applet-selector>
+
+        <div class="opx-flex-fill p-3">
+            <opx-datatable table-config="$ctrl.tableConfig">
+                <button ng-if="$ctrl.showNavigation" type="button" class="btn btn-secondary"
+                        ng-disabled="$ctrl.tableConfig.selectedItems.length<1"
+                        ng-click="$ctrl.moveJobs()"><i class="fa fa-sign-in"></i>
+                    {{'jao.page.action.move_job' | translate}}
+                </button>
+            </opx-datatable>
+        </div>
+    </div>
+</div>

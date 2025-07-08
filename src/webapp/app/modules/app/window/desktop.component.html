@@ -1,0 +1,7 @@
+<div class="opx-win-desktop">
+    <div class="p-3 h-100 d-flex flex-column flex-wrap align-content-start">
+        <div ng-repeat="shortcut in $ctrl.shortcuts">
+            <opx-applet-item applet-def="shortcut" on-click-applet="$ctrl.openShortcut(shortcut)"></opx-applet-item>
+        </div>
+    </div>
+</div>

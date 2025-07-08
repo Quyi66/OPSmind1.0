@@ -1,0 +1,182 @@
+<style type="text/css">
+    .udp-uml {
+        overflow-x: auto;
+        max-width: 100%;
+        white-space: nowrap;
+        padding: 8px 0;
+    }
+
+    .list-group-item.field-excluded span {
+        text-decoration-line: line-through;
+    }
+
+    .list-group-item.field-relation span {
+        color: deepskyblue;
+    }
+
+    span.field-renamed {
+        color: red;
+    }
+
+    .list-group-item.field-in-edit {
+        padding: 5px 4px;
+    }
+
+    .udp-uml-block {
+        display: inline-flex;
+        vertical-align: top;
+        position: relative;
+    }
+
+    .udp-uml-block-relation {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 40px;
+        height: 200px;
+        overflow-y: auto;
+    }
+
+    .udp-uml-block-relation-line {
+        border-bottom: 2px solid #aaaaaa;
+        padding-bottom: 4px;
+        margin-bottom: 8px;
+        position: relative;
+    }
+
+    .udp-uml-block-relation-line .badge {
+        user-select: none;
+        cursor: default;
+    }
+
+    .udp-uml-block-relation-line.active {
+        border-bottom-color: deepskyblue;
+    }
+
+    .udp-uml-block-class {
+        display: inline-block;
+        min-width: 120px;
+        max-width: 200px;
+        height: 200px;
+        vertical-align: middle;
+    }
+
+    .udp-uml-block-class.card {
+        margin-bottom: 0;
+    }
+
+    .udp-uml-block-class .card-header {
+        padding: 8px;
+        height: 36px;
+    }
+
+    .udp-uml-block-class .list-group {
+        height: calc(100% - 40px);
+        overflow-y: auto;
+    }
+</style>
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.dataset.joinx.select_dataset' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="d-flex w-100">
+            <select class="form-select" ng-model="$ctrl.selectedDsCode"
+                    ng-options="ds.code as ds.name for ds in $ctrl.datasets | orderBy:'name'">
+                <option disabled></option>
+            </select>
+            <!--            <div class="input-group-btn">-->
+            <button type="button" class="ml-3 btn btn-primary" ng-click="$ctrl.addDataset()">
+                {{'udp.wc.dataset.joinx.add_dataset' | translate}}
+            </button>
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+<div ui-sortable="::$ctrl.sortableOptions" ui-sortable-start="$ctrl.onSortStart" ui-sortable-stop="$ctrl.onSortStop"
+     ng-model="$ctrl.graphDs" class="udp-uml">
+    <div ng-repeat="ds in $ctrl.graphDs track by $index" class="udp-uml-block">
+        <div ng-if="!$first" class="udp-uml-block-relation">
+            <div class="udp-uml-block-relation-line op-hover-trigger"
+                 ng-click="$ctrl.chooseRelation($parent.$index,$index)"
+                 ng-class="{'active':$ctrl.activeRelation.dsIndex===$parent.$index && $ctrl.activeRelation.relIndex===$index}"
+                 ng-repeat="relation in $ctrl.theModel.dses[$index].relations">
+                <div style="display:flex;">
+                    <div>
+                        <span class="badge"
+                              ng-class="$ctrl.activeRelation.dsIndex===$parent.$index && $ctrl.activeRelation.relIndex===$index?'badge-info':(relation.hasError?'badge-danger':(relation.left?'badge-default':'badge-warning'))">{{relation.left || '??'}} </span>
+                    </div>
+                    <div class="text-right" style="flex:1;">
+                       <span class="badge"
+                             ng-class="$ctrl.activeRelation.dsIndex===$parent.$index && $ctrl.activeRelation.relIndex===$index?'badge-info':(relation.right?'badge-default':'badge-warning')">{{relation.right || '??'}}</span>
+                    </div>
+                </div>
+                <div class="op-hover-display-block">
+                    <button type="button" class="btn btn-danger btn-sm opx-btn-icon "
+                            title="{{'udp.wc.dataset.joinx.remove_relation'|translate}}"
+                            ng-click="$ctrl.removeRelation($parent.$index,$index)"
+                            style="position:absolute;bottom:-10px;left:calc(50% - 10px);z-index:2;">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card card-default udp-uml-block-class">
+            <div class="card-header op-drag-handle op-hover-trigger" title="{{ds.code}}">
+                <div>
+                    {{ds.name}}
+                </div>
+                <div class="op-hover-display-block" style="background:#ddd;position:absolute;top:8px;right:8px;">
+                    <a ng-if="!$first" ng-click="$ctrl.addRelation($index)"
+                       title="{{'udp.wc.dataset.joinx.add_relation'|translate}}"
+                       class="btn btn-sm btn-primary opx-btn-flat opx-btn-icon"><i
+                            class="fa fa-plus-square"></i></a>
+                    <a ng-click="$ctrl.removeDataset($index)"
+                       title="{{'udp.wc.dataset.joinx.remove_dataset'|translate}}"
+                       class="btn btn-sm btn-danger opx-btn-flat opx-btn-icon"><i
+                            class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item op-hover-trigger"
+                    ng-repeat="field in ds.fields | orderBy:['-inLeftRel','-inRightRel']"
+                    ng-class="{'field-excluded':field.excluded,'field-relation':field.inRightRel || field.inLeftRel,'field-in-edit':$ctrl.fieldInEdit.dsIndex===$parent.$index && $ctrl.fieldInEdit.fieldName===field.name}">
+                    <div ng-show="$ctrl.fieldInEdit.dsIndex===$parent.$index && $ctrl.fieldInEdit.fieldName===field.name">
+                        <div class="d-flex">
+                            <input type="text" class="form-control input-sm" ng-model="field._tempRename">}
+                            <!--                            <div class="input-group-btn">-->
+                            <button type="button" class="ml-3 btn btn-sm btn-default"
+                                    ng-click="$ctrl.cancelRename(field)">
+                                <i class="fa fa-times"></i></button>
+                            <!--                            </div>-->
+                            <!--                            <div class="input-group-btn">-->
+                            <button type="button" class="ml-3 btn btn-sm btn-primary"
+                                    ng-click="$ctrl.saveRename(field)">
+                                <i class="fa fa-check"></i></button>
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                    <div ng-hide="$ctrl.fieldInEdit.dsIndex===$parent.$index && $ctrl.fieldInEdit.fieldName===field.name">
+                        <i class="text-muted fa fa-caret-left" ng-if="field.inRightRel"></i>
+                        <span ng-class="{'field-renamed':field.rename}">{{field.rename || field.alias || field.name}}</span>
+                        <i class="text-muted fa fa-caret-right" ng-if="field.inLeftRel"></i>
+                        <div class="op-hover-display-block xpull-right"
+                             style="position:absolute;top:8px;right:5px;background:#eee;">
+                            <a ng-click="$ctrl.setRelationField($parent.$index, field.name)"
+                               title="{{'udp.wc.dataset.joinx.set_relation_field'|translate}}"
+                               class="btn btn-sm opx-btn-flat opx-btn-icon btn-primary"
+                               ng-show="$ctrl.activeRelation.relIndex>=0 && ($ctrl.activeRelation.dsIndex===$parent.$index || $ctrl.activeRelation.dsIndex===$parent.$index+1)"><i
+                                    class="fa fa-link"></i></a>
+                            <a ng-click="$ctrl.toggleField($parent.$index,field.name)"
+                               title="{{'udp.wc.dataset.joinx.remove_field'|translate}}"
+                               class="btn btn-sm opx-btn-flat opx-btn-icon btn-default"><i
+                                    class="fa fa-times-circle"></i></a>
+                            <a ng-click="$ctrl.renameField($parent.$index, field.name)"
+                               title="{{'udp.wc.dataset.joinx.rename_field'|translate}}"
+                               class="btn btn-sm opx-btn-flat opx-btn-icon btn-default"><i
+                                    class="fa fa-font"></i></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

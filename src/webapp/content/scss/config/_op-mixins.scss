@@ -1,0 +1,8 @@
+// Generate Fontawesome icon
+@mixin opx-fa-icon($unicode) {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: $unicode;
+}

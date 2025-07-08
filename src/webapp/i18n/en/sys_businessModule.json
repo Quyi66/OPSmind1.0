@@ -1,0 +1,15 @@
+{
+    "sys_businessModule.home.title": "Business Modules",
+    "sys_businessModule.home.createLabel": "Add Module",
+    "sys_businessModule.home.editLabel": "Edit Module",
+    "sys_businessModule.created": "Business module {{ param }} created successfully",
+    "sys_businessModule.updated": "Business module {{ param }} updated successfully",
+    "sys_businessModule.deleted": "Business module {{ param }} deleted successfully",
+    "sys_businessModule.delete.question": "Are you sure you want to delete business module {{ name }}? ",
+    "sys_businessModule.detail.title": "Module Details",
+    "sys_businessModule.name": "Name",
+    "sys_businessModule.code": "Code",
+    "sys_businessModule.description": "Description",
+    "sys_businessModule.permission": "Permission Configuration",
+    "sys_businessModule.dataSql": "Data Query"
+}

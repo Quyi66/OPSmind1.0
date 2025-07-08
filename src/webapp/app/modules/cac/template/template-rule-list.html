@@ -1,0 +1,43 @@
+
+<div class="modal-header">
+    <h4 class="modal-title"> {{'cac.index.select_rules' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ng-click="cacTemplateRuleVm.views.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cac-template-rule-dialog">
+    <div>
+        <div class="form-group">
+        <label class="control-label">{{'common.term.category' | translate}} :</label>
+            <select ng-change="cacTemplateRuleVm.views.selectRule()"
+                    ng-model="cacTemplateRuleVm.views.category"
+                    chosen="{placeholder_text: {{'common.messages.select' | translate:{ obj: {{'common.term.category' | translate}} } }}  }" style="width: 100%">
+                <option value="" selected>{{'common.term.all' | translate}}</option>
+                <option class="" value="{{category}}" ng-repeat="category in cacTemplateRuleVm.views.categoryList">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+        <label class="control-label">{{'common.term.tag' | translate}} :</label>
+        <select ng-change="cacTemplateRuleVm.views.selectRule()"
+                ng-model="cacTemplateRuleVm.views.label"
+                chosen="{placeholder_text: {{'common.messages.select' | translate:{ obj: {{'common.term.tag' | translate}} } }} }" multiple
+                style="width: 100%">
+            <option value="" selected>{{'common.term.all' | translate}}</option>
+            <option class="" value="{{label}}" ng-repeat="label in cacTemplateRuleVm.views.labelList">
+                {{label}}
+            </option>
+        </select>
+        </div>
+    </div>
+    <form name="cac-select-template-rule-form">
+        <div class="table-responsive">
+            <table id="cac-template-rule-table" class="cac-template-rule-table table opx-table cac-table"></table>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <p class="text-right">
+        <button type="submit" class="btn btn-primary opx-btn-ok" ng-click="cacTemplateRuleVm.views.save()">{{'common.entity.action.confirm' | translate}}</button>
+        <button type="reset" class="btn btn-default" ng-click="cacTemplateRuleVm.views.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+    </p>
+</div>
+

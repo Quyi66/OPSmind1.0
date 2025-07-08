@@ -1,0 +1,22 @@
+<form ng-submit="$ctrl.doExport()">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'ssc.applet.manage.export' | translate}}</h4>
+    </div>
+    <div class="modal-body">
+        <div style="padding-top: 20px; display: flex; justify-content: center;">
+            <label class="control-label">{{'ssc.applet.manage.export.tip' | translate}}: </label>
+            <select ng-model="$ctrl.containsScript" class="form-select op-w-auto" style="width: 50%">
+                <option value=true>{{'ssc.applet.manage.export.tip.yes' | translate}}</option>
+                <option value=false>{{'ssc.applet.manage.export.tip.no' | translate}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn btn-default" type="button" ng-click="$ctrl.cancelExport()">
+                {{'common.action.cancel' | translate}}
+            </button>
+            <button class="btn btn-primary" type="submit"> {{'common.action.export' | translate}}</button>
+        </div>
+    </div>
+</form>

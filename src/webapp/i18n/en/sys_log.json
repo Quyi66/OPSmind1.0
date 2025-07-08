@@ -1,0 +1,16 @@
+{
+  "sys_log.sys_log": "System Logs",
+  "sys_log.login_log": "Login Logs",
+  "sys_log.operation_log": "Operation Logs",
+  "sys_log.login_user": "Login User",
+  "sys_log.login_time": "Login Time",
+  "sys_log.address": "Address",
+  "sys_log.login_status": "Login Status",
+  "sys_log.device_info": "Device Info",
+  "sys_log.operator": "Operator",
+  "sys_log.operate_time": "Operate Time",
+  "sys_log.app_module": "App Module",
+  "sys_log.operation_type": "Operation Type",
+  "sys_log.description": "Description",
+  "sys_log.status": "Status"
+}

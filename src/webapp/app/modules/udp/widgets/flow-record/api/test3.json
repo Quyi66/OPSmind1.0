@@ -1,0 +1,52 @@
+{
+  "id": "2c9942a7892095920189209bd06a001b",
+  "name": "步骤2",
+  "flowId": "2c9942a7892095920189209bd06d001c",
+  "runLogIds": "[\"abd1c439c8d14301bceae047c8c7e234\",\"72b9413c479645f9ac2e1e50d5a5085d\"]",
+  "type": "script",
+  "configJson": "{\"tasks\":[{\"scripts\":[{\"location\":\"demo/demo_debug.yml\",\"argline\":\"test_vars=isgruop22\",\"tag\":\"b\"}],\"groups\":[{\"group\":\"group2\",\"group_vars\":\"group_vars: isgruop22\",\"host_vars\":\"host_vars=isgruop22\",\"hosts\":[{\"host\":\"e085.oplus-example.com\",\"hostId\":\"ff8080817e3e4cec017e42ccba47013f\",\"key\":\"ff8080817e3e4cec017e42ccba47013f\",\"assetType\":\"linux\",\"status\":\"failed\"}],\"hosts_info\":[{\"key\":\"ff8080817e3e4cec017e42ccba47013f\",\"value\":\"e085.oplus-example.com\",\"assetType\":\"linux\",\"status\":\"failed\"}]}],\"hosts\":[]}],\"taskTimeout\":0,\"verbosity\":1}",
+  "autoNext": false,
+  "config": {
+    "tasks": [
+      {
+        "scripts": [
+          {
+            "location": "demo/demo_debug.yml",
+            "argline": "test_vars=isgruop22",
+            "tag": "b"
+          }
+        ],
+        "groups": [
+          {
+            "group": "group2",
+            "group_vars": "group_vars: isgruop22",
+            "host_vars": "host_vars=isgruop22",
+            "hosts": [
+              {
+                "host": "e085.oplus-example.com",
+                "hostId": "ff8080817e3e4cec017e42ccba47013f",
+                "key": "ff8080817e3e4cec017e42ccba47013f",
+                "assetType": "linux",
+                "status": "failed",
+                 "value:": ""
+              }
+            ],
+            "hosts_info": [
+              {
+                "key": "ff8080817e3e4cec017e42ccba47013f",
+                "value": "e085.oplus-example.com",
+                "assetType": "linux",
+                "status": "failed"
+              }
+            ]
+          }
+        ],
+        "hosts": []
+      }
+    ],
+    "taskTimeout": 0,
+    "verbosity": 1
+  },
+  "status": "finished",
+  "appletCode": "dev-yangbin"
+}

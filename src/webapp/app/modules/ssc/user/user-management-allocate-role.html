@@ -1,0 +1,22 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.ssc.user">{{'sys_userManagement.home.title' | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">
+                    {{'sys_userManagement.allocateRole' | translate}}
+                </li>
+            </ol>
+        </div>
+    </nav>
+    <div class="opx-flex-fill p-3">
+        <opx-datatable table-config="allocateRoleVm.tableConfig"></opx-datatable>
+        <div class="mt-3">
+            <button type="button" ng-click="allocateRoleVm.save()" class="btn btn-primary opx-btn-ok">
+                <span data-translate="common.action.save">Save</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,255 @@
+const path = require('path');
+const fs = require('fs');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+
+module.exports = function makeWebpackConfig(options) {
+  const entry = './flow.module.js';
+
+  const defaultLoaders = [
+    {
+      test: /\.(png|jpg|jpeg|gif|svg)$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+        },
+      },
+    },
+    {
+      test: /\.html$/,
+      use: ['html-loader']
+    },
+
+    // font awesome
+    {
+      test: /\.woff2?(\?v=\d+\.\d+\.\d+|\?.*)?$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          mimetype: 'application/font-woff',
+        },
+      },
+    },
+    {
+      test: /\.ttf(\?v=\d+\.\d+\.\d+|\?.*)?$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          mimetype: 'application/octet-stream',
+        },
+      },
+    },
+    {
+      test: /\.eot(\?v=\d+\.\d+\.\d+|\?.*)?$/,
+      use: ['file-loader'],
+    },
+    {
+      test: /\.svg(\?v=\d+\.\d+\.\d+|\?.*)$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          mimetype: 'application/svg+xml',
+        },
+      },
+    },
+  ];
+  const postCssLoader = {
+    loader: 'postcss-loader',
+    options: {
+      sourceMap: true,
+    },
+  };
+  const cssLoader = {
+    loader: 'css-loader',
+    options: {
+      sourceMap: true,
+    },
+  };
+
+  const bpmnlintLoader = {
+    test: /\.bpmnlintrc$/,
+    use: ['bpmnlint-loader']
+  };
+
+  let stylesheetLoaders = [{
+      test: /\.css$/,
+      use: [cssLoader, postCssLoader],
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        cssLoader,
+        postCssLoader,
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+            outputStyle: 'expanded',
+            sourceMapContents: true,
+          },
+        },
+      ],
+    },
+    {
+      test: /\.less$/,
+      use: [
+        cssLoader,
+        postCssLoader,
+        {
+          loader: 'less-loader',
+          options: {
+            sourceMap: true,
+          },
+        },
+      ],
+    },
+    {
+      test: /\.sass$/,
+      use: [
+        cssLoader,
+        postCssLoader,
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+            indentedSyntax: true,
+            outputStyle: 'expanded',
+            sourceMapContents: true,
+          },
+        },
+      ],
+    },
+  ];
+
+  const output = {
+    path: path.join(__dirname, 'dist'),
+    filename: `oplus-flow.js`,
+    chunkFilename: 'oplus-flow.bundle.js',
+    // sourceMapFilename: 'debugging/[file].map',
+    pathinfo: options.debug,
+  };
+
+  const excludeFromStats = [
+    // /node_modules[\\/]angular[\\/]/,
+  ];
+
+  const plugins = [];
+
+  if (!options.devServer) {
+    // plugins.push(statsPlugin);
+  }
+
+  const alias = {};
+  const externals = [];
+
+  stylesheetLoaders = stylesheetLoaders.map((loaderIn) => {
+    const loader = Object.assign({}, loaderIn);
+    delete loader.use;
+
+    if (options.isServer) {
+      loader.use = ['null-loader'];
+    } else if (options.separateStylesheet) {
+      loader.loader = [MiniCssExtractPlugin.loader].concat(loaderIn.use);
+    } else {
+      loader.use = ['style-loader', ...loaderIn.use];
+    }
+    return loader;
+  });
+
+  if (options.separateStylesheet) {
+    plugins.push(new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      path: path.join(__dirname, 'dist'),
+      filename: `oplus-flow.css`,
+      chunkFilename: '[id].css',
+    }));
+  }
+  const definitions = {
+    'process.env.NODE_ENV': options.debug ? JSON.stringify('development') : JSON.stringify('production'),
+  };
+
+  plugins.push(new webpack.DefinePlugin(definitions));
+
+  let jsRules;
+
+  if (options.cover) {
+    jsRules = [
+      // transpile all files except testing sources with babel as usual
+      {
+        test: /\.test\.[tj]sx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+      // transpile and instrument only testing sources with babel-istanbul
+      {
+        test: /\.[jt]sx?$/,
+        exclude: [
+          /node_modules/,
+          /\.test\./,
+        ],
+        use: [{
+            loader: 'istanbul-instrumenter-loader',
+            options: {
+              esModules: true
+            },
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-typescript',
+              ],
+              plugins: [
+                'angularjs-annotate',
+              ],
+            },
+          }
+        ],
+      },
+    ];
+  } else {
+    jsRules = [{
+      test: /\.[jt]sx?$/,
+      use: ['babel-loader'],
+      exclude: /node_modules/,
+    }, ];
+  }
+
+  return {
+    mode: options.mode || 'development',
+    entry,
+    output,
+    target: 'web',
+    module: {
+      rules: []
+        .concat(jsRules)
+        .concat(defaultLoaders)
+        .concat(stylesheetLoaders)
+        .concat(bpmnlintLoader),
+    },
+    devtool: options.devtool,
+    externals,
+    resolve: {
+      modules: [
+        'node_modules',
+      ],
+      extensions: ['.web.js', '.js', '.jsx', '.ts', '.tsx'],
+      mainFields: ['browser', 'module', 'jsnext:main', 'main'],
+      alias,
+    },
+    plugins,
+    devServer: {
+      stats: {
+        cached: false,
+        exclude: excludeFromStats,
+      },
+    },
+  };
+};

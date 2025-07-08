@@ -1,0 +1,23 @@
+<div class="p-3 bg-white">
+    <!--    <div class="alert alert-info xalert-dismissible" ng-if="$ctrl.repoType==='git'">-->
+    <!--        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">-->
+    <!--            <span aria-hidden="true"></span>-->
+    <!--        </button>-->
+    <!--        <div style="position: absolute;bottom:0.25rem;right:0.25rem;"><a href="" data-dismiss="alert"-->
+    <!--                                                                         ng-click="$ctrl.disableHelpInfo()">不再提示</a>-->
+    <!--        </div>-->
+    <!--        <div class="d-flex align-items-center ">-->
+    <!--            <div class="me-3">-->
+    <!--                <i class="fad fa-fw fa-file-check fa-3x"></i>-->
+    <!--                <i class="fal fa-long-arrow-right fa-3x"></i>-->
+    <!--                <i class="fad fa-fw fa-code-merge fa-3x"></i>-->
+    <!--            </div>-->
+    <!--            <div>-->
+    <!--                请选择适当的文件夹上传脚本。<br/>-->
+    <!--                上传的文件会先暂存在审核区，待审核通过后发布到脚本库。在审核通过之前，上传的文件不会覆盖脚本库的同名文件。-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <gfs-gfile-list repo="$ctrl.repo" dir="$ctrl.dir" options="$ctrl.options" hide-dir=true
+                    repo-type="$ctrl.repoType"></gfs-gfile-list>
+</div>

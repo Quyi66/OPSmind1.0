@@ -1,0 +1,19 @@
+<div class="p-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">Regexp</h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <textarea class="form-control code" ng-model="testString" rows="5"></textarea>
+                <button class="m-t btn btn-primary" ng-click="parseRegexp()">解析</button>
+            </div>
+            <ul>
+                <li ng-repeat="(key, value) in parseResult track by $index">
+                    <span ng-if="key!=='resultJson'">{{key}}: {{value}}</span>
+                    <pre ng-if="key==='resultJson'">{{value | json}}</pre>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

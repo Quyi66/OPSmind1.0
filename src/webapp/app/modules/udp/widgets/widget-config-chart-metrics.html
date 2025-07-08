@@ -1,0 +1,244 @@
+<fieldset ng-if="axisOptions.xAxis.enabled!==false">
+    <legend>{{axisOptions.xAxis.name||'X Axis'}}</legend>
+    <div>
+        <div class="form-group">
+            <label class="control-label">{{'common.term.data'|translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-dsfield-selector the-model="theModel.xAxis" fields="fields"></udp-dsfield-selector>
+            </div>
+        </div>
+        <div class="form-group" ng-if="axisOptions.xAxis.customizable.indexOf('axisType')>=0">
+            <label class="control-label"
+                   op-help-info="udp.w.echart.x_axis.type_desc">{{'udp.w.echart.x_axis.type'|translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <select class="form-select op-w-sm" ng-model="theModel.xAxis.axisType">
+                    <option value=""></option>
+                    <option value="time">{{'udp.w.echart.x_axis.type_time'|translate}}</option>
+                </select>
+                <div ng-if="theModel.xAxis.axisType==='time'">
+                    <div class="input-group"><span class="input-group-addon"
+                                                   op-help-info="udp.w.echart.x_axis.time_format_desc">{{'udp.w.echart.x_axis.time_format'|translate}}</span>
+                        <input type="text" class="form-control" ng-model="theModel.xAxis.axisLabel">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="axisOptions.xAxis.customizable.indexOf('axisType')>=0">
+            <label class="control-label">{{'udp.w.echart.axis.label_angle'|translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" class="form-control" ng-model="theModel.xAxis.labelAngle" title="{{'udp.w.echart.axis.label_angle'|translate}}">
+            </div>
+        </div>
+        <div class="form-group" ng-if="chartType==='map'">
+            <label class="control-label" op-help-info="udp.w.map.locname_desc">{{'udp.w.map.locname'|translate}}</label>
+            <div class="form-control-wrapper">
+                <select ng-model="theModel.xAxis.locName" class="form-select op-w-sm d-inline-block">
+                    <option value="simple">{{'udp.w.map.locname_simple'|translate}}</option>
+                    <option value="full">{{'udp.w.map.locname_full'|translate}}</option>
+                </select>
+            </div>
+        </div>
+        <!--<div ng-if="theModel.datastream.enabled">-->
+        <!--<udp-widget-config-dataset props="theModel.datastream.dataset" selected-ds="streamDs"-->
+        <!--options="{disableParams:true,disableConfirm:true}"></udp-widget-config-dataset>-->
+        <!--</div>-->
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="pull-right" ng-if="axisOptions.yAxis.multiple">
+        <button type="button" class="btn btn-outline-default" ng-click="addYAxis()"><i
+                class="fa fa-plus"></i> {{'udp.w.echart.metric.add_metric'|translate}}
+        </button>
+    </div>
+    <legend>{{'udp.w.echart.metric.metric'|translate}}</legend>
+    <ul ng-sortable ng-model="theModel.yAxes" class="list list-unstyled list-inline">
+        <!-- It seems adding class to li will make ui-sortable unstable -->
+        <li ng-repeat="field in theModel.yAxes track by $index">
+            <span class="badge op-text-normal p-3"
+                  ng-class="{'badge-dark':current.index === $index,'badge-secondary':current.index!==$index,'badge-light':field.hidden}">
+                        <i ng-if="!field.field" class="fa fa-bolt"></i>
+                        <a ng-click="selectYAxis($index)">{{ field.legend||label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>
+                        <a ng-click="removeYAxis($index)" ng-if="axisOptions.yAxis.multiple"></a>
+                    </span></li>
+    </ul>
+    <div ng-if="current.index>=0">
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.echart.elem.legend'|translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <input class="form-control op-w-sm" ng-model="current.yAxis.legend">
+                <div class="checkbox checkbox-inline"><input type="checkbox" class="form-control" id="wccm_yhidden"
+                                                             ng-model="current.yAxis.hidden"><label for="wccm_yhidden">
+                    {{'udp.w.echart.metric.hide'|translate}}</label></div>
+                <div class="checkbox checkbox-inline ms-3">
+                    <input type="checkbox" id="dwc_dynamic"
+                           ng-model="current.yAxis.dynamic"><label
+                        for="dwc_dynamic" op-help-info="udp.w.echart.metric.dynamic_metric_desc">{{'udp.w.echart.metric.dynamic_metric'|translate}} (dev)</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="current.yAxis.dynamic">
+            <label class="control-label" op-help-info="udp.w.echart.metric.dynamic_metric_def_desc">{{'udp.w.echart.metric.dynamic_metric_def'|translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="current.yAxis.dynamicDef"
+                                    options="{kinds:'js,yaml'}" class="op-w-full"></udp-data-converter>
+            </div>
+        </div>
+        <div ng-if="!current.yAxis.dynamic" class="form-group">
+            <label class="control-label">{{'common.term.data'|translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-dsfield-selector the-model="current.yAxis" fields="fields"></udp-dsfield-selector>
+            </div>
+        </div>
+        <div class="form-group" ng-if="chartType==='gauge'">
+            <label class="control-label col-sm-2">{{'udp.w.gauge.max_value'|translate}}</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" style="width: 100%;" ng-model="current.yAxis.maxValue"
+                       placeholder="{{'udp.w.gauge.max_value_placeholder'|translate}}"/>
+            </div>
+        </div>
+        <div id="cfg-chart-type" class="form-group" ng-if="axisOptions.yAxis.customizable.indexOf('chartType')>=0">
+            <label class="control-label">{{'udp.w.echart.metric.chart_type'|translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <select class="form-select op-w-xs" ng-model="current.yAxis.chartType">
+                    <option value="bar" ng-if="chartType!=='map'">{{'udp.w.echart.metric.chart_type_bar'|translate}}</option>
+                    <option value="line" ng-if="chartType!=='map'">{{'udp.w.echart.metric.chart_type_line'|translate}}</option>
+                    <option value="map" ng-if="chartType==='map'">{{'udp.w.echart.metric.chart_type_map'|translate}}</option>
+                    <option value="scatter" ng-if="chartType==='map'">{{'udp.w.echart.metric.chart_type_scatter'|translate}}</option>
+                </select>
+                <div class="checkbox checkbox-inline" ng-if="chartType==='map'">
+                    <input type="checkbox" ng-model="current.yAxis.showVisualMap" id="wccm_showvm">
+                    <label for="wccm_showvm" op-help-info="{{'udp.w.map.show_visualmap_desc'|translate}}">
+                        {{'udp.w.map.show_visualmap'|translate}}
+                    </label>
+                </div>
+                <div ng-if="theModel.xAxis.axisType==='time' && current.yAxis.chartType==='line'">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" ng-model="current.yAxis.contTime.enabled" id="wccm_yce"><label
+                            for="wccm_yce" op-help-info="{{'udp.w.echart.line.line_break_gap_desc'|translate}}">{{'udp.w.echart.line.line_break_gap'|translate}}</label>
+                    </div>
+                    <input type="number" class="form-control d-inline-block" ng-model="current.yAxis.contTime.limit"
+                           ng-disabled="!current.yAxis.contTime.enabled">
+                    <select class="form-select d-inline-block" ng-model="current.yAxis.contTime.unit"
+                            ng-disabled="!current.yAxis.contTime.enabled" style="width:8rem;">
+                        <option value="s">{{'common.term.second'|translate}}</option>
+                        <option value="m">{{'common.term.minute'|translate}}</option>
+                        <option value="h">{{'common.term.hour'|translate}}</option>
+                        <option value="d">{{'common.term.day'|translate}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="current.yAxis.chartType==='map'">
+            <label class="control-label col-sm-2">{{'udp.w.echart.metric.color_range'|translate}}</label>
+            <div class="col-sm-10"
+                 ng-init="current.yAxis.auxData['color'].range=current.yAxis.auxData['color'].range||[]">
+                <udp-color-picker ng-model="current.yAxis.auxData['color'].range[0].k" title="{{'udp.w.echart.metric.color_of_min'|translate}}"></udp-color-picker>
+                <udp-color-picker ng-model="current.yAxis.auxData['color'].range[1].k" title="{{'udp.w.echart.metric.color_of_max'|translate}}"></udp-color-picker>
+            </div>
+        </div>
+        <div id="cfg-axis-type" class="form-group" ng-if="axisOptions.yAxis.customizable.indexOf('axisType')>=0">
+            <label class="control-label">{{'udp.w.echart.elem.axis'|translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-xs" ng-model="current.yAxis.axisIndex" title="{{'udp.w.echart.elem.y_axis'|translate}}"
+                        ng-options="yaxis.index as yaxis.label for yaxis in axisOptions.multipleYAxes">
+                </select>
+            </div>
+        </div>
+        <div id="cfg-bar-style" class="form-group" ng-if="current.yAxis.chartType==='bar'">
+            <label class="control-label col-sm-2">{{'common.term.width'|translate}}</label>
+            <div class="col-sm-6">
+                <input type="number" class="form-control d-inline-block" title="{{'common.term.pixel'|translate}}"
+                       min="0"
+                       ng-model="current.yAxis.barWidth"/>
+            </div>
+        </div>
+        <div id="cfg-line-style" class="form-group" ng-if="axisOptions.yAxis.customizable.indexOf('lineStyle')>=0">
+            <label class="control-label">{{'udp.w.echart.line.style'|translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <select class="form-select op-w-xs" title="{{'udp.w.echart.line.type'|translate}}"
+                        ng-options="type.name as type.label for type in styles.lineTypes"
+                        ng-model="current.yAxis.lineType"></select>
+                <input type="number" class="form-control" title="{{'udp.w.echart.line.width'|translate}}"
+                       min="1"
+                       ng-model="current.yAxis.lineWidth"/>
+                <udp-color-picker title="{{'udp.w.echart.line.color'|translate}}" ng-model="current.yAxis.lineColor"></udp-color-picker>
+                <input type="number" class="form-control" title="{{'udp.w.echart.line.fill_opacity'|translate}}"
+                       min="0" max="10" ng-model="current.yAxis.fillOpacity" style="width:4em;">
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" ng-model="current.yAxis.smooth" id="wccm_ysmooth">
+                    <label for="wccm_ysmooth">{{'udp.w.echart.line.smooth'|translate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="current.yAxis.chartType!=='map'&&chartType!=='gauge'">
+            <label class="control-label">{{'udp.w.echart.elem.data_label'|translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <select class="form-select op-w-xs" ng-model="current.yAxis.pointLabel">
+                    <option value="">{{'udp.w.echart.data_point.label_none'|translate}}</option>
+                    <option value="outside">{{'udp.w.echart.data_point.label_outside'|translate}}</option>
+                    <option value="inside">{{'udp.w.echart.data_point.label_inside'|translate}}</option>
+                </select>
+                <label class="control-label" ng-if="chartType==='pie'" op-help-info="{{'udp.w.echart.data_point.label_format_pie_desc'|translate}}">{{'udp.w.echart.data_point.label_format'|translate}}</label>
+                <div class="input-group" ng-if="chartType==='pie'">
+                    <input type="text" ng-model="current.yAxis.labelFormatter" class="form-control"
+                           ng-disabled="current.yAxis.pointLabel===''">
+                    <span class="input-group-append"><button udp-expandable-editor="current.yAxis.labelFormatter"
+                                                             type="button" class="btn btn-outline-default"
+                                                             ng-disabled="$ctrl.ngDisabled"><i
+                            class="fa fa-pencil"></i></button></span>
+                </div>
+            </div>
+        </div>
+        <div id="cfg-point-style" class="form-group"
+             ng-if="chartType!=='pie' && chartType!=='gauge' && ['map','pie','gauge'].indexOf(current.yAxis.chartType)<0">
+            <label class="control-label">{{'udp.w.echart.elem.data_point'|translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <select class="form-select op-w-xs" title="{{'udp.w.echart.data_point.shape'|translate}}"
+                        ng-options="type.name as type.label for type in styles.pointShapes"
+                        ng-model="current.yAxis.pointShape"></select>
+                <input type="number" class="form-control" title="{{'udp.w.echart.data_point.size'|translate}}"
+                       min="0"
+                       ng-disabled="current.yAxis.dynamicPoint"
+                       ng-model="current.yAxis.pointSize"/>
+                <udp-color-picker title="{{'udp.w.echart.data_point.color'|translate}}" ng-model="current.yAxis.pointColor"
+                                  disabled="current.yAxis.dynamicPoint"></udp-color-picker>
+                <div class="" ng-if="current.yAxis.chartType==='scatter'">
+                    <div class="checkbox checkbox-inline checkbox-primary">
+                        <input type="checkbox" ng-model="current.yAxis.dynamicPoint" id="wccm_dynamicpoint"><label
+                            for="wccm_dynamicpoint">{{'udp.w.echart.data_point.dynamic_color'|translate}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cfg-dynamic-color-size" class="wrapper-xs bg-light lt"
+             ng-if="current.yAxis.dynamicPoint && current.yAxis.chartType==='scatter'">
+            <div id="dynamic-color" class="form-group"
+                 ng-init="current.yAxis.auxData['color'].range=current.yAxis.auxData['color'].range||[]">
+                <label class="control-label" style="width:3em;">{{'common.term.color'|translate}}</label>
+                <div class="form-control-wrapper op-combo">
+                    <udp-dsfield-selector the-model="current.yAxis.auxData['color']" class="d-inline-block"
+                                          fields="fields" style="width:26em;"></udp-dsfield-selector>
+                    <label class="control-label">{{'udp.w.echart.metric.color_range'|translate}}</label>
+                    <udp-color-picker ng-model="current.yAxis.auxData['color'].range[0].k"></udp-color-picker>
+                    <udp-color-picker ng-model="current.yAxis.auxData['color'].range[1].k"></udp-color-picker>
+                </div>
+            </div>
+            <div id="dynamic-size" class="form-group"
+                 ng-init="current.yAxis.auxData['size'].range=current.yAxis.auxData['size'].range||[]">
+                <label class="control-label" style="width:3em;">{{'common.term.size'|translate}}</label>
+                <div class="form-control-wrapper op-combo">
+                    <udp-dsfield-selector the-model="current.yAxis.auxData['size']" class="d-inline-block"
+                                          fields="fields" style="width:26em;"></udp-dsfield-selector>
+                    <label class="control-label">{{'udp.w.echart.data_point.dynamic_max_width'|translate}}</label>
+                    <input type="number" class="form-control" title="{{'udp.w.echart.data_point.dynamic_max_width_desc'|translate}}"
+                           ng-model="current.yAxis.auxData['size'].range[1].k"/>
+                    <label class="control-label">{{'udp.w.echart.data_point.dynamic_max_value'|translate}}</label>
+                    <input type="number" class="form-control" title="{{'udp.w.echart.data_point.dynamic_max_value_desc'|translate}}" xstyle="width:6em;"
+                           ng-model="current.yAxis.auxData['size'].range[1].v"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+

@@ -1,0 +1,30 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cmd.index.list' | translate}}</div>
+        <div class="ms-auto" uaa-has-permission="cmd:edit:*">
+            <button class="btn btn-outline-primary" ui-sref="app.jao_cmd.command_new">
+                <i class="fa fa-plus"></i>
+                {{'cmd.list.button_create_command' | translate}}
+            </button>
+        </div>
+    </nav>
+    <div class="p-3" uaa-has-permission="cmd:view:*" uaa-deny-message="没有查看命令列表的权限">
+        <div class="table-responsive">
+            <opx-datatable table-config="$ctrl.tableConfig">
+                <button class="btn btn-primary"
+                        ng-disabled="!$ctrl.tableConfig.selectedItems.length>0"
+                        ng-click="$ctrl.runCommands('runCommand')">
+                    <i class="fa fa-caret-square-right fa-fw"></i> {{'cmd.list.button_run' | translate}}
+                </button>
+                <button class="btn btn-default" uaa-has-permission="cmd:edit:*"
+                        ng-disabled="!$ctrl.tableConfig.selectedItems.length>0"
+                        ng-click="$ctrl.runCommands('createJob')">
+                    {{'cmd.list.button_create_job' | translate}}
+                </button>
+            </opx-datatable>
+        </div>
+        <div class="ms-auto" style="float: left" uaa-has-permission="cmd:edit:*">
+
+        </div>
+    </div>
+</div>

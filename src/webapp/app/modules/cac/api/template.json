@@ -1,0 +1,153 @@
+{
+  "totalRecords": 4,
+  "aaData": [
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            },
+            {
+              "scriptName": "script2",
+              "scriptParams": "-r -2"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule1"
+            },
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule1"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host1",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2018-04-08T06:53:59.089Z",
+      "createdBy": "zml",
+      "description": "test_template",
+      "id": 1,
+      "templateName": "templateName"
+    },
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script2",
+              "scriptParams": "-r2 -l"
+            },
+            {
+              "scriptName": "script22",
+              "scriptParams": "-r2 -2"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule1"
+            },
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule1"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host1",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2018-04-08T06:53:59.089Z",
+      "createdBy": "zml",
+      "description": "test_template",
+      "id": 1,
+      "templateName": "templateName1"
+    },
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script3",
+              "scriptParams": "-r3 -l"
+            },
+            {
+              "scriptName": "script32",
+              "scriptParams": "-r -2"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule2"
+            },
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule3"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host3",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2018-04-08T06:53:59.089Z",
+      "createdBy": "zml",
+      "description": "test_template",
+      "id": 1,
+      "templateName": "templateNam3e"
+    },
+    {
+      "auditParams": [
+        {
+          "scripts": [
+            {
+              "scriptName": "script1",
+              "scriptParams": "-r -l"
+            },
+            {
+              "scriptName": "script2",
+              "scriptParams": "-r -2"
+            }
+          ],
+          "ruleExpressions": [
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule1"
+            },
+            {
+              "ruleValue": "(a < 100 || b < 50) && c > 100",
+              "ruleName": "rule4"
+            }
+          ],
+          "hosts": [
+            {
+              "hostName": "host4",
+              "hostIp": "1.1.1.1"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2018-04-08T06:53:59.089Z",
+      "createdBy": "zml",
+      "description": "test_template4",
+      "id": 1,
+      "templateName": "templateName4"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>
+        <udp-widget-config-chart-metrics uw-props="uwProps" axis-options="axisOptions"
+                                         fields="selectedDs.fields"></udp-widget-config-chart-metrics>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <!--<div class="form-group">-->
+                <!--<label class="control-label col-sm-2">线宽</label>-->
+                <!--<div class="col-sm-2">-->
+                    <!--<input type="number" class="form-control" ng-model="uwProps.display.borderWidth">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label class="control-label col-sm-2">数据点大小</label>-->
+                <!--<div class="col-sm-2">-->
+                    <!--<input type="number" class="form-control" ng-model="uwProps.display.pointRadius">-->
+                <!--</div>-->
+            <!--</div>-->
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <pre>{{uwProps|json}}</pre>
+    </uib-tab>
+</uib-tabset>

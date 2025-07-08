@@ -1,0 +1,28 @@
+<div class="op-layout-v">
+    <nav class="op-header-nav">
+        <ol class="breadcrumb">
+            <li>
+                <button class="btn btn-primary btn-sm cac-title-button-l" uaa-has-permission="cac:*:*"
+                        ng-click="cacScriptListCtrlVm.views.addScript()"><i class="fa fa-plus m-r-xs"></i> {{'cac.script.upload.title' | translate}}</button>
+            </li>
+        </ol>
+    </nav>
+    <div class="op-viewport" style="padding:0px;top:49px;">
+        <div class="card card-default">
+            <!--<div class="card-header">-->
+                <!--<div class="card-title">-->
+                <!--<span hidden>脚本列表</span>-->
+                <!--<button class="btn btn-primary btn-sm cac-title-button-l" uaa-has-permission="cac:*:*"-->
+                   <!--ng-click="cacScriptListCtrlVm.views.addScript()"><i class="fa fa-plus m-r-xs"></i> 上传脚本</button>-->
+                <!--&lt;!&ndash;<button class="btn btn-default btn-sm pull-right" ui-sref="app.cac.scripts_upload"><i class="fa fa-plus m-r-xs"></i> 上传脚本q</button>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="cacScriptTable" class="script-table table opx-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

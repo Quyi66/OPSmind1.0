@@ -1,0 +1,36 @@
+<style type="text/css">
+    .pre_command { margin: 0; padding: 0; border: none; }
+    .pre_command {
+        max-height: 200px;
+        background: #f8f9fa;
+        margin: 5px auto;
+        line-height: 25px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+    /*定义滚动条轨道*/
+    .pre_command::-webkit-scrollbar-track { background-color: #f8f9fa; }
+    /*定义滚动条高宽及背景*/
+    .pre_command::-webkit-scrollbar { width: 5px; }
+    /*定义滚动条按钮*/
+    .pre_command::-webkit-scrollbar-thumb { border-radius: 5px; background-color: #e9ecef; }
+</style>
+<div ng-if="$ctrl.theCommand.length>0">
+    <div class="d-flex flex-nowrap align-items-center">
+        <div class="btn btn-sm btn-default d-inline-block op-hover-trigger" style="position:relative;width:10em;">
+            <span class="op-hover-to-show pull-right" ng-click="$ctrl.clearAllCommand()" title={{'cmd.messages.remove_all' | translate}}><i
+                    class="fa fa-times"></i></span>
+            <span class="d-block"
+                  ng-click="$ctrl.openCommandDialog()">{{ 'acm.common.selector.total' | translate}}<strong>{{$ctrl.theCommand.length}}</strong>{{ 'acm.common.selector.item' | translate}}</span>
+        </div>
+        <op-searchbox search-text="$ctrl.filter" class="ms-auto autohide"></op-searchbox>
+    </div>
+    <pre class="pre_command" ng-repeat="command in $ctrl.theCommand | filter: $ctrl.filter track by $index">{{command.cmd}}</pre>
+</div>
+<div ng-if="$ctrl.theCommand.length===0" class="op-blank-slate bg-light p-3">
+    <div class="op-blank-slate-icon"><i class="fal fa-file-alt" style="font-size:4rem;"></i></div>
+    <div>
+        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.openCommandDialog()">{{'cmd.job.button_command' | translate}}
+        </button>
+    </div>
+</div>

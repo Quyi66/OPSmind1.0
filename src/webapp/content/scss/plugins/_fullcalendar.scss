@@ -1,0 +1,14 @@
+//=============================================================================
+// Modified styles from vendor lib
+// @author Joker liu (qdjoker@hpcmb.com), 06/06/2018 moved from css
+//=============================================================================
+
+//full calendar
+.fc-day-grid-event.bg-white.bg-info {
+  background-color: lighten($cyan, 10%);
+  color: $gray-100;
+}
+
+.fc-title {
+  color: white;
+}

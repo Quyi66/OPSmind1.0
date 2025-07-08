@@ -1,0 +1,24 @@
+<div ng-show="$ctrl.pageSource!=='code'" class="h-full opx-layout-vflex">
+    <nav class="navbar navbar-expand navbar-light bg-light" ng-if="$ctrl.options.navbar===true">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" ng-if="$ctrl.history.length > 1" ng-click="$ctrl.goBack()"><i class="fa fa-chevron-left"></i></a></li>
+            <li class="nav-item __dropdown">
+                <span class="opx-navbar-title" style="cursor:default;">{{$ctrl.current.title}}</span>
+            </li>
+        </ul>
+        <div class="ms-auto">
+            <udp-page-actions ng-if="$ctrl.isOnInitedPageInfo" page-id="$ctrl.pageInfo.id" page-url="$ctrl.pageInfo.url"
+                              page-title="$ctrl.pageInfo.title" page-action="$ctrl.pageInfo.action"></udp-page-actions>
+        </div>
+    </nav>
+    <div class="op-blank-slate" ng-if="$ctrl.page._isError" style="height: 80px;">
+        <div class="op-blank-slate-icon" style="height: 60px;">
+            <i class="fa fa-4x fa-question-circle"></i>
+        </div>
+        <div style="line-height: 20px; height: 20px;">{{$ctrl.page._error.message}}</div>
+    </div>
+    <div class="js-page-content no-gutters scroll-y opx-flex-fill" ng-class="$ctrl.pageCss"
+         ng-style="$ctrl.pageStyle"></div>
+</div>
+<!--20201102:for custom include widget-->
+<ng-transclude ng-show="$ctrl.pageSource==='code'" class="h-full"></ng-transclude>

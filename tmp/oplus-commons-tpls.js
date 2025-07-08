@@ -1,0 +1,817 @@
+//HEAD 
+(function(app) {
+try { app = angular.module("oplus.commons"); }
+catch(err) { app = angular.module("oplus.commons", []); }
+app.run(["$templateCache", function($templateCache) {
+"use strict";
+
+$templateCache.put("app/modules/commons/editor/op-code-editor.component.html","<div class=\"mb-2 d-flex bg-light\" ng-if=\"$ctrl.options.toolbar\">\n" +
+    "    <div class=\"d-flex me-auto\" ng-transclude></div>\n" +
+    "    <div class=\"ms-2\">\n" +
+    "        <button type=\"button\" class=\"btn opx-btn-icon ms-2\"\n" +
+    "                ng-class=\"$ctrl.cmOptions.lineWrapping?'btn-default active':'btn-outline-default'\"\n" +
+    "                ng-click=\"$ctrl.toggleLineWrap()\"><i class=\"fa fa-level-down fa-rotate-90\"></i></button>\n" +
+    "        <button type=\"button\" class=\"btn opx-btn-icon ms-2\"\n" +
+    "                ng-class=\"$ctrl.cmOptions.lineNumbers?'btn-default active':'btn-outline-default'\"\n" +
+    "                ng-click=\"$ctrl.cmOptions.lineNumbers=!$ctrl.cmOptions.lineNumbers\"><i class=\"fa fa-list-ol\"></i>\n" +
+    "        </button>\n" +
+    "        <button type=\"button\" class=\"btn opx-btn-icon btn-outline-default ms-2\"\n" +
+    "                ng-click=\"$ctrl.execCommand('find')\"><i class=\"fa fa-search\"></i></button>\n" +
+    "        <button type=\"button\" class=\"btn opx-btn-icon btn-outline-default ms-2\"\n" +
+    "                ng-if=\"!$ctrl.cmOptions.readOnly\"\n" +
+    "                ng-click=\"$ctrl.execCommand('replace')\"><i class=\"fa fa-exchange\"></i></button>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<textarea ui-codemirror=\"$ctrl.cmOptions\" rows=\"10\" ng-model=\"$ctrl.theModel\" ui-refresh=\"$ctrl.refreshCm\"></textarea>\n" +
+    "   ")
+
+$templateCache.put("app/modules/commons/file/download-model.html","<div class=\"modal-header\" style=\"display: block;\">\n" +
+    "    <div class=\"d-flex flex-nowrap w-full m-b\">\n" +
+    "        <h4 class=\"modal-title\">{{$ctrl.path}}</h4>\n" +
+    "        <button type=\"button\" class=\"btn-close\" data-dismiss=\"modal\" ng-click=\"$ctrl.cancel()\"></button>\n" +
+    "    </div>\n" +
+    "    <div class=\"m-b\" style=\"display: grid; grid-template-columns: 1fr repeat(3, auto); grid-gap: 15px;\">\n" +
+    "        <span class=\"small me-3\">{{$ctrl.lastModifiedDate | date:'yyyy-MM-dd HH:mm:ss' }}</span>\n" +
+    "        <span class=\"small me-3\">{{$ctrl.size | filesize:0}}</span>\n" +
+    "        <a ng-click=\"$ctrl.downloadFile()\"><i class=\"fa fa-download\"></i> {{'common.entity.action' | translate}}</a>\n" +
+    "        <a ngclipboard data-clipboard-text=\"{{$ctrl.path}}\"><i class=\"fa fa-copy\"></i> {{'common.file.copy_link' | translate}}</a>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"w-full\" style=\"height: 400px;\">\n" +
+    "        <div ng-bind-html=\"$ctrl.content | markdown\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/commons/form/op-select.html","<div class=\"dropdown\">\n" +
+    "    <button type=\"button\" class=\"btn\"\n" +
+    "            ng-class=\"($ctrl.selectedItems|anysize) >0?'btn-primary':'btn-default'\" data-bs-toggle=\"dropdown\">\n" +
+    "        {{'common.word.style' | translate}} {{$ctrl.selectedItems | anysize}} <span class=\"caret\"></span>\n" +
+    "    </button>\n" +
+    "    <div class=\"dropdown-menu p-2\" style=\"width:30rem;\">\n" +
+    "        <div ng-repeat=\"(groupName, groupOptions) in $ctrl.optionGroups\">\n" +
+    "            <h5>{{groupOptions.label}}</h5>\n" +
+    "            <ul class=\"list list-inline list-unstyled\">\n" +
+    "                <li ng-repeat=\"option in groupOptions.options\" class=\"mb-2 me-2\">\n" +
+    "                    <a class=\"udp-css-chip {{option.css}}\" ng-class=\"{'selected':$ctrl.selectedItems[option.css]}\"\n" +
+    "                       ng-click=\"$ctrl.toggleSelect(option.css)\">{{option.desc}}</a>\n" +
+    "                </li>\n" +
+    "            </ul>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/commons/tree/opx-tree.component.html","<div id=\"{{$ctrl.treeId}}\"></div>\n" +
+    "")
+
+$templateCache.put("app/modules/commons/ui/op-param-table.html","<table class=\"op-param-table table\">\n" +
+    "    <thead>\n" +
+    "    <tr>\n" +
+    "        <th>{{'common.table.parameter' | translate}}</th>\n" +
+    "        <th>{{'common.table.show_name' | translate}}</th>\n" +
+    "        <th>{{'common.table.describe' | translate}}</th>\n" +
+    "        <th op-help-info=\"{{'jao.jao.detail.default_info' | translate}}\">{{'common.table.default_value' | translate}}</th>\n" +
+    "        <th>{{'common.table.type' | translate}}</th>\n" +
+    "        <th>{{'common.table.secret' | translate}}</th>\n" +
+    "        <th class=\"text-right\">\n" +
+    "            <button class=\"btn btn-sm btn-primary opx-btn-icon \" title=\"{{'common.table.new_parameter' | translate}}\"\n" +
+    "                    ng-click=\"$ctrl.addParam()\">\n" +
+    "                <i class=\"fa fa-plus\"></i>\n" +
+    "            </button>\n" +
+    "        </th>\n" +
+    "    </tr>\n" +
+    "    </thead>\n" +
+    "    <tbody>\n" +
+    "    <tr ng-repeat=\"param in $ctrl.theParamList track by $index\">\n" +
+    "        <td><input class=\"form-control\" ng-model=\"param.name\" required=\"true\"></td>\n" +
+    "        <td><input class=\"form-control\" ng-model=\"param.label\"></td>\n" +
+    "        <td><input class=\"form-control\" ng-model=\"param.description\"></td>\n" +
+    "        <td><input class=\"form-control\" ng-model=\"param.defaultValue\"></td>\n" +
+    "        <td>\n" +
+    "            <select class=\"form-select\" ng-model=\"param.type\"\n" +
+    "                    ng-options=\"def.type as def.title for def in $ctrl.paramTypeList\">\n" +
+    "            </select>\n" +
+    "        </td>\n" +
+    "        <td>\n" +
+    "            <div class=\"checkbox checkbox-primary\">\n" +
+    "                <input type=\"checkbox\" ng-model=\"param.secret\" id=\"je_secret_{{$index}}\">\n" +
+    "                <label for=\"je_secret_{{$index}}\"></label>\n" +
+    "            </div>\n" +
+    "        </td>\n" +
+    "        <td class=\"text-right\">\n" +
+    "            <button class=\"btn btn-sm btn-default opx-btn-icon \" title=\"{{'common.table.delete_parameter' | translate}}\"\n" +
+    "                    ng-click=\"$ctrl.removeParam($index)\">\n" +
+    "                <i class=\"fa fa-minus\"></i>\n" +
+    "            </button>\n" +
+    "        </td>\n" +
+    "    </tr>\n" +
+    "    </tbody>\n" +
+    "</table>")
+
+$templateCache.put("app/modules/commons/ui/op-searchbox.html","<div class=\"op-searchbox\"\n" +
+    "     ng-class=\"{'with-focused':$ctrl.isFocused,'with-text':$ctrl.searchText, 'with-collapsed':$ctrl.collapsed}\">\n" +
+    "    <label for=\"{{$ctrl.inputId}}\" class=\"op-searchbox-prepend\">\n" +
+    "        <i class=\"fa fa-search op-searchbox-icon\" ng-click=\"$ctrl.isFocused=true;$ctrl.collapsed=false;\"></i>\n" +
+    "        <i class=\"fa fa-caret-down op-searchbox-icon ps-2\" ng-if=\"$ctrl.searchHistory.length>0\"\n" +
+    "           data-bs-toggle=\"dropdown\"></i>\n" +
+    "        <div class=\"dropdown-menu\" ng-if=\"$ctrl.searchHistory.length>0\">\n" +
+    "            <div class=\"dropdown-header\">{{'common.messages.history_record' | translate}}</div>\n" +
+    "            <a ng-repeat=\"item in $ctrl.searchHistory track by $index\"\n" +
+    "               ng-click=\"$ctrl.selectHistory(item)\"><span class=\"badge bg-secondary\">{{item}}</span></a>\n" +
+    "            <div class=\"divider\"></div>\n" +
+    "            <a class=\"dropdown-item\" ng-click=\"$ctrl.clearHistory()\"><i\n" +
+    "                    class=\"fa fa-trash-alt\"></i>{{'common.messages.clear_records' | translate}}</a>\n" +
+    "        </div>\n" +
+    "    </label>\n" +
+    "    <input type=\"search\" id=\"{{$ctrl.inputId}}\" class=\"op-searchbox-input op-input-highlight-not-empty\"\n" +
+    "           __style=\"background:transparent;\" placeholder=\" \"\n" +
+    "           ng-model=\"$ctrl.searchText\" ng-focus=\"$ctrl.isFocused=true\"\n" +
+    "           ng-blur=\"$ctrl.isFocused=false\" xxxng-if=\"$ctrl.isFocused || !$ctrl.options.autoExpand\">\n" +
+    "    <button type=\"button\" title=\"{{'common.messages.clear' | translate}}\" class=\"btn op-searchbox-append\"\n" +
+    "            ng-click=\"$ctrl.searchText=undefined;$ctrl.isFocused=false;\"><i\n" +
+    "            class=\"fa fa-times\"></i></button>\n" +
+    "</div>\n" +
+    "<ng-transclude class=\"d-flex flex-row\" ng-hide=\"$ctrl.isFocused && $ctrl.options.autoExpand\"></ng-transclude>")
+
+$templateCache.put("app/modules/commons/ui/op-smart-select.html","<div class=\"checkbox\" ng-class=\"$ctrl.extraCss\"\n" +
+    "     ng-repeat=\"item in $ctrl.itemList track by $index\">\n" +
+    "    <input type=\"checkbox\" multiple checkbox-model=\"$ctrl.selectedItems\" checkbox-value=\"item.value\" id=\"{{item.id}}\">\n" +
+    "    <label for=\"{{item.id}}\" ng-bind-html=\"item.label||item.value\"></label>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/commons/umd/table-columns-config.html","<div>\n" +
+    "    <ul ng-sortable class=\"list list-unstyled list-inline\">\n" +
+    "        <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "        <li class=\"mb-1\" ng-repeat=\"field in uwProps.fields track by $index\">\n" +
+    "                    <span class=\"badge op-text-normal p-3\"\n" +
+    "                          ng-class=\"{'badge-dark':current.index === $index,'badge-secondary':current.index!==$index,'badge-light opx-font-strikethrough':field.hidden}\">\n" +
+    "<!--                        <i class=\"fa fa-ban\" ng-if=\"field.hidden\"></i>-->\n" +
+    "                        <i class=\"far fa-exchange\"\n" +
+    "                           xxstyle=\"font-size:8px;margin-top:-4px;vertical-align: middle;\"\n" +
+    "                           ng-if=\"!field.dynamic && field.convertFn\" title=\"{{'common.table.config.data_converted' | translate}}\"></i>\n" +
+    "                        <i class=\"far fa-ellipsis-h\"\n" +
+    "                           xxstyle=\"font-size:8px;margin-top:-4px;vertical-align: middle;\"\n" +
+    "                           ng-if=\"field.dynamic\" title=\"{{'common.table.config.dynamic_column' | translate}}\"></i>\n" +
+    "                        <a ng-click=\"current.index=$index\"\n" +
+    "                           ng-bind-html=\"field.dynamic?('common.table.config.dynamic_column' | translate):(field.label || field.field || '&nbsp;&nbsp;&nbsp;')\"></a>\n" +
+    "                        <a ng-click=\"removeField($index)\"></a>\n" +
+    "                    </span></li>\n" +
+    "    </ul>\n" +
+    "</div>\n" +
+    "<fieldset ng-if=\"current.index>=0\" class=\"p-2\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'common.noun.tag' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <input class=\"form-control op-w-sm\" ng-model=\"uwProps.fields[current.index].label\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'common.table.config.list_set' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper op-combo flex-wrap\">\n" +
+    "            <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                <!--<input type=\"checkbox\"-->\n" +
+    "                <!--ng-model=\"uwProps.fields[current.index].hidden\"><label>隐藏此列</label>-->\n" +
+    "                <input type=\"checkbox\" id=\"dwc_hide\" ng-model=\"uwProps.fields[current.index].hidden\"><label\n" +
+    "                    for=\"dwc_hide\">{{'common.table.config.hide_list' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                <input type=\"checkbox\" id=\"dwc_mcheck\"\n" +
+    "                       ng-model=\"uwProps.fields[current.index].mcheck\"><label\n" +
+    "                    for=\"dwc_mcheck\">{{'common.table.config.checkbox' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                <input type=\"checkbox\" id=\"dwc_dynamic\"\n" +
+    "                       ng-model=\"uwProps.fields[current.index].dynamic\"><label\n" +
+    "                    for=\"dwc_dynamic\" op-help-info=\"{{'common.table.config.message_list' | translate}}\">{{'common.table.config.data_converted' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                <input type=\"checkbox\" id=\"dwc_isrestricted\"\n" +
+    "                       ng-model=\"uwProps.fields[current.index].isrestricted\"><label\n" +
+    "                    for=\"dwc_isrestricted\" op-help-info=\"{{'common.table.config.message_secrecy' | translate}}\">{{'common.table.config.secrecy_msg' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"checkbox checkbox-inline ms-3\"\n" +
+    "                 ng-if=\"!uwProps.dataset._type && uwProps.dataset.serverPage\">\n" +
+    "                <input type=\"checkbox\" id=\"dwc_sortable\"\n" +
+    "                       ng-model=\"uwProps.fields[current.index].orderable\"><label\n" +
+    "                    for=\"dwc_sortable\" op-help-info=\"{{'common.table.config.message_sort' | translate}}\">{{'common.table.config.can_sort' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"checkbox checkbox-inline ms-3\"\n" +
+    "                 ng-if=\"!uwProps.dataset._type && uwProps.dataset.serverPage\">\n" +
+    "                <input type=\"checkbox\" id=\"dwc_searchable\"\n" +
+    "                       ng-model=\"uwProps.fields[current.index].searchable\"><label\n" +
+    "                    for=\"dwc_searchable\" op-help-info=\"{{'common.table.config.message_search' | translate}}\">{{'common.table.config.can_search' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\" ng-if=\"uwProps.fields[current.index].dynamic\">\n" +
+    "        <label class=\"control-label\" op-help-info=\"{{'common.table.config.message_list_properties' | translate}}\n" +
+    "                <ul class='list-unstyled'>\n" +
+    "                <li><code>field</code>：{{'common.table.config.column_name' | translate}}</li>\n" +
+    "                <li><code>label</code>：{{'common.table.config.list_name' | translate}}</li>\n" +
+    "                <li><code>show</code>：{{'common.table.config.whether_to_show' | translate}}</li>\n" +
+    "                <li><code>hide</code>：{{'common.table.config.whether_to_hide' | translate}}</li>\n" +
+    "                <li><code>searchable</code>：{{'common.table.config.allow_search' | translate}}</li>\n" +
+    "                <li><code>orderable</code>：{{'common.table.config.allow_sorting' | translate}}</li>\n" +
+    "                <li><code>css</code>：{{'common.table.config.css_style' | translate}}</li></ul>\n" +
+    "                {{'common.table.config.fill_in_list' | translate}}\">{{'common.table.config.dynamic_column_definition' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <udp-data-converter the-model=\"uwProps.fields[current.index].dynamicDef\"\n" +
+    "                                options=\"{kinds:'js,yaml'}\" class=\"op-w-full\"></udp-data-converter>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"!uwProps.fields[current.index].dynamic\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'common.table.config.message_column' | translate}}\">{{'common.table.config.data' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-dsfield-selector the-model=\"uwProps.fields[current.index].field\" fields=\"selectedDs.fields\"\n" +
+    "                                      options=\"{disableConverter:true}\"></udp-dsfield-selector>\n" +
+    "                <div class=\"btn-group\">\n" +
+    "                    <button type=\"button\" class=\"btn ms-3\"\n" +
+    "                            ng-class=\"showDataConverter[current.index]?'btn-secondary':'btn-outline-default'\"\n" +
+    "                            ng-click=\"showDataConverter[current.index]=!showDataConverter[current.index]\">\n" +
+    "                        {{'common.umd_config.data_conversion' | translate}}\n" +
+    "                    </button>\n" +
+    "                    <button type=\"button\"\n" +
+    "                            ng-click=\"previewFieldsData(uwProps.fields,selectedDs.sampleRecord)\" title=\"{{'common.table.config.data_preview' | translate}}\"\n" +
+    "                            class=\"btn btn-outline-default\"><i class=\"fa fa-grip-horizontal\"></i>\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div ng-if=\"showDataConverter[current.index]\" class=\"op-form-subgroup mb-3 mt-3 w-100\">\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\" ng-if=\"!uwProps.fields[current.index].mcheck\"><span\n" +
+    "                                op-help-info=\"{{'common.table.config.message_data' | translate}}\">{{'common.umd_config.show_data' | translate}}</span></label>\n" +
+    "                        <label class=\"control-label\" ng-if=\"uwProps.fields[current.index].mcheck\"><span\n" +
+    "                                op-help-info=\"{{'common.table.config.message_checkbox_properties' | translate}}\">{{'common.table.config.properties_value'}}</span></label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <!--                        <udp-dsfield-selector the-model=\"uwProps.fields[current.index]\" fields=\"selectedDs.fields\"-->\n" +
+    "                            <!--                                              class=\"w-full\"-->\n" +
+    "                            <!--                                              options=\"{converter:{kinds:'js,str,link',varTypes:'field,pageparam,global'}}\"></udp-dsfield-selector>-->\n" +
+    "                            <!--                        <div class=\"checkbox checkbox-inline\">-->\n" +
+    "                            <!--                            <input type=\"checkbox\" ng-model=\"uwProps.fields[current.index].enableConvertFn\"-->\n" +
+    "                            <!--                                   id=\"dwc_enableconvertfn\"><label for=\"dwc_enableconvertfn\"></label></div>-->\n" +
+    "                            <udp-data-converter the-model=\"uwProps.fields[current.index].convertFn\"\n" +
+    "                                                class=\"w-full\"\n" +
+    "                                                options=\"{kinds:'js,str,link',varTypes:'field,pageparam,global'}\"></udp-data-converter>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group\" ng-if=\"!uwProps.dataset._type && uwProps.dataset.serverPage\">\n" +
+    "                        <label class=\"control-label\" op-help-info=\"{{'common.table.config.message_output' | translate}}\">{{'common.table.config.output' | translate}}</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <input type=\"text\" class=\"form-control code\"\n" +
+    "                                   ng-model=\"uwProps.fields[current.index].dataSsp\">\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <section ng-if=\"uwProps.fields[current.index].mcheck\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'common.table.config.message_tag' | translate}}\">{{'common.table.config.show_tag' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-dsfield-selector the-model=\"uwProps.fields[current.index].mcheckUnionFiled\"\n" +
+    "                                      fields=\"selectedDs.fields\"\n" +
+    "                                      options=\"{disableConverter:true}\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"{{'common.table.config.message_output_parameter' | translate}}\">{{'common.table.config.output_parameter' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" ng-model=\"uwProps.fields[current.index].mcheckParam\"\n" +
+    "                       class=\"form-control op-w-sm me-3\"/>\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.fields[current.index].mcheckType\">\n" +
+    "                    <option value=\"\">{{'common.variable.array' | translate}}</option>\n" +
+    "                    <option value=\"csv\">{{'common.table.config.comma_separated_string' | translate}}</option>\n" +
+    "                    <!--                                <option value=\"json\">数组JSON字符串</option>-->\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </section>\n" +
+    "    <section ng-if=\"!uwProps.fields[current.index].mcheck\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.table.config.default_content' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" ng-model=\"uwProps.fields[current.index].defaultContent\"\n" +
+    "                       class=\"form-control op-w-md\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <!--New-->\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.table.config.sort' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-auto\" ng-model=\"uwProps.fields[current.index].order\">\n" +
+    "                    <option value=\"\">{{'common.table.config.not_sort' | translate}}</option>\n" +
+    "                    <option value=\"asc\">{{'common.table.config.ascending' | translate}}</option>\n" +
+    "                    <option value=\"desc\">{{'common.table.config.descending' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.table.config.align_and_wrap'}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-auto\" ng-model=\"uwProps.fields[current.index].align\">\n" +
+    "                    <option value=\"\">{{'common.table.config.automatic' | translate}}</option>\n" +
+    "                    <option value=\"left\">{{'common.table.config.left' | translate}}</option>\n" +
+    "                    <option value=\"center\">{{'common.table.config.centered' | translate}}</option>\n" +
+    "                    <option value=\"right\">{{'common.table.config.right' | translate}}</option>\n" +
+    "                </select>\n" +
+    "                <!--</div>-->\n" +
+    "                <!--<div class=\"\">-->\n" +
+    "                <select class=\"form-select op-w-auto\" ng-model=\"uwProps.fields[current.index].wrap\">\n" +
+    "                    <option value=\"\">{{'common.word.default' | translate}}</option>\n" +
+    "                    <option value=\"nowrap\">{{'common.table.config.no_line_break' | translate}}</option>\n" +
+    "                    <option value=\"wrap\">{{'common.table.config.wrap' | translate}}</option>\n" +
+    "                </select>\n" +
+    "                <udp-css-editor the-model=\"uwProps.fields[current.index].css\"\n" +
+    "                                options=\"{style:'dropdown',groups:'text'}\"></udp-css-editor>\n" +
+    "                <input type=\"number\" ng-model=\"uwProps.fields[current.index].linelimit\" class=\"form-control\"\n" +
+    "                       title=\"{{'common.table.config.show_rows' | translate}}\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'common.table.config.message_cut_off' | translate}}\">{{'common.table.config.cut_off_width' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" class=\"form-control\" ng-model=\"uwProps.fields[current.index].cutoff\"\n" +
+    "                       min=\"0\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" xxng-if=\"uwProps.fields[current.index].type\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"{{'common.table.config.message_format_data' | translate}}<code>0,000</code>，<code>0.00</code>\">{{'common.table.config.show_format' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" ng-model=\"uwProps.fields[current.index].formatter\"\n" +
+    "                       class=\"form-control op-w-md\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.fields[current.index].type==='number'\">\n" +
+    "            <label class=\"control-label\">{{'common.table.config.numerical_ratio' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" ng-model=\"uwProps.fields[current.index].scale\"\n" +
+    "                       class=\"form-control op-w-sm\"\n" +
+    "                       style=\"width:100%;\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.display.footer\">\n" +
+    "            <label class=\"control-label\">{{'common.table.config.summary' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.fields[current.index].accum\">\n" +
+    "                    <option value=\"\"></option>\n" +
+    "                    <option value=\"MAX\">{{'common.table.config.max' | translate}}</option>\n" +
+    "                    <option value=\"MIN\">{{'common.table.config.min' | translate}}</option>\n" +
+    "                    <option value=\"COUNT\">{{'common.table.config.count' | translate}}</option>\n" +
+    "                    <option value=\"SUM\">{{'common.table.config.sum' | translate}}</option>\n" +
+    "                    <option value=\"AVERAGE\">{{'common.table.config.average_value' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </section>\n" +
+    "    </div>\n" +
+    "    <!--<div class=\"form-group\">-->\n" +
+    "    <!--<label class=\"control-label col-sm-2\">数据定义</label>-->\n" +
+    "    <!--<div class=\"col-sm-10\">-->\n" +
+    "    <!--<udp-data-converter the-model=\"uwProps.fields[current.index].convertFn\"-->\n" +
+    "    <!--options=\"{kinds:'js,str,link'}\"></udp-data-converter>-->\n" +
+    "    <!--</div>-->\n" +
+    "    <!--</div>-->\n" +
+    "</fieldset>\n" +
+    "<div class=\"m-t\">\n" +
+    "    <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"removeAllFields()\"><i\n" +
+    "            class=\"fa fa-minus-square\"></i> {{'common.table.config.delete_all_list' | translate}}\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-outline-primary btn-sm\" ng-click=\"addField()\"><i\n" +
+    "            class=\"fa fa-plus-square\"></i> {{'common.table.config.add_list'}}\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-outline-primary btn-sm\" ng-click=\"addAllFields(selectedDs.fields)\"><i\n" +
+    "            class=\"fa fa-plus-square\" title=\"{{'common.table.config.message_add_all_list' | translate}}\"></i> {{'common.table.config.add_all_list' | translate}}\n" +
+    "    </button>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/team-res-table-permission.html","<div class=\"opx-layout-vflex\">\n" +
+    "    <div class=\"opx-flex-fill p-3\">\n" +
+    "        <opx-datatable table-config=\"$ctrl.tableConfig\"></opx-datatable>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-config-attrs.component.html","<div class=\"opx-layout-vflex\">\n" +
+    "    <div class=\"mb-3\">\n" +
+    "        <!--        <button class=\"btn btn-outline-default\" ng-click=\"$ctrl.addAttr()\"><i class=\"fa fa-plus\"></i> {{ 'umd.attrs.add_attr' | translate}}</button>-->\n" +
+    "        <button class=\"btn btn-outline-primary\" ng-click=\"$ctrl.addAttrGroup()\"><i class=\"fa fa-folder-plus\"></i> {{ 'umd.attrs.add_attr_group' | translate}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <div class=\"opx-flex-fill\">\n" +
+    "        <div class=\"opx-layout-hflex\">\n" +
+    "            <div class=\"opx-flex-fill px-2\" ui-sortable=\"{handle:'.js-group-sort-handle'}\"\n" +
+    "                 ng-model=\"$ctrl.groupedAttrs\">\n" +
+    "                <div class=\"card mb-3 js-group-sort-handle\" ng-repeat=\"ga in $ctrl.groupedAttrs track by $index\" ng-class=\"{'active':ga.__isNew}\">\n" +
+    "                    <div class=\"card-header js-group-sort-handle bg-light py-2\">\n" +
+    "                        <div ng-if=\"$ctrl.groupInEdit!==ga.group\"\n" +
+    "                             class=\"d-flex align-items-center op-hover-trigger\">\n" +
+    "                            <button type=\"button\" class=\"btn btn-default opx-btn-icon opx-btn-flat\" ng-click=\"ga.__collapsed=!ga.__collapsed\"><i class=\"far\" ng-class=\"ga.__collapsed?'fa-angle-up':'fa-angle-down'\"></i></button>\n" +
+    "                            <span class=\"me-auto\"><a href=\"\" ng-click=\"$ctrl.renameAttrGroup(ga.group)\" title=\"{{ 'umd.attrs.rename_attr_group' | translate}}\">{{ga.group}}</a></span>\n" +
+    "                            <div class=\"ms-3 op-hover-to-show\">\n" +
+    "                                <button class=\"btn btn-default\" ng-click=\"$ctrl.addAttr(ga.group)\" title=\"{{ 'umd.attrs.add_attr' | translate}}\"><i\n" +
+    "                                        class=\"fa fa-plus\"></i></button>\n" +
+    "                                <!--                                <button class=\"btn btn-default\" ng-click=\"$ctrl.renameAttrGroup(ga.group)\" title=\"分组重命名\"><i-->\n" +
+    "                                <!--                                        class=\"fa fa-pencil\"></i></button>-->\n" +
+    "                                <button class=\"btn btn-default\" ng-click=\"$ctrl.deleteAttrGroup(ga.group)\" title=\"{{ 'umd.attrs.delete_attr_group' | translate}}\">\n" +
+    "                                    <i\n" +
+    "                                            class=\"fa fa-trash-alt\"></i></button>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div ng-if=\"$ctrl.groupInEdit===ga.group\" class=\"d-flex align-items-center\">\n" +
+    "                            <div>\n" +
+    "                                <input type=\"text\" ng-model=\"$ctrl.newGroupName\" class=\"form-control\">\n" +
+    "                            </div>\n" +
+    "                            <div class=\"ms-3\">\n" +
+    "                                <button class=\"btn btn-primary opx-btn-ok\" ng-click=\"$ctrl.doRenameAttrGroup(ga.group)\">\n" +
+    "                                    {{ 'umd.attrs.confirm' | translate}}\n" +
+    "                                </button>\n" +
+    "                                <button class=\"btn btn-default opx-btn-cancel\"\n" +
+    "                                        ng-click=\"$ctrl.cancelRenameAttrGroup(ga.group)\">{{ 'umd.attrs.cancel' | translate}}\n" +
+    "                                </button>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"card-body form form-horizontal op-smartform js-sortable-container\"\n" +
+    "                         ui-sortable=\"$ctrl.sortableOptions\" ng-model=\"ga.attrs\" ng-hide=\"ga.__collapsed\">\n" +
+    "                        <div ng-repeat=\"attr in ga.attrs track by $index\"\n" +
+    "                             ng-click=\"$ctrl.clickAttr(attr)\"\n" +
+    "                             class=\"d-block p-3 d-flex align-items-center op-hover-trigger umd-attr-item\"\n" +
+    "                             ng-class=\"{'active':attr.__active}\">\n" +
+    "                            <div class=\"op-hover-to-show me-3\">\n" +
+    "                                <i class=\"fa fa-bars fa-fw op-drag-handle text-muted js-attr-sort-handle\"></i>\n" +
+    "                            </div>\n" +
+    "                            <umd-model-attr the-attr=\"attr\" class=\"flex-fill\"\n" +
+    "                                            xxxoptions=\"{readonly:true}\"></umd-model-attr>\n" +
+    "                            <div class=\"ms-3 d-flex align-items-center\">\n" +
+    "                                <div class=\"text-danger text-center\" style=\"width:2rem;\"><i\n" +
+    "                                        ng-if=\"$ctrl.errorsByAttr[attr.code]\"\n" +
+    "                                        class=\"fa fa-exclamation-circle\"></i></div>\n" +
+    "                                <div class=\"op-hover-to-show\">\n" +
+    "                                    <button class=\"btn btn-default opx-btn-icon opx-btn-flat\" title=\"{{ 'common.entity.action.delete' | translate}}\"\n" +
+    "                                            ng-if=\"!attr.internal\"\n" +
+    "                                            ng-click=\"$ctrl.deleteAttr(attr)\"><i\n" +
+    "                                            class=\"fa fa-times\"></i></button>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div style=\"width:20rem; min-height: 30rem;\" class=\"ms-3 card\">\n" +
+    "                <div class=\"card-header bg-dark text-light\">{{ 'umd.attrs.attr_config' | translate}}</div>\n" +
+    "                <div class=\"card-body bg-light\" ng-if=\"!$ctrl.activeModelAttr\">\n" +
+    "                    <div class=\"op-blank-slate\">\n" +
+    "                        <div class=\"op-blank-slate-icon\"><i class=\"fa fa-tasks-alt fa-4x\"></i></div>\n" +
+    "                        <p>{{ 'umd.attrs.left_to_edit_attr' | translate}}</p>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <!--                    <div class=\"card-header\">{{ 'umd.attrs.attr_config' | translate}}</div>-->\n" +
+    "                <div class=\"card-body scroll-y op-smartform bg-light\" ng-if=\"$ctrl.activeModelAttr\">\n" +
+    "                    <fieldset opx-foldable>\n" +
+    "                        <legend>{{ 'umd.attrs.base' | translate}}</legend>\n" +
+    "                        <div class=\"form-group\">\n" +
+    "                            <label class=\"control-label\">Code</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <input type=\"text\" ng-model=\"$ctrl.activeModelAttr.code\" class=\"form-control\" ng-required=\"true\"\n" +
+    "                                       ng-disabled=\"$ctrl.activeModelAttr.internal\"\n" +
+    "                                       ng-class=\"{'is-invalid':$ctrl.errorsByAttr[$ctrl.activeModelAttr.code].code}\">\n" +
+    "                                <div class=\"invalid-feedback\"\n" +
+    "                                     ng-if=\"$ctrl.errorsByAttr[$ctrl.activeModelAttr.code].code\">\n" +
+    "                                    {{$ctrl.errorsByAttr[$ctrl.activeModelAttr.code].code}}</divp>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"form-group\">\n" +
+    "                            <label class=\"control-label\">{{ 'umd.attrs.title' | translate}}</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <input type=\"text\" ng-model=\"$ctrl.activeModelAttr.title\" class=\"form-control\"\n" +
+    "                                       ffffng-required=\"true\">\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <!--                        <div class=\"form-group\">-->\n" +
+    "                        <!--                            <label class=\"control-label\">{{ 'umd.attrs.date_type' | translate}}</label>-->\n" +
+    "                        <!--                            <div class=\"form-control-wrapper\">-->\n" +
+    "                        <!--                                <select class=\"form-select\" ng-model=\"$ctrl.activeModelAttr.data_type\">-->\n" +
+    "                        <!--                                    <option value=\"string\">{{ 'umd.attrs.String' | translate}}</option>-->\n" +
+    "                        <!--                                    <option value=\"number\">{{ 'umd.attrs.num' | translate}}</option>-->\n" +
+    "                        <!--                                    <option value=\"ip\">IP</option>-->\n" +
+    "                        <!--                                </select>-->\n" +
+    "                        <!--                            </div>-->\n" +
+    "                        <!--                        </div>-->\n" +
+    "                        <div class=\"form-group\">\n" +
+    "                            <label class=\"control-label\">{{ 'umd.attrs.constraint' | translate}}</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <div class=\"checkbox checkbox-inline\">\n" +
+    "                                    <input type=\"checkbox\" ng-model=\"$ctrl.activeModelAttr.unique\" id=\"mc_unique\">\n" +
+    "                                    <label for=\"mc_unique\">{{ 'umd.attrs.unique' | translate}}</label>\n" +
+    "                                </div>\n" +
+    "                                <div class=\"checkbox checkbox-inline\">\n" +
+    "                                    <input type=\"checkbox\" ng-model=\"$ctrl.activeModelAttr.required\"\n" +
+    "                                           id=\"mc_required\">\n" +
+    "                                    <label for=\"mc_required\">{{ 'umd.attrs.required' | translate}}</label>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </fieldset>\n" +
+    "                    <fieldset opx-foldable>\n" +
+    "                        <legend>{{ 'umd.attrs.data_input' | translate}}</legend>\n" +
+    "                        <uinput-setting-datacontrol\n" +
+    "                                ng-model=\"$ctrl.activeModelAttr.input\"\n" +
+    "                                options=\"{disableEvent:true}\"></uinput-setting-datacontrol>\n" +
+    "\n" +
+    "                    </fieldset>\n" +
+    "                    <fieldset opx-foldable>\n" +
+    "                        <legend>{{ 'umd.attrs.display_data' | translate}}</legend>\n" +
+    "                        <div class=\"form-group\">\n" +
+    "                            <label class=\"control-label\">{{ 'umd.attrs.data_conversion' | translate}}</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <udp-data-converter the-model=\"$ctrl.activeModelAttr.display.converter\"\n" +
+    "                                                    options=\"{kinds:'js,str'}\"></udp-data-converter>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"form-group\">\n" +
+    "                            <label class=\"control-label\">Click</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <select class=\"form-select\" ng-model=\"$ctrl.activeModelAttr.display.onclick\">\n" +
+    "                                    <option value=\"\">None</option>\n" +
+    "                                    <option value=\"ViewDetail\">View Detail</option>\n" +
+    "                                </select>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </fieldset>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-config-operation.component.html","<div class=\"opx-layout-vflex\">\n" +
+    "    <div class=\"opx-flex-fill\">\n" +
+    "        <div ui-sortable=\"{handle:'.op-drag-handle'}\" ng-model=\"$ctrl.operationDefs\"\n" +
+    "             class=\"d-flex flex-row align-items-start\" style=\"gap:1rem;\">\n" +
+    "            <div ng-repeat=\"operation in $ctrl.operationDefs track by $index\"\n" +
+    "                 class=\"d-inline-block op-hover-trigger\">\n" +
+    "                <button class=\"btn btn-default opx-icon-card\">\n" +
+    "                    <i class=\"far {{operation.icon}}\"></i>\n" +
+    "                    <span>{{operation.title}}</span>\n" +
+    "                </button>\n" +
+    "                <div class=\"op-hover-to-show mt-2 text-right op-drag-handle\">\n" +
+    "                    <!--                    <span class=\"me-auto\"><i class=\"fa fa-grip-horizontal op-drag-handle text-muted\"></i></span>-->\n" +
+    "                    <button class=\"btn btn-default opx-btn-flat opx-btn-icon\"\n" +
+    "                            ng-click=\"$ctrl.editOperation($index)\"><i\n" +
+    "                            class=\"far fa-pencil\"></i></button>\n" +
+    "                    <button class=\"btn btn-default opx-btn-flat opx-btn-icon\"\n" +
+    "                            ng-click=\"$ctrl.removeOperation($index)\">\n" +
+    "                        <i class=\"far fa-times\"></i></button>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "<!--            <div class=\"d-inline-block\">-->\n" +
+    "                <button class=\"btn btn-light opx-icon-card\" ng-click=\"$ctrl.addOperation()\">\n" +
+    "                    <i class=\"fal fa-plus text-muted\"></i>\n" +
+    "                </button>\n" +
+    "<!--            </div>-->\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <!--        <table class=\"table opx-table\">-->\n" +
+    "        <!--            <thead>-->\n" +
+    "        <!--            <tr>-->\n" +
+    "        <!--                <th></th>-->\n" +
+    "        <!--                <th>Disabled</th>-->\n" +
+    "        <!--                <th>Title</th>-->\n" +
+    "        <!--                <th>-->\n" +
+    "        <!--                    <button class=\"btn btn-primary opx-btn-icon opx-btn-flat\" ng-click=\"$ctrl.addOperation()\"><i-->\n" +
+    "        <!--                            class=\"far fa-plus\"></i></button>-->\n" +
+    "        <!--                </th>-->\n" +
+    "        <!--            </tr>-->\n" +
+    "        <!--            </thead>-->\n" +
+    "        <!--            <tbody ui-sortable=\"{handle:'.op-drag-handle'}\" ng-model=\"$ctrl.operationDefs\">-->\n" +
+    "        <!--            <tr ng-repeat=\"operation in $ctrl.operationDefs track by $index\">-->\n" +
+    "        <!--                <th>-->\n" +
+    "        <!--                    <i class=\"fa fa-grip-horizontal op-drag-handle text-muted\"></i>-->\n" +
+    "        <!--                </th>-->\n" +
+    "        <!--                <td>-->\n" +
+    "        <!--                    <div class=\"checkbox checkbox-primary\"><input type=\"checkbox\" id=\"uco_operation_{{$index}}\"-->\n" +
+    "        <!--                                                                  ng-model=\"operation.disabled\"><label-->\n" +
+    "        <!--                            for=\"uco_operation_{{$index}}\"></label></div>-->\n" +
+    "        <!--                </td>-->\n" +
+    "        <!--                <td>{{operation.title}}</td>-->\n" +
+    "        <!--                <td>-->\n" +
+    "        <!--                    <button type=\"button\" class=\"btn btn-default opx-btn-icon opx-btn-flat\"-->\n" +
+    "        <!--                            ng-click=\"$ctrl.editOperation($index)\"><i class=\"far fa-pencil\"></i></button>-->\n" +
+    "        <!--                    <button type=\"button\" class=\"btn btn-default opx-btn-icon opx-btn-flat\"-->\n" +
+    "        <!--                            ng-click=\"$ctrl.removeOperation($index)\"><i class=\"far fa-times\"></i></button>-->\n" +
+    "        <!--                </td>-->\n" +
+    "        <!--            </tr>-->\n" +
+    "        <!--            </tbody>-->\n" +
+    "        <!--        </table>-->\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-config-view.component.html","<div class=\"opx-layout-vflex\">\n" +
+    "    <div class=\"mb-3\">\n" +
+    "    </div>\n" +
+    "    <div class=\"opx-flex-fill\">\n" +
+    "        <ul class=\"list list-unstyled list-inline\">\n" +
+    "            <li class=\"mb-1\" ng-repeat=\"(type,view) in $ctrl.VIEW_DEFS track by $index\">\n" +
+    "                <div class=\"btn-group __op-hover-trigger\">\n" +
+    "                    <button type=\"button\" class=\"btn btn-outline-default\"\n" +
+    "                            ng-class=\"$ctrl.currentView.type===type?'active':''\"\n" +
+    "                            ng-click=\"$ctrl.clickView(type)\"><i class=\"far fa-fw {{view.icon}}\"></i> {{view.title}}\n" +
+    "                    </button>\n" +
+    "                    <button type=\"button\" class=\"btn btn-outline-default\"\n" +
+    "                            ng-click=\"$ctrl.previewView(type)\"><i class=\"far fa-search\"></i></button>\n" +
+    "                </div>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "        <div ng-if=\"$ctrl.currentView.type==='detail'\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <!--                <div class=\"form-control-wrapper\">-->\n" +
+    "                <!--                    <div class=\"checkbox checkbox-primary\">-->\n" +
+    "                <!--                        <input type=\"checkbox\" ng-model=\"$ctrl.currentView.config.showOperations\"-->\n" +
+    "                <!--                               id=\"ucv_showoperations\"><label-->\n" +
+    "                <!--                            for=\"ucv_showoperations\">Show Operations</label>-->\n" +
+    "                <!--                    </div>-->\n" +
+    "                <!--                </div>-->\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"$ctrl.currentView.type==='detail'\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">Data</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-data-converter the-model=\"$ctrl.currentView.data\"\n" +
+    "                                        options=\"{kinds:'js,yaml,json'}\"></udp-data-converter>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"['selector','list'].indexOf($ctrl.currentView.type)>-1\">\n" +
+    "            <div>\n" +
+    "                <div class=\"mb-3 d-flex align-items-center\">\n" +
+    "                    <div>{{ 'umd.view.table_column' | translate}}</div>\n" +
+    "                </div>\n" +
+    "                <div class=\"d-flex p-3 bg-light\">\n" +
+    "                    <ul class=\"mb-0 list list-inline\" ng-sortable ng-model=\"$ctrl.currentView.config.columns\">\n" +
+    "                        <li class=\"mb-2\" ng-repeat=\"column in $ctrl.currentView.config.columns track by $index\">\n" +
+    "                            <span class=\"badge op-text-normal p-3 badge-secondary xxborder xxbg-light\">{{$ctrl.attrsByCode[column.attr].title}} [{{column.attr}}]\n" +
+    "                            <span ng-click=\"$ctrl.toggleSelectionOfAttr(column.attr)\" class=\"op-cursor-hand ms-2\"><i\n" +
+    "                                    class=\"fal fa-times\"></i></span></span>\n" +
+    "                        </li>\n" +
+    "                    </ul>\n" +
+    "                    <div class=\"dropdown ms-auto\">\n" +
+    "                        <button class=\"btn btn-outline-primary\" data-bs-toggle=\"dropdown\" opx-popdrop><i\n" +
+    "                                class=\"fal fa-sliders-h\"></i>\n" +
+    "                            {{ 'umd.view.add_column' | translate}}\n" +
+    "                        </button>\n" +
+    "                        <div class=\"dropdown-menu\">\n" +
+    "                            <a ng-repeat=\"attr in $ctrl.availAttrs\"\n" +
+    "                               class=\"dropdown-item d-flex align-items-center w-100\"\n" +
+    "                               title=\"{{attr|json}}\"\n" +
+    "                               href=\"\" ng-click=\"$ctrl.toggleSelectionOfAttr(attr.code)\">\n" +
+    "                                        <span style=\"width:1rem;\" class=\"d-inline-block\"><i class=\"fa fa-check\"\n" +
+    "                                                                                            ng-if=\"attr._selected\"></i></span>\n" +
+    "                                {{attr.title}} [{{attr.code}}]</a>\n" +
+    "                            <div class=\"divider\"></div>\n" +
+    "                            <a class=\"dropdown-item\" class=\"text-primary\" href=\"\"\n" +
+    "                               ng-click=\"$ctrl.toggleSelectionOfAllAttrs(true)\"><span style=\"width:1rem;\"\n" +
+    "                                                                                      class=\"d-inline-block\"><i\n" +
+    "                                    class=\"fa fa-plus-square\"></i></span>\n" +
+    "                                {{ 'umd.view.add_all_column' | translate}}</a>\n" +
+    "                            <a class=\"dropdown-item text-danger\" href=\"\"\n" +
+    "                               ng-click=\"$ctrl.toggleSelectionOfAllAttrs(false)\"><span style=\"width:1rem;\"\n" +
+    "                                                                                       class=\"d-inline-block\"><i\n" +
+    "                                    class=\"fa fa-times-square\"></i></span>\n" +
+    "                                {{ 'umd.view.remove_all_column' | translate}}</a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <!--        <div ng-if=\"$ctrl.currentView\">-->\n" +
+    "        <!--            <div class=\"mb-3\">-->\n" +
+    "        <!--                <button class=\"btn btn-outline-primary\" ng-click=\"$ctrl.previewView($ctrl.currentView.type)\">-->\n" +
+    "        <!--                    {{ 'umd.view.view_preview' | translate}}-->\n" +
+    "        <!--                </button>-->\n" +
+    "        <!--            </div>-->\n" +
+    "        <!--        </div>-->\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-data-edit.component.html","<div>\n" +
+    "    <umd-data-view  the-data=\"$ctrl.data\"\n" +
+    "                    model-def=\"$ctrl.model\"\n" +
+    "                    view-type=\"editor\"\n" +
+    "                    options=\"{editMode:true}\">\n" +
+    "    </umd-data-view>\n" +
+    "\n" +
+    "    <div class=\"card-footer text-left\" >\n" +
+    "        <button ng-click=\"$ctrl.save()\" ng-disabled=\"!$ctrl.allChecked\" class=\"btn btn-primary no-animate\">{{'common.action.save' | translate}}</button>\n" +
+    "        <button ng-click=\"$ctrl.close()\" class=\"btn btn-secondary no-animate\">{{'common.action.cancel' | translate}}</button>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-data-view.component.html","<div ng-if=\"$ctrl.error\">\n" +
+    "    <div class=\"alert alert-danger\">{{$ctrl.error}}</div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"!$ctrl.error\" class=\"h-100\">\n" +
+    "    <div ng-if=\"['detail','editor'].indexOf($ctrl.viewType)>-1\" class=\"h-100\">\n" +
+    "        <uib-tabset class=\"tab-container h-100 scroll-y op-tab-pane-scroll\" type=\"mdc-op\">\n" +
+    "            <uib-tab ng-repeat=\"ga in $ctrl.groupedAttrs track by $index\">\n" +
+    "                <uib-tab-heading>{{ga.group}}</uib-tab-heading>\n" +
+    "                <div class=\"p-3 form op-smartform op-bold-label\" ng-class=\"$ctrl.options.editMode?'form-vertical':'form-horizontal'\">\n" +
+    "                    <div class=\"form-group\" ng-repeat=\"attr in ga.attrs track by $index\"\n" +
+    "                         ng-show=\"attr.input.control!=='hidden'\">\n" +
+    "                        <label class=\"control-label\">\n" +
+    "                            <span class=\"text-danger\" ng-if=\"attr.required\"> * </span>\n" +
+    "                            {{attr.title || attr.code}}\n" +
+    "                        </label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <udp-input ng-if=\"$ctrl.options.editMode\"\n" +
+    "                                       ng-model=\"$ctrl.viewData[attr.code]\"\n" +
+    "                                       the-config=\"attr.input\"\n" +
+    "                                       $controlonly=\"true\"></udp-input>\n" +
+    "                            <span ng-if=\"!$ctrl.options.editMode\"\n" +
+    "                                  ng-bind-html=\"$ctrl.viewData[attr.code]\" class=\"py-2\"></span>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </uib-tab>\n" +
+    "            <uib-tab ng-if=\"$ctrl.viewType==='detail' && $ctrl.operations|isNotEmpty\">\n" +
+    "                <uib-tab-heading>Operations</uib-tab-heading>\n" +
+    "                <div class=\"p-3 d-flex flex-row align-items-start\" style=\"gap:1rem;\">\n" +
+    "                    <div ng-repeat=\"operation in $ctrl.operations track by $index\">\n" +
+    "                        <button class=\"btn btn-default opx-icon-card\" ng-click=\"$ctrl.clickOperation(operation,$event)\">\n" +
+    "                            <i class=\"far {{operation.icon}}\"></i>\n" +
+    "                            <span>{{operation.title}}</span>\n" +
+    "                        </button>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </uib-tab>\n" +
+    "        </uib-tabset>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.viewType==='list'\">\n" +
+    "        <opx-datatable table-config=\"$ctrl.tableConfig\"></opx-datatable>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.viewType==='selector'\">\n" +
+    "        <opx-datatable table-config=\"$ctrl.tableConfig\"></opx-datatable>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-edit-operation-modal.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">\n" +
+    "        Edit Operation\n" +
+    "    </h4>\n" +
+    "    <button type=\"button\" ng-click=\"$ctrl.cancel()\" class=\"btn btn-default opx-btn-icon opx-btn-flat op-close-window\"><i\n" +
+    "            class=\"fa fa-times\"></i></button>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">Title</label>\n" +
+    "        <div class=\"form-control-wrapper d-flex\">\n" +
+    "            <op-iconpicker ng-model=\"$ctrl.theOperation.icon\" class=\"me-3\"></op-iconpicker>\n" +
+    "            <input type=\"text\" class=\"form-control w-md\" ng-model=\"$ctrl.theOperation.title\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "   <udp-widget-config-interaction the-model=\"$ctrl.theOperation.config\"\n" +
+    "                                   options=\"{supports:'page,job,code'}\"></udp-widget-config-interaction>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" class=\"btn btn-primary opx-btn-ok\" ng-click=\"$ctrl.submit()\">\n" +
+    "        {{'common.action.ok' | translate}}\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default opx-btn-cancel\" ng-click=\"$ctrl.cancel()\">\n" +
+    "        {{'common.action.cancel' | translate}}\n" +
+    "    </button>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-model-attr.html","<div class=\"form-group mb-0\">\n" +
+    "    <label class=\"control-label\"><i class=\"fa fa-key text-primary\" ng-if=\"$ctrl.theAttr.unique\" title=\"{{ 'umd.attrs.unique' | translate}}\"></i>\n" +
+    "        <i class=\"fa fa-asterisk text-danger\" ng-if=\"$ctrl.theAttr.required\" title=\"{{ 'umd.attrs.required' | translate}}\"></i>\n" +
+    "        <i class=\"fa fa-lock\" ng-if=\"$ctrl.theAttr.internal\" title=\"{{ 'umd.inner.inner_attr' | translate}}\"></i>\n" +
+    "        {{$ctrl.theAttr.title || $ctrl.theAttr.code}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/commons/umd/umd-selector.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'umd.edit.select' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"input-group\">\n" +
+    "            <select op-select=\"{placeholder: ('umd.edit.select_placeholder' | translate)}\"\n" +
+    "                    style=\"width:calc(100% - 2rem)\" \n" +
+    "                    class=\"form-select\" \n" +
+    "                    ng-model=\"$ctrl.theModel\"\n" +
+    "                    ng-options=\"data.code as data.title for data in $ctrl.dataList\">\n" +
+    "                <option></option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "")
+}]);
+})();

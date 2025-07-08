@@ -1,0 +1,6 @@
+- [小应用](applet/index.md)
+    - [快速入门](applet/quickstart.md)
+    - [使用指南](applet/guide.md)
+    - [设置和管理](applet/config.md)
+    - [开发指南](applet/dev.md)
+    - [常见问题](applet/faq.md)

@@ -1,0 +1,19 @@
+<div class="mb-2 d-flex bg-light" ng-if="$ctrl.options.toolbar">
+    <div class="d-flex me-auto" ng-transclude></div>
+    <div class="ms-2">
+        <button type="button" class="btn opx-btn-icon ms-2"
+                ng-class="$ctrl.cmOptions.lineWrapping?'btn-default active':'btn-outline-default'"
+                ng-click="$ctrl.toggleLineWrap()"><i class="fa fa-level-down fa-rotate-90"></i></button>
+        <button type="button" class="btn opx-btn-icon ms-2"
+                ng-class="$ctrl.cmOptions.lineNumbers?'btn-default active':'btn-outline-default'"
+                ng-click="$ctrl.cmOptions.lineNumbers=!$ctrl.cmOptions.lineNumbers"><i class="fa fa-list-ol"></i>
+        </button>
+        <button type="button" class="btn opx-btn-icon btn-outline-default ms-2"
+                ng-click="$ctrl.execCommand('find')"><i class="fa fa-search"></i></button>
+        <button type="button" class="btn opx-btn-icon btn-outline-default ms-2"
+                ng-if="!$ctrl.cmOptions.readOnly"
+                ng-click="$ctrl.execCommand('replace')"><i class="fa fa-exchange"></i></button>
+    </div>
+</div>
+<textarea ui-codemirror="$ctrl.cmOptions" rows="10" ng-model="$ctrl.theModel" ui-refresh="$ctrl.refreshCm"></textarea>
+   

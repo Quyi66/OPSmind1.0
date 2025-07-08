@@ -1,0 +1,74 @@
+<div class="h-full opx-layout-vflex">
+    <div style="display: flex;flex-direction: row; align-items: center;">
+        <select ng-if="$ctrl.ciTypeDefs.length>1" class="form-select w-sm" ng-model="$ctrl.activeCiType">
+            <option ng-repeat="citype in $ctrl.ciTypeDefs track by $index" value="{{citype.code}}">{{citype.title}}
+            </option>
+        </select>
+    </div>
+
+    <div class="pt-2">
+        <div class="card udp-card-mode __opx-autocolor ">
+            <div class="card-header">
+                <i class="fa fa-briefcase-medical text-muted"></i>
+                <span>已选主机</span>
+                <span class="pl-3  badge bg-danger rounded-pill" style="padding-bottom: 1px;padding-top: 3px;"
+                      ng-click="$ctrl.changeShowHosts()">{{ $ctrl.theHostsByCiType ? $ctrl.theHostsByCiType.length : 0 }}
+                </span>
+            </div>
+            <div class="card-body" ng-if="$ctrl.theHostsByCiType.length > 0 && $ctrl.showHosts">
+                <div class="uw-flex uw-column align-items-start">
+                    <div class="uw-body">
+                        <div class="uw-content ">
+                            <ul class="list list-unstyled list-inline" style="max-height:10rem; overflow-y:auto;">
+                                <li ng-repeat="host in $ctrl.theHostsByCiType | filter: $ctrl.filter track by $index"
+                                    class="op-hover-trigger mb-3">
+                                    <div class="badge bg-secondary op-text-normal op-cursor-default py-2 px-2">
+                                        {{host.value}}
+                                        <a ng-click="$ctrl.removeItem(host, $index)"  style="color: #495057">x</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.activeCiType" class="opx-flex-fill">
+        <ul class="nav nav-mdc-op mb-3">
+            <li ng-repeat="(mode,def) in $ctrl.selectModeDefs" ng-class="{'active':$ctrl._currentMode===mode}"
+                class="nav-item"><a class="nav-link" ng-click="$ctrl._currentMode=mode"><i
+                    class="fa fa-fw {{def.icon}}"></i> {{def.title}}</a></li>
+        </ul>
+        <acm-list-ci-instance ng-if="$ctrl.selectModeDefs['host']"
+                              ng-show="$ctrl._currentMode==='host'"
+                              ci-type="$ctrl.activeCiType"
+                              the-model="$ctrl.theModel"
+                              the-hosts-by-ci-type="$ctrl.theHostsByCiType"
+                              options="$ctrl.options"></acm-list-ci-instance>
+        <acm-list-ci-group ng-if="$ctrl.selectModeDefs['group']"
+                           ng-show="$ctrl._currentMode==='group'"
+                           ci-type="$ctrl.activeCiType"
+                           ng-model="$ctrl.theModel"
+                           the-hosts-by-ci-type="$ctrl.theHostsByCiType"
+                           options="$ctrl.options"
+                           mcheck-type="$ctrl.mcheckType" class="flex-fill scroll-y"></acm-list-ci-group>
+        <acm-list-ci-tag ng-if="$ctrl.selectModeDefs['tag']" ng-show="$ctrl._currentMode==='tag'"
+                         ci-type="$ctrl.activeCiType"
+                         ng-model="$ctrl.theModel"
+                         the-hosts-by-ci-type="$ctrl.theHostsByCiType"
+                         options="{view:'card'}"
+                         mcheck-type="$ctrl.mcheckType"></acm-list-ci-tag>
+        <acm-ci-filter ng-if="$ctrl.selectModeDefs['input']"
+                       ng-show="$ctrl._currentMode==='input'"
+                       ci-type="$ctrl.activeCiType"
+                       ng-model="$ctrl.theModel"></acm-ci-filter>
+        <acm-list-ci-recently ng-if="$ctrl.selectModeDefs['recently']"
+                              ng-show="$ctrl._currentMode==='recently'"
+                              ci-type="$ctrl.activeCiType"
+                              options="$ctrl.options"
+                              ng-model="$ctrl.theModel"
+                              mcheck-type="$ctrl.mcheckType"></acm-list-ci-recently>
+    </div>
+</div>

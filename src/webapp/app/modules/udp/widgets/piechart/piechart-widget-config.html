@@ -1,0 +1,39 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>
+        <udp-widget-config-chart-metrics uw-props="uwProps" axis-options="axisOptions" chart-type="pie"
+                                         fields="selectedDs.fields"></udp-widget-config-chart-metrics>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page'}"
+                                       param-vars="{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <udp-widget-config-chart-display ng-model="uwProps.display"></udp-widget-config-chart-display>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.w.piechart.config.chart_type'|translate}}</label>
+                <div class="col-sm-10">
+                    <label class="radio-inline i-checks"><input type="radio" value="pie"
+                                                                ng-model="uwProps.display.chart"><i></i>{{'udp.w.piechart.config.chart_type_pie'|translate}}</label>
+                    <label class="radio-inline i-checks"><input type="radio" value="doughnut"
+                                                                ng-model="uwProps.display.chart"><i></i>{{'udp.w.piechart.config.chart_type_doughnut'|translate}}</label>
+                    <label class="radio-inline i-checks"><input type="radio" value="rose"
+                                                                ng-model="uwProps.display.chart"><i></i>{{'udp.w.piechart.config.chart_type_rose'|translate}}</label>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>
+

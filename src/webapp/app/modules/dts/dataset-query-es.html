@@ -1,0 +1,92 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="input_query" required>{{'dts.commons.search' | translate}} json *</label>
+    <div class="col-sm-10">
+        <textarea ui-codemirror="{mode:'application/json', lineNumbers:true, theme:'opluscode', lineWrapping:true}"
+                  xclass="form-control code" rows="6" id="input_query" ng-model="dataset.query"></textarea>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-10 col-sm-offset-2">
+        <button type="button" ng-click="queryMeta('param',selectedDatasource.type)" class="btn btn-primary pull-right">
+            {{'dts.commons.get_params' | translate}}
+        </button>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">{{'dts.commons.search_params' | translate}}</label>
+    <div class="col-sm-10">
+        <table class="table op-param-table">
+            <thead>
+            <tr>
+                <th>{{'dts.commons.params' | translate}}
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="addQueryParam()"
+                            title="{{'dts.commons.add_params' | translate}}"><i
+                            class="fa fa-plus"></i></button>
+                </th>
+                <th>{{'dts.commons.type' | translate}}</th>
+                <th>{{'dts.commons.test_value' | translate}}</th>
+                <th>{{'dts.commons.desc' | translate}}</th>
+                <th>{{'dts.commons.required' | translate}}</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(name,detail) in dataset.params track by $index">
+
+                <td><input type="text" class="form-control" ng-model="name" ng-change="changeParam($index,name)"></td>
+                <td>
+                    <select class="form-select" ng-model="detail.type">
+                        <option value="string">{{'dts.commons.string' | translate}}</option>
+                        <option value="number">{{'dts.commons.number' | translate}}</option>
+                        <option value="date">{{'dts.commons.date' | translate}}</option>
+                        <option value="array">{{'dts.commons.array' | translate}}</option>
+                    </select>
+                </td>
+                <td><input type="text" class="form-control" ng-model="detail.defaultValue"></td>
+                <td><input type="text" class="form-control" ng-model="detail.desc"></td>
+                <td><label class="i-checks m-b-none"><input type="checkbox" name="display_panel"
+                                                            ng-model="detail.required"><i></i></label>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="removeQueryParam(name)"><i
+                            class="fa fa-times"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">{{'dts.commons.field_desc' | translate}}
+    </label>
+    <div class="col-sm-10">
+        <table class="table op-param-table">
+            <thead>
+            <tr>
+                <th>{{'dts.commons.field' | translate}}
+                    <button type="button" class="btn btn-sm btn-primary"
+                            ng-click="queryMeta('field',selectedDatasource.type)" title="{{'dts.commons.get_field' | translate}}"><i
+                            class="fa fa-pencil"></i></button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="addColumns()"
+                            title="{{'dts.commons.add_params' | translate}}"><i
+                            class="fa fa-plus"></i></button>
+                </th>
+                <th>{{'dts.commons.chinese' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(name,detail) in dataset.options.columns track by $index">
+
+                <td><input type="text" class="form-control" ng-model="name" ng-change="changeColumn($index,name)"></td>
+                <td><input type="text" class="form-control" ng-model="detail" ng-change="changeColumnDesc(name,detail)">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" ng-click="removeColumn(name)"><i
+                            class="fa fa-times"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+{
+    "sys_dict.home.title": "Dicts",
+    "sys_dict.home.createLabel": "Create a new Dict",
+    "sys_dict.home.createOrEditLabel": "Create or Edit Dict",
+    "sys_dict.home.search": "Find Dict",
+    "sys_dict.created": "Dict {{ param }} created successfully",
+    "sys_dict.updated": "Dict {{ param }} updated successfully",
+    "sys_dict.deleted": "Dict {{ param }} deleted successfully",
+    "sys_dict.delete.question": "Are you sure you want to delete Dict {{ id }}? ",
+    "sys_dict.detail.title": "Dict",
+    "sys_dict.pid": "Pid",
+    "sys_dict.label": "Label",
+    "sys_dict.value": "Value",
+    "sys_dict.sort": "Sort",
+    "sys_dict.type": "Type",
+    "sys_dict.description": "Description",
+    "sys_dict.disabled": "Disabled"
+}

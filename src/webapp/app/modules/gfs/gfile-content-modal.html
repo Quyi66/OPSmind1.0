@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.path}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+
+<div class="modal-body">
+    <gfs-gfile-content path="$ctrl.path" repo-type="$ctrl.repoType" repo="$ctrl.repo" save-filename="$ctrl.saveFilename" options="{showExtraInfo:true}" class="block"></gfs-gfile-content>
+</div>

@@ -1,0 +1,25 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light bg-light">
+        <div class="nav-item">
+            <button class="btn btn-primary btn-sm cac-title-button-l"
+                    uaa-has-permission="cac:*:*"
+                    ng-click="cacRuleListCtrlVm.views.addRule()"><i class="fa fa-plus m-r-xs"></i> {{'cac.rule.create' | translate}}
+            </button>
+        </div>
+        <div class="nav-item ms-auto">
+            <botton id="uploadRuleExcel" type="file" ngf-select
+                    ngf-change="cacRuleListCtrlVm.views.uploadRuleExcel($file)"
+                    class="btn btn-default btn-sm">
+                <i class="fa fa-upload"></i> {{'common.entity.action.import' | translate}}
+            </botton>
+            <a href="#" ng-click="cacRuleListCtrlVm.views.exportRules($event)">
+                <button class="btn btn-default btn-sm">
+                    <i class="fa fa-download"></i> {{'common.entity.action.export' | translate}}
+                </button>
+            </a>
+        </div>
+    </nav>
+    <div class="table-responsive bg-white w-full wrapper">
+        <table id="cacRuleTable" class="rule-table table opx-table"></table>
+    </div>
+</div>

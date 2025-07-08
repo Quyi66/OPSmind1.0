@@ -1,0 +1,291 @@
+@import "src/webapp/content/scss/config";
+
+$jao-shadow-opacity: .75;
+$jao-breath-begin-color: transparent;
+$jao-breath-begin-size: 0;
+$jao-breath-end-color: rgba($primary, $jao-shadow-opacity);
+$jao-breath-end-size: .25rem;
+$jao_playbook_node_margin: 2rem;
+
+jao-job-result-view {
+  position: relative;
+  display: block;
+  height: 100%;
+
+  > .tab-container {
+    > .tab-content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+// A icon indicates the run status
+.jao-jobrun-status-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  border-radius: 50% !important;
+  padding: 0;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  font-size: 0.75rem;
+  vertical-align: middle;
+
+  &.status-running {
+    background-color: $primary;
+    animation: ani-scale 2s infinite;
+  }
+
+  &.status-completed {
+    background-color: $success;
+
+    &:before {
+      @include opx-fa-icon('\f00c');
+    }
+  }
+
+  &.status-interrupted {
+    background-color: $dark;
+
+    &:before {
+      @include opx-fa-icon('\f256');
+    }
+  }
+
+  &.status-error {
+    background-color: $warning;
+
+    &:before {
+      @include opx-fa-icon('\f12a');
+    }
+  }
+
+  &.status-failed {
+    background-color: $danger;
+
+    &:before {
+      @include opx-fa-icon('\f00d');
+    }
+  }
+
+  &.status-waiting {
+    background-color: $gray-600;
+
+    &:before {
+      @include opx-fa-icon('\f52c');
+    }
+  }
+}
+
+.jao-jobrun-status-btn {
+  &.status-running.btn {
+    &.disabled, &:disabled {
+      background-color: $gray-500;
+      border-color: $gray-500;
+      color: white;
+      opacity: 1;
+      filter: grayscale(0);
+    }
+  }
+
+  &.ani-outlined {
+    &.status-running {
+      animation: ani-glow-primary 2s infinite;
+      box-shadow: 0 0 0 $jao-breath-end-size rgba($primary, $jao-shadow-opacity);
+    }
+
+    &.status-completed {
+      box-shadow: 0 0 0 $jao-breath-end-size rgba($success, $jao-shadow-opacity);
+    }
+
+    &.status-error {
+      box-shadow: 0 0 0 $jao-breath-end-size rgba($warning, $jao-shadow-opacity);
+    }
+
+    &.status-failed {
+      box-shadow: 0 0 0 $jao-breath-end-size rgba($danger, $jao-shadow-opacity);
+    }
+
+    &.status-interrupted {
+      box-shadow: 0 0 0 $jao-breath-end-size rgba($dark, $jao-shadow-opacity);
+    }
+  }
+}
+
+
+@keyframes ani-scale {
+  0% {
+    transform: scale(.4);
+  }
+  50% {
+    transform: scale(.8);
+  }
+  100% {
+    transform: scale(.4);
+  }
+}
+
+@mixin op-ani-glow($color-name) {
+  @keyframes ani-glow-#{$color-name} {
+    0% {
+      box-shadow: 0 0 0 $jao-breath-begin-size transparent;
+    }
+    50% {
+      box-shadow: 0 0 0 $jao-breath-end-size theme-color($color-name);
+    }
+    100% {
+      box-shadow: 0 0 0 $jao-breath-begin-size transparent;
+    }
+  }
+}
+
+@include op-ani-glow('primary');
+@include op-ani-glow('success');
+@include op-ani-glow('warning');
+@include op-ani-glow('danger');
+
+//------------------------------------------------------------------------------
+// Playbook diagram
+//------------------------------------------------------------------------------
+
+.long-arrow {
+  height: 3px;
+  width: 30px;
+  background: $gray-400;
+  margin: 0 auto;
+  position: relative;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 15px;
+    display: block;
+    background: $gray-400;
+  }
+
+  &:before {
+    right: -3px;
+    bottom: -4px;
+    transform: rotate(-45deg);
+  }
+
+  &:after {
+    right: -3px;
+    top: -4px;
+    transform: rotate(45deg);
+  }
+}
+
+.op-flowchart-nodelist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.op-flowchart-node {
+  margin-right: $jao_playbook_node_margin;
+  position: relative;
+  margin-bottom: 0.5rem;
+
+  .op-flowchart-shape-arrow {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+  }
+
+  &:last-child .op-flowchart-shape-arrow {
+    //display: none;
+  }
+
+  //&.node-task:not(:last-child):after {
+  //  content: ' ';
+  //  display: inline-block;
+  //  position: absolute;
+  //  top: 50%;
+  //  width: 2rem;
+  //  border: 1px solid red;
+  //  height: 2px;
+  //  right: -$jao_playbook_node_margin;
+  //}
+  .op-flowchart-node-detail {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    padding: .5rem;
+    top: 2.5rem;
+    border: 1px solid $gray-200;
+    background-color: white;
+    font-family: $font-family-monospace;
+    white-space: pre;
+    font-size: 85%;
+  }
+
+  &.detail-expanded {
+    > .card-header {
+      background-color: $op-highlight-bg !important;
+    }
+
+    > .op-flowchart-node-detail {
+      display: block;
+      //@include box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+    }
+  }
+
+  &.node-type-task {
+    max-width: 12em;
+
+    > .card-header {
+      background-color: $gray-100;
+    }
+  }
+
+  &.node-type-taskgroup {
+    border-style: dashed;
+  }
+
+  &.node-type-play {
+    border: 0;
+
+    > .card-header {
+      color: $primary;
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+// Process Modeler
+//------------------------------------------------------------------------------
+.jao-pmd-canvas {
+  .jao-pmd-node-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+  }
+
+  .jao-pmd-task-node.card {
+    width: 16rem;
+    min-width: 16rem;
+    height: 8rem;
+    margin: 1rem 2rem;
+    user-select: none;
+    border-color: rgba($black, .25);
+    // To make node above .leader-line
+    z-index: 1;
+
+    &.highlight {
+      //TODO: make it a utility
+      background-color: shift-color($primary, $alert-bg-scale);
+      animation: ani-glow-primary 2s infinite;
+    }
+  }
+
+  .jao-pmd-task-placeholder {
+    border: 1px dotted $primary;
+    //TODO: make it a utility
+    background-color: shift-color($primary, $alert-bg-scale);
+  }
+}

@@ -1,0 +1,13 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'adm.content.upd_tags' | translate}}</div>
+        <div class="ms-auto" uaa-has-permission="adm:edit:*">
+            <button class="btn btn-outline-primary" ui-sref="app.ssc.config.tag.new">
+                <span class="fa fa-plus"></span> <span>{{'adm.content.add_tag' | translate}} </span>
+            </button>
+        </div>
+    </nav>
+    <div class="card-body">
+        <opx-datatable table-config="tableConfig"/>
+    </div>
+</div>

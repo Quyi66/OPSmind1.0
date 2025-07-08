@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand navbar-light bg-light b-b">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb bg-transparent my-0">
+            <li class="breadcrumb-item active">
+                <span data-translate="sys_businessModule.home.title">Business Module Management</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper" uaa-has-permission="sysadmin:module:*">
+
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title">
+                <span>模块列表</span>
+                <span class="pull-right m-t-n-xs">
+                    <button class="btn btn-default" ui-sref="businessModule.new">
+                        <span class="fa fa-plus"></span> <span data-translate="sys_businessModule.home.createLabel">Create a new Business Module</span>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="business-module-table table table-striped table-hover"></table>
+            </div>
+        </div>
+
+    </div>
+</div>

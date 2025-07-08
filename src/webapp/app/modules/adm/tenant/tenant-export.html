@@ -1,0 +1,16 @@
+<form ng-submit="$export.doExport()">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'adm.content.export_page' | translate}}</h4>
+    </div>
+    <div class="modal-body">
+        <div style="width: 470px;">
+            <div id="tenantConfigExportTree" style="height: 400px;"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn btn-default" type="button" ng-click="$export.cancelImport()">{{'common.action.cancel'|translate}}</button>
+            <button class="btn btn-primary" type="submit" uaa-has-permission="sysadmin:tenant:*" >{{'adm.content.start_export' | translate}}</button>
+        </div>
+    </div>
+</form>

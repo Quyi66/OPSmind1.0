@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'gfs.modal.jgit_management' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.close()"></button>
+</div>
+<div class="modal-body op-smartform">
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.jgit_info' | translate}}</label>
+        <div class="form-control-wrapper">
+            <op-code-editor the-model="$ctrl.jgitInfo" options="{syntax:'json'}"></op-code-editor>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="$ctrl.resetJGit()">
+        <i class="fa fa-undo-alt">&nbsp;{{'gfs.modal.jgit_reset' | translate}}</i>
+    </button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.fixJGit()">
+        <i class="fa fa-tools">&nbsp;{{'common.action.repair' | translate}}</i>
+    </button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.refreshJGit()"><i
+            class="fa fa-sync-alt">&nbsp;{{'common.action.refresh' | translate}}</i></button>
+</div>

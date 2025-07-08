@@ -1,0 +1,27 @@
+<fieldset>
+    <legend>{{'jao.job.process.title' | translate}}</legend>
+    <jao-process-modeler process-model="$ctrl.jobConfig.processModel"
+                         register-modeler="$ctrl.registerDesigner($modeler)"
+                         options="{readonly:!$ctrl.isEditMode,canvasCss:$ctrl.isEditMode?'bg-secondary':'bg-light'}"
+                         style="height:600px; display: block" class="mb-3"></jao-process-modeler>
+</fieldset>
+<fieldset ng-disabled="!$ctrl.isEditMode">
+    <legend>{{'jao.job.process.run_settings' | translate}}</legend>
+    <div class="form-group">
+        <label class="control-label" op-help-info="{{'jao.job.process.callback_info' | translate}}">{{'jao.job.process.callback' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input class="form-control" ng-model="$ctrl.jobConfig.callback">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label"
+               op-help-info="{{'jao.job.process.timeout_info' | translate}}">{{'jao.job.process.timeout' | translate}}</label>
+        <div class="form-control-wrapper">
+            <div class="input-group w-sm">
+                <input type="number" ng-model="$ctrl.jobConfig.taskTimeout" class="form-control" min="-1"
+                       step="1">
+                <div class="input-group-append"><span class="input-group-text">{{'common.term.second' | translate}}</span></div>
+            </div>
+        </div>
+    </div>
+</fieldset>

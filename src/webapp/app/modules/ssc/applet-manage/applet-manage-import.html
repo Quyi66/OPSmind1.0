@@ -1,0 +1,40 @@
+<form ng-submit="$ctrl.doImport()">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'ssc.applet.manage.import' | translate}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" >
+            <label class="control-label pr-2">{{'ssc.applet.manage.import.select' | translate}}</label>
+            <select ng-model="$ctrl.importType" class="form-select op-w-auto " style="width: 35%; display: inline !important;">
+                <option value="mod">{{'ssc.applet.manage.import.select.mod' | translate}}</option>
+                <option value="del">{{'ssc.applet.manage.import.select.init' | translate}}</option>
+            </select>
+        </div>
+
+        <div class="form-group" style="padding-top: 15px;padding-bottom: 10px">
+            <button type="button" class="btn btn-outline-primary" udp-file-browser
+                    ng-model="$ctrl.selectedFile"
+                    on-change="$ctrl.preUpload">
+                <i class="fa fa-folder-open-o"></i> {{'adm.content.select_import_file' | translate}}
+            </button>
+            <strong>{{$ctrl.selectedFile.name}}</strong>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div id="appletTree" ng-show="appletDisplay" style="min-height: 200px;"></div>
+            </div>
+            <div class="col-6">
+                <div id="scriptsTree" ng-show="scriptsDisplay" style="min-height: 200px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn btn-default" type="button" ng-click="$ctrl.cancelImport()">
+                {{'common.action.cancel' | translate}}
+            </button>
+            <button class="btn btn-primary" type="submit"> {{'common.action.import' | translate}}</button>
+        </div>
+    </div>
+</form>

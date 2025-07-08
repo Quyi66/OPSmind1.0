@@ -1,0 +1,59 @@
+
+.uwidget.uwtype-card {
+  display: inline-block;
+
+  .udp-card {
+    align-items: center;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    //background-color: #fff;
+    padding: 8px;
+
+    .udp-card-image {
+      img {
+        //width: 96px;
+      }
+    }
+
+    .udp-card-text {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      > div {
+        margin-bottom: 8px;
+      }
+
+      h4, p {
+        margin: 0;
+      }
+    }
+  }
+}
+
+// For fancy number
+.udp-fancy-number {
+  .digit {
+    margin-right: 4px;
+    padding: 0 4px;
+    display: inline-block;
+    color: white;
+  }
+
+  &.primary .digit {
+    background-color: $primary;
+  }
+
+  &.success .digit {
+    background-color: $success;
+  }
+
+  &.warning .digit {
+    background-color: $warning;
+  }
+
+  &.danger .digit {
+    background-color: $danger;
+  }
+}

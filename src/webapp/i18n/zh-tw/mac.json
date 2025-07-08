@@ -1,0 +1,16 @@
+{
+  "mac": {
+    "title": "訊息中心",
+    "action": {
+      "handle": "立即處理",
+      "view": "檢視詳情",
+      "ignore": "忽略",
+      "more": "獲取更多"
+    },
+    "message": {
+      "no_more": "暫無更多",
+      "no_news": "暫無新訊息",
+      "view_history": "檢視歷史訊息"
+    }
+  }
+}

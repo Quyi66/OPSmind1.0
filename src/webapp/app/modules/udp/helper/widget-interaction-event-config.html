@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="wiec_name">{{'udp.wc.intx.event.name' | translate}}</label>
+    <div class="col-sm-4">
+        <input id="wiec_name" type="text" class="form-control" ng-model="$ctrl.props.name">
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="wiec_scope">{{'udp.wc.intx.event.scope' | translate}}</label>
+    <div class="col-sm-4">
+        <select id="wiec_scope" class="form-select" ng-model="$ctrl.props.scope">
+            <option value="">{{'udp.wc.intx.event.scope_page' | translate}}</option>
+            <option value="root">{{'udp.wc.intx.event.scope_root' | translate}}</option>
+        </select>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb bg-transparent my-auto">
+            <li class="breadcrumb-item">
+                <a ui-sref="role" data-translate="sys_role.home.title">Role Management</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <span data-translate="sys_role.detail.title">Role Detail</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <span data-translate="sys_role.detail.title">Role Detail</span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <uib-tabset class="tab-container" active="1">
+                <uib-tab index="1" heading="基本信息">
+                    <div>
+                        <dl class="dl-horizontal jh-entity-details">
+                            <dt><span data-translate="sys_role.name">Name</span></dt>
+                            <dd>
+                                <span>{{vm.role.name}}</span>
+                            </dd>
+                            <!--<dt><span data-translate="sys_role.visibility">Visibility</span></dt>-->
+                            <!--<dd>-->
+                            <!--<span>{{vm.role.visibility}}</span>-->
+                            <!--</dd>-->
+                            <dt><span data-translate="sys_role.description">Description</span></dt>
+                            <dd>
+                                <span>{{vm.role.description}}</span>
+                            </dd>
+                        </dl>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="角色权限">
+                    <div ng-show="vm.role.permissions != null && vm.role.permissions.length > 0">
+                        <span class="badge bg-secondary m-r-sm" ng-repeat="permission in vm.role.permissions">{{permission.domain}}:{{permission.action}}:{{permission.target}}</span>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" ui-sref="role" class="btn btn-default">
+                <span class="fa fa-arrow-left"></span>&nbsp;<span data-translate="common.action.back"> Back</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'cmd.index.log' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="pointer-events: auto;"
+            ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cm-host-dialog">
+    <div>
+        <opx-datatable table-config="$ctrl.tableConfig"></opx-datatable>
+    </div>
+</div>
+<div class="modal-footer text-right">
+    <button type="reset" class="btn btn-default" ng-click="$ctrl.cancel()">{{'common.entity.action.back' | translate}}</button>
+</div>

@@ -1,0 +1,240 @@
+{
+  "dts": {
+    "datasource": {
+      "title": "数据源",
+      "action": {
+        "create_datasource": "新建数据源"
+      },
+      "program_error": "程序错误",
+      "operation_must_logged": "此操作必须登录后才能执行",
+      "dataset": "数据集",
+      "query_failures": "出现连续的查询失败",
+      "query_dataset": "查询数据集",
+      "times_error": "时报错",
+      "dataset_query_error": "数据集查询错误",
+      "not_supported": "暂不支持",
+      "file_type_datasource": "文件类型数据源",
+      "only": "唯一",
+      "data_file": "数据文件",
+      "support_format": "支持格式",
+      "please_save_dataset": "请先保存数据源",
+      "success": "成功",
+      "test_success": "测试成功",
+      "fail": "失败",
+      "data_service": "数据服务",
+      "edit_data_service": "编辑数据源",
+      "test_result": "测试结果",
+      "choose_dataset_type": "选择数据源类型",
+      "other": "其他",
+      "fill_corresponding": "填写相应的",
+      "connect": "连接"
+    },
+    "dataset": {
+      "title": "数据集",
+      "desc": "通过SQL、Web Service等方式从数据源读取数据",
+      "action": {
+        "create": "新建数据集",
+        "move_dataset": "移动数据集",
+        "move_dataset_confirm": "将选定的<strong>{{recordNum}}</strong>个数据集移动到应用 <strong class=\"text-primary\">{{applet}}</strong>？",
+        "delete": "删除数据集",
+        "delete_confirm": "删除数据集 <strong class=\"text-primary\">{{name}}</strong>？",
+        "edit": "编辑数据集"
+      },
+      "attr": {
+        "name": "名称",
+        "code": "代码",
+        "applet": "所属应用",
+        "datasource": "数据源"
+      },
+      "edit": {
+        "basic": "基本设置",
+        "code": "代码",
+        "code_helpinfo": "标识数据集的唯一代码，保存之后不可更改",
+        "code_placeholder": "只允许字母A-Z，下滑线，数字",
+        "name": "名称",
+        "description": "说明",
+        "datasource": "数据源",
+        "query": "查询条件",
+        "test": "测试",
+        "test_run": "执行测试查询",
+        "test_result": "测试查询结果",
+        "options": "选项",
+        "parse_param": "获取参数",
+        "parse_param_helpinfo": "解析SQL中的参数，在参数列表中列出",
+        "add_param": "添加参数",
+        "parse_field": "获取结果字段",
+        "field_desc": "字段说明",
+        "field_desc_helpinfo": "为结果字段添加中文说明，便于理解",
+        "field_name": "字段名",
+        "field_cnname": "中文名",
+        "choose_dataset": "请选择数据源类型"
+      },
+      "jdbc": {
+        "proc": "这是存储过程",
+        "sql": "查询SQL",
+        "params": "查询参数"
+      },
+      "param": {
+        "name": "参数",
+        "type": "类型",
+        "default_value": "测试值",
+        "desc": "说明",
+        "required": "必需"
+      }
+    },
+    "datatype": {
+      "string": "字符串",
+      "number": "数值",
+      "date": "日期",
+      "array": "数组"
+    },
+    "status": {
+      "fail": "失败",
+      "point": "提示",
+      "not_get_data": "获取不到数据"
+    },
+    "operate": {
+      "delete": "删除"
+    },
+    "list": {
+      "database": "数据库",
+      "multiple_datasets": "多数据集",
+      "document": "文件",
+      "server": "服务器",
+      "api": "接口",
+      "please_input": "请输入",
+      "copy_success": "复制成功",
+      "sort": "排序",
+      "which_page": "第几页",
+      "page_count": "每页条数",
+      "request_param": "请求参数",
+      "search": "搜索",
+      "filter": "过滤",
+      "sort_column": "排序列",
+      "page_number": "分页页码",
+      "query_param": "查询参数",
+      "publish_failed": "发布失败",
+      "publish_success": "发布成功",
+      "no_datasource_defined": "还没有定义任何数据源"
+    },
+    "commons": {
+      "search": "查询",
+      "get_params": "获取参数",
+      "search_params": "查询参数",
+      "params": "参数",
+      "add_params": "添加参数",
+      "type": "类型",
+      "test_value": "测试值",
+      "desc": "说明",
+      "required": "必需",
+      "string": "字符串",
+      "number": "数值",
+      "date": "日期",
+      "array": "数组",
+      "field_desc": "字段说明",
+      "field": "字段",
+      "get_field": "获取字段",
+      "chinese": "中文",
+      "save": "保存",
+      "only": "唯一",
+      "file_type_datasource": "文件类型数据源",
+      "path": "路径",
+      "support_format": "支持格式",
+      "data_source": "数据源",
+      "name": "名称",
+      "edit": "编辑",
+      "delete": "删除",
+      "confirm_delete_datasource": "确认删除数据源",
+      "delete_success": "删除成功",
+      "add": "新建"
+    },
+    "query": {
+      "search_statement": "查询语句"
+    },
+    "join": {
+      "match_mode": "匹配模式",
+      "datasets": "数据集集合",
+      "relation_field": "关联字段",
+      "multiple_datasets": "多数据集",
+      "only": "唯一"
+    },
+    "rest": {
+      "coding_format": "编码格式",
+      "data_convert": "数据转换",
+      "convert_to": "转换为",
+      "get_assign_result": "是否取指定结果",
+      "array_result": "数组结果",
+      "name_group_dataset": "名称仅用于数据集的分组",
+      "interface_access_address": "接口访问地址",
+      "access_mode": "访问模式",
+      "interface_access_parameters": "接口访问参数"
+    },
+    "es": {
+      "only": "唯一",
+      "address": "地址",
+      "test_statement": "测试语句",
+      "test_connectivity": "测试连通性"
+    },
+    "jdbc": {
+      "type_datasource": "类型数据源",
+      "name": "名称",
+      "only": "唯一",
+      "not_allow_chinese": "不允许中文",
+      "space": "空格",
+      "drive": "驱动",
+      "sample": "样例",
+      "verification_statement": "验证语句",
+      "username": "用户名",
+      "password": "密码",
+      "principal": "负责人",
+      "desc": "说明",
+      "test_connectivity": "测试连通性"
+    },
+    "cache": {
+      "realtime_transaction_volume": "实时交易量",
+      "cache": "缓存",
+      "group_conditions": "分组条件",
+      "support": "支持",
+      "parameter_grouping_condition": "分组条件的参数值",
+      "group_count": "对应每组数量",
+      "several_groups": "几组",
+      "filed_name": "字段名称"
+    },
+    "mock": {
+      "indicator_data": "指标数据",
+      "time_series_data": "时序数据",
+      "datasource": "数据源",
+      "to_request": "要请求的",
+      "request_from_browser": "由于是从浏览器直接发起请求",
+      "this": "此",
+      "must_support_cross": "必须支持跨域访问",
+      "request_method": "请求的方法",
+      "default_is": "默认是",
+      "format_represents_result_set": "格式表示结果集里的一个样例元素",
+      "parse_result_filed": "用以解析结果数据包含哪些字段",
+      "if_field_not_set": "如果没有设置此字段",
+      "automatically_called_once": "会自动调用一次",
+      "parse_result": "以解析结果",
+      "extract": "提取",
+      "return_path_result": "返回结果的哪个路径作为结果",
+      "start_time": "开始时间",
+      "end_time": "结束时间",
+      "interval_seconds": "采样间隔秒数",
+      "default": "默认",
+      "least": "最小",
+      "for": "为",
+      "from": "从",
+      "counted_sampling_points": "算起的采样点数",
+      "if_set_then": "如果设定则",
+      "and": "和",
+      "dot_work": "不起作用",
+      "separated_keywords": "逗号分隔的关键字",
+      "input_parameters_returned": "输入的参数原样返回",
+      "verify_parameters": "用以验证能够接受参数",
+      "number_of_data_return": "返回的数据个数"
+    },
+    "approve": {
+      "message": "Excel后台导出完成，点击查看详情"
+    }
+  }
+}

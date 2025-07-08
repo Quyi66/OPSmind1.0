@@ -1,0 +1,58 @@
+<nav class="navbar navbar-light bg-light b-b">
+    <div class="navbar-header" style="width: 100%; padding-left: 20px;">
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="param" data-translate="sys_param.home.title">Param Management</a>
+            </li>
+            <li>
+                <span data-translate="sys_param.detail.title">Param Detail</span>
+            </li>
+        </ol>
+    </div>
+
+</nav>
+<div class="wrapper">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <span data-translate="sys_param.detail.title">Param Detail</span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <uib-tabset class="tab-container row wrapper" active="1">
+                <uib-tab index="1" heading="基本信息">
+                    <div class="col-md-12">
+                        <dl class="dl-horizontal jh-entity-details">
+                            <dt><span>ID</span></dt>
+                            <dd>
+                                <span>{{vm.param.id}}</span>
+                            </dd>
+                            <dt><span data-translate="sys_param.domain">Domain</span></dt>
+                            <dd>
+                                <span>{{vm.param.domain}}</span>
+                            </dd>
+                            <dt><span data-translate="sys_param.name">Name</span></dt>
+                            <dd>
+                                <span>{{vm.param.name}}</span>
+                            </dd>
+                            <dt><span data-translate="sys_param.value">value</span></dt>
+                            <dd>
+                                <div id="jsoneditor" style="width: 400px; height: 400px;" ng-if="vm.param.useJsonEditor"></div>
+                                <textarea rows="10" cols="200" readonly ng-if="!vm.param.useJsonEditor">{{vm.param.value}}</textarea>
+                            </dd>
+                            <dt><span data-translate="sys_param.description">Description</span></dt>
+                            <dd>
+                                <span>{{vm.param.description}}</span>
+                            </dd>
+                        </dl>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" ui-sref="param" class="btn btn-default opx-btn-cancel">
+                {{'entity.action.back'|translate}}
+            </button>
+        </div>
+    </div>
+</div>

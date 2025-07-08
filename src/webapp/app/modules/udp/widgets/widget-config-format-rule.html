@@ -1,0 +1,20 @@
+<div class="form-inline">
+    <button type="button" class="btn btn-outline-primary" ng-click="$ctrl.addRule()"><i
+            class="fa fa-plus"></i> {{'udp.wc.condfmt.add_rule'|translate}}
+    </button>
+</div>
+<div ng-transclude></div>
+<div class="list-group m-t" ng-show="$ctrl.rules.length>0" ng-sortable="{handle: '.js-sort-handle'}">
+    <div ng-repeat="rule in $ctrl.rules track by $index" class="list-group-item d-flex align-items-center p-3"
+         ng-click="$ctrl.selectRule($index)" ng-class="{'highlight':$ctrl.current.index===$index}">
+        <i class="fa fa-bars op-drag-handle text-muted me-2 js-sort-handle fa-fw"></i>
+        <input type="text" ng-model="rule.expr" class="form-control code flex-fill"
+               title="{{'udp.wc.condfmt.rule_expr'|translate}}">
+        <udp-theme-selector ng-if="$ctrl.formats.theme" the-model="rule" class="ms-2"
+                            customizable="true"
+                            title="{{'udp.wc.condfmt.rule_color'|translate}}"></udp-theme-selector>
+        <udp-css-editor ng-if="$ctrl.formats.css" class="ms-2"
+                        the-model="rule.css" options="{style:'dropdown',groups:'text,color,bgcolor'}"></udp-css-editor>
+        <span ng-click="$ctrl.removeRule($index)" class="ms-2"><i class="fa fa-times text-muted"></i></span>
+    </div>
+</div>

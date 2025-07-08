@@ -1,0 +1,32 @@
+<div class="op-smartform form-vertical op-bold-label col-sm-12 ms-1">
+  <div class="form-group" ng-repeat="param in $ctrl.paramsFake track by $index" >
+    <udp-input  ng-if="param.type !== 'host' && !param.dcSelector"
+                datatype="string" 
+                label="{{ param.label || param.name || Object.entries(param)[0] }}" 
+                showlabel="true" 
+                desc="{{ (param.description || param.desc).startsWith('uw-prop=') ? '' : (param.description || param.desc) }}"
+                showdesc="true" 
+                ng-model="$ctrl.theModel[param.name]" 
+                the-config="{rows: 1}"
+                ismultiple="{{ param.uWidgetProp ? param.uWidgetProp.ismultiple : false }}"
+                sourcedef="{{ param.uWidgetProp ? param.uWidgetProp.sourcedef : '' }}"
+                control="{{ param.uWidgetProp ? param.uWidgetProp.control : (param.type === 'string_pwd' ? 'password' : 'textarea') }}"
+                readonly="{{ $ctrl.readonly }}">
+    </udp-input>
+
+    <label ng-if=" param.dcSelector ">{{ param.label || param.name || Object.entries(param)[0] || param.dcSelector.name | translate }}</label>
+    <dc-selector  options="param.dcSelector"
+                  ng-if=" param.dcSelector "
+                  the-model="$ctrl.theModel[param.name]"
+                  readonly="$ctrl.readonly">
+    </dc-selector>
+
+    <label ng-if=" param.type === 'host' ">Hosts</label>
+    <acm-device-selector  view-as="btndlg" ci-types="'[auto]'"
+                          ng-if=" param.type === 'host' "
+                          the-model="$ctrl.theModel[param.name]"
+                          readonly="$ctrl.readonly">
+    </acm-device-selector>
+
+  </div>
+</div>

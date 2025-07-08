@@ -1,0 +1,79 @@
+/**! ColResize 2.5.1
+ * ©2017 Steven Masala
+ */
+
+.dt-colresizable-table-wrapper {
+  //modify by joker ad 20180429
+  //overflow: auto;
+  overflow-y: hidden;
+  overflow-y: -webkit-paged-x;
+  //modify by joker ad 20180429
+
+  width: 100%;
+  position: relative;
+  &.dt-colresizable-with-scroller {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .dt-colresizable {
+    //modify by joker ad 20180429
+    margin-left: -10px;
+    //modify by joker ad 20180429
+
+    height: 0;
+    position: relative;
+    top: 0;
+    z-index: 999;
+    .dataTable {
+      table-layout: fixed;
+    }
+    .dt-colresizable-col {
+      display: block;
+      position: absolute;
+      box-sizing: border-box;
+      width: 4px;
+      cursor: ew-resize;
+      z-index: 1000;
+      //background-color: rgba(122, 122, 122, 0.1);
+      &:hover {
+        background-color: rgba(122, 122, 122, 0.3);
+      }
+      &:last-child {
+        // LEO@20180201: Prevent h-scroll.
+        // `display:none` will cause last column unable resize
+        //display: none;
+        //width: 0;
+      }
+    }
+  }
+}
+
+.dt-colresizable-scroller-wrapper {
+  position: absolute;
+  overflow-y: auto;
+  overflow-x: hidden; /** FF **/
+  width: 100%;
+}
+
+.dt-colresizable-scroller-content-wrapper {
+  width: 100%;
+}
+
+.dt-colresizable-scroller-content {
+  width: 100%;
+}
+
+.dt-colresizable-with-scroller {
+  table thead,
+  table tbody tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  table tbody {
+    overflow-y: auto;
+    display: block;
+  }
+}

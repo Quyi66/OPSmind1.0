@@ -1,0 +1,16 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">Custom Function</div>
+    </nav>
+    <div class="opx-flex-fill p-3">
+        <div class="card">
+            <div class="card-header">$$.toTableHtml</div>
+            <div class="card-body">
+                <div ng-repeat="html in customfuncVm.htmls track by $index">
+                    <strong>{{html.title}}</strong>
+                    <div ng-bind-html="html.html"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

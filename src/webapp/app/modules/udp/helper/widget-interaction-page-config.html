@@ -1,0 +1,53 @@
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.intx.page.title' | translate}}</label>
+    <div class="form-control-wrapper op-combo">
+        <udp-page-selector page-id="$ctrl.props.pageId" on-change=""
+                           options="{converter:{kinds:'js,str',varTypes:'field,pageparam,global'}}"
+                           class="op-w-full"></udp-page-selector>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label"
+           op-help-info="{{'udp.wc.intx.page.target_helpinfo'|translate}}">{{'udp.wc.intx.page.target' | translate}}</label>
+    <div class="form-control-wrapper op-combo">
+        <select class="form-select op-w-sm" ng-model="$ctrl.props.target"
+                ng-options="target.key as target.title for target in $ctrl.targets">
+        </select>
+        <div ng-if="$ctrl.props.target==='_dialog'" class="d-flex align-items-center ms-5">
+            <label class="control-label">{{'udp.wc.intx.page.size' | translate}}</label>
+            <select class="form-select op-w-sm" ng-model="$ctrl.props.size">
+                <option value="">{{'udp.wc.intx.page.size_default' | translate}}</option>
+                <option value="sm">{{'udp.wc.intx.page.size_sm' | translate}}</option>
+                <option value="md">{{'udp.wc.intx.page.size_md' | translate}}</option>
+                <option value="lg">{{'udp.wc.intx.page.size_lg' | translate}}</option>
+                <option value="xl">{{'udp.wc.intx.page.size_xl' | translate}}</option>
+<!--                <option value="full">{{'udp.wc.intx.page.size_full' | translate}}</option>-->
+            </select>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.intx.page.param' | translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-page-params-config class="op-w-full" params-json="$ctrl.props.params"
+                                options="{converter:{kinds:'str,js',varTypes:'pageparam,global'}}"></udp-page-params-config>
+        <div ng-transclude></div>
+    </div>
+</div>
+<div ng-if="$ctrl.props.target==='_dialog'">
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.intx.page.result' | translate}}</label>
+        <div class="form-control-wrapper">
+            <select ng-model="$ctrl.props.result" class="form-select op-w-sm">
+                <option value="">{{'udp.wc.intx.page.result_default' | translate}}</option>
+                <option value="merge">{{'udp.wc.intx.page.result_merge' | translate}}</option>
+                <option value="trigger">{{'udp.wc.intx.event.title' | translate}}</option>
+            </select>
+        </div>
+    </div>
+
+    <udp-widget-interaction-event-config 
+            ng-if="$ctrl.props.result === 'trigger'"
+            props="$ctrl.props.dialog_event"></udp-widget-interaction-event-config>
+</div>
+

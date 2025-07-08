@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span>{{'jao.flow.host_output' | translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <p>IP </p>
+    <p>
+        <span class="badge bg-secondary">{{$ctrl.hostKey}}</span>
+    </p>
+    <p>{{'jao.common.output' | translate}}</p>
+    <div class="opx-layout-hflex" style="height: 100%; min-width: 400px;">
+        <div class="opx-flex-fill px-3">
+            <div class="opx-flex-fill scroll-y list-group">
+                <div ng-repeat="task in $ctrl.hostResult track by $index"
+                     class="list-group-item p-3">
+                    <h4><span class="badge bg-{{$ctrl.statusDefs[task.status].color}}">{{task.status}}</span>
+                        {{task.task}}</h4>
+                    <pre class="bg-light p-3" ng-if="task.output">{{task.output}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<pre class="cac-job-result-pre">{{'asdfasd'}}</pre>-->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="$ctrl.cancel()">{{'common.entity.action.close' | translate}}</button>
+</div>
+

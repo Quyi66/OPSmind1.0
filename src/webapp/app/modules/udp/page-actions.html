@@ -1,0 +1,26 @@
+<div class="dropdown" ng-if="$ctrl.display.enableActions">
+    <button class="btn opx-btn-icon" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+    <ul class="dropdown-menu dropdown-menu-end" ng-if="$root.$global.viewMode==='mobile'">
+        <!--        <li class="dropdown-header">{{$ctrl.pageInfo.title}}</li>-->
+        <li><a ng-click="$ctrl.sharePage($ctrl.pageInfo.id,'zhdyh')"><i class="fa fa-share-alt"></i>
+            {{'udp.page.actions.share' | translate}}</a></li>
+    </ul>
+    <ul class="dropdown-menu dropdown-menu-end" ng-if="$root.$global.viewMode!=='mobile'">
+        <li ng-if="$ctrl.display.enableManagement && $ctrl.hasEditPermission($ctrl.pageInfo.action)">
+            <a ui-sref="app.appman.page.edit({pageId:$ctrl.pageInfo.id})" title="{{$ctrl.pageInfo.id}}"><i
+                    class="fa fa-pencil"></i> {{'udp.page.actions.modify'|translate}}</a>
+        </li>
+        <li ng-if="$ctrl.display.enableExport" class="divider"></li>
+        <li ng-if="$ctrl.display.enableExport"><a ng-click="$ctrl.exportPage('pdf')"><i
+                class="fa fa-file-pdf-o"></i>
+            {{'udp.page.actions.export_pdf' | translate}}</a></li>
+        <li ng-if="$ctrl.display.enableExport"><a ng-click="$ctrl.exportPage('word')"><i
+                class="fa fa-file-word-o"></i>
+            {{'udp.page.actions.export_word' | translate}}</a></li>
+        <li ng-if="$ctrl.display.enableExport"><a ng-click="$ctrl.exportPage('excel')"><i
+                class="fa fa-file-excel-o"></i> {{'udp.page.actions.export_excel' | translate}} {{'udp.designer.action.export_excel'|translate}}</a></li>
+        <li ng-if="$ctrl.display.enableExport"><a ng-click="$ctrl.exportPage('html')"><i
+                class="fa fa-file-text"></i>
+            {{'udp.page.actions.export_html' | translate}}</a></li>
+    </ul>
+</div>

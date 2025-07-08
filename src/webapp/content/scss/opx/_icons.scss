@@ -1,0 +1,31 @@
+$op_icons: (
+        cmd:(icon:"f120"),
+        acm:(icon:"f233"),
+        udp:(icon:"f5c3"),
+        udp-page:(icon:"f5c3"),
+        dts:(icon:"f78a"),
+        dts-dataset:(icon:"f78a"),
+        jao:(icon:"f927"),
+        jao-job:(icon:"f927"),
+        gfs:(icon:"f64b"),
+        gfs-script:(icon:"f387"),
+        gfs-staticfs:(icon:"f187"),
+        applet:(icon:"f867")
+);
+
+//https://stackoverflow.com/questions/30421570/sass-unicode-escape-is-not-preserved-in-css-file
+@function unicode($str) {
+  @return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"")
+}
+
+@each $name, $def in $op_icons {
+  .fa-oplus-#{$name} {
+    &:before {
+      content: unicode(map-get($def, "icon"));
+    }
+
+    &.fad:after {
+      content: unicode("10"+map-get($def, "icon"));
+    }
+  }
+}

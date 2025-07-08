@@ -1,0 +1,20 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a ui-sref="app.appman.datamodel">{{'jao.index.data_model' | translate}}</a></li>
+                <li class="breadcrumb-item active opx-navbar-title">
+                    {{ ({view: 'jao.dc.view', create: 'jao.dc.create', edit: 'jao.dc.edit'}[$ctrl.viewMode]) | translate }}
+                </li>
+            </ol>
+        </div>
+        <div class="navbar-nav ms-auto" ng-if="$ctrl.viewMode==='view'" uaa-has-permission="jao:edit:*">
+            <button class="btn btn-outline-primary" ui-sref="app.appman.datamodel.edit({id:$ctrl.id})"><i
+                    class="fa fa-pencil"></i> {{'jao.dc.edit' | translate}}
+            </button>
+        </div>
+    </nav>
+    <div class="opx-flex-fill p-3">
+        <jao-ci-model-editor dc-code="$ctrl.id" view-mode="$ctrl.viewMode">
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label class="control-label">{{'udp.w.flow.process.select-process' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="input-group">
+            <select op-select="{allowClear: true, placeholder: ('flow.process.select_placeholder' | translate)}"
+                    style="width:calc(100% - 2rem)" 
+                    class="form-select" 
+                    ng-model="$ctrl.theModel"
+                    ng-disabled="$ctrl.disabled"
+                    ng-options="process.id as process.processName for process in $ctrl.processList">
+                <option></option>
+            </select>
+        </div>
+    </div>
+</div>
+

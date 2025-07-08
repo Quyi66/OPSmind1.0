@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'gfs.modal.sync_script' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.close()"></button>
+</div>
+<div class="modal-body op-smartform">
+    <p class="help-block ">
+        <strong>{{'gfs.basic.sync_help_info' | translate}}</strong>
+    </p>
+    <div class="form-group" style="margin-top: 1rem;">
+        <label op-help-info="gfs.modal.sync_script_path_info"
+               class="control-label">{{'gfs.modal.sync_script_path' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control code" ng-model="$ctrl.fileInfo.path">
+        </div>
+    </div>
+    <div class="form-group op-align-horizontal" ng-if="$ctrl.fileInfo.path">
+        <label class="control-label w-auto text-left">{{'gfs.basic.sync_file_options' | translate}}</label>
+        <div class="form-control-wrapper">
+            <div class="opx-check-group opx-primary">
+                <input type="radio" name="unzip" ng-model="$ctrl.fileInfo.syncMode" value="ExtractToDir"
+                       id="gem_unzip_opt2">
+                <label for="gem_unzip_opt2">{{'gfs.basic.sync_subdirectory_extract_to_dir' | translate}}</label>
+                <input type="radio" name="unzip"
+                       ng-model="$ctrl.fileInfo.syncMode"
+                       value="ExtractWithoutDir" id="gem_unzip_opt1"><label
+                    for="gem_unzip_opt1">{{'gfs.basic.sync_subdirectory_extract_without_dir' | translate}}</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary opx-btn-ok" type="button" ng-click="$ctrl.saveSyncClose()"
+            ng-disabled="!$ctrl.fileInfo.path || !$ctrl.fileInfo.syncMode">{{'gfs.common.sure' | translate}}
+    </button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.close()">{{'gfs.common.cancel' | translate}}</button>
+</div>

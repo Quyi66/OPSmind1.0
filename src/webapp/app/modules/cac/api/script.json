@@ -1,0 +1,55 @@
+{
+  "totalRecords": 3,
+  "aaData": [
+    {
+      "createdAt": "2018-04-08T06:53:59.018Z",
+      "createdBy": "string",
+      "description": "1",
+      "id": 1,
+      "scriptFormat": "string",
+      "scriptName": "string",
+      "scriptParams": "string",
+      "scriptType": "string"
+    },
+    {
+      "createdAt": "2018-04-08T06:53:59.018Z",
+      "createdBy": "string",
+      "description": "2",
+      "id": 2,
+      "scriptFormat": "string",
+      "scriptName": "string",
+      "scriptParams": "string",
+      "scriptType": "string"
+    },
+    {
+      "createdAt": "2018-04-08T06:53:59.018Z",
+      "createdBy": "string",
+      "description": "3",
+      "id": 3,
+      "scriptFormat": "string",
+      "scriptName": "string",
+      "scriptParams": "string",
+      "scriptType": "string"
+    },
+    {
+      "createdAt": "2018-04-08T06:53:59.018Z",
+      "createdBy": "string",
+      "description": "4",
+      "id": 4,
+      "scriptFormat": "string",
+      "scriptName": "string",
+      "scriptParams": "string",
+      "scriptType": "string"
+    },
+    {
+      "createdAt": "2018-04-08T06:53:59.018Z",
+      "createdBy": "string",
+      "description": "5",
+      "id": 5,
+      "scriptFormat": "string",
+      "scriptName": "string",
+      "scriptParams": "string",
+      "scriptType": "string"
+    }
+  ]
+}

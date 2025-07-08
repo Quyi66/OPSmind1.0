@@ -1,0 +1,27 @@
+<div ng-if="$ctrl.theModel.length>0">
+    <ul class="list list-unstyled list-inline mb-3" ng-sortable ng-model="$ctrl.theModel">
+        <!-- It seems adding class to li will make ui-sortable unstable -->
+        <li ng-repeat="param in $ctrl.theModel track by $index" class="me-2 mb-2"
+            title="{{$ctrl.paramsConfig[param.name].$title}}">
+            <span class="badge op-text-normal p-3"
+                  ng-class="$ctrl.current.name === param.name?'badge-dark':'badge-secondary'">
+                        <a ng-click="$ctrl.current=param">{{ param.name }}<span
+                                ng-if="$ctrl.paramsConfig[param.name].required===true"> *</span></a>
+                    </span></li>
+    </ul>
+    <div ng-if="$ctrl.current">
+        <uinput-setting-basic props="$ctrl.current"
+                              options="{disableBinding:false, disableName:true}"></uinput-setting-basic>
+        <div class="form-group">
+            <label class="control-label">{{'udp.param.other'|translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" ng-model="$ctrl.current.keepvis" id="pcc_keepvis"><label for="pcc_keepvis" op-help-info="{{'udp.param.keepvis'|translate}}">{{'udp.param.keepvis_desc'|translate}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.theModel.length===0">
+    <p class="text-center">{{'udp.param.params_not_supported'|translate}}</p>
+</div>

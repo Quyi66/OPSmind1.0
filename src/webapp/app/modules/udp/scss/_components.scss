@@ -1,0 +1,67 @@
+.udp-css-chip {
+  margin-bottom: .25rem;
+  border: 1px solid $gray-300;
+  padding: 0 .25rem;
+  font-size: smaller;
+  display: inline-block;
+  line-height: 1.5rem;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    outline: solid 2px $gray-300;
+  }
+
+  &.selected {
+    &:after {
+      font-family: "Font Awesome 5 Pro";
+      content: '\f00c';
+      display: block;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      font-size: 10px;
+      line-height: .875rem;
+      width: .875rem;
+      height: .875rem;
+      color: white;
+      text-align: center;
+      background-color: $primary;
+      border-radius: 8px;
+    }
+  }
+}
+
+$preview-margin-color: #F9CC9D;
+$preview-padding-color: #C3D08B;
+.css-preview-mt-3 {
+  border-top: 4px solid $preview-margin-color;
+}
+
+.css-preview-ml-3 {
+  border-left: 4px solid $preview-margin-color;
+}
+
+.css-preview-mr-3 {
+  border-right: 4px solid $preview-margin-color;
+}
+
+.css-preview-mb-3 {
+  border-bottom: 4px solid $preview-margin-color;
+}
+
+.css-preview-m-3 {
+  border: 4px solid $preview-margin-color;
+}
+
+.css-preview-p-3 {
+  box-shadow: inset 4px 0 0 $preview-padding-color, inset -4px 0 0 $preview-padding-color, inset 0 4px 0 $preview-padding-color, inset 0 -4px 0 $preview-padding-color;
+}
+
+.css-preview-op-pl {
+  box-shadow: inset 4px 0 0 $preview-padding-color;
+}
+
+.css-preview-op-pr {
+  box-shadow: inset -4px 0 0 $preview-padding-color;
+}

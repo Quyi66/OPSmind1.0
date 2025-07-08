@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand navbar-light bg-light b-b">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb bg-transparent my-0">
+            <li class="breadcrumb-item active">
+                <span data-translate="sys_param.home.title">Parameter Configuration</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+
+<div class="wrapper" ng-if="paramVm.isOplusAdminUI" uaa-has-permission="sysadmin:param:*">
+    <div class="card-body">
+        <opx-datatable table-config="tableConfig">
+            <button class="btn btn-default" ui-sref="param.new">
+                <span class="fa fa-plus"></span> <span data-translate="sys_param.home.createLabel">Create a new Param</span>
+            </button>
+        </opx-datatable>
+    </div>
+</div>
+<div ng-if="!paramVm.isOplusAdminUI">
+    <h3 class="text-danger text-center mt-5">请到管理系统(oplus-admin)访问此功能</h3>
+</div>

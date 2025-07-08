@@ -1,0 +1,22 @@
+{
+  "id": "t3Xle0",
+  "tenant_id": "ff808081727a047f017292d0d72e0004",
+  "code": null,
+  "folder_id": null,
+  "title": "【CAC】巡检结果概览-3.0",
+  "html": "<div widget-layout=\"layout-flex\" id=\"w-16395562797011\" uw-type=\"layout-flex\">\n    <div widget-layout=\"layout-flex\" id=\"w-15871236103733\" uw-type=\"layout-flex\">\n        <uwidget uw-type=\"kpi\" id=\"w-16394773012001\" uw-props=\"{&quot;_v&quot;:&quot;1.2&quot;,&quot;dataset&quot;:{&quot;_type&quot;:&quot;datax&quot;,&quot;datax&quot;:{&quot;metaparams&quot;:{},&quot;expr&quot;:&quot;js:$$.qdata(\\&quot;CAC_GET_STATISTICS_THREE\\&quot;,{checkLogId:${check_log_id}},[],null,\\nfunction(data){\\n  var result=[];  \\n  var defs={\\n    'OK':{title:\\&quot;#{cac.profile.inspection_pass}\\&quot;,icon:'fa-check',linkPage:'tyo3sF',pageParam:'OK',order:1},\\n    'FAILED':{title:'#{cac.profile.inspection_failed}',icon:'fa-times',linkPage:'tyo3sF',pageParam:'FAILED',order:2},\\n    'CHECK':{title:'#{cac.profile.manual_inspection}',icon:'fa-users',linkPage:'tyo3sF',pageParam:'CHECK',order:3},\\n    'UNREACHABLE':{title:'#{cac.profile.no_data}',icon:'fa-exclamation-triangle',linkPage:'tyo3sF',pageParam:'UNREACHABLE',order:4}\\n  };\\n  data.records.forEach(function(rec){\\n    var def=defs[rec.name];\\n    if (def){\\n      result.push({name:def.title, value:rec.value, icon: def.icon,\\n                   linkPage:def.linkPage,pageParam:def.pageParam,\\n                   _order:def.order});\\n    }\\n  });\\n  return _.orderBy(result,['_order','asc']);\\n})&quot;,&quot;metafields&quot;:&quot;yaml:_order: 4\\nicon: fa-exclamation-triangle\\nlinkPage: tyo3sF\\nname: '#{cac.profile.no_data}'\\npageParam: UNREACHABLE\\nvalue: 0\\n&quot;},&quot;params&quot;:[{&quot;name&quot;:&quot;check_log_id&quot;,&quot;initval&quot;:&quot;8a888086830953b8018309564a9d0000&quot;}],&quot;paramView&quot;:&quot;hidden&quot;,&quot;id&quot;:&quot;JAO_LIST_RUN_LOGS&quot;},&quot;interaction&quot;:{&quot;actions&quot;:[&quot;page&quot;],&quot;page&quot;:{&quot;params&quot;:&quot;{\\&quot;status\\&quot;:\\&quot;${pageParam||''}\\&quot;,\\&quot;check_log_id\\&quot;:\\&quot;${@.check_log_id}\\&quot;}&quot;,&quot;pageId&quot;:&quot;${linkPage||''}&quot;,&quot;target&quot;:&quot;_dialog&quot;}},&quot;display&quot;:{&quot;rules&quot;:[{&quot;expr&quot;:&quot;${name}==='检查通过' &amp;&amp; ${value} > 0&quot;,&quot;theme&quot;:&quot;success&quot;},{&quot;expr&quot;:&quot;${name}==='检查失败' &amp;&amp; ${value} > 0&quot;,&quot;theme&quot;:&quot;danger&quot;},{&quot;expr&quot;:&quot;${name}==='人工检查' &amp;&amp; ${value} > 0&quot;,&quot;theme&quot;:&quot;info&quot;},{&quot;expr&quot;:&quot;${name}==='缺数据' &amp;&amp; ${value} > 0&quot;,&quot;theme&quot;:&quot;warning&quot;}],&quot;theme&quot;:&quot;secondary&quot;,&quot;rowNum&quot;:4,&quot;css&quot;:&quot;&quot;},&quot;fields&quot;:{&quot;text&quot;:{&quot;field&quot;:&quot;name&quot;},&quot;title&quot;:{&quot;field&quot;:&quot;value&quot;},&quot;icon&quot;:{&quot;field&quot;:&quot;icon&quot;}}}\"></uwidget>\n    </div>\n    <div widget-layout=\"layout-flex\" id=\"w-16394780360393\" uw-type=\"layout-flex\">\n        <uwidget uw-type=\"nav\" id=\"w-16394780327692\" uw-props=\"{&quot;items&quot;:[{&quot;link&quot;:{&quot;params&quot;:&quot;{}&quot;,&quot;pageId&quot;:&quot;bjlpW5&quot;},&quot;key&quot;:&quot;&quot;,&quot;title&quot;:&quot;#{cac.profile.machine_profile}&quot;},{&quot;title&quot;:&quot;#{cac.profile.inspection_profile}&quot;,&quot;link&quot;:{&quot;pageId&quot;:&quot;Y3rqYY&quot;},&quot;key&quot;:&quot;&quot;}],&quot;display&quot;:{&quot;style&quot;:&quot;mdc-op&quot;}}\"></uwidget>\n    </div>\n</div>",
+  "setting": {},
+  "starred": null,
+  "tags": null,
+  "status": null,
+  "home": "0",
+  "description": null,
+  "created_by": "admin",
+  "created_name": "管理员",
+  "created_at": "2022-09-07T18:33:04",
+  "modified_by": "admin",
+  "modified_name": "管理員",
+  "modified_at": "2022-09-08T10:12:45",
+  "access_control": null,
+  "applet_code": "cac3"
+}

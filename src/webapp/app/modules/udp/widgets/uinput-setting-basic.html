@@ -1,0 +1,65 @@
+<div class="form-group">
+    <label class="control-label" for="usb_label">{{'udp.uinput.attrs.label'|translate}}</label>
+
+    <div class="form-control-wrapper">
+        <div class="input-group op-w-sm">
+                <div class="input-group-text"><input type="checkbox" ng-model="$ctrl.props.showlabel"
+                                                     title="{{'udp.uinput.attrs.label_enable_helpinfo'|translate}}"></div>
+            <input class="form-control" ng-model="$ctrl.props.label" id="usb_label" title="{{'udp.uinput.attrs.label_helpinfo'|translate}}"
+                   ng-disabled="!$ctrl.props.showlabel">
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label" for="usb_label">{{'udp.uinput.attrs.desc'|translate}}</label>
+
+    <div class="form-control-wrapper">
+        <div class="input-group">
+                <div class="input-group-text">
+                    <input type="checkbox" ng-model="$ctrl.props.showdesc" id="usb_showdesc"
+                           title="{{'udp.uinput.attrs.desc_enable_helpinfo'|translate}}"><label for="usb_showdesc"></label>
+                </div>
+            <input type="text" class="form-control" ng-model="$ctrl.props.desc" title="{{'udp.uinput.attrs.desc_helpinfo'|translate}}"
+                   ng-disabled="!$ctrl.props.showdesc">
+        </div>
+    </div>
+</div>
+<div class="form-group" ng-if="!$ctrl.options.disableName">
+    <label class="control-label" for="usb_name"
+           op-help-info="{{'udp.uinput.attrs.name_helpinfo'|translate}}">{{'udp.uinput.attrs.name'|translate}}</label>
+
+    <div class="form-control-wrapper">
+        <input class="form-control op-w-sm" ng-model="$ctrl.props.name" id="usb_name">
+    </div>
+</div>
+<div class="form-group" ng-if="!$ctrl.options.disableBinding">
+    <label class="control-label" for="usb_binding">{{'udp.uinput.attrs.binding'|translate}}</label>
+
+    <div class="form-control-wrapper">
+        <input class="form-control op-w-sm" ng-model="$ctrl.props.binding" id="usb_binding">
+    </div>
+</div>
+<hr>
+<uinput-setting-datacontrol ng-model="$ctrl.props"></uinput-setting-datacontrol>
+<div class="form-group">
+    <label class="control-label"
+           op-help-info="{{'udp.uinput.attrs.etovalue_helpinfo'|translate}}">{{'udp.uinput.attrs.etovalue'|translate}}</label>
+
+    <div class="form-control-wrapper">
+        <input class="form-control" ng-model="$ctrl.props.etovalue"/>
+    </div>
+</div>
+<hr>
+<div class="form-group">
+    <label class="control-label" for="f_accesskey">{{'udp.uinput.attrs.accesskey'|translate}}</label>
+
+    <div class="form-control-wrapper">
+        <input class="form-control op-w-sm" ng-model="$ctrl.props.accesskey" id="f_accesskey">
+    </div>
+    <div class="form-control-wrapper">
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" ng-model="$ctrl.props.readonly" id="usb_readonly"><label
+                for="usb_readonly">{{'udp.uinput.attrs.readonly'|translate}}</label>
+        </div>
+    </div>
+</div>

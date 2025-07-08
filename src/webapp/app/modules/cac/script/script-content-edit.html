@@ -1,0 +1,30 @@
+
+<div class="modal-header">
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="cacScriptEditVm.views.cancel()">
+        &times;
+    </button>
+    <h4 class="modal-title">
+        {{cacScriptEditVm.views.scriptName}}
+    </h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea ui-codemirror="cacScriptEditVm.views.option" class="cac-script-codemirror"
+                          ng-model="cacScriptEditVm.views.scriptContent" ng-disabled="disabled"></textarea>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cacScriptEditVm.views.cancel()">{{'common.entity.action.cancel' | translate}}
+    </button>
+    <!--<button type="button" class="btn btn-success" ng-click="cacScriptEditVm.views.saveScriptContent()">
+        保存
+    </button>-->
+</div>
+
+

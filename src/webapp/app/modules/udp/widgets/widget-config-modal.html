@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h4 class="modal-title"> #{udp.wc.title}</h4>
+    <span class="badge bg-secondary ms-auto"><i class="font-weight-normal uw-icon uwtype-{{::uwType}}"></i> {{'udp.w.'+uwType+'.name'|translate}}</span>
+</div>
+<div class="modal-body form-horizontal op-smartform opx-overflow-shadow">
+    <form data-ng-include="uwidgetConfigTemplate" class="h-100">
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-click="save()" class="btn btn-primary opx-btn-ok">{{'common.action.ok'|translate}}</button>
+    <button type="button" class="btn btn-default opx-btn-cancel" ng-click="cancel($event)">{{'common.action.cancel'|translate}}</button>
+</div>

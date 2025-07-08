@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ff8080817c11d1cc017c11d321480a94",
+    "groupInfo": "/GD2/TowerOplus/VM50",
+    "extra_param": [
+      {
+        "name": "ciType",
+        "data": "linux"
+      }
+    ],
+    "teamInfo": [
+      {
+        "teamName": "管理員團隊",
+        "permission": [
+          "r"
+        ]
+      },
+      {
+        "teamName": "测试团队",
+        "permission": [
+          "r"
+        ]
+      }
+    ]
+  }
+]

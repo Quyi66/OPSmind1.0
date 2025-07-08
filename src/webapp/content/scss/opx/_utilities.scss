@@ -1,0 +1,273 @@
+// Oplus specific styles
+//======================================
+//.opx-nowrap {
+//  &.form-inline {
+//    flex-wrap: nowrap !important;
+//  }
+//}
+
+// Put children elements at vertical and horizontal center
+.opx-align-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.opx-font-strikethrough {
+  text-decoration: line-through;
+}
+
+.op-input-highlight-not-empty:not(:placeholder-shown) {
+  background-color: $op-highlight-bg
+}
+
+// Normal size label
+//--------------------------------------
+.op-text-normal {
+  font-size: $font-size-base;
+  font-weight: normal;
+  //border-radius: 0.25rem;
+}
+
+// Features and icons
+//--------------------------------------
+
+.op-jumbo-link {
+  text-align: center;
+  display: inline-block;
+
+  .op-jumbo-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 8rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    color: $primary;
+    background-color: rgba(128, 128, 128, 0.075) !important;
+
+    img {
+      width: 5rem;
+    }
+
+    i.fa {
+      font-size: 5rem;
+    }
+  }
+
+  .op-jumbo-link-icon.small {
+    width: 4rem;
+    height: 4rem;
+
+    i.fa {
+      font-size: 2.5rem;
+    }
+  }
+
+  &:hover .op-jumbo-link-icon {
+    color: $white !important;
+    background-color: $op-highlight-bg !important;
+    transition: background-color 500ms ease-out;
+  }
+}
+
+.op-blank-slate {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  //20200210: Use opacity will cause transparent inner popover
+  //opacity: 0.75;
+  .op-blank-slate-icon {
+    opacity: 0.25;
+    margin-bottom: 8px;
+  }
+
+  //.op-blank-slate-body {
+  //  vertical-align: middle;
+  //  overflow: auto;
+  //}
+}
+
+.op-fa-8x {
+  font-size: 8 * $font-size-base;
+}
+
+.op-drag-handle {
+  cursor: move;
+}
+
+.op-cursor-hand {
+  cursor: pointer;
+}
+
+.op-cursor-default {
+  cursor: default;
+}
+
+.op-pl {
+  padding-left: .5rem !important;
+}
+
+.op-pr {
+  padding-right: .5rem !important;
+}
+
+.umd-attr-item {
+  &.active {
+    background-color: $op-highlight-bg !important;
+  }
+
+  &:hover {
+    //border: 1px dashed $gray-300;
+    border-radius: $border-radius;
+    background-color: $gray-100;
+  }
+}
+
+// Old bs3 utilities
+
+.pull-right {
+  float: right !important;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+//.hide {
+//  display: none !important;
+//}
+
+//.show {
+  //display: block !important;
+//}
+
+.invisible {
+  visibility: hidden;
+}
+
+// Hide from screenreaders and browsers
+//
+// Credit: HTML5 Boilerplate
+
+.hidden {
+  display: none !important;
+}
+
+.opx-overflow-shadow {
+  //https://dabblet.com/gist/2462915
+  //20200905: NOT work when element has background
+  background: /* Shadow covers */
+          linear-gradient(white 30%, rgba(255, 255, 255, 0)),
+          linear-gradient(rgba(255, 255, 255, 0), white 70%) 0 100%,
+            /* Shadows */
+          radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
+          radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+  /* Opera doesn't support this in the shorthand */
+  background-attachment: local, local, scroll, scroll;
+}
+
+.opx-no-border.list-group {
+  .list-group-item {
+    border-top: 0;
+    border-bottom: 0;
+  }
+}
+
+.opx-no-background.list-group {
+  .list-group-item:not(.active):not(:hover) {
+    background-color: unset;
+  }
+}
+
+//.no-radius {
+//  border-radius: 0;
+//}
+
+//.block {
+//  display: block;
+//}
+
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.w-sm {
+  width: 150px;
+}
+
+.w-md {
+  width: 240px;
+}
+
+.w-lg {
+  width: 280px;
+}
+
+.w-xl {
+  width: 320px;
+}
+
+//.w-xxl {
+//  width: 360px;
+//}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.scroll-x, .scroll-y {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  //@include overflowy-shadow;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+//show item when hover on it's parent
+.op-hover-trigger {
+  .op-hover-to-show {
+    visibility: hidden;
+  }
+
+  .op-hover-display-block {
+    display: none;
+  }
+
+  &:hover {
+    .op-hover-to-show {
+      visibility: visible;
+    }
+
+    //20201029: limit to direct children
+    & > .op-hover-display-block {
+      display: block !important;
+    }
+  }
+}
+

@@ -1,0 +1,58 @@
+// Core variables and mixins
+@import "src/webapp/content/scss/config";
+//@import "../../../../content/scss/bs4/mixins";
+//@import "src/webapp/content/scss/bs3-archived/normalize";
+//@import "src/webapp/content/scss/bs4/list-group";
+//@import "src/webapp/content/scss/bs4/tables-modified";
+@import "src/webapp/content/scss/opx/tables";
+//@import "src/webapp/content/scss/bs4/alert";
+//@import "../../../../content/scss/bs3/labels";
+//@import "src/webapp/content/scss/bs4/nav";
+@import "src/webapp/content/scss/opx/colors";
+//@import "../../../../content/scss/bs3/panels";
+//@import "../../../../content/scss/bs3/grid";
+@import "src/webapp/content/scss/opx/grids";
+@import "src/webapp/content/scss/opx/utilities";
+@import "uwtype-kpi";
+@import "widget-form";
+@import "uwtype-input";
+
+body, button {
+  //font-family: "Open Sans", "Microsoft Yahei Light", "Microsoft Yahei", Helvetica, Arial, sans-serif;
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eee;
+}
+
+table {
+  background-color: transparent;
+}
+
+th {
+  text-align: left;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}

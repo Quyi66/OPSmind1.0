@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'gfs.modal.add_script' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.close()"></button>
+</div>
+<div class="modal-body op-smartform">
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.script_name' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control code" ng-model="$ctrl.fileInfo.name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'gfs.modal.script_content' | translate}}</label>
+        <div class="form-control-wrapper">
+            <op-code-editor the-model="$ctrl.fileInfo.scriptContent" options="{syntax:'shell'}"
+                            style="height:20rem;"></op-code-editor>
+        </div>
+    </div>
+    <div class="form-group" ng-if="$ctrl.repoType.toLowerCase()==='git'">
+        <label class="control-label"
+               op-help-info="gfs.modal.param_config_info">{{'gfs.modal.param_config' | translate}}</label>
+        <div class="form-control-wrapper">
+            <input type="text" class="form-control code" ng-model="$ctrl.fileInfo.config">
+        </div>
+    </div>
+    <div class="form-group" ng-if="$ctrl.repoType.toLowerCase()==='git'">
+        <label class="control-label" op-help-info="gfs.modal.desc_info">{{'gfs.modal.desc' | translate}}</label>
+        <div class="form-control-wrapper">
+            <textarea class="form-control" ng-model="$ctrl.fileInfo.description" rows="3"
+                      style="resize: none;"></textarea>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary opx-btn-ok" type="button" ng-click="$ctrl.saveClose()"
+            ng-disabled="!$ctrl.fileInfo.name || !$ctrl.fileInfo.scriptContent">{{'gfs.common.sure' | translate}}
+    </button>
+    <button class="btn btn-default opx-btn-cancel" type="button" ng-click="$ctrl.close()">{{'gfs.common.cancel' | translate}}</button>
+</div>

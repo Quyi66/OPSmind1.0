@@ -1,0 +1,101 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">Popup and Dropdown</div>
+    </nav>
+    <div>
+        <div style="height:15rem;overflow-y:auto">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Modal Title
+                    </h4>
+                </div>
+                <div class="modal-body bg-secondary" style="height:10rem; overflow-y:auto;">
+                    <div class="alert alert-info">
+                        Modal body is fixed height and scrollable. Want to make dropdown menu fully visible.
+                    </div>
+                    <button type="button" class="btn btn-info" data-bs-toggle="popover" title="Popover title"
+                            data-bs-content="And here's some amazing content. It's very engaging. Right?" opx-dropdown>
+                        Bootstrap5 Popover
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                data-bs-auto-close="false">
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="p-3" style="width:10rem;height:12rem;">
+                                Dropdown Content
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                data-bs-auto-close="false">
+                            Dropdown2
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="p-3" style="width:10rem;height:12rem;">
+                                Dropdown Content
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                Other element
+            </div>
+        </div>
+
+    </div>
+    <div class="opx-flex-fill p-3">
+        <div class="modal-content" style="height:12rem;">
+            <div class="modal-header"><h4 class="modal-title">Dropdown</h4></div>
+            <div class="modal-body bg-secondary">
+                <div class="alert alert-info">
+                    Height of the modal body is limited.
+                    The dropdown should not cause scroll and always visible.
+                </div>
+                <div>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
+                            Bootstrap3
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu">
+                            <div ng-include="'dropdown-content.html'"></div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown">
+                            Bootstrap5
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu">
+                            <div ng-include="'dropdown-content.html'"></div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown"
+                                opx-popdrop>Opx Dropdown
+                        </button>
+                        <div class="dropdown-menu">
+                            <div ng-include="'dropdown-content.html'"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-info" data-bs-toggle="popover" title="Popover title"
+                            data-bs-content="And here's some amazing content. It's very engaging. Right?" opx-popdrop>
+                        Bootstrap5 Popover
+                    </button>
+                </div>
+                <div>
+                    <span op-help-info="Use bootstrap5 popover and dropdown. <code>opx-popdrop</code> to handle popover and dropdown.{{'common.action.ok'|translate}}">Help</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="dropdown-content.html">
+    <div class="p-3 bg-info" style="width:10rem;height:12rem;">Dropdown content</div>
+</script>
+

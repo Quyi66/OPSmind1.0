@@ -1,0 +1,72 @@
+<div class="opx-layout-hflex cac-job-index">
+    <div class="opx-sidebar border-right bg-light">
+        <nav class="opx-sidebar-header border-bottom">
+            <input type="text" class="form-control xtemplate-filter"
+                   ng-model="cacCheckLogCtrlVm.views.name">
+            <div class="dropdown">
+                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-sort" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item"
+                       ng-click="cacCheckLogCtrlVm.views.changeTemplateOrder('-name')">{{'cac.job.order.name_down' |
+                        translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacCheckLogCtrlVm.views.templateOrder == '-name'"></span>
+                    </a>
+                    <a class="dropdown-item"
+                       ng-click="cacCheckLogCtrlVm.views.changeTemplateOrder('name')">{{'cac.job.order.name_up' |
+                        translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacCheckLogCtrlVm.views.templateOrder == 'name'"></span>
+                    </a>
+                    <a class="dropdown-item"
+                       ng-click="cacCheckLogCtrlVm.views.changeTemplateOrder('executedAt')">{{'cac.job.order.execute_at_up'
+                        | translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacCheckLogCtrlVm.views.templateOrder == 'executedAt'"></span>
+                    </a>
+                    <a class="dropdown-item"
+                       ng-click="cacCheckLogCtrlVm.views.changeTemplateOrder('-executedAt')">{{'cac.job.order.execute_at_down'
+                        | translate}}
+                        <span style="float: right;padding-top: 4px" class="fa fa-check"
+                              ng-if="cacCheckLogCtrlVm.views.templateOrder == '-executedAt'"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <div class="opx-flex-fill scroll-y">
+            <div class="opx-treenav">
+                <a class="opx-treenav-item"
+                   ui-sref-active="active"
+                   ui-sref="app.cac3.check_log.list({templateId:''})"
+                   ng-click="cacCheckLogCtrlVm.views.clearFilter()">
+                    <i class="fa fa-list-alt"></i>
+                    {{'common.term.all' | translate}}
+                </a>
+                <a class="opx-treenav-item"
+                   ui-sref="app.cac3.check_log.list({templateId:'inspection_all'})"
+                   ui-sref-active="active"
+                   ng-click="cacCheckLogCtrlVm.views.clearFilter()">
+                    <i class="fa fa-list-alt"></i>
+                    {{'cac3.title.patrolInspectionItems' | translate}}
+                </a>
+                <a class="opx-treenav-item"
+                   ng-repeat="item in cacCheckLogCtrlVm.views.templateList | filter:{name:cacCheckLogCtrlVm.views.name} | orderBy: cacCheckLogCtrlVm.views.templateOrder"
+                   ui-sref-active="active"
+                   ui-sref="app.cac3.check_log.list({templateId:'{{item.id}}'})">
+                    {{item.name}}
+                </a>
+            </div>
+            <div class="op-blank-slate"
+                 ng-if=cacCheckLogCtrlVm.views.templateList==null||cacCheckLogCtrlVm.views.templateList.length==0>
+                <div style="padding-top: 20px"><i class="fa fa-cog fa-spin"></i> {{'common.entity.loading' | translate}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-x scroll-y" ui-view="checkView" xxstyle="overflow: auto">
+
+    </div>
+</div>
+

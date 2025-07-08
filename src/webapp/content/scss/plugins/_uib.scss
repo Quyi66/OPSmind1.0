@@ -1,0 +1,20 @@
+// Customization for ui-bootstrap
+// https://angular-ui.github.io/bootstrap/
+// --------------------------------------------------
+.uib-datepicker {
+  .glyphicon {
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .glyphicon-chevron-left:before {
+    @include opx-fa-icon("\f053");
+  }
+  .glyphicon-chevron-right:before {
+    @include opx-fa-icon("\f054");
+  }
+}
+

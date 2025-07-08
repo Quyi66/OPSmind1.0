@@ -1,0 +1,124 @@
+<div class="opx-layout-hflex bg-white">
+    <div class="opx-sidebar opx-collapsible w-lg">
+        <!--折叠按钮、标题和搜索-->
+        <nav class="opx-sidebar-header opx-sidebar-header-fixed border-bottom">
+            <op-searchbox options="{autoExpand:true}" search-text="layoutVm.searchText" >
+                <span class="opx-sidebar-title">左右布局示例</span>
+            </op-searchbox>
+            <!--            <input type="text" class="form-control w-full opx-sidebar-search" placeholder="请输入搜索关键字">-->
+        </nav>
+        <div class="opx-sidebar-body">
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-light list-group-item-action"
+                   ng-repeat="link in layoutVm.links">
+                    <i class="fa fa-datasource-es"></i>
+                    <span class="ms-2 opx-sidebar-collapsed-hidden">{{link.label}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y wrapper">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Column</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <span>===============================================================================================================================*****************************************======================================================================================</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--示例代码开始-->
+        <div class="p-3">
+            <h1 class="">左右布局示例</h1>
+            <hr class="my-4">
+            <p>基本示例代码:</p>
+            <pre class="bg-light wrapper">
+                &lt;div class=&quot;opx-layout-hflex&quot;&gt;
+                    &lt;div&gt;
+                        左侧
+                    &lt;/div&gt;
+                    &lt;div class=&quot;opx-flex-fill&quot;&gt;
+                        右侧
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            </pre>
+            <p>最外层<code>opx-layout-hflex</code>的高度为父容器的100%。</p>
+            <p>页面可以划分多列,每一个<code>div</code>元素代表一列,列宽默认自适应其内容。通常你需要给其中一列添加<code>opx-flex-fill</code>类来让其占满剩余宽度。其它列设置固定宽度或者不做任何设置让其自适应内容
+            </p>
+            <p>每一列<code>div</code>在高度上撑满父容器，超高内容会被隐藏。你可通过添加工具类<code>scroll-y</code>实现上下滚动。</p>
+            <p>上下滚动示例代码:</p>
+            <pre class="bg-light wrapper">
+                &lt;div class=&quot;opx-layout-hflex&quot;&gt;
+                    &lt;div class=&quot;scroll-y&quot;&gt;
+                        左侧超高上下滚动
+                    &lt;/div&gt;
+                    &lt;div class=&quot;opx-flex-fill scroll-y&quot;&gt;
+                        右侧超高上下滚动
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            </pre>
+        </div>
+
+        <div class="p-3">
+            <h1 class="">左侧带导航菜单左右布局示例</h1>
+            <hr class="my-4">
+            <p>示例代码:</p>
+            <pre class="bg-light wrapper">
+                &lt;div class=&quot;opx-layout-hflex&quot;&gt;
+                   &lt;!--导航菜单作为最左列--&gt;
+                   &lt;div class=&quot;opx-sidebar opx-collapsible w-lg&quot;&gt;
+                        &lt;nav class=&quot;opx-sidebar-header opx-sidebar-header-fixed&quot;&gt;
+                            &lt;span class=&quot;opx-sidebar-title&quot;&gt;左右布局导航菜单示例&lt;/span&gt;
+                        &lt;/nav&gt;
+                        &lt;div class=&quot;opx-sidebar-body&quot;&gt;
+                            &lt;div class=&quot;list-group list-group-flush&quot;&gt;
+                                &lt;a class=&quot;list-group-item list-group-item-light list-group-item-action&quot; ng-repeat=&quot;link in layoutVm.links&quot;&gt;
+                                    &lt;span class=&quot;opx-sidebar-collapsed-show text-center&quot;&gt;&lt;i class=&quot;fa fa-datasource-es&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+                                    &lt;span class=&quot;opx-sidebar-expand-show&quot;&gt;{{link.label}}&lt;/span&gt;
+                                &lt;/a&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&quot;opx-flex-fill scroll-y&quot;&gt;
+                        右侧超高上下滚动
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            </pre>
+            <p><code>opx-sidebar</code>是导航菜单的父容器,它的高度默认撑满父容器。它下面有两个直接子元素<code>opx-sidebar-header</code>和<code>opx-sidebar-body</code>。
+            </p>
+            <p>
+                菜单支持折叠和展开，你只需要给<code>opx-sidebar</code>添加类<code>opx-collapsible</code>,框架会自动帮你生成折叠按钮。菜单处于展开状态，隐藏包含<code>opx-sidebar-expand-hidden</code>类的元素；菜单处于折叠状态隐藏包含<code>opx-sidebar-collapsed-hidden</code>类的元素。
+            </p>
+            <p>当<code>opx-sidebar</code>中内容高度大于100%时,它内部会出现纵向滚动条。可以通过给<code>opx-sidebar-header</code>添加<code>opx-sidebar-header-fixed</code>类来固定<code>opx-sidebar-header</code>使其不随其它内容一起滚动。
+            </p>
+            <p><code>opx-sidebar-header</code>通常会放置两种内容：标题或搜索框。这两个可以单独放置，也可以同时放置。上面的示例代码只有标题，只有搜索框的示例代码如下：</p>
+            <pre class="wrapper bg-light">
+                &lt;!--你需要自行监听搜索框内容变化来实现过滤效果--&gt;
+                &lt;nav class=&quot;opx-sidebar-header border-bottom&quot;&gt;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control w-full&quot; placeholder=&quot;请输入搜索关键字&quot;&gt;
+                &lt;/nav&gt;
+            </pre>
+            <br>
+            <p>两者同时存在的情况比较特殊，宽度不够用，显示效果也不好。所以框架会自动生成切换按钮来切换两者显示,默认展示标题。示例代码如下：</p>
+            <pre class="wrapper bg-light">
+                 &lt;nav class=&quot;opx-sidebar-header border-bottom&quot;&gt;
+                    &lt;span class=&quot;opx-sidebar-title&quot;&gt;左右布局示例&lt;/span&gt;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control w-full opx-sidebar-search&quot; placeholder=&quot;请输入搜索关键字&quot;&gt;
+                 &lt;/nav&gt;
+            </pre>
+        </div>
+        <!--        <div class="text-center wrapper" style="min-height: 800px;">-->
+        <!--            <p>超高内容 - 宽度自适应内容</p>-->
+        <!--        </div>-->
+        <!--        <p class="text-center wrapper">底部</p>-->
+        <!-- 示例代码结束-->
+    </div>
+</div>
+

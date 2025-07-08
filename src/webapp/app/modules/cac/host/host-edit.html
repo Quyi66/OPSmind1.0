@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <button type="button" class="btn-close" data-dismiss="modal" aria-="true"
+            ng-click="cacHostEditVm.views.cancel()">
+        &times;
+    </button>
+
+    <h4 class="modal-title">
+        {{cacHostEditVm.views.host.id == null ? ("cac.host.create" | translate) : ("cac.host.edit" | translate)}}
+    </h4>
+</div>
+<div class="modal-body">
+    <form name="addHostForm " class="form-horizontal" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'cac.host.name' | translate}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="cacHostEditVm.views.host.hostName" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">IP</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="cacHostEditVm.views.host.hostKey" required/>
+            </div>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-sm-2 control-label">主机用户</label>-->
+<!--            <div class="col-sm-10">-->
+<!--                <input type="text" class="form-control" ng-model="cacHostEditVm.views.host.hostUser"/>-->
+<!--            </div>-->
+<!--        </div>-->
+        <!--  <div class="form-group" ng-if="cacHostEditVm.views.host.id == null">
+            <label class="col-sm-2 control-label">用户密码</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="cacHostEditVm.views.host.hostPassword" required/>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'common.term.category' | translate}}</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="cacHostEditVm.views.host.category"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'common.entity.detail.description' | translate}} </label>
+            <div class="col-sm-10">
+                <textarea type="textarea" class="form-control" placeholder=""
+                          ng-model="cacHostEditVm.views.host.description" row="5"></textarea>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cacHostEditVm.views.cancel()">{{'common.entity.action.cancel' | translate}}
+    </button>
+    <button type="button" class="btn btn-success" ng-click="cacHostEditVm.views.save()"
+            ng-disabled="addHostForm.$invalid">{{'common.entity.action.save' | translate}}
+    </button>
+</div>
+
+

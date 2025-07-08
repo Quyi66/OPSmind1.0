@@ -1,0 +1,18 @@
+<div class="h-full">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'jao.messages.select_host' | translate}}</div>
+    </nav>
+
+    <div class="p-3">
+        <opx-datatable table-config="$ctrl.tableConfig"></opx-datatable>
+    </div>
+</div>
+
+<div class="modal-footer text-right">
+    <button type="submit" class="btn btn-primary" ng-click="$ctrl.confirm()">{{'common.entity.action.confirm' | translate}}</button>
+    <button type="reset" class="btn btn-default" ng-click="$ctrl.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+</div>
+
+
+
+

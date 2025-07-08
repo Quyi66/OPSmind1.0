@@ -1,0 +1,23 @@
+{
+  "sys_businessModule": {
+    "home": {
+      "title": "业务模块",
+      "createLabel": "添加模块",
+      "editLabel": "编辑模块"
+    },
+    "created": "业务模块 {{ param }} 创建成功",
+    "updated": "业务模块 {{ param }} 更新成功",
+    "deleted": "业务模块 {{ param }} 删除成功",
+    "delete": {
+      "question": "确定删除 业务模块 {{ name }} 吗？"
+    },
+    "detail": {
+      "title": "模块详情"
+    },
+    "name": "名称",
+    "code": "编码",
+    "description": "描述",
+    "permission": "权限配置",
+    "dataSql": "数据查询"
+  }
+}

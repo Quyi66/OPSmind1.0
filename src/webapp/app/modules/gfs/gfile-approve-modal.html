@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'gfs.modal.audit' | translate}} - {{$ctrl.file.path}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body op-smartform pt-0">
+
+    <gfs-file-change-status repo-type="$ctrl.file.repoType" file="$ctrl.file"
+                            after-change="$ctrl.afterChangeStatus"
+                            watch-refresh="$ctrl.refreshFileStatusMark"
+                            show-diff="true"
+                            class="js-inside-click px-5 py-3"
+                            style="min-width: 20rem;">
+
+    </gfs-file-change-status>
+</div>
+<!--<div class="modal-footer">-->
+<!--</div>-->

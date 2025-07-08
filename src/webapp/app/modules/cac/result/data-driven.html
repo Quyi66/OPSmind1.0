@@ -1,0 +1,567 @@
+<div class="container" id="container" style="height: 100%;">
+    <div id="D3svg" style="height: 100%;"></div>
+</div>
+
+<script>
+    var container;
+    var zoom;
+    var rootData;
+    var depthInfo;
+    var rootName; //根节点名称
+
+    jQuery(document).ready(function () {
+        var child = document.getElementById("D3svg");
+        child.innerHTML = '';
+        getData();
+    });
+
+    function getData() {
+        rootData = {
+            "downward": {
+                "direction": "downward",
+                "name": "origin",
+                "children": [{
+                    "name": "业务系统A",
+                    "amount": "100",
+                    "hasHumanholding": true,
+                    "hasChildren": true,
+                    "isExpand": true,
+                    "children": [{
+                        "name": "公司1-1",
+                        "hasHumanholding": false,
+                        "hasChildren": true,
+                        "amount": "100",
+                        "children": []
+                    },
+                        {
+                            "name": "公司1-2",
+                            "hasHumanholding": false,
+                            "hasChildren": true,
+                            "amount": "100",
+                            "children": []
+                        },
+                        {
+                            "name": "公司1-3测试数据测试长度",
+                            "hasHumanholding": false,
+                            "hasChildren": true,
+                            "amount": "100",
+                            "children": []
+                        }
+                    ]
+                },
+                    {
+                        "name": "业务系统B",
+                        "amount": "100",
+                        "hasHumanholding": true,
+                        "hasChildren": true,
+                        "isExpand": true,
+                        "children": [{
+                            "name": "公司2-1",
+                            "hasHumanholding": false,
+                            "hasChildren": true,
+                            "amount": "100",
+                            "children": []
+                        },
+                            {
+                                "name": "公司2-2",
+                                "hasHumanholding": false,
+                                "hasChildren": true,
+                                "amount": "100",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "业务系统C",
+                        "amount": "100",
+                        "hasHumanholding": true,
+                        "hasChildren": true,
+                        "isExpand": true,
+                        "children": [{
+                            "name": "公司3-1",
+                            "hasHumanholding": false,
+                            "hasChildren": true,
+                            "amount": "100",
+                            "children": []
+                        },
+                            {
+                                "name": "公司3-2",
+                                "hasHumanholding": false,
+                                "hasChildren": true,
+                                "amount": "100",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+        }
+        rootName = 'RHEL系统基础巡检';
+        drawing();
+    };
+    function drawing() {
+        var _this = this;
+        var rootRectWidth = 0; //根节点rect的宽度
+        var downwardLength = 0,
+            upwardLength = 0;
+        var forUpward = true
+
+        var treeChart = function (d3Object) {
+            this.d3 = d3Object;
+            this.directions = ['downward'];
+        };
+
+
+        treeChart.prototype.drawChart = function () {
+            // First get tree data for both directions.
+            this.treeData = {};
+            var that = this;
+            that.directions.forEach(function (direction) {
+                that.treeData[direction] = _this.rootData[direction];
+            });
+            // rootName = 'RHEL系统基础巡检';
+            rootRectWidth = _this.rootName.length * 15;
+            //获得downward第一级节点的个数
+            downwardLength = _this.rootData.downward.children.length;
+            that.graphTree(that.getTreeConfig());
+        };
+
+        treeChart.prototype.getTreeConfig = function () {
+            var treeConfig = {
+                'margin': {
+                    'top': 10,
+                    'right': 5,
+                    'bottom': 0,
+                    'left': 30
+                }
+            }
+
+            treeConfig.centralHeight = 100; //高度间距
+            treeConfig.centralWidth = 700;//宽度间距
+            treeConfig.linkLength = 120;
+            treeConfig.duration = 500; //动画时间
+            return treeConfig;
+        };
+
+        treeChart.prototype.graphTree = function (config) {
+            var that = this;
+            var d3 = this.d3;
+            var linkLength = config.linkLength;
+            var duration = config.duration;
+            var hasChildNodeArr = [];
+            var id = 0;
+
+            //折线
+            var diagonal = function (obj) {
+                var s = obj.source;
+                var t = obj.target;
+                return (
+                    "M" +
+                    s.x +
+                    "," +
+                    s.y +
+                    "L" +
+                    s.x +
+                    "," +
+                    (s.y + (t.y - s.y) / 2) +
+                    "L" +
+                    t.x +
+                    "," +
+                    (s.y + (t.y - s.y) / 2) +
+                    "L" +
+                    t.x +
+                    "," +
+                    t.y
+                );
+            }
+
+            var zoom = d3_old.behavior.zoom()
+                .scaleExtent([0.5, 2])
+                .on('zoom', redraw);
+            var svg = d3_old.select('#D3svg')
+                .append('svg')
+                .attr('width', '100%')
+                .attr('height', '100%')
+                .on('mousedown', disableRightClick)
+                .call(zoom)
+                .on('dblclick.zoom', null);
+            var treeG = svg.append('g')
+                .attr('class', 'gbox')
+                .attr('transform', 'translate(' + config.margin.left + ',' + config.margin.top + ')');
+
+            //箭头(下半部分)
+            var markerDown = svg.append("marker")
+                .attr("id", "resolvedDown")
+                .attr("markerUnits", "strokeWidth") //设置为strokeWidth箭头会随着线的粗细发生变化
+                .attr("markerUnits", "userSpaceOnUse")
+                .attr("viewBox", "0 0 12 12") //坐标系的区域
+                .attr("refX", 30) //箭头坐标
+                .attr("refY", 6)
+                .attr("markerWidth", 12) //标识的大小
+                .attr("markerHeight", 12)
+                .attr("orient", "90") //绘制方向，可设定为：auto（自动确认方向）和 角度值
+                .attr("stroke-width", 2) //箭头宽度
+                .append("path")
+
+                .attr("d", "M2,2 L12,6 L2,10 L4,6 L2,2") //箭头的路径
+                .attr('fill', '#000'); //箭头颜色
+
+
+
+            // Initialize the tree nodes and update chart.
+            for (var d in this.directions) {
+                var direction = this.directions[d];
+                var data = that.treeData[direction];
+                data.x0 = config.centralWidth;
+                data.y0 = config.centralHeight;
+                data.children.forEach(collapse);
+                update(data, data, treeG);
+            }
+
+            function update(source, originalData, g) {
+                console.log('source', source)
+                console.log('originalData', originalData)
+
+                var direction = originalData['direction'];
+                forUpward = direction == 'upward';
+                var node_class = direction + 'Node';
+                var link_class = direction + 'Link';
+                var downwardSign = (forUpward) ? -1 : 1;
+                var nodeColor = (forUpward) ? '#37592b' : '#51a56e';
+
+                var isExpand = true;
+                var statusUp = true;
+                var statusDown = true;
+                var nodeSpace = 80;
+                var tree = d3_old.layout.tree().sort(sortByDate).nodeSize([nodeSpace, 0]);
+                var nodes = tree.nodes(originalData);
+                var links = tree.links(nodes);
+                var offsetX = -config.centralWidth;
+
+                nodes.forEach(function (d) {
+                    d.y = downwardSign * (d.depth * linkLength) + config.centralHeight;
+                    d.x = d.x - offsetX;
+                    if (d.name == 'origin') {
+                        d.x = config.centralWidth;
+                        d.y += downwardSign * 0; // 上下两树图根节点之间的距离
+                    }
+                });
+
+                // Update the node.
+                var node = g.selectAll('g.' + node_class)
+                    .data(nodes, function (d) {
+                        return d.id || (d.id = ++id);
+                    });
+                var nodeEnter = node.enter().append('g')
+                    .attr('class', node_class)
+                    .attr('transform', function (d) {
+                        return 'translate(' + source.x0 + ',' + source.y0 + ')';
+                    })
+                    .style('cursor', function (d) {
+                        return (d.name == 'origin') ? '' : (d.children || d._children) ? 'pointer' : '';
+                    });
+                // .on('click', click);
+
+
+                nodeEnter.append("svg:rect")
+                    .attr("x", function (d) {
+                        return (d.name == 'origin') ? -(rootRectWidth / 2) : -60;
+                    })
+                    .attr("y", function (d) {
+                        return (d.name == 'origin') ? -20 : forUpward ? -52 : 2;
+                    })
+                    .attr("width", function (d) {
+                        return (d.name == 'origin') ? rootRectWidth : (d.depth === 1) ? 120 : 30;
+                        //return (d.name == 'origin') ? rootRectWidth : 120;
+                    })
+                    .attr("height", function (d) {
+                        return d.depth === 2 ? 160 : 40;
+                    })
+                    .attr("rx", 5)
+                    .style("stroke", function (d) {
+                        return (d.name == 'origin') ? "#51a56e" : "#CCC";
+                    })
+                    .style("fill", function (d) {
+                        return (d.name == 'origin') ? "#51a56e" : "#FFF"; //节点背景色
+                    });
+
+                nodeEnter.append('circle')
+                    .attr('r', 1e-6);
+
+                nodeEnter.append("text")
+                    .attr("class", "linkname")
+                    .attr("x", function (d) {
+                        return (d.name == 'origin') ? '0' : "-55";
+                    })
+                    .attr('dy', function (d) {//11 todo
+                        if (d.name == 'origin') {
+                            return '.35em'
+                        } else if (forUpward) {
+                            return '-40'
+                        } else if (d.name.length < 11) {
+                            return '25'
+                        } else if (d.name.length < 21) {
+                            return '19'
+                        } else {
+                            return '14'
+                        }
+                    })
+                    .attr("text-anchor", function (d) {
+                        return (d.name == 'origin') ? 'middle' : "start";
+                    })
+                    .attr('fill', '#000')
+                    .text(function (d) {
+                        if (d.name == 'origin') {
+                            return rootName;
+                        }
+                        if (d.repeated) {
+                            return '[Recurring] ' + d.name;
+                        }
+                        console.log(d.name,d.name.length)
+                        return (d.name.length > 5) ? d.name.substr(0, 10) : d.name;
+                    })
+                    .style({
+                        'fill-opacity': 1e-6,
+                        'fill': function (d) {
+                            if (d.name == 'origin') {
+                                return '#fff';
+                            }
+                        },
+                        'font-size': function (d) {
+                            return (d.name == 'origin') ? 14 : 11;
+                        },
+                        'cursor': "pointer"
+                    })
+                    .on('click', function (d) {
+                        that.toOtherCompany(d)
+                    });
+
+                nodeEnter.append("text")
+                    .attr("class", "linkname")
+                    .attr("x", "-55")
+                    .attr("dy", function (d) {
+                        if (d.name == 'origin') {
+                            return '.35em'
+                        } else if (forUpward) {
+                            return '-29'
+                        } else if (d.name.length < 21) {
+                            return '30'
+                        } else {
+                            return '26'
+                        }
+                    })
+                    .attr("text-anchor", function () {
+                        return (d.name == 'origin') ? 'middle' : "start";
+                    })
+                    .text(function (d) {
+                        return (d.name.length > 20) ? d.name.substr(10, 10) : d.name.substr(10, d.name
+                            .length - 10);
+                    })
+                    .style({
+                        'font-size': function (d) {
+                            return (d.name == 'origin') ? 14 : 11;
+                        },
+                    })
+                    .on('click', function (d) {
+                        that.toOtherCompany(d)
+                    });
+
+
+
+
+
+                // Transition nodes to their new position.原有节点更新到新位置
+                var nodeUpdate = node.transition()
+                    .duration(duration)
+                    .attr('transform', function (d) {
+                        return (d.depth == 2) ? 'translate(' +( d.x + 44 ) + ',' + d.y + ')' : 'translate(' + d.x  + ',' + d.y + ')';
+                    });
+                nodeUpdate.select('circle')
+                    .attr('r', function (d) {
+                        return (d.name == 'origin') ? 0 : (hasChildNodeArr.indexOf(d) == -1) ? 0 : 6;
+                    })
+                    .attr('cy', function (d) {
+                        return (d.name == 'origin') ? -20 : (forUpward) ? -58 : 47;
+                    })
+                    .style('fill', function (d) {
+                        return hasChildNodeArr.indexOf(d) != -1 ? "#fff" : "";
+                    })
+                    .style('stroke', function (d) {
+                        return hasChildNodeArr.indexOf(d) != -1 ? "#ccc" : "";
+                    })
+                    .style('stroke-width', function (d) {
+                        if (d.repeated) {
+                            return 5;
+                        }
+                    });
+
+                //代表是否展开的+-号
+                nodeEnter.append("svg:text")
+                    .attr("class", "isExpand")
+                    .attr("x", "0")
+                    .attr("dy", function (d) {
+                        return forUpward ? -53 : 52;
+                    })
+                    .attr("text-anchor", "middle")
+                    .style("fill", "#000")
+                    .text(function (d) {
+                        if (d.name == 'origin') {
+                            return '';
+                        }
+                        //return hasChildNodeArr.indexOf(d) != -1 ? "+" : "";
+                        return hasChildNodeArr.indexOf(d) != -1 ? "-" : "";
+                    })
+                    .on('click', click)
+
+
+                nodeUpdate.select('text').style('fill-opacity', 1)
+
+                var nodeExit = node.exit().transition()
+                    .duration(duration)
+                    .attr('transform', function (d) {
+                        return 'translate(' + source.x + ',' + source.y + ')';
+                    })
+                    .remove();
+                nodeExit.select('circle')
+                    .attr('r', 1e-6)
+                nodeExit.select('text')
+                    .style('fill-opacity', 1e-6);
+
+                var link = g.selectAll('path.' + link_class)
+                    .data(links, function (d) {
+                        return d.target.id;
+                    });
+
+                link.enter().insert('path', 'g')
+                    .attr('class', link_class)
+                    .attr('stroke', function (d) {
+                        // return '#51a56e'
+                        return '#ccc'
+                    })
+                    .attr('fill', "none")
+                    .attr('stroke-width', '1px')
+                    .attr('opacity', 0.5)
+                    .attr('d', function (d) {
+                        var o = {
+                            x: source.x0,
+                            y: source.y0
+                        };
+                        return diagonal({
+                            source: o,
+                            target: o
+                        });
+                    })
+                    .attr("marker-end", function (d) {
+                        return forUpward ? "url(#resolvedUp)" : "url(#resolvedDown)";
+                    }) //根据箭头标记的id号标记箭头;
+                    .attr("id", function (d, i) {
+                        return "mypath" + i;
+                    })
+                link.transition()
+                    .duration(duration)
+                    .attr('d', diagonal);
+                link.exit().transition()
+                    .duration(duration)
+                    .attr('d', function (d) {
+                        var o = {
+                            x: source.x,
+                            y: source.y
+                        };
+                        return diagonal({
+                            source: o,
+                            target: o
+                        });
+                    })
+                    .remove();
+                nodes.forEach(function (d) {
+                    d.x0 = d.x;
+                    d.y0 = d.y;
+                });
+
+                function Change_modal(d) {
+                    console.log(123412)
+                    that.Modal = true
+                    console.log(d)
+                }
+
+
+                function click(d) {
+                    if (forUpward) {
+
+                    } else {
+                        if (d._children) {
+                            console.log('对外投资--ok')
+                        } else {
+                            console.log('对外投资--no')
+                        }
+                    }
+
+                    isExpand = !isExpand;
+                    if (d.name == 'origin') {
+                        return;
+                    }
+                    console.log(d, 'ddd')
+                    if (d.children) {
+                        d._children = d.children;
+                        d.children = null;
+                        d3_old.select(this).text('+')
+                    } else {
+                        d.children = d._children;
+                        d._children = null;
+                        // expand all if it's the first node
+                        if (d.name == 'origin') {
+                            d.children.forEach(expand);
+                        }
+                        d3_old.select(this).text('-')
+                    }
+                    update(d, originalData, g);
+                }
+            }
+
+
+            function expand(d) {
+                if (d._children) {
+                    d.children = d._children;
+                    d.children.forEach(expand);
+                    d._children = null;
+                }
+            }
+
+
+            function collapse(d) {
+                if (d.children && d.children.length != 0) {
+                    d._children = d.children;
+                    d._children.forEach(collapse);
+                    //d.children = null; //默认展开（打开关闭）
+                    hasChildNodeArr.push(d);
+                }
+            }
+
+
+            function redraw() {
+                treeG.attr('transform', 'translate(' + d3_old.event.translate + ')' +
+                    ' scale(' + d3_old.event.scale + ')');
+            }
+
+            function disableRightClick() {
+                // stop zoom
+                if (d3_old.event.button == 2) {
+                    console.log('No right click allowed');
+                    d3_old.event.stopImmediatePropagation();
+                }
+            }
+
+
+            function sortByDate(a, b) {
+                var aNum = a.name.substr(a.name.lastIndexOf('(') + 1, 4);
+                var bNum = b.name.substr(b.name.lastIndexOf('(') + 1, 4);
+                return d3_old.ascending(aNum, bNum) ||
+                    d3_old.ascending(a.name, b.name) ||
+                    d3_old.ascending(a.id, b.id);
+            }
+        };
+
+        var d3GenerationChart = new treeChart(d3);
+        d3GenerationChart.drawChart();
+    }
+</script>

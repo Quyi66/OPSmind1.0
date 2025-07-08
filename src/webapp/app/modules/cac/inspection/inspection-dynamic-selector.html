@@ -1,0 +1,24 @@
+<div ng-if="$ctrl.threeCheckItemIds.length > 0">
+    <div class="d-flex flex-nowrap align-items-center">
+        <div class="btn btn-sm btn-default d-inline-block op-hover-trigger" style="position:relative;width:10em;">
+            <span class="op-hover-to-show pull-right" ng-click="$ctrl.emptyItems()" title="{{'common.umd_config.move_all' | translate}}" role="button" tabindex="0"><i class="fa fa-times"></i></span>
+            <span class="d-block" ng-click="$ctrl.inspectionListCi()" role="button" tabindex="0">{{ 'acm.common.selector.total' | translate}}<strong>{{$ctrl.threeCheckItemIds.length}}</strong>{{ 'acm.common.selector.item' | translate}}</span>
+        </div>
+        <op-searchbox search-text="$ctrl.filter" class="ms-auto autohide"></op-searchbox>
+    </div>
+    <ul class="list list-unstyled list-inline" style="max-height:10rem; overflow-y:auto;">
+        <li ng-repeat="inspection in $ctrl.inspectionViewList | filter : $ctrl.myFilter"
+            class="op-hover-trigger mb-3">
+            <div class="badge bg-secondary op-text-normal op-cursor-default py-2 px-2">
+                {{inspection.name}}
+                <a ng-click="$ctrl.removeItem(inspection.id)" >&times;</a>
+            </div>
+        </li>
+    </ul>
+</div>
+<div ng-if="!$ctrl.threeCheckItemIds || $ctrl.threeCheckItemIds.length === 0" __class="op-blank-slate bg-light p-3">
+    <button type="button" class="btn btn-outline-default" ng-click="$ctrl.inspectionListCi()"><i
+            class="fal fa-euro-sign"></i> {{ 'cac3.title.patrolInspectionItems' | translate}}
+    </button>
+</div>
+

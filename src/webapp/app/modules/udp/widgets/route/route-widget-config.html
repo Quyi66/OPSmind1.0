@@ -1,0 +1,47 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>
+        <udp-widget-config-fields props="uwProps.fields" dataset-fields="selectedDs.fields"
+                                  options="fieldOptions"></udp-widget-config-fields>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.route.config.map_type' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select" ng-model="uwProps.display.mapType"
+                            ng-options="type.name as type.title for type in mapTypes"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.route.config.map_size' | translate}}</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" ng-model="uwProps.display.width"
+                           placeholder="{{'common.term.width'|translate}}">
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" ng-model="uwProps.display.height"
+                           placeholder="{{'common.term.height'|translate}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.route.config.misc' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-primary">
+                        <input type="checkbox" id="f_zoomable"
+                               ng-model="uwProps.display.zoomable"><label
+                            for="f_zoomable">{{'udp.w.route.config.zoomable' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

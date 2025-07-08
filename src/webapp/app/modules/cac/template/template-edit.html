@@ -1,0 +1,30 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.cac.template.list({display:true})">{{'cac.index.template' | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">{{cacEditTemplateCtrlVm.views.template.id == null ? ("cac.template.create" | translate):
+                    ("cac.template.edit" | translate)}}
+                </li>
+            </ol>
+        </div>
+    </nav>
+    <div class="opx-flex-fill scroll-y p-3" uaa-has-permission="{{cacEditTemplateCtrlVm.views.permission}}" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+        <form class="form-vertical op-smartform" name="templateForm">
+            <div ng-include="'app/modules/cac/template/template-edit-content.html'"></div>
+            <div class="form-group">
+                <div class="op-form-actions">
+                    <button type="submit" class="btn btn-primary opx-btn-ok" ng-click="cacEditTemplateCtrlVm.views.save()"
+                            ng-disabled="templateForm.$invalid">{{'common.entity.action.save' | translate}}
+                    </button>
+                    <button type="cancel" class="btn btn-default opx-btn-cancel" ng-click="cacEditTemplateCtrlVm.views.back()">
+                        {{'common.entity.action.back' | translate}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

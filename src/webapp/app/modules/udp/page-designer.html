@@ -1,0 +1,27 @@
+<div ui-view="widget_config_model"></div>
+<div class="opx-layout-vflex">
+    <div ng-include="'app/modules/udp/page-designer-toolbar.html'"></div>
+    <div class="opx-flex-fill opx-layout-hflex scroll-y"
+         ng-class="{'udp-pd-visual-mode':inMode=='edit',
+     'udp-pd-preview-mode':inMode=='preview',
+     'udp-pd-source-mode':inMode=='source',
+     'udp-pd-more-space':showMoreSpace,
+     'udp-pd-show-outline':showWidgetOutline}">
+        <div id="pd-palette-zone" class="opx-sidebar bg-light border-right"
+             ng-hide="$root.$global.userPref['udp.pd.hideToolbox']" style="width:10rem;">
+            <udp-page-designer-toolbox class="h-100"></udp-page-designer-toolbox>
+        </div>
+        <div class="opx-flex-fill scroll-y" id="globally-only-one-page-designer">
+            <div class="h-100 bg-secondary p-5" ng-hide="inMode==='source'">
+                <udp-page-view id="pd-canvas-zone" class="h-100"
+                               is-designer="true" reload-page="newPageHtml" options="{navbar:false}"
+                               page="page"></udp-page-view>
+            </div>
+            <div id="pd-source-zone" ng-show="inMode==='source'" class="h-100">
+                <textarea rows="20" ng-model="sourceCode"
+                          ui-codemirror="{mode: 'htmlmixed',lineNumbers: true, lineWrapping: true, theme:'opluscode', matchTags: {bothTags: true}, matchBrackets:true}"
+                          ui-refresh="inMode=='source'"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

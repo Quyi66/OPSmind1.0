@@ -1,0 +1,293 @@
+<div class="opx-layout-vflex" uaa-has-permission="adm:view:*" uaa-deny-message="无权访问">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">{{'adm.engine.title' | translate}}</li>
+            </ol>
+        </div>
+    </nav>
+    <div class="card-body">
+        <form class="op-smartform form-vertical">
+            <div class="form-group col-6">
+                <label class="control-label">OPlus Execute Engine&nbsp;<code>Ansible or Ansible Automation Platform</code></label>
+                <div class="form-control-wrapper">
+                    <div class="opx-check-group btn-group opx-primary">
+                        <input ng-repeat-start="engine in vm.ansible_engines track by $index"
+                               type="radio" name="formSelectedCityBtnGroup" value="{{engine.value}}"
+                               id="form_radiobtngroup_opt_{{$index}}"
+                               ng-model="vm.usedEngine"
+                               ng-change="vm.changeEngine()">
+                        <label ng-repeat-end for="form_radiobtngroup_opt_{{$index}}">{{engine.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="vm.scriptEngine === 'ansible'">
+                <div class="form-group col-6">
+                    <label class="control-label">Enable Host Forks&nbsp;</label>
+                    <div class="form-control-wrapper">
+                        <div class="form-check form-switch">
+                            <label>
+                                <input class="form-check-input" style="width:4rem;height:1.4rem;cursor: pointer;"
+                                       ng-model="vm.jaoParamMap.is_fork.value"
+                                       type="checkbox" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label">Host Forks Size &nbsp;</label>
+                    <div class="input-group op-w-sm">
+                        <label>
+                            <input type="number" autocomplete="off" class="form-control" min="100" ng-model="vm.jaoParamMap.forks.value"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="control-label">Sync Git Project Before Starting Job &nbsp;</label>
+                    <div class="form-control-wrapper">
+                        <div class="form-check form-switch">
+                            <label>
+                                <input class="form-check-input" style="width:4rem;height:1.4rem;cursor: pointer;"
+                                       ng-model="vm.jaoParamMap.sync_script_git.value"
+                                       type="checkbox" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <button type="submit" class="btn btn-primary opx-btn-ok me-3" ng-click="vm.saveAnsibleConfig()">
+                        {{ 'common.entity.action.save' | translate}}
+                    </button>
+                </div>
+            </div>
+            <div ng-if="vm.scriptEngine === 'aap'">
+                <div class="form-group col-6">
+                    <label class="control-label">AAP Clear&nbsp;</label>
+                    <div class="form-control-wrapper">
+                        <div class="form-check form-switch">
+                            <label>
+                                <input class="form-check-input" style="width:4rem;height:1.4rem;cursor: pointer;"
+                                       value="vm.ataParamMap.tower_clear"
+                                       type="checkbox" ng-model="vm.ataParamMap.tower_clear.value"/>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-6">
+                    <label class="control-label">AAP Web Login Config</label>
+                    <div class="form-control-wrapper op-combo">
+                        <div class="p-3 ">
+                            <label class="control-label">Login Host</label>
+                            <div class="input-group op-w-sm">
+                                <label>
+                                    <input type="text" class="form-control" ng-model="vm.ataParamMap.tower_host.value"/>
+                                </label>
+                            </div>
+                            <p class="help-block">
+                                <span>{{ 'adm.engine.aap.web.web_login_host' | translate}}</span>
+                            </p>
+                        </div>
+                        <div class="p-3 ">
+                            <label class="control-label">Login Name</label>
+                            <div class="input-group op-w-sm">
+                                <label>
+                                    <input type="text" class="form-control"
+                                           ng-model="vm.ataParamMap.tower_login_config.value.web_login_name"/>
+                                </label>
+                            </div>
+                            <p class="help-block">
+                                <span>{{ 'adm.engine.aap.web.web_login_name' | translate}}</span>
+                            </p>
+                        </div>
+                        <div class="p-3 ">
+                            <label class="control-label">Login Password</label>
+                            <div class="input-group op-w-sm">
+                                <label>
+                                    <input type="password" autocomplete="off" class="form-control"
+                                           ng-model="vm.ataParamMap.tower_login_config.value.web_login_pwd"/>
+                                </label>
+                            </div>
+                            <p class="help-block">
+                                <span>{{ 'adm.engine.aap.web.web_login_pwd' | translate}}</span>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="vm.isConnectAap">
+                    <div class="col-md-12" >
+                        <label class="control-label">AAP Servers&nbsp;<code>{{ 'adm.engine.aap.servers' | translate}}</code></label>
+
+                        <table id="mytable" class="opx-table table table-hover dataTable no-footer">
+
+                            <thead>
+                            <th style="display:none">index</th>
+                            <th style="width:10%;">host</th>
+                            <th style="width:5%;">port</th>
+                            <th style="width:15%;">username</th>
+                            <th style="width:15%;">password</th>
+                            <th style="width:10%;">操作</th>
+                            </thead>
+
+                            <tbody>
+                            <tr ng-repeat="cs in vm.ataParamMap.tower_login_config.value.cluster_servers">
+                                <td style="display:none">{{$index + 1}}</td>
+                                <td>
+                                    <label>
+                                        <input name="host{{$index}}" ng-model="cs.host">
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input name="port{{$index}}" ng-model="cs.port"/>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input name="username{{$index}}" ng-model="cs.username">
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input name="password{{$index}}" type="password" ng-model="cs.password">
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="buttons">
+                                        <button type="button" class="btn btn-danger" ng-click="deleteClusterServe($index)">
+                                            Delete
+                                        </button>
+                                        <button type="button" class="btn btn-info" ng-click="addClusterServer()">Add
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group col-12" >
+                        <label class="control-label">AAP Execute Config&nbsp;<code>{{ 'adm.engine.aap.config' | translate}}</code></label>
+
+                        <div class="form-control-wrapper op-combo">
+                            <div class="p-3 ">
+                                <label class="control-label">Git Project</label>
+                                <div class="input-group op-w-sm">
+                                    <select op-select class="form-select flex-fill" ng-model="vm.ataParamMap.tower_config.value.git_project_id"
+                                            ng-options="project.id as project.name for project in vm.queryProjects | filter:{scm_type:'git'}">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-3 ">
+                                <label class="control-label">Organization</label>
+                                <div class="input-group op-w-sm">
+                                    <select op-select class="form-select flex-fill"
+                                            ng-model="vm.ataParamMap.tower_config.value.organization_id"
+                                            ng-options="organization.id as organization.name for organization in vm.queryOrganizations">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-3 ">
+                                <label class="control-label">Manual Project</label>
+                                <div class="input-group op-w-sm">
+                                    <select op-select="scm_type" class="form-select flex-fill"
+                                            ng-model="vm.ataParamMap.tower_config.value.template_project_id"
+                                            ng-change="vm.changeProjectPath()"
+                                            ng-options="project.id as project.name for project in vm.queryProjects | filter:{scm_type:'!git'}">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-3 col-3">
+                                <label class="control-label">Manual Project Path</label>
+                                <div class="op-w-full">
+                                    <input class="form-control" ng-model="vm.ataParamMap.tower_config.value.project_path" disabled/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-control-wrapper op-combo">
+                            <div class="p-3 ">
+                                <label class="control-label">Credential</label>
+                                <div class="input-group op-w-sm">
+                                    <select class="form-select flex-fill"
+                                            ng-model="vm.ataParamMap.tower_config.value.template_credentials_id"
+                                            op-select="{datatype:'string'}" multiple
+                                            ng-options="credential.id as credential.name for credential in vm.queryCredentials">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="p-3 ">
+                                <label class="control-label">Instance Group</label>
+                                <div class="input-group op-w-sm">
+                                    <select op-select class="form-select flex-fill"
+                                            ng-model="vm.ataParamMap.tower_config.value.instance_group"
+                                            ng-options="ig.name as ig.name for ig in vm.queryInstance_groups">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-3 ">
+                                <label class="control-label">Execution Environment</label>
+                                <div class="input-group op-w-sm">
+                                    <select op-select class="form-select flex-fill"
+                                            ng-model="vm.ataParamMap.tower_config.value.execution_environment"
+                                            ng-options="ee.id as ee.name for ee in vm.queryExecution_environments">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <label class="control-label">Template Become Enabled</label>
+                                <div class="form-control-wrapper">
+                                    <div class="form-check form-switch">
+                                        <label>
+                                            <input class="form-check-input" style="width:4rem;height:1.4rem;cursor: pointer;"
+                                                   value="vm.tower_config.template_become"
+                                                   type="checkbox" ng-model="vm.ataParamMap.tower_config.value.template_become"/>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <label class="control-label">Sync Git Project Before Starting Job</label>
+                                <div class="form-control-wrapper">
+                                    <div class="form-check form-switch">
+                                        <label>
+                                            <input class="form-check-input" style="width:4rem;height:1.4rem;cursor: pointer;"
+                                                   value="vm.tower_config.sync_git_project_before_starting_job"
+                                                   type="checkbox" ng-model="vm.ataParamMap.tower_config.value.sync_git_project_before_starting_job"/>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <label class="control-label">Encrypt Host Pass</label>
+                                <div class="form-control-wrapper">
+                                    <div class="form-check form-switch">
+                                        <label>
+                                            <input class="form-check-input" style="width:4rem;height:1.4rem;cursor: pointer;"
+                                                   value="vm.tower_config.encrypt_host_pass"
+                                                   type="checkbox" ng-model="vm.ataParamMap.tower_config.value.encrypt_host_pass"/>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-wrapper op-combo">
+                            <button type="submit" class="btn btn-outline-primary ml-3 mt-3" ng-click="vm.openEEUploaderPage()">
+                                Execution Environment Upload
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group col-6">
+                    <button type="submit" class="btn btn-primary opx-btn-ok ml-3" ng-click="vm.saveAapConfig()">
+                        {{ 'common.entity.action.save' | translate}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

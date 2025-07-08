@@ -1,0 +1,26 @@
+  
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">{{'flow.index.list' | translate}}</li>
+            </ol>
+        </div>  
+        
+        <button class="btn btn-outline-primary" uaa-has-permission="flow:edit:*" ng-click="$ctrl.add()"><i class="fa fa-plus"></i> {{'common.action.create' | translate}}</button>
+    </nav>
+
+    <opx-datatable table-config="$ctrl.tableConfig" class="p-3">
+        <button class="btn btn-danger" ng-click="$ctrl.deleteBatch()" 
+                uaa-has-permission="flow:edit:*"
+                ng-disabled="$ctrl.tableConfig.selectedItems.length === 0">
+            <i class="fa fa-trash-alt"></i> {{ 'common.action.delete' | translate }}
+        </button>
+
+        <button class="btn btn-primary" ng-click="$ctrl.exportBatch()" 
+                uaa-has-permission="flow:edit:*"
+                ng-disabled="$ctrl.tableConfig.selectedItems.length === 0">
+            <i class="fa fa-file-download"></i> {{ 'common.action.export' | translate }}
+        </button>
+    </opx-datatable>
+</div>

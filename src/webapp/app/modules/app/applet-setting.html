@@ -1,0 +1,303 @@
+<div class="opx-layout-hflex opx-flex-fill scroll-y">
+    <div class="opx-flex-fill opx-layout-vflex">
+        <nav class="navbar navbar-light">
+            <div class="opx-navbar-title" data-translate="app.setting.appConfig"></div>
+            <div class="navbar-nav ms-auto">
+                <button type="submit" class="btn btn-primary opx-btn-ok"
+                        ng-disabled="appletSettingForm.$invalid" ng-click="appSettingVm.save()"
+                        data-translate="common.entity.action.save">
+                </button>
+                <!--                <button type="button" class="btn btn-default opx-btn-cancel"-->
+                <!--                        ng-click="appSettingVm.cancel($event)" data-translate="common.entity.action.cancel"> 取消-->
+                <!--                </button>-->
+            </div>
+        </nav>
+        <div class="opx-flex-fill scroll-y p-3" ng-if="appSettingVm.applet.canUpdate">
+            <form class="form-vertical op-smartform needs-validation op-bold-label __p-3 __card"
+                  name="appletSettingForm"
+                  ng-submit="appSettingVm.save()" novalidate>
+                <uib-tabset class="tab-container" type="mdc-op" active="1">
+                    <uib-tab index="1">
+                        <uib-tab-heading><i class="fa fa-info-circle"></i> {{'app.setting.basicInfo' | translate}}</uib-tab-heading>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="app.setting.title"></label>
+                            <div class="form-control-wrapper">
+                                <input name="title" class="form-control op-w-sm"
+                                       ng-model="appSettingVm.applet.title"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   op-help-info="{{'app.setting.code_desc'|translate}}">{{'app.setting.code' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <input name="name" class="form-control op-w-sm"
+                                       placeholder="{{'app.setting.code.placeholder' | translate}}"
+                                       ng-disabled="appSettingVm.applet.id" ng-model="appSettingVm.applet.name"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{'app.setting.version' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <input name="version" class="form-control op-w-sm"
+                                       ng-model="appSettingVm.applet.version"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{'app.setting.tags' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <select class="form-select op-w-sm" op-select multiple
+                                        ng-model="appSettingVm.applet.appletTagList"
+                                        ng-options="tag.id as tag.name for tag in appSettingVm.tags"
+                                        ></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="app.setting.status"></label>
+                            <div class="form-control-wrapper">
+                                <div class="opx-check-group btn-group">
+                                    <input type="radio" name="status" ng-model="appSettingVm.applet.status"
+                                           id="as_status_1" value="O">
+                                    <label for="as_status_1">{{'app.setting.stop' | translate}}</label>
+                                    <input type="radio" name="status" ng-model="appSettingVm.applet.status"
+                                           id="as_status_2" value="P">
+                                    <label for="as_status_2">{{'app.setting.published' | translate}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{'app.setting.icon' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <op-iconpicker ng-model="appSettingVm.applet.setting.icon"
+                                               options="{excludeBrandIcon:true}"
+                                               required=""></op-iconpicker>
+                                <udp-color-picker class="ms-3"
+                                                  ng-model="appSettingVm.applet.setting.color"></udp-color-picker>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{'app.setting.window_size' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                <select class="form-select w-sm" ng-model="appSettingVm.applet.setting.windowSize">
+                                    <option value="">Default</option>
+                                    <option value="md">Middle</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{'app.setting.description' | translate}}</label>
+                            <div class="form-control-wrapper">
+                                    <textarea name="description" class="form-control" rows="4"
+                                              ng-model="appSettingVm.applet.description"></textarea>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="2">
+                        <uib-tab-heading><i class="fa fa-list-ul"></i> {{'app.setting.content' | translate}}</uib-tab-heading>
+                        <div class="form-group">
+                            <label class="control-label">{{'app.setting.entrance' | translate}}</label>
+                            <div class="form-control-wrapper op-combo">
+                                <select class="form-select op-w-sm"
+                                        ng-options="type.code as type.name for type in appSettingVm.entryTypes"
+                                        ng-model="appSettingVm.entryType"></select>
+
+                            </div>
+                        </div>
+                        <div class="op-form-subgroup">
+                            <!--                            <div class="form-group" ng-if="appSettingVm.entryType === 'udp-page'">-->
+                            <!--                                <udp-page-and-param-config page-id="appSettingVm.applet.entry" params-json="appSettingVm.applet.entryParams"></udp-page-and-param-config>-->
+                            <!--                            </div>-->
+                            <div class="form-group" ng-if="appSettingVm.entryType === 'udp-page'">
+                                <label class="control-label">{{'app.setting.pageEntrance' | translate}}</label>
+                                <div class="form-control-wrapper op-combo">
+                                    <udp-page-selector page-id="appSettingVm.applet.entry"
+                                                       options="{converter:{kinds:'js,str', varTypes:'global'}}"
+                                                       class="op-w-full"></udp-page-selector>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="appSettingVm.entryType === 'udp-page'">
+                                <label class="control-label">{{'app.setting.pageParams' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <udp-page-params-config class="op-w-full"
+                                                            params-json="appSettingVm.applet.entryParams"></udp-page-params-config>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="appSettingVm.entryType === 'inner-page'">
+                                <label class="control-label" data-translate="app.setting.pageAddress"></label>
+                                <div class="form-control-wrapper">
+                                    <input name="entry" class="form-control op-w-md"
+                                           ng-model="appSettingVm.applet.entry"
+                                           placeholder="{{'app.setting.pageAddress.placeholder1' | translate}}"
+                                           ng-pattern="/^#\/|\./">
+                                </div>
+                            </div>
+
+                            <div ng-if="appSettingVm.entryType === 'outer-page'">
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="app.setting.pageAddress"></label>
+                                    <div class="form-control-wrapper">
+                                        <input name="entry" class="form-control op-w-md" ng-model="appSettingVm.applet.entry"
+                                            placeholder="{{'app.setting.pageAddress.placeholder2' | translate}}" ng-pattern="/^http[s]?:\/\//">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="udp.wc.intx.link.target"></label>
+                                    <div class="form-control-wrapper">
+                                        <select op-select class="form-select w-sm" ng-model="appSettingVm.applet.setting.target">
+                                            <option value="">{{ 'app.settings.target.blank' | translate }}</option>
+                                            <option value="dialog">{{ 'udp.wc.intx.link.target_new' | translate }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="app.setting.navigation"></label>
+                            <div class="form-control-wrapper">
+                                <div class="opx-check-group btn-group">
+                                    <input type="radio" name="navPosition" value="left" id="as_navposition_left"
+                                           ng-model="appSettingVm.applet.setting.nav.position"/><label
+                                        for="as_navposition_left"><i class="fa fa-arrow-to-left"></i>
+                                    {{'app.setting.left' | translate}}</label>
+                                    <input type="radio" name="navPosition" value="top" id="as_navposition_top"
+                                           ng-model="appSettingVm.applet.setting.nav.position"/><label
+                                        for="as_navposition_top"><i class="fa fa-arrow-to-top"></i>
+                                    {{'app.setting.top' | translate}}</label>
+                                </div>
+                                <div class="opx-check-group btn-group ms-3">
+                                    <input type="radio" name="navTheme" value="dark" id="as_navtheme_1"
+                                           ng-model="appSettingVm.applet.setting.nav.theme"/> <label
+                                        for="as_navtheme_1" data-translate="app.setting.darkColor"></label>
+                                    <input type="radio" name="navTheme" value="light" id="as_navtheme_2"
+                                           ng-model="appSettingVm.applet.setting.nav.theme"/> <label
+                                        for="as_navtheme_2" data-translate="app.setting.lightColor"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label justify-content-end"
+                                   data-translate="app.setting.viewConfig"></label>
+                            <div class="form-control-wrapper">
+                                <div class="checkbox checkbox-inline">
+                                    <input type="checkbox" name="navHide" id="as_navdisplay_1"
+                                           ng-model="appSettingVm.applet.setting.nav.hide"/> <label
+                                        for="as_navdisplay_1" data-translate="app.setting.noNav"></label>
+                                </div>
+                                <div class="checkbox checkbox-inline">
+                                    <input type="checkbox" name="navHideOnHome" id="as_navhideonhome"
+                                           ng-model="appSettingVm.applet.setting.nav.hideOnHome"
+                                           ng-disabled="appSettingVm.applet.setting.nav.hide"/> <label
+                                        for="as_navhideonhome" data-translate="app.setting.notInHome"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="app.setting.menu"></label>
+                            <div class="form-control-wrapper">
+                                <table class="table op-param-table">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th style="width: 10rem;" data-translate="app.setting.menuName"></th>
+                                        <th data-translate="app.setting.menuIcon"></th>
+                                        <th data-translate="app.setting.associatedPage"></th>
+                                        <th class="text-center text-nowrap" data-translate="app.setting.hide"></th>
+                                        <th class="text-center">
+                                            <button class="btn btn-outline-primary btn-sm opx-btn-icon"
+                                                    type="button"
+                                                    title="添加菜单项"
+                                                    ng-click="appSettingVm.applet.setting.nav.items.push({})">
+                                                <i class="fa fa-plus"></i></button>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-sortable="{handle:'.op-drag-handle'}"
+                                           ng-model="appSettingVm.applet.setting.nav.items">
+                                    <tr ng-repeat="item in appSettingVm.applet.setting.nav.items track by $index"
+                                        ng-show="!item.isRemoved">
+                                        <td class="text-center">
+                                            <i class="fa fa-grip-horizontal op-drag-handle text-muted"></i>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="navItemName"
+                                                   placeholder="{{'app.setting.menuItem.placeholder' | translate}}"
+                                                   ng-model="item.name" required/>
+                                        </td>
+                                        <td>
+                                            <op-iconpicker ng-model="item.icon"></op-iconpicker>
+                                        </td>
+                                        <td>
+                                            <udp-page-selector page-id="item.entry"
+                                                               options="{converter:{kinds:'js,str',varTypes:'global'}}"
+                                                               class="op-w-full"></udp-page-selector>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="checkbox checkbox-inline">
+                                                <input type="checkbox" name="navItemDisplay" ng-model="item.hide"
+                                                       id="as_navitemdisplay_{{$index}}"/> <label
+                                                    for="as_navitemdisplay_{{$index}}"></label>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-default btn-sm opx-btn-flat opx-btn-icon"
+                                                    type="button"
+                                                    title="{{'app.setting.delItem.title' | translate}}"
+                                                    ng-click="appSettingVm.removeNavItem(item)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label class="control-label" data-translate="app.setting.helpDoc">帮助文档</label>-->
+                        <!--                            <div class="form-control-wrapper">-->
+                        <!--                                <div class="border p-2 rounded w-100 d-flex align-items-center">-->
+                        <!--                                    <a class="text-primary me-auto"-->
+                        <!--                                       ui-sref="app.applet_help({appletCode:appSettingVm.applet.name})"-->
+                        <!--                                       target="_blank">{{appSettingVm.getHelpDocName()}}</a>-->
+                        <!--                                    <button class="btn btn-default btn-sm ms-3" type="file" ngf-select-->
+                        <!--                                            ngf-pattern="'.pdf'"-->
+                        <!--                                            ngf-accept="'application/pdf'"-->
+                        <!--                                            ngf-change="appSettingVm.uploadHelpDoc($file)">-->
+                        <!--                                        <i class="fa fa-upload"></i> {{'app.setting.uploadDoc' | translate}}-->
+                        <!--                                    </button>-->
+                        <!--                                    <button class="btn btn-sm btn-default ms-3 opx-btn-icon opx-btn-flat" type="button"-->
+                        <!--                                            ng-click="appSettingVm.removeHelpDoc()"-->
+                        <!--                                            title="{{'app.setting.delDoc.title' | translate}}"-->
+                        <!--                                            ng-if="appSettingVm.applet.helpDocUrl">-->
+                        <!--                                        <i class="fa fa-times"></i>-->
+                        <!--                                    </button>-->
+                        <!--                                </div>-->
+                        <!--                                <p class="help-block" data-translate="app.setting.docInfo">注意：只支持pdf格式文件</p>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading><i class="fa fa-unlock-alt"></i> {{'app.setting.ac.title'|translate}}</uib-tab-heading>
+                        <applet-config-access ng-model="appSettingVm.applet.accessControl"></applet-config-access>
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading><i class="fa fa-ellipsis-h"></i> {{'app.setting.other' | translate}}</uib-tab-heading>
+                        <div class="alert alert-danger">
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-danger ms-auto"
+                                        ng-disabled="!appSettingVm.applet.canDelete"
+                                        ng-click="appSettingVm.delete($event)"
+                                        ng-show="appSettingVm.applet.id"><i class="fa fa-trash-alt"></i>
+                                    {{'app.setting.delApp' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+            </form>
+        </div>
+    </div>
+</div>

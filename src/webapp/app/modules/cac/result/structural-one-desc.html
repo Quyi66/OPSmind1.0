@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'cac.profile.inspection_results_profile' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal"
+            ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <div style="margin: 10px;">
+        <p>
+            <span style="font-weight: bolder; font-size: 14px;">
+                <span>{{ $ctrl.maps.primaryService }}</span>
+            </span>
+        </p>
+        <div class="d-flex align-items-center">
+            <div>
+                <p>
+                    <span style="font-size: 14px;">{{'cac.structural.secondary_service' | translate}}：
+                        <span>{{$ctrl.counts[0]}}</span>
+                    </span>
+                </p>
+                <p>
+                    <span style="font-size: 14px;">{{'cac.structural.item_err_total' | translate}}：
+                        <span>{{$ctrl.counts[1]}}</span>
+                    </span>
+                </p>
+                <p>
+                    <span style="font-size: 14px;">{{'cac.structural.item_host_total' | translate}}：
+                        <span>{{$ctrl.counts[2]}}</span>
+                    </span>
+                </p>
+            </div>
+            <div class="ml-auto"><i class="fad fa-desktop fa-5x text-secondary"></i></div>
+        </div>
+    </div>
+
+    <opx-datatable table-config="$ctrl.tableConfig">
+    </opx-datatable>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="$ctrl.cancel()">{{'common.action.close' | translate}}
+    </button>
+</div>
+<!--<style>-->
+<!--    .modal-dialog.modal-lg {-->
+<!--        height: 45rem;-->
+<!--    }-->
+<!--</style>-->

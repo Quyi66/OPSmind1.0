@@ -1,0 +1,15 @@
+{
+    "search.type.all": "All Types",
+    "search.type.jao": "One-Click Job",
+    "search.type.gfs": "Script Management",
+    "search.type.udp": "Self-Service Page",
+    "search.type.dts": "Data Services",
+    "search.type.acm": "Asset Management",
+    "search.index.clean_result": "Clear Search Results",
+    "search.index.history_record": "History Search History",
+    "search.index.clean_history_record": "Clear History Search History",
+    "search.index.searching": "Searching",
+    "search.index.by_keyword": "By Keyword",
+    "search.index.clean": "Clean",
+    "search.index.not_found": "Search, no relevant data was found"
+}

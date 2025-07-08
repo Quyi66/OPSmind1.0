@@ -1,0 +1,59 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cmd.index.command_job' | translate}}</div>
+    </nav>
+    <div class="opx-layout-hflex" uaa-is-authenticated>
+        <div class="opx-sidebar" style="width: 15rem;">
+            <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed">
+                <op-searchbox search-text="$ctrl.jobFilter" style="width:10rem;" class="me-2"></op-searchbox>
+                <div class="dropdown ms-auto">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle opx-btn-icon"
+                            data-bs-toggle="dropdown">
+                        <i class="fa fa-line-height"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item"
+                           ng-click="$ctrl.changeJobOrderBy('title')">{{'common.entity.detail.name' | translate}}
+                            <i style="float: right;padding-top: 4px"
+                               ng-class="$ctrl.orderMethod ? 'fa fa-sort-alpha-down-alt':'fa fa-sort-alpha-up'"
+                               ng-if="$ctrl.orderName == 'title'"></i>
+                        </a>
+                        <a class="dropdown-item"
+                           ng-click="$ctrl.changeJobOrderBy('updatedAt')">{{'common.entity.detail.update_at' | translate}}
+                            <i style="float: right;padding-top: 4px"
+                               ng-class="$ctrl.orderMethod ? 'fa fa-sort-alpha-down-alt':'fa fa-sort-alpha-up'"
+                               ng-if="$ctrl.orderName == 'updatedAt'"></i>
+                        </a>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-default btn-sm opx-btn-icon" ng-click="$ctrl.createJob()"
+                        title="{{'cmd.job.create_job' | translate}}"
+                        uaa-has-permission="cmd:edit:*">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </nav>
+            <div class="opx-sidebar-body">
+                <div class="list-group list-group-flush op-styled-highlight">
+                    <a ng-repeat="job in $ctrl.jobTypeList | filter:$ctrl.jobFilter | orderBy:[$ctrl.orderName,'createdAt']:$ctrl.orderMethod"
+                       ui-sref="{{$ctrl.viewUrl}}"
+                       ng-click="$ctrl.changeActiveJob(job)"
+                       ng-class="{'active':job.id == $ctrl.activeJob}"
+                       class="list-group-item list-group-item-action" title="{{job.title}}"
+                       style="position:relative;">
+                        <h5 class="text-ellipsis">{{job.title}}</h5>
+                        <div class="small text-muted">{{(job.updatedAt || job.createdAt) | date }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="opx-flex-fill fade-in" ui-view="jaoJobDetailView">
+            <div class="h-100 bg-light op-blank-slate">
+                <div class="op-blank-slate-icon">
+                    <i class="fa fa-inbox op-fa-8x"></i>
+                </div>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>

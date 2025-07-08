@@ -1,0 +1,61 @@
+<div class="op-bold-label">
+    <div class="form-group">
+        <div class="form-control-wrapper">
+            <strong>{{$ctrl.fileInfo.path}}</strong>
+            <span class="text-muted ms-3" ng-if="$ctrl.fileInfo.config">{{$ctrl.fileInfo.config}}</span>
+        </div>
+    </div>
+    <div ng-if="$ctrl.fileParams | isNotEmpty" class="form-group">
+        <table class="table op-param-table">
+            <thead>
+            <tr>
+                <th class="font-weight-bold">{{'jao.job.script.param_settings' | translate}}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(name, value) in $ctrl.fileParams track by $index">
+                <td class="text-right"><span class="badge bg-secondary op-text-normal">{{name}}</span></td>
+                <td class="w-100"><input type="text" class="form-control" ng-model="$ctrl.fileParams[name]"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        <label class="control-label"
+               op-help-info="{{'jao.job.script.verbose_info' | translate}}">{{'jao.job.script.verbose' | translate}}</label>
+        <div class="form-control-wrapper">
+            <select ng-model="$ctrl.verbosity" id="template-verbosity" aria-label="选择输入"
+                    class="form-select op-w-auto">
+                <option class="" value=0>{{'jao.job.run.ansible.verbose.normal' | translate}}</option>
+                <option class="" value=1>{{'jao.job.run.ansible.verbose.detailed' | translate}}</option>
+                <option class="" value=2>{{'jao.job.run.ansible.verbose.more_details' | translate}}</option>
+                <option class="" value=3>{{'jao.job.run.ansible.verbose.debug' | translate}}</option>
+                <option class="" value=4>{{'jao.job.run.ansible.verbose.connection_debugging' | translate}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'jao.job.script.test_hosts' | translate}}</label>
+        <div class="form-control-wrapper">
+            <acm-device-selector the-model="$ctrl.hosts" class="w-100"
+                                 options="{label:('jao.job.script.select_hosts' | translate)}"
+                                 ci-types="'[auto]'"></acm-device-selector>
+        </div>
+    </div>
+    <div class="d-flex align-items-center" id="js-script-test-run">
+        <div class="ms-auto">
+    <span ng-if="!!$ctrl.jobStatus.title"
+          class="me-3 op-cursor-hand jao-jobrun-status-icon status-{{$ctrl.jobStatus.name}}"
+          title="{{$ctrl.jobStatus.title}}"
+          ng-click="$ctrl.viewRunResult()"></span>
+            <button type="button" class="btn btn-primary" ng-click="$ctrl.submit()"
+                    ng-disabled="$ctrl.isRunning"><i
+                    class="fa fa-chevron-right fa-fw"></i> {{'jao.job.run' | translate}}
+            </button>
+            <button type="button" class="btn btn-default opx-btn-cancel ms-3" ng-click="$ctrl.cancel()">
+                {{'common.entity.action.close' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

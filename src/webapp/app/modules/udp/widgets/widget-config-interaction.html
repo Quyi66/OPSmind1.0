@@ -1,0 +1,122 @@
+<div class="form-group">
+    <div class="btn-group me-5">
+        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown"><i
+                class="fa fa-plus"></i> {{'udp.wc.intx.add_action' | translate}} <span class="caret"></span>
+        </button>
+        <div class="dropdown-menu op-append-to-body">
+            <a class="dropdown-item" ng-if="!$ctrl.hasAvailableAction"
+               href="javascript:void(0);">{{'udp.wc.intx.no_avail_action' | translate}}</a>
+            <a class="dropdown-item" ng-if="!action.isUsed"
+               ng-repeat="action in $ctrl.availableActions"
+               ng-click="$ctrl.addAction(action.key)"><i class="far fa-fw {{action.icon}}"></i>
+                {{action.title}}</a>
+        </div>
+    </div>
+    <div>
+        <div class="input-group-text me-5"><input type="checkbox" ng-model="$ctrl.props.doubleReview"
+                                                  ng-disabled="$ctrl.props.confirm" class="me-2">{{'udp.wc.intx.enable_double_review' | translate}}</div>
+    </div>
+    <label class="control-label w-auto">{{'udp.wc.intx.confirm_before_action' | translate}}</label>
+    <div class="form-control-wrapper ms-0">
+        <div class="input-group">
+            <div class="input-group-text"><input type="checkbox"
+                                                 ng-model="$ctrl.props.confirm" ng-disabled="$ctrl.props.doubleReview"></div>
+            <input type="text" class="form-control" ng-model="$ctrl.props.confirmText"
+                   ng-disabled="!$ctrl.props.confirm" placeholder="{{'udp.wc.intx.confirm_message'|translate}}">
+        </div>
+    </div>
+</div>
+<ul class="list list-inline" ng-sortable="$ctrl.sortableOptions" ng-model="$ctrl.props.actions">
+    <li ng-repeat="action in $ctrl.props.actions">
+        <div class="btn-group">
+            <button href="javascript:void(0);" class="btn"
+                    ng-class="$ctrl.currentAction===action?'btn-dark':'btn-default'"
+                    ng-click="$ctrl.currentAction=action;">
+                <i class="me-3 op-drag-handle fa {{$ctrl.actionDefs[action].icon}}"></i>
+                {{$ctrl.actionDefs[action].title || action}}
+            </button>
+            <button class="btn" ng-class="$ctrl.currentAction===action?'btn-dark':'btn-default'"
+                    ng-click="$ctrl.removeAction(action)">
+                <i class="far fa-times"></i>
+            </button>
+        </div>
+    </li>
+</ul>
+<fieldset ng-if="$ctrl.currentAction==='ajax'">
+    <legend>{{'udp.wc.intx.ajax.config_title' | translate}}</legend>
+    <udp-widget-interaction-ajax-config class="d-block" props="$ctrl.props"></udp-widget-interaction-ajax-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='link'">
+    <legend>{{'udp.wc.intx.link.config_title' | translate}}</legend>
+    <udp-widget-interaction-link-config class="d-block" props="$ctrl.props.link"></udp-widget-interaction-link-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='page'">
+    <legend>{{'udp.wc.intx.page.config_title' | translate}}</legend>
+    <udp-page-link-config class="d-block" props="$ctrl.props.page"></udp-page-link-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='job'">
+    <legend>{{'udp.wc.intx.job.config_title' | translate}}</legend>
+    <udp-widget-interaction-job-config class="d-block" props="$ctrl.props.job"></udp-widget-interaction-job-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='event'">
+    <legend>{{'udp.wc.intx.event.config_title' | translate}}</legend>
+    <udp-widget-interaction-event-config class="d-block" props="$ctrl.props.event"></udp-widget-interaction-event-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='func'">
+    <legend>{{'udp.wc.intx.func.config_title' | translate}}</legend>
+    <udp-widget-interaction-func-config class="d-block" props="$ctrl.props.func"></udp-widget-interaction-func-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='code'">
+    <legend>{{'udp.wc.intx.code.config_title' | translate}}</legend>
+    <udp-widget-interaction-code-config class="d-block" props="$ctrl.props.code"></udp-widget-interaction-code-config>
+</fieldset>
+<fieldset ng-if="$ctrl.currentAction==='param'">
+    <legend>{{'udp.wc.intx.param.config_title' | translate}}</legend>
+    <udp-page-params-config params-json="$ctrl.props.param.params" class="d-block w-100"></udp-page-params-config>
+    <div class="checkbox checkbox-inline">
+        <input type="checkbox" ng-model="$ctrl.props.param.changeUrl" id="wci_param_changeurl">
+        <label for="wci_param_changeurl">{{'udp.wc.intx.param.change_url' | translate}}</label>
+    </div>
+</fieldset>
+<div ng-if="$ctrl.varList.length>0" class="form-group">
+    <!--    <label class="control-label"></label>-->
+    <div class="form-control-wrapper">
+        <p class="help-block">{{'udp.wc.intx.var_support' | translate}}</p>
+        <ul class="list-unstyled">
+            <li ng-repeat="var in $ctrl.varList track by $index">
+                <code class="large">{{var.name}}</code>
+                <span>{{var.desc}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<fieldset ng-if="$ctrl.options.enableAutoActive">
+    <legend>{{'udp.wc.intx.default_activate' | translate}}</legend>
+    <div>
+        <div class="form-inline m-b">
+            <div class="checkbox checkbox-inline me-2">
+                <input type="checkbox" id="wci-abf" ng-model="$ctrl.props.activeByField.enabled">
+                <label for="wci-abf">{{'udp.wc.intx.activate_by_field' | translate}}</label>
+            </div>
+            <input type="text" class="form-control" ng-model="$ctrl.props.activeByField.field"
+                   ng-disabled="!$ctrl.props.activeByField.enabled"
+                   placeholder="{{'udp.wc.intx.activate_by_field_placeholder'|translate}}">
+            <span class="mx-2">{{'udp.wc.intx.activate_by_field_value' | translate}}</span>
+            <input type="text" class="form-control" ng-model="$ctrl.props.activeByField.value"
+                   ng-disabled="!$ctrl.props.activeByField.enabled"
+                   placeholder="{{'udp.wc.intx.activate_by_field_value_placeholder'|translate}}">
+            <span class="ms-2">{{'udp.wc.intx.activate_by_field_when' | translate}}</span>
+            <span op-help-info="{{'udp.wc.intx.activate_by_field_helpinfo'|translate}}"></span>
+        </div>
+        <div class="form-inline">
+            <div class="checkbox">
+                <input type="checkbox" id="wci-abi" ng-model="$ctrl.props.activeByIndex.enabled">
+                <label for="wci-abi">{{'udp.wc.intx.activate_by_record' | translate}}</label>
+            </div>
+            <input type="number" class="form-control mx-2" ng-model="$ctrl.props.activeByIndex.index"
+                   ng-disabled="!$ctrl.props.activeByIndex.enabled" style="width:5em;text-align: center;">
+            <span>{{'udp.wc.intx.activate_by_record_index' | translate}}</span>
+            <span op-help-info="{{'udp.wc.intx.activate_by_record_helpinfo'|translate}}"></span>
+        </div>
+    </div>
+</fieldset>

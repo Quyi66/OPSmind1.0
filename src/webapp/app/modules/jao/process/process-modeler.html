@@ -1,0 +1,219 @@
+<div class="h-100 scroll-y">
+    <div class="jao-pmd-canvas opx-flex-fill p-3" ng-class="$ctrl.options.canvasCss" ng-if="$ctrl.showElems==='diagram'">
+        <!--                    <button class="btn btn-sm btn-default opx-btn-icon" ng-click="$ctrl.drawLines()"><i-->
+        <!--                            class="far fa-sync-alt"></i></button>-->
+        <div class="jao-pmd-node-container"
+             ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.processModel.tasks">
+            <div ng-repeat="task in $ctrl.processModel.tasks track by $index"
+                 class="card jao-pmd-task-node"
+                 id="js-pm-tasknode-{{task.id}}"
+                 tabindex="-1"
+                 ng-class="{'active':$ctrl.selectedTaskNodes.indexOf($index)>=0}"
+                 ng-click="$ctrl.clickTaskNode(task,$index)">
+                <div class="card-header p-2 d-flex align-items-center">
+                    <i class="text-muted fal {{$ctrl.moduleDefs[task[task.type||'module'].name].icon}} fa-fw me-2"></i>
+                    <span>{{task.name}}</span>
+                    <span class="ms-auto small text-secondary">{{$ctrl.moduleDefs[task[task.type || 'module'].name].title}}</span>
+                </div>
+                <div class="card-body p-2 scroll-y">
+                    <div ng-repeat="(param,value) in task[task.type||'module'].params track by $index"
+                         class="small">
+                        <strong>{{param}}</strong>
+                        <div class="text-ellipsis" title="{{value}}">{{value}}</div>
+                    </div>
+                    <div ng-if="task.withHosts"><i class="far fa-fw fa-server"></i>
+                        <ul class="list-inline list-unstyled d-inline-block mb-0">
+                            <li ng-repeat="host in task.withHosts">
+                                <span class="badge bg-secondary">{{host}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-if="task.when" title="{{'jao.job.process.when' | translate}}"><i class="far fa-fw fa-filter"></i> <code
+                            class="">{{task.when}}</code></div>
+                    <div ng-if="task.outputVar" title="{{'jao.job.process.output_var' | translate}}"><i class="far fa-fw fa-brackets-curly"></i> <span
+                            class="badge bg-info">{{task.outputVar}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div id="jao-pmd-line-wrapper"></div>
+    </div>
+    <uib-tabset class="tab-container h-100" active="1" type="mdc-op" ng-if="$ctrl.showElems!=='diagram'">
+        <uib-tab index="2" ng-if="$ctrl.showElems.indexOf('inventory')>-1">
+            <uib-tab-heading><i class="far fa-server"></i> {{'jao.job.process.host_resource' | translate}}</uib-tab-heading>
+            <fieldset ng-disabled="$ctrl.options.readonly">
+                <div class="mb-3">
+                    <button class="btn btn-primary" ng-click="$ctrl.addServerGroup()"><i class="fa fa-plus"></i> {{'jao.job.process.create_group' | translate}}
+                    </button>
+                </div>
+                <div class="card mb-3" ng-repeat="group in $ctrl.processModel.inventory track by $index">
+                    <div class="card-header d-flex p-2 bg-light border-bottom">
+                        <input type="text" ng-model="group.group" class="form-control me-auto font-weight-bold">
+                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.removeServerGroup($index)" title="{{'jao.job.process.delete_group' | translate}}"><i
+                                class="fa fa-trash-alt"></i></button>
+                    </div>
+                    <div class="card-body p-3">
+                        <acm-device-selector the-model="group.hosts" mcheck-type="'map'"></acm-device-selector>
+                    </div>
+                </div>
+            </fieldset>
+        </uib-tab>
+        <uib-tab index="1">
+            <uib-tab-heading><i class="far fa-random"></i> {{'jao.common.flow' | translate}}</uib-tab-heading>
+            <div class="opx-layout-hflex">
+                <div class="jao-pmd-canvas opx-flex-fill p-3" ng-class="$ctrl.options.canvasCss">
+                    <!--                    <button class="btn btn-sm btn-default opx-btn-icon" ng-click="$ctrl.drawLines()"><i-->
+                    <!--                            class="far fa-sync-alt"></i></button>-->
+                    <div class="jao-pmd-node-container"
+                         ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.processModel.tasks">
+                        <div ng-repeat="task in $ctrl.processModel.tasks track by $index"
+                             class="card jao-pmd-task-node"
+                             id="js-pm-tasknode-{{task.id}}"
+                             tabindex="-1"
+                             ng-class="{'active':$ctrl.selectedTaskNodes.indexOf($index)>=0}"
+                             ng-click="$ctrl.clickTaskNode(task,$index)">
+                            <div class="card-header p-2 d-flex align-items-center">
+                                <i class="text-muted fal {{$ctrl.moduleDefs[task[task.type||'module'].name].icon}} fa-fw me-2"></i>
+                                <span>{{task.name}}</span>
+                                <span class="ms-auto small text-secondary">{{$ctrl.moduleDefs[task[task.type || 'module'].name].title}}</span>
+                            </div>
+                            <div class="card-body p-2 scroll-y">
+                                <div ng-repeat="(param,value) in task[task.type||'module'].params track by $index"
+                                     class="small">
+                                    <strong>{{param}}</strong>
+                                    <div class="text-ellipsis" title="{{value}}">{{value}}</div>
+                                </div>
+                                <div ng-if="task.withHosts"><i class="far fa-fw fa-server"></i>
+                                    <ul class="list-inline list-unstyled d-inline-block mb-0">
+                                        <li ng-repeat="host in task.withHosts">
+                                            <span class="badge bg-secondary">{{host}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div ng-if="task.when" title="{{'jao.job.process.when' | translate}}"><i class="far fa-fw fa-filter"></i> <code
+                                        class="">{{task.when}}</code></div>
+                                <div ng-if="task.outputVar" title="{{'jao.job.process.output_var' | translate}}"><i class="far fa-fw fa-brackets-curly"></i> <span
+                                        class="badge bg-info">{{task.outputVar}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="jao-pmd-line-wrapper"></div>
+                </div>
+                <fieldset ng-disabled="$ctrl.options.readonly" ng-if="$ctrl.showElems.indexOf('details')>-1">
+                    <div id="js-pm-task-detail" class="card ms-3 op-smartform" style="width:15rem;">
+                        <div class="card-header bg-light p-2" ng-if="!$ctrl.options.readonly">
+                            {{'jao.job.process.operate_settings' | translate}}
+                            <button class="btn btn-sm btn-primary opx-btn-icon opx-btn-flat" title="{{'jao.job.process.create_task' | translate}}"
+                                    ng-click="$ctrl.addTask()"><i
+                                    class="fa fa-plus"></i></button>
+                            <button class="btn btn-sm btn-danger opx-btn-icon opx-btn-flat" title="{{'jao.job.process.delete_task' | translate}}"
+                                    ng-click="$ctrl.removeTask()"><i
+                                    class="fa fa-trash-alt"></i></button>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="form-group">
+                                <label class="control-label">{{'common.entity.detail.name' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" ng-model="$ctrl.activeTask.name">
+                                </div>
+                            </div>
+                            <!--                <div class="form-group">-->
+                            <!--                    <label class="control-label">操作</label>-->
+                            <!--                    <div class="form-control-wrapper">-->
+                            <!--                        <select class="form-select" ng-model="$ctrl.activeTask.type">-->
+                            <!--                            <option value="module">调用模块</option>-->
+                            <!--                        </select>-->
+                            <!--                    </div>-->
+                            <!--                </div>-->
+                            <div class="form-group">
+                                <label class="control-label">{{'common.entity.detail.operation' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <select class="form-select" ng-model="$ctrl.activeTask.module.name"
+                                            ng-options="key as def.title + ' ('+key + ')' for (key,def) in $ctrl.moduleDefs">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'jao.job.process.operate_param' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <div class="w-full">
+                                        <div ng-repeat="(key,value) in $ctrl.moduleDefs[$ctrl.activeTask.module.name].params">
+                                            <span class="badge bg-secondary">{{key}}</span>
+                                            <input type="text" class="form-control"
+                                                   ng-model="$ctrl.activeTask.module.params[key]">
+                                            <p class="help-block">
+                                                {{$ctrl.moduleDefs[$ctrl.activeTask.module.name].params[key].desc}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'jao.job.process.output_var' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" ng-model="$ctrl.activeTask.outputVar">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'jao.job.process.when' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" ng-model="$ctrl.activeTask.when">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-control-wrapper">
+                                    <div class="checkbox checkbox-primary">
+                                        <input type="checkbox" ng-model="$ctrl.activeTask.ignoreErrors"
+                                               id="pd-task-ignoreerror">
+                                        <label for="pd-task-ignoreerror">{{'jao.job.process.ignore_error' | translate}}</label>
+                                    </div>
+                                    <div class="checkbox checkbox-primary ms-5">
+                                        <input type="checkbox" ng-model="$ctrl.activeTask.runOnce"
+                                               id="pd-task-runonce">
+                                        <label for="pd-task-runonce">{{'jao.job.process.run_once' | translate}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'jao.job.process.operate_resource' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <select op-select multiple class="form-select" ng-disabled="$ctrl.options.readonly"
+                                            ng-model="$ctrl.activeTask.withHosts"
+                                            ng-options="item.group as item.group for item in $ctrl.processModel.inventory">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </uib-tab>
+        <!--    <uib-tab>-->
+        <!--        <uib-tab-heading><i class="far fa-brackets-curly"></i> 参数</uib-tab-heading>-->
+        <!--        <op-param-table param-list="$ctrl.processModel.params"></op-param-table>-->
+        <!--        <pre>{{$ctrl.processModel.params | json}}</pre>-->
+        <!--    </uib-tab>-->
+        <uib-tab ng-if="$ctrl.showElems.indexOf('source')>-1">
+            <uib-tab-heading><i class="far fa-code"></i> Source</uib-tab-heading>
+            <pre class="bg-light p-3">{{$ctrl.processModel | json}}</pre>
+        </uib-tab>
+        <uib-tab heading="Playbook" ng-if="$ctrl.showElems.indexOf('playbook')>-1">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">site.yml</div>
+                        <div class="card-body">
+                            <pre>{{$ctrl.generatedPlaybook}}</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card col">
+                        <div class="card-header">hosts</div>
+                        <div class="card-body">
+                            <pre>{{$ctrl.generatedInventory}}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>

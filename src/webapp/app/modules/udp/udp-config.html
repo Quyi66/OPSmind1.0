@@ -1,0 +1,27 @@
+<div class="p-3">
+    <div class="card">
+        <div class="card-header"> {{'udp.config.module_setting' | translate}}</div>
+        <div class="card-body op-smartform form-horizontal">
+            <div class="form-group">
+                <label class="control-label">{{'udp.config.restricted_mode'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-inline checkbox-primary">
+                        <input type="checkbox" ng-model="$ctrl.config.restrictedMode" id="uc_restrictedmode"><label
+                            for="uc_restrictedmode"></label>
+                        <p class="help-block">{{'udp.config.restricted_mode_desc'|translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'udp.config.dev_mode'|translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="checkbox checkbox-inline checkbox-primary">
+                        <input type="checkbox" ng-model="$ctrl.config.devMode" id="uc_devmode"><label
+                            for="uc_devmode"></label>
+                        <p class="help-block">{{'udp.config.dev_mode_desc'|translate}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

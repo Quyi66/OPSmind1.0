@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label class="control-label" for="js-wilcp-url">URL</label>
+    <div class="form-control-wrapper">
+        <!--<input id="js-wilcp-url" type="text" class="form-control" ng-model="$ctrl.props.url">-->
+        <udp-data-converter id="js-wilcp-url" the-model="$ctrl.props.url" options="{kinds:'str'}" class="op-w-full"></udp-data-converter>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.intx.link.target'|translate}}</label>
+    <div class="form-control-wrapper">
+        <select class="form-select op-w-sm" ng-model="$ctrl.props.target">
+            <option value="">{{'udp.wc.intx.link.target_new'|translate}}</option>
+            <option value="dialog">{{'udp.wc.intx.link.target_dialog'|translate}}</option>
+        </select>
+    </div>
+</div>

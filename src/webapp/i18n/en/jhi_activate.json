@@ -1,0 +1,5 @@
+{
+    "jhi_activate.title": "Enable",
+    "jhi_activate.messages.success": "<strong>Your account is enabled.</strong> Please <a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">Login</a>.",
+    "jhi_activate.messages.error": "<strong>Your account cannot be activated.</strong> Please sign up again."
+}

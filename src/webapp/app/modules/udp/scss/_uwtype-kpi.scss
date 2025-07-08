@@ -1,0 +1,148 @@
+// Customized widgets
+$uw-kpi-text-padding: 32px;
+$uw-kpi-title-size: 30px;
+$uw-kpi-icon-size: 40px;
+$uw-kpi-icon-hover-size: $uw-kpi-icon-size*1.25;
+$uw-kpi-padding: 8px;
+
+.list-group-item {
+  &.notmatch {
+    //opacity: 0.1;
+    display: none;
+  }
+}
+
+.udp-kpi-list {
+  > div {
+    &:not(:last-child) {
+     //padding-right:8px;
+    }
+  }
+}
+
+.udp-kpi-card {
+  border: 0;
+  border-radius: 2px;
+  padding: $uw-kpi-padding;
+  margin-bottom: $uw-kpi-padding;
+  position: relative;
+  min-height: 56px;
+
+  &.active {
+    box-shadow: $op-component-active-box-shadow;
+  }
+
+  &.notmatch {
+    opacity: 0.1;
+  }
+
+  &.udp-kpi-card-h {
+    text-align: center;
+
+    .kpi-text {
+      display: inline-block;
+      margin-right: 0.5em;
+      vertical-align: middle;
+    }
+
+    .kpi-title {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .popover-content {
+    max-height: 160px;
+    overflow-y: auto;
+  }
+
+  .kpi-text {
+    margin: 4px 0;
+  }
+
+  .kpi-title, .kpi-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: $uw-kpi-text-padding;
+  }
+
+  .popover {
+    color: #333;
+
+    a {
+      color: $link-color !important;
+    }
+  }
+
+  .kpi-title {
+    font-size: $uw-kpi-title-size;
+  }
+
+  .kpi-icon {
+    opacity: 0.5;
+    position: absolute;
+    top: $uw-kpi-padding;
+    right: $uw-kpi-padding;
+    //float: right;
+    i {
+      font-size: $uw-kpi-icon-size;
+    }
+  }
+
+  &:hover .kpi-icon .fa {
+    font-size: $uw-kpi-icon-hover-size;
+    transition-duration: 400ms;
+    transition-property: font-size;
+  }
+
+  // Layout
+  &.udp-kpi-icon-left {
+    .kpi-title, .kpi-text {
+      text-align: right;
+      padding-right: 0;
+      padding-left: $uw-kpi-text-padding;
+    }
+
+    .kpi-icon {
+      right: auto;
+      left: $uw-kpi-padding;
+      //float:left;
+    }
+  }
+
+  &.udp-kpi-icon-center {
+    .kpi-icon {
+      position: relative;
+      text-align: center;
+      right: auto;
+      top: auto;
+      height: $uw-kpi-icon-hover-size;
+    }
+
+    .kpi-title, .kpi-text {
+      text-align: center;
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
+  &.udp-kpi-icon-none {
+    .kpi-title, .kpi-text {
+      //20200624: Do not force align center
+      //text-align: center;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .kpi-icon {
+      display: none;
+    }
+  }
+
+  &.bg-black, &.bg-dark {
+    a {
+      color: white;
+    }
+  }
+}

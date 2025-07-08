@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <h4 class="modal-title">#{udp.w.datatable.exfilter.title}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="vm.cancel()"></button>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label class="control-label">#{udp.w.datatable.exfilter.type}</label>
+        <div class="form-control-wrapper">
+            <select ng-model="vm.filter.type" class="form-select w-sm">
+                <option value="precise">#{udp.w.datatable.exfilter.type_precise}</option>
+                <option value="fuzzy">#{udp.w.datatable.exfilter.type_fuzzy}</option>
+            </select>
+        </div>
+        <div class="form-control-wrapper">
+            <div class="checkbox">
+                <input type="checkbox" ng-model="vm.filter.case" id="dfm-case"><label for="dfm-case">#{udp.w.datatable.exfilter.case}</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">#{udp.w.datatable.exfilter.column}</label>
+        <div class="form-control-wrapper">
+            <select class="form-select w-sm"
+                    ng-options="col.index as col.title for col in ::vm.columns"
+                    ng-model="vm.filter.column"></select>
+        </div>
+    </div>
+    <!--<div class="form-group">-->
+    <!--<input type="text" ng-model="vm.type">-->
+    <!--</div>-->
+    <div class="form-group">
+        <label class="control-label">#{udp.w.datatable.exfilter.content}</label>
+        <div class="form-control-wrapper">
+            <textarea class="form-control" rows="8" ng-model="vm.filter.content"></textarea>
+            <p class="help-block">#{udp.w.datatable.exfilter.content_desc}</p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <!--<button class="btn btn-default" type="button" ng-click="vm.cancel()">{{'common.action.cancel'|translate}}</button>-->
+    <button class="btn btn-primary" type="submit" ng-click="vm.confirm()"><i class="fa fa-check"></i> #{udp.w.datatable.exfilter.enable_filter}</button>
+    <button class="btn btn-default" type="button" ng-click="vm.clearCustomFilter()"><i class="fa fa-times"></i> #{udp.w.datatable.exfilter.clear_filter}
+    </button>
+</div>

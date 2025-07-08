@@ -1,0 +1,183 @@
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.dataset.type' | translate}}</label>
+    <div class="form-control-wrapper">
+        <select class="form-select op-w-sm" ng-model="$ctrl.theModel._type">
+            <option value="">{{'udp.wc.dataset.type_normal' | translate}}</option>
+            <option value="joinx">{{'udp.wc.dataset.type_joinx' | translate}}</option>
+            <option value="datax">{{'udp.wc.dataset.type_datax' | translate}}</option>
+            <option value="datamodel">{{'udp.wc.dataset.type_datamodel' | translate}}</option>
+        </select>
+        <!-- <button type="button" class="btn btn-default ms-auto" ng-click="$ctrl.testDataset()">
+            {{'udp.wc.dataset.test' | translate}}
+        </button> -->
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.theModel._type === ''">
+    <label class="control-label">{{'udp.wc.dataset.dataset' | translate}}</label>
+    <div class="form-control-wrapper">
+        <!--Also important: if your ngModel is null or undefined, you must manually
+        include an empty <option value=""></option> inside your <select>,
+        otherwise you'll encounter strange off-by-one errors-->
+        <div class="input-group op-w-full">
+            <select op-select class="form-select"
+                    style="width:calc(100% - 2*32px)"
+                    ng-model="$ctrl.theModel.id"
+                    ng-change="$ctrl.confirmChange()">
+                <option ng-repeat="ds in $ctrl.datasets | orderBy:'name'" value="{{ds.code}}">{{ds.name}}</option>
+            </select>
+            <span class="input-group-append"><button type="button" class="btn btn-outline-default opx-btn-icon"
+                                                     title="{{'udp.wc.dataset.edit_dataset'|translate}}"
+                                                     ng-click="$ctrl.editDataset()"><i
+                    class="fa fa-pencil"></i></button></span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group" ng-if="$ctrl.theModel._type === 'datamodel'">
+    <label class="control-label">{{'udp.wc.dataset.type_datamodel' | translate}}</label>
+    <div class="form-control-wrapper">
+        <!--Also important: if your ngModel is null or undefined, you must manually
+        include an empty <option value=""></option> inside your <select>,
+        otherwise you'll encounter strange off-by-one errors-->
+        <div class="input-group op-w-full">
+            <select op-select class="form-select"
+                    style="width:calc(100% - 2*32px)"
+                    ng-model="$ctrl.theModel.id"
+                    ng-change="$ctrl.confirmChange()">
+                <option ng-repeat="dc in $ctrl.datamodels | orderBy:'title'" value="{{dc.code}}">{{dc.title}}</option>
+            </select>
+            <span class="input-group-append"><button type="button" class="btn btn-outline-default opx-btn-icon"
+                                                     title="{{'udp.wc.dataset.edit_dataset'|translate}}"
+                                                     ng-click="$ctrl.editDatamodel()"><i
+                    class="fa fa-pencil"></i></button></span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label" for="wcd_eventforrefresh"
+           op-help-info="{{'udp.wc.dataset.event_refresh_helpinfo'|translate}}">{{'udp.wc.dataset.event_refresh' | translate}}
+    </label>
+    <div class="form-control-wrapper">
+        <input type="text" ng-model="$ctrl.theModel.eventtorefresh" class="form-control op-w-sm me-3"
+               id="wcd_eventforrefresh">
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.options.allowServerPage">
+    <!--<div class="form-group" ng-if="false">-->
+    <label class="control-label">{{'udp.wc.dataset.data_process' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="dropdown">
+            <button type="button" class="btn btn-default opx-btn-flat" data-bs-toggle="dropdown"
+                    op-help-info="{{'udp.wc.dataset.data_trans_helpinfo'|translate}}">
+                {{'udp.wc.dataset.data_trans' | translate}}
+                <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu op-append-to-body">
+                <a class="dropdown-item"
+                   ng-click="$ctrl.theModel.trans.mode=undefined">{{'udp.wc.dataset.data_process_trans_none' | translate}}</a>
+                <a class="dropdown-item"
+                   ng-click="$ctrl.theModel.trans.mode='valcol'">{{'udp.wc.dataset.data_trans_valcol' | translate}}</a>
+                <a class="dropdown-item"
+                   ng-click="$ctrl.theModel.trans.mode='rotate'">{{'udp.wc.dataset.data_trans_rotate' | translate}}</a>
+            </div>
+        </div>
+        <div class="checkbox checkbox-primary ms-3" ng-if="!$ctrl.theModel._type || $ctrl.theModel._type==='code'">
+            <input type="checkbox" id="wcd_serverpage"
+                   ng-model="$ctrl.theModel.serverPage"><label for="wcd_serverpage"
+                                                               op-help-info="{{'udp.wc.dataset.serverside_helpinfo'|translate}}">{{'udp.wc.dataset.serverside' | translate}}</label>
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.theModel.trans.mode" class="op-form-subgroup">
+    <table class="table op-param-table" ng-if="$ctrl.theModel.trans.mode==='rotate'">
+        <thead>
+        <tr>
+            <th>{{'udp.wc.dataset.rotate.pk_field' | translate}}<span
+                    op-help-info="{{'udp.wc.dataset.rotate.pk_field_desc'|translate}}"></span></th>
+            <th>{{'udp.wc.dataset.rotate.new_pk_field' | translate}}<span op-help-info=""></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <udp-dsfield-selector options="{disableConverter:true,fieldNameAsModel:true}"
+                                      fields="$ctrl.selectedDs.fields"
+                                      the-model="$ctrl.theModel.trans.rotate.oldKeyCol"></udp-dsfield-selector>
+            </td>
+            <td>
+                <input type="text" class="form-control" ng-model="$ctrl.theModel.trans.rotate.newKeyCol">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table op-param-table" ng-if="$ctrl.theModel.trans.mode==='valcol'">
+        <thead>
+        <tr>
+            <th>{{'udp.wc.dataset.valcol.pk_field' | translate}}<span
+                    op-help-info="{{'udp.wc.dataset.valcol.pk_field_desc'|translate}}"></span></th>
+            <th>{{'udp.wc.dataset.valcol.col_field' | translate}}<span
+                    op-help-info="{{'udp.wc.dataset.valcol.col_field_desc'|translate}}"></span></th>
+            <th>{{'udp.wc.dataset.valcol.value_field' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <udp-dsfield-selector options="{disableConverter:true,fieldNameAsModel:true}"
+                                      fields="$ctrl.selectedDs.fields"
+                                      the-model="$ctrl.theModel.trans.valcol.keyAs"></udp-dsfield-selector>
+            </td>
+            <td>
+                <udp-dsfield-selector options="{disableConverter:true,fieldNameAsModel:true}"
+                                      fields="$ctrl.selectedDs.fields"
+                                      the-model="$ctrl.theModel.trans.valcol.colAs"></udp-dsfield-selector>
+            </td>
+            <td>
+                <udp-dsfield-selector options="{disableConverter:true,fieldNameAsModel:true}"
+                                      fields="$ctrl.selectedDs.fields"
+                                      the-model="$ctrl.theModel.trans.valcol.valAs"></udp-dsfield-selector>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group" ng-if="$ctrl.options.allowClientLimit">
+    <label class="control-label col-sm-2">{{'udp.wc.dataset.record_limit' | translate}}</label>
+    <div class="col-sm-4 col-md-4">
+        <input type="number" class="form-control" ng-model="$ctrl.theModel.limit" min="0">
+        <p class="help-block">{{'udp.wc.dataset.record_limit_helpinfo' | translate}}</p>
+    </div>
+</div>
+<fieldset ng-if="$ctrl.theModel._type==='joinx'">
+    <legend>{{'udp.wc.dataset.type_joinx' | translate}}</legend>
+    <udp-widget-config-dataset-joinx the-model="$ctrl.theModel.joinx" params="$ctrl.theModel.params"
+                                     selected-ds="$ctrl.selectedDs"
+                                     class="d-block"
+                                     datasets="$ctrl.datasets"></udp-widget-config-dataset-joinx>
+</fieldset>
+<fieldset ng-if="$ctrl.theModel._type==='datax'">
+    <legend>{{'udp.wc.dataset.type_datax' | translate}}</legend>
+    <udp-widget-config-dataset-datax the-model="$ctrl.theModel.datax"
+                                     class="d-block"
+                                     selected-ds="$ctrl.selectedDs"></udp-widget-config-dataset-datax>
+</fieldset>
+<fieldset ng-if="!$ctrl.options.disableParams">
+    <legend>{{'udp.wc.dataset.params' | translate}}</legend>
+    <div class="form-group" ng-if="$ctrl.selectedDs.paramsConfig | isNotEmpty">
+        <label class="control-label">{{'udp.wc.dataset.params_display' | translate}}</label>
+        <div class="form-control-wrapper">
+            <select class="form-select w-sm" ng-model="$ctrl.theModel.paramView">
+                <option value="">{{'udp.wc.dataset.params_display_default' | translate}}</option>
+                <option value="hidden">{{'udp.wc.dataset.params_display_hidden' | translate}}</option>
+                <option value="dropdown">{{'udp.wc.dataset.params_display_dropdown' | translate}}</option>
+            </select>
+            <div class="checkbox checkbox-primary ms-3">
+                <input type="checkbox" ng-model="$ctrl.theModel.refreshBtn" id="wcd_refreshbtn"><label
+                    for="wcd_refreshbtn">{{'udp.wc.dataset.params_refresh' | translate}}</label>
+            </div>
+        </div>
+    </div>
+    <udp-params-control-config the-model="$ctrl.theModel.params"
+                               params-config="$ctrl.selectedDs.paramsConfig"></udp-params-control-config>
+</fieldset>

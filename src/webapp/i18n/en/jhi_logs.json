@@ -1,0 +1,7 @@
+{
+    "jhi_logs.title": "Log",
+    "jhi_logs.nbloggers": "{{ total }} total logs.",
+    "jhi_logs.filter": "Filter",
+    "jhi_logs.table.name": "Name",
+    "jhi_logs.table.level": "Level"
+}

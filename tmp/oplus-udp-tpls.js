@@ -1,0 +1,6693 @@
+//HEAD 
+(function(app) {
+try { app = angular.module("oplus.udp"); }
+catch(err) { app = angular.module("oplus.udp", []); }
+app.run(["$templateCache", function($templateCache) {
+"use strict";
+
+$templateCache.put("app/modules/udp/assets/templates/apppage.html","<uwidget uw-type=\"pageheader\" id=\"w-16342832217511\">\n" +
+    "    <div class=\"form-inline ms-auto uw-include-container op-pageheader-actions\" data-uw-placeholder=\"actions\"></div>\n" +
+    "</uwidget>\n" +
+    "<div widget-layout=\"layout-flex\" id=\"w-15871236103733\" uw-type=\"layout-flex\" uw-props=\"{&quot;display&quot;:{&quot;css&quot;:&quot;p-3&quot;}}\"></div>")
+
+$templateCache.put("app/modules/udp/assets/templates/blank.html","<div widget-layout=\"layout-flex\" id=\"w-15871236103733\" uw-type=\"layout-flex\"></div>")
+
+$templateCache.put("app/modules/udp/assets/templates/leftright.html","<div widget-layout=\"layout-flex\" id=\"w-15868656930693\" uw-type=\"layout-flex\" uw-props=\"{&quot;display&quot;:{&quot;cardMode&quot;:false,&quot;theme&quot;:&quot;light&quot;,&quot;height&quot;:&quot;100%&quot;,&quot;css&quot;:&quot;&quot;},&quot;span&quot;:&quot;12&quot;,&quot;css&quot;:&quot;h-100 bg-secondary&quot;,&quot;flex&quot;:{&quot;direction&quot;:&quot;flex-row&quot;,&quot;alignV&quot;:&quot;top&quot;}}\">\n" +
+    "    <div widget-layout=\"layout-flex\" id=\"w-15868656053151\" uw-type=\"layout-flex\" uw-props=\"{&quot;span&quot;:&quot;2&quot;,&quot;display&quot;:{&quot;cardMode&quot;:false,&quot;css&quot;:&quot;bg-light border-right h-100&quot;,&quot;width&quot;:&quot;15rem&quot;}}\">\n" +
+    "    </div>\n" +
+    "    <div widget-layout=\"layout-flex\" id=\"w-15868656754132\" uw-type=\"layout-flex\" uw-props=\"{&quot;span&quot;:&quot;10&quot;,&quot;display&quot;:{&quot;cardMode&quot;:false,&quot;css&quot;:&quot;p-3 bg-white&quot;,&quot;height&quot;:&quot;100%&quot;,&quot;width&quot;:&quot;fill&quot;},&quot;flex&quot;:{&quot;direction&quot;:&quot;flex-row&quot;}}\">\n" +
+    "        <uwidget uw-type=\"datatable\" id=\"w-15869320459421\" uw-props=\"{&quot;fields&quot;:[{&quot;field&quot;:&quot;name&quot;},{&quot;field&quot;:&quot;value&quot;}],&quot;display&quot;:{&quot;rules&quot;:[],&quot;cellrules&quot;:[]},&quot;dataset&quot;:{&quot;_type&quot;:&quot;datax&quot;,&quot;datax&quot;:{&quot;metaparams&quot;:{},&quot;expr&quot;:&quot;yaml:- name: \\&quot;AAA\\&quot;\\n  value: \\&quot;AAA\\&quot;&quot;,&quot;metafields&quot;:&quot;yaml:name: AAA\\nvalue: AAA\\n&quot;},&quot;params&quot;:[]}}\"></uwidget>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/helper/button-state-config.html","<div class=\"form-group\">\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "            <input type=\"checkbox\" id=\"bsc_enabled\" ng-model=\"$ctrl.theModel.enabled\">\n" +
+    "            <label for=\"bsc_enabled\"\n" +
+    "                   op-help-info=\"{{'udp.wc.state.enable_sc_helpinfo'|translate}}\">{{'udp.wc.state.enable_sc' | translate}}</label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<fieldset ng-disabled=\"!$ctrl.theModel.enabled\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.state.expr' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <input type=\"text\" ng-model=\"$ctrl.theModel.allow\" class=\"form-control code\">\n" +
+    "            <div class=\"help-block\">\n" +
+    "                <div ng-bind-html=\"'udp.wc.state.expr_desc'|translate\"></div>\n" +
+    "                <details>\n" +
+    "                    <summary href=\"\" class=\"text-primary\">{{'udp.wc.state.expr_example' | translate}}\n" +
+    "                    </summary>\n" +
+    "                    <div ng-bind-html=\"'udp.wc.state.expr_example_detail'|translate\">\n" +
+    "                    </div>\n" +
+    "                </details>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.state.expr_failed' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <div class=\"radio radio-inline radio-primary\">\n" +
+    "                <input type=\"radio\" name=\"state\" ng-model=\"$ctrl.theModel.state\" value=\"\" id=\"bsc_statedefault\"><label\n" +
+    "                    for=\"bsc_statedefault\">{{'udp.wc.state.expr_failed_hide' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"radio radio-inline radio-primary\">\n" +
+    "                <input type=\"radio\" name=\"state\" ng-model=\"$ctrl.theModel.state\" value=\"disabled\"\n" +
+    "                       id=\"bsc_statedisabled\"><label\n" +
+    "                    for=\"bsc_statedisabled\">{{'udp.wc.state.expr_failed_disable' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/button-style-config.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"f_label\">{{'udp.wc.button.label' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input class=\"form-control w-sm\" ng-model=\"$ctrl.editCopy.label\" id=\"f_label\" maxlength=\"100\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.button.icon' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <op-iconpicker ng-model=\"$ctrl.editCopy.icon\" class=\"me-2\"></op-iconpicker>\n" +
+    "        <select class=\"form-select d-inline-block\" ng-model=\"$ctrl.editCopy.layout\" style=\"width:8rem;\"\n" +
+    "                ng-options=\"layout.value as layout.title for layout in $ctrl.buttonLayouts\">\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'common.term.color' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-theme-selector the-model=\"$ctrl.editCopy.color\" model-type=\"string\"></udp-theme-selector>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'common.term.size' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select class=\"form-select w-sm\" ng-options=\"size.value as size.title for size in $ctrl.buttonSizes\"\n" +
+    "                ng-model=\"$ctrl.editCopy.size\"></select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'common.term.style' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select class=\"form-select\" op-select style=\"width:100%;\" multiple ng-model=\"$ctrl.editCopy.buttonStyles\"\n" +
+    "                ng-options=\"style.value as style.title for style in $ctrl.availButtonStyles\">\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/color-picker.html","<span style=\"xvertical-align: top;display:inline-block;\"><input class=\"form-control\"/></span>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/css-editor.html","<div class=\"dropdown\">\n" +
+    "    <button type=\"button\" class=\"btn\"\n" +
+    "            ng-class=\"($ctrl.selectedCss|anysize) >0?'btn-primary':'btn-default'\" data-bs-toggle=\"dropdown\"  data-bs-auto-close=\"outside\" opx-popdrop>\n" +
+    "        {{'common.term.style'|translate}} {{$ctrl.selectedCss | anysize}} <span class=\"caret\"></span>\n" +
+    "    </button>\n" +
+    "    <div class=\"dropdown-menu p-3 __js-inside-click\" style=\"width:30rem;z-index:100000;\">\n" +
+    "        <div ng-repeat=\"(groupName, cssGroup) in $ctrl.availCssGroups\">\n" +
+    "            <h5>{{cssGroup.label}}</h5>\n" +
+    "            <ul class=\"list list-inline list-unstyled\">\n" +
+    "                <li ng-repeat=\"def in cssGroup.list\" class=\"mb-2 me-2\">\n" +
+    "                    <span class=\"udp-css-chip {{def.previewCss||def.cssClass}}\" ng-class=\"{'selected':$ctrl.selectedCss[def.cssClass]}\"\n" +
+    "                       ng-click=\"$ctrl.toggleCss(def.cssClass)\">{{def.desc}}</span>\n" +
+    "                </li>\n" +
+    "            </ul>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/helper/data-converter-config-modal.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">{{'udp.dataex.title' | translate}}</h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"opx-layout-vflex\">\n" +
+    "        <div class=\"mb-2\">\n" +
+    "            <div class=\"__btn-group\">\n" +
+    "                <label class=\"btn btn-outline-default\" ng-model=\"vm.kind\" uib-btn-radio=\"vm.kinds.JS\"\n" +
+    "                       ng-if=\"vm.enabledKinds[vm.kinds.JS]\"><i class=\"fa fa-function\"></i>\n" +
+    "                    {{'udp.dataex.type.js' | translate}}</label>\n" +
+    "                <label class=\"btn btn-outline-default\" ng-model=\"vm.kind\" uib-btn-radio=\"vm.kinds.YAML\"\n" +
+    "                       ng-if=\"vm.enabledKinds[vm.kinds.YAML]\"><i class=\"fa fa-list\"></i>\n" +
+    "                    {{'udp.dataex.type.yaml' | translate}}</label>\n" +
+    "                <label class=\"btn btn-outline-default\" ng-model=\"vm.kind\" uib-btn-radio=\"vm.kinds.JSON\"\n" +
+    "                       ng-if=\"vm.enabledKinds[vm.kinds.JSON]\"><i class=\"fa fa-brackets-curly\"></i>\n" +
+    "                    {{'udp.dataex.type.json' | translate}}</label>\n" +
+    "                <label class=\"btn btn-outline-default\" ng-model=\"vm.kind\" uib-btn-radio=\"vm.kinds.STR\"\n" +
+    "                       ng-if=\"vm.enabledKinds[vm.kinds.STR]\"><i class=\"fa fa-font\"></i>\n" +
+    "                    {{'udp.dataex.type.str' | translate}}</label>\n" +
+    "                <label class=\"btn btn-outline-default\" ng-model=\"vm.kind\" uib-btn-radio=\"vm.kinds.LINK\"\n" +
+    "                       ng-if=\"vm.enabledKinds[vm.kinds.LINK]\"><i class=\"fa fa-link\"></i>\n" +
+    "                    {{'udp.dataex.type.link' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"vm.kind===vm.kinds.JS && vm.enabledKinds[vm.kinds.JS]\" class=\"opx-flex-fill opx-layout-vflex\">\n" +
+    "            <p ng-bind-html=\"'udp.dataex.js.desc'|translate\"></p>\n" +
+    "            <div ng-include=\"'udp-widget-var-desc.html'\" class=\"mb-3\"></div>\n" +
+    "            <op-code-editor the-model=\"vm.convertFn\" options=\"{syntax:'javascript'}\" class=\"opx-flex-fill\"\n" +
+    "                            on-loaded=\"vm.codemirrorLoaded\"></op-code-editor>\n" +
+    "            <div class=\"form-inline mt-2\">\n" +
+    "                <label class=\"control-label me-3\">{{'udp.dataex.js.func_list' | translate}}</label>\n" +
+    "                <div class=\"input-group w-50\">\n" +
+    "                    <select op-select ng-options=\"fn as fnName for (fnName,fn) in ::vm.funcList\"\n" +
+    "                            ng-model=\"vm.selectedFn\"\n" +
+    "                            class=\"form-control\"></select>\n" +
+    "                    <div class=\"input-group-append\">\n" +
+    "                        <button type=\"button\" class=\"btn btn-outline-default\" ng-click=\"vm.insertFunction()\"\n" +
+    "                                title=\"{{'udp.dataex.js.insert_func'|translate}}\"><i\n" +
+    "                                class=\"fa fa-plus\"></i></button>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"m-t-sm\" ng-if=\"vm.selectedFn\" style=\"max-height:200px;overflow-y:auto;\">\n" +
+    "                <p><strong>{{'common.term.usage' | translate}}</strong> <code\n" +
+    "                        ng-if=\"vm.selectedFn.sample\">{{vm.selectedFn.sample}}</code></p>\n" +
+    "                <p><span ng-bind-html=\"vm.selectedFn.desc\"></span></p>\n" +
+    "                <div ng-if=\"vm.selectedFn.params.length>0\">\n" +
+    "                    <p><strong>{{'common.term.parameter' | translate}}</strong></p>\n" +
+    "                    <table class=\"table table-sm\">\n" +
+    "                        <tbody>\n" +
+    "                        <tr ng-repeat=\"param in vm.selectedFn.params track by $index\">\n" +
+    "                            <td><code>{{param.name}}</code></td>\n" +
+    "                            <td><span class=\"code badge bg-secondary\">{{param.type}}</span></td>\n" +
+    "                            <td><span ng-bind-html=\"param.desc\"></span></td>\n" +
+    "                        </tr>\n" +
+    "                        </tbody>\n" +
+    "                    </table>\n" +
+    "                </div>\n" +
+    "                <div ng-if=\"vm.selectedFn.returns\">\n" +
+    "                    <p><strong>{{'common.term.return_value' | translate}}</strong></p>\n" +
+    "                    <span class=\"code badge bg-secondary\">{{vm.selectedFn.returns.type}}</span>\n" +
+    "                    <span ng-bind-html=\"vm.selectedFn.returns.desc\"></span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"vm.kind===vm.kinds.YAML && vm.enabledKinds[vm.kinds.YAML]\" class=\"opx-flex-fill opx-layout-vflex\">\n" +
+    "            <div ng-include=\"'udp-widget-var-desc.html'\" class=\"mb-3\"></div>\n" +
+    "            <op-code-editor the-model=\"vm.convertFn\" options=\"{syntax:'yaml'}\"\n" +
+    "                            class=\"opx-flex-fill\"></op-code-editor>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"vm.kind===vm.kinds.JSON && vm.enabledKinds[vm.kinds.JSON]\" class=\"opx-flex-fill opx-layout-vflex\">\n" +
+    "            <div ng-include=\"'udp-widget-var-desc.html'\" class=\"mb-3\"></div>\n" +
+    "            <op-code-editor the-model=\"vm.convertFn\" options=\"{syntax:'json'}\"\n" +
+    "                            class=\"opx-flex-fill\"></op-code-editor>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"vm.kind===vm.kinds.STR && vm.enabledKinds[vm.kinds.STR]\" class=\"opx-flex-fill opx-layout-vflex\">\n" +
+    "            <p class=\"mb-3\" ng-bind-html=\"'udp.dataex.str.desc'|translate\"></p>\n" +
+    "            <div ng-include=\"'udp-widget-var-desc.html'\" class=\"mb-3\"></div>\n" +
+    "            <op-code-editor the-model=\"vm.convertFn\" options=\"{syntax:'htmlmixed'}\"\n" +
+    "                            class=\"opx-flex-fill\"></op-code-editor>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"vm.kind===vm.kinds.LINK && vm.enabledKinds[vm.kinds.LINK]\"\n" +
+    "             class=\"opx-flex-fill opx-layout-vflex op-smartform form-horizontal\">\n" +
+    "            <div class=\"d-flex\">\n" +
+    "                <ul class=\"nav nav-pills wrapper-xs bg-light me-auto\" ng-sortable ng-model=\"vm.pageLinks\">\n" +
+    "                    <li ng-repeat=\"link in vm.pageLinks track by $index\" class=\"me-3\">\n" +
+    "                        <div class=\"btn btn-sm btn-default\" ng-class=\"{'active':vm.current.index===$index}\"\n" +
+    "                             ng-click=\"vm.selectPageLink($index)\">{{link.display.label || '&nbsp;&nbsp;'}}\n" +
+    "                            <a ng-click=\"vm.removePageLink($index)\"\n" +
+    "                               title=\"{{'common.action.delete'|translate}}\"><i class=\"fa fa-times\"></i></a></div>\n" +
+    "                    </li>\n" +
+    "                </ul>\n" +
+    "                <button type=\"button\" class=\"btn btn-sm btn-outline-primary\" ng-click=\"vm.addPageLink()\"><i\n" +
+    "                        class=\"fa fa-plus\"></i>\n" +
+    "                    {{'udp.dataex.link.add_button' | translate}}\n" +
+    "                </button>\n" +
+    "            </div>\n" +
+    "            <uib-tabset class=\"tab-container\" type=\"mdc-op\" justified=\"true\" ng-if=\"vm.current.item\">\n" +
+    "                <uib-tab>\n" +
+    "                    <uib-tab-heading><i class=\"fa fa-font\"></i> {{'common.term.style' | translate}}\n" +
+    "                    </uib-tab-heading>\n" +
+    "                    <udp-button-style-config ng-model=\"vm.current.item.display\"></udp-button-style-config>\n" +
+    "                </uib-tab>\n" +
+    "                <uib-tab>\n" +
+    "                    <uib-tab-heading><i class=\"fa fa-random\"></i> {{'common.term.interaction' | translate}}\n" +
+    "                    </uib-tab-heading>\n" +
+    "                    <div ng-repeat=\"item in vm.pageLinks track by $index\" ng-if=\"$index===vm.current.index\">\n" +
+    "                        <udp-widget-config-interaction the-model=\"item.interaction\"\n" +
+    "                                                       options=\"{supports:'page,param,ajax,job,event,link,func,code'}\"></udp-widget-config-interaction>\n" +
+    "                    </div>\n" +
+    "                </uib-tab>\n" +
+    "                <uib-tab>\n" +
+    "                    <uib-tab-heading><i class=\"fa fa-lock\"></i> {{'udp.wc.tab.access' | translate}}\n" +
+    "                    </uib-tab-heading>\n" +
+    "                    <udp-widget-access-config\n" +
+    "                            the-model=\"vm.current.item.accesscontrol\"></udp-widget-access-config>\n" +
+    "                    <udp-button-state-config the-model=\"vm.current.item.statecontrol\"></udp-button-state-config>\n" +
+    "                </uib-tab>\n" +
+    "            </uib-tabset>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <button type=\"submit\" class=\"btn btn-primary opx-btn-ok\" ng-click=\"vm.save()\">\n" +
+    "            {{'common.action.ok' | translate}}\n" +
+    "        </button>\n" +
+    "        <button type=\"button\" class=\"btn btn-default opx-btn-cancel\" ng-click=\"vm.cancel()\">\n" +
+    "            {{'common.action.cancel' | translate}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<script type=\"text/ng-template\" id=\"udp-widget-var-desc.html\">\n" +
+    "    <details ng-if=\"vm.enabledVarTypes.length>0\">\n" +
+    "        <summary>\n" +
+    "            <i class=\"fa fa-brackets-curly\"></i>\n" +
+    "            {{'udp.dataex.var.supported_var' | translate}}\n" +
+    "        </summary>\n" +
+    "        <div>\n" +
+    "            <p ng-bind-html=\"'udp.dataex.var.supported_var_desc' | translate\"></p>\n" +
+    "            <ul class=\"list-unstyled ms-3\" id=\"js-dccm-help-vars\">\n" +
+    "                <li ng-if=\"vm.enabledVarTypes.indexOf('field')>=0\"\n" +
+    "                    ng-bind-html=\"'udp.dataex.var.type_field'|translate\"></li>\n" +
+    "                <li ng-if=\"vm.enabledVarTypes.indexOf('pageparam')>=0\"\n" +
+    "                    ng-bind-html=\"'udp.dataex.var.type_pageparam'|translate\"></li>\n" +
+    "                <li ng-if=\"vm.enabledVarTypes.indexOf('global')>=0\"\n" +
+    "                    ng-bind-html=\"'udp.dataex.var.type_global'|translate\"></li>\n" +
+    "            </ul>\n" +
+    "        </div>\n" +
+    "    </details>\n" +
+    "</script>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/data-converter.html","<div class=\"input-group\">\n" +
+    "    <span class=\"input-group-text\" title=\"{{$ctrl.kindDefs[$ctrl.meta.kind].label}}\"><i\n" +
+    "                class=\"far fa-fw\" ng-class=\"$ctrl.kindDefs[$ctrl.meta.kind].icon\"></i></span>\n" +
+    "    <input class=\"form-control code\" readonly value=\"{{$ctrl.meta.body}}\"/>\n" +
+    "    <button class=\"btn btn-outline-default\" type=\"button\" ng-disabled=\"$ctrl.disabled\"\n" +
+    "            ng-click=\"$ctrl.showBuilder()\" title=\"{{'udp.dataex.control.open_editor'|translate}}\"><i\n" +
+    "            class=\"fa fa-pencil\"></i></button>\n" +
+    "    <button class=\"btn btn-outline-default\" type=\"button\" ng-disabled=\"$ctrl.disabled\"\n" +
+    "            ng-click=\"$ctrl.remove()\" title=\"{{'udp.dataex.control.remove_expr'|translate}}\"><i\n" +
+    "            class=\"fa fa-trash-alt\"></i></button>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/expandable-editor.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">{{'common.action.edit'|translate}}</h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div>\n" +
+    "        <textarea ng-model=\"model\" class=\"form-control\" rows=\"8\"></textarea>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancel()\">{{'common.action.cancel'|translate}}</button>\n" +
+    "    <button type=\"button\" class=\"btn btn-success\" ng-click=\"submit()\">{{'common.action.ok'|translate}}</button>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/helper/font-editor.html","<select class=\"form-select\" ng-options=\"size.size as size.label for size in $ctrl.sizeList\"\n" +
+    "        ng-model=\"$ctrl.theModel\"></select>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/media-selector.html","<div class=\"form-inline\">\n" +
+    "    <select class=\"form-select\" ng-model=\"$ctrl.theModel.type\"\n" +
+    "            ng-options=\"type.type as type.name for type in $ctrl.mediaTypes\">\n" +
+    "    </select>\n" +
+    "    <label class=\"control-label xcol-sm-2\">{{'common.term.width' | translate}}</label>\n" +
+    "    <div class=\"input-group\">\n" +
+    "        <input type=\"number\" min=\"10\" class=\"form-control\"\n" +
+    "               ng-model=\"$ctrl.theModel.size\">\n" +
+    "        <span class=\"input-group-addon\">{{'common.term.pixel' | translate}}</span>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"m-t-xs\">\n" +
+    "    <div ng-if=\"$ctrl.theModel.type==='fa'\">\n" +
+    "        <op-iconpicker ng-model=\"$ctrl.theModel.source\"></op-iconpicker>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.theModel.type==='img'\">\n" +
+    "        <ul class=\"list list-inline\">\n" +
+    "            <li class=\"wrapper-xs\" ng-class=\"{'bg-primary':$ctrl.theModel.source===image.source}\"\n" +
+    "                ng-repeat=\"image in $ctrl.images\" ng-click=\"$ctrl.theModel.source=image.source\">\n" +
+    "                <img src=\"{{image.url}}\"\n" +
+    "                     width=\"48\"\n" +
+    "                     alt=\"{{image.source}}\">\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/page-and-param-config.html","<udp-page-selector page-id=\"$ctrl.pageId\"></udp-page-selector>\n" +
+    "<udp-page-params-config params-json=\"$ctrl.paramsJson\"></udp-page-params-config>")
+
+$templateCache.put("app/modules/udp/helper/page-params-config.html","<button type=\"button\" class=\"btn btn-outline-primary\" ng-click=\"$ctrl.params.push({})\"><i\n" +
+    "        class=\"fa fa-plus\"></i> {{'udp.param.add_param' | translate}}\n" +
+    "</button>\n" +
+    "<table class=\"table table-sm op-param-table\">\n" +
+    "    <tbody>\n" +
+    "    <tr ng-repeat=\"param in $ctrl.params track by $index\">\n" +
+    "        <td><input type=\"text\" class=\"form-control\" ng-model=\"param.name\" title=\"{{'udp.param.param_name'|translate}}\">\n" +
+    "        </td>\n" +
+    "        <td>\n" +
+    "            <udp-data-converter the-model=\"param.value\" options=\"$ctrl.options.converter\"\n" +
+    "                                title=\"{{'udp.param.param_value'|translate}}\"></udp-data-converter>\n" +
+    "        </td>\n" +
+    "    </tr>\n" +
+    "    </tbody>\n" +
+    "</table>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/page-selector.html","<div class=\"row no-gutters\">\n" +
+    "    <div class=\"col-sm-6\" xxstyle=\"padding-right:0;\">\n" +
+    "        <select op-select=\"{width:'100%'}\"\n" +
+    "                ng-model=\"$ctrl.pageId\" class=\"form-control\"\n" +
+    "                data-placeholder-text-single=\"{{'udp.page.selector.select_page'|translate}}\"\n" +
+    "                ng-options=\"page.id as page.title for page in $ctrl.pages\"></select>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-6\"><span class=\"control-label\"\n" +
+    "                                style=\"margin-left:0.5rem;\">{{'common.term.or' | translate}}</span>\n" +
+    "        <udp-data-converter the-model=\"$ctrl.pageId\" options=\"$ctrl.options.converter\"\n" +
+    "                            style=\"width: calc(100% - 3em); display: inline-block;\"></udp-data-converter>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/theme-selector.html","<select ng-model=\"$ctrl.selectedTheme\" class=\"form-select d-inline-block bg-{{$ctrl.selectedTheme}} opx-autocolor\"\n" +
+    "        style=\"width:10rem;\">\n" +
+    "    <option class=\"bg-{{theme.id}} opx-autocolor\" value=\"{{theme.id}}\" ng-repeat=\"theme in ::$ctrl.themeColors\">\n" +
+    "        {{theme.title}}\n" +
+    "    </option>\n" +
+    "</select>\n" +
+    "<div ng-if=\"$ctrl.selectedTheme==='_CUSTOM'\" class=\"d-inline-block ms-3\" style=\"vertical-align: top\">\n" +
+    "    <udp-color-picker ng-model=\"$ctrl.theModel.backColor\"\n" +
+    "                      title=\"{{'common.term.background'|translate}}\"></udp-color-picker>\n" +
+    "    <udp-color-picker ng-model=\"$ctrl.theModel.fontColor\" title=\"{{'common.term.font'|translate}}\"></udp-color-picker>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-ajax-config.html","<div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\" op-help-info=\"{{'udp.wc.intx.ajax.repeat_helpinfo'|translate}}\">{{'udp.wc.intx.ajax.repeat'|translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <div class=\"input-group\">\n" +
+    "                <div class=\"input-group-addon\">\n" +
+    "                    <input id=\"js_wiac_repeatenabled\" type=\"checkbox\" ng-model=\"$ctrl.props.ajax.repeat.enabled\">\n" +
+    "                </div>\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.ajax.repeat.var\"\n" +
+    "                       ng-disabled=\"!$ctrl.props.ajax.repeat.enabled\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\" for=\"js_wiacp_url\">URL</label>\n" +
+    "        <div class=\"form-control-wrapper op-combo\">\n" +
+    "            <select id=\"js_wiac_method\" class=\"form-select\" ng-model=\"$ctrl.props.ajax.method\" style=\"width:6em;\">\n" +
+    "                <option value=\"GET\">GET</option>\n" +
+    "                <option value=\"POST\">POST</option>\n" +
+    "                <option value=\"PUT\">PUT</option>\n" +
+    "                <option value=\"DELETE\">DELETE</option>\n" +
+    "            </select>\n" +
+    "            <udp-data-converter id=\"js_wiacp_url\"  class=\"w-full\" the-model=\"$ctrl.props.ajax.url\" options=\"{kinds:'js,str'}\"></udp-data-converter>\n" +
+    "            <!--<input id=\"js_wiacp_url\" type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.ajax.url\">-->\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.interacdtion.ajax.param'|translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <udp-page-params-config params-json=\"$ctrl.props.ajax.params\" class=\"op-w-full\"></udp-page-params-config>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <udp-widget-interaction-postproc proc-props=\"$ctrl.props.ajax.postproc\"></udp-widget-interaction-postproc>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-code-config.html","<div class=\"form-group\">\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <op-code-editor the-model=\"$ctrl.props.expr\" options=\"{syntax:'javascript'}\" style=\"height:10rem;\"></op-code-editor>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.props.name==='closeme'\">\n" +
+    "    <label class=\"control-label\" op-help-info=\"{{'udp.wc.intx.code.params_helpinfo'|translate}}\">{{'udp.wc.intx.code.params'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-page-params-config params-json=\"$ctrl.props.params\" class=\"w-100\"></udp-page-params-config>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.props.name==='download'\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.code.download_url'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.download.url\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-event-config.html","<div class=\"form-group\">\n" +
+    "    <label class=\"col-sm-2 control-label\" for=\"wiec_name\">{{'udp.wc.intx.event.name' | translate}}</label>\n" +
+    "    <div class=\"col-sm-4\">\n" +
+    "        <input id=\"wiec_name\" type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.name\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"col-sm-2 control-label\" for=\"wiec_scope\">{{'udp.wc.intx.event.scope' | translate}}</label>\n" +
+    "    <div class=\"col-sm-4\">\n" +
+    "        <select id=\"wiec_scope\" class=\"form-select\" ng-model=\"$ctrl.props.scope\">\n" +
+    "            <option value=\"\">{{'udp.wc.intx.event.scope_page' | translate}}</option>\n" +
+    "            <option value=\"root\">{{'udp.wc.intx.event.scope_root' | translate}}</option>\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-func-config.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"wifc_name\">{{'udp.wc.intx.func.name' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select id=\"wifc_name\" class=\"form-select op-w-md\" ng-model=\"$ctrl.props.name\">\n" +
+    "            <option value=\"\"></option>\n" +
+    "            <option value=\"closeme\">{{'udp.wc.intx.func.closeme' | translate}}</option>\n" +
+    "            <!--            <option value=\"download\">Download</option>-->\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.props.name==='closeme'\">\n" +
+    "    <label class=\"control-label\"\n" +
+    "           op-help-info=\"{{'udp.wc.intx.func.closeme_helpinfo'|translate}}\">{{'udp.wc.intx.func.closeme_param' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-page-params-config params-json=\"$ctrl.props.params\" class=\"w-100\"></udp-page-params-config>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.props.name==='download'\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.func.download_url' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.download.url\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-job-config.html","<!--<div class=\"form-group\">-->\n" +
+    "<!--    <label class=\"control-label\" op-help-info=\"用于识别一个作业被谁调用的，支持<code>${变量}</code>形式的变量\">作业CallId</label>-->\n" +
+    "<!--    <idgen ng-model=\"$ctrl.props.callId\" class=\"form-control-wrapper\"></idgen>-->\n" +
+    "<!--</div>-->\n" +
+    "<jao-job-selector the-model=\"$ctrl.props.code\" selected-job=\"$ctrl.selectedJob\"></jao-job-selector>\n" +
+    "<div ng-if=\"!($ctrl.selectedJob.$paramsConfig|isEmpty)\">\n" +
+    "    <div class=\"my-3\">\n" +
+    "        <strong>{{'common.term.parameter' | translate}}</strong>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\" ng-repeat=\"(name,config) in $ctrl.selectedJob.$paramsConfig track by $index\">\n" +
+    "        <label class=\"control-label\" title=\"{{name}}\">{{name}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <udp-data-converter the-model=\"$ctrl.props.params[name]\" options=\"{kinds:'js,str'}\"\n" +
+    "                                class=\"w-100\"></udp-data-converter>\n" +
+    "            <p class=\"help-block\" ng-if=\"config.desc\">{{config.desc}}</p>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\"></label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"checkbox checkbox-inline\">\n" +
+    "            <input type=\"checkbox\" ng-model=\"$ctrl.props.evalObject\" id=\"wijc_evalObject\">\n" +
+    "            <label for=\"wijc_evalObject\">\n" +
+    "                {{'jao.job.widget.eval_object'|translate}}\n" +
+    "            </label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\"></label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"checkbox checkbox-inline\"><input type=\"checkbox\" ng-model=\"$ctrl.props.showOutput\" id=\"wijc_showoutput\"><label for=\"wijc_showoutput\" op-help-info=\"{{'jao.job.widget.show_output_desc'|translate}}\">{{'jao.job.widget.show_output'|translate}}</label></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<udp-widget-interaction-postproc proc-props=\"$ctrl.props.postproc\"></udp-widget-interaction-postproc>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-link-config.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"js-wilcp-url\">URL</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <!--<input id=\"js-wilcp-url\" type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.url\">-->\n" +
+    "        <udp-data-converter id=\"js-wilcp-url\" the-model=\"$ctrl.props.url\" options=\"{kinds:'str'}\" class=\"op-w-full\"></udp-data-converter>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.link.target'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.target\">\n" +
+    "            <option value=\"\">{{'udp.wc.intx.link.target_new'|translate}}</option>\n" +
+    "            <option value=\"dialog\">{{'udp.wc.intx.link.target_dialog'|translate}}</option>\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-page-config.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.page.title' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper op-combo\">\n" +
+    "        <udp-page-selector page-id=\"$ctrl.props.pageId\" on-change=\"\"\n" +
+    "                           options=\"{converter:{kinds:'js,str',varTypes:'field,pageparam,global'}}\"\n" +
+    "                           class=\"op-w-full\"></udp-page-selector>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\"\n" +
+    "           op-help-info=\"{{'udp.wc.intx.page.target_helpinfo'|translate}}\">{{'udp.wc.intx.page.target' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper op-combo\">\n" +
+    "        <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.target\"\n" +
+    "                ng-options=\"target.key as target.title for target in $ctrl.targets\">\n" +
+    "        </select>\n" +
+    "        <div ng-if=\"$ctrl.props.target==='_dialog'\" class=\"d-flex align-items-center ms-5\">\n" +
+    "            <label class=\"control-label\">{{'udp.wc.intx.page.size' | translate}}</label>\n" +
+    "            <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.size\">\n" +
+    "                <option value=\"\">{{'udp.wc.intx.page.size_default' | translate}}</option>\n" +
+    "                <option value=\"sm\">{{'udp.wc.intx.page.size_sm' | translate}}</option>\n" +
+    "                <option value=\"md\">{{'udp.wc.intx.page.size_md' | translate}}</option>\n" +
+    "                <option value=\"lg\">{{'udp.wc.intx.page.size_lg' | translate}}</option>\n" +
+    "                <option value=\"xl\">{{'udp.wc.intx.page.size_xl' | translate}}</option>\n" +
+    "<!--                <option value=\"full\">{{'udp.wc.intx.page.size_full' | translate}}</option>-->\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.page.param' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-page-params-config class=\"op-w-full\" params-json=\"$ctrl.props.params\"\n" +
+    "                                options=\"{converter:{kinds:'str,js',varTypes:'pageparam,global'}}\"></udp-page-params-config>\n" +
+    "        <div ng-transclude></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"$ctrl.props.target==='_dialog'\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.intx.page.result' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select ng-model=\"$ctrl.props.result\" class=\"form-select op-w-sm\">\n" +
+    "                <option value=\"\">{{'udp.wc.intx.page.result_default' | translate}}</option>\n" +
+    "                <option value=\"merge\">{{'udp.wc.intx.page.result_merge' | translate}}</option>\n" +
+    "                <option value=\"trigger\">{{'udp.wc.intx.event.title' | translate}}</option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <udp-widget-interaction-event-config \n" +
+    "            ng-if=\"$ctrl.props.result === 'trigger'\"\n" +
+    "            props=\"$ctrl.props.dialog_event\"></udp-widget-interaction-event-config>\n" +
+    "</div>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/helper/widget-interaction-postproc.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.postproc.choose_action' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select class=\"form-select op-w-md\" ng-model=\"$ctrl.procProps.action\"\n" +
+    "                ng-options=\"proc.key as proc.title for proc in $ctrl.postProcs\">\n" +
+    "            <option value=\"\">None</option>\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"$ctrl.procProps.action==='ca_msg'\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.intx.postproc.ca_msg.expr' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <udp-data-converter the-model=\"$ctrl.procProps.ca_msg.expr\"\n" +
+    "                                options=\"{kinds:'js,str'}\"></udp-data-converter>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.intx.postproc.ca_msg.style' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.procProps.ca_msg.style\">\n" +
+    "                <option value=\"dialog\">{{'udp.wc.intx.postproc.ca_msg.style_dialog' | translate}}</option>\n" +
+    "                <option value=\"toast\">{{'udp.wc.intx.postproc.ca_msg.style_toast' | translate}}</option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<!--<div ng-if=\"$ctrl.procProps.action==='ca_msg'\" class=\"form-group\">-->\n" +
+    "<!--    <label class=\"control-label\">消息内容</label>-->\n" +
+    "<!--    <div class=\"form-control-wrapper\">-->\n" +
+    "<!--        <udp-data-converter the-model=\"$ctrl.procProps.ca_msg.expr\"-->\n" +
+    "<!--                            options=\"{kinds:'js,str'}\"></udp-data-converter>-->\n" +
+    "<!--    </div>-->\n" +
+    "<!--</div>-->\n" +
+    "<div ng-if=\"$ctrl.procProps.action==='ca_param'\" class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.intx.postproc.ca_param.param' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-page-params-config params-json=\"$ctrl.procProps.ca_param\" class=\"w-full\"></udp-page-params-config>\n" +
+    "        <p class=\"help-block\" ng-bind-html=\"'udp.wc.intx.postproc.ca_param.param_desc' | translate\"></p>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div ng-if=\"$ctrl.procProps.action==='ca_event'\">\n" +
+    "   <udp-widget-interaction-event-config props=\"$ctrl.procProps.ca_event\">\n" +
+    "   </udp-widget-interaction-event-config>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/page-actions.html","<div class=\"dropdown\" ng-if=\"$ctrl.display.enableActions\">\n" +
+    "    <button class=\"btn opx-btn-icon\" data-bs-toggle=\"dropdown\"><i class=\"fa fa-ellipsis-v\"></i></button>\n" +
+    "    <ul class=\"dropdown-menu dropdown-menu-end\" ng-if=\"$root.$global.viewMode==='mobile'\">\n" +
+    "        <!--        <li class=\"dropdown-header\">{{$ctrl.pageInfo.title}}</li>-->\n" +
+    "        <li><a ng-click=\"$ctrl.sharePage($ctrl.pageInfo.id,'zhdyh')\"><i class=\"fa fa-share-alt\"></i>\n" +
+    "            {{'udp.page.actions.share' | translate}}</a></li>\n" +
+    "    </ul>\n" +
+    "    <ul class=\"dropdown-menu dropdown-menu-end\" ng-if=\"$root.$global.viewMode!=='mobile'\">\n" +
+    "        <li ng-if=\"$ctrl.display.enableManagement && $ctrl.hasEditPermission($ctrl.pageInfo.action)\">\n" +
+    "            <a ui-sref=\"app.appman.page.edit({pageId:$ctrl.pageInfo.id})\" title=\"{{$ctrl.pageInfo.id}}\"><i\n" +
+    "                    class=\"fa fa-pencil\"></i> {{'udp.page.actions.modify'|translate}}</a>\n" +
+    "        </li>\n" +
+    "        <li ng-if=\"$ctrl.display.enableExport\" class=\"divider\"></li>\n" +
+    "        <li ng-if=\"$ctrl.display.enableExport\"><a ng-click=\"$ctrl.exportPage('pdf')\"><i\n" +
+    "                class=\"fa fa-file-pdf-o\"></i>\n" +
+    "            {{'udp.page.actions.export_pdf' | translate}}</a></li>\n" +
+    "        <li ng-if=\"$ctrl.display.enableExport\"><a ng-click=\"$ctrl.exportPage('word')\"><i\n" +
+    "                class=\"fa fa-file-word-o\"></i>\n" +
+    "            {{'udp.page.actions.export_word' | translate}}</a></li>\n" +
+    "        <li ng-if=\"$ctrl.display.enableExport\"><a ng-click=\"$ctrl.exportPage('excel')\"><i\n" +
+    "                class=\"fa fa-file-excel-o\"></i> {{'udp.page.actions.export_excel' | translate}} {{'udp.designer.action.export_excel'|translate}}</a></li>\n" +
+    "        <li ng-if=\"$ctrl.display.enableExport\"><a ng-click=\"$ctrl.exportPage('html')\"><i\n" +
+    "                class=\"fa fa-file-text\"></i>\n" +
+    "            {{'udp.page.actions.export_html' | translate}}</a></li>\n" +
+    "    </ul>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-designer-palette.html","<div class=\"h-100 opx-layout-vflex\" ng-if=\"true\">\n" +
+    "    <ul class=\"nav nav-justified op-nav-pills-underline\">\n" +
+    "        <li class=\"nav-item\" ng-repeat=\"wg in ::$ctrl.widgetGroups track by $index\"\n" +
+    "            ng-class=\"{active:$ctrl.activeTab===$index}\">\n" +
+    "            <a class=\"nav-link\" ng-click=\"$ctrl.showTab($index)\" data-target=\"#pd-toolbox-tab-{{$index}}\"\n" +
+    "               data-toggle=\"tab\" style=\"padding:.5rem;\"\n" +
+    "               title=\"{{'udp.designer.wg.'+wg.group|translate}}\"><i class=\"far {{::wg.icon}}\"\n" +
+    "                                                                    style=\"font-size: 120%;\"></i></a>\n" +
+    "        </li>\n" +
+    "    </ul>\n" +
+    "    <div class=\"tab-content opx-flex-fill scroll-y\">\n" +
+    "        <div ng-repeat=\"wg in ::$ctrl.widgetGroups track by $index\"\n" +
+    "             class=\"tab-pane p-2 js-udp-palette-group\" id=\"pd-toolbox-tab-{{$index}}\"\n" +
+    "             ng-class=\"{active:$ctrl.activeTab==$index}\">\n" +
+    "            <div ng-repeat=\"w in ::wg.widgets\" class=\"uw-symbol position-relative\" uw-type=\"{{w.type}}\"\n" +
+    "                 title=\"{{'udp.w.'+w.type+'.desc'|ttt:''}}\">\n" +
+    "                <span ng-if=\"w.tag\" class=\"badge bg-secondary position-absolute\" style=\"right:0;\">{{w.tag}}</span>\n" +
+    "                <i class=\"uw-icon uwtype-{{::w.type}}\"></i> {{'udp.w.' + w.type + '.name' | translate}}\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/page-designer-toolbar.html","<nav class=\"navbar navbar-expand navbar-light bg-light\" udp-confirm-on-exit>\n" +
+    "    <!--    <ul class=\"navbar-nav\">-->\n" +
+    "    <!--        <li class=\"nav-item\" ng-if=\"$parent.udp.moduleTitle\"><a class=\"nav-link\" ui-sref=\"app.udp\">{{$parent.udp.moduleTitle}}</a>-->\n" +
+    "    <!--        </li>-->\n" +
+    "    <!--    </ul>-->\n" +
+    "    <div class=\"navbar-nav\">\n" +
+    "        <!-- <a ui-sref=\"app.udp\" -->\n" +
+    "        <a ng-click=\"onClickBackBtn()\"\n" +
+    "           class=\"btn opx-btn-icon opx-btn-flat btn-default\"\n" +
+    "           title=\"{{'common.action.back'|translate}}\"><i class=\"fa fa-arrow-left\"></i></a>\n" +
+    "        <button type=\"button\" class=\"btn opx-btn-icon btn-default\"\n" +
+    "                ng-class=\"$parent.showToolbox?'active':''\"\n" +
+    "                ng-click=\"toggleToolbox()\" title=\"{{'udp.designer.actions.toggle_toolbox'|translate}}\"><i\n" +
+    "                class=\"fa fa-bars\"></i></button>\n" +
+    "        <button type=\"button\" class=\"btn opx-btn-icon opx-btn-flat btn-default\" ui-sref=\"app.appman.page.create\"\n" +
+    "                title=\"{{'common.action.create'|translate}}\" uaa-has-permission=\"udp:edit:*\"><i class=\"fa fa-file\"></i>\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <form class=\"form-inline ms-3\" ng-submit=\"savePage()\" role=\"form\"\n" +
+    "          action=\"javascript:void(0)\">\n" +
+    "        <input ui-focus=\"{{!page.title}}\" type=\"text\" class=\"form-control\"\n" +
+    "               style=\"width:12em;\"\n" +
+    "               ng-model=\"page.title\" title=\"{{'udp.page.attrs.title'|translate}}\"\n" +
+    "               placeholder=\"{{'udp.page.attrs.title'|translate}}\">\n" +
+    "        <button ng-if=\"hasEditPermission(page.action)\" type=\"submit\" class=\"btn btn-primary opx-btn-icon\"\n" +
+    "                title=\"{{'common.action.save'|translate}}\"><i\n" +
+    "                class=\"fa fa-save\"></i>\n" +
+    "        </button>\n" +
+    "        <button type=\"button\" ng-click=\"configPage()\" class=\"btn btn-default opx-btn-icon opx-btn-flat \"\n" +
+    "                title=\"{{'udp.page.actions.setting'|translate}}\"><i\n" +
+    "                class=\"fa fa-cog\"></i>\n" +
+    "        </button>\n" +
+    "    </form>\n" +
+    "    <div class=\"navbar-nav ms-auto\">\n" +
+    "        <button type=\"button\" ng-click=\"$parent.showMoreSpace=!$parent.showMoreSpace\"\n" +
+    "                class=\"btn navbar-btn btn-default opx-btn-icon\"\n" +
+    "                ng-class=\"$parent.showMoreSpace?'active':''\" title=\"{{'udp.designer.actions.show_space'|translate}}\"><i\n" +
+    "                class=\"fa fa-th\"></i>\n" +
+    "        </button>\n" +
+    "        <button type=\"button\" ng-click=\"$parent.showWidgetOutline=!$parent.showWidgetOutline\"\n" +
+    "                class=\"btn navbar-btn btn-default opx-btn-icon\"\n" +
+    "                ng-class=\"$parent.showWidgetOutline?'active':''\"\n" +
+    "                title=\"{{'udp.designer.actions.widget_outline'|translate}}\"><i class=\"fa fa-anchor\"></i>\n" +
+    "        </button>\n" +
+    "        <div class=\"btn-group\">\n" +
+    "            <button class=\"btn opx-btn-icon btn-outline-default\" ng-click=\"$parent.inMode='edit'\"\n" +
+    "                    title=\"{{'udp.designer.actions.visual_mode'|translate}}\"\n" +
+    "                    ng-class=\"{active:!$parent.inMode || $parent.inMode==='edit'}\"><i class=\"fa fa-pencil\"></i></button>\n" +
+    "            <button class=\"btn opx-btn-icon btn-outline-default\" ng-click=\"$parent.inMode='source';genSourceCode();\"\n" +
+    "                    ng-class=\"{active:$parent.inMode=='source'}\"\n" +
+    "                    title=\"{{'udp.designer.actions.source_mode'|translate}}\"><i class=\"fa fa-code\"></i></button>\n" +
+    "            <button class=\"btn btn-outline-default\"\n" +
+    "                    ng-click=\"$parent.inMode=($parent.inMode==='preview'?'edit':'preview')\"\n" +
+    "                    ng-class=\"{active:$parent.inMode=='preview'}\" title=\"{{'udp.designer.actions.preview'|translate}}\">\n" +
+    "                <i\n" +
+    "                        class=\"fa fa-eye\"></i> {{'udp.designer.actions.preview' | translate}}\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "        <div class=\"btn-group\">\n" +
+    "            <button type=\"button\" class=\"btn btn-default opx-btn-icon opx-btn-flat\" data-bs-toggle=\"dropdown\">\n" +
+    "                <i class=\"fa fa-ellipsis-v\"></i>\n" +
+    "            </button>\n" +
+    "            <div class=\"dropdown-menu dropdown-menu-end\">\n" +
+    "                <a class=\"dropdown-item\" ui-sref='app.udp_pageview_full({pageId:page.id})' target=\"_blank\"><i\n" +
+    "                        class=\"fa fa-external-link-square\"></i> {{'udp.designer.actions.open_newwindow_full' | translate}}\n" +
+    "                </a>\n" +
+    "                <a class=\"dropdown-item\" ui-sref='app.udp_pageview({pageId:page.id})' target=\"_blank\"><i\n" +
+    "                        class=\"fa fa-external-link\"></i> {{'udp.designer.actions.open_newwindow' | translate}}\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</nav>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-designer.html","<div ui-view=\"widget_config_model\"></div>\n" +
+    "<div class=\"opx-layout-vflex\">\n" +
+    "    <div ng-include=\"'app/modules/udp/page-designer-toolbar.html'\"></div>\n" +
+    "    <div class=\"opx-flex-fill opx-layout-hflex scroll-y\"\n" +
+    "         ng-class=\"{'udp-pd-visual-mode':inMode=='edit',\n" +
+    "     'udp-pd-preview-mode':inMode=='preview',\n" +
+    "     'udp-pd-source-mode':inMode=='source',\n" +
+    "     'udp-pd-more-space':showMoreSpace,\n" +
+    "     'udp-pd-show-outline':showWidgetOutline}\">\n" +
+    "        <div id=\"pd-palette-zone\" class=\"opx-sidebar bg-light border-right\"\n" +
+    "             ng-hide=\"$root.$global.userPref['udp.pd.hideToolbox']\" style=\"width:10rem;\">\n" +
+    "            <udp-page-designer-toolbox class=\"h-100\"></udp-page-designer-toolbox>\n" +
+    "        </div>\n" +
+    "        <div class=\"opx-flex-fill scroll-y\" id=\"globally-only-one-page-designer\">\n" +
+    "            <div class=\"h-100 bg-secondary p-5\" ng-hide=\"inMode==='source'\">\n" +
+    "                <udp-page-view id=\"pd-canvas-zone\" class=\"h-100\"\n" +
+    "                               is-designer=\"true\" reload-page=\"newPageHtml\" options=\"{navbar:false}\"\n" +
+    "                               page=\"page\"></udp-page-view>\n" +
+    "            </div>\n" +
+    "            <div id=\"pd-source-zone\" ng-show=\"inMode==='source'\" class=\"h-100\">\n" +
+    "                <textarea rows=\"20\" ng-model=\"sourceCode\"\n" +
+    "                          ui-codemirror=\"{mode: 'htmlmixed',lineNumbers: true, lineWrapping: true, theme:'opluscode', matchTags: {bothTags: true}, matchBrackets:true}\"\n" +
+    "                          ui-refresh=\"inMode=='source'\"></textarea>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-import.html","<form ng-submit=\"$pic.doImport()\">\n" +
+    "    <div class=\"modal-header\">\n" +
+    "        <h4 class=\"modal-title\">{{'udp.page.import.title'|translate}}</h4>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-body\">\n" +
+    "        <div>\n" +
+    "            <table class=\"table op-with-scroll-body\" ng-show=\"$pic.pages.length>0\">\n" +
+    "                <thead>\n" +
+    "                <tr>\n" +
+    "                    <th>\n" +
+    "                        <div class=\"checkbox checkbox-primary checkbox-inline\"><input type=\"checkbox\"\n" +
+    "                                                                                      ng-click=\"$pic.selectAll()\"\n" +
+    "                                                                                      ng-model=\"$pic.isAll\"><label></label>\n" +
+    "                        </div>\n" +
+    "                    </th>\n" +
+    "                    <th>{{'udp.page.attrs.title'|translate}}</th>\n" +
+    "                </tr>\n" +
+    "                </thead>\n" +
+    "                <tbody style='height:200px'>\n" +
+    "                <tr ng-repeat=\"page in $pic.pages track by $index\" ng-init=\"selected=[]\"\n" +
+    "                    ng-class=\"{'info':page._selected}\">\n" +
+    "                    <td>\n" +
+    "                        <div class=\"checkbox checkbox-primary checkbox-inline\"><input type=\"checkbox\"\n" +
+    "                                                                                      ng-model=\"page._selected\"><label></label>\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                    <td>{{page.title}}</td>\n" +
+    "                </tr>\n" +
+    "                </tbody>\n" +
+    "            </table>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"modal-footer\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <button class=\"btn btn-default\" type=\"button\" ng-click=\"$pic.cancelImport()\">\n" +
+    "                {{'common.action.cancel' | translate}}\n" +
+    "            </button>\n" +
+    "            <button class=\"btn btn-primary\" type=\"submit\">{{'udp.page.import.submit'|translate}}</button>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</form>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-list.component.html","<div class=\"opx-layout-hflex\">\n" +
+    "    <div class=\"opx-sidebar border-right bg-light\" style=\"width:12rem;\" ng-if=\"$ctrl.showApplet\">\n" +
+    "        <div class=\"opx-sidebar-body\">\n" +
+    "            <applet-selector applet-code=\"$ctrl.appletCode\" on-change=\"$ctrl.onAppletSelectorChange\"\n" +
+    "                             options=\"{viewAs:'list', showAll:true,includeAllAndNull:true}\"></applet-selector>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"opx-flex-fill scroll-y p-3\">\n" +
+    "        <opx-datatable table-config=\"$ctrl.tableConfig\">\n" +
+    "            <button type=\"button\" class=\"btn btn-secondary\" ng-disabled=\"$ctrl.tableConfig.selectedItems.length<1\"\n" +
+    "                    ng-click=\"$ctrl.movePages()\" ng-if=\"$ctrl.showApplet\"><i class=\"fa fa-sign-in\"></i>\n" +
+    "                {{'udp.page.actions.move_page' | translate}}\n" +
+    "            </button>\n" +
+    "        </opx-datatable>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-list.html","<div uaa-has-permission=\"udp:view:*\" uaa-deny-message=\"{{'common.uaa.no_permission'|translate}}\" class=\"h-100\" >\n" +
+    "    <page-list show-applet=\"true\" class=\"h-100\"></page-list>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/page-setting.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.page.setting.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.page.attrs.title' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control\" ng-model=\"$ctrl.page.title\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.page.attrs.code' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control\" ng-model=\"$ctrl.page.code\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.page.setting.display' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.page.attrs.bg_color' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-theme-selector the-model=\"$ctrl.page.setting\" customizable=\"false\"\n" +
+    "                                    theme-group=\"page\"></udp-theme-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.page.attrs.font_color' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-color-picker title=\"{{'common.term.font'|translate}}\"\n" +
+    "                                  ng-model=\"$ctrl.page.setting.fontColor\"></udp-color-picker>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"{{'udp.page.setting.bgimage_helpinfo'|translate}}\">{{'udp.page.attrs.bg_image' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"input-group\">\n" +
+    "                    <div class=\"input-group-text\"><input type=\"checkbox\"\n" +
+    "                                                         ng-model=\"$ctrl.page.setting.useBgimage\"></div>\n" +
+    "                    <input type=\"text\" ng-model=\"$ctrl.page.setting.bgimage\" class=\"form-control\"\n" +
+    "                           ng-disabled=\"!$ctrl.page.setting.useBgimage\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.page.attrs.view' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"$ctrl.page.setting.view\">\n" +
+    "                    <option value=\"\"></option>\n" +
+    "                    <option value=\"app\">{{'udp.page.attrs.view_app' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class=\"fa fa-lock\"></i> {{'udp.wc.tab.access' | translate}}\n" +
+    "        </uib-tab-heading>\n" +
+    "        <udp-widget-access-config the-model=\"$ctrl.page.setting.accessControl\"></udp-widget-access-config>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-code'></i> {{'udp.page.setting.param' | translate}}</uib-tab-heading>\n" +
+    "        <pre>{{pageParams | json}}</pre>\n" +
+    "        <pre>{{page.setting}}</pre>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-share-modal.html","<div class=\"modal-header\">\n" +
+    "    <button type=\"button\" class=\"btn-close\" data-dismiss=\"modal\"\n" +
+    "            ng-click=\"vm.cancel()\">\n" +
+    "    </button>\n" +
+    "    <h4 class=\"modal-title\">{{'udp.page.share.title' | translate}}: {{vm.pageInfo.title}}</h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <!--<ul class=\"list list-unstyled list-inline\">-->\n" +
+    "    <!--<li ng-if=\"vm.shareMethods.indexOf('zhdyh')>-1\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-vcard-o\"></i> 招乎</button> </li>-->\n" +
+    "    <!--<li ng-if=\"vm.shareMethods.indexOf('link')>-1\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-envolope-o\"></i> 邮件</button> </li>-->\n" +
+    "    <!--<li ng-if=\"vm.shareMethods.indexOf('url')>-1\"><button type=\"button\" class=\"btn btn-default\"><i class=\"fa fa-link\"></i> 复制链接</button> </li>-->\n" +
+    "    <!--</ul>-->\n" +
+    "    <div class=\"btn-group m-b\" ng-if=\"vm.methodKeys.length>1\">\n" +
+    "        <button type=\"button\" class=\"btn btn-default\" ng-class=\"{active:key===vm.method}\"\n" +
+    "                ng-repeat=\"(key,sm) in vm.shareMethods\" ng-click=\"vm.method=key\">\n" +
+    "            {{sm.title}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <section ng-if=\"vm.method==='email'\">\n" +
+    "        <div class=\"form p-2\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label xcol-sm-2\">{{'udp.page.share.email_to' | translate}}</label>\n" +
+    "                <div class=\"xcol-sm-10\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"vm.to\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"xcol-sm-12 text-right\">\n" +
+    "                    <button type=\"button\" class=\"btn btn-default\" ng-click=\"vm.cancel()\">\n" +
+    "                        {{'common.action.cancel' | translate}}\n" +
+    "                    </button>\n" +
+    "                    <button ng-disabled=\"!vm.to || vm.isSending\" type=\"button\" ng-click=\"vm.sendEmail()\"\n" +
+    "                            class=\"btn btn-primary\">\n" +
+    "                        {{'udp.page.share.send_email' | translate}}\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </section>\n" +
+    "    <section ng-if=\"vm.method ==='url'\">\n" +
+    "        <div class=\"p-2\">\n" +
+    "            <div class=\"input-group\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"vm.pageInfo.url\" id=\"js-text1\"/>\n" +
+    "                <!--                <span class=\"input-group-btn\">-->\n" +
+    "                <button type=\"button\" class=\"btn btn-default\" ngclipboard\n" +
+    "                        data-clipboard-target=\"#js-text1\"\n" +
+    "                        title=\"{{'udp.page.share.copy_url_desc'|translate}}\"><i\n" +
+    "                        class=\"fa fa-clipboard\"></i> {{'common.action.copy' | translate}}\n" +
+    "                </button>\n" +
+    "                <!--                </span>-->\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </section>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-tpl-selector.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">{{'udp.designer.edit.select_page_template' | translate}}</h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"wrapper\">\n" +
+    "        <div class=\"d-flex align-items-start justify-content-around\">\n" +
+    "            <div ng-repeat=\"tpl in pageTemplates track by $index\">\n" +
+    "                <div class=\"op-jumbo-link\" ng-click=\"selectPageTemplate(tpl.code)\">\n" +
+    "                    <div class=\"op-jumbo-link-icon small\"><i class=\"far fa-4x\" ng-class=\"tpl.icon\"></i></div>\n" +
+    "                    <h4>{{'udp.designer.edit.template.' + tpl.code | translate}}</h4></div>\n" +
+    "                <p class=\"help-block\">{{'udp.designer.edit.template.' + tpl.code + '_desc' | translate}}</p>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view-applet.html","<udp-page-view page-id=\"pageId\" options=\"{navbar:false}\" class=\"scroll-y opx-flex-fill\"></udp-page-view>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view-child.html","<div class=\"w-full\">\n" +
+    "    <udp-page-view ng-show=\"pageId\" page-id=\"pageId\" page-params=\"pageParams\"\n" +
+    "                   options=\"{showUrl:true,navbar:false}\"></udp-page-view>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view-component.html","<div class=\"op-blank-slate bg-light\" ng-if=\"$ctrl.error\">\n" +
+    "    <div class=\"op-blank-slate-icon\"><i class=\"fa fa-4x fa-exclamation-triangle\"></i></div>\n" +
+    "    <p> {{'udp.page.view.load_page_error' | translate}} {{$ctrl.error.message}}</p>\n" +
+    "</div>\n" +
+    "<udp-page-view page-id=\"$ctrl.pageId\" page-params=\"$ctrl.pageParams\" options=\"{navbar:false}\" style=\"flex:1;\"\n" +
+    "               ng-if=\"!$ctrl.error\"></udp-page-view>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view-dialog.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\"></h4>\n" +
+    "<!--    <udp-page-actions></udp-page-actions>-->\n" +
+    "    <button type=\"button\" class=\"btn-close\" data-dismiss=\"modal\" ng-click=\"closePageInModal()\"></button>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\" __style=\"padding:0;\">\n" +
+    "    <udp-page-view page-id=\"pageId\" page-params=\"pageParams\" options=\"{navbar:false}\"></udp-page-view>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/page-view-full.html","<udp-page-view ng-show=\"pageId\" page-id=\"pageId\" options=\"{navbar:false}\" ng-init=\"$root.$global.hideAside=true;$root.$global.hideHeader=true;\" class=\"h-100\"></udp-page-view>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view-normal.html","<udp-page-view page-id=\"pageId\" options=\"{navbar:true}\" class=\"scroll-y opx-flex-fill\"></udp-page-view>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view-print.html","<udp-page-view ng-show=\"pageId\" page-id=\"pageId\" options=\"{print:true, pwt:pwt, navbar:false}\"\n" +
+    "               ng-init=\"$global.hideAside=true;$global.hideHeader=true;\" class=\"h-100\"></udp-page-view>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/page-view.html","<div ng-show=\"$ctrl.pageSource!=='code'\" class=\"h-full opx-layout-vflex\">\n" +
+    "    <nav class=\"navbar navbar-expand navbar-light bg-light\" ng-if=\"$ctrl.options.navbar===true\">\n" +
+    "        <ul class=\"navbar-nav\">\n" +
+    "            <li class=\"nav-item\"><a class=\"nav-link\" ng-if=\"$ctrl.history.length > 1\" ng-click=\"$ctrl.goBack()\"><i class=\"fa fa-chevron-left\"></i></a></li>\n" +
+    "            <li class=\"nav-item __dropdown\">\n" +
+    "                <span class=\"opx-navbar-title\" style=\"cursor:default;\">{{$ctrl.current.title}}</span>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "        <div class=\"ms-auto\">\n" +
+    "            <udp-page-actions ng-if=\"$ctrl.isOnInitedPageInfo\" page-id=\"$ctrl.pageInfo.id\" page-url=\"$ctrl.pageInfo.url\"\n" +
+    "                              page-title=\"$ctrl.pageInfo.title\" page-action=\"$ctrl.pageInfo.action\"></udp-page-actions>\n" +
+    "        </div>\n" +
+    "    </nav>\n" +
+    "    <div class=\"op-blank-slate\" ng-if=\"$ctrl.page._isError\" style=\"height: 80px;\">\n" +
+    "        <div class=\"op-blank-slate-icon\" style=\"height: 60px;\">\n" +
+    "            <i class=\"fa fa-4x fa-question-circle\"></i>\n" +
+    "        </div>\n" +
+    "        <div style=\"line-height: 20px; height: 20px;\">{{$ctrl.page._error.message}}</div>\n" +
+    "    </div>\n" +
+    "    <div class=\"js-page-content no-gutters scroll-y opx-flex-fill\" ng-class=\"$ctrl.pageCss\"\n" +
+    "         ng-style=\"$ctrl.pageStyle\"></div>\n" +
+    "</div>\n" +
+    "<!--20201102:for custom include widget-->\n" +
+    "<ng-transclude ng-show=\"$ctrl.pageSource==='code'\" class=\"h-full\"></ng-transclude>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/params-control-config.html","<div ng-if=\"$ctrl.theModel.length>0\">\n" +
+    "    <ul class=\"list list-unstyled list-inline mb-3\" ng-sortable ng-model=\"$ctrl.theModel\">\n" +
+    "        <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "        <li ng-repeat=\"param in $ctrl.theModel track by $index\" class=\"me-2 mb-2\"\n" +
+    "            title=\"{{$ctrl.paramsConfig[param.name].$title}}\">\n" +
+    "            <span class=\"badge op-text-normal p-3\"\n" +
+    "                  ng-class=\"$ctrl.current.name === param.name?'badge-dark':'badge-secondary'\">\n" +
+    "                        <a ng-click=\"$ctrl.current=param\">{{ param.name }}<span\n" +
+    "                                ng-if=\"$ctrl.paramsConfig[param.name].required===true\"> *</span></a>\n" +
+    "                    </span></li>\n" +
+    "    </ul>\n" +
+    "    <div ng-if=\"$ctrl.current\">\n" +
+    "        <uinput-setting-basic props=\"$ctrl.current\"\n" +
+    "                              options=\"{disableBinding:false, disableName:true}\"></uinput-setting-basic>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.param.other'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                    <input type=\"checkbox\" ng-model=\"$ctrl.current.keepvis\" id=\"pcc_keepvis\"><label for=\"pcc_keepvis\" op-help-info=\"{{'udp.param.keepvis'|translate}}\">{{'udp.param.keepvis_desc'|translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"$ctrl.theModel.length===0\">\n" +
+    "    <p class=\"text-center\">{{'udp.param.params_not_supported'|translate}}</p>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/security/widget-access-config.html","<div class=\"form-group\">\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "            <input type=\"checkbox\" id=\"wpc_enabled\" ng-model=\"$ctrl.theModel.enabled\">\n" +
+    "            <label for=\"wpc_enabled\" op-help-info=\"{{'udp.wc.access.enable_access_helpinfo'|translate}}\">{{'udp.wc.access.enable_access'|translate}}</label></div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<fieldset ng-disabled=\"!$ctrl.theModel.enabled\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.access.method'|translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper d-flex flex-nowrap\">\n" +
+    "            <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.theModel.by\" title=\"{{'udp.wc.access.method_helpinfo'|translate}}\">\n" +
+    "                <option value=\"role\">{{'udp.wc.access.method_role'|translate}}</option>\n" +
+    "                <option value=\"permission\">{{'udp.wc.access.method_permission'|translate}}</option>\n" +
+    "            </select>\n" +
+    "            <input type=\"text\" ng-model=\"$ctrl.theModel.allow\" class=\"form-control ms-3\" title=\"{{'udp.wc.access.allow_value'|translate}}\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.access.no_access_handler'|translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.theModel.state\">\n" +
+    "                <option value=\"\">{{'udp.wc.access.no_access_handler_hide'|translate}}</option>\n" +
+    "                <option value=\"disabled\">{{'udp.wc.access.no_access_handler_disable'|translate}}</option>\n" +
+    "                <option value=\"notice\">{{'udp.wc.access.no_access_handler_notice'|translate}}</option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/udp-config.html","<div class=\"p-3\">\n" +
+    "    <div class=\"card\">\n" +
+    "        <div class=\"card-header\"> {{'udp.config.module_setting' | translate}}</div>\n" +
+    "        <div class=\"card-body op-smartform form-horizontal\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.config.restricted_mode'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"$ctrl.config.restrictedMode\" id=\"uc_restrictedmode\"><label\n" +
+    "                            for=\"uc_restrictedmode\"></label>\n" +
+    "                        <p class=\"help-block\">{{'udp.config.restricted_mode_desc'|translate}}</p>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.config.dev_mode'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"$ctrl.config.devMode\" id=\"uc_devmode\"><label\n" +
+    "                            for=\"uc_devmode\"></label>\n" +
+    "                        <p class=\"help-block\">{{'udp.config.dev_mode_desc'|translate}}</p>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/udp-index.html","")
+
+$templateCache.put("app/modules/udp/url-iframe-dialog.html","<div class=\"modal-header\" ng-if=\"$ctrl.applet\" ng-class=\"{'bg-dark':$ctrl.applet.theme==='dark'}\" ng-dblclick=\"$ctrl.restoreOrMaxWindow()\">\n" +
+    "    <h4 class=\"modal-title\"><i class=\"fad {{$ctrl.applet.icon}}\"></i> {{$ctrl.applet.title}}</h4>\n" +
+    "    <button type=\"button\" class=\"btn btn-default opx-btn-flat opx-btn-icon\" ng-click=\"$ctrl.minimizeWindow($event)\"><i\n" +
+    "            class=\"far fa-minus\"></i></button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default opx-btn-flat opx-btn-icon op-close-window\"\n" +
+    "        ng-click=\"$ctrl.closeWindow($event)\" data-dismiss=\"modal\"><i class=\"far fa-times\"></i></button>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"modal-header justify-content-end\" ng-if=\"!$ctrl.applet\">\n" +
+    "    <button type=\"button\" class=\"btn btn-default opx-btn-flat opx-btn-icon\" ng-click=\"$ctrl.openInNewWindow()\">\n" +
+    "        <i class=\"far fa-external-link-square\"></i>\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default opx-btn-flat opx-btn-icon op-close-window\" ng-click=\"$ctrl.dismissModal()\" data-dismiss=\"modal\">\n" +
+    "        <i class=\"far fa-times\"></i>\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <iframe ng-src=\"{{ $ctrl.url }}\" style=\"width:100%;height:99%;border:0;\"></iframe>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/widgets/barchart/barchart-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-metrics uw-props=\"uwProps\" axis-options=\"axisOptions\"\n" +
+    "                                         fields=\"selectedDs.fields\"></udp-widget-config-chart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page'}\"\n" +
+    "                                       param-vars=\"{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <udp-widget-config-chart-display ng-model=\"uwProps.display\"></udp-widget-config-chart-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">#{udp.w.barchart.layout}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <label class=\"i-checks checkbox-inline\"><input type=\"checkbox\"\n" +
+    "                                                                   ng-model=\"uwProps.display.horizontal\"><i></i>#{udp.w.barchart.layout_horizontal}</label>\n" +
+    "                    <label class=\"i-checks checkbox-inline\"><input type=\"checkbox\"\n" +
+    "                                                                   ng-model=\"uwProps.display.stack\"><i></i>#{udp.w.echart.display.data_stack}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-bar-chart'></i> #{udp.w.echart.elem.axis}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-axes the-model=\"uwProps.display\" uw-props=\"uwProps\"\n" +
+    "                                      fields=\"selectedDs.fields\"></udp-widget-config-chart-axes>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "         <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/button/button-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>\n" +
+    "        <udp-button-style-config ng-model=\"uwProps.display\"></udp-button-style-config>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page,param,job,ajax,link,event,func,code'}\"\n" +
+    "                                       param-vars=\"\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">#{udp.w.button.icon_size}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"range\" class=\"form-control-range w-25\" min=\"1\" max=\"5\" step=\"1\" ng-model=\"uwProps.display.iconSize\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-access-config the-model=\"uwProps.accesscontrol\"></udp-widget-access-config>\n" +
+    "        <udp-button-state-config the-model=\"uwProps.statecontrol\"></udp-button-state-config>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/calendar/calendar-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\" ng-repeat=\"param in ::fieldProps track by $index\">\n" +
+    "            <label class=\"control-label\">{{param.title}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-dsfield-selector the-model=\"uwProps.attrs[param.name]\"\n" +
+    "                                      fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/card/card-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> 数据集</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> 字段属性</uib-tab-heading>\n" +
+    "        <fieldset>\n" +
+    "            <legend>图标</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"目前只支持medialib目录下的图片\">图片来源</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields.image\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">宽度</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.image.width\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <udp-widget-config-multi-values the-model=\"uwProps.fields.metrics\"\n" +
+    "                                        fields=\"selectedDs.fields\"\n" +
+    "                                        options=\"{font:{unit:'defined'}}\"></udp-widget-config-multi-values>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">背景色</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.display.bgcolor\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">文字位置</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.layout\">\n" +
+    "                        <option value=\"\">数据在上，名称在下</option>\n" +
+    "                        <option value=\"bottom\">数据在下，名称在上</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">炫彩文字样式</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.fancyStyle\">\n" +
+    "                        <option value=\"\">不启用</option>\n" +
+    "                        <option value=\"primary\">蓝底</option>\n" +
+    "                        <option value=\"warning\">橙色</option>\n" +
+    "                        <option value=\"danger\">红色</option>\n" +
+    "                        <option value=\"success\">绿色</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/circle-kpi/circle-kpi-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">初始化選項</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.parse.init\">\n" +
+    "                    <option value=\"true\">是</option>\n" +
+    "                    <option value=\"false\">否</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "<!--        <div class=\"form-group\">-->\n" +
+    "<!--            <label class=\"control-label\">{{'udp.uinput.attrs.binding' | translate}}</label>-->\n" +
+    "<!--            <div class=\"form-control-wrapper\">-->\n" +
+    "<!--                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.core.exportParam\">-->\n" +
+    "<!--            </div>-->\n" +
+    "<!--        </div>-->\n" +
+    "<!--        <div class=\"form-group\">-->\n" +
+    "<!--            <label class=\"control-label\">設置頁面參數</label>-->\n" +
+    "<!--            <div class=\"form-control-wrapper\">-->\n" +
+    "<!--                <udp-data-converter the-model=\"uwProps.parse.data\" class=\"op-w-full\"-->\n" +
+    "<!--                                    options=\"{kinds:'js,str',varTypes:'pageparam,global'}\"></udp-data-converter>-->\n" +
+    "<!--            </div>-->\n" +
+    "<!--        </div>-->\n" +
+    "<!-- -->\n" +
+    "<!--        <div class=\"form-group\">-->\n" +
+    "<!--            <label class=\"control-label\"-->\n" +
+    "<!--                   op-help-info=\"udp.w.param.config.eventtorefresh_desc\">{{'udp.w.param.config.eventtorefresh'|translate}}</label>-->\n" +
+    "<!--            <div class=\"form-control-wrapper\">-->\n" +
+    "<!--                <input class=\"form-control op-w-md\" ng-model=\"uwProps.etovalue\"/>-->\n" +
+    "<!--            </div>-->\n" +
+    "<!--        </div>-->\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "\n" +
+    "    <!--     交互设定-->\n" +
+    "    <!--    <uib-tab>-->\n" +
+    "    <!--        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>-->\n" +
+    "    <!--        <udp-widget-config-interaction the-model=\"uwProps.interaction\"-->\n" +
+    "    <!--                                       options=\"{supports:'page,param,event',enableAutoActive:true}\">-->\n" +
+    "    <!--        </udp-widget-config-interaction>-->\n" +
+    "    <!--    </uib-tab>-->\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.kpi.color'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-theme-selector the-model=\"uwProps.display\" customizable=\"true\"></udp-theme-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\" op-help-info=\"{{'udp.w.kpi.row_num_helpinfo'|translate}}\">{{'udp.w.kpi.row_num'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"number\" ng-model=\"uwProps.display.rowNum\" class=\"form-control\" min=\"1\" max=\"12\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.kpi.search'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.search\">\n" +
+    "                        <option value=\"\">{{'udp.w.kpi.search_none'|translate}}</option>\n" +
+    "                        <option value=\"right\">{{'udp.w.kpi.search_right'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <fieldset>\n" +
+    "                <legend>{{'udp.w.kpi.layout'|translate}}</legend>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.kpi.config.icon'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.icon\">\n" +
+    "                            <option value=\"none\">{{'udp.w.kpi.config.icon_none'|translate}}</option>\n" +
+    "                            <option value=\"center\">{{'udp.w.kpi.config.icon_center'|translate}}</option>\n" +
+    "                            <option value=\"left\">{{'udp.w.kpi.config.icon_left'|translate}}</option>\n" +
+    "                            <option value=\"right\">{{'udp.w.kpi.config.icon_right'|translate}}</option>\n" +
+    "                        </select>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.kpi.config.title'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.title\"\n" +
+    "                                ng-options=\"pos.key as 'udp.w.kpi.config.title_'+(pos.key||'bottom')|translate for pos in titlePositions\"></select>\n" +
+    "                        <label class=\"control-label op-w-auto ms-3\">{{'udp.w.kpi.config.title_size'|translate}}</label>\n" +
+    "                        <udp-font-editor the-model=\"uwProps.fields.title.size\"></udp-font-editor>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.kpi.config.text'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <!--                    <label class=\"control-label op-w-auto\">位置</label>-->\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.text\"\n" +
+    "                                ng-options=\"pos.key as 'udp.w.kpi.config.text_'+(pos.key||'show')|translate for pos in textPositions\"></select>\n" +
+    "                        <label class=\"control-label op-w-auto ms-3\">{{'udp.w.kpi.config.text_size'|translate}}</label>\n" +
+    "                        <udp-font-editor the-model=\"uwProps.fields.text.size\"></udp-font-editor>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </fieldset>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-retweet'></i> {{'udp.wc.tab.condfmt'|translate}}</uib-tab-heading>\n" +
+    "        <p>{{'udp.wc.condfmt.helpinfo'|translate}}</p>\n" +
+    "        <div>\n" +
+    "            <udp-widget-config-format-rule the-model=\"uwProps.display.rules\"\n" +
+    "                                           formats=\"{theme:true,backColor:true,fontColor:true}\"></udp-widget-config-format-rule>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/circle-kpi/circle-kpi.html","<div class=\"container\">\n" +
+    "    <div class=\"row\">\n" +
+    "        <div class=\"col-md-12\">\n" +
+    "            <div class=\"bs-stepper\">\n" +
+    "                <div class=\"bs-stepper-header\">\n" +
+    "                    <div class=\"bs-stepper-content\" ng-repeat=\"parse in $ctrl.parseList track by $index\">\n" +
+    "                        <div class=\"step\">\n" +
+    "                            <div class=\"step-trigger\">\n" +
+    "                                <div ng-class=\"parse.status\">\n" +
+    "                                <span class=\"bs-stepper-circle\" ng-class=\"{true: 'fa-stack fa-1x '}[parse.merge]\">\n" +
+    "                                    <i class=\"fa {{::parse.icon}} \"\n" +
+    "                                       ng-class=\"{true: 'fa-stack-2x'}[parse.merge]\"></i>\n" +
+    "                                    <i ng-if=\"parse.merge\" class=\"fa {{::parse.icon_with}} pbr\"></i>\n" +
+    "                                </span>\n" +
+    "                                </div>\n" +
+    "                                <span class=\"bs-stepper-label\">{{::parse.name}}</span>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"line\" ng-if=\"$index !== $ctrl.parseList.length-1\"></div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/circle/circle-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.circle.wc.dataset' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.circle.wc.field.attr' | translate}}</uib-tab-heading>\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.circle.wc.icon' | translate}}</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.icon.data' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields.icon\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.icon' | translate}}</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <input type=\"number\" min=\"10\" class=\"form-control\" ng-model=\"uwProps.fields.icon.size\">\n" +
+    "                    <!-- <udp-media-selector the-model=\"uwProps.fields.icon\" options=\"{supports:'image'}\"></udp-media-selector>-->\n" +
+    "                </div>\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.icon.pixel' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.circle.wc.title' | translate}}</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.title.information' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.title.text\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.title.information.set' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields.name\" fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2 \">{{'udp.circle.wc.title.font' | translate}}</label>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <udp-font-editor the-model=\"uwProps.fields.title.size\" options=\"{unit:'px'}\"></udp-font-editor>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.fields.title.color\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.title.x' | translate}}</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <select class=\"form-select\" ng-model=\"uwProps.fields.title.left\">\n" +
+    "                        <option value=\"center\">{{'udp.w.layout-flex.config.alignh_center'|translate}}</option>\n" +
+    "                        <option value=\"right\">{{'udp.w.echart.display.legend_right'|translate}}</option>\n" +
+    "                        <option value=\"left\">{{'udp.w.echart.display.legend_left'|translate}}</option>\n" +
+    "                        <option value=\"custom\">{{'udp.w.echart.display.custom'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-2\" ng-if=\"uwProps.fields.title.left === 'custom'\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.title.leftCustom\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.title.y' | translate}}</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <select class=\"form-select\" ng-model=\"uwProps.fields.title.top\">\n" +
+    "                        <option value=\"top\">{{'udp.w.layout-flex.config.alignv_top'|translate}}</option>\n" +
+    "                        <option value=\"middle\">{{'udp.w.layout-flex.config.alignv_middle'|translate}}</option>\n" +
+    "                        <option value=\"bottom\">{{'udp.w.layout-flex.config.alignv_bottom'|translate}}</option>\n" +
+    "                        <option value=\"custom\">{{'udp.w.echart.display.custom'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-2\" ng-if=\"uwProps.fields.title.top === 'custom'\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.title.topCustom\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.circle.wc.main' | translate}}</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.main.tips'|translate}}\">{{'udp.circle.wc.main.data' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields.mainText\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group form-inline\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.main.tips2'|translate}}\">{{'udp.circle.wc.main.x' | translate}}</label>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.mainText.posX\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <div class=\"form-group form-inline\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.main.tips3'|translate}}\">{{'udp.circle.wc.main.top' | translate}}</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.mainText.posY\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "                <label class=\"control-label col-sm-2 \" style=\"text-align:right\">{{'udp.circle.wc.title.font' | translate}}</label>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <udp-font-editor the-model=\"uwProps.fields.mainText.size\"></udp-font-editor>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.fields.mainText.color\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.circle.wc.secondary' | translate}}</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.circle.wc.secondary.data' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields.displayText\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group form-inline\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.main.tips2'|translate}}\">{{'udp.circle.wc.main.x' | translate}}</label>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.displayText.posX\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group form-inline\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.secondary.tip'|translate}}\">{{'udp.circle.wc.secondary.bottom' | translate}}</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <input type=\"text\" ng-model=\"uwProps.fields.displayText.posY\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "                <label class=\"control-label col-sm-2 \" style=\"text-align:right\">{{'udp.circle.wc.title.font' | translate}}</label>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <udp-font-editor the-model=\"uwProps.fields.displayText.size\"></udp-font-editor>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.fields.displayText.color\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.circle.wc.max.value' | translate}}</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.max.tips'|translate}}\">{{'udp.circle.wc.max.data' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields.total\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.circle.wc.max.color'|translate}}\">{{'udp.circle.wc.max.color2' | translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.fields.total.color\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <!--        <div class=\"form-group\">-->\n" +
+    "        <!--        <label class=\"control-label col-sm-2\">数据单位</label>-->\n" +
+    "        <!--        <div class=\"col-sm-10\">-->\n" +
+    "        <!--        <udp-dsfield-selector the-model=\"uwProps.fields.unit\"-->\n" +
+    "        <!--        fields=\"selectedDs.fields\"></udp-dsfield-selector>-->\n" +
+    "        <!--        </div>-->\n" +
+    "        <!--        </div>-->\n" +
+    "        <!--        <div class=\"form-group\">-->\n" +
+    "        <!--        <label class=\"control-label col-sm-2\">描述文字</label>-->\n" +
+    "        <!--        <div class=\"col-sm-10\">-->\n" +
+    "        <!--        <udp-dsfield-selector the-model=\"uwProps.fields.text\"-->\n" +
+    "        <!--        fields=\"selectedDs.fields\"></udp-dsfield-selector>-->\n" +
+    "        <!--        </div>-->\n" +
+    "        <!--        </div>-->\n" +
+    "        <udp-widget-config-multi-values the-model=\"uwProps.fields.metrics\" axis-options=\"axisOptions\"\n" +
+    "                                        fields=\"selectedDs.fields\"></udp-widget-config-multi-values>\n" +
+    "    </uib-tab>\n" +
+    "    <!--<uib-tab>-->\n" +
+    "    <!--<uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>-->\n" +
+    "    <!--<udp-widget-config-interaction the-model=\"uwProps.interaction\"-->\n" +
+    "    <!--options=\"{supports:'page'}\"-->\n" +
+    "    <!--param-vars=\"{'${S}':'所选数据点的序列名称','${X}':'所选数据点的标签','${Y}':'所选数据点的Y值'}\">-->\n" +
+    "    <!--</udp-widget-config-interaction>-->\n" +
+    "    <!--</uib-tab>-->\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <udp-widget-config-chart-display ng-model=\"uwProps.display\"></udp-widget-config-chart-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\" for=\"cwc-rownum\">{{'udp.wc.tab.style.row.num'|translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <input type=\"number\" id=\"cwc-rownum\" min=\"1\" max=\"12\" class=\"form-control d-inline-block\"\n" +
+    "                           ng-model=\"uwProps.display.rowNum\">\n" +
+    "                    <!--</div>-->\n" +
+    "                    <label class=\"control-label ms-3 m-r\" for=\"cwc-rowspace\"\n" +
+    "                           op-help-info=\"{{'udp.wc.tab.style.row.tips'|translate}}\">{{'udp.wc.tab.style.row.space'|translate}}</label>\n" +
+    "                    <!--<div class=\"col-sm-4\">-->\n" +
+    "                    <input type=\"text\" id=\"cwc-rowspace\" class=\"form-control d-inline-block\" style=\"width:6em;\"\n" +
+    "                           ng-model=\"uwProps.display.rowSpace\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "<!--            <div class=\"form-group\">-->\n" +
+    "<!--                <label for=\"cwc-radius\" class=\"control-label col-sm-2\">环形宽度</label>-->\n" +
+    "<!--                <div class=\"col-sm-10\">-->\n" +
+    "<!--                    <input id=\"cwc-radius\" type=\"number\" min=\"10\" step=\"5\" class=\"form-control d-inline-block\"-->\n" +
+    "<!--                           ng-model=\"uwProps.display.radius\">-->\n" +
+    "<!--                    &lt;!&ndash;</div>&ndash;&gt;-->\n" +
+    "<!--                    &lt;!&ndash;<div class=\"form-group\">&ndash;&gt;-->\n" +
+    "<!--                    <label for=\"cwc-sizunit\" class=\"control-label ms-3 m-r\"-->\n" +
+    "<!--                           op-help-info=\"宽度的单位，相对宽度使用百分比，绝对宽度使用像素\">尺寸单位</label>-->\n" +
+    "<!--                    <select id=\"cwc-sizunit\" class=\"form-select d-inline-block\" ng-model=\"uwProps.display.sizeUnit\"-->\n" +
+    "<!--                            style=\"width:auto;\">-->\n" +
+    "<!--                        <option value=\"%\">百分比%</option>-->\n" +
+    "<!--                        <option value=\"px\">像素px</option>-->\n" +
+    "<!--                    </select>-->\n" +
+    "<!--                </div>-->\n" +
+    "<!--            </div>-->\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\"> {{'common.css.bgcolor'|translate}}</label>\n" +
+    "                <div class=\"col-sm-2\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.display.bgcolor\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <fieldset>\n" +
+    "                <legend  op-help-info=\"{{'udp.wc.tab.style.field.tips'|translate}}\">{{'udp.circle.wc.tab.style.width'|translate}}</legend>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label for=\"cwc-radius-x\" class=\"control-label ms-3 m-r\">{{'udp.circle.wc.tab.style.inner'|translate}}</label>\n" +
+    "                    <div class=\"col-sm-4\">\n" +
+    "                        <input id=\"cwc-radius-x\" type=\"number\"  min=\"10\" max=\"100\" class=\"form-control d-inline-block\"\n" +
+    "                               ng-model=\"uwProps.display.radius.inner\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label for=\"cwc-radius-y\" class=\"control-label ms-3 m-r\">{{'udp.circle.wc.tab.style.outer'|translate}}</label>\n" +
+    "                    <div class=\"col-sm-4\">\n" +
+    "                        <input id=\"cwc-radius-y\" type=\"number\" min=\"10\" max=\"100\" class=\"form-control d-inline-block\"\n" +
+    "                               ng-model=\"uwProps.display.radius.outer\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </fieldset>\n" +
+    "            <fieldset>\n" +
+    "                <legend op-help-info=\"{{'udp.circle.wc.tab.style.tips'|translate}}\">{{'udp.circle.wc.tab.style.index'|translate}}</legend>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label for=\"cwc-center-x\" class=\"control-label col-sm-2\">{{'udp.circle.wc.tab.style.index.x'|translate}}</label>\n" +
+    "                    <div class=\"col-sm-4\">\n" +
+    "                        <input id=\"cwc-center-x\" type=\"number\"  min=\"10\" max=\"100\" class=\"form-control d-inline-block\"\n" +
+    "                               ng-model=\"uwProps.display.center.x\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label for=\"cwc-center-y\" class=\"control-label col-sm-2\">{{'udp.circle.wc.tab.style.index.y'|translate}}</label>\n" +
+    "                    <div class=\"col-sm-4\">\n" +
+    "                        <input id=\"cwc-center-y\" type=\"number\"  min=\"10\" max=\"100\" class=\"form-control d-inline-block\"\n" +
+    "                               ng-model=\"uwProps.display.center.y\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </fieldset>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/clock/clock-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_interval\">{{'udp.w.clock.config.interval'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" class=\"form-control\" ng-model=\"uwProps.interval\" id=\"f_interval\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_event\">{{'udp.w.clock.config.event' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control w-md\" ng-model=\"uwProps.event\" id=\"f_event\">\n" +
+    "                <p class=\"help-block\">{{'udp.w.clock.config.event_desc' | translate}}</p>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_initstate\">{{'udp.w.clock.config.init_state' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"checkbox checkbox-primary\">\n" +
+    "                    <input type=\"checkbox\" id=\"f_initstate\" ng-model=\"uwProps.autoStart\"><label\n" +
+    "                        for=\"f_initstate\">{{'udp.w.clock.config.auto_start' | translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/code-editor/code-editor-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"usb_name\"\n" +
+    "                op-help-info=\"{{'udp.uinput.attrs.name_helpinfo'|translate}}\">{{'udp.uinput.attrs.name'|translate}}</label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control op-w-sm\" ng-model=\"uwProps.name\" id=\"usb_name\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'cmd.list.grammar' | translate}} \n" +
+    "                <i class=\"fa fa-atlas\"></i>\n" +
+    "            </label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.syntax\"\n" +
+    "                        op-select\n" +
+    "                        ng-options=\"syntax for syntax in syntaxArr track by syntax\">\n" +
+    "                    <option value=\"\"></option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_readonly\">{{'udp.uinput.attrs.readonly' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"form-check form-switch\">\n" +
+    "                    <input class=\"form-check-input\" style=\"width:3rem;height:1.4rem;\" type=\"checkbox\" value=\"true\"\n" +
+    "                        id=\"f_readonly\" ng-model=\"uwProps.readonly\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_toolbar\">{{'udp.w.code-editor.toolbar' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"form-check form-switch\">\n" +
+    "                    <input class=\"form-check-input\" style=\"width:3rem;height:1.4rem;\" type=\"checkbox\" value=\"true\"\n" +
+    "                        id=\"f_toolbar\" ng-model=\"uwProps.toolbar\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.data.initval'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.initval\" class=\"op-w-full\"\n" +
+    "                    options=\"{kinds:'js,str',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/datatable/datatable-filter-modal.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">#{udp.w.datatable.exfilter.title}</h4>\n" +
+    "    <button type=\"button\" class=\"btn-close\" data-dismiss=\"modal\" ng-click=\"vm.cancel()\"></button>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">#{udp.w.datatable.exfilter.type}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select ng-model=\"vm.filter.type\" class=\"form-select w-sm\">\n" +
+    "                <option value=\"precise\">#{udp.w.datatable.exfilter.type_precise}</option>\n" +
+    "                <option value=\"fuzzy\">#{udp.w.datatable.exfilter.type_fuzzy}</option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <div class=\"checkbox\">\n" +
+    "                <input type=\"checkbox\" ng-model=\"vm.filter.case\" id=\"dfm-case\"><label for=\"dfm-case\">#{udp.w.datatable.exfilter.case}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">#{udp.w.datatable.exfilter.column}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select w-sm\"\n" +
+    "                    ng-options=\"col.index as col.title for col in ::vm.columns\"\n" +
+    "                    ng-model=\"vm.filter.column\"></select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <!--<div class=\"form-group\">-->\n" +
+    "    <!--<input type=\"text\" ng-model=\"vm.type\">-->\n" +
+    "    <!--</div>-->\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">#{udp.w.datatable.exfilter.content}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <textarea class=\"form-control\" rows=\"8\" ng-model=\"vm.filter.content\"></textarea>\n" +
+    "            <p class=\"help-block\">#{udp.w.datatable.exfilter.content_desc}</p>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <!--<button class=\"btn btn-default\" type=\"button\" ng-click=\"vm.cancel()\">{{'common.action.cancel'|translate}}</button>-->\n" +
+    "    <button class=\"btn btn-primary\" type=\"submit\" ng-click=\"vm.confirm()\"><i class=\"fa fa-check\"></i> #{udp.w.datatable.exfilter.enable_filter}</button>\n" +
+    "    <button class=\"btn btn-default\" type=\"button\" ng-click=\"vm.clearCustomFilter()\"><i class=\"fa fa-times\"></i> #{udp.w.datatable.exfilter.clear_filter}\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/datatable/datatable-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"\n" +
+    "                                   options=\"{allowServerPage:true,allowClientLimit:false}\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>\n" +
+    "        <div>\n" +
+    "            <ul ng-sortable class=\"list list-unstyled list-inline\">\n" +
+    "                <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "                <li class=\"mb-1\" ng-repeat=\"field in uwProps.fields track by $index\">\n" +
+    "                    <span class=\"badge op-text-normal p-3\"\n" +
+    "                          ng-class=\"{'badge-dark':current.index === $index,'badge-secondary':current.index!==$index,'badge-light opx-font-strikethrough':field.hidden}\">\n" +
+    "                        <i class=\"far fa-exchange\"\n" +
+    "                           ng-if=\"!field.dynamic && field.convertFn\"\n" +
+    "                           title=\"{{'udp.w.datatable.config.field_is_converted'|translate}}\"></i>\n" +
+    "                        <i class=\"far fa-ellipsis-h\"\n" +
+    "                           ng-if=\"field.dynamic\" title=\"{{'udp.w.datatable.column.dynamic'|translate}}\"></i>\n" +
+    "                        <a ng-click=\"current.index=$index\"\n" +
+    "                           ng-bind-html=\"field.dynamic?('udp.w.datatable.column.dynamic'|translate):(field.label || field.field || '&nbsp;&nbsp;&nbsp;')\"></a>\n" +
+    "                        <a ng-click=\"removeField($index)\">&times;</a>\n" +
+    "                    </span></li>\n" +
+    "            </ul>\n" +
+    "        </div>\n" +
+    "        <fieldset ng-if=\"current.index>=0\" class=\"p-2\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.datatable.column.label' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control op-w-sm\" ng-model=\"uwProps.fields[current.index].label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.datatable.column.setting' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper op-combo flex-wrap\">\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_hide\" ng-model=\"uwProps.fields[current.index].hidden\"><label\n" +
+    "                            for=\"dwc_hide\">{{'udp.w.datatable.column.hide' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_mcheck\"\n" +
+    "                               ng-model=\"uwProps.fields[current.index].mcheck\"><label\n" +
+    "                            for=\"dwc_mcheck\">{{'udp.w.datatable.column.mcheck' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dynamic\"\n" +
+    "                               ng-model=\"uwProps.fields[current.index].dynamic\"><label\n" +
+    "                            for=\"dwc_dynamic\"\n" +
+    "                            op-help-info=\"{{'udp.w.datatable.column.dynamic_helpinfo'|translate}}\">{{'udp.w.datatable.column.dynamic' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_isrestricted\"\n" +
+    "                               ng-model=\"uwProps.fields[current.index].isrestricted\"><label\n" +
+    "                            for=\"dwc_isrestricted\"\n" +
+    "                            op-help-info=\"{{'udp.w.datatable.column.secret_helpinfo'|translate}}\">{{'udp.w.datatable.column.secret' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "<!--                         ng-if=\"!uwProps.dataset._type && uwProps.dataset.serverPage\">-->\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_sortable\"\n" +
+    "                               ng-model=\"uwProps.fields[current.index].orderable\"><label\n" +
+    "                            for=\"dwc_sortable\"\n" +
+    "                            op-help-info=\"{{'udp.w.datatable.column.sortable_helpinfo'|translate}}\">{{'udp.w.datatable.column.sortable' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "<!--                         ng-if=\"!uwProps.dataset._type && uwProps.dataset.serverPage\">-->\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_searchable\"\n" +
+    "                               ng-model=\"uwProps.fields[current.index].searchable\"><label\n" +
+    "                            for=\"dwc_searchable\"\n" +
+    "                            op-help-info=\"{{'udp.w.datatable.column.searchable_helpinfo'|translate}}\">{{'udp.w.datatable.column.searchable' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\" ng-if=\"uwProps.fields[current.index].dynamic\">\n" +
+    "                <label class=\"control-label\" op-help-info=\"{{'udp.w.datatable.column.dynamicdef_helpinfo'|translate}}\">{{'udp.w.datatable.column.dynamic_definition' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-data-converter the-model=\"uwProps.fields[current.index].dynamicDef\"\n" +
+    "                                        options=\"{kinds:'js,yaml'}\" class=\"op-w-full\"></udp-data-converter>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div ng-if=\"!uwProps.fields[current.index].dynamic\">\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\"\n" +
+    "                           op-help-info=\"{{'udp.w.datatable.column.data_helpinfo'|translate}}\">{{'udp.w.datatable.column.data' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <udp-dsfield-selector the-model=\"uwProps.fields[current.index].field\" fields=\"selectedDs.fields\"\n" +
+    "                                              options=\"{disableConverter:true}\"></udp-dsfield-selector>\n" +
+    "                        <div class=\"btn-group\">\n" +
+    "                            <button type=\"button\" class=\"btn ms-3\"\n" +
+    "                                    ng-class=\"showDataConverter[current.index]?'btn-secondary':'btn-outline-default'\"\n" +
+    "                                    ng-click=\"showDataConverter[current.index]=!showDataConverter[current.index]\">\n" +
+    "                                {{'udp.w.datatable.column.data_convert' | translate}}\n" +
+    "                            </button>\n" +
+    "                            <button type=\"button\"\n" +
+    "                                    ng-click=\"previewFieldsData(uwProps.fields,selectedDs.sampleRecord)\"\n" +
+    "                                    title=\"{{'udp.w.datatable.column.data_preview'|translate}}\"\n" +
+    "                                    class=\"btn btn-outline-default\"><i class=\"fa fa-grip-horizontal\"></i>\n" +
+    "                            </button>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <div ng-if=\"showDataConverter[current.index]\" class=\"op-form-subgroup mb-3 mt-3 w-100\">\n" +
+    "                            <div class=\"form-group\">\n" +
+    "                                <label class=\"control-label\" ng-if=\"!uwProps.fields[current.index].mcheck\"><span\n" +
+    "                                        op-help-info=\"{{'udp.w.datatable.column.data_display_helpinfo' | translate}}\">{{'udp.w.datatable.column.data_display' | translate}}</span></label>\n" +
+    "                                <label class=\"control-label\" ng-if=\"uwProps.fields[current.index].mcheck\"><span\n" +
+    "                                        op-help-info=\"{{'udp.w.datatable.column.data_mcheck_helpinfo'|translate}}\">{{'udp.w.datatable.column.data_mcheck'|translate}}</span></label>\n" +
+    "                                <div class=\"form-control-wrapper\">\n" +
+    "                                    <udp-data-converter the-model=\"uwProps.fields[current.index].convertFn\"\n" +
+    "                                                        class=\"w-full\"\n" +
+    "                                                        options=\"{kinds:'js,str,link',varTypes:'field,pageparam,global'}\"></udp-data-converter>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"form-group\" ng-if=\"!uwProps.dataset._type && uwProps.dataset.serverPage\">\n" +
+    "                                <label class=\"control-label\" op-help-info=\"{{'udp.w.datatable.column.data_export_helpinfo'|translate}}\">{{'udp.w.datatable.column.data_export'|translate}}</label>\n" +
+    "                                <div class=\"form-control-wrapper\">\n" +
+    "                                    <input type=\"text\" class=\"form-control code\"\n" +
+    "                                           ng-model=\"uwProps.fields[current.index].dataSsp\">\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <section ng-if=\"uwProps.fields[current.index].mcheck\">\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\" op-help-info=\"udp.w.datatable.column.mcheck_selected_label_helpinfo\">{{'udp.w.datatable.column.mcheck_selected_label'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <udp-dsfield-selector the-model=\"uwProps.fields[current.index].mcheckUnionFiled\"\n" +
+    "                                              fields=\"selectedDs.fields\"\n" +
+    "                                              options=\"{disableConverter:true}\"></udp-dsfield-selector>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\"\n" +
+    "                           op-help-info=\"udp.w.datatable.column.mcheck_export_param_helpinfo\">{{'udp.w.datatable.column.mcheck_export_param'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <input type=\"text\" ng-model=\"uwProps.fields[current.index].mcheckParam\"\n" +
+    "                               class=\"form-control op-w-sm me-3\"/>\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.fields[current.index].mcheckType\">\n" +
+    "                            <option value=\"\">{{'common.datatype.array'|translate}}</option>\n" +
+    "                            <option value=\"csv\">{{'common.datatype.csv'|translate}}</option>\n" +
+    "                        </select>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </section>\n" +
+    "            <section ng-if=\"!uwProps.fields[current.index].mcheck\">\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.datatable.column.default_content' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <input type=\"text\" ng-model=\"uwProps.fields[current.index].defaultContent\"\n" +
+    "                               class=\"form-control op-w-md\"/>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <!--New-->\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.datatable.column.sort' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <select class=\"form-select op-w-auto\" ng-model=\"uwProps.fields[current.index].order\">\n" +
+    "                            <option value=\"\">{{'udp.w.datatable.column.sort_disabled' | translate}}</option>\n" +
+    "                            <option value=\"asc\">{{'udp.w.datatable.column.sort_asc' | translate}}</option>\n" +
+    "                            <option value=\"desc\">{{'udp.w.datatable.column.sort_desc' | translate}}</option>\n" +
+    "                        </select>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.datatable.column.align' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <select class=\"form-select op-w-auto\" ng-model=\"uwProps.fields[current.index].align\">\n" +
+    "                            <option value=\"\">{{'udp.w.datatable.column.align_auto' | translate}}</option>\n" +
+    "                            <option value=\"left\">{{'udp.w.datatable.column.align_left' | translate}}</option>\n" +
+    "                            <option value=\"center\">{{'udp.w.datatable.column.align_center' | translate}}</option>\n" +
+    "                            <option value=\"right\">{{'udp.w.datatable.column.align_right' | translate}}</option>\n" +
+    "                        </select>\n" +
+    "                        <!--</div>-->\n" +
+    "                        <!--<div class=\"\">-->\n" +
+    "                        <select class=\"ms-2 form-select op-w-auto\" ng-model=\"uwProps.fields[current.index].wrap\">\n" +
+    "                            <option value=\"\">{{'common.term.default' | translate}}</option>\n" +
+    "                            <option value=\"nowrap\">{{'udp.w.datatable.column.wrap_disabled' | translate}}\n" +
+    "                            </option>\n" +
+    "                            <option value=\"wrap\">{{'udp.w.datatable.column.wrap_auto' | translate}}</option>\n" +
+    "                        </select>\n" +
+    "                        <udp-css-editor class=\"ms-2\" the-model=\"uwProps.fields[current.index].css\"\n" +
+    "                                        options=\"{style:'dropdown',groups:'text'}\"></udp-css-editor>\n" +
+    "                        <input type=\"number\" ng-model=\"uwProps.fields[current.index].linelimit\" class=\"ms-2 form-control\"\n" +
+    "                               title=\"#{udp.w.datatable.column.linelimit}\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\"\n" +
+    "                           op-help-info=\"{{'udp.w.datatable.column.trim_helpinfo'|translate}}\">{{'udp.w.datatable.column.trim' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <input type=\"number\" class=\"form-control\" ng-model=\"uwProps.fields[current.index].cutoff\"\n" +
+    "                               min=\"0\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\" xxng-if=\"uwProps.fields[current.index].type\">\n" +
+    "                    <label class=\"control-label\"\n" +
+    "                           op-help-info=\"{{'udp.w.datatable.column.format_helpinfo'|translate}}\">{{'udp.w.datatable.column.format' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <input type=\"text\" ng-model=\"uwProps.fields[current.index].formatter\"\n" +
+    "                               class=\"form-control op-w-md\"/>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\" ng-if=\"uwProps.fields[current.index].type==='number'\">\n" +
+    "                    <label class=\"control-label\">#{udp.w.datatable.column.scale}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <input type=\"number\" ng-model=\"uwProps.fields[current.index].scale\"\n" +
+    "                               class=\"form-control op-w-sm\"\n" +
+    "                               style=\"width:100%;\"/>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\" ng-if=\"uwProps.display.footer\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.datatable.column.footer' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.fields[current.index].accum\">\n" +
+    "                            <option value=\"\"></option>\n" +
+    "                            <option value=\"MAX\">{{'udp.w.datatable.column.footer_max' | translate}}</option>\n" +
+    "                            <option value=\"MIN\">{{'udp.w.datatable.column.footer_min' | translate}}</option>\n" +
+    "                            <option value=\"COUNT\">{{'udp.w.datatable.column.footer_count' | translate}}</option>\n" +
+    "                            <option value=\"SUM\">{{'udp.w.datatable.column.footer_sum' | translate}}</option>\n" +
+    "                            <option value=\"AVERAGE\">{{'udp.w.datatable.column.footer_average' | translate}}</option>\n" +
+    "                        </select>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </section>\n" +
+    "            </div>\n" +
+    "            <!--<div class=\"form-group\">-->\n" +
+    "            <!--<label class=\"control-label col-sm-2\">数据定义</label>-->\n" +
+    "            <!--<div class=\"col-sm-10\">-->\n" +
+    "            <!--<udp-data-converter the-model=\"uwProps.fields[current.index].convertFn\"-->\n" +
+    "            <!--options=\"{kinds:'js,str,link'}\"></udp-data-converter>-->\n" +
+    "            <!--</div>-->\n" +
+    "            <!--</div>-->\n" +
+    "        </fieldset>\n" +
+    "        <div class=\"m-t\">\n" +
+    "            <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"removeAllFields()\"><i\n" +
+    "                    class=\"fa fa-minus-square\"></i> {{'udp.w.datatable.config.remove_all_columns' | translate}}\n" +
+    "            </button>\n" +
+    "            <button type=\"button\" class=\"btn btn-outline-primary btn-sm\" ng-click=\"addField()\"><i\n" +
+    "                    class=\"fa fa-plus-square\"></i> {{'udp.w.datatable.config.add_column' | translate}}\n" +
+    "            </button>\n" +
+    "            <button type=\"button\" class=\"btn btn-outline-primary btn-sm\" ng-click=\"addAllFields(selectedDs.fields)\"><i\n" +
+    "                    class=\"fa fa-plus-square\"\n" +
+    "                    title=\"{{'udp.w.datatable.config.add_all_columns_helpinfo'|translate}}\"></i>\n" +
+    "                {{'udp.w.datatable.config.add_all_columns' | translate}}\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}\n" +
+    "        </uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <!--            <div class=\"form-group\">-->\n" +
+    "            <!--                <label class=\"control-label\" op-help-info=\"只支持px和vh单位，例如200px, 50vh\">高度</label>-->\n" +
+    "            <!--                <div class=\"form-control-wrapper\">-->\n" +
+    "            <!--                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.height\" placeholder=\"高度\">-->\n" +
+    "            <!--                </div>-->\n" +
+    "            <!--            </div>-->\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.datatable.config.border_and_background' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <!--                    <div class=\"checkbox checkbox-inline\">-->\n" +
+    "                    <!--                        <input type=\"checkbox\" name=\"display_noborder\" id=\"dwc_dis-border\"-->\n" +
+    "                    <!--                               ng-model=\"uwProps.display.noBorder\"><label for=\"dwc_dis-border\">无边框</label>-->\n" +
+    "                    <!--                    </div>-->\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" name=\"display_nogrid\" id=\"dwc_dis-grid\"\n" +
+    "                               ng-model=\"uwProps.display.noGrid\"><label\n" +
+    "                            for=\"dwc_dis-grid\">{{'udp.w.datatable.config.border_nogrid' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.datatable.config.header' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"uwProps.display.noHeader\" id=\"dwc_dis_noheader\">\n" +
+    "                        <label for=\"dwc_dis_noheader\">{{'udp.w.datatable.config.header_hide' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.datatable.config.controls' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dis_nosearch\" name=\"display_search\"\n" +
+    "                               ng-model=\"uwProps.display.noSearch\"><label\n" +
+    "                            for=\"dwc_dis_nosearch\">{{'udp.w.datatable.config.controls_nosearch' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dis_footer\"\n" +
+    "                               ng-model=\"uwProps.display.footer\"><label for=\"dwc_dis_footer\"\n" +
+    "                                                                        op-help-info=\"{{'udp.w.datatable.config.controls_footer_helpinfo'|translate}}\">{{'udp.w.datatable.config.controls_footer' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dis_exfilter\"\n" +
+    "                               ng-model=\"uwProps.display.exfilter\"><label for=\"dwc_dis_exfilter\"\n" +
+    "                                                                          op-help-info=\"{{'udp.w.datatable.config.controls_exfilter_helpinfo'|translate}}\">{{'udp.w.datatable.config.controls_exfilter' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dis_showrefresh\"\n" +
+    "                               ng-model=\"uwProps.display.showrefresh\"><label\n" +
+    "                            for=\"dwc_dis_showrefresh\">{{'udp.w.datatable.config.controls_refresh' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dis_showexport\"\n" +
+    "                               ng-model=\"uwProps.display.showexport\"><label\n" +
+    "                            for=\"dwc_dis_showexport\">{{'udp.w.datatable.config.controls_export' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.datatable.config.pagination' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-auto\" ng-model=\"uwProps.display.pagination\">\n" +
+    "                        <option value=\"none\">{{'udp.w.datatable.config.pagination_none' | translate}}</option>\n" +
+    "                        <option value=\"default\">{{'udp.w.datatable.config.pagination_default' | translate}}</option>\n" +
+    "                        <option value=\"simple\">{{'udp.w.datatable.config.pagination_simple' | translate}}</option>\n" +
+    "                        <option value=\"full\">{{'udp.w.datatable.config.pagination_full' | translate}}</option>\n" +
+    "                        <option value=\"listbox\">{{'udp.w.datatable.config.pagination_listbox' | translate}}</option>\n" +
+    "                        <option value=\"input\">{{'udp.w.datatable.config.pagination_input' | translate}}</option>\n" +
+    "                    </select>\n" +
+    "                    <!--</div>-->\n" +
+    "                    <div class=\"checkbox checkbox-inline ms-5\">\n" +
+    "                        <input type=\"checkbox\" id=\"dwc_dis-pager\" name=\"display_pagesize\"\n" +
+    "                               ng-model=\"uwProps.display.noPageSize\"><label\n" +
+    "                            for=\"dwc_dis-pager\">{{'udp.w.datatable.config.pagination_no_pagesize' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-retweet'></i> {{'udp.wc.tab.condfmt' | translate}}\n" +
+    "        </uib-tab-heading>\n" +
+    "        <p>{{'udp.w.datatable.config.condfmt.cell_style' | translate}}</p>\n" +
+    "        <udp-widget-config-format-rule the-model=\"uwProps.display.cellrules\"\n" +
+    "                                       formats=\"{theme:false,backColor:false,fontColor:false,css:true,style:true}\">\n" +
+    "        </udp-widget-config-format-rule>\n" +
+    "        <p class=\"help-block\" ng-bind-html=\"'udp.w.datatable.config.condfmt.cell_style_helpinfo'|translate\"></p>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-access-config the-model=\"uwProps.accesscontrol\"></udp-widget-access-config>\n" +
+    "        <udp-button-state-config the-model=\"uwProps.statecontrol\"></udp-button-state-config>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading>{{'udp.wc.tab.props'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/daterange/daterange-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <!--<label class=\"control-label\" op-help-info=\"名称可以为空，如果别的控件需要关联此控件的数据，就需要设置一个整个页面唯一的名称\">名称</label>-->\n" +
+    "            <!--<div class=\"col-sm-10 col-md-4\">-->\n" +
+    "            <!--<input class=\"form-control\" ng-model=\"uwProps.name\" id=\"f_name\">-->\n" +
+    "            <!--</div>-->\n" +
+    "            <label class=\"control-label\" for=\"f_label\">{{'udp.w.daterange.attrs.label' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"input-group\">\n" +
+    "                    <span class=\"input-group-text\"><input type=\"checkbox\" ng-model=\"uwProps.showlabel\"></span>\n" +
+    "                    <input class=\"form-control\" ng-model=\"uwProps.label\" id=\"f_label\"\n" +
+    "                           ng-disabled=\"!uwProps.showlabel\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.begin_param' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control\" ng-model=\"uwProps.nameofstart\" id=\"f_nameofstart\">\n" +
+    "            </div>\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.begin_initval' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.initvalofstart\" options=\"{kinds:'js'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.end_param' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control\" ng-model=\"uwProps.nameofend\" id=\"f_nameofend\">\n" +
+    "            </div>\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.end_initval' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.initvalofend\" options=\"{kinds:'js'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <hr>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.date_format' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.formatter\">\n" +
+    "                    <option value=\"YYYY-MM-DD\">{{'udp.w.daterange.attrs.date_format_1' | translate}}</option>\n" +
+    "                    <option value=\"YYYY/MM/DD\">{{'udp.w.daterange.attrs.date_format_2' | translate}}</option>\n" +
+    "                    <option value=\"YYYY-MM-DD HH:mm:ss\">{{'udp.w.daterange.attrs.date_format_3' | translate}}</option>\n" +
+    "                    <option value=\"YYYY/MM/DD HH:mm:ss\">{{'udp.w.daterange.attrs.date_format_4' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"{{'udp.w.daterange.attrs.datatype_desc'|translate}}\">{{'common.term.datatype' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.format\">\n" +
+    "                    <option value=\"string\">{{'common.datatype.string' | translate}}</option>\n" +
+    "                    <option value=\"date\">{{'common.datatype.date' | translate}}</option>\n" +
+    "                    <!--                    <option value=\"custom\">{{'common.datatype.string'|translate}}</option>-->\n" +
+    "                </select>\n" +
+    "                <div>\n" +
+    "                    <udp-data-converter the-model=\"uwProps.converter\" options=\"{kinds:'js'}\" class=\"xop-w-full\"\n" +
+    "                                        ng-if=\"uwProps.format==='custom'\"></udp-data-converter>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"uwProps.source==='func' && uwProps.control==='select'\" class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.sourcedef' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.sourcedef\"\n" +
+    "                                    options=\"{kinds:'js,yaml',varTypes:'pageparam'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_datelimit\"\n" +
+    "                   op-help-info=\"{{'udp.w.daterange.attrs.date_range_desc'|translate}}\">{{'udp.w.daterange.attrs.date_range' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"input-group\" style=\"width:15em;\">\n" +
+    "                    <div class=\"input-group-text\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"uwProps.datelimit.enabled\"></div>\n" +
+    "                    <input type=\"number\" class=\"form-control\" ng-model=\"uwProps.datelimit.maxspan\" id=\"f_datelimit\"\n" +
+    "                           ng-disabled=\"!uwProps.datelimit.enabled\">\n" +
+    "                    <button type=\"button\" class=\"btn btn-outline-default dropdown-toggle\"\n" +
+    "                            data-bs-toggle=\"dropdown\">\n" +
+    "                        {{uwProps.datelimit.maxunit || '&nbsp;'}}</button>\n" +
+    "                    <div class=\"dropdown-menu dropdown-menu-end\">\n" +
+    "                        <a class=\"dropdown-item\" ng-repeat=\"unit in ::units track by $index\"\n" +
+    "                           ng-click=\"uwProps.datelimit.maxunit=unit.key;\">{{unit.label}}</a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <hr>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.daterange.attrs.width' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" ng-model=\"uwProps.width\" class=\"form-control\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.term.style' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                    <input type=\"checkbox\" id=\"dwc_readonly\"\n" +
+    "                           ng-model=\"uwProps.readonly\"><label\n" +
+    "                        for=\"dwc_readonly\">{{'udp.w.daterange.attrs.readonly' | translate}}</label>\n" +
+    "                </div>\n" +
+    "                <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                    <input type=\"checkbox\" id=\"dwc_slider\"\n" +
+    "                           ng-model=\"uwProps.display.style\"><label\n" +
+    "                        for=\"dwc_slider\">{{'udp.w.daterange.attrs.slider' | translate}}</label>\n" +
+    "                </div>\n" +
+    "                <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                    <input type=\"checkbox\" id=\"dwc_ranges\"\n" +
+    "                           ng-model=\"uwProps.ranges\"><label\n" +
+    "                        for=\"dwc_ranges\">{{'udp.w.daterange.attrs.show_predefined' | translate}}</label>\n" +
+    "                </div>\n" +
+    "\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/dsfield-selector.html","<div ng-if=\"$ctrl.options.disableConverter\">\n" +
+    "    <select op-select=\"{width:'16em',search_contains: true}\" class=\"form-select\"\n" +
+    "            ng-model=\"$ctrl.theModel\"\n" +
+    "            ng-options=\"df.name as df.alias?df.alias+' ('+df.name+ ') ['+df.type+']':df.name+' ['+df.type+']' for df in $ctrl.fields | orderBy:'name'\">\n" +
+    "    </select>\n" +
+    "</div>\n" +
+    "<div style=\"display: flex;\" ng-if=\"!$ctrl.options.disableConverter\">\n" +
+    "    <select op-select=\"{width:'16em',search_contains: true}\" class=\"form-select\"\n" +
+    "            ng-model=\"$ctrl.theModel.field\"\n" +
+    "            ng-options=\"df.name as df.alias?df.alias+' ('+df.name+ ') ['+df.type+']':df.name+' ['+df.type+']' for df in $ctrl.fields | orderBy:'name'\">\n" +
+    "        <option value=\"\">--{{'udp.wc.dataset.custom_field_data'|translate}}--</option>\n" +
+    "    </select>\n" +
+    "    <udp-data-converter the-model=\"$ctrl.theModel.convertFn\"\n" +
+    "                        options=\"$ctrl.options.converter\"\n" +
+    "                        class=\"ms-2\"\n" +
+    "                        style=\"flex:1;\"\n" +
+    "                        disabled=\"$ctrl.theModel.field\"></udp-data-converter>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/dynamic-topology-chart/dynamic-topology-chart-widget-config.html","<uib-tabset class=\"tab-container\" xmlns=\"http://www.w3.org/1999/html\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> 节点字段设定</uib-tab-heading>\n" +
+    "        <div class=\"alert alert-info\" role=\"alert\">\n" +
+    "            <h4 class=\"alert-heading\">节点字段说明</h4>\n" +
+    "            <div>\n" +
+    "                <table class=\"table table-bordered\">\n" +
+    "                    <thead>\n" +
+    "                    <tr>\n" +
+    "                        <th>名称</th>\n" +
+    "                        <th>是否必填</th>\n" +
+    "                        <th>默认字段名</th>\n" +
+    "                        <th>默认值</th>\n" +
+    "                        <th>说明</th>\n" +
+    "                    </tr>\n" +
+    "                    </thead>\n" +
+    "                    <tbody>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">主键</td>\n" +
+    "                        <td style=\"width: 10%\">是</td>\n" +
+    "                        <td style=\"width: 10%\">id</td>\n" +
+    "                        <td style=\"width: 10%\"></td>\n" +
+    "                        <td style=\"width: 60%\">用于标识节点的唯一性</td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">分类</td>\n" +
+    "                        <td style=\"width: 10%\">是</td>\n" +
+    "                        <td style=\"width: 10%\">category</td>\n" +
+    "                        <td style=\"width: 10%\"></td>\n" +
+    "                        <td style=\"width: 60%\">用于给节点分类，相当于图形上的图例</td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">图标</td>\n" +
+    "                        <td style=\"width: 10%\">否</td>\n" +
+    "                        <td style=\"width: 10%\">icon</td>\n" +
+    "                        <td style=\"width: 10%\"></td>\n" +
+    "                        <td style=\"width: 60%;word-break:break-all;\">\n" +
+    "                            可以通过 'path://' 将图标设置为任意的矢量路径,例如:\n" +
+    "                            <p><code>'path://M30.9,53.2C16.8,53.2,5.3,41.7,5.3,27.6S16.8,2,30.9,2C45,2,56.4,13.5,56.4,27.6S45,53.2,30.9,53.2z M30.9,3.5C17.6,3.5,6.8,14.4,6.8,27.6c0,13.3,10.8,24.1,24.101,24.1C44.2,51.7,55,40.9,55,27.6C54.9,14.4,44.1,3.5,30.9,3.5z M36.9,35.8c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H36c0.5,0,0.9,0.4,0.9,1V35.8z M27.8,35.8 c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H27c0.5,0,0.9,0.4,0.9,1L27.8,35.8L27.8,35.8z'</code></p>\n" +
+    "                        </td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">图标颜色</td>\n" +
+    "                        <td style=\"width: 10%\">否</td>\n" +
+    "                        <td style=\"width: 10%\">iconColor</td>\n" +
+    "                        <td style=\"width: 10%\"></td>\n" +
+    "                        <td style=\"width: 60%\">节点图标的颜色，支持HEX或者RGB，例如<code>'#121212'、'rgb(0,0,0)'</code></td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">图标大小</td>\n" +
+    "                        <td style=\"width: 10%\">否</td>\n" +
+    "                        <td style=\"width: 10%\">iconSize</td>\n" +
+    "                        <td style=\"width: 10%\">40</td>\n" +
+    "                        <td style=\"width: 60%\"></td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">文字</td>\n" +
+    "                        <td style=\"width: 10%\">否</td>\n" +
+    "                        <td style=\"width: 10%\">text</td>\n" +
+    "                        <td style=\"width: 10%\"></td>\n" +
+    "                        <td style=\"width: 60%\"></td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">文字颜色</td>\n" +
+    "                        <td style=\"width: 10%\">否</td>\n" +
+    "                        <td style=\"width: 10%\">textColor</td>\n" +
+    "                        <td style=\"width: 10%\"></td>\n" +
+    "                        <td style=\"width: 60%\">文字颜色，支持HEX或者RGB，例如<code>'#121212'、'rgb(0,0,0)'</code></td>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td style=\"width: 10%\">文字大小</td>\n" +
+    "                        <td style=\"width: 10%\">否</td>\n" +
+    "                        <td style=\"width: 10%\">textSize</td>\n" +
+    "                        <td style=\"width: 10%\">12</td>\n" +
+    "                        <td style=\"width: 60%\"></td>\n" +
+    "                    </tr>\n" +
+    "                    </tbody>\n" +
+    "                </table>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <table class=\"table op-param-table\">\n" +
+    "            <tbody>\n" +
+    "            <tr ng-repeat=\"field in ::nodeFields track by $index\">\n" +
+    "                <td>{{::field.label}}</td>\n" +
+    "                <td>\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields[field.name]\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </td>\n" +
+    "            </tr>\n" +
+    "            </tbody>\n" +
+    "        </table>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cogs'></i> 节点关系设定</uib-tab-heading>\n" +
+    "        <div>\n" +
+    "            <div class=\"alert alert-info\" role=\"alert\">\n" +
+    "                <h4 class=\"alert-heading\">内置关系说明</h4>\n" +
+    "                <p>节点数据可以使用link字段配置与其他节点的关系。link字段的值需要满足以下格式:</p>\n" +
+    "                <code>\n" +
+    "                    <p>[{</p>\n" +
+    "                    <p>&nbsp;&nbsp;target: \"必填，目标节点的主键值\",</p>\n" +
+    "                    <p>&nbsp;&nbsp;linkWidth: \"非必填，连线宽度，默认宽度为1\",</p>\n" +
+    "                    <p>&nbsp;&nbsp;linkColor: '非必填，连线颜色，支持HEX或者RGB',</p>\n" +
+    "                    <p>&nbsp;&nbsp;linkType: '非必填，连线类型，solid(实线)、dashed(虚线)、dotted(点线)'</p>\n" +
+    "                    <p>},</p>\n" +
+    "                    <p>{...}]</p>\n" +
+    "                </code>\n" +
+    "            </div>\n" +
+    "            <div class=\"alert alert-success\" role=\"alert\">\n" +
+    "                <h4 class=\"alert-heading\">关系映射说明</h4>\n" +
+    "                <p>使用JS表达式配置节点关系，<code>${字段名}</code>可以用来调用字段值</p>\n" +
+    "                <p>例如：</p>\n" +
+    "                <p><code>${nodeName} === \"simpleNode\"、${nodeSize} > 0</code></p>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-inline\">\n" +
+    "                <button type=\"button\" class=\"btn btn-outline-primary mb-2\" ng-click=\"addLineRule()\"><i\n" +
+    "                        class=\"fa fa-plus\"></i> 添加关系映射\n" +
+    "                </button>\n" +
+    "            </div>\n" +
+    "            <div>\n" +
+    "                <table class=\"table table-bordered\">\n" +
+    "                    <thead>\n" +
+    "                    <tr>\n" +
+    "                        <td>源节点</td>\n" +
+    "                        <td>目标节点</td>\n" +
+    "                        <td>连线颜色</td>\n" +
+    "                        <td>连线宽度</td>\n" +
+    "                        <td>连线风格</td>\n" +
+    "                        <td></td>\n" +
+    "                    </tr>\n" +
+    "                    </thead>\n" +
+    "                    <tbody>\n" +
+    "                    <tr ng-repeat=\"rule in uwProps.lineRules \">\n" +
+    "                        <td style=\"width:35%\"><input class=\"form-control\" ng-model=\"rule.sourceRule\"></td>\n" +
+    "                        <td style=\"width:35%\"><input class=\"form-control\" ng-model=\"rule.targetRule\"></td>\n" +
+    "                        <td style=\"width:8%\">\n" +
+    "                            <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                              ng-model=\"rule.lineColor\"></udp-color-picker>\n" +
+    "                        </td>\n" +
+    "                        <td style=\"width:8%\"><input type=\"tel\" class=\"form-control\" ng-model=\"rule.lineWidth\" ></td>\n" +
+    "                        <td style=\"width:9%\">\n" +
+    "                            <select class=\"form-select\" ng-model=\"rule.lineType\">\n" +
+    "                            <option value=\"solid\">实线</option>\n" +
+    "                            <option value=\"dashed\">虚线</option>\n" +
+    "                            <option value=\"dotted\">点线</option>\n" +
+    "                            </select>\n" +
+    "                        </td>\n" +
+    "                        <td style=\"width: 5%\">\n" +
+    "                            <button type=\"button\" class=\"btn btn-danger\" ng-click=\"removeLineRule($index)\"><i class=\"fa fa-trash\"></i></button>\n" +
+    "                        </td>\n" +
+    "                    </tr>\n" +
+    "                    </tbody>\n" +
+    "                </table>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"row\">\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-instance/flow-instance-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'jao.job.detail.base' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'jao.job.selector.sync_param' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.core.exportParam\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">流程模板</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.core.flowId\" class=\"op-w-full\"\n" +
+    "                                    options=\"{kinds:'js,str',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'jao.job.selector.display_mode' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.viewAs\"\n" +
+    "                            ng-options=\"mode.value as mode.title for mode in viewModeDefs\">\n" +
+    "                        <option value=\"\"></option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}\n" +
+    "        </uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page,param',enableAutoActive:true}\"\n" +
+    "                                       param-vars=\"mapValue\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'jao.log.props_code' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/flow-instance/flow-instance.html","<div class=\"opx-layout-vflex\" >\n" +
+    "    <div class=\"scroll-y opx-flex-fill p-3\" style=\"overflow: inherit;\">\n" +
+    "        <div class=\"card mb-3\" style=\"height: 50px\">\n" +
+    "            <div class=\"card-body\">\n" +
+    "                <ul class=\"list-unstyled d-flex align-items-center\">\n" +
+    "                    <li class=\"ms-3\">\n" +
+    "                        <strong>{{'jao.flow.detail.name' | translate}}：</strong>{{$ctrl.flowInstance.name}}\n" +
+    "                    </li>\n" +
+    "                    <li class=\"ms-3\">\n" +
+    "                        <strong>{{'jao.flow.detail.step' | translate}}：</strong>{{$ctrl.flowInstance.steps.length}}\n" +
+    "                    </li>\n" +
+    "                    <li class=\"ms-3\">\n" +
+    "                        <strong>{{'jao.flow.detail.hosts' | translate}}：</strong>{{$ctrl.flowInstance.hosts.length}}\n" +
+    "                    </li>\n" +
+    "                    <li class=\"ms-3\">\n" +
+    "                        <strong>{{'common.entity.detail.start_at' | translate}}：</strong>{{$ctrl.flowInstance.createdAt\n" +
+    "                        | date:'yyyy-MM-dd HH:mm:ss'}}\n" +
+    "                    </li>\n" +
+    "                </ul>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"card card-default\">\n" +
+    "            <div class=\"card-header\">\n" +
+    "                <div class=\"card-title\">\n" +
+    "                    {{'jao.result.name' | translate}}\n" +
+    "                    <button ng-click=\"$ctrl.refreshComponent()\" class=\"btn btn-default opx-btn-icon opx-btn-flat __btn-sm\" tabindex=\"0\"\n" +
+    "                            aria-controls=\"DataTables_Table_2\" type=\"button\">\n" +
+    "                        <span><i class=\"far fa-sync-alt\" title=\"刷新表格\"></i></span>\n" +
+    "                    </button>\n" +
+    "                    <ul class=\"text-right list-unstyled list-inline small mb-3\" style=\"margin-top: -21px;height: 10px;\">\n" +
+    "                        <li>\n" +
+    "                            <span class=\"btn btn-sm opx-btn-icon btn-info\"><i class=\"fa fa-running\"></i></span>\n" +
+    "                            {{'jao.status.job.running' | translate}}\n" +
+    "                        </li>\n" +
+    "                        <li>\n" +
+    "                            <span class=\"btn btn-sm opx-btn-icon btn-success\"><i class=\"fa fa-check\"></i></span>\n" +
+    "                            {{'jao.status.job.completed' | translate}}\n" +
+    "                        </li>\n" +
+    "                        <li>\n" +
+    "                            <span class=\"btn btn-sm opx-btn-icon btn-danger\"><i class=\"fa fa-times\"></i></span>\n" +
+    "                            {{'jao.status.job.failed' | translate}}\n" +
+    "                        </li>\n" +
+    "                        <li>\n" +
+    "                            <span class=\"btn btn-sm opx-btn-icon btn-warning\"><i class=\"fa fa-exclamation\"></i></span>\n" +
+    "                            {{'jao.status.job.not_run' | translate}}\n" +
+    "                        </li>\n" +
+    "                    </ul>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"table-responsive\">\n" +
+    "                <table id=\"host-status-table\" style=\"z-index: 1\" class=\"table opx-table\"></table>\n" +
+    "            </div>\n" +
+    "            <div class=\"opx-flex-fill wrapper tab-container\">\n" +
+    "                <div class=\"tab-content\">\n" +
+    "                    <flow-record the-flow=\"$ctrl.flowInstance\" selected-task-nodes=\"$ctrl.selectedTaskNodes\" start-steps = \"$ctrrl.startSteps\"\n" +
+    "                                 ng-if=\"$ctrl.flowInstance\"></flow-record>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"scroll-y opx-flex-fill p-3\" style=\"overflow: inherit;\" ng-if=\"$ctrl.selectedTaskLogId\">\n" +
+    "        <nav class=\"navbar navbar-light\" style=\"height: 3rem\">\n" +
+    "            <span class=\"opx-navbar-title\"> 步骤:{{$ctrl.selectedTasks.stepName}} 结果详情</span>\n" +
+    "            <div ng-if=\"$ctrl.selectedTaskRunLogIds && $ctrl.selectedTaskRunLogIds.length > 1\">\n" +
+    "                <select class=\"form-select op-w-sm\" op-select\n" +
+    "                        ng-model=\"$ctrl.selectedTaskLogId\"\n" +
+    "                        ng-options=\"task.id as task.startTime for task in $ctrl.selectedTaskRunLogIds\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </nav>\n" +
+    "        <div class=\"card card-default\" style=\"padding-bottom: 50px\">\n" +
+    "            <div class=\"opx-flex-fill wrapper tab-container\">\n" +
+    "                <div class=\"tab-content\" style=\"overflow: inherit;\">\n" +
+    "                    <jao-job-result-view run-id=\"$ctrl.selectedTaskLogId\"></jao-job-result-view>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-layout/flow-layout-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.binding' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.core.exportParam\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.name' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.core.flowId\" class=\"op-w-full\"\n" +
+    "                                    options=\"{kinds:'js,str',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.host.scope' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.hostScope\">\n" +
+    "                    <option value=\"global\">{{'udp.w.flow.host.scope.global' | translate}}</option>\n" +
+    "                    <option value=\"step\">{{'udp.w.flow.host.scope.step' | translate}}</option>\n" +
+    "                    <option value=\"all\">{{'udp.w.flow.host.scope.all' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if = \"uwProps.core.hostScope === 'step'\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.step.select.scripts' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.scriptsOption\">\n" +
+    "                    <option value=\"single\">{{'udp.w.flow.step.select.scripts.single' | translate}}</option>\n" +
+    "                    <option value=\"multiple\">{{'udp.w.flow.step.select.scripts.multiple' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if = \"uwProps.core.hostScope === 'step'\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.step.host.group' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.hostGroup\">\n" +
+    "                    <option value=\"true\">{{'udp.w.flow.step.host.group.true' | translate}}</option>\n" +
+    "                    <option value=\"false\">{{'udp.w.flow.step.host.group.false' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.applet' | translate}} </label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.appletCode\"  op-select\n" +
+    "                        ng-options=\"applet.code as applet.title for applet in applets\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.w.flow.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/flow-layout/flow-layout.html","<div class=\"opx-layout-vflex\">\n" +
+    "    <nav class=\"navbar navbar-light\">\n" +
+    "        <span class=\"opx-navbar-title\">{{'jao.flow.edit' | translate}}</span>\n" +
+    "        <div class=\"ms-auto\">\n" +
+    "            <button type=\"button\" class=\"btn btn-primary opx-btn-ok\"\n" +
+    "                    ng-click=\"$ctrl.save()\" ng-if=\"!$ctrl.isInstance\"\n" +
+    "                    ng-disabled=\"flowForm.$invalid\" >{{'common.entity.action.save' |\n" +
+    "                translate}}\n" +
+    "            </button>\n" +
+    "            <button ng-if=\"$ctrl.isInstance\" type=\"button\" class=\"btn btn-primary opx-btn-ok\"\n" +
+    "                    ng-click=\"$ctrl.startFlow()\"\n" +
+    "                    ng-disabled=\"flowForm.$invalid\" >{{'jao.flow.run' | translate}}\n" +
+    "            </button>\n" +
+    "            <button type=\"button\" class=\"btn btn-default\"\n" +
+    "                    ng-click=\"$ctrl.cancel()\">{{'common.entity.action.cancel' | translate}}\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "    </nav>\n" +
+    "    <form class=\"op-smartform form-vertical  op-bold-label p-5 bg-white opx-flex-fill scroll-y\" name=\"flowForm\"\n" +
+    "          id=\"js-flow-edit-{{$ctrl.theFlow.id||'new'}}\">\n" +
+    "        <fieldset>\n" +
+    "            <legend>基本信息</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">名称 <span\n" +
+    "                        class=\"cac-text-required\">*</span></label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control\" ng-model=\"$ctrl.theFlow.name\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">描述</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <textarea class=\"form-control\" ng-model=\"$ctrl.theFlow.description\" rows=\"3\"></textarea>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\" ng-if=\"$ctrl.hostScope !== 'step' || $ctrl.theFlow.hosts.length >0 \">\n" +
+    "                <label class=\"control-label\">{{'jao.common.host' | translate}}<span\n" +
+    "                        op-help-info=\"{{'jao.flow.detail.host_info' | translate}}\"></span></label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"w-full\">\n" +
+    "                        <div class=\"mt-3\">\n" +
+    "                            <acm-device-selector the-model=\"$ctrl.theFlow.hosts\" ci-types=\"'[auto]'\"\n" +
+    "                                                 mcheck-type=\"'map'\"></acm-device-selector>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "\n" +
+    "        <fieldset ng-disabled=\"$ctrl.isInstance\">\n" +
+    "            <legend>步骤设置</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"d-flex mb-3\">\n" +
+    "                    <label class=\"control-label\" ng-click=\"$ctrl.changeStepFold()\">步骤\n" +
+    "                        <i class=\"fa fa-angle-double-down\" ng-if=\"!$ctrl.isFoldAllSteps\"></i>\n" +
+    "                        <i class=\"fa fa-angle-double-left\" ng-if=\"$ctrl.isFoldAllSteps\"></i>\n" +
+    "                    </label>\n" +
+    "                    <button class=\"btn btn-sm btn-default ms-3\"\n" +
+    "                            ng-click=\"$ctrl.addStep()\"><i class=\"text-primary fa fa-plus-circle\"></i> 新增步骤\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "                <div>\n" +
+    "                    <div class=\"card card-default op-action-card op-w-full\" ng-repeat=\"step in $ctrl.theFlow.steps\">\n" +
+    "                        <div class=\"card-header\" ng-click=\"$ctrl.stepFoldList[$index] = !$ctrl.stepFoldList[$index]\">\n" +
+    "                            <h4 class=\"card-title\">步骤 {{$index + 1}}\n" +
+    "                                <span ng-if=\"$ctrl.stepFoldList[$index]\"> : {{step.name}}</span>\n" +
+    "                                <span ng-if=\"$ctrl.stepFoldList[$index]\"> 任务数: {{step.config.tasks.length}}</span>\n" +
+    "                            </h4>\n" +
+    "                            <button class=\"btn btn-sm btn-default pull-right\"\n" +
+    "                                    ng-disabled=\"$ctrl.theFlow.steps.length == 1\"\n" +
+    "                                    ng-click=\"$ctrl.removeStep($index)\">删除步骤\n" +
+    "                            </button>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"card-body\" ng-show=\"!$ctrl.stepFoldList[$index]\">\n" +
+    "                            <div class=\"form-group op-align-horizontal\">\n" +
+    "                                <label class=\"control-label\">步骤名</label>\n" +
+    "                                <div class=\"form-control-wrapper\">\n" +
+    "                                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"step.name\">\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <label class=\"control-label\"\n" +
+    "                                       op-help-info=\"{{'jao.job.process.timeout_info' | translate}}\">\n" +
+    "                                    任务超时</label>\n" +
+    "                                <div class=\"form-control-wrapper\">\n" +
+    "                                    <div class=\"input-group w-sm\">\n" +
+    "                                        <input type=\"number\" ng-model=\"step.config.taskTimeout\" class=\"form-control\"\n" +
+    "                                               min=\"-1\"\n" +
+    "                                               step=\"1\">\n" +
+    "                                        <div class=\"input-group-append\"><span class=\"input-group-text\">秒</span></div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"form-group op-align-horizontal\">\n" +
+    "                                <label class=\"control-label\">自动执行下一步</label>\n" +
+    "                                <div class=\"form-control-wrapper\">\n" +
+    "                                    <div class=\"checkbox checkbox-primary\">\n" +
+    "                                        <input type=\"checkbox\" ng-model=\"step.autoNext\" id=\"je_secret_{{$index}}\"\n" +
+    "                                               class=\"ng-pristine ng-untouched ng-valid ng-empty\" aria-invalid=\"false\">\n" +
+    "                                        <label for=\"je_secret_{{$index}}\"></label>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "\n" +
+    "                                <label class=\"control-label\"\n" +
+    "                                       op-help-info=\"{{'jao.job.script.verbose_info' | translate}}\">{{'jao.job.script.verbose' | translate}}</label>\n" +
+    "                                <div class=\"form-control-wrapper\">\n" +
+    "                                    <select ng-model=\"step.config.verbosity\" id=\"template-verbosity-{{$index}}\" aria-label=\"选择输入\" class=\"form-select op-w-auto\">\n" +
+    "                                        <option class=\"\" value=0>{{'jao.job.run.ansible.verbose.normal' | translate}}</option>\n" +
+    "                                        <option class=\"\" value=1>{{'jao.job.run.ansible.verbose.detailed' | translate}}</option>\n" +
+    "                                        <option class=\"\" value=2>{{'jao.job.run.ansible.verbose.more_details' | translate}}</option>\n" +
+    "                                        <option class=\"\" value=3>{{'jao.job.run.ansible.verbose.debug' | translate}}</option>\n" +
+    "                                        <option class=\"\" value=4>{{'jao.job.run.ansible.verbose.connection_debugging' | translate}}</option>\n" +
+    "                                    </select>\n" +
+    "<!--                                    <div class=\"checkbox checkbox-primary\">-->\n" +
+    "<!--                                        <input type=\"checkbox\" ng-model=\"step.config.verbosity\" id=\"je_verbosity\"-->\n" +
+    "<!--                                               class=\"ng-pristine ng-untouched ng-valid ng-empty\" aria-invalid=\"false\">-->\n" +
+    "<!--                                        <label for=\"je_verbosity\"></label>-->\n" +
+    "<!--                                    </div>-->\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                            <div ng-if=\"step.type === 'script'\">\n" +
+    "                                <div ng-if=\"$ctrl.hostScope === 'step'\">\n" +
+    "                                    <button class=\"btn btn-sm btn-default\"\n" +
+    "                                            ng-click=\"$ctrl.addTask($index)\"><i\n" +
+    "                                            class=\"text-primary fa fa-plus-circle\"></i> 新增脚本\n" +
+    "                                    </button>\n" +
+    "                                    <div class=\"form-group op-align-horizontal\" ng-repeat=\"task in step.config.tasks\">\n" +
+    "                                        <label class=\"control-label\">脚本 {{$index + 1}}\n" +
+    "                                            <button class=\"ms-3 btn btn-default opx-btn-icon opx-btn-flat\"\n" +
+    "                                                    ng-click=\"$ctrl.removeTask($parent.$index, $index)\"\n" +
+    "                                                    ng-disabled=\"step.config.tasks.length === 1\"\n" +
+    "                                                    title=\"{{'jao.job.process.delete_group' | translate}}\">\n" +
+    "                                                <i class=\"fa fa-minus\"></i>\n" +
+    "                                            </button>\n" +
+    "                                        </label>\n" +
+    "                                        <div class=\"form-control-wrapper\">\n" +
+    "                                            <gfs-file-selector the-model=\"task\" class=\"w-full\"\n" +
+    "                                                               model-converter=\"$ctrl.fileModelConverter\"\n" +
+    "                                                               config=\"$ctrl.fileSelectorConfig\"></gfs-file-selector>\n" +
+    "                                        </div>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                                <div class=\"form-group op-align-horizontal\"\n" +
+    "                                     ng-if=\"$ctrl.hostScope !== 'step'\">\n" +
+    "                                    <label class=\"control-label\">{{'jao.common.script' | translate}}</label>\n" +
+    "                                    <div class=\"form-control-wrapper\">\n" +
+    "                                        <gfs-file-selector the-model=\"step.config.tasks[0].scripts\" class=\"w-full\"\n" +
+    "                                                           model-converter=\"$ctrl.fileModelConverter\"\n" +
+    "                                                           config=\"$ctrl.fileSelectorConfig\"></gfs-file-selector>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "    </form>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-manager/flow-export.html","<div class=\"h-full\">\n" +
+    "    <nav class=\"navbar navbar-light\">\n" +
+    "        <div class=\"opx-navbar-title\">{{'jao.flow.list' | translate}}</div>\n" +
+    "        <div class=\"ms-auto\">\n" +
+    "            <button type=\"button\" class=\"btn btn-primary opx-btn-ok\"\n" +
+    "                    ng-click=\"$ctrl.exportFlow()\">{{'udp.w.datatable.column.data_export' | translate}}\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "    </nav>\n" +
+    "\n" +
+    "    <div class=\"p-3\">\n" +
+    "        <opx-datatable id=\"flowInstanceTable\" table-config=\"tableConfig\"></opx-datatable>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-manager/flow-import.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">导入流程模板</h4>\n" +
+    "    <button type=\"button\" class=\"btn-close\" data-dismiss=\"modal\" ng-click=\"$ctrl.cancel()\">\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body op-smartform\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <div class=\"form-control-wrapper\">{{'gfs.basic.file_path' | translate}}：\n" +
+    "            {{$ctrl.fileInfo.dir || '~'}} <strong>&nbsp;&nbsp;/&nbsp;&nbsp;{{ $ctrl.flow.file.name}}</strong>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <label class=\"btn btn-outline-primary\">\n" +
+    "                <input type=\"file\" ngf-select ng-model=\"$ctrl.flow.file\" name=\"file\" style=\"display:none;\">\n" +
+    "                {{'gfs.basic.select_file' | translate}}\n" +
+    "            </label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button class=\"btn btn-primary opx-btn-ok\" data-dismiss=\"modal\" type=\"button\" ng-click=\"$ctrl.importFlow()\">\n" +
+    "        {{'gfs.common.sure' | translate}}\n" +
+    "    </button>\n" +
+    "    <button class=\"btn btn-default opx-btn-cancel\" data-dismiss=\"modal\" type=\"button\" ng-click=\"$ctrl.cancel()\">\n" +
+    "        {{'gfs.common.cancel' | translate}}\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-manager/flow-instance-list.html","<div class=\"h-full\" ng-if=\"!instanceViewTag\">\n" +
+    "    <nav class=\"navbar navbar-light\">\n" +
+    "        <div class=\"opx-navbar-title\">{{'udp.w.flow.manager.list.instance' | translate}}</div>\n" +
+    "    </nav>\n" +
+    "    <div class=\"p-3\">\n" +
+    "        <opx-datatable id=\"flowInstanceTable\" table-config=\"tableConfig\"></opx-datatable>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "<div class=\"h-full\" ng-if=\"instanceViewTag\">\n" +
+    "    <nav class=\"navbar navbar-light\">\n" +
+    "        <div class=\"opx-navbar-title\">{{'jao.log.detail' | translate}}</div>\n" +
+    "    </nav>\n" +
+    "    <flow-instance the-model=\"$ctrl.flow\" options=\"instanceOption\"></flow-instance>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-manager/flow-manager-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "<!--        <div class=\"form-group\">-->\n" +
+    "<!--            <label class=\"control-label\">{{'udp.w.flow.host.scope' | translate}}</label>-->\n" +
+    "<!--            <div class=\"form-control-wrapper\">-->\n" +
+    "<!--                <select class=\"form-select\" ng-model=\"uwProps.core.hostScope\">-->\n" +
+    "<!--                    <option value=\"global\">{{'udp.w.flow.host.scope.global' | translate}}</option>-->\n" +
+    "<!--                    <option value=\"step\">{{'udp.w.flow.host.scope.step' | translate}}</option>-->\n" +
+    "<!--                    <option value=\"all\">{{'udp.w.flow.host.scope.all' | translate}}</option>-->\n" +
+    "<!--                </select>-->\n" +
+    "<!--            </div>-->\n" +
+    "<!--        </div>-->\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.applet' | translate}} </label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.appletCode\"  op-select\n" +
+    "                        ng-options=\"applet.code as applet.title for applet in applets\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.w.flow.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-manager/flow-manager.html","<div class=\"opx-layout-hflex\">\n" +
+    "    <div class=\"opx-sidebar\" style=\"width: 15rem;min-height: 630px; max-height: 650px;\">\n" +
+    "        <nav class=\"navbar opx-sidebar-header opx-sidebar-header-fixed\" style=\"padding: 0.25rem 0.25rem !important;\">\n" +
+    "            <op-searchbox search-text=\"$ctrl.jobFilter\" style=\"width:10rem;\" class=\"me-2\"></op-searchbox>\n" +
+    "            <button type=\"button\"\n" +
+    "                    style=\"margin-left:0 !important;padding: 0.125rem 0.3rem !important;\"\n" +
+    "                    class=\"btn btn-default btn-sm \"\n" +
+    "                    ng-click=\"$ctrl.createFlow()\"\n" +
+    "                    title=\"{{'common.action.create' | translate}}\">\n" +
+    "                <i class=\"fa fa-plus\"></i>\n" +
+    "            </button>\n" +
+    "            <button type=\"button\"\n" +
+    "                    class=\"btn btn-default btn-sm\"\n" +
+    "                    style=\"margin-left:0 !important;padding: 0.125rem 0.3rem !important;\"\n" +
+    "                    ng-click=\"$ctrl.importFlow()\"\n" +
+    "                    title=\"{{'common.action.import' | translate}}\">\n" +
+    "                <i class=\"fa fa-file-import\"></i>\n" +
+    "            </button>\n" +
+    "            <button type=\"button\"\n" +
+    "                    class=\"btn btn-default btn-sm\"\n" +
+    "                    style=\"margin-left:0 !important;padding: 0.125rem 0.3rem !important;\"\n" +
+    "                    ng-click=\"$ctrl.exportFlow()\"\n" +
+    "                    title=\"{{'udp.w.datatable.column.data_export' | translate}}\">\n" +
+    "                <i class=\"fa fa-cloud-download-alt\"></i></button>\n" +
+    "            <button type=\"button\"\n" +
+    "                    class=\"btn btn-default btn-sm\"\n" +
+    "                    style=\"margin-left:0 !important;padding: 0.125rem 0.3rem !important;\"\n" +
+    "                    ng-click=\"$ctrl.assignFlow()\"\n" +
+    "                    uaa-has-any-role=\"ROLE_ADMIN, ROLE_TENANT_ADMIN\"\n" +
+    "                    title=\"{{'udp.w.flow.manager.list.assign' | translate}}\">\n" +
+    "                <i class=\"fa fa-users-cog\"></i></button>\n" +
+    "        </nav>\n" +
+    "        <div class=\"opx-sidebar-body\">\n" +
+    "            <div class=\"list-group list-group-flush op-styled-highlight\" ng-if=\"$ctrl.flowList.length > 0\">\n" +
+    "                <a ng-repeat=\"flow in $ctrl.flowList | filter:$ctrl.jobFilter | orderBy:[$ctrl.orderName,'createdAt']:$ctrl.orderMethod\"\n" +
+    "                   ng-class=\"{'active':flow.id == $ctrl.activeFlowId}\"\n" +
+    "                   class=\"list-group-item list-group-item-action op-hover-trigger ng-scope\" title=\"{{flow.name}}\"\n" +
+    "                   style=\"position:relative;\">\n" +
+    "                    <div ng-click=\"$ctrl.changeActiveFlow(flow)\">\n" +
+    "                        <h5 class=\"text-ellipsis\">{{flow.name}}</h5>\n" +
+    "                        <div class=\"small text-muted\">\n" +
+    "                            {{(flow.updatedAt||flow.createdAt) | date }}\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"op-hover-to-show\" style=\"position:absolute;right:0.25rem;bottom:0.25rem;\">\n" +
+    "                        <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"$ctrl.createInstance(flow.id)\"\n" +
+    "                                title=\"{{'jao.flow.run' | translate}}\">\n" +
+    "                            <i class=\"fa fa-play-circle\"></i></button>\n" +
+    "                        <button type=\"button\" class=\"btn btn-default btn-sm\" ng-click=\"$ctrl.editFlow(flow.id)\"\n" +
+    "                                title=\"{{'common.entity.action.edit' | translate}}\">\n" +
+    "                            <i class=\"fa fa-pencil\"></i></button>\n" +
+    "                        <button type=\"button\" class=\"btn btn-default btn-sm\"\n" +
+    "                                ng-click=\"$ctrl.deleteFlow(flow.name, flow.id)\"\n" +
+    "                                class=\"m-r-sm\" title=\"{{'common.entity.action.delete' | translate}}\">\n" +
+    "                            <i class=\"fa fa-trash-alt\"></i></button>\n" +
+    "                    </div>\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "            <div class=\"h-100 bg-light op-blank-slate\" ng-if=\"$ctrl.flowList.length === 0\">\n" +
+    "                <div class=\"op-blank-slate-icon\" style=\"padding-top: 20px\">\n" +
+    "                    <p>{{'udp.w.flow-manager.list.default.tips.header' | translate}}</p>\n" +
+    "                </div>\n" +
+    "                <p>{{'udp.w.flow-manager.list.default.tips' | translate}} <i class=\"fa fa-plus\"></i>{{'udp.w.flow-manager.list.default.tips.body'\n" +
+    "                    | translate}}</p>\n" +
+    "            </div>\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"opx-flex-fill fade-in\" style=\"overflow-y: hidden\">\n" +
+    "        <flow-layout the-model=\"createOptions\" _options=\"createOptions\" ng-if=\"$ctrl.addTag\"></flow-layout>\n" +
+    "        <flow-layout the-model=\"createOptions\" _options=\"createOptions\" ng-if=\"$ctrl.editTag\"></flow-layout>\n" +
+    "        <flow-layout the-model=\"runOptions\" _options=\"runOptions\" ng-if=\"$ctrl.runTag\"></flow-layout>\n" +
+    "        <flow-instance-list flow-id=\"$ctrl.activeFlowId\" ng-if=\"$ctrl.recordTag\"></flow-instance-list>\n" +
+    "        <flow-export applet-code=\"$ctrl.options.applet\" ng-if=\"$ctrl.exportTag\"></flow-export>\n" +
+    "        <flow-permission applet-code=\"$ctrl.options.applet\" ng-if=\"$ctrl.assignTag\"></flow-permission>\n" +
+    "        <div class=\"h-100 bg-light op-blank-slate\"\n" +
+    "             ng-if=\"!$ctrl.addTag && !$ctrl.editTag && !$ctrl.recordTag && !$ctrl.runTag && !$ctrl.exportTag && !$ctrl.assignTag\">\n" +
+    "            <div class=\"op-blank-slate-icon\">\n" +
+    "                <i class=\"fa fa-inbox op-fa-8x\"></i>\n" +
+    "            </div>\n" +
+    "            <p>{{'jao.flow.view' | translate}}</p>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-manager/flow-permission.html","\n" +
+    "\n" +
+    "\n" +
+    "<div class=\"h-full\">\n" +
+    "    <nav class=\"navbar navbar-light\">\n" +
+    "        <div class=\"opx-navbar-title\">{{'udp.w.flow.manager.list.assign' | translate}}</div>\n" +
+    "    </nav>\n" +
+    "\n" +
+    "    <div class=\"p-3\">\n" +
+    "        <team-res-table-permission module-data=\"$ctrl.moduleData\" app-module=\"$ctrl.appModule\"\n" +
+    "                                   show-permission-r-w-x=\"$ctrl.showPermissionRWX\" ></team-res-table-permission>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-process-result/flow-process-result-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <flow-process-selector the-model=\"uwProps.processId\" selected-process=\"uwProps.selectedProcess\"></flow-process-selector>\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}</uib-tab-heading>\n" +
+    "        <!-- <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page,param',enableAutoActive:true}\"\n" +
+    "                                       param-vars=\"mapValue\">\n" +
+    "        </udp-widget-config-interaction> -->\n" +
+    "\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'common.action.view' | translate}}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>\n" +
+    "            <udp-page-link-config class=\"d-block\" props=\"uwProps.viewBtn\"></udp-page-link-config>\n" +
+    "        </fieldset>\n" +
+    "\n" +
+    "        <button type=\"button\" class=\"btn btn-outline-primary\" \n" +
+    "                ng-disabled=\"uwProps.customBtns.length >= 3\" \n" +
+    "                ng-click=\"addCustomBtn()\">\n" +
+    "            <i class=\"fa fa-plus\"></i> {{'udp.w.flow-process-result.btn.add_custom' | translate}}\n" +
+    "        </button>\n" +
+    "\n" +
+    "        <uib-tabset class=\"mt-3\" type=\"pills\">\n" +
+    "            <uib-tab ng-repeat=\"item in uwProps.customBtns track by $index\" \n" +
+    "                     heading=\"{{ item.label }} {{'udp.w.button.name' | translate}}\">\n" +
+    "                <button type=\"button\" class=\"btn btn-outline-danger mb-3\" \n" +
+    "                        ng-click=\"uwProps.customBtns.splice($index, 1)\">\n" +
+    "                    <i class=\"fa fa-trash\"></i> {{'common.action.delete' | translate}}{{'udp.w.button.name' | translate}}\n" +
+    "                </button>\n" +
+    "\n" +
+    "                <div class=\"op-smartform form-horizontal\">\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\" for=\"f_label\">{{'udp.wc.button.label' | translate}}</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <input class=\"form-control w-sm\" ng-model=\"item.label\" maxlength=\"100\" aria-invalid=\"false\">\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\" for=\"f_label\">{{'udp.wc.button.icon' | translate}}</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <op-iconpicker ng-model=\"item.icon\"></op-iconpicker>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\" for=\"f_label\">{{'udp.wc.display.color' | translate}}</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <udp-theme-selector the-model=\"item.color\" model-type=\"string\"></udp-theme-selector>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <udp-widget-config-interaction  the-model=\"item.interaction\"\n" +
+    "                                                options=\"{supports:'page, code, ajax, link'}\">\n" +
+    "                </udp-widget-config-interaction>\n" +
+    "\n" +
+    "                <!-- <fieldset>\n" +
+    "                    <legend>{{ item.label }}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>\n" +
+    "                    <udp-page-link-config class=\"d-block\" props=\"item.page\"></udp-page-link-config>\n" +
+    "                </fieldset> -->\n" +
+    "            </uib-tab>\n" +
+    "        </uib-tabset>\n" +
+    "\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'jao.log.props_code' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/flow-process/flow-process-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.page.attrs.view' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select op-select\n" +
+    "                        class=\"w-50\"\n" +
+    "                        ng-model=\"uwProps.mode\"\n" +
+    "                        ng-options=\"item.code as item.label for item in modeArr\"\n" +
+    "                        >\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.mode === 'design'\">\n" +
+    "            <label class=\"control-label\">{{'common.table.type' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select op-select\n" +
+    "                        class=\"w-50\"\n" +
+    "                        ng-model=\"uwProps.design.designType\"\n" +
+    "                        ng-options=\"item.code as item.label for item in designType\"\n" +
+    "                        >\n" +
+    "                        <option></option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <flow-process-selector \n" +
+    "                ng-if=\"uwProps.design.designType !== 'add'\"\n" +
+    "                the-model=\"uwProps.processId\" \n" +
+    "                selected-process=\"uwProps.selectedProcess\"></flow-process-selector>\n" +
+    "\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.mode === 'result' || uwProps.mode === 'detail'\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.binding' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps[uwProps.mode].pageParamName\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.mode === 'result' || uwProps.mode === 'detail'\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.param.config.eventtorefresh' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps[uwProps.mode].pageEvent\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.mode === 'result'\">\n" +
+    "            <label class=\"control-label\">{{'gfs.selector.operation_mode' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"opx-check-group\">\n" +
+    "                    <input type=\"radio\" ng-model=\"uwProps.result.viewMode\" value=\"fixed\" id=\"js_fwc_viewmode_1\">\n" +
+    "                    <label for=\"js_fwc_viewmode_1\">{{'udp.designer.actions.pin_widget' | translate}}</label>\n" +
+    "                    <input type=\"radio\" ng-model=\"uwProps.result.viewMode\" value=\"drawer\" id=\"js_fwc_viewmode_2\">\n" +
+    "                    <label for=\"js_fwc_viewmode_2\">{{'udp.w.flow.process.viewmode.drawer' | translate}}</label>\n" +
+    "                    <input type=\"radio\" ng-model=\"uwProps.result.viewMode\" value=\"hidden\" id=\"js_fwc_viewmode_3\">\n" +
+    "                    <label for=\"js_fwc_viewmode_3\">{{'udp.uinput.control.hidden' | translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\" ng-if=\"uwProps.mode === 'result'\">\n" +
+    "            <label class=\"control-label\">{{'app_vcm.entity.refresh_interval' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" min=\"1\" max=\"60\" class=\"form-control op-w-sm\" ng-model=\"uwProps[uwProps.mode].refreshInterval\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <!-- <udp-params-control-config the-model=\"uwProps.wparams\" options=\"{labelByDefault:true}\"\n" +
+    "                                   params-config=\"selectedProcess.$paramsConfig\"></udp-params-control-config> -->\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab ng-if=\"uwProps.mode === 'detail' || uwProps.mode === 'run'\">\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}</uib-tab-heading>\n" +
+    "        <!-- <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page,param',enableAutoActive:true}\"\n" +
+    "                                       param-vars=\"mapValue\">\n" +
+    "        </udp-widget-config-interaction> -->\n" +
+    "\n" +
+    "        <fieldset ng-if=\"uwProps.mode === 'detail'\">\n" +
+    "            <legend>{{'jao.common.run' | translate}}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>\n" +
+    "            <udp-page-link-config class=\"d-block\" props=\"uwProps.detail.runBtn\"></udp-page-link-config>\n" +
+    "        </fieldset>\n" +
+    "\n" +
+    "        <fieldset ng-if=\"uwProps.mode === 'detail'\">\n" +
+    "            <legend>{{'flow.process.design' | translate}}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>\n" +
+    "            <udp-page-link-config class=\"d-block\" props=\"uwProps.detail.designBtn\"></udp-page-link-config>\n" +
+    "        </fieldset>\n" +
+    "\n" +
+    "        <fieldset ng-if=\"uwProps.mode === 'run'\">\n" +
+    "            <legend>{{'udp.w.flow.process.run-landing' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>\n" +
+    "            <udp-page-link-config class=\"d-block\" props=\"uwProps.run.runLanding\"></udp-page-link-config>\n" +
+    "        </fieldset>\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'jao.log.props_code' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/flow-record/flow-record-step.html","<div class=\"opx-layout-vflex\">\n" +
+    "    <nav class=\"navbar navbar-light\" style=\"height: 3rem\">\n" +
+    "        <span class=\"opx-navbar-title\">{{'jao.flow.edit' | translate}}</span>\n" +
+    "        <div class=\"ms-auto\">\n" +
+    "            <button ng-if=\"$ctrl.task\" type=\"button\" class=\"btn btn-primary opx-btn-ok\"\n" +
+    "                    ng-click=\"$ctrl.startFlow()\"\n" +
+    "                    ng-disabled=\"flowForm.$invalid\">{{'jao.flow.detail.step.run' | translate}}\n" +
+    "            </button>\n" +
+    "            <button type=\"button\" class=\"btn btn-default\"\n" +
+    "                    ng-click=\"$ctrl.cancel()\">{{'common.entity.action.cancel' | translate}}\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "    </nav>\n" +
+    "\n" +
+    "    <form class=\"op-smartform form-vertical  op-bold-label p-5 bg-white opx-flex-fill scroll-y\" name=\"flowForm\"\n" +
+    "          id=\"js-flow-edit-{{$ctrl.task.id||'new'}}\">\n" +
+    "        <fieldset>\n" +
+    "            <legend>主机信息</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=mb-3\" ng-repeat=\"task in $ctrl.step.config.tasks track by $index\">\n" +
+    "                    <div class=\"card mb-3\" ng-repeat=\"group in task.groups track by $index\">\n" +
+    "                        <div class=\"card-header d-flex p-2 bg-light border-bottom\">\n" +
+    "                            <label class=\"control-label\">\n" +
+    "                                <pre>{{task.scripts[$index].location}}</pre>\n" +
+    "                            </label>\n" +
+    "                            <input ng-disabled=\"true\" type=\"text\" ng-model=\"group.group\"\n" +
+    "                                   class=\"form-control me-auto font-weight-bold\"/>\n" +
+    "                            <button class=\"ms-3 btn btn-default opx-btn-icon opx-btn-flat\"\n" +
+    "                                    ng-click=\"$ctrl.openTextModal($parent.$index, $index,group.host_vars, 'host_vars')\"\n" +
+    "                                    title=\"host_vars: {{group.host_vars}}\"><i class=\"far fa-comment-alt-edit\"></i>\n" +
+    "                            </button>\n" +
+    "                            <button class=\"ms-3 btn btn-default opx-btn-icon opx-btn-flat\"\n" +
+    "                                    ng-click=\"$ctrl.openTextModal($parent.$index, $index, group.group_vars, 'group_vars')\"\n" +
+    "                                    title=\"group_vars: {{group.group_vars}}\"><i class=\"far fa-comment-alt-edit\"></i>\n" +
+    "                            </button>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"card-body p-3\">\n" +
+    "                            <div class=\"form-group\">\n" +
+    "                                <div class=\"mt-3\">\n" +
+    "                                    <!--                                        <textarea row=\"5\" style=\"width: 100%\">-->\n" +
+    "                                    <!--                                           $parent.$index:  {{$parent.$index}} \\n-->\n" +
+    "                                    <!--                                           $index:  {{$index}} \\n-->\n" +
+    "                                    <!--                                           host: {{$ctrl.step.config.tasks[$parent.$index]['groups'][$index].hosts}}-->\n" +
+    "                                    <!--                                        </textarea>-->\n" +
+    "                                    <jao-dynamic-host-selector\n" +
+    "                                            the-model=\"$ctrl.step.config.tasks[$parent.$index]['groups'][$index].hosts\"\n" +
+    "                                            the-data=\"$ctrl.hostStatusList[$parent.$index][$index][group.group]\"></jao-dynamic-host-selector>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "\n" +
+    "        <fieldset>\n" +
+    "            <legend>步骤信息</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"card card-default op-action-card op-w-full\">\n" +
+    "                    <div class=\"card-body\">\n" +
+    "                        <div class=\"form-group op-align-horizontal\">\n" +
+    "                            <label class=\"control-label\">步骤名</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <input type=\"text\" class=\"form-control op-w-lg\" ng-model=\"$ctrl.task.name\"\n" +
+    "                                       ng-disabled=\"true\">\n" +
+    "                            </div>\n" +
+    "\n" +
+    "                            <label class=\"control-label\"\n" +
+    "                                   op-help-info=\"{{'jao.job.process.timeout_info' | translate}}\">\n" +
+    "                                任务超时</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <div class=\"input-group w-md\">\n" +
+    "                                    <input type=\"number\" ng-model=\"$ctrl.task.config.taskTimeout\" class=\"form-control\"\n" +
+    "                                           min=\"-1\"\n" +
+    "                                           step=\"1\">\n" +
+    "                                    <div class=\"input-group-append\"><span class=\"input-group-text\">秒</span></div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"form-group op-align-horizontal\">\n" +
+    "                            <label class=\"control-label\">自动执行下一步</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <div class=\"checkbox checkbox-primary\">\n" +
+    "                                    <input type=\"checkbox\" ng-model=\"$ctrl.step.autoNext\" id=\"je_secret_0\"\n" +
+    "                                           class=\"ng-pristine ng-untouched ng-valid ng-empty\" aria-invalid=\"false\">\n" +
+    "                                    <label for=\"je_secret_0\"></label>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "\n" +
+    "                            <!--                            <label class=\"control-label\">详细输出</label>-->\n" +
+    "                            <!--                            <div class=\"form-control-wrapper\">-->\n" +
+    "                            <!--                                <div class=\"checkbox checkbox-primary\">-->\n" +
+    "                            <!--                                    <input type=\"checkbox\" ng-model=\"$ctrl.task.config.verbosity\" id=\"je_verbosity\"-->\n" +
+    "                            <!--                                           class=\"ng-pristine ng-untouched ng-valid ng-empty\" aria-invalid=\"false\">-->\n" +
+    "                            <!--                                    <label for=\"je_verbosity\"></label>-->\n" +
+    "                            <!--                                </div>-->\n" +
+    "                            <!--                            </div>-->\n" +
+    "                            <label class=\"control-label\"\n" +
+    "                                   op-help-info=\"{{'jao.job.script.verbose_info' | translate}}\">{{'jao.job.script.verbose' | translate}}</label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <select ng-model=\"$ctrl.task.config.verbosity\" id=\"je_verbosity\" aria-label=\"选择输入\"\n" +
+    "                                        class=\"form-select op-w-auto\">\n" +
+    "                                    <option value=0>{{'jao.job.run.ansible.verbose.normal' | translate}}</option>\n" +
+    "                                    <option class=\"\" value=1>{{'jao.job.run.ansible.verbose.detailed' | translate}}</option>\n" +
+    "                                    <option class=\"\" value=2>{{'jao.job.run.ansible.verbose.more_details' | translate}}</option>\n" +
+    "                                    <option class=\"\" value=3>{{'jao.job.run.ansible.verbose.debug' | translate}}</option>\n" +
+    "                                    <option class=\"\" value=4>{{'jao.job.run.ansible.verbose.connection_debugging' | translate}}</option>\n" +
+    "                                </select>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"form-group op-align-horizontal\"\n" +
+    "                             ng-repeat=\"tasks in $ctrl.task.config.tasks\">\n" +
+    "                            <label class=\"control-label\">脚本 {{$index + 1}}\n" +
+    "                            </label>\n" +
+    "                            <div class=\"form-control-wrapper\">\n" +
+    "                                <gfs-file-selector the-model=\"tasks\" class=\"w-full\"\n" +
+    "                                                   model-converter=\"$ctrl.fileModelConverter\"\n" +
+    "                                                   disable-file-button=\"true\"\n" +
+    "                                                   if-group-div=\"false\"\n" +
+    "                                                   config=\"$ctrl.fileSelectorConfig\"></gfs-file-selector>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "    </form>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/flow-record/flow-record-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.binding' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.core.exportParam\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.name' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"uwProps.core.flowId\" class=\"op-w-full\"\n" +
+    "                                    options=\"{kinds:'js,str',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.host.scope' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.hostScope\">\n" +
+    "                    <option value=\"global\">{{'udp.w.flow.host.scope.global' | translate}}</option>\n" +
+    "                    <option value=\"step\">{{'udp.w.flow.host.scope.step' | translate}}</option>\n" +
+    "                    <option value=\"all\">{{'udp.w.flow.host.scope.all' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if = \"uwProps.core.hostScope === 'step'\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.step.select.scripts' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.scriptsOption\">\n" +
+    "                    <option value=\"single\">{{'udp.w.flow.step.select.scripts.single' | translate}}</option>\n" +
+    "                    <option value=\"multiple\">{{'udp.w.flow.step.select.scripts.multiple' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if = \"uwProps.core.hostScope === 'step'\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.step.host.group' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.hostGroup\">\n" +
+    "                    <option value=\"true\">{{'udp.w.flow.step.host.group.true' | translate}}</option>\n" +
+    "                    <option value=\"false\">{{'udp.w.flow.step.host.group.false' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.applet' | translate}} </label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.core.appletCode\"  op-select\n" +
+    "                        ng-options=\"applet.code as applet.title for applet in applets\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.w.flow.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/flow-record/flow-record.html","<div class=\"opx-layout-hflex\">\n" +
+    "    <div class=\"jao-pmd-canvas opx-flex-fill p-3 bg-secondary\">\n" +
+    "        <div class=\"jao-pmd-node-container\" ui-sortable=\"$ctrl.sortableOptions\" >\n" +
+    "            <div ng-repeat=\"step in $ctrl.theFlows.steps track by $index\"\n" +
+    "                 class=\"card jao-pmd-task-node\"\n" +
+    "                 id=\"js-pm-tasknode-{{step.id}}\"\n" +
+    "                 tabindex=\"-1\"\n" +
+    "                 ng-class=\"{'active':$ctrl.selectedTaskNodes.indexOf($index)>=0}\"\n" +
+    "                 ng-click=\"$ctrl.selectedNode(step, $index)\"\n" +
+    "                >\n" +
+    "                <div class=\"card-header p-2 d-flex align-items-center\" ng-click=\"$ctrl.clickTaskNode(step,$index)\">\n" +
+    "                    <i class=\"text-muted fal fa-file-alt fa-fw me-2\"></i>\n" +
+    "                    <span>{{step.name}}</span>\n" +
+    "                    <div  class =\" ms-auto small text-center opx-autocolor {{$ctrl.statusMap[step.status].class}}\">\n" +
+    "                        <i class=\"fa {{$ctrl.statusMap[step.status].iconClass}}\"></i>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"card-body p-2 scroll-y\">\n" +
+    "                    <div ng-repeat=\"task in step.config.tasks track by $index\" class=\"small\">\n" +
+    "                        <div ng-repeat=\"script in task.scripts track by $index\" class=\"small\">\n" +
+    "                            <strong>{{script.location}}</strong>\n" +
+    "                            <div class=\"text-ellipsis\" title=\"参数\">{{script.argline}}</div>\n" +
+    "                        </div>\n" +
+    "                        <div ng-if=\"task.groups\"><i class=\"far fa-fw fa-server\" title=\"主机信息\"></i>\n" +
+    "                            <ul class=\"list-inline list-unstyled d-inline-block mb-0\">\n" +
+    "                                <li ng-repeat=\"group in task.groups\">\n" +
+    "                                    <span class=\"badge bg-secondary\" title=\"{{group.group}}\">{{group.hosts.length}}</span>\n" +
+    "                                </li>\n" +
+    "                            </ul>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"jao-pmd-line-wrapper\"></div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/gauge/gauge-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-metrics uw-props=\"uwProps\" axis-options=\"axisOptions\" chart-type=\"gauge\" fields=\"selectedDs.fields\">\n" +
+    "        </udp-widget-config-chart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <udp-widget-config-chart-display ng-model=\"uwProps.display\" chart-type=\"gauge\" options=\"{enableVisualMap:false}\"></udp-widget-config-chart-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">轴线颜色</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <table class=\"jh-table table table-striped\">\n" +
+    "                        <thead>\n" +
+    "                        <tr>\n" +
+    "                            <td>区间<span class=\" text-muted ms-2\">(0-1)</span></td>\n" +
+    "                            <td>颜色</td>\n" +
+    "                            <td></td>\n" +
+    "                            <td>\n" +
+    "                                <button class=\"btn btn-sm btn-info\" type=\"button\" ng-click=\"addGaugeColor()\" title=\"添加新区间\">\n" +
+    "                                    <i class=\"fa fa-plus\"></i>\n" +
+    "                                </button>\n" +
+    "                            </td>\n" +
+    "                        </tr>\n" +
+    "                        </thead>\n" +
+    "                        <tbody>\n" +
+    "                        <tr ng-repeat=\"color in getGaugeColor()\">\n" +
+    "                            <td>\n" +
+    "                                <div class=\"form-group\">\n" +
+    "                                    <input class=\"form-control\" type=\"text\" ng-model=\"color[0]\">\n" +
+    "                                </div>\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <div class=\"form-group\">\n" +
+    "                                    <input class=\"form-control\" type=\"text\" ng-model=\"color[1]\">\n" +
+    "                                </div>\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <udp-color-picker class=\"d-inline-block\" title=\"区间颜色\" ng-model=\"color[1]\"></udp-color-picker>\n" +
+    "                                <!--<span style=\"background-color:{{color[1]}};margin-right:4px;width:24px;height:24px;display:inline-block;\">&nbsp;</span>-->\n" +
+    "                            </td>\n" +
+    "                            <td>\n" +
+    "                                <button class=\"btn btn-sm btn-default\" type=\"button\" ng-click=\"removeGaugeColor($index)\" title=\"删除区间\">\n" +
+    "                                    <i class=\"fa fa-close\"></i>\n" +
+    "                                </button>\n" +
+    "                            </td>\n" +
+    "                        </tr>\n" +
+    "                        </tbody>\n" +
+    "                    </table>\n" +
+    "                    <!--<span ng-repeat=\"color in $ctrl.palettes[uwProps.display.palette].colors\"-->\n" +
+    "                    <!--style=\"background-color:{{color}};margin-right:4px;width:24px;height:24px;display:inline-block;\">&nbsp;</span>-->\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">轴线配置</label>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.startAngle\" title=\"轴线起始角度\" placeholder=\"起始角度,默认 210\"/>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.endAngle\" title=\"轴线终止角度\" placeholder=\"终止角度,默认 -30\"/>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.axisLine.lineStyle.width\" title=\"轴线宽度\" placeholder=\"宽度,默认 30\"/>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">指标配置</label>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.detail.offsetHorizontal\" title=\"指标左右偏移,默认值 0%\" placeholder=\"左右偏移,默认 0%\"/>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.detail.offsetVertical\" title=\"指标上下偏移,默认值 20%\" placeholder=\"上下偏移,默认 20%\"/>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.detail.fontSize\" title=\"指标字体大小,默认值15\" placeholder=\"字体大小,默认 15\"/>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">标题配置</label>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.title.offsetHorizontal\" title=\"标题左右偏移,默认值 0%\" placeholder=\"左右偏移,默认 0%\"/>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.title.offsetVertical\" title=\"标题上下偏移,默认值 40%\" placeholder=\"上下偏移,默认 40%\"/>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-3\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.title.fontSize\" title=\"标题字体大小,默认值15\" placeholder=\"字体大小,默认 15\"/>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <pre>{{uwProps|json}}</pre>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/googlemap/googlemap-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page'}\"\n" +
+    "                                       param-vars=\"{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/input/input-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>\n" +
+    "        <uinput-setting-basic props=\"uwProps\" options=\"{disableBinding:true}\"></uinput-setting-basic>\n" +
+    "        <hr/>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.input.config.other'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"checkbox checkbox-inline\">\n" +
+    "                    <input type=\"checkbox\" ng-model=\"uwProps.changeUrl\" id=\"iwc_changeurl\">\n" +
+    "                    <label for=\"iwc_changeurl\" op-help-info=\"{{'udp.w.input.config.change_url_helpinfo'|translate}}\">{{'udp.w.input.config.change_url'|translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <uinput-setting-interaction props=\"uwProps\"\n" +
+    "                                    ng-if=\"uwProps.control==='select' || uwProps.control==='typeahead'\"></uinput-setting-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/kpi/kpi-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <table class=\"table op-param-table\">\n" +
+    "            <tbody>\n" +
+    "            <tr ng-repeat=\"param in ::attrs track by $index\">\n" +
+    "                <td>\n" +
+    "                    <select class=\"form-select\" ng-model=\"uwProps.fields[param.name].position\" ng-if=\"param.layouts\"\n" +
+    "                            ng-options=\"layout.key as 'udp.w.kpi.config.'+layout.key|translate for layout in param.layouts\">\n" +
+    "                    </select>\n" +
+    "                </td>\n" +
+    "                <td>{{::param.title}}</td>\n" +
+    "                <td>\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields[param.name]\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "                </td>\n" +
+    "            </tr>\n" +
+    "            </tbody>\n" +
+    "        </table>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page,param,event',enableAutoActive:true}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.kpi.color'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-theme-selector the-model=\"uwProps.display\" customizable=\"true\"></udp-theme-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\" op-help-info=\"{{'udp.w.kpi.row_num_helpinfo'|translate}}\">{{'udp.w.kpi.row_num'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"number\" ng-model=\"uwProps.display.rowNum\" class=\"form-control\" min=\"1\" max=\"12\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.kpi.search'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.search\">\n" +
+    "                        <option value=\"\">{{'udp.w.kpi.search_none'|translate}}</option>\n" +
+    "                        <option value=\"right\">{{'udp.w.kpi.search_right'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <fieldset>\n" +
+    "                <legend>{{'udp.w.kpi.layout'|translate}}</legend>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.kpi.config.icon'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.icon\">\n" +
+    "                            <option value=\"none\">{{'udp.w.kpi.config.icon_none'|translate}}</option>\n" +
+    "                            <option value=\"center\">{{'udp.w.kpi.config.icon_center'|translate}}</option>\n" +
+    "                            <option value=\"left\">{{'udp.w.kpi.config.icon_left'|translate}}</option>\n" +
+    "                            <option value=\"right\">{{'udp.w.kpi.config.icon_right'|translate}}</option>\n" +
+    "                        </select>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.kpi.config.title'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <!--                    <label class=\"control-label op-w-auto\">位置</label>-->\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.title\"\n" +
+    "                                ng-options=\"pos.key as 'udp.w.kpi.config.title_'+(pos.key||'bottom')|translate for pos in titlePositions\"></select>\n" +
+    "                        <label class=\"control-label op-w-auto ms-3\">{{'udp.w.kpi.config.title_size'|translate}}</label>\n" +
+    "                        <udp-font-editor the-model=\"uwProps.fields.title.size\"></udp-font-editor>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.kpi.config.text'|translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <!--                    <label class=\"control-label op-w-auto\">位置</label>-->\n" +
+    "                        <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.text\"\n" +
+    "                                ng-options=\"pos.key as 'udp.w.kpi.config.text_'+(pos.key||'show')|translate for pos in textPositions\"></select>\n" +
+    "                        <label class=\"control-label op-w-auto ms-3\">{{'udp.w.kpi.config.text_size'|translate}}</label>\n" +
+    "                        <udp-font-editor the-model=\"uwProps.fields.text.size\"></udp-font-editor>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </fieldset>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-retweet'></i> {{'udp.wc.tab.condfmt'|translate}}</uib-tab-heading>\n" +
+    "        <p>{{'udp.wc.condfmt.helpinfo'|translate}}</p>\n" +
+    "        <div>\n" +
+    "            <udp-widget-config-format-rule the-model=\"uwProps.display.rules\"\n" +
+    "                                           formats=\"{theme:true,backColor:true,fontColor:true}\"></udp-widget-config-format-rule>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/layout-flex/layout-flex-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'udp.w.layout-flex.config.id_desc'|translate}}\">ID</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.id\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.term.width' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <div class=\"input-group\">\n" +
+    "                    <div class=\"input-group-text\"\n" +
+    "                         op-help-info=\"{{'udp.w.layout-flex.config.span_by_grid_desc'|translate}}\">\n" +
+    "                        {{'udp.w.layout-flex.config.span_by_grid' | translate}}\n" +
+    "                    </div>\n" +
+    "                    <select ng-model=\"uwProps.span\" class=\"form-select\"\n" +
+    "                            ng-options=\"grid.value as grid.label for grid in grids\">\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "                <span>{{'common.term.or' | translate}}</span>\n" +
+    "                <div class=\"input-group\">\n" +
+    "                    <div class=\"input-group-text\">{{'udp.w.layout-flex.config.span_by_pct' | translate}}</div>\n" +
+    "                    <select ng-model=\"uwProps.span\" class=\"form-select\"\n" +
+    "                            ng-options=\"pct.value as pct.title for pct in percents\">\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.layout-flex.config.dir' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"uwProps.flex.direction\">\n" +
+    "                    <option value=\"flex-row\">{{'udp.w.layout-flex.config.dir_horizontal' | translate}}</option>\n" +
+    "                    <option value=\"flex-column\">{{'udp.w.layout-flex.config.dir_vertical' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.layout-flex.config.gap' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" ng-model=\"uwProps.flex.gap\" class=\"form-control w-sm\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.layout-flex.config.alignh' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"opx-check-group btn-group\">\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignh\" value=\"\" id=\"lfwc_alignh_1\"\n" +
+    "                           ng-model=\"uwProps.flex.alignH\"><label for=\"lfwc_alignh_1\"\n" +
+    "                                                                 title=\"{{'udp.w.layout-flex.config.alignh_left'|translate}}\"><i\n" +
+    "                        class=\"fa fa-align-left\"></i></label>\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignh\" value=\"center\" id=\"lfwc_alignh_2\"\n" +
+    "                           ng-model=\"uwProps.flex.alignH\"><label\n" +
+    "                        for=\"lfwc_alignh_2\" class=\"btn btn-outline-default opx-btn-icon\"\n" +
+    "                        title=\"{{'udp.w.layout-flex.config.alignh_center'|translate}}\"><i\n" +
+    "                        class=\"fa fa-align-center\"></i></label>\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignh\" value=\"right\" id=\"lfwc_alignh_3\"\n" +
+    "                           ng-model=\"uwProps.flex.alignH\"><label for=\"lfwc_alignh_3\"\n" +
+    "                                                                 title=\"{{'udp.w.layout-flex.config.alignh_right'|translate}}\"><i\n" +
+    "                        class=\"fa fa-align-right\"></i></label>\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignh\" value=\"justify\" id=\"lfwc_alignh_4\"\n" +
+    "                           ng-model=\"uwProps.flex.alignH\"><label for=\"lfwc_alignh_4\"\n" +
+    "                                                                 title=\"{{'udp.w.layout-flex.config.alignh_both'|translate}}\"><i\n" +
+    "                        class=\"fa fa-align-justify\"></i></label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.layout-flex.config.alignv' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"opx-check-group btn-group\">\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignv\" value=\"top\" id=\"lfwc_alignv_1\"\n" +
+    "                           ng-model=\"uwProps.flex.alignV\"><label for=\"lfwc_alignv_1\"><i\n" +
+    "                        class=\"fa fa-arrow-to-top\"></i> {{'udp.w.layout-flex.config.alignv_top' | translate}}</label>\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignv\" value=\"middle\" id=\"lfwc_alignv_2\"\n" +
+    "                           ng-model=\"uwProps.flex.alignV\"><label\n" +
+    "                        for=\"lfwc_alignv_2\"><i\n" +
+    "                        class=\"fa fa-horizontal-rule\"></i>\n" +
+    "                    {{'udp.w.layout-flex.config.alignv_middle' | translate}}</label>\n" +
+    "                    <input type=\"radio\" name=\"lfwc_alignv\" value=\"bottom\" id=\"lfwc_alignv_3\"\n" +
+    "                           ng-model=\"uwProps.flex.alignV\"><label\n" +
+    "                        for=\"lfwc_alignv_3\"><i\n" +
+    "                        class=\"fa fa-arrow-to-bottom\"></i>\n" +
+    "                    {{'udp.w.layout-flex.config.alignv_bottom' | translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">邊框設置</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <div >\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.flex.border\">\n" +
+    "                        <option value=\"none\">默認</option>\n" +
+    "                        <option value=\"custom\">自定義</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "                <div class=\"input-group\" ng-if=\"uwProps.flex.border === 'custom'\">\n" +
+    "                    <div class=\"input-group-text\"\n" +
+    "                         op-help-info=\"設置邊框寬度，支持px\">寬度\n" +
+    "                    </div>\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.flex.borderSize\">\n" +
+    "                </div>\n" +
+    "                <div class=\"input-group\" ng-if=\"uwProps.flex.border === 'custom'\">\n" +
+    "                    <div class=\"input-group-text\"\n" +
+    "                         op-help-info=\"設置圓角邊框，支持px\">圓角\n" +
+    "                    </div>\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.flex.borderRadius\">\n" +
+    "                </div>\n" +
+    "                <div class=\"input-group\" ng-if=\"uwProps.flex.border === 'custom'\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.flex.borderColor\" title=\"邊框顔色\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.layout-flex.config.form' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"input-group\">\n" +
+    "                        <select class=\"form-select\" ng-model=\"uwProps.display.form\">\n" +
+    "                            <option value=\"\"></option>\n" +
+    "                            <option value=\"horizontal\">{{'udp.w.layout-flex.config.form_horizontal' | translate}}\n" +
+    "                            </option>\n" +
+    "                            <option value=\"vertical\">{{'udp.w.layout-flex.config.form_vertical' | translate}}</option>\n" +
+    "                            <option value=\"inline\">{{'udp.w.layout-flex.config.form_inline' | translate}}</option>\n" +
+    "                        </select>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access' | translate}}</uib-tab-heading>\n" +
+    "        <udp-button-state-config the-model=\"uwProps.statecontrol\"></udp-button-state-config>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/layout-float/layout-float-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\" op-help-info=\"{{'udp.w.layout-float.config.id_desc'|translate}}\">ID</label>\n" +
+    "            <div class=\"col-sm-10 col-md-4\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.id\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.layout-float.config.z_index'|translate}}</label>\n" +
+    "            <div class=\"col-sm-4\">\n" +
+    "                <input type=\"number\" class=\"form-control\" ng-model=\"uwProps.display.zindex\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.layout-float.config.operation'|translate}}</label>\n" +
+    "            <div class=\"col-sm-10\">\n" +
+    "                <label class=\"checkbox-inline i-checks\"><input type=\"checkbox\" ng-model=\"uwProps.display.resizable\"><i></i> {{'udp.w.layout-float.config.resizable'|translate}} </label>\n" +
+    "                <label class=\"checkbox-inline i-checks\"><input type=\"checkbox\" ng-model=\"uwProps.display.draggable\"><i></i> {{'udp.w.layout-float.config.draggable'|translate}} </label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.layout-float.config.max_width'|translate}}</label>\n" +
+    "            <div class=\"col-sm-4\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.maxWidth\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.layout-float.config.max_height'|translate}}</label>\n" +
+    "            <div class=\"col-sm-4\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.maxHeight\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.layout-float.config.css'|translate}}</label>\n" +
+    "            <div class=\"col-sm-10\">\n" +
+    "                <udp-css-editor the-model=\"uwProps.css\"\n" +
+    "                                options=\"{style:'dropdown',groups:'layout'}\"></udp-css-editor>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <pre>{{uwProps|json}}</pre>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/linechart/linechart-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-metrics uw-props=\"uwProps\"\n" +
+    "                                         axis-options=\"axisOptions\"\n" +
+    "                                         fields=\"selectedDs.fields\"></udp-widget-config-chart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page'}\"\n" +
+    "                                       param-vars=\"{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <udp-widget-config-chart-display ng-model=\"uwProps.display\"\n" +
+    "                                             options=\"{enableVisualMap:false}\"></udp-widget-config-chart-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.w.echart.display.zoom'|translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"uwProps.display.rangeSlider\" id=\"lwc-zoomx\" ng-disabled=\"uwProps.enabledDoubleX\"><label\n" +
+    "                            for=\"lwc-zoomx\">{{'udp.w.echart.display.zoom_x'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"uwProps.display.insideZoom\"\n" +
+    "                               ng-disabled=\"!uwProps.display.rangeSlider\" id=\"lwc-inzoom\"><label for=\"lwc-inzoom\">{{'udp.w.echart.display.zoom_inside'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"uwProps.display.stack\" id=\"lwc-stack\"><label for=\"lwc-stack\">{{'udp.w.echart.display.data_stack'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-retweet'></i> {{'udp.wc.tab.condfmt'|translate}}</uib-tab-heading>\n" +
+    "        <p>{{'udp.w.echart.line_condfmt.title'|translate}}</p>\n" +
+    "        <udp-widget-linechart-format-yaxis the-model=\"uwProps\" >\n" +
+    "        </udp-widget-linechart-format-yaxis>\n" +
+    "\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-bar-chart'></i> {{'udp.w.echart.elem.axis'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-axes the-model=\"uwProps.display\"\n" +
+    "                                      fields=\"selectedDs.fields\"\n" +
+    "                                      uw-props=\"uwProps\"></udp-widget-config-chart-axes>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/linechart/widget-linechart-format-yaxis.html","<div class=\"form-group\">\n" +
+    "    <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "        <input type=\"checkbox\" id=\"wpc_enabled_highlight\" ng-model=\"$ctrl.model.enabledYaxisHighlight\"\n" +
+    "               ng-disabled=\"$ctrl.model.enabledDoubleX\">\n" +
+    "        <label for=\"wpc_enabled_highlight\"\n" +
+    "               op-help-info=\"{{'udp.w.echart.line_condfmt.enable_desc'|translate}}\">{{'udp.w.echart.line_condfmt.enable' | translate}}</label>\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "<div ng-if=\"$ctrl.model.enabledYaxisHighlight\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <button type=\"button\" class=\"btn btn-primary me-5\" ng-click=\"$ctrl.addRule()\"><i\n" +
+    "                class=\"fa fa-plus\"></i> {{'udp.w.echart.line_condfmt.add_range' | translate}}\n" +
+    "        </button>\n" +
+    "        <input class=\"form-control\" type=\"text\"\n" +
+    "               ng-model=\"$ctrl.currentPiece.gt\"\n" +
+    "               title=\"{{'udp.w.echart.line_condfmt.range_begin'|translate}}\"\n" +
+    "               placeholder=\"{{'udp.w.echart.line_condfmt.range_begin'|translate}}\" style=\"width: 20%\"/>\n" +
+    "        <span class=\"mx-3\">-</span>\n" +
+    "        <input class=\"form-control\" type=\"text\"\n" +
+    "               ng-model=\"$ctrl.currentPiece.lte\"\n" +
+    "               title=\"{{'udp.w.echart.line_condfmt.range_end'|translate}}\"\n" +
+    "               placeholder=\"{{'udp.w.echart.line_condfmt.range_end'|translate}}\" style=\"width: 20%\"/>\n" +
+    "        <udp-color-picker title=\"{{'udp.w.echart.line_condfmt.line_color'|translate}}\" class=\"ms-3\"\n" +
+    "                          ng-model=\"$ctrl.currentPiece.color\"></udp-color-picker>\n" +
+    "    </div>\n" +
+    "    <div ng-transclude></div>\n" +
+    "    <ul ui-sortable=\"sortableOptions\" ng-model=\"$ctrl.model.yAxes\" class=\"nav nav-pills\">\n" +
+    "        <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "        <li ng-repeat=\"field in $ctrl.model.yAxes track by $index\">\n" +
+    "                    <span class=\"badge op-text-normal rounded-0\"\n" +
+    "                          ng-class=\"$ctrl.currentYaxisIndex === $index?'badge-dark':'badge-default'\">\n" +
+    "                        <i ng-if=\"!field.field\" class=\"fa fa-bolt\"></i>\n" +
+    "                        <a ng-click=\"$ctrl.selectYAxis($index)\">{{ field.legend || label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>\n" +
+    "                    </span></li>\n" +
+    "    </ul>\n" +
+    "    <div class=\"list-group m-t\" ng-show=\"$ctrl.currentVisualMap.pieces.length>0\" ui-sortable>\n" +
+    "        <a ng-repeat=\"rule in $ctrl.currentVisualMap.pieces track by $index\"\n" +
+    "           class=\"list-group-item\"\n" +
+    "           ng-style=\"{'background-color':rule.color,'color':'black'}\"\n" +
+    "           ng-click=\"$ctrl.selectVisualMap($index)\">\n" +
+    "            <i class=\"fa fa-sort op-drag-handle text-muted\"></i>\n" +
+    "            <span class=\"pull-right\" ng-click=\"$ctrl.removeRule($index)\"><i class=\"fa fa-times text-muted\"></i></span>\n" +
+    "            {{rule.gt}}&nbsp;&nbsp;~&nbsp;&nbsp;{{rule.lte}}\n" +
+    "        </a>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/widgets/list/list-widget-actions.html","<div>\n" +
+    "    <button type=\"button\" class=\"btn\" ng-click=\"copyText()\"  ngclipboard data-clipboard-text=\"{{items[activeItemIndex].title}}\">{{'udp.w.list.copy_title'|translate}}</button>\n" +
+    "    <button type=\"button\" class=\"btn\" ng-click=\"copyText()\"  ngclipboard data-clipboard-text=\"{{items[activeItemIndex].text}}\">{{'udp.w.list.copy_text'|translate}}</button>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/list/list-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"js-sample\">\n" +
+    "            <div class=\"list-group\" style=\"width:200px\">\n" +
+    "                <div class=\"list-group-item\">\n" +
+    "                    <span class=\"badge\">{{'udp.w.list.config.badge'|translate}}</span>\n" +
+    "                    <div class=\"pull-left bg-light text-center img-circle m-r\" xstyle=\"width:48px\">\n" +
+    "                        <i class=\"fa fa-3x fa-info-circle\"></i>\n" +
+    "                    </div>\n" +
+    "                    <h4 class=\"list-group-item-heading\">{{'udp.w.list.config.title'|translate}}</h4>\n" +
+    "                    <p class=\"list-group-item-text\">{{'udp.w.list.config.text'|translate}}</p>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <table class=\"table op-param-table\">\n" +
+    "            <thead>\n" +
+    "            <tr>\n" +
+    "                <th></th>\n" +
+    "                <th>{{'common.term.field'|translate}}</th>\n" +
+    "            </tr>\n" +
+    "            </thead>\n" +
+    "            <tbody>\n" +
+    "            <tr ng-repeat=\"param in ::params track by $index\">\n" +
+    "                <td>{{::param.title}}</td>\n" +
+    "                <td>\n" +
+    "                    <udp-dsfield-selector the-model=\"uwProps.fields[param.name]\"\n" +
+    "                                          fields=\"selectedDs.fields\"></udp-dsfield-selector>\n" +
+    "\n" +
+    "                </td>\n" +
+    "            </tr>\n" +
+    "            </tbody>\n" +
+    "        </table>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page,param,event,job',enableAutoActive:true}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.list.config.filter'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" id=\"lwc_showfilter\" ng-model=\"uwProps.display.filter\">\n" +
+    "                        <label for=\"lwc_showfilter\">{{'udp.w.list.config.filter_enable'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.list.config.control'|translate}}</label>\n" +
+    "                <div class=\"col-sm-4\">\n" +
+    "                    <select class=\"form-select\" ng-model=\"uwProps.display.control\" ng-options=\"style.value as style.title for style in controlStyles\">\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/map/map-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">地图类型</label>\n" +
+    "            <div class=\"col-sm-12 col-md-4\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.display.mapType\"\n" +
+    "                        ng-options=\"type.name as type.title for type in mapTypes\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <udp-widget-config-chart-metrics uw-props=\"uwProps\" chart-type=\"map\" axis-options=\"axisOptions\"\n" +
+    "                                         fields=\"selectedDs.fields\"></udp-widget-config-chart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">图例</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select id=\"wccd_legendpos\" class=\"form-select op-w-sm\" ng-model=\"uwProps.display.legend.position\">\n" +
+    "                        <option value=\"none\">不显示</option>\n" +
+    "                        <option value=\"auto\">自动</option>\n" +
+    "                        <option value=\"bottom\">下方</option>\n" +
+    "                        <option value=\"right\">右方</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">颜色</label>\n" +
+    "                <div class=\"form-control-wrapper op-combo\">\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.display.mapBgColor\" title=\"地图区域颜色\"></udp-color-picker>\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.display.mapHiColor\" title=\"地图区域高亮颜色\"></udp-color-picker>\n" +
+    "                    <udp-color-picker ng-model=\"uwProps.display.mapBorderColor\" title=\"地图边界颜色\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">其它</label>\n" +
+    "                <div class=\"form-control-wrapper op-combo\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\"><input type=\"checkbox\" id=\"mwc_showlabel\"\n" +
+    "                                                                 ng-model=\"uwProps.display.showLabel\"><label\n" +
+    "                            for=\"mwc_showlabel\">显示地名</label></div>\n" +
+    "                    <div class=\"checkbox checkbox-inline\"><input type=\"checkbox\" id=\"mwc_zoomable\"\n" +
+    "                                                                 ng-model=\"uwProps.display.zoomable\"><label\n" +
+    "                            for=\"mwc_zoomable\">鼠标滚轮缩放地图</label></div>\n" +
+    "                    <!--<div class=\"checkbox\">-->\n" +
+    "                    <!--<label class=\"i-checks\"><input type=\"checkbox\"-->\n" +
+    "                    <!--ng-model=\"uwProps.display.visualMap\"><i></i>数据鼠标缩放</label>-->\n" +
+    "                    <!--</div>-->\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page'}\"\n" +
+    "                                       param-vars=\"{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/nav/nav-widget-config.html","<uib-tabset class=\"tab-container\" ng-init=\"uwProps.items=uwProps.items||[];uwProps.display=uwProps.display||{}\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'udp.w.nav.config.key_desc'|translate}}\">{{'udp.w.nav.config.key'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" ng-model=\"uwProps.key\" class=\"form-control op-w-sm\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <ul class=\"nav\" ng-class=\"'nav-'+(uwProps.display.style||'tabs')\"\n" +
+    "            ui-sortable=\"{handle:'.op-drag-handle'}\" ui-sortable-stop=\"sortStop\"\n" +
+    "            ng-model=\"uwProps.items\">\n" +
+    "            <li ng-repeat=\"item in uwProps.items track by $index\" class=\"nav-item\">\n" +
+    "                <a ng-click=\"selectNavItem($index)\" style=\"padding-left:2px;\" class=\"nav-link\"\n" +
+    "                   ng-class=\"{active:indexInEdit===$index}\">\n" +
+    "                    <i class=\"fa text-muted op-drag-handle\"\n" +
+    "                       ng-class=\"item.link.type==='url'?'fa-link':'fa-sort fa-rotate-90 fa-fw'\"></i>\n" +
+    "                    <span ng-bind-html=\"item.title\"></span></a>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "        <div class=\"mt-5\">\n" +
+    "            <button type=\"button\" ng-click=\"addNavItem()\" class=\"btn btn-primary pull-right\"><i\n" +
+    "                    class=\"fa fa-plus\"></i> {{'udp.w.nav.config.add_navitem'|translate}}\n" +
+    "            </button>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\"\n" +
+    "                       op-help-info=\"{{'udp.w.nav.config.navitem_key_desc'|translate}}\">{{'udp.w.nav.config.navitem_key'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" ng-model=\"itemInEdit.key\" class=\"form-control op-w-sm\">\n" +
+    "                    <!--remove class  btn-link-->\n" +
+    "                    <button type=\"button\" class=\"btn btn-outline-danger\" ng-click=\"deleteNavItem(indexInEdit)\"><i\n" +
+    "                            class=\"fa fa-times\"></i> {{'udp.w.nav.config.delete_navitem'|translate}}\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.nav.config.navitem_label'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" ng-model=\"itemInEdit.title\" class=\"form-control op-w-md\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.nav.config.navitem_link'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper op-combo\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"itemInEdit.link.type\">\n" +
+    "                        <option value=\"\">{{'udp.w.nav.config.navitem_link_type_page'|translate}}</option>\n" +
+    "                        <option value=\"url\">{{'udp.w.nav.config.navitem_link_type_url'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                    <udp-data-converter ng-if=\"itemInEdit.link.type==='url'\" the-model=\"itemInEdit.link.url\"\n" +
+    "                                        class=\"op-w-full\"\n" +
+    "                                        options=\"{kinds:'js,str'}\"></udp-data-converter>\n" +
+    "                    <udp-page-selector ng-if=\"itemInEdit.link.type!=='url'\" page-id=\"itemInEdit.link.pageId\"\n" +
+    "                                       class=\"op-w-full\"\n" +
+    "                                       on-change=\"onPageSelectorChange\"\n" +
+    "                                       excluded=\"[currentPageId]\"></udp-page-selector>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.nav.config.navitem_params'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-page-params-config params-json=\"itemInEdit.link.params\"\n" +
+    "                                            class=\"op-w-full\"></udp-page-params-config>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.list.config.control_type'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select op-w-sm\" ng-model=\"uwProps.display.style\">\n" +
+    "                        <option value=\"tabs\">{{'udp.w.list.config.control_tab'|translate}}</option>\n" +
+    "                        <option value=\"pills\">{{'udp.w.list.config.control_pill'|translate}}</option>\n" +
+    "                        <option value=\"mdc-op\">{{'udp.w.list.config.control_indicator'|translate}}</option>\n" +
+    "                        <option value=\"navbar\">{{'udp.w.list.config.control_navbar'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/page-event-selector.html","<select class=\"form-select\" ng-model=\"$ctrl.theModel\" id=\"feventtorefresh\"\n" +
+    "        ng-options=\"event.name as event.name for event in $ctrl.pageEvents\">\n" +
+    "    <option value=\"\"></option>\n" +
+    "</select>")
+
+$templateCache.put("app/modules/udp/widgets/pageheader/pageheader-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading>{{'udp.wc.tab.props'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/param/param-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"udp.w.param.config.name_desc\">{{'udp.w.param.config.name'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control op-w-md\" ng-model=\"uwProps.name\" id=\"f_name\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"udp.w.param.config.eventtorefresh_desc\">{{'udp.w.param.config.eventtorefresh'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control op-w-md\" ng-model=\"uwProps.eventtorefresh\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"udp.w.param.config.data_desc\">{{'udp.w.param.config.data'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter class=\"op-w-full\" the-model=\"uwProps.data\" options=\"{kinds:'js,yaml',varTypes:'pageparam'}\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"alert alert-info\" ng-bind-html=\"'udp.w.param.config.desc'|translate\">\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <pre>{{currentValue}}</pre>\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/piechart/piechart-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-metrics uw-props=\"uwProps\" axis-options=\"axisOptions\" chart-type=\"pie\"\n" +
+    "                                         fields=\"selectedDs.fields\"></udp-widget-config-chart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page'}\"\n" +
+    "                                       param-vars=\"{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <udp-widget-config-chart-display ng-model=\"uwProps.display\"></udp-widget-config-chart-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label col-sm-2\">{{'udp.w.piechart.config.chart_type'|translate}}</label>\n" +
+    "                <div class=\"col-sm-10\">\n" +
+    "                    <label class=\"radio-inline i-checks\"><input type=\"radio\" value=\"pie\"\n" +
+    "                                                                ng-model=\"uwProps.display.chart\"><i></i>{{'udp.w.piechart.config.chart_type_pie'|translate}}</label>\n" +
+    "                    <label class=\"radio-inline i-checks\"><input type=\"radio\" value=\"doughnut\"\n" +
+    "                                                                ng-model=\"uwProps.display.chart\"><i></i>{{'udp.w.piechart.config.chart_type_doughnut'|translate}}</label>\n" +
+    "                    <label class=\"radio-inline i-checks\"><input type=\"radio\" value=\"rose\"\n" +
+    "                                                                ng-model=\"uwProps.display.chart\"><i></i>{{'udp.w.piechart.config.chart_type_rose'|translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/pivot/pivot-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "   <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"uwProps.display.disableUi\" id=\"pwc_disableui\">\n" +
+    "                        <label for=\"pwc_disableui\">{{'udp.w.pivot.config.disable_ui'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.title'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control\" type=\"text\" ng-model=\"uwProps.display.title\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.pivot.config.axis_label'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control w-sm\" type=\"text\" ng-model=\"uwProps.display.axisXlabel\">\n" +
+    "                    <input class=\"form-control w-sm\" type=\"text\" ng-model=\"uwProps.display.axisYlabel\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/radarchart/radarchart-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-chart-metrics uw-props=\"uwProps\" axis-options=\"axisOptions\"\n" +
+    "                                         fields=\"selectedDs.fields\"></udp-widget-config-chart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <!--<div class=\"form-group\">-->\n" +
+    "                <!--<label class=\"control-label col-sm-2\">线宽</label>-->\n" +
+    "                <!--<div class=\"col-sm-2\">-->\n" +
+    "                    <!--<input type=\"number\" class=\"form-control\" ng-model=\"uwProps.display.borderWidth\">-->\n" +
+    "                <!--</div>-->\n" +
+    "            <!--</div>-->\n" +
+    "            <!--<div class=\"form-group\">-->\n" +
+    "                <!--<label class=\"control-label col-sm-2\">数据点大小</label>-->\n" +
+    "                <!--<div class=\"col-sm-2\">-->\n" +
+    "                    <!--<input type=\"number\" class=\"form-control\" ng-model=\"uwProps.display.pointRadius\">-->\n" +
+    "                <!--</div>-->\n" +
+    "            <!--</div>-->\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <pre>{{uwProps|json}}</pre>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/rosechart/rosechart-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-rosechart-metrics uw-props=\"uwProps\" axis-options=\"axisOptions\"\n" +
+    "                                         fields=\"selectedDs.fields\"></udp-widget-config-rosechart-metrics>\n" +
+    "    </uib-tab>\n" +
+    "\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <udp-widget-config-rosechart-display ng-model=\"uwProps.display\"></udp-widget-config-rosechart-display>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <pre>{{uwProps|json}}</pre>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/rosechart/widget-config-rosechart-display.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label col-sm-2\">图形色调</label>\n" +
+    "    <div class=\"col-sm-4\" ng-init=\"\">\n" +
+    "        <select class=\"form-select\" ng-model=\"$ctrl.props.palette\"\n" +
+    "                ng-options=\"id as p.title for (id,p) in $ctrl.palettes\">\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-6\">\n" +
+    "                <span ng-repeat=\"color in $ctrl.palettes[$ctrl.props.palette].colors\"\n" +
+    "                      style=\"background-color:{{color}};margin-right:4px;width:24px;height:24px;display:inline-block;\">&nbsp;</span>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/rosechart/widget-config-rosechart-metrics.html","<fieldset ng-if=\"axisOptions.xAxis.enabled!==false\">\n" +
+    "    <legend>{{axisOptions.xAxis.name||'角度轴'}}</legend>\n" +
+    "    <div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">数据</label>\n" +
+    "            <div class=\"col-sm-10\">\n" +
+    "                <udp-dsfield-selector the-model=\"theModel.xAxis\" fields=\"fields\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "<fieldset>\n" +
+    "    <div class=\"pull-right\" >\n" +
+    "        <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"addYAxis()\"><i\n" +
+    "                class=\"fa fa-plus-square\"></i> 添加指标\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <legend>数据指标</legend>\n" +
+    "    <div>\n" +
+    "        <ul ui-sortable=\"sortableOptions\" ng-model=\"theModel.yAxes\" class=\"nav nav-pills\">\n" +
+    "            <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "            <li ng-repeat=\"field in theModel.yAxes track by $index\" style=\"height:32px;\">\n" +
+    "                    <span class=\"badge op-text-normal rounded-0\"\n" +
+    "                          ng-class=\"current.index === $index?'badge-info':'badge-default'\">\n" +
+    "                        <i ng-if=\"!field.field\" class=\"fa fa-bolt\"></i>\n" +
+    "                        <a ng-click=\"selectYAxis($index)\">{{ field.legend||label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>\n" +
+    "                        <a ng-click=\"removeYAxis($index)\" ></a>\n" +
+    "                    </span></li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"current.index>=0\" class=\"bg-light lt p-2\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">图例名称</label>\n" +
+    "            <div class=\"col-sm-4\">\n" +
+    "                <input class=\"form-control\" ng-model=\"current.yAxis.legend\"></div>\n" +
+    "            <div class=\"col-sm-6\">\n" +
+    "                <div class=\"checkbox checkbox-inline\"><input type=\"checkbox\" class=\"form-control\" id=\"wccm_yhidden\"\n" +
+    "                                                             ng-model=\"current.yAxis.hidden\"><label for=\"wccm_yhidden\">\n" +
+    "                    默认不显示此字段</label></div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">数据</label>\n" +
+    "            <div class=\"col-sm-10\">\n" +
+    "                <udp-dsfield-selector the-model=\"current.yAxis\" fields=\"fields\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/route/route-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-fields props=\"uwProps.fields\" dataset-fields=\"selectedDs.fields\"\n" +
+    "                                  options=\"fieldOptions\"></udp-widget-config-fields>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.route.config.map_type' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <select class=\"form-select\" ng-model=\"uwProps.display.mapType\"\n" +
+    "                            ng-options=\"type.name as type.title for type in mapTypes\"/>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.route.config.map_size' | translate}}</label>\n" +
+    "                <div class=\"col-sm-5\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.width\"\n" +
+    "                           placeholder=\"{{'common.term.width'|translate}}\">\n" +
+    "                </div>\n" +
+    "                <div class=\"col-sm-5\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.display.height\"\n" +
+    "                           placeholder=\"{{'common.term.height'|translate}}\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'udp.w.route.config.misc' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <div class=\"checkbox checkbox-primary\">\n" +
+    "                        <input type=\"checkbox\" id=\"f_zoomable\"\n" +
+    "                               ng-model=\"uwProps.display.zoomable\"><label\n" +
+    "                            for=\"f_zoomable\">{{'udp.w.route.config.zoomable' | translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/sample/sample-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display></udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/script/script-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"\n" +
+    "                                   options=\"{allowServerPage:true,allowClientLimit:false}\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-code'></i> {{'udp.w.script.config.code' | translate}}</uib-tab-heading>\n" +
+    "        <uib-tabset class=\"tab-container\" type=\"mdc-op\" justified=\"true\">\n" +
+    "            <uib-tab>\n" +
+    "                <uib-tab-heading>{{'udp.w.script.config.html' | translate}}</uib-tab-heading>\n" +
+    "                <div class=\"opx-layout-vflex\">\n" +
+    "                    <p ng-bind-html=\"'udp.w.script.config.html_desc'|translate\"></p>\n" +
+    "                    <op-code-editor the-model=\"uwProps.content.tpl\" options=\"{syntax:'htmlmixed'}\"\n" +
+    "                                    class=\"flex-fill\"></op-code-editor>\n" +
+    "                </div>\n" +
+    "            </uib-tab>\n" +
+    "            <uib-tab>\n" +
+    "                <uib-tab-heading>{{'udp.w.script.config.js' | translate}}</uib-tab-heading>\n" +
+    "                <div class=\"opx-layout-vflex\">\n" +
+    "                    <div ng-bind-html=\"'udp.w.script.config.js_desc'|translate\">\n" +
+    "                    </div>\n" +
+    "                    <op-code-editor the-model=\"uwProps.content.js\" options=\"{syntax:'javascript'}\"\n" +
+    "                                    class=\"flex-fill\"></op-code-editor>\n" +
+    "                </div>\n" +
+    "            </uib-tab>\n" +
+    "            <uib-tab>\n" +
+    "                <uib-tab-heading>{{'udp.w.script.config.css' | translate}}</uib-tab-heading>\n" +
+    "                <div class=\"opx-layout-vflex\">\n" +
+    "                    <op-code-editor the-model=\"uwProps.content.css\" options=\"{syntax:'css'}\"\n" +
+    "                                    class=\"flex-fill\"></op-code-editor>\n" +
+    "                </div>\n" +
+    "            </uib-tab>\n" +
+    "        </uib-tabset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-access-config the-model=\"uwProps.accesscontrol\"></udp-widget-access-config>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/task-scheduling/task-scheduling-edit.html","<style>\n" +
+    "    .jao-cron-input-style{\n" +
+    "        width: 94%;\n" +
+    "        margin: auto;\n" +
+    "        margin-bottom: 16px;\n" +
+    "    }\n" +
+    "</style>\n" +
+    "<div class=\"modal-header m-t-xs\">\n" +
+    "    <h4 class=\"modal-title\" id=\"myAssetNetworkLabel\">\n" +
+    "        <span ng-show=\"!vm.cron.id\">{{ 'task_scheduling.add_CRON' | translate}}</span>\n" +
+    "        <span ng-show=\"vm.cron.id\">{{ 'task_scheduling.edit_CRON' | translate}}  ID: {{vm.cron.id}}</span>\n" +
+    "        <span>\n" +
+    "            <a type=\"button\" class=\"btn-close\" style=\"margin: 10px;float: right;\" data-dismiss=\"modal\" ng-click=\"vm.cancel()\"></a>\n" +
+    "        </span>\n" +
+    "    </h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.datatable.job_desc' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <input type=\"text\" class=\"form-control\" ng-model=\"vm.cron.jobDesc\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.output_log' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select\"  ng-model=\"vm.cron.logOutput\">\n" +
+    "               <option ng-repeat=\"option in logOutputs\" value=\"{{option.value}}\">\n" +
+    "                    {{option.label}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.is_encrypt' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select\"  ng-model=\"vm.cron.isEncrypt\" ng-disabled=\"vm.jaoHighPower\">\n" +
+    "                <option ng-repeat=\"option in isEncrypts\" value=\"{{option.value}}\">\n" +
+    "                    {{option.label}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.datatable.schedule_conf' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"input-group\">\n" +
+    "                  <input type=\"text\" class=\"form-control\" ng-model=\"vm.cron.scheduleConf\">\n" +
+    "<!--            <span class=\"input-group-btn\">-->\n" +
+    "                 <button ng-click=\"vm.CronDialogBox()\" style=\"height: 30px;border: 1px solid #ced4da;\" class=\"btn btn-default\"\n" +
+    "                         title=\"{{ 'task_scheduling.title_desc_one' | translate}}\">\n" +
+    "                    <i class=\"fa fa-calendar-alt\"></i>\n" +
+    "                </button>\n" +
+    "<!--            </span>-->\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'adm.menu.appres' | translate}}</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select\" ng-model=\"vm.cron.appCode\">\n" +
+    "                <option value=\"\">\n" +
+    "                </option>\n" +
+    "                <option ng-repeat=\"option in appletsList\" value=\"{{option.name}}\">\n" +
+    "                    {{option.title}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.execution_job_type' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select \" ng-model=\"vm.cron.jobType\" ng-change=\"showTemplate()\">\n" +
+    "                <option ng-repeat=\"option in jobTypes\" value=\"{{option.value}}\">\n" +
+    "                    {{option.label}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.select_execute_job' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "\n" +
+    "            <select ng-if=\"vm.displayType\" op-select class=\"form-select\" ng-model=\"vm.cron.jobId\" ng-change=\"showJobParameter()\">\n" +
+    "                <option ng-repeat=\"option in jobList\" value=\"{{option.id}}\">\n" +
+    "                    {{option.id.length > 20 ? option.templateName : option.title}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "            <div ng-if=\"!vm.displayType && 'cac' === vm.cron.jobType\" class=\"form-control-wrapper\">\n" +
+    "                <select ng-model=\"vm.ccfIds\" class=\"form-select\"\n" +
+    "                        op-select multiple\n" +
+    "                        ng-options=\"city.id as city.templateName for city in jobList\"></select>\n" +
+    "            </div>\n" +
+    "            <div ng-if=\"!vm.displayType && 'cmd' === vm.cron.jobType\" class=\"form-control-wrapper\">\n" +
+    "                <select ng-model=\"vm.ccfIds\" class=\"form-select\"\n" +
+    "                        op-select multiple\n" +
+    "                        ng-options=\"city.id as city.name for city in jobList\"></select>\n" +
+    "            </div>\n" +
+    "            <div ng-if=\"!vm.displayType && 'flows' === vm.cron.jobType\" class=\"form-control-wrapper\">\n" +
+    "                <select op-select class=\"form-select\" ng-model=\"vm.ccfIds[0]\">\n" +
+    "                    <option ng-repeat=\"option in jobList\" value=\"{{option.id}}\">\n" +
+    "                        {{option.name}}\n" +
+    "                    </option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <div class=\"form-group w-100 m-b-sm\">\n" +
+    "        <button class=\"btn btn-outline-primary\" style=\"margin-left:3%;\" ng-if=\"vm.cron.jobId != '' || vm.cron.jobType == 'cmd' || vm.cron.jobType == 'cac'\"\n" +
+    "                title=\"{{ 'task_scheduling.title_desc_two' | translate}}\" ng-click=\"vm.JobOperatingParam()\"><i\n" +
+    "                class=\"fa fa-diagnoses\"></i>\n" +
+    "            {{ 'task_scheduling.operating_param' | translate}}\n" +
+    "        </button>\n" +
+    "        <button type=\"reset\" class=\"btn btn-default pull-right\" style=\"margin-right: 20px;\" ng-click=\"vm.cancel()\">\n" +
+    "            <i class=\"fa fa-reply\"></i>\n" +
+    "            {{ 'common.entity.action.back' | translate}}\n" +
+    "        </button>\n" +
+    "        <button class=\"btn btn-primary pull-right\" style=\"margin-right: 6px;\" ng-click=\"vm.save()\"\n" +
+    "                ng-disabled=\"(!vm.cron.jobId && vm.ccfIds.length < 1) || !vm.cron.jobType || !vm.cron.scheduleConf || !vm.cron.jobDesc || !vm.cron.logOutput || !vm.cron.isEncrypt\">\n" +
+    "            <i class=\"fa fa-check\"></i>\n" +
+    "            {{ 'common.entity.action.save' | translate}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/widgets/task-scheduling/task-scheduling-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.binding' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.core.exportParam\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.flow.applet' | translate}} </label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"uwProps.tasks.appletCode\"  op-select\n" +
+    "                        ng-options=\"applet.code as applet.title for applet in applets\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.w.flow.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props' | translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>")
+
+$templateCache.put("app/modules/udp/widgets/task-scheduling/task-scheduling.html","<div class=\"opx-layout-vflex\" uaa-is-authenticated uaa-deny-message=\"{{ 'task_scheduling.cron_job_list' | translate}}\">\n" +
+    "    <nav class=\"navbar navbar-light\">\n" +
+    "        <div class=\"navbar-nav\">\n" +
+    "            <ol class=\"breadcrumb\">\n" +
+    "                <li class=\"breadcrumb-item active opx-navbar-title\">{{ 'task_scheduling.menu.home' | translate}}</li>\n" +
+    "            </ol>\n" +
+    "        </div>\n" +
+    "    </nav>\n" +
+    "    <div class=\"card-body\">\n" +
+    "        <opx-datatable table-config=\"$ctrl.tableConfig\">\n" +
+    "        </opx-datatable>\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/widgets/text-p/text-p-widget-config.html","<!--<summernote ng-model=\"uwProps.data\"></summernote>-->\n" +
+    "<textarea ui-tinymce ng-model=\"uwProps.data\"></textarea>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/timer/timer-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_name\">{{'udp.w.timer.config.name'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"uwProps.name\" id=\"f_name\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_interval\">{{'udp.w.timer.config.interval'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" class=\"form-control\" ng-model=\"uwProps.interval\" id=\"f_interval\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_event\"\n" +
+    "                   op-help-info=\"{{'udp.w.timer.config.event_desc'|translate}}\">{{'udp.w.timer.config.event'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control\" ng-model=\"uwProps.eventbytimer\" id=\"f_event\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_initstate\">{{'udp.w.timer.config.default_state'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"checkbox checkbox-inline\">\n" +
+    "                    <input type=\"checkbox\" id=\"f_initstate\"\n" +
+    "                           ng-model=\"uwProps.autoStart\"><label for=\"f_initstate\">{{'udp.w.timer.config.auto_start'|translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_style\">{{'common.term.style'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select ng-model=\"uwProps.display.style\" class=\"form-select op-w-xs\" id=\"f_style\">\n" +
+    "                    <option value=\"switch\">{{'udp.w.timer.config.style_switch'|translate}}</option>\n" +
+    "                    <option value=\"button\">{{'udp.w.timer.config.style_button'|translate}}</option>\n" +
+    "                    <option value=\"hidden\">{{'udp.w.timer.config.style_hidden'|translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/topology-chart/topology-chart-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-dataset props=\"uwProps.dataset\" selected-ds=\"selectedDs\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> 样式</uib-tab-heading>\n" +
+    "        <fieldset>\n" +
+    "            <legend>公共样式</legend>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">节点大小</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control op-w-sm\" type=\"number\" value=\"40\"\n" +
+    "                           ng-model=\"uwProps.graph.common.node.size\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">节点颜色</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                      ng-model=\"uwProps.graph.common.node.color\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">节点文字大小</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control op-w-sm\" type=\"number\" value=\"12\"\n" +
+    "                           ng-model=\"uwProps.graph.common.node.fontSize\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">节点文字颜色</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                      ng-model=\"uwProps.graph.common.node.fontColor\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">连线宽度</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input class=\"form-control op-w-sm\" type=\"number\" value=\"1\"\n" +
+    "                           ng-model=\"uwProps.graph.common.line.width\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">连线颜色</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                      ng-model=\"uwProps.graph.common.line.color\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <fieldset>\n" +
+    "            <legend>自定义样式</legend>\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"col-4\">\n" +
+    "                    <table class=\"table table-bordered table-hover \">\n" +
+    "                        <tbody style=\"border-width: 1px;\">\n" +
+    "                        <tr ng-repeat=\" tr in uwProps.graph.tableData\">\n" +
+    "                            <td ng-class=\"{'bg-info':currentNode.id === td.id}\" ng-repeat=\"td in tr\" ng-click=\"selectGraphNode(td)\">{{td.name}}</td>\n" +
+    "                        </tr>\n" +
+    "                        </tbody>\n" +
+    "                    </table>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-1\"></div>\n" +
+    "                <div class=\"col-7\">\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\">节点图标</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <input class=\"form-control\" ng-model=\"currentNode.symbol\">\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\">节点大小</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <input class=\"form-control\" ng-model=\"currentNode.symbolSize\">\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\">节点颜色</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                              ng-model=\"currentNode.itemStyle.normal.color\"></udp-color-picker>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\">文字大小</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <input class=\"form-control\" ng-model=\"currentNode.label.fontSize\">\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group\">\n" +
+    "                        <label class=\"control-label\">文字颜色</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                              ng-model=\"currentNode.label.color\"></udp-color-picker>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"form-group\" ng-if=\"currentNode.target\">\n" +
+    "                        <label class=\"control-label\">连线</label>\n" +
+    "                        <div class=\"form-control-wrapper\">\n" +
+    "                            <div class=\"col-4\">\n" +
+    "                                <ul class=\"list-group\" ng-repeat=\"link in currentNode.links\">\n" +
+    "                                    <li class=\"list-group-item\" ng-click=\"selectGraphLine(link)\"\n" +
+    "                                        ng-class=\"{'active':currentLine.name===link.name}\">{{link.name}}\n" +
+    "                                    </li>\n" +
+    "                                </ul>\n" +
+    "                            </div>\n" +
+    "                            <div class=\"col-2\"></div>\n" +
+    "                            <div class=\"col-6\">\n" +
+    "                                <div class=\"form-group\">\n" +
+    "                                    <label class=\"control-label\">连线宽度</label>\n" +
+    "                                    <div class=\"form-control-wrapper\">\n" +
+    "                                        <input class=\"form-control op-w-sm\" type=\"number\" value=\"1\"\n" +
+    "                                               ng-model=\"currentLine.lineStyle.normal.width\">\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                                <div class=\"form-group\">\n" +
+    "                                    <label class=\"control-label\">连线颜色</label>\n" +
+    "                                    <div class=\"form-control-wrapper\">\n" +
+    "                                        <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                                          ng-model=\"currentLine.lineStyle.normal.color\"></udp-color-picker>\n" +
+    "                                    </div>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "\n" +
+    "                </div>\n" +
+    "\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/tree/tree-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"usb_name\"\n" +
+    "                op-help-info=\"{{'udp.uinput.attrs.name_helpinfo'|translate}}\">{{'udp.uinput.attrs.name'|translate}}</label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control op-w-sm\" ng-model=\"uwProps.name\" id=\"usb_name\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <uinput-setting-interaction props=\"uwProps\"></uinput-setting-interaction>\n" +
+    "\n" +
+    "        <udp-widget-config-dataset  props=\"uwProps.dataset\" selected-ds=\"selectedDs\"\n" +
+    "                                    options=\"{allowServerPage:true,allowClientLimit:false}\"></udp-widget-config-dataset>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">\n" +
+    "                <span op-help-info=\"{{'udp.w.tree.column.root_helpinfo' | translate}}\">\n" +
+    "                {{ 'udp.w.tree.column.root' | translate }}\n" +
+    "            </label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" ng-model=\"uwProps.root\" class=\"form-control op-w-sm\" style=\"width:100%;\" />\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"f_expanded\">{{'udp.w.tree.config.expanded'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <div class=\"checkbox checkbox-inline\">\n" +
+    "                    <input type=\"checkbox\" id=\"f_expanded\" ng-model=\"uwProps.expanded\" />\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.tree.column.type'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select op-select class=\"form-select op-w-sm\" style=\"width: 200px;\" ng-model=\"uwProps.selector\">\n" +
+    "                    <option value=\"\">{{'udp.w.tree.type.single'|translate}}</option>\n" +
+    "                    <option value=\"multiple\">{{'udp.w.tree.type.multiple'|translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <table class=\"table op-param-table\">\n" +
+    "            <tbody>\n" +
+    "                <tr ng-repeat=\"param in ::attrs track by $index\">\n" +
+    "                    <td>\n" +
+    "                        <select class=\"form-select\" ng-model=\"uwProps.fields[param.name].position\" ng-if=\"param.layouts\"\n" +
+    "                            ng-options=\"layout.key as 'udp.w.kpi.config.'+layout.key|translate for layout in param.layouts\">\n" +
+    "                        </select>\n" +
+    "                    </td>\n" +
+    "                    <td>{{::param.title}}</td>\n" +
+    "                    <td>\n" +
+    "                        <udp-dsfield-selector the-model=\"uwProps.fields[param.name]\" fields=\"selectedDs.fields\">\n" +
+    "                        </udp-dsfield-selector>\n" +
+    "                    </td>\n" +
+    "                </tr>\n" +
+    "            </tbody>\n" +
+    "        </table>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/uinput-setting-basic.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"usb_label\">{{'udp.uinput.attrs.label'|translate}}</label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"input-group op-w-sm\">\n" +
+    "                <div class=\"input-group-text\"><input type=\"checkbox\" ng-model=\"$ctrl.props.showlabel\"\n" +
+    "                                                     title=\"{{'udp.uinput.attrs.label_enable_helpinfo'|translate}}\"></div>\n" +
+    "            <input class=\"form-control\" ng-model=\"$ctrl.props.label\" id=\"usb_label\" title=\"{{'udp.uinput.attrs.label_helpinfo'|translate}}\"\n" +
+    "                   ng-disabled=\"!$ctrl.props.showlabel\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"usb_label\">{{'udp.uinput.attrs.desc'|translate}}</label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"input-group\">\n" +
+    "                <div class=\"input-group-text\">\n" +
+    "                    <input type=\"checkbox\" ng-model=\"$ctrl.props.showdesc\" id=\"usb_showdesc\"\n" +
+    "                           title=\"{{'udp.uinput.attrs.desc_enable_helpinfo'|translate}}\"><label for=\"usb_showdesc\"></label>\n" +
+    "                </div>\n" +
+    "            <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.desc\" title=\"{{'udp.uinput.attrs.desc_helpinfo'|translate}}\"\n" +
+    "                   ng-disabled=\"!$ctrl.props.showdesc\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"!$ctrl.options.disableName\">\n" +
+    "    <label class=\"control-label\" for=\"usb_name\"\n" +
+    "           op-help-info=\"{{'udp.uinput.attrs.name_helpinfo'|translate}}\">{{'udp.uinput.attrs.name'|translate}}</label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input class=\"form-control op-w-sm\" ng-model=\"$ctrl.props.name\" id=\"usb_name\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"!$ctrl.options.disableBinding\">\n" +
+    "    <label class=\"control-label\" for=\"usb_binding\">{{'udp.uinput.attrs.binding'|translate}}</label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input class=\"form-control op-w-sm\" ng-model=\"$ctrl.props.binding\" id=\"usb_binding\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<hr>\n" +
+    "<uinput-setting-datacontrol ng-model=\"$ctrl.props\"></uinput-setting-datacontrol>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\"\n" +
+    "           op-help-info=\"{{'udp.uinput.attrs.etovalue_helpinfo'|translate}}\">{{'udp.uinput.attrs.etovalue'|translate}}</label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input class=\"form-control\" ng-model=\"$ctrl.props.etovalue\"/>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<hr>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"f_accesskey\">{{'udp.uinput.attrs.accesskey'|translate}}</label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input class=\"form-control op-w-sm\" ng-model=\"$ctrl.props.accesskey\" id=\"f_accesskey\">\n" +
+    "    </div>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"checkbox checkbox-inline\">\n" +
+    "            <input type=\"checkbox\" ng-model=\"$ctrl.props.readonly\" id=\"usb_readonly\"><label\n" +
+    "                for=\"usb_readonly\">{{'udp.uinput.attrs.readonly'|translate}}</label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/uinput-setting-datacontrol.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.uinput.attrs.control_type' | translate}} <i class=\"fa fa-keyboard\"></i></label>\n" +
+    "\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.control\">\n" +
+    "            <option value=\"input\">{{'udp.uinput.control.input' | translate}}</option>\n" +
+    "            <option value=\"password\">{{'udp.uinput.control.password' | translate}}</option>\n" +
+    "            <option value=\"select\">{{'udp.uinput.control.select' | translate}}</option>\n" +
+    "            <option value=\"typeahead\">{{'udp.uinput.control.typeahead' | translate}}</option>\n" +
+    "            <option value=\"datepicker\">{{'udp.uinput.control.datapicker' | translate}}</option>\n" +
+    "            <option value=\"iconpicker\">{{'udp.uinput.control.iconpicker' | translate}}</option>\n" +
+    "            <option value=\"radio\">{{'udp.uinput.control.radio' | translate}}</option>\n" +
+    "            <option value=\"checkbox\">{{'udp.uinput.control.checkbox' | translate}}</option>\n" +
+    "            <option value=\"textarea\">{{'udp.uinput.control.textarea' | translate}}</option>\n" +
+    "            <option value=\"text\">{{'udp.uinput.control.text' | translate}}</option>\n" +
+    "            <option value=\"device\">{{'udp.uinput.control.device' | translate}}</option>\n" +
+    "            <option value=\"file\">{{'udp.uinput.control.file' | translate}}</option>\n" +
+    "            <option value=\"hidden\">{{'udp.uinput.control.hidden' | translate}}</option>\n" +
+    "        </select>\n" +
+    "        <!--        <div class=\"checkbox checkbox-inline ms-3\">-->\n" +
+    "        <!--            <input type=\"checkbox\" ng-model=\"$ctrl.props.isrestricted\" id=\"usb_isrestricted\"><label-->\n" +
+    "        <!--                for=\"usb_isrestricted\" op-help-info=\"如果内容保密，在演示模式下将不显示，目前仅对文本框有效\">保密信息</label>-->\n" +
+    "        <!--        </div>-->\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"op-form-subgroup mb-3 js-control-options\" ng-show=\"$ctrl.hasControlOptions\">\n" +
+    "    <div ng-if=\"$ctrl.props.control==='textarea'\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.diplay.viewas' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.viewas\">\n" +
+    "                    <option value=\"\">{{'udp.uinput.display.viewas_default' | translate}}</option>\n" +
+    "                    <option value=\"inputbtn\">{{'udp.uinput.display.viewas_inputbtn' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.props.control==='device'\">\n" +
+    "        <div class=\"form-group\" ng-show=\"$ctrl.props.viewas\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'udp.uinput.device.type'|translate}}\"></label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <!--                <select op-select multiple class=\"form-select\" ng-model=\"$ctrl.props.devicetype\"-->\n" +
+    "                <!--                <select op-select multiple class=\"form-select\" ng-model=\"$ctrl.props.__citarray\"-->\n" +
+    "                <!--                        ng-options=\"cit.value as cit.title for cit in $ctrl.ciTypes\">-->\n" +
+    "                <!--                </select>-->\n" +
+    "                <udp-data-converter the-model=\"$ctrl.props.devicetype\" options=\"{kinds:'js,str'}\"\n" +
+    "                                    class=\"op-w-full\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.display.viewas' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.viewas\">\n" +
+    "                    <option value=\"btndlg\">{{'udp.uinput.device.viewas_btndlg' | translate}}</option>\n" +
+    "                    <option value=\"dropdown\">{{'udp.uinput.device.viewas_dropdown' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.props.control==='radio' || $ctrl.props.control==='checkbox'\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"{{'udp.uinput.attrs.options_helpinfo'|translate}}\">{{'udp.uinput.attrs.options' | translate}}</label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"$ctrl.props.sourcedef\" class=\"op-w-full\"\n" +
+    "                                    options=\"{kinds:'js,yaml',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.layout' | translate}}</label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"$ctrl.props.layout\">\n" +
+    "                    <option value=\"inline\">{{'udp.uinput.attrs.layout_inline' | translate}}</option>\n" +
+    "                    <option value=\"even-1\">{{'udp.uinput.attrs.layout_even1' | translate}}</option>\n" +
+    "                    <option value=\"even-2\">{{'udp.uinput.attrs.layout_even2' | translate}}</option>\n" +
+    "                    <option value=\"even-3\">{{'udp.uinput.attrs.layout_even3' | translate}}</option>\n" +
+    "                    <option value=\"even-4\">{{'udp.uinput.attrs.layout_even4' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "            <label class=\"control-label\">{{'udp.uinput.attrs.style' | translate}}</label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select\" ng-model=\"$ctrl.props.options.style\">\n" +
+    "                    <option value=\"\">{{'udp.uinput.attrs.style_default' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.props.control==='select' || $ctrl.props.control==='typeahead'\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"{{'udp.uinput.attrs.sourcedef_select_helpinfo'|translate}}\">{{'udp.uinput.attrs.sourcedef_select'|translate}}</label>\n" +
+    "\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"$ctrl.props.sourcedef\" class=\"op-w-full\"\n" +
+    "                                    options=\"{kinds:'js,yaml',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"!$ctrl.options.disableEvent\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"{{'udp.uinput.attrs.etosource_helpinfo'|translate}}\">{{'udp.uinput.attrs.etosource' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input class=\"form-control\" ng-model=\"$ctrl.props.etosource\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\" ng-if=\"$ctrl.props.control==='typeahead'\">\n" +
+    "        <label class=\"control-label\"></label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <div class=\"checkbox\">\n" +
+    "                <input type=\"checkbox\" id=\"usb_keephis\" ng-model=\"$ctrl.props.options.history\"><label\n" +
+    "                    for=\"usb_keephis\">{{'udp.uinput.typeahead.keep_history' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <!--    <div class=\"form-group\" ng-if=\"$ctrl.props.control==='device' || $ctrl.props.control==='select'\">-->\n" +
+    "    <div class=\"form-group\" ng-if=\"$ctrl.props.control==='select'\">\n" +
+    "        <label class=\"control-label\"></label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <div class=\"checkbox checkbox-inline\">\n" +
+    "                <input type=\"checkbox\" ng-model=\"$ctrl.props.ismultiple\" id=\"usb_ismultiple\"><label\n" +
+    "                    for=\"usb_ismultiple\">{{'udp.uinput.select.allow_multiple' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <div class=\"checkbox checkbox-inline\">\n" +
+    "                <input type=\"checkbox\" ng-model=\"$ctrl.props.istags\" id=\"usb_istags\"><label\n" +
+    "                    for=\"usb_istags\">{{'udp.uinput.select.allow_tags' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.props.control==='datepicker'\" class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.uinput.datepicker.format' | translate}}</label>\n" +
+    "\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.formatter\">\n" +
+    "                <option value=\"YYYY-MM-DD\">{{'udp.uinput.datepicker.format_yyyymmdd' | translate}}</option>\n" +
+    "                <option value=\"YYYY-MM-DD HH:mm:ss\">{{'udp.uinput.datepicker.format_ymdhms' | translate}}</option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"$ctrl.props.control!=='file'\">\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\" op-help-info=\"{{'udp.uinput.attrs.datatype_helpinfo'|translate}}\">{{'udp.uinput.attrs.datatype' | translate}} <i\n" +
+    "                class=\"fa fa-font-case\"></i></label>\n" +
+    "\n" +
+    "        <div class=\"form-control-wrapper op-combo\">\n" +
+    "            <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.props.datatype\"\n" +
+    "                    ng-options=\"datatype.value as datatype.label for datatype in $ctrl.availDatatypes\">\n" +
+    "            </select>\n" +
+    "            <div ng-if=\"$ctrl.props.datatype==='dsv' || ($ctrl.props.datatype==='string' && ($ctrl.props.ismultiple||$ctrl.props.control==='checkbox'))\"\n" +
+    "                 class=\"ms-3\">\n" +
+    "                <label>{{'udp.uinput.data.delim'|translate}}</label>\n" +
+    "                <select class=\"form-select d-inline op-w-sm\" ng-model=\"$ctrl.props.formatdsv\">\n" +
+    "                    <option value=\"comma\">{{'udp.uinput.data.delim_comma'|translate}}</option>\n" +
+    "                    <option value=\"space\">{{'udp.uinput.data.delim_space'|translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.uinput.data.initval'|translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <udp-data-converter the-model=\"$ctrl.props.initval\" class=\"op-w-full\"\n" +
+    "                                options=\"{kinds:'js,str',varTypes:'pageparam,global'}\"></udp-data-converter>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.uinput.attrs.width'|translate}}</label>\n" +
+    "\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <input type=\"number\" ng-model=\"$ctrl.props.width\" class=\"form-control\" min=\"2\" max=\"20\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/uinput-setting-interaction.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.uinput.attrs.event_by_change'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input class=\"form-control op-w-md\" ng-model=\"$ctrl.props.eventbychange\">\n" +
+    "    </div>\n" +
+    "</div>")
+
+$templateCache.put("app/modules/udp/widgets/umd-form/umd-form-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>\n" +
+    "        <umd-selector   the-model=\"uwProps.modelCode\" \n" +
+    "                        selected-data=\"uwProps.selectedData\"></umd-selector>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field' | translate}}</uib-tab-heading>\n" +
+    "\n" +
+    "\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-interaction the-model=\"uwProps.interaction\"\n" +
+    "                                       options=\"{supports:'page'}\"\n" +
+    "                                       param-vars=\"{}\">\n" +
+    "        </udp-widget-config-interaction>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label class=\"control-label\">{{'common.term.tag' | translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper\">\n" +
+    "                    <input type=\"text\" class=\"form-control op-w-sm\" ng-model=\"uwProps.display.label\">\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "         <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-chart-axes.html","<table class=\"table op-param-table\">\n" +
+    "    <thead>\n" +
+    "    <tr>\n" +
+    "        <th>{{'common.term.position' | translate}}</th>\n" +
+    "        <th>{{'udp.w.echart.axis.label' | translate}}</th>\n" +
+    "        <th>{{'udp.w.echart.axis.value_range' | translate}}</th>\n" +
+    "        <th>{{'udp.w.echart.axis.type' | translate}}</th>\n" +
+    "    </tr>\n" +
+    "    </thead>\n" +
+    "    <tbody>\n" +
+    "    <tr ng-repeat=\"yaxis in ::$ctrl.yaxes track by $index\">\n" +
+    "        <td>{{yaxis.title}}</td>\n" +
+    "        <td>\n" +
+    "            <div class=\"form-inline\">\n" +
+    "                <input type=\"text\" ng-model=\"$ctrl.model.yaxes[$index].label\" class=\"form-control me-2\"\n" +
+    "                       style=\"width:8em;\">\n" +
+    "                <select class=\"form-select\" ng-model=\"$ctrl.model.yaxes[$index].labelPos\">\n" +
+    "                    <option value=\"\">{{'udp.w.echart.axis.label_none' | translate}}</option>\n" +
+    "                    <option value=\"end\">{{'udp.w.echart.axis.label_top' | translate}}</option>\n" +
+    "                    <option value=\"center\">{{'udp.w.echart.axis.label_middle' | translate}}</option>\n" +
+    "                    <option value=\"start\">{{'udp.w.echart.axis.label_bottom' | translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </td>\n" +
+    "        <td>\n" +
+    "            <div class=\"form-inline\">\n" +
+    "                <input type=\"text\" class=\"form-control me-2\" style=\"width:6em;\"\n" +
+    "                       ng-model=\"$ctrl.model.yaxes[$index].min\"\n" +
+    "                       placeholder=\"{{'udp.w.echart.axis.value_range_placeholder'|translate}}\"\n" +
+    "                       title=\"{{'udp.w.echart.axis.value_min'|translate}}\">\n" +
+    "                <input type=\"text\" class=\"form-control\" style=\"width:6em;\"\n" +
+    "                       ng-model=\"$ctrl.model.yaxes[$index].max\"\n" +
+    "                       placeholder=\"{{'udp.w.echart.axis.value_range_placeholder'|translate}}\"\n" +
+    "                       title=\"{{'udp.w.echart.axis.value_max'|translate}}\">\n" +
+    "            </div>\n" +
+    "        </td>\n" +
+    "        <td>\n" +
+    "            <select ng-model=\"$ctrl.model.yaxes[$index].type\" class=\"form-select\">\n" +
+    "                <option value=\"\">{{'udp.w.echart.axis.type_liner' | translate}}</option>\n" +
+    "                <option value=\"log\">{{'udp.w.echart.axis.type_log' | translate}}</option>\n" +
+    "            </select>\n" +
+    "        </td>\n" +
+    "    </tr>\n" +
+    "    </tbody>\n" +
+    "</table>\n" +
+    "<div>\n" +
+    "    <div>\n" +
+    "        <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "            <input type=\"checkbox\" id=\"wpc_hidden_y\" ng-model=\"$ctrl.props.hiddenYaxes\">\n" +
+    "            <label for=\"wpc_hidden_y\"\n" +
+    "                   op-help-info=\"udp.w.echart.axis.hide_yaxis_desc\">{{'udp.w.echart.axis.hide_yaxis' | translate}}</label>\n" +
+    "        </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "    <div>\n" +
+    "        <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "            <input type=\"checkbox\" id=\"wpc_enabled_doublex\" ng-model=\"$ctrl.props.enabledDoubleX\"\n" +
+    "                   ng-disabled=\"($ctrl.props.xAxis.field === null && !$ctrl.props.xAxis.convertFn)||$ctrl.props.xAxis.axisType==='time'||$ctrl.props.enabledYaxisHighlight\">\n" +
+    "            <label for=\"wpc_enabled_doublex\"\n" +
+    "                   op-help-info=\"udp.w.echart.axis.double_x_desc\">{{'udp.w.echart.axis.double_x' | translate}}</label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "<!--  TODO: Duplicate code with widget-config-chart-metrics, need move x-axis config to a reusable component  -->\n" +
+    "    <div ng-if=\"$ctrl.props.enabledDoubleX\">\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.w.echart.elem.x_axis' | translate}}</legend>\n" +
+    "            <div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'common.term.data' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <udp-dsfield-selector the-model=\"$ctrl.props.xAxis2\"\n" +
+    "                                              fields=\"$ctrl.fields\"></udp-dsfield-selector>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.echart.axis.label_angle' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <input type=\"number\" class=\"form-control\" ng-model=\"$ctrl.props.xAxis2.labelAngle\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "        <fieldset>\n" +
+    "            <legend>{{'udp.w.echart.metric.metric' | translate}}</legend>\n" +
+    "            <div>\n" +
+    "                <div class=\"pull-right\">\n" +
+    "                    <button type=\"button\" class=\"btn btn-outline-primary btn-sm\" ng-click=\"$ctrl.addYAxis()\"><i\n" +
+    "                            class=\"fa fa-plus-square\"></i> {{'udp.w.echart.metric.add_metric' | translate}}\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "                <ul ui-sortable=\"sortableOptions\" ng-model=\"$ctrl.props.yAxes2\" class=\"nav nav-pills\">\n" +
+    "                    <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "                    <li ng-repeat=\"field in $ctrl.props.yAxes2 track by $index\">\n" +
+    "                    <span class=\"badge op-text-normal rounded-0\"\n" +
+    "                          ng-class=\"$ctrl.currentYaxesIndex === $index?'badge-info':'badge-default'\">\n" +
+    "                        <i ng-if=\"!field.field\" class=\"fa fa-bolt\"></i>\n" +
+    "                        <a ng-click=\"$ctrl.selectYAxis($index)\">{{ field.legend || label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>\n" +
+    "                        <a ng-click=\"$ctrl.removeYAxis($index)\"></a>\n" +
+    "                    </span></li>\n" +
+    "                </ul>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.echart.elem.legend' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper op-combo\">\n" +
+    "                        <input class=\"form-control op-w-sm\" ng-model=\"$ctrl.currentYaxis.legend\">\n" +
+    "                        <div class=\"checkbox checkbox-inline\">\n" +
+    "                            <input type=\"checkbox\" class=\"form-control\" id=\"wccm_yishidden\"\n" +
+    "                                   ng-model=\"$ctrl.currentYaxis.hidden\">\n" +
+    "                            <label for=\"wccm_yishidden\">{{'udp.w.echart.metric.hide' | translate}}</label>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'common.term.data' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper\">\n" +
+    "                        <udp-dsfield-selector the-model=\"$ctrl.currentYaxis\"\n" +
+    "                                              fields=\"$ctrl.fields\"></udp-dsfield-selector>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div id=\"cfg-line-style\" class=\"form-group\">\n" +
+    "                    <label class=\"control-label\">{{'udp.w.echart.line.type' | translate}}</label>\n" +
+    "                    <div class=\"form-control-wrapper op-combo\">\n" +
+    "                        <select class=\"form-select op-w-xs\" title=\"{{'udp.w.echart.line.shape'|translate}}\"\n" +
+    "                                ng-options=\"type.name as type.label for type in $ctrl.styles.lineTypes\"\n" +
+    "                                ng-model=\"$ctrl.currentYaxis.lineType\"></select>\n" +
+    "                        <input type=\"number\" class=\"form-control\" title=\"{{'udp.w.echart.line.width'|translate}}\"\n" +
+    "                               min=\"1\"\n" +
+    "                               ng-model=\"$ctrl.currentYaxis.lineWidth\"/>\n" +
+    "                        <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\"\n" +
+    "                                          ng-model=\"$ctrl.currentYaxis.lineColor\"></udp-color-picker>\n" +
+    "                        <input type=\"number\" class=\"form-control\"\n" +
+    "                               title=\"{{'udp.w.echart.line.fill_opacity'|translate}}\"\n" +
+    "                               min=\"0\" max=\"10\" ng-model=\"$ctrl.currentYaxis.fillOpacity\" style=\"width:4em;\">\n" +
+    "                        <div class=\"checkbox checkbox-inline\">\n" +
+    "                            <input type=\"checkbox\" ng-model=\"$ctrl.currentYaxis.smooth\" id=\"wccm_ysmooth\">\n" +
+    "                            <label for=\"wccm_ysmooth\">{{'udp.w.echart.line.smooth' | translate}}</label>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </fieldset>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-chart-display.html","<div class=\"form-group\">\n" +
+    "    <label for=\"wccd_palette\" class=\"control-label col-sm-2\">{{'udp.w.echart.display.palette'|translate}}</label>\n" +
+    "    <div class=\"col-sm-4\" ng-init=\"\">\n" +
+    "        <select id=\"wccd_palette\" class=\"form-select\" ng-model=\"$ctrl.props.palette\"\n" +
+    "                ng-options=\"id as p.title for (id,p) in $ctrl.palettes\">\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-6\">\n" +
+    "        <span ng-repeat=\"color in $ctrl.palettes[$ctrl.props.palette].colors\"\n" +
+    "              style=\"background-color:{{color}};margin-right:4px;width:24px;height:24px;display:inline-block;\">&nbsp;</span>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label col-sm-2\">{{'udp.w.echart.elem.gridline'|translate}}</label>\n" +
+    "    <div class=\"col-sm-4\">\n" +
+    "        <div class=\"checkbox checkbox-inline\">\n" +
+    "            <input type=\"checkbox\" ng-model=\"$ctrl.props.showGridLineX\" id=\"wccd_showgridx\"><label for=\"wccd_showgridx\">{{'udp.w.echart.elem.gridline_x'|translate}}</label>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox checkbox-inline\">\n" +
+    "            <input type=\"checkbox\" ng-model=\"$ctrl.props.showGridLineY\" id=\"wccd_showgridy\"><label for=\"wccd_showgridy\">{{'udp.w.echart.elem.gridline_y'|translate}}</label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label for=\"wccd_legendpos\" class=\"control-label col-sm-2\">{{'udp.w.echart.elem.legend'|translate}}</label>\n" +
+    "    <div class=\"col-sm-2\">\n" +
+    "        <select id=\"wccd_legendpos\" class=\"form-select\" ng-model=\"$ctrl.props.legend.position\">\n" +
+    "            <option value=\"none\">{{'udp.w.echart.display.legend_none'|translate}}</option>\n" +
+    "            <option value=\"auto\">{{'udp.w.echart.display.legend_auto'|translate}}</option>\n" +
+    "            <option value=\"bottom\">{{'udp.w.echart.display.legend_bottom'|translate}}</option>\n" +
+    "            <option value=\"right\">{{'udp.w.echart.display.legend_right'|translate}}</option>\n" +
+    "            <option value=\"left\">{{'udp.w.echart.display.legend_left'|translate}}</option>\n" +
+    "            <option value=\"custom\">{{'udp.w.echart.display.custom'|translate}}</option>\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-sm-2\" ng-if=\"$ctrl.props.legend.position === 'custom'\">\n" +
+    "        <input type=\"text\" ng-model=\"$ctrl.props.legend.positionCustom\" class=\"form-control\">\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <label for=\"wccd_legendpos_icon\" class=\"control-label col-sm-2\">是否隐藏图例图标</label>\n" +
+    "    <div class=\"col-sm-2\">\n" +
+    "        <select id=\"wccd_legendpos_icon\" class=\"form-select\" ng-model=\"$ctrl.props.legend.positionIcon\">\n" +
+    "            <option value=\"yes\">{{'udp.w.echart.display.yes'|translate}}</option>\n" +
+    "            <option value=\"no\">{{'udp.w.echart.display.no'|translate}}</option>\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label for=\"wccd_showExport\"\n" +
+    "           class=\"control-label col-sm-2\">{{'udp.w.datatable.config.controls_export'|translate}}</label>\n" +
+    "    <div class=\"col-sm-2\">\n" +
+    "        <select id=\"wccd_showExport\" class=\"form-select\" ng-model=\"$ctrl.props.showExport\">\n" +
+    "            <option value=\"none\">{{'udp.w.echart.toolbox.export_none'|translate}}</option>\n" +
+    "            <option value=\"noMark\">{{'udp.w.echart.toolbox.export_no_mark'|translate}}</option>\n" +
+    "            <option value=\"mark\">{{'udp.w.echart.toolbox.export_mark'|translate}}</option>\n" +
+    "        </select>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-chart-metrics.html","<fieldset ng-if=\"axisOptions.xAxis.enabled!==false\">\n" +
+    "    <legend>{{axisOptions.xAxis.name||'X Axis'}}</legend>\n" +
+    "    <div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.term.data'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-dsfield-selector the-model=\"theModel.xAxis\" fields=\"fields\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"axisOptions.xAxis.customizable.indexOf('axisType')>=0\">\n" +
+    "            <label class=\"control-label\"\n" +
+    "                   op-help-info=\"udp.w.echart.x_axis.type_desc\">{{'udp.w.echart.x_axis.type'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <select class=\"form-select op-w-sm\" ng-model=\"theModel.xAxis.axisType\">\n" +
+    "                    <option value=\"\"></option>\n" +
+    "                    <option value=\"time\">{{'udp.w.echart.x_axis.type_time'|translate}}</option>\n" +
+    "                </select>\n" +
+    "                <div ng-if=\"theModel.xAxis.axisType==='time'\">\n" +
+    "                    <div class=\"input-group\"><span class=\"input-group-addon\"\n" +
+    "                                                   op-help-info=\"udp.w.echart.x_axis.time_format_desc\">{{'udp.w.echart.x_axis.time_format'|translate}}</span>\n" +
+    "                        <input type=\"text\" class=\"form-control\" ng-model=\"theModel.xAxis.axisLabel\">\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"axisOptions.xAxis.customizable.indexOf('axisType')>=0\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.axis.label_angle'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"number\" class=\"form-control\" ng-model=\"theModel.xAxis.labelAngle\" title=\"{{'udp.w.echart.axis.label_angle'|translate}}\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"chartType==='map'\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"udp.w.map.locname_desc\">{{'udp.w.map.locname'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select ng-model=\"theModel.xAxis.locName\" class=\"form-select op-w-sm d-inline-block\">\n" +
+    "                    <option value=\"simple\">{{'udp.w.map.locname_simple'|translate}}</option>\n" +
+    "                    <option value=\"full\">{{'udp.w.map.locname_full'|translate}}</option>\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <!--<div ng-if=\"theModel.datastream.enabled\">-->\n" +
+    "        <!--<udp-widget-config-dataset props=\"theModel.datastream.dataset\" selected-ds=\"streamDs\"-->\n" +
+    "        <!--options=\"{disableParams:true,disableConfirm:true}\"></udp-widget-config-dataset>-->\n" +
+    "        <!--</div>-->\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "<fieldset>\n" +
+    "    <div class=\"pull-right\" ng-if=\"axisOptions.yAxis.multiple\">\n" +
+    "        <button type=\"button\" class=\"btn btn-outline-default\" ng-click=\"addYAxis()\"><i\n" +
+    "                class=\"fa fa-plus\"></i> {{'udp.w.echart.metric.add_metric'|translate}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <legend>{{'udp.w.echart.metric.metric'|translate}}</legend>\n" +
+    "    <ul ng-sortable ng-model=\"theModel.yAxes\" class=\"list list-unstyled list-inline\">\n" +
+    "        <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "        <li ng-repeat=\"field in theModel.yAxes track by $index\">\n" +
+    "            <span class=\"badge op-text-normal p-3\"\n" +
+    "                  ng-class=\"{'badge-dark':current.index === $index,'badge-secondary':current.index!==$index,'badge-light':field.hidden}\">\n" +
+    "                        <i ng-if=\"!field.field\" class=\"fa fa-bolt\"></i>\n" +
+    "                        <a ng-click=\"selectYAxis($index)\">{{ field.legend||label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>\n" +
+    "                        <a ng-click=\"removeYAxis($index)\" ng-if=\"axisOptions.yAxis.multiple\"></a>\n" +
+    "                    </span></li>\n" +
+    "    </ul>\n" +
+    "    <div ng-if=\"current.index>=0\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.elem.legend'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <input class=\"form-control op-w-sm\" ng-model=\"current.yAxis.legend\">\n" +
+    "                <div class=\"checkbox checkbox-inline\"><input type=\"checkbox\" class=\"form-control\" id=\"wccm_yhidden\"\n" +
+    "                                                             ng-model=\"current.yAxis.hidden\"><label for=\"wccm_yhidden\">\n" +
+    "                    {{'udp.w.echart.metric.hide'|translate}}</label></div>\n" +
+    "                <div class=\"checkbox checkbox-inline ms-3\">\n" +
+    "                    <input type=\"checkbox\" id=\"dwc_dynamic\"\n" +
+    "                           ng-model=\"current.yAxis.dynamic\"><label\n" +
+    "                        for=\"dwc_dynamic\" op-help-info=\"udp.w.echart.metric.dynamic_metric_desc\">{{'udp.w.echart.metric.dynamic_metric'|translate}} (dev)</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"current.yAxis.dynamic\">\n" +
+    "            <label class=\"control-label\" op-help-info=\"udp.w.echart.metric.dynamic_metric_def_desc\">{{'udp.w.echart.metric.dynamic_metric_def'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-data-converter the-model=\"current.yAxis.dynamicDef\"\n" +
+    "                                    options=\"{kinds:'js,yaml'}\" class=\"op-w-full\"></udp-data-converter>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div ng-if=\"!current.yAxis.dynamic\" class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'common.term.data'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-dsfield-selector the-model=\"current.yAxis\" fields=\"fields\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"chartType==='gauge'\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.gauge.max_value'|translate}}</label>\n" +
+    "            <div class=\"col-sm-4\">\n" +
+    "                <input type=\"number\" class=\"form-control\" style=\"width: 100%;\" ng-model=\"current.yAxis.maxValue\"\n" +
+    "                       placeholder=\"{{'udp.w.gauge.max_value_placeholder'|translate}}\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"cfg-chart-type\" class=\"form-group\" ng-if=\"axisOptions.yAxis.customizable.indexOf('chartType')>=0\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.metric.chart_type'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <select class=\"form-select op-w-xs\" ng-model=\"current.yAxis.chartType\">\n" +
+    "                    <option value=\"bar\" ng-if=\"chartType!=='map'\">{{'udp.w.echart.metric.chart_type_bar'|translate}}</option>\n" +
+    "                    <option value=\"line\" ng-if=\"chartType!=='map'\">{{'udp.w.echart.metric.chart_type_line'|translate}}</option>\n" +
+    "                    <option value=\"map\" ng-if=\"chartType==='map'\">{{'udp.w.echart.metric.chart_type_map'|translate}}</option>\n" +
+    "                    <option value=\"scatter\" ng-if=\"chartType==='map'\">{{'udp.w.echart.metric.chart_type_scatter'|translate}}</option>\n" +
+    "                </select>\n" +
+    "                <div class=\"checkbox checkbox-inline\" ng-if=\"chartType==='map'\">\n" +
+    "                    <input type=\"checkbox\" ng-model=\"current.yAxis.showVisualMap\" id=\"wccm_showvm\">\n" +
+    "                    <label for=\"wccm_showvm\" op-help-info=\"{{'udp.w.map.show_visualmap_desc'|translate}}\">\n" +
+    "                        {{'udp.w.map.show_visualmap'|translate}}\n" +
+    "                    </label>\n" +
+    "                </div>\n" +
+    "                <div ng-if=\"theModel.xAxis.axisType==='time' && current.yAxis.chartType==='line'\">\n" +
+    "                    <div class=\"checkbox checkbox-inline\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"current.yAxis.contTime.enabled\" id=\"wccm_yce\"><label\n" +
+    "                            for=\"wccm_yce\" op-help-info=\"{{'udp.w.echart.line.line_break_gap_desc'|translate}}\">{{'udp.w.echart.line.line_break_gap'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                    <input type=\"number\" class=\"form-control d-inline-block\" ng-model=\"current.yAxis.contTime.limit\"\n" +
+    "                           ng-disabled=\"!current.yAxis.contTime.enabled\">\n" +
+    "                    <select class=\"form-select d-inline-block\" ng-model=\"current.yAxis.contTime.unit\"\n" +
+    "                            ng-disabled=\"!current.yAxis.contTime.enabled\" style=\"width:8rem;\">\n" +
+    "                        <option value=\"s\">{{'common.term.second'|translate}}</option>\n" +
+    "                        <option value=\"m\">{{'common.term.minute'|translate}}</option>\n" +
+    "                        <option value=\"h\">{{'common.term.hour'|translate}}</option>\n" +
+    "                        <option value=\"d\">{{'common.term.day'|translate}}</option>\n" +
+    "                    </select>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"current.yAxis.chartType==='map'\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.echart.metric.color_range'|translate}}</label>\n" +
+    "            <div class=\"col-sm-10\"\n" +
+    "                 ng-init=\"current.yAxis.auxData['color'].range=current.yAxis.auxData['color'].range||[]\">\n" +
+    "                <udp-color-picker ng-model=\"current.yAxis.auxData['color'].range[0].k\" title=\"{{'udp.w.echart.metric.color_of_min'|translate}}\"></udp-color-picker>\n" +
+    "                <udp-color-picker ng-model=\"current.yAxis.auxData['color'].range[1].k\" title=\"{{'udp.w.echart.metric.color_of_max'|translate}}\"></udp-color-picker>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"cfg-axis-type\" class=\"form-group\" ng-if=\"axisOptions.yAxis.customizable.indexOf('axisType')>=0\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.elem.axis'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <select class=\"form-select op-w-xs\" ng-model=\"current.yAxis.axisIndex\" title=\"{{'udp.w.echart.elem.y_axis'|translate}}\"\n" +
+    "                        ng-options=\"yaxis.index as yaxis.label for yaxis in axisOptions.multipleYAxes\">\n" +
+    "                </select>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"cfg-bar-style\" class=\"form-group\" ng-if=\"current.yAxis.chartType==='bar'\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'common.term.width'|translate}}</label>\n" +
+    "            <div class=\"col-sm-6\">\n" +
+    "                <input type=\"number\" class=\"form-control d-inline-block\" title=\"{{'common.term.pixel'|translate}}\"\n" +
+    "                       min=\"0\"\n" +
+    "                       ng-model=\"current.yAxis.barWidth\"/>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"cfg-line-style\" class=\"form-group\" ng-if=\"axisOptions.yAxis.customizable.indexOf('lineStyle')>=0\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.line.style'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <select class=\"form-select op-w-xs\" title=\"{{'udp.w.echart.line.type'|translate}}\"\n" +
+    "                        ng-options=\"type.name as type.label for type in styles.lineTypes\"\n" +
+    "                        ng-model=\"current.yAxis.lineType\"></select>\n" +
+    "                <input type=\"number\" class=\"form-control\" title=\"{{'udp.w.echart.line.width'|translate}}\"\n" +
+    "                       min=\"1\"\n" +
+    "                       ng-model=\"current.yAxis.lineWidth\"/>\n" +
+    "                <udp-color-picker title=\"{{'udp.w.echart.line.color'|translate}}\" ng-model=\"current.yAxis.lineColor\"></udp-color-picker>\n" +
+    "                <input type=\"number\" class=\"form-control\" title=\"{{'udp.w.echart.line.fill_opacity'|translate}}\"\n" +
+    "                       min=\"0\" max=\"10\" ng-model=\"current.yAxis.fillOpacity\" style=\"width:4em;\">\n" +
+    "                <div class=\"checkbox checkbox-inline\">\n" +
+    "                    <input type=\"checkbox\" ng-model=\"current.yAxis.smooth\" id=\"wccm_ysmooth\">\n" +
+    "                    <label for=\"wccm_ysmooth\">{{'udp.w.echart.line.smooth'|translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"current.yAxis.chartType!=='map'&&chartType!=='gauge'\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.elem.data_label'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <select class=\"form-select op-w-xs\" ng-model=\"current.yAxis.pointLabel\">\n" +
+    "                    <option value=\"\">{{'udp.w.echart.data_point.label_none'|translate}}</option>\n" +
+    "                    <option value=\"outside\">{{'udp.w.echart.data_point.label_outside'|translate}}</option>\n" +
+    "                    <option value=\"inside\">{{'udp.w.echart.data_point.label_inside'|translate}}</option>\n" +
+    "                </select>\n" +
+    "                <label class=\"control-label\" ng-if=\"chartType==='pie'\" op-help-info=\"{{'udp.w.echart.data_point.label_format_pie_desc'|translate}}\">{{'udp.w.echart.data_point.label_format'|translate}}</label>\n" +
+    "                <div class=\"input-group\" ng-if=\"chartType==='pie'\">\n" +
+    "                    <input type=\"text\" ng-model=\"current.yAxis.labelFormatter\" class=\"form-control\"\n" +
+    "                           ng-disabled=\"current.yAxis.pointLabel===''\">\n" +
+    "                    <span class=\"input-group-append\"><button udp-expandable-editor=\"current.yAxis.labelFormatter\"\n" +
+    "                                                             type=\"button\" class=\"btn btn-outline-default\"\n" +
+    "                                                             ng-disabled=\"$ctrl.ngDisabled\"><i\n" +
+    "                            class=\"fa fa-pencil\"></i></button></span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"cfg-point-style\" class=\"form-group\"\n" +
+    "             ng-if=\"chartType!=='pie' && chartType!=='gauge' && ['map','pie','gauge'].indexOf(current.yAxis.chartType)<0\">\n" +
+    "            <label class=\"control-label\">{{'udp.w.echart.elem.data_point'|translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper op-combo\">\n" +
+    "                <select class=\"form-select op-w-xs\" title=\"{{'udp.w.echart.data_point.shape'|translate}}\"\n" +
+    "                        ng-options=\"type.name as type.label for type in styles.pointShapes\"\n" +
+    "                        ng-model=\"current.yAxis.pointShape\"></select>\n" +
+    "                <input type=\"number\" class=\"form-control\" title=\"{{'udp.w.echart.data_point.size'|translate}}\"\n" +
+    "                       min=\"0\"\n" +
+    "                       ng-disabled=\"current.yAxis.dynamicPoint\"\n" +
+    "                       ng-model=\"current.yAxis.pointSize\"/>\n" +
+    "                <udp-color-picker title=\"{{'udp.w.echart.data_point.color'|translate}}\" ng-model=\"current.yAxis.pointColor\"\n" +
+    "                                  disabled=\"current.yAxis.dynamicPoint\"></udp-color-picker>\n" +
+    "                <div class=\"\" ng-if=\"current.yAxis.chartType==='scatter'\">\n" +
+    "                    <div class=\"checkbox checkbox-inline checkbox-primary\">\n" +
+    "                        <input type=\"checkbox\" ng-model=\"current.yAxis.dynamicPoint\" id=\"wccm_dynamicpoint\"><label\n" +
+    "                            for=\"wccm_dynamicpoint\">{{'udp.w.echart.data_point.dynamic_color'|translate}}</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div id=\"cfg-dynamic-color-size\" class=\"wrapper-xs bg-light lt\"\n" +
+    "             ng-if=\"current.yAxis.dynamicPoint && current.yAxis.chartType==='scatter'\">\n" +
+    "            <div id=\"dynamic-color\" class=\"form-group\"\n" +
+    "                 ng-init=\"current.yAxis.auxData['color'].range=current.yAxis.auxData['color'].range||[]\">\n" +
+    "                <label class=\"control-label\" style=\"width:3em;\">{{'common.term.color'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper op-combo\">\n" +
+    "                    <udp-dsfield-selector the-model=\"current.yAxis.auxData['color']\" class=\"d-inline-block\"\n" +
+    "                                          fields=\"fields\" style=\"width:26em;\"></udp-dsfield-selector>\n" +
+    "                    <label class=\"control-label\">{{'udp.w.echart.metric.color_range'|translate}}</label>\n" +
+    "                    <udp-color-picker ng-model=\"current.yAxis.auxData['color'].range[0].k\"></udp-color-picker>\n" +
+    "                    <udp-color-picker ng-model=\"current.yAxis.auxData['color'].range[1].k\"></udp-color-picker>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div id=\"dynamic-size\" class=\"form-group\"\n" +
+    "                 ng-init=\"current.yAxis.auxData['size'].range=current.yAxis.auxData['size'].range||[]\">\n" +
+    "                <label class=\"control-label\" style=\"width:3em;\">{{'common.term.size'|translate}}</label>\n" +
+    "                <div class=\"form-control-wrapper op-combo\">\n" +
+    "                    <udp-dsfield-selector the-model=\"current.yAxis.auxData['size']\" class=\"d-inline-block\"\n" +
+    "                                          fields=\"fields\" style=\"width:26em;\"></udp-dsfield-selector>\n" +
+    "                    <label class=\"control-label\">{{'udp.w.echart.data_point.dynamic_max_width'|translate}}</label>\n" +
+    "                    <input type=\"number\" class=\"form-control\" title=\"{{'udp.w.echart.data_point.dynamic_max_width_desc'|translate}}\"\n" +
+    "                           ng-model=\"current.yAxis.auxData['size'].range[1].k\"/>\n" +
+    "                    <label class=\"control-label\">{{'udp.w.echart.data_point.dynamic_max_value'|translate}}</label>\n" +
+    "                    <input type=\"number\" class=\"form-control\" title=\"{{'udp.w.echart.data_point.dynamic_max_value_desc'|translate}}\" xstyle=\"width:6em;\"\n" +
+    "                           ng-model=\"current.yAxis.auxData['size'].range[1].v\"/>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-dataset-datax-result-modal.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\">{{'udp.wc.dataset.datax.test_result'|translate}}</h4>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body\">\n" +
+    "    <pre style=\"height:360px;overflow: auto;\">{{result|json}}</pre>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer text-right\">\n" +
+    "    <button type=\"button\" class=\"btn btn-primary\" ng-click=\"useAsFields()\">{{'udp.wc.dataset.datax.result_ok'|translate}}</button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default\" ng-click=\"cancelModal()\">{{'common.action.cancel'|translate}}</button>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-dataset-datax.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\"\n" +
+    "           op-help-info=\"{{'udp.wc.dataset.datax.expr_helpinfo'|translate}}\">{{'udp.wc.dataset.datax.expr'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-data-converter the-model=\"$ctrl.theModel.expr\" options=\"{kinds:'js,yaml'}\"\n" +
+    "                            class=\"op-w-full\"></udp-data-converter>\n" +
+    "    </div>\n" +
+    "    <button type=\"button\" class=\"btn btn-outline-primary ms-3\" ng-click=\"$ctrl.testExpr()\" title=\"{{'udp.wc.dataset.datax.test_helpinfo'|translate}}\">{{'udp.wc.dataset.datax.test'|translate}}\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" id=\"js-dataex-tester\" ng-if=\"$ctrl.theModel.metaparams | isNotEmpty\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.dataset.datax.test_params'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <table class=\"table op-param-table\">\n" +
+    "            <tbody>\n" +
+    "            <tr ng-repeat=\"(key, value) in $ctrl.theModel.metaparams track by $index\">\n" +
+    "                <td class=\"text-right\"><label class=\"badge bg-secondary\" for=\"wcddf_{{$index}}\">{{key}}</label></td>\n" +
+    "                <td>\n" +
+    "                    <div class=\"input-group\">\n" +
+    "                        <input id=\"wcddf_{{$index}}\" type=\"text\" class=\"form-control\"\n" +
+    "                               ng-model=\"$ctrl.theModel.metaparams[key]\">\n" +
+    "                        <div class=\"input-group-append\">\n" +
+    "                            <button type=\"button\" class=\"btn btn-default opx-btn-icon\"\n" +
+    "                                    ng-click=\"$ctrl.removeInputVar(key)\"><i class=\"fa fa-trash\"></i></button>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </td>\n" +
+    "            </tr>\n" +
+    "            </tbody>\n" +
+    "        </table>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" op-help-info=\"{{'udp.wc.dataset.datax.metafields_helpinfo'|translate}}\">{{'udp.wc.dataset.datax.metafields'|translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <udp-data-converter the-model=\"$ctrl.theModel.metafields\" options=\"{kinds:'yaml'}\"\n" +
+    "                            class=\"op-w-full\"></udp-data-converter>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-dataset-joinx.html","<style type=\"text/css\">\n" +
+    "    .udp-uml {\n" +
+    "        overflow-x: auto;\n" +
+    "        max-width: 100%;\n" +
+    "        white-space: nowrap;\n" +
+    "        padding: 8px 0;\n" +
+    "    }\n" +
+    "\n" +
+    "    .list-group-item.field-excluded span {\n" +
+    "        text-decoration-line: line-through;\n" +
+    "    }\n" +
+    "\n" +
+    "    .list-group-item.field-relation span {\n" +
+    "        color: deepskyblue;\n" +
+    "    }\n" +
+    "\n" +
+    "    span.field-renamed {\n" +
+    "        color: red;\n" +
+    "    }\n" +
+    "\n" +
+    "    .list-group-item.field-in-edit {\n" +
+    "        padding: 5px 4px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block {\n" +
+    "        display: inline-flex;\n" +
+    "        vertical-align: top;\n" +
+    "        position: relative;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-relation {\n" +
+    "        display: inline-flex;\n" +
+    "        flex-direction: column;\n" +
+    "        justify-content: center;\n" +
+    "        min-width: 40px;\n" +
+    "        height: 200px;\n" +
+    "        overflow-y: auto;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-relation-line {\n" +
+    "        border-bottom: 2px solid #aaaaaa;\n" +
+    "        padding-bottom: 4px;\n" +
+    "        margin-bottom: 8px;\n" +
+    "        position: relative;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-relation-line .badge {\n" +
+    "        user-select: none;\n" +
+    "        cursor: default;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-relation-line.active {\n" +
+    "        border-bottom-color: deepskyblue;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-class {\n" +
+    "        display: inline-block;\n" +
+    "        min-width: 120px;\n" +
+    "        max-width: 200px;\n" +
+    "        height: 200px;\n" +
+    "        vertical-align: middle;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-class.card {\n" +
+    "        margin-bottom: 0;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-class .card-header {\n" +
+    "        padding: 8px;\n" +
+    "        height: 36px;\n" +
+    "    }\n" +
+    "\n" +
+    "    .udp-uml-block-class .list-group {\n" +
+    "        height: calc(100% - 40px);\n" +
+    "        overflow-y: auto;\n" +
+    "    }\n" +
+    "</style>\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.dataset.joinx.select_dataset' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"d-flex w-100\">\n" +
+    "            <select class=\"form-select\" ng-model=\"$ctrl.selectedDsCode\"\n" +
+    "                    ng-options=\"ds.code as ds.name for ds in $ctrl.datasets | orderBy:'name'\">\n" +
+    "                <option disabled></option>\n" +
+    "            </select>\n" +
+    "            <!--            <div class=\"input-group-btn\">-->\n" +
+    "            <button type=\"button\" class=\"ml-3 btn btn-primary\" ng-click=\"$ctrl.addDataset()\">\n" +
+    "                {{'udp.wc.dataset.joinx.add_dataset' | translate}}\n" +
+    "            </button>\n" +
+    "            <!--            </div>-->\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div ui-sortable=\"::$ctrl.sortableOptions\" ui-sortable-start=\"$ctrl.onSortStart\" ui-sortable-stop=\"$ctrl.onSortStop\"\n" +
+    "     ng-model=\"$ctrl.graphDs\" class=\"udp-uml\">\n" +
+    "    <div ng-repeat=\"ds in $ctrl.graphDs track by $index\" class=\"udp-uml-block\">\n" +
+    "        <div ng-if=\"!$first\" class=\"udp-uml-block-relation\">\n" +
+    "            <div class=\"udp-uml-block-relation-line op-hover-trigger\"\n" +
+    "                 ng-click=\"$ctrl.chooseRelation($parent.$index,$index)\"\n" +
+    "                 ng-class=\"{'active':$ctrl.activeRelation.dsIndex===$parent.$index && $ctrl.activeRelation.relIndex===$index}\"\n" +
+    "                 ng-repeat=\"relation in $ctrl.theModel.dses[$index].relations\">\n" +
+    "                <div style=\"display:flex;\">\n" +
+    "                    <div>\n" +
+    "                        <span class=\"badge\"\n" +
+    "                              ng-class=\"$ctrl.activeRelation.dsIndex===$parent.$index && $ctrl.activeRelation.relIndex===$index?'badge-info':(relation.hasError?'badge-danger':(relation.left?'badge-default':'badge-warning'))\">{{relation.left || '??'}} </span>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"text-right\" style=\"flex:1;\">\n" +
+    "                       <span class=\"badge\"\n" +
+    "                             ng-class=\"$ctrl.activeRelation.dsIndex===$parent.$index && $ctrl.activeRelation.relIndex===$index?'badge-info':(relation.right?'badge-default':'badge-warning')\">{{relation.right || '??'}}</span>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"op-hover-display-block\">\n" +
+    "                    <button type=\"button\" class=\"btn btn-danger btn-sm opx-btn-icon \"\n" +
+    "                            title=\"{{'udp.wc.dataset.joinx.remove_relation'|translate}}\"\n" +
+    "                            ng-click=\"$ctrl.removeRelation($parent.$index,$index)\"\n" +
+    "                            style=\"position:absolute;bottom:-10px;left:calc(50% - 10px);z-index:2;\">\n" +
+    "                        <i class=\"fa fa-times\"></i>\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"card card-default udp-uml-block-class\">\n" +
+    "            <div class=\"card-header op-drag-handle op-hover-trigger\" title=\"{{ds.code}}\">\n" +
+    "                <div>\n" +
+    "                    {{ds.name}}\n" +
+    "                </div>\n" +
+    "                <div class=\"op-hover-display-block\" style=\"background:#ddd;position:absolute;top:8px;right:8px;\">\n" +
+    "                    <a ng-if=\"!$first\" ng-click=\"$ctrl.addRelation($index)\"\n" +
+    "                       title=\"{{'udp.wc.dataset.joinx.add_relation'|translate}}\"\n" +
+    "                       class=\"btn btn-sm btn-primary opx-btn-flat opx-btn-icon\"><i\n" +
+    "                            class=\"fa fa-plus-square\"></i></a>\n" +
+    "                    <a ng-click=\"$ctrl.removeDataset($index)\"\n" +
+    "                       title=\"{{'udp.wc.dataset.joinx.remove_dataset'|translate}}\"\n" +
+    "                       class=\"btn btn-sm btn-danger opx-btn-flat opx-btn-icon\"><i\n" +
+    "                            class=\"fa fa-times\"></i></a>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <ul class=\"list-group\">\n" +
+    "                <li class=\"list-group-item op-hover-trigger\"\n" +
+    "                    ng-repeat=\"field in ds.fields | orderBy:['-inLeftRel','-inRightRel']\"\n" +
+    "                    ng-class=\"{'field-excluded':field.excluded,'field-relation':field.inRightRel || field.inLeftRel,'field-in-edit':$ctrl.fieldInEdit.dsIndex===$parent.$index && $ctrl.fieldInEdit.fieldName===field.name}\">\n" +
+    "                    <div ng-show=\"$ctrl.fieldInEdit.dsIndex===$parent.$index && $ctrl.fieldInEdit.fieldName===field.name\">\n" +
+    "                        <div class=\"d-flex\">\n" +
+    "                            <input type=\"text\" class=\"form-control input-sm\" ng-model=\"field._tempRename\">}\n" +
+    "                            <!--                            <div class=\"input-group-btn\">-->\n" +
+    "                            <button type=\"button\" class=\"ml-3 btn btn-sm btn-default\"\n" +
+    "                                    ng-click=\"$ctrl.cancelRename(field)\">\n" +
+    "                                <i class=\"fa fa-times\"></i></button>\n" +
+    "                            <!--                            </div>-->\n" +
+    "                            <!--                            <div class=\"input-group-btn\">-->\n" +
+    "                            <button type=\"button\" class=\"ml-3 btn btn-sm btn-primary\"\n" +
+    "                                    ng-click=\"$ctrl.saveRename(field)\">\n" +
+    "                                <i class=\"fa fa-check\"></i></button>\n" +
+    "                            <!--                            </div>-->\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div ng-hide=\"$ctrl.fieldInEdit.dsIndex===$parent.$index && $ctrl.fieldInEdit.fieldName===field.name\">\n" +
+    "                        <i class=\"text-muted fa fa-caret-left\" ng-if=\"field.inRightRel\"></i>\n" +
+    "                        <span ng-class=\"{'field-renamed':field.rename}\">{{field.rename || field.alias || field.name}}</span>\n" +
+    "                        <i class=\"text-muted fa fa-caret-right\" ng-if=\"field.inLeftRel\"></i>\n" +
+    "                        <div class=\"op-hover-display-block xpull-right\"\n" +
+    "                             style=\"position:absolute;top:8px;right:5px;background:#eee;\">\n" +
+    "                            <a ng-click=\"$ctrl.setRelationField($parent.$index, field.name)\"\n" +
+    "                               title=\"{{'udp.wc.dataset.joinx.set_relation_field'|translate}}\"\n" +
+    "                               class=\"btn btn-sm opx-btn-flat opx-btn-icon btn-primary\"\n" +
+    "                               ng-show=\"$ctrl.activeRelation.relIndex>=0 && ($ctrl.activeRelation.dsIndex===$parent.$index || $ctrl.activeRelation.dsIndex===$parent.$index+1)\"><i\n" +
+    "                                    class=\"fa fa-link\"></i></a>\n" +
+    "                            <a ng-click=\"$ctrl.toggleField($parent.$index,field.name)\"\n" +
+    "                               title=\"{{'udp.wc.dataset.joinx.remove_field'|translate}}\"\n" +
+    "                               class=\"btn btn-sm opx-btn-flat opx-btn-icon btn-default\"><i\n" +
+    "                                    class=\"fa fa-times-circle\"></i></a>\n" +
+    "                            <a ng-click=\"$ctrl.renameField($parent.$index, field.name)\"\n" +
+    "                               title=\"{{'udp.wc.dataset.joinx.rename_field'|translate}}\"\n" +
+    "                               class=\"btn btn-sm opx-btn-flat opx-btn-icon btn-default\"><i\n" +
+    "                                    class=\"fa fa-font\"></i></a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </li>\n" +
+    "            </ul>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-dataset.html","<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.dataset.type' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <select class=\"form-select op-w-sm\" ng-model=\"$ctrl.theModel._type\">\n" +
+    "            <option value=\"\">{{'udp.wc.dataset.type_normal' | translate}}</option>\n" +
+    "            <option value=\"joinx\">{{'udp.wc.dataset.type_joinx' | translate}}</option>\n" +
+    "            <option value=\"datax\">{{'udp.wc.dataset.type_datax' | translate}}</option>\n" +
+    "            <option value=\"datamodel\">{{'udp.wc.dataset.type_datamodel' | translate}}</option>\n" +
+    "        </select>\n" +
+    "        <!-- <button type=\"button\" class=\"btn btn-default ms-auto\" ng-click=\"$ctrl.testDataset()\">\n" +
+    "            {{'udp.wc.dataset.test' | translate}}\n" +
+    "        </button> -->\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.theModel._type === ''\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.dataset.dataset' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <!--Also important: if your ngModel is null or undefined, you must manually\n" +
+    "        include an empty <option value=\"\"></option> inside your <select>,\n" +
+    "        otherwise you'll encounter strange off-by-one errors-->\n" +
+    "        <div class=\"input-group op-w-full\">\n" +
+    "            <select op-select class=\"form-select\"\n" +
+    "                    style=\"width:calc(100% - 2*32px)\"\n" +
+    "                    ng-model=\"$ctrl.theModel.id\"\n" +
+    "                    ng-change=\"$ctrl.confirmChange()\">\n" +
+    "                <option ng-repeat=\"ds in $ctrl.datasets | orderBy:'name'\" value=\"{{ds.code}}\">{{ds.name}}</option>\n" +
+    "            </select>\n" +
+    "            <span class=\"input-group-append\"><button type=\"button\" class=\"btn btn-outline-default opx-btn-icon\"\n" +
+    "                                                     title=\"{{'udp.wc.dataset.edit_dataset'|translate}}\"\n" +
+    "                                                     ng-click=\"$ctrl.editDataset()\"><i\n" +
+    "                    class=\"fa fa-pencil\"></i></button></span>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.theModel._type === 'datamodel'\">\n" +
+    "    <label class=\"control-label\">{{'udp.wc.dataset.type_datamodel' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <!--Also important: if your ngModel is null or undefined, you must manually\n" +
+    "        include an empty <option value=\"\"></option> inside your <select>,\n" +
+    "        otherwise you'll encounter strange off-by-one errors-->\n" +
+    "        <div class=\"input-group op-w-full\">\n" +
+    "            <select op-select class=\"form-select\"\n" +
+    "                    style=\"width:calc(100% - 2*32px)\"\n" +
+    "                    ng-model=\"$ctrl.theModel.id\"\n" +
+    "                    ng-change=\"$ctrl.confirmChange()\">\n" +
+    "                <option ng-repeat=\"dc in $ctrl.datamodels | orderBy:'title'\" value=\"{{dc.code}}\">{{dc.title}}</option>\n" +
+    "            </select>\n" +
+    "            <span class=\"input-group-append\"><button type=\"button\" class=\"btn btn-outline-default opx-btn-icon\"\n" +
+    "                                                     title=\"{{'udp.wc.dataset.edit_dataset'|translate}}\"\n" +
+    "                                                     ng-click=\"$ctrl.editDatamodel()\"><i\n" +
+    "                    class=\"fa fa-pencil\"></i></button></span>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "<div class=\"form-group\">\n" +
+    "    <label class=\"control-label\" for=\"wcd_eventforrefresh\"\n" +
+    "           op-help-info=\"{{'udp.wc.dataset.event_refresh_helpinfo'|translate}}\">{{'udp.wc.dataset.event_refresh' | translate}}\n" +
+    "    </label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <input type=\"text\" ng-model=\"$ctrl.theModel.eventtorefresh\" class=\"form-control op-w-sm me-3\"\n" +
+    "               id=\"wcd_eventforrefresh\">\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.options.allowServerPage\">\n" +
+    "    <!--<div class=\"form-group\" ng-if=\"false\">-->\n" +
+    "    <label class=\"control-label\">{{'udp.wc.dataset.data_process' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <div class=\"dropdown\">\n" +
+    "            <button type=\"button\" class=\"btn btn-default opx-btn-flat\" data-bs-toggle=\"dropdown\"\n" +
+    "                    op-help-info=\"{{'udp.wc.dataset.data_trans_helpinfo'|translate}}\">\n" +
+    "                {{'udp.wc.dataset.data_trans' | translate}}\n" +
+    "                <span class=\"caret\"></span>\n" +
+    "            </button>\n" +
+    "            <div class=\"dropdown-menu op-append-to-body\">\n" +
+    "                <a class=\"dropdown-item\"\n" +
+    "                   ng-click=\"$ctrl.theModel.trans.mode=undefined\">{{'udp.wc.dataset.data_process_trans_none' | translate}}</a>\n" +
+    "                <a class=\"dropdown-item\"\n" +
+    "                   ng-click=\"$ctrl.theModel.trans.mode='valcol'\">{{'udp.wc.dataset.data_trans_valcol' | translate}}</a>\n" +
+    "                <a class=\"dropdown-item\"\n" +
+    "                   ng-click=\"$ctrl.theModel.trans.mode='rotate'\">{{'udp.wc.dataset.data_trans_rotate' | translate}}</a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"checkbox checkbox-primary ms-3\" ng-if=\"!$ctrl.theModel._type || $ctrl.theModel._type==='code'\">\n" +
+    "            <input type=\"checkbox\" id=\"wcd_serverpage\"\n" +
+    "                   ng-model=\"$ctrl.theModel.serverPage\"><label for=\"wcd_serverpage\"\n" +
+    "                                                               op-help-info=\"{{'udp.wc.dataset.serverside_helpinfo'|translate}}\">{{'udp.wc.dataset.serverside' | translate}}</label>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div ng-if=\"$ctrl.theModel.trans.mode\" class=\"op-form-subgroup\">\n" +
+    "    <table class=\"table op-param-table\" ng-if=\"$ctrl.theModel.trans.mode==='rotate'\">\n" +
+    "        <thead>\n" +
+    "        <tr>\n" +
+    "            <th>{{'udp.wc.dataset.rotate.pk_field' | translate}}<span\n" +
+    "                    op-help-info=\"{{'udp.wc.dataset.rotate.pk_field_desc'|translate}}\"></span></th>\n" +
+    "            <th>{{'udp.wc.dataset.rotate.new_pk_field' | translate}}<span op-help-info=\"\"></span></th>\n" +
+    "        </tr>\n" +
+    "        </thead>\n" +
+    "        <tbody>\n" +
+    "        <tr>\n" +
+    "            <td>\n" +
+    "                <udp-dsfield-selector options=\"{disableConverter:true,fieldNameAsModel:true}\"\n" +
+    "                                      fields=\"$ctrl.selectedDs.fields\"\n" +
+    "                                      the-model=\"$ctrl.theModel.trans.rotate.oldKeyCol\"></udp-dsfield-selector>\n" +
+    "            </td>\n" +
+    "            <td>\n" +
+    "                <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.theModel.trans.rotate.newKeyCol\">\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "        </tbody>\n" +
+    "    </table>\n" +
+    "    <table class=\"table op-param-table\" ng-if=\"$ctrl.theModel.trans.mode==='valcol'\">\n" +
+    "        <thead>\n" +
+    "        <tr>\n" +
+    "            <th>{{'udp.wc.dataset.valcol.pk_field' | translate}}<span\n" +
+    "                    op-help-info=\"{{'udp.wc.dataset.valcol.pk_field_desc'|translate}}\"></span></th>\n" +
+    "            <th>{{'udp.wc.dataset.valcol.col_field' | translate}}<span\n" +
+    "                    op-help-info=\"{{'udp.wc.dataset.valcol.col_field_desc'|translate}}\"></span></th>\n" +
+    "            <th>{{'udp.wc.dataset.valcol.value_field' | translate}}</th>\n" +
+    "        </tr>\n" +
+    "        </thead>\n" +
+    "        <tbody>\n" +
+    "        <tr>\n" +
+    "            <td>\n" +
+    "                <udp-dsfield-selector options=\"{disableConverter:true,fieldNameAsModel:true}\"\n" +
+    "                                      fields=\"$ctrl.selectedDs.fields\"\n" +
+    "                                      the-model=\"$ctrl.theModel.trans.valcol.keyAs\"></udp-dsfield-selector>\n" +
+    "            </td>\n" +
+    "            <td>\n" +
+    "                <udp-dsfield-selector options=\"{disableConverter:true,fieldNameAsModel:true}\"\n" +
+    "                                      fields=\"$ctrl.selectedDs.fields\"\n" +
+    "                                      the-model=\"$ctrl.theModel.trans.valcol.colAs\"></udp-dsfield-selector>\n" +
+    "            </td>\n" +
+    "            <td>\n" +
+    "                <udp-dsfield-selector options=\"{disableConverter:true,fieldNameAsModel:true}\"\n" +
+    "                                      fields=\"$ctrl.selectedDs.fields\"\n" +
+    "                                      the-model=\"$ctrl.theModel.trans.valcol.valAs\"></udp-dsfield-selector>\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "        </tbody>\n" +
+    "    </table>\n" +
+    "</div>\n" +
+    "<div class=\"form-group\" ng-if=\"$ctrl.options.allowClientLimit\">\n" +
+    "    <label class=\"control-label col-sm-2\">{{'udp.wc.dataset.record_limit' | translate}}</label>\n" +
+    "    <div class=\"col-sm-4 col-md-4\">\n" +
+    "        <input type=\"number\" class=\"form-control\" ng-model=\"$ctrl.theModel.limit\" min=\"0\">\n" +
+    "        <p class=\"help-block\">{{'udp.wc.dataset.record_limit_helpinfo' | translate}}</p>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<fieldset ng-if=\"$ctrl.theModel._type==='joinx'\">\n" +
+    "    <legend>{{'udp.wc.dataset.type_joinx' | translate}}</legend>\n" +
+    "    <udp-widget-config-dataset-joinx the-model=\"$ctrl.theModel.joinx\" params=\"$ctrl.theModel.params\"\n" +
+    "                                     selected-ds=\"$ctrl.selectedDs\"\n" +
+    "                                     class=\"d-block\"\n" +
+    "                                     datasets=\"$ctrl.datasets\"></udp-widget-config-dataset-joinx>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.theModel._type==='datax'\">\n" +
+    "    <legend>{{'udp.wc.dataset.type_datax' | translate}}</legend>\n" +
+    "    <udp-widget-config-dataset-datax the-model=\"$ctrl.theModel.datax\"\n" +
+    "                                     class=\"d-block\"\n" +
+    "                                     selected-ds=\"$ctrl.selectedDs\"></udp-widget-config-dataset-datax>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"!$ctrl.options.disableParams\">\n" +
+    "    <legend>{{'udp.wc.dataset.params' | translate}}</legend>\n" +
+    "    <div class=\"form-group\" ng-if=\"$ctrl.selectedDs.paramsConfig | isNotEmpty\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.dataset.params_display' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select w-sm\" ng-model=\"$ctrl.theModel.paramView\">\n" +
+    "                <option value=\"\">{{'udp.wc.dataset.params_display_default' | translate}}</option>\n" +
+    "                <option value=\"hidden\">{{'udp.wc.dataset.params_display_hidden' | translate}}</option>\n" +
+    "                <option value=\"dropdown\">{{'udp.wc.dataset.params_display_dropdown' | translate}}</option>\n" +
+    "            </select>\n" +
+    "            <div class=\"checkbox checkbox-primary ms-3\">\n" +
+    "                <input type=\"checkbox\" ng-model=\"$ctrl.theModel.refreshBtn\" id=\"wcd_refreshbtn\"><label\n" +
+    "                    for=\"wcd_refreshbtn\">{{'udp.wc.dataset.params_refresh' | translate}}</label>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <udp-params-control-config the-model=\"$ctrl.theModel.params\"\n" +
+    "                               params-config=\"$ctrl.selectedDs.paramsConfig\"></udp-params-control-config>\n" +
+    "</fieldset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-display.html","<div ng-transclude></div>\n" +
+    "<fieldset>\n" +
+    "    <legend>{{'udp.wc.display.size_and_css' | translate}}</legend>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\"\n" +
+    "               op-help-info=\"{{'udp.wc.display.size_helpinfo'|translate}}\">{{'udp.wc.display.size' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <div class=\"input-group\" style=\"width:10rem;\">\n" +
+    "                <div class=\"input-group-text px-3\"><i class=\"fa fa-arrows-h fa-fw\"></i></div>\n" +
+    "                <input id=\"wcd_width\" type=\"text\"\n" +
+    "                       class=\"form-control\"\n" +
+    "                       ng-model=\"uwProps.display.width\"\n" +
+    "                       title=\"{{'udp.wc.display.width'|translate}}\">\n" +
+    "            </div>\n" +
+    "            <!--            <span class=\"ms-2\"><i class=\"fa fa-times\"></i></span>-->\n" +
+    "            <div class=\"input-group ms-2\" style=\"width:10rem;\">\n" +
+    "                <div class=\"input-group-text px-3\"><i class=\"fa fa-arrows-v fa-fw\"></i></div>\n" +
+    "                <input id=\"wcd_height\" type=\"text\"\n" +
+    "                       class=\"form-control\"\n" +
+    "                       ng-model=\"uwProps.display.height\"\n" +
+    "                       title=\"{{'udp.wc.display.height'|translate}}\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"form-group\">\n" +
+    "        <label class=\"control-label\">{{'udp.wc.display.css' | translate}}</label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <udp-css-editor the-model=\"uwProps.display.css\"></udp-css-editor>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "<fieldset>\n" +
+    "    <legend title=\"{{'udp.wc.display.border_and_background_helpinfo'|translate}}\">\n" +
+    "        <div class=\"checkbox checkbox-primary checkbox-inline\" style=\"padding-top:0\">\n" +
+    "            <input type=\"checkbox\" ng-model=\"uwProps.display.cardMode\" id=\"wcd_cardmode\"><label\n" +
+    "                for=\"wcd_cardmode\"><strong>{{'udp.wc.display.border_and_background' | translate}}</strong></label>\n" +
+    "        </div>\n" +
+    "    </legend>\n" +
+    "    <div ng-if=\"uwProps.display.boxMode || uwProps.display.cardMode\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\" for=\"input_widget_title\"\n" +
+    "                   op-help-info=\"{{'udp.wc.display.title_helpinfo'|translate}}\">{{'udp.wc.display.title' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <input type=\"text\" class=\"form-control\" id=\"input_widget_title\" ng-model=\"uwProps.title\"\n" +
+    "                       placeholder=\"{{'udp.wc.display.title'|translate}}\">\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.wc.display.controls' | translate}}</label>\n" +
+    "            <div class=\"col-sm-4\">\n" +
+    "                <div class=\"checkbox checkbox-inline\">\n" +
+    "                    <input type=\"checkbox\" id=\"wcd-zoom\"\n" +
+    "                           ng-model=\"uwProps.display.cardControls\"><label\n" +
+    "                        for=\"wcd-zoom\">{{'udp.wc.display.allow_zoom' | translate}}</label>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <!-- 20200602: disable color for card mode -->\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label\">{{'udp.wc.display.color' | translate}}</label>\n" +
+    "            <div class=\"form-control-wrapper\">\n" +
+    "                <udp-theme-selector the-model=\"uwProps.display\" customizable=\"true\"\n" +
+    "                                    theme-group=\"page\"></udp-theme-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-fields.html","<table class=\"table op-param-table\">\n" +
+    "    <thead>\n" +
+    "    <tr>\n" +
+    "        <th>{{'udp.wc.field.name'|translate}}</th>\n" +
+    "        <th>{{'udp.wc.field.field'|translate}}</th>\n" +
+    "        <th>{{'udp.wc.field.label'|translate}}</th>\n" +
+    "        <th>{{'udp.wc.field.converter'|translate}}</th>\n" +
+    "    </tr>\n" +
+    "    </thead>\n" +
+    "    <tbody>\n" +
+    "    <tr ng-repeat=\"field in $ctrl.options.fieldDefs track by $index\">\n" +
+    "        <td>{{field.title}}</td>\n" +
+    "        <td>\n" +
+    "            <select chosen=\"{width:'100%'}\" ng-model=\"$ctrl.props[field.name].field\" class=\"form-select\"\n" +
+    "                    ng-options=\"field.name as field.name +' [' + field.type + ']' for field in $ctrl.datasetFields\">\n" +
+    "            </select>\n" +
+    "        </td>\n" +
+    "        <td><input ng-model=\"$ctrl.props[field.name].label\" class=\"form-control\"></td>\n" +
+    "        <td><input ng-model=\"$ctrl.props[field.name].convertFn\" class=\"form-control\"></td>\n" +
+    "    </tr>\n" +
+    "    </tbody>\n" +
+    "</table>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-format-rule.html","<div class=\"form-inline\">\n" +
+    "    <button type=\"button\" class=\"btn btn-outline-primary\" ng-click=\"$ctrl.addRule()\"><i\n" +
+    "            class=\"fa fa-plus\"></i> {{'udp.wc.condfmt.add_rule'|translate}}\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "<div ng-transclude></div>\n" +
+    "<div class=\"list-group m-t\" ng-show=\"$ctrl.rules.length>0\" ng-sortable=\"{handle: '.js-sort-handle'}\">\n" +
+    "    <div ng-repeat=\"rule in $ctrl.rules track by $index\" class=\"list-group-item d-flex align-items-center p-3\"\n" +
+    "         ng-click=\"$ctrl.selectRule($index)\" ng-class=\"{'highlight':$ctrl.current.index===$index}\">\n" +
+    "        <i class=\"fa fa-bars op-drag-handle text-muted me-2 js-sort-handle fa-fw\"></i>\n" +
+    "        <input type=\"text\" ng-model=\"rule.expr\" class=\"form-control code flex-fill\"\n" +
+    "               title=\"{{'udp.wc.condfmt.rule_expr'|translate}}\">\n" +
+    "        <udp-theme-selector ng-if=\"$ctrl.formats.theme\" the-model=\"rule\" class=\"ms-2\"\n" +
+    "                            customizable=\"true\"\n" +
+    "                            title=\"{{'udp.wc.condfmt.rule_color'|translate}}\"></udp-theme-selector>\n" +
+    "        <udp-css-editor ng-if=\"$ctrl.formats.css\" class=\"ms-2\"\n" +
+    "                        the-model=\"rule.css\" options=\"{style:'dropdown',groups:'text,color,bgcolor'}\"></udp-css-editor>\n" +
+    "        <span ng-click=\"$ctrl.removeRule($index)\" class=\"ms-2\"><i class=\"fa fa-times text-muted\"></i></span>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-interaction.html","<div class=\"form-group\">\n" +
+    "    <div class=\"btn-group me-5\">\n" +
+    "        <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-bs-toggle=\"dropdown\"><i\n" +
+    "                class=\"fa fa-plus\"></i> {{'udp.wc.intx.add_action' | translate}} <span class=\"caret\"></span>\n" +
+    "        </button>\n" +
+    "        <div class=\"dropdown-menu op-append-to-body\">\n" +
+    "            <a class=\"dropdown-item\" ng-if=\"!$ctrl.hasAvailableAction\"\n" +
+    "               href=\"javascript:void(0);\">{{'udp.wc.intx.no_avail_action' | translate}}</a>\n" +
+    "            <a class=\"dropdown-item\" ng-if=\"!action.isUsed\"\n" +
+    "               ng-repeat=\"action in $ctrl.availableActions\"\n" +
+    "               ng-click=\"$ctrl.addAction(action.key)\"><i class=\"far fa-fw {{action.icon}}\"></i>\n" +
+    "                {{action.title}}</a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div>\n" +
+    "        <div class=\"input-group-text me-5\"><input type=\"checkbox\" ng-model=\"$ctrl.props.doubleReview\"\n" +
+    "                                                  ng-disabled=\"$ctrl.props.confirm\" class=\"me-2\">{{'udp.wc.intx.enable_double_review' | translate}}</div>\n" +
+    "    </div>\n" +
+    "    <label class=\"control-label w-auto\">{{'udp.wc.intx.confirm_before_action' | translate}}</label>\n" +
+    "    <div class=\"form-control-wrapper ms-0\">\n" +
+    "        <div class=\"input-group\">\n" +
+    "            <div class=\"input-group-text\"><input type=\"checkbox\"\n" +
+    "                                                 ng-model=\"$ctrl.props.confirm\" ng-disabled=\"$ctrl.props.doubleReview\"></div>\n" +
+    "            <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.confirmText\"\n" +
+    "                   ng-disabled=\"!$ctrl.props.confirm\" placeholder=\"{{'udp.wc.intx.confirm_message'|translate}}\">\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<ul class=\"list list-inline\" ng-sortable=\"$ctrl.sortableOptions\" ng-model=\"$ctrl.props.actions\">\n" +
+    "    <li ng-repeat=\"action in $ctrl.props.actions\">\n" +
+    "        <div class=\"btn-group\">\n" +
+    "            <button href=\"javascript:void(0);\" class=\"btn\"\n" +
+    "                    ng-class=\"$ctrl.currentAction===action?'btn-dark':'btn-default'\"\n" +
+    "                    ng-click=\"$ctrl.currentAction=action;\">\n" +
+    "                <i class=\"me-3 op-drag-handle fa {{$ctrl.actionDefs[action].icon}}\"></i>\n" +
+    "                {{$ctrl.actionDefs[action].title || action}}\n" +
+    "            </button>\n" +
+    "            <button class=\"btn\" ng-class=\"$ctrl.currentAction===action?'btn-dark':'btn-default'\"\n" +
+    "                    ng-click=\"$ctrl.removeAction(action)\">\n" +
+    "                <i class=\"far fa-times\"></i>\n" +
+    "            </button>\n" +
+    "        </div>\n" +
+    "    </li>\n" +
+    "</ul>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='ajax'\">\n" +
+    "    <legend>{{'udp.wc.intx.ajax.config_title' | translate}}</legend>\n" +
+    "    <udp-widget-interaction-ajax-config class=\"d-block\" props=\"$ctrl.props\"></udp-widget-interaction-ajax-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='link'\">\n" +
+    "    <legend>{{'udp.wc.intx.link.config_title' | translate}}</legend>\n" +
+    "    <udp-widget-interaction-link-config class=\"d-block\" props=\"$ctrl.props.link\"></udp-widget-interaction-link-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='page'\">\n" +
+    "    <legend>{{'udp.wc.intx.page.config_title' | translate}}</legend>\n" +
+    "    <udp-page-link-config class=\"d-block\" props=\"$ctrl.props.page\"></udp-page-link-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='job'\">\n" +
+    "    <legend>{{'udp.wc.intx.job.config_title' | translate}}</legend>\n" +
+    "    <udp-widget-interaction-job-config class=\"d-block\" props=\"$ctrl.props.job\"></udp-widget-interaction-job-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='event'\">\n" +
+    "    <legend>{{'udp.wc.intx.event.config_title' | translate}}</legend>\n" +
+    "    <udp-widget-interaction-event-config class=\"d-block\" props=\"$ctrl.props.event\"></udp-widget-interaction-event-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='func'\">\n" +
+    "    <legend>{{'udp.wc.intx.func.config_title' | translate}}</legend>\n" +
+    "    <udp-widget-interaction-func-config class=\"d-block\" props=\"$ctrl.props.func\"></udp-widget-interaction-func-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='code'\">\n" +
+    "    <legend>{{'udp.wc.intx.code.config_title' | translate}}</legend>\n" +
+    "    <udp-widget-interaction-code-config class=\"d-block\" props=\"$ctrl.props.code\"></udp-widget-interaction-code-config>\n" +
+    "</fieldset>\n" +
+    "<fieldset ng-if=\"$ctrl.currentAction==='param'\">\n" +
+    "    <legend>{{'udp.wc.intx.param.config_title' | translate}}</legend>\n" +
+    "    <udp-page-params-config params-json=\"$ctrl.props.param.params\" class=\"d-block w-100\"></udp-page-params-config>\n" +
+    "    <div class=\"checkbox checkbox-inline\">\n" +
+    "        <input type=\"checkbox\" ng-model=\"$ctrl.props.param.changeUrl\" id=\"wci_param_changeurl\">\n" +
+    "        <label for=\"wci_param_changeurl\">{{'udp.wc.intx.param.change_url' | translate}}</label>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "<div ng-if=\"$ctrl.varList.length>0\" class=\"form-group\">\n" +
+    "    <!--    <label class=\"control-label\"></label>-->\n" +
+    "    <div class=\"form-control-wrapper\">\n" +
+    "        <p class=\"help-block\">{{'udp.wc.intx.var_support' | translate}}</p>\n" +
+    "        <ul class=\"list-unstyled\">\n" +
+    "            <li ng-repeat=\"var in $ctrl.varList track by $index\">\n" +
+    "                <code class=\"large\">{{var.name}}</code>\n" +
+    "                <span>{{var.desc}}</span>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<fieldset ng-if=\"$ctrl.options.enableAutoActive\">\n" +
+    "    <legend>{{'udp.wc.intx.default_activate' | translate}}</legend>\n" +
+    "    <div>\n" +
+    "        <div class=\"form-inline m-b\">\n" +
+    "            <div class=\"checkbox checkbox-inline me-2\">\n" +
+    "                <input type=\"checkbox\" id=\"wci-abf\" ng-model=\"$ctrl.props.activeByField.enabled\">\n" +
+    "                <label for=\"wci-abf\">{{'udp.wc.intx.activate_by_field' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.activeByField.field\"\n" +
+    "                   ng-disabled=\"!$ctrl.props.activeByField.enabled\"\n" +
+    "                   placeholder=\"{{'udp.wc.intx.activate_by_field_placeholder'|translate}}\">\n" +
+    "            <span class=\"mx-2\">{{'udp.wc.intx.activate_by_field_value' | translate}}</span>\n" +
+    "            <input type=\"text\" class=\"form-control\" ng-model=\"$ctrl.props.activeByField.value\"\n" +
+    "                   ng-disabled=\"!$ctrl.props.activeByField.enabled\"\n" +
+    "                   placeholder=\"{{'udp.wc.intx.activate_by_field_value_placeholder'|translate}}\">\n" +
+    "            <span class=\"ms-2\">{{'udp.wc.intx.activate_by_field_when' | translate}}</span>\n" +
+    "            <span op-help-info=\"{{'udp.wc.intx.activate_by_field_helpinfo'|translate}}\"></span>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-inline\">\n" +
+    "            <div class=\"checkbox\">\n" +
+    "                <input type=\"checkbox\" id=\"wci-abi\" ng-model=\"$ctrl.props.activeByIndex.enabled\">\n" +
+    "                <label for=\"wci-abi\">{{'udp.wc.intx.activate_by_record' | translate}}</label>\n" +
+    "            </div>\n" +
+    "            <input type=\"number\" class=\"form-control mx-2\" ng-model=\"$ctrl.props.activeByIndex.index\"\n" +
+    "                   ng-disabled=\"!$ctrl.props.activeByIndex.enabled\" style=\"width:5em;text-align: center;\">\n" +
+    "            <span>{{'udp.wc.intx.activate_by_record_index' | translate}}</span>\n" +
+    "            <span op-help-info=\"{{'udp.wc.intx.activate_by_record_helpinfo'|translate}}\"></span>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-modal.html","<div class=\"modal-header\">\n" +
+    "    <h4 class=\"modal-title\"> #{udp.wc.title}</h4>\n" +
+    "    <span class=\"badge bg-secondary ms-auto\"><i class=\"font-weight-normal uw-icon uwtype-{{::uwType}}\"></i> {{'udp.w.'+uwType+'.name'|translate}}</span>\n" +
+    "</div>\n" +
+    "<div class=\"modal-body form-horizontal op-smartform opx-overflow-shadow\">\n" +
+    "    <form data-ng-include=\"uwidgetConfigTemplate\" class=\"h-100\">\n" +
+    "    </form>\n" +
+    "</div>\n" +
+    "<div class=\"modal-footer\">\n" +
+    "    <button type=\"button\" ng-click=\"save()\" class=\"btn btn-primary opx-btn-ok\">{{'common.action.ok'|translate}}</button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default opx-btn-cancel\" ng-click=\"cancel($event)\">{{'common.action.cancel'|translate}}</button>\n" +
+    "</div>\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-config-multi-values.html","<fieldset>\n" +
+    "    <div class=\"pull-right\">\n" +
+    "        <button type=\"button\" class=\"btn btn-primary btn-sm\" ng-click=\"$ctrl.addMetric()\"><i\n" +
+    "                class=\"fa fa-plus-square\"></i> {{'udp.w.echart.metric.add_metric'|translate}}\n" +
+    "        </button>\n" +
+    "    </div>\n" +
+    "    <legend>{{'udp.w.echart.metric.metric'|translate}}</legend>\n" +
+    "    <div>\n" +
+    "        <ul ui-sortable=\"$ctrl.sortableOptions\" ng-model=\"$ctrl.theModel\" class=\"nav nav-pills\">\n" +
+    "            <!-- It seems adding class to li will make ui-sortable unstable -->\n" +
+    "            <li ng-repeat=\"field in $ctrl.theModel track by $index\" style=\"height:32px;\">\n" +
+    "                    <span class=\"badge op-text-normal rounded-0\"\n" +
+    "                          ng-class=\"$ctrl.current.index === $index?'badge-info':'badge-default'\">\n" +
+    "                        <i ng-if=\"!field.field\" class=\"fa fa-bolt\"></i>\n" +
+    "                        <a href ng-dblclick=\"$ctrl.removeMetric($index)\" ng-click=\"$ctrl.selectMetric($index)\">{{ field.label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>\n" +
+    "                    </span></li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "    <div ng-if=\"$ctrl.current.index>=0\" class=\"bg-light lt p-2\">\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'udp.w.echart.metric.metric.label'|translate}}</label>\n" +
+    "            <div class=\"col-sm-4\"> <input class=\"form-control\" ng-model=\"$ctrl.current.item.label\"></div>\n" +
+    "            <div class=\"col-sm-2\">\n" +
+    "                <udp-color-picker ng-model=\"$ctrl.current.item.fontColor\"></udp-color-picker>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'common.term.data'|translate}}</label>\n" +
+    "            <div class=\"col-sm-10\">\n" +
+    "                <udp-dsfield-selector the-model=\"$ctrl.current.item\" fields=\"$ctrl.fields\"\n" +
+    "                                      options=\"{disableConverter:$ctrl.options.disableConverter}\"></udp-dsfield-selector>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'common.term.color'|translate}}</label>\n" +
+    "            <div class=\"col-sm-10\">\n" +
+    "                <udp-color-picker ng-model=\"$ctrl.current.item.color\"></udp-color-picker>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"form-group\" ng-if=\"$ctrl.options.font\">\n" +
+    "            <label class=\"control-label col-sm-2\">{{'common.term.font'|translate}}</label>\n" +
+    "            <div class=\"col-sm-2\">\n" +
+    "                <udp-font-editor the-model=\"$ctrl.current.item.fontSize\" options=\"$ctrl.options.font\"></udp-font-editor>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</fieldset>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/widget-props-viewer.html","<div>\n" +
+    "    <div class=\"p-3 bg-light\">\n" +
+    "        <pre ng-if=\"!$ctrl.editMode\" style=\"height:20rem;\">{{$ctrl.theModel | json}}</pre>\n" +
+    "    </div>\n" +
+    "    <form name=\"editorForm\">\n" +
+    "        <op-code-editor ng-if=\"$ctrl.editMode\" the-model=\"$ctrl.model.json\"\n" +
+    "                        options=\"{syntax:'javascript'}\"></op-code-editor>\n" +
+    "    </form>\n" +
+    "</div>\n" +
+    "<div class=\"mt-2\">\n" +
+    "    <button type=\"button\" class=\"btn btn-outline-default opx-btn-icon\" ng-click=\"$ctrl.edit()\" ng-if=\"!$ctrl.editMode\"\n" +
+    "            title=\"{{'udp.wc.props.edit_desc'|translate}}\"><i class=\"fa fa-pencil\"></i></button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default m-t-sm\" ng-click=\"$ctrl.cancel()\" ng-if=\"$ctrl.editMode\">\n" +
+    "        {{'common.action.exit' | translate}}\n" +
+    "    </button>\n" +
+    "    <button type=\"button\" class=\"btn btn-default m-t-sm\" ng-click=\"$ctrl.refresh()\" ng-if=\"$ctrl.editMode\">\n" +
+    "        {{'common.action.refresh' | translate}}\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "\n" +
+    "")
+
+$templateCache.put("app/modules/udp/widgets/wysiwyg/wysiwyg-widget-config.html","<uib-tabset class=\"tab-container\">\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>\n" +
+    "        <!--        <summernote ng-model=\"uwProps.text\" config=\"editorOptions\"></summernote>-->\n" +
+    "        <div class=\"h-100 opx-layout-vflex\">\n" +
+    "            <textarea ui-tinymce=\"tinymceOptions\" ng-model=\"uwProps.text\" class=\"opx-flex-fill\"></textarea>\n" +
+    "            <details>\n" +
+    "                <summary>{{'udp.w.wysiwyg.config.param' | translate}}</summary>\n" +
+    "                <div class=\"alert alert-info mt-3\" ng-bind-html=\"'udp.w.wysiwyg.config.param_desc'|translate\">\n" +
+    "                </div>\n" +
+    "            </details>\n" +
+    "        </div>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab>\n" +
+    "        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>\n" +
+    "        <udp-widget-config-display options=\"{palette:false}\"></udp-widget-config-display>\n" +
+    "    </uib-tab>\n" +
+    "    <uib-tab heading=\"{{'udp.wc.tab.props'|translate}}\">\n" +
+    "        <udp-widget-props-viewer the-model=\"uwProps\"></udp-widget-props-viewer>\n" +
+    "    </uib-tab>\n" +
+    "</uib-tabset>\n" +
+    "")
+}]);
+})();

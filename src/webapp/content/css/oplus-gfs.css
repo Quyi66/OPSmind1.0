@@ -1,0 +1,148 @@
+@charset "UTF-8";
+.gfs-ff-warn::before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+
+.gfs-missing-file .gfs-ff-name {
+  text-decoration: line-through;
+}
+.gfs-missing-file .gfs-ff-warn::before {
+  content: "";
+  color: #dc3545;
+}
+
+.gfs-missing-rec .gfs-ff-name {
+  font-style: italic;
+}
+.gfs-missing-rec .gfs-ff-warn::before {
+  content: "";
+  color: #ffc107;
+}
+
+.gfs-ff-stage::before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+.gfs-stage-rejected .gfs-ff-stage::before {
+  color: #ffc107 !important;
+  margin-right: 0.25rem;
+}
+.gfs-stage-exist .gfs-ff-stage::before {
+  color: #0d6efd;
+  margin-right: 0.25rem;
+}
+
+.gfs-ff-desc p, .gfs-ff-desc ul, .gfs-ff-desc ol, .gfs-ff-desc dl {
+  margin-bottom: 0.25rem;
+}
+
+.gfs-ff-status::before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+
+.gfs-ff-stage-status::before {
+  font-family: "Font Awesome 5 Pro";
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 900;
+  content: "";
+}
+
+.gfs-master-disabled .gfs-ff-name {
+  color: #aaa;
+}
+.gfs-master-disabled .gfs-ff-status::before {
+  content: "";
+  color: #6c757d;
+}
+
+.gfs-master-published .gfs-ff-status::before {
+  content: "";
+  color: #198754;
+}
+
+.gfs-stage-exist .gfs-ff-status::before {
+  content: "";
+}
+.gfs-stage-exist.gfs-master-disabled .gfs-ff-status::before {
+  content: "";
+}
+
+dl.gfs-help-doc dt {
+  font-weight: normal;
+  float: left;
+  clear: left;
+  width: 6em;
+  text-align: right;
+  margin-right: 1em;
+}
+dl.gfs-help-doc dt > div {
+  display: inline-block;
+}
+
+.gfs-markdown-content h1 {
+  font-size: 150%;
+}
+.gfs-markdown-content h2 {
+  font-size: 125%;
+}
+.gfs-markdown-content h3 {
+  font-size: 112.5%;
+}
+.gfs-markdown-content h4 {
+  font-size: 100%;
+}
+.gfs-markdown-content h1, .gfs-markdown-content h2, .gfs-markdown-content h3, .gfs-markdown-content h4 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+.gfs-markdown-content table {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  color: inherit;
+  background-color: transparent;
+  border: 1px solid #dee2e6;
+}
+.gfs-markdown-content table th, .gfs-markdown-content table td {
+  padding: 0.25rem 0.25rem;
+  vertical-align: top;
+  border: 1px solid #dee2e6;
+}
+.gfs-markdown-content table thead th {
+  vertical-align: bottom;
+}
+.gfs-markdown-content table thead tr {
+  background-color: rgba(173, 181, 189, 0.25);
+}
+.gfs-markdown-content table tbody + tbody {
+  border-top: 2px solid #dee2e6;
+}
+.gfs-markdown-content table thead th, .gfs-markdown-content table thead td {
+  border-bottom-width: 2px;
+}
+.gfs-markdown-content blockquote {
+  background-color: #f8f9fa;
+  border-left: 0.25rem solid #e9ecef;
+  padding: 0.5rem;
+}
+.gfs-markdown-content ul, .gfs-markdown-content ol, .gfs-markdown-content dl {
+  margin-bottom: 0.5rem;
+}
+.gfs-markdown-content pre {
+  background-color: #e9ecef;
+  padding: 0.25rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}

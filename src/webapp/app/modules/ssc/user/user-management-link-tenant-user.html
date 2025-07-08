@@ -1,0 +1,37 @@
+<style>
+    .help-block {
+        margin: 0px;
+    }
+</style>
+
+<div class="modal-header">
+    <h4 class="modal-title" id="myUserLabel">
+        <span>{{'sys_userManagement.associatedUser' | translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"
+            ng-click="addTenantUserVm.clear()">
+    </button>
+</div>
+
+
+<div class="modal-body">
+    <div class="alert alert-primary" role="alert">
+        {{'sys_userManagement.userDoesNotExist' | translate}} <button class="btn btn-sm btn-info mt-n2 ms-4" ng-click="addTenantUserVm.clear()"  create-user tenant-id="{{addTenantUserVm.tenantId}}" on-update="addTenantUserVm.onAddUser" >{{'sys_userManagement.home.createUser' | translate}}</button>
+    </div>
+   <!-- <form name="editForm" class="form-horizontal" role="form" novalidate show-validation>
+        <div class="table-responsive">
+            <table id="select-tenant-user-table" class="select-tenant-user-table table table-striped table-hover"></table>
+        </div>
+    </form>-->
+    <opx-datatable table-config="tableConfig"></opx-datatable>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addTenantUserVm.clear()">
+        <span data-translate="common.action.cancel">Cancel</span>
+    </button>
+    <button type="button" ng-disabled="editForm.$invalid" ng-click="addTenantUserVm.save()" class="btn btn-primary">
+        <span data-translate="common.action.save">Save</span>
+    </button>
+</div>
+
+

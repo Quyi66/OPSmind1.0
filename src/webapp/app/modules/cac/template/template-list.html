@@ -1,0 +1,16 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cac.index.template' | translate}}</div>
+        <div class="navbar-nav ms-auto">
+            <button class="btn btn-primary"
+                    ui-sref="app.cac.template_add"><i class="fa fa-plus"></i> {{'cac.template.create' | translate}}
+            </button>
+        </div>
+    </nav>
+    <div class="opx-flex-fill wrapper">
+        <opx-datatable table-config="cacTemplateListCtrlVm.tableConfig" reload-fn="cacTemplateListCtrlVm.reloadTable"></opx-datatable>
+<!--        <div class="table-responsive">-->
+<!--            <table id="cacTemplateTable" class="template-table table opx-table"></table>-->
+<!--        </div>-->
+    </div>
+</div>

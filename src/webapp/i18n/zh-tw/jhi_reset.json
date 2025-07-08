@@ -1,0 +1,27 @@
+{
+    "jhi_reset": {
+        "request": {
+            "title": "重置您的密碼",
+            "form": {
+                "button": "重置密碼"
+            },
+            "messages": {
+                "info": "請輸入您註冊時使用的郵件地址",
+                "success": "已將重置密碼的操作說明發送到您的郵箱，請檢查郵件.",
+                "notfound": "<strong>沒有與該郵件地址關聯的賬號.</strong> 請使用其他郵件地址"
+            }
+        },
+        "finish" : {
+            "title": "重置密碼",
+            "form": {
+                "button": "確定"
+            },
+            "messages": {
+                "info": "請設定新密碼",
+                "success": "<strong>您的密碼已被重置.</strong> 請 <a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">登入</a>.",
+                "keymissing": "無效的重置密碼請求.",
+                "error": "無法重置密碼. 您必須在請求重置密碼後24小時內完成重置."
+            }
+        }
+    }
+}

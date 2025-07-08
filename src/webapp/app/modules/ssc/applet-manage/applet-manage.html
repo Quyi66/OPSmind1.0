@@ -1,0 +1,56 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'ssc.applet.manage' | translate}}</div>
+    </nav>
+
+    <div class="mb-1">
+        <ul class="nav nav-mdc-op" op-tab-bar style="width:100%;" op-tab-bar>
+            <li class="nav-item">
+                <a class="nav-link" ng-click="$ctrl.activeTab = 'app'" ng-class="{active: $ctrl.activeTab === 'app'}">
+                    {{'ssc.applet.manage.applet' | translate}}
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" ng-click="$ctrl.activeTab = 'can'" ng-class="{active: $ctrl.activeTab === 'can'}">
+                    {{'ssc.applet.manage.trash' | translate}}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body" ng-if="$ctrl.activeTab === 'app'">
+        <opx-datatable table-config="appletsTableConfig">
+            <button class="btn btn-primary"
+                    ng-disabled="!appletsTableConfig.selectedItems.length>0"
+                    ng-click="$ctrl.exportApplet(appletsTableConfig.selectedItems)"
+                  >
+                <i class="fa fa-caret-square-right fa-fw"></i> {{'ssc.applet.manage.export' | translate}}
+            </button>
+
+            <button class="btn btn-default" uaa-has-permission="cmd:edit:*"
+                    ui-sref="app.ssc.config.applet-manage.import">
+                <i class="fa fa-caret-square-right fa-fw"></i> {{'ssc.applet.manage.import' | translate}}
+            </button>
+        </opx-datatable>
+    </div>
+
+    <div class="card-body" ng-if="$ctrl.activeTab === 'can'">
+        <opx-datatable table-config="recycledAppletsTableConfig">
+            <button class="btn btn-danger"
+                ng-click="$ctrl.clearRecycle()">
+                <i class="fa fa-trash-alt"></i> {{'ssc.applet.manage.trash.empty' | translate}}
+            </button>
+
+            <button class="btn btn-danger" ng-disabled="!recycledAppletsTableConfig.selectedItems.length>0"
+                ng-click="$ctrl.deleteSelectedRecycle()">
+                <i class="fa fa-trash-alt"></i> {{'ssc.applet.manage.trash.delete' | translate}}
+            </button>
+
+            <button class="btn btn-warning" ng-disabled="!recycledAppletsTableConfig.selectedItems.length>0"
+                ng-click="$ctrl.recoverSelectedRecycle()">
+                <i class="fa fa-redo"></i> {{'adm.applet.recover' | translate}}
+            </button>
+        </opx-datatable>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <jao-job-selector the-model="uwProps.job.id" selected-job="selectedJob"></jao-job-selector>
+        <udp-params-control-config the-model="uwProps.wparams" options="{labelByDefault:true}"
+                                   params-config="selectedJob.$paramsConfig"></udp-params-control-config>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}
+        </uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'jao.messages.need_submit_confirm' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="input-group">
+                    <div class="input-group-text"><input type="checkbox"
+                                                         ng-model="uwProps.display.confirm"></div>
+                    <input type="text" class="form-control" ng-model="uwProps.display.confirmText"
+                           ng-disabled="!uwProps.display.confirm"
+                           placeholder="{{'jao.messages.confirm_dialog_msg' | translate}}">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline"><input type="checkbox" ng-model="uwProps.intx.showOutput"
+                                                             id="jwc_showoutput"><label for="jwc_showoutput"
+                                                                                        op-help-info="{{'jao.job.widget.show_output_desc'|translate}}">{{'jao.job.widget.show_output' | translate}}</label>
+                </div>
+            </div>
+        </div>
+        <fieldset>
+            <legend>{{'jao.job.widget.after' | translate}}</legend>
+            <div class="form-group">
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.interaction.when">
+                        <option value="">{{'jao.job.widget.after.run' | translate}}</option>
+                        <option value="completed">{{'jao.job.widget.after.completed' | translate}}</option>
+                        <!--                        <option value="error">{{'jao.job.widget.after.error' | translate}}</option>-->
+                    </select>
+                </div>
+            </div>
+            <udp-widget-config-interaction the-model="uwProps.interaction"
+                                           options="{supports:'page,param,event,func'}"
+                                           param-vars="">
+            </udp-widget-config-interaction>
+        </fieldset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <div class="form-group">
+                <label class="control-label">{{'jao.job.widget.form_layout' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select w-sm" ng-model="uwProps.display.formLayout">
+                        <option value="horizontal">{{'jao.job.widget.form_layout.horizontal' | translate}}</option>
+                        <option value="vertical">{{'jao.job.widget.form_layout.vertical' | translate}}</option>
+                        <option value="inline">{{'jao.job.widget.form_layout.inline' | translate}}</option>
+                    </select>
+                </div>
+            </div>
+            <!--            <div class="form-group" ng-if="uwProps.display.formLayout!=='inline'">-->
+            <!--                <label class="control-label">列数</label>-->
+            <!--                <div class="form-control-wrapper op-w-sm">-->
+            <!--                    <input type="number" class="form-control" ng-model="uwProps.display.columns" min="1" max="3">-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <fieldset>
+                <legend>{{'jao.job.widget.button_style' | translate}}</legend>
+                <udp-button-style-config ng-model="uwProps.display.buttons.ok"></udp-button-style-config>
+                <div class="form-group">
+                    <label class="control-label">{{'jao.job.widget.button_pos' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <select class="form-select op-w-sm" ng-model="uwProps.display.buttons.position">
+                            <option value="left">{{'jao.job.widget.button_pos.left' | translate}}</option>
+                            <option value="center">{{'jao.job.widget.button_pos.center' | translate}}</option>
+                            <option value="right">{{'jao.job.widget.button_pos.right' | translate}}</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'jao.log.props_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,14 @@
+{
+  "name": "opencc-js-1.0.3",
+  "_cacheHeaders": {
+    "ETag": "\"62573e425342668579bb702b0d8fe7bf\"",
+    "Last-Modified": "Mon, 29 Mar 2021 03:33:48 GMT",
+    "Content-Length": "934220",
+    "Content-Type": "application/octet-stream"
+  },
+  "_release": "e-tag:62573e425",
+  "_source": "https://registry.npmjs.org/opencc-js/-/opencc-js-1.0.3.tgz",
+  "_target": "*",
+  "_originalSource": "https://registry.npmjs.org/opencc-js/-/opencc-js-1.0.3.tgz",
+  "_direct": true
+}

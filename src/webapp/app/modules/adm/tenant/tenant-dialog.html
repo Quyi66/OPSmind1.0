@@ -1,0 +1,74 @@
+<style>
+    .help-block {
+        margin: 0;
+    }
+</style>
+<form name="editForm" role="form" novalidate ng-submit="tenantEditVm.save()" show-validation>
+    <div class="card card-default">
+        <div class="card-header">
+            <div class="card-title">
+                <span data-translate="sys_tenant.home.createTenant" ng-show="tenantEditVm.tenant.id == null">Create Tenant</span>
+                <span data-translate="sys_tenant.home.editTenant" ng-show="tenantEditVm.tenant.id != null">Edit Tenant</span>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <uib-tabset active="1">
+                <uib-tab index="1" heading="基本信息">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" data-translate="sys_tenant.name" for="field_name">Name</label>
+                            <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1 ng-maxlength=50 ng-model="tenantEditVm.tenant.name"/>
+                            <p class="help-block">
+                                <span ng-show="editForm.name.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                                <span ng-show="editForm.name.$error.maxlength" data-translate="entity.validation.maxlength"
+                                      translate-value-max="50">This field cannot be longer than 50 characters.</span>
+                            </p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':editForm.code.$error.pattern}">
+                            <label class="control-label" data-translate="sys_tenant.code" for="field_code">Code</label>
+                            <input type="text" class="form-control" name="code" id="field_code" required ng-minlength=1 ng-maxlength=100
+                                   ng-pattern="/^[_a-z0-9-]*$/" ng-model="tenantEditVm.tenant.code" ng-disabled="tenantEditVm.tenant.id != null"/>
+                            <p class="help-block">
+                                <span ng-show="editForm.code.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                                <span ng-show="editForm.code.$error.maxlength" data-translate="entity.validation.maxlength"
+                                      translate-value-max="100">This field cannot be longer than 100 characters.</span>
+                                <span ng-show="editForm.code.$error.pattern">只允许数字（0-9）、小写字母（a-z）、下划线（_)、横线（-).</span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="sys_tenant.description" for="field_description">Description</label>
+                            <input type="text" class="form-control" name="description" id="field_description" ng-minlength=1 ng-maxlength=100 ng-model="tenantEditVm.tenant.description"/>
+                            <p class="help-block">
+                            <span ng-show="editForm.desc.$error.maxlength" data-translate="entity.validation.maxlength"
+                                  translate-value-max="100">This field cannot be longer than 100 characters.</span>
+                            </p>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="配置信息">
+                    <div class="col-md-12 mt-3">
+                        <textarea class="form-control" ui-codemirror="{mode:'javascript', lineNumbers:false, theme:'opluscode', lineWrapping:true}"
+                                  rows="10" ng-model="tenantEditVm.tenant.config"></textarea>
+                    </div>
+                </uib-tab>
+                <uib-tab index="3" heading="用户列表" ng-if="tenantEditVm.tenant.id" select="tenantEditVm.isShowTenantUser=true;">
+                    <div class="col-md-12 mt-3" ng-if="tenantEditVm.isShowTenantUser">
+                        <div style="margin-bottom: -35px;">
+                            <button class="btn btn-info" type="button" link-tenant-user tenant-id="{{tenantEditVm.tenant.id}}" on-update="tenantEditVm.onAddUser">添加用户</button>
+                        </div>
+                        <tenant-user-list tenant-id="tenantEditVm.tenant.id"></tenant-user-list>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="tenantEditVm.clear()">
+                <span data-translate="common.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" ng-disabled="editForm.$invalid || tenantEditVm.isSaving" class="btn btn-primary">
+                <span data-translate="common.action.save">Save</span>
+            </button>
+        </div>
+    </div>
+</form>

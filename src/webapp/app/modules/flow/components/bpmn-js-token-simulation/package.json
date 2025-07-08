@@ -1,0 +1,106 @@
+{
+  "_args": [
+    [
+      "bpmn-js-token-simulation@0.10.0",
+      "/Users/chy/Desktop/chy/Java/Fame/oplus-modules/src/webapp/app/modules/flow"
+    ]
+  ],
+  "_development": true,
+  "_from": "bpmn-js-token-simulation@0.10.0",
+  "_id": "bpmn-js-token-simulation@0.10.0",
+  "_inBundle": false,
+  "_integrity": "sha512-QuZQ/KVXKt9Vl+XENyOBoTW2Aw+uKjuBlKdCJL6El7AyM7DkJ5bZkSYURshId1SkBDdYg2mJ1flSmsrhGuSfwg==",
+  "_location": "/bpmn-js-token-simulation",
+  "_phantomChildren": {
+    "component-classes": "1.2.6",
+    "component-closest": "0.1.4",
+    "component-delegate": "0.2.4",
+    "component-event": "0.1.4",
+    "component-matches-selector": "0.1.7",
+    "component-query": "0.0.3",
+    "domify": "1.4.1"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "bpmn-js-token-simulation@0.10.0",
+    "name": "bpmn-js-token-simulation",
+    "escapedName": "bpmn-js-token-simulation",
+    "rawSpec": "0.10.0",
+    "saveSpec": null,
+    "fetchSpec": "0.10.0"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bpmn-js-token-simulation/-/bpmn-js-token-simulation-0.10.0.tgz",
+  "_spec": "0.10.0",
+  "_where": "/Users/chy/Desktop/chy/Java/Fame/oplus-modules/src/webapp/app/modules/flow",
+  "bugs": {
+    "url": "https://github.com/bpmn-io/bpmn-js-token-simulation/issues"
+  },
+  "contributors": [
+    {
+      "name": "Patrick Dehn",
+      "url": "https://github.com/pedesen"
+    },
+    {
+      "name": "Philipp Fromme",
+      "url": "https://github.com/philippfromme"
+    },
+    {
+      "name": "Sebastian Warnke",
+      "url": "https://github.com/sebwarnke"
+    }
+  ],
+  "dependencies": {
+    "min-dash": "^3.3.0",
+    "min-dom": "^0.2.0",
+    "svg.js": "^2.6.3"
+  },
+  "description": "bpmn-js token simulation extension",
+  "devDependencies": {
+    "bpmn-font": "^0.8.0",
+    "bpmn-js": "^7.2.0",
+    "chai": "^4.2.0",
+    "copy-webpack-plugin": "^4.5.2",
+    "eslint": "^5.12.0",
+    "eslint-plugin-bpmn-io": "^0.6.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^2.0.1",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon-chai": "^2.0.2",
+    "karma-spec-reporter": "0.0.32",
+    "karma-webpack": "^3.0.5",
+    "mocha": "^5.2.0",
+    "mocha-test-container-support": "^0.2.0",
+    "npm-run-all": "^4.1.5",
+    "puppeteer": "^1.20.0",
+    "raw-loader": "^0.5.1",
+    "sinon": "^7.2.2",
+    "sinon-chai": "^3.3.0",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "homepage": "https://github.com/bpmn-io/bpmn-js-token-simulation#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "bpmn-js-token-simulation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bpmn-io/bpmn-js-token-simulation.git"
+  },
+  "scripts": {
+    "all": "run-s lint test bundle",
+    "bundle": "webpack",
+    "bundle:watch": "webpack -w",
+    "dev": "npm test -- --auto-watch --no-single-run",
+    "lint": "eslint .",
+    "start": "webpack-dev-server --content-base ./example --open-page index.html",
+    "test": "karma start"
+  },
+  "version": "0.10.0"
+}

@@ -1,0 +1,34 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'adm.menu.params' | translate}}</div>
+    </nav>
+
+    <div class="mb-1">
+        <ul class="nav nav-mdc-op" op-tab-bar style="width:100%;" op-tab-bar>
+            <li class="nav-item">
+                <a class="nav-link" ng-click="activeTab = 'sysParams'" ng-class="{active: activeTab === 'sysParams'}">{{ 'adm.content.sys_param_config' | translate }}</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" ng-click="activeTab = 'appParams'" ng-class="{active: activeTab === 'appParams'}">{{ 'adm.content.app_param_config' | translate }}</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="card-body" ng-show="activeTab === 'sysParams'" uaa-has-permission="sysadmin:param:*">
+        <opx-datatable table-config="sysTableConfig">
+            <button class="btn btn-outline-primary" ui-sref="app.ssc.config.param.new_sys">
+                <span class="fa fa-plus"></span> <span>{{'adm.content.add' | translate}}</span>
+            </button>
+        </opx-datatable>
+    </div>
+
+    <div class="card-body" ng-show="activeTab === 'appParams'" uaa-has-permission="adm:edit:*">
+        <opx-datatable table-config="appTableConfig">
+            <button class="btn btn-outline-primary" ui-sref="app.ssc.config.param.new_app">
+                <span class="fa fa-plus"></span> <span> {{'adm.content.add' | translate}} </span>
+            </button>
+        </opx-datatable>
+    </div>
+</div>

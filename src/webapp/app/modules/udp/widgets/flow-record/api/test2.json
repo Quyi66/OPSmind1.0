@@ -1,0 +1,107 @@
+{
+  "hostList": [
+    {
+      "id": "2c9942a783c611900183cb42bf074eff",
+      "stepId": "2c9942a783c611900183cb42bef44efc",
+      "host": "e231.oplus-example.com",
+      "hostId": "ff8080817e3e4cec017e42ccba6901da",
+      "status": "finished",
+      "result": "[{\"output\":\"Hello \\r\\n\",\"task\":\"echo\",\"status\":\"changed\"}]",
+      "resultType": "default",
+      "runId": ""
+    },
+    {
+      "id": "2c9942a783c611900183cb42bf074f00",
+      "stepId": "2c9942a783c611900183cb42bef44efc",
+      "host": "e231.oplus-example.com",
+      "hostId": "ff8080817e3e4cec017e42ccba6901da",
+      "status": "finished",
+      "result": "[{\"output\":\"Hello \\r\\n\",\"task\":\"echo\",\"status\":\"changed\"}]",
+      "resultType": "default",
+      "runId": ""
+    }
+  ],
+  "step": {
+    "id": "2c9942a783c611900183cb42bef44efc",
+    "name": "echo",
+    "flowId": "2c9942a783c611900183cb42bef84efe",
+    "runLogIds": "[\"2905ab47826942afb1a67b9255c69638\"]",
+    "type": "script",
+    "configJson": "{\"tasks\":[{\"scripts\":[{\"location\":\"demo/echo.sh\",\"argline\":null}],\"groups\":[{\"group\":\"dev\",\"group_vars\":\"\",\"hosts\":[{\"key\":\"ff8080817e3e4cec017e42ccba6901da\",\"value\":\"e231.oplus-example.com\",\"assetType\":\"linux\"}]},{\"group\":\"prod\",\"group_vars\":\"\",\"hosts\":[{\"key\":\"ff8080817e3e4cec017e42ccba6901da\",\"value\":\"e231.oplus-example.com\",\"assetType\":\"linux\"}]}],\"$$hashKey\":\"object:6655\"}],\"verbosity\":1,\"taskTimeout\":0}",
+    "autoNext": false,
+    "config": {
+      "tasks": [
+        {
+          "scripts": [
+            {
+              "location": "demo/echo.sh",
+              "argline": null,
+              "tag": null
+            }
+          ],
+          "groups": [
+            {
+              "group": "dev",
+              "group_vars": "",
+              "host_vars": null,
+              "hosts": [
+                {
+                  "key": "ff8080817e3e4cec017e42ccba6901da",
+                  "value": "e231.oplus-example.com",
+                  "assetType": "linux",
+                  "status": null
+                }
+              ],
+              "hosts_info": [
+                {
+                  "key": "ff8080817e3e4cec017e42ccba6901da",
+                  "value": "e231.oplus-example.com",
+                  "assetType": "linux",
+                  "ansibleConfig": null,
+                  "status": null
+                }
+              ]
+            },
+            {
+              "group": "prod",
+              "group_vars": "",
+              "host_vars": null,
+              "hosts": [
+                {
+                  "key": "ff8080817e3e4cec017e42ccba6901da",
+                  "value": "e231.oplus-example.com",
+                  "assetType": "linux",
+                  "status": null
+                }
+              ],
+              "hosts_info": [
+                {
+                  "key": "ff8080817e3e4cec017e42ccba6901da",
+                  "value": "e231.oplus-example.com",
+                  "assetType": "linux",
+                  "status": null
+                }
+              ]
+            }
+          ],
+          "hosts": [],
+          "callback": null,
+          "hostsMode": null,
+          "hostsParam": null,
+          "hostsType": null
+        }
+      ],
+      "engine": null,
+      "callback": null,
+      "taskTimeout": 0,
+      "scriptType": null,
+      "verbosity": 1,
+      "allScripts": [
+        "demo/echo.sh"
+      ]
+    },
+    "status": "finished",
+    "appletCode": "rtsp_opration"
+  },
+  "params": []
+}

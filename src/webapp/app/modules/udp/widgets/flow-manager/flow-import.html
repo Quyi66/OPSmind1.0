@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title">导入流程模板</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body op-smartform">
+    <div class="form-group">
+        <div class="form-control-wrapper">{{'gfs.basic.file_path' | translate}}：
+            {{$ctrl.fileInfo.dir || '~'}} <strong>&nbsp;&nbsp;/&nbsp;&nbsp;{{ $ctrl.flow.file.name}}</strong>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-control-wrapper">
+            <label class="btn btn-outline-primary">
+                <input type="file" ngf-select ng-model="$ctrl.flow.file" name="file" style="display:none;">
+                {{'gfs.basic.select_file' | translate}}
+            </label>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary opx-btn-ok" data-dismiss="modal" type="button" ng-click="$ctrl.importFlow()">
+        {{'gfs.common.sure' | translate}}
+    </button>
+    <button class="btn btn-default opx-btn-cancel" data-dismiss="modal" type="button" ng-click="$ctrl.cancel()">
+        {{'gfs.common.cancel' | translate}}
+    </button>
+</div>

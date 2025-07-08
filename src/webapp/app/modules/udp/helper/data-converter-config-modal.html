@@ -1,0 +1,151 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'udp.dataex.title' | translate}}</h4>
+</div>
+<div class="modal-body">
+    <div class="opx-layout-vflex">
+        <div class="mb-2">
+            <div class="__btn-group">
+                <label class="btn btn-outline-default" ng-model="vm.kind" uib-btn-radio="vm.kinds.JS"
+                       ng-if="vm.enabledKinds[vm.kinds.JS]"><i class="fa fa-function"></i>
+                    {{'udp.dataex.type.js' | translate}}</label>
+                <label class="btn btn-outline-default" ng-model="vm.kind" uib-btn-radio="vm.kinds.YAML"
+                       ng-if="vm.enabledKinds[vm.kinds.YAML]"><i class="fa fa-list"></i>
+                    {{'udp.dataex.type.yaml' | translate}}</label>
+                <label class="btn btn-outline-default" ng-model="vm.kind" uib-btn-radio="vm.kinds.JSON"
+                       ng-if="vm.enabledKinds[vm.kinds.JSON]"><i class="fa fa-brackets-curly"></i>
+                    {{'udp.dataex.type.json' | translate}}</label>
+                <label class="btn btn-outline-default" ng-model="vm.kind" uib-btn-radio="vm.kinds.STR"
+                       ng-if="vm.enabledKinds[vm.kinds.STR]"><i class="fa fa-font"></i>
+                    {{'udp.dataex.type.str' | translate}}</label>
+                <label class="btn btn-outline-default" ng-model="vm.kind" uib-btn-radio="vm.kinds.LINK"
+                       ng-if="vm.enabledKinds[vm.kinds.LINK]"><i class="fa fa-link"></i>
+                    {{'udp.dataex.type.link' | translate}}</label>
+            </div>
+        </div>
+        <div ng-if="vm.kind===vm.kinds.JS && vm.enabledKinds[vm.kinds.JS]" class="opx-flex-fill opx-layout-vflex">
+            <p ng-bind-html="'udp.dataex.js.desc'|translate"></p>
+            <div ng-include="'udp-widget-var-desc.html'" class="mb-3"></div>
+            <op-code-editor the-model="vm.convertFn" options="{syntax:'javascript'}" class="opx-flex-fill"
+                            on-loaded="vm.codemirrorLoaded"></op-code-editor>
+            <div class="form-inline mt-2">
+                <label class="control-label me-3">{{'udp.dataex.js.func_list' | translate}}</label>
+                <div class="input-group w-50">
+                    <select op-select ng-options="fn as fnName for (fnName,fn) in ::vm.funcList"
+                            ng-model="vm.selectedFn"
+                            class="form-control"></select>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-outline-default" ng-click="vm.insertFunction()"
+                                title="{{'udp.dataex.js.insert_func'|translate}}"><i
+                                class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="m-t-sm" ng-if="vm.selectedFn" style="max-height:200px;overflow-y:auto;">
+                <p><strong>{{'common.term.usage' | translate}}</strong> <code
+                        ng-if="vm.selectedFn.sample">{{vm.selectedFn.sample}}</code></p>
+                <p><span ng-bind-html="vm.selectedFn.desc"></span></p>
+                <div ng-if="vm.selectedFn.params.length>0">
+                    <p><strong>{{'common.term.parameter' | translate}}</strong></p>
+                    <table class="table table-sm">
+                        <tbody>
+                        <tr ng-repeat="param in vm.selectedFn.params track by $index">
+                            <td><code>{{param.name}}</code></td>
+                            <td><span class="code badge bg-secondary">{{param.type}}</span></td>
+                            <td><span ng-bind-html="param.desc"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-if="vm.selectedFn.returns">
+                    <p><strong>{{'common.term.return_value' | translate}}</strong></p>
+                    <span class="code badge bg-secondary">{{vm.selectedFn.returns.type}}</span>
+                    <span ng-bind-html="vm.selectedFn.returns.desc"></span>
+                </div>
+            </div>
+        </div>
+        <div ng-if="vm.kind===vm.kinds.YAML && vm.enabledKinds[vm.kinds.YAML]" class="opx-flex-fill opx-layout-vflex">
+            <div ng-include="'udp-widget-var-desc.html'" class="mb-3"></div>
+            <op-code-editor the-model="vm.convertFn" options="{syntax:'yaml'}"
+                            class="opx-flex-fill"></op-code-editor>
+        </div>
+        <div ng-if="vm.kind===vm.kinds.JSON && vm.enabledKinds[vm.kinds.JSON]" class="opx-flex-fill opx-layout-vflex">
+            <div ng-include="'udp-widget-var-desc.html'" class="mb-3"></div>
+            <op-code-editor the-model="vm.convertFn" options="{syntax:'json'}"
+                            class="opx-flex-fill"></op-code-editor>
+        </div>
+        <div ng-if="vm.kind===vm.kinds.STR && vm.enabledKinds[vm.kinds.STR]" class="opx-flex-fill opx-layout-vflex">
+            <p class="mb-3" ng-bind-html="'udp.dataex.str.desc'|translate"></p>
+            <div ng-include="'udp-widget-var-desc.html'" class="mb-3"></div>
+            <op-code-editor the-model="vm.convertFn" options="{syntax:'htmlmixed'}"
+                            class="opx-flex-fill"></op-code-editor>
+        </div>
+        <div ng-if="vm.kind===vm.kinds.LINK && vm.enabledKinds[vm.kinds.LINK]"
+             class="opx-flex-fill opx-layout-vflex op-smartform form-horizontal">
+            <div class="d-flex">
+                <ul class="nav nav-pills wrapper-xs bg-light me-auto" ng-sortable ng-model="vm.pageLinks">
+                    <li ng-repeat="link in vm.pageLinks track by $index" class="me-3">
+                        <div class="btn btn-sm btn-default" ng-class="{'active':vm.current.index===$index}"
+                             ng-click="vm.selectPageLink($index)">{{link.display.label || '&nbsp;&nbsp;'}}
+                            <a ng-click="vm.removePageLink($index)"
+                               title="{{'common.action.delete'|translate}}"><i class="fa fa-times"></i></a></div>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-sm btn-outline-primary" ng-click="vm.addPageLink()"><i
+                        class="fa fa-plus"></i>
+                    {{'udp.dataex.link.add_button' | translate}}
+                </button>
+            </div>
+            <uib-tabset class="tab-container" type="mdc-op" justified="true" ng-if="vm.current.item">
+                <uib-tab>
+                    <uib-tab-heading><i class="fa fa-font"></i> {{'common.term.style' | translate}}
+                    </uib-tab-heading>
+                    <udp-button-style-config ng-model="vm.current.item.display"></udp-button-style-config>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><i class="fa fa-random"></i> {{'common.term.interaction' | translate}}
+                    </uib-tab-heading>
+                    <div ng-repeat="item in vm.pageLinks track by $index" ng-if="$index===vm.current.index">
+                        <udp-widget-config-interaction the-model="item.interaction"
+                                                       options="{supports:'page,param,ajax,job,event,link,func,code'}"></udp-widget-config-interaction>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><i class="fa fa-lock"></i> {{'udp.wc.tab.access' | translate}}
+                    </uib-tab-heading>
+                    <udp-widget-access-config
+                            the-model="vm.current.item.accesscontrol"></udp-widget-access-config>
+                    <udp-button-state-config the-model="vm.current.item.statecontrol"></udp-button-state-config>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary opx-btn-ok" ng-click="vm.save()">
+            {{'common.action.ok' | translate}}
+        </button>
+        <button type="button" class="btn btn-default opx-btn-cancel" ng-click="vm.cancel()">
+            {{'common.action.cancel' | translate}}
+        </button>
+    </div>
+</div>
+<script type="text/ng-template" id="udp-widget-var-desc.html">
+    <details ng-if="vm.enabledVarTypes.length>0">
+        <summary>
+            <i class="fa fa-brackets-curly"></i>
+            {{'udp.dataex.var.supported_var' | translate}}
+        </summary>
+        <div>
+            <p ng-bind-html="'udp.dataex.var.supported_var_desc' | translate"></p>
+            <ul class="list-unstyled ms-3" id="js-dccm-help-vars">
+                <li ng-if="vm.enabledVarTypes.indexOf('field')>=0"
+                    ng-bind-html="'udp.dataex.var.type_field'|translate"></li>
+                <li ng-if="vm.enabledVarTypes.indexOf('pageparam')>=0"
+                    ng-bind-html="'udp.dataex.var.type_pageparam'|translate"></li>
+                <li ng-if="vm.enabledVarTypes.indexOf('global')>=0"
+                    ng-bind-html="'udp.dataex.var.type_global'|translate"></li>
+            </ul>
+        </div>
+    </details>
+</script>

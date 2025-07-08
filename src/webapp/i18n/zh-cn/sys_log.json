@@ -1,0 +1,16 @@
+{
+  "sys_log.sys_log": "系统日志",
+  "sys_log.login_log": "登录日志",
+  "sys_log.operation_log": "操作日志",
+  "sys_log.login_user": "登录用户",
+  "sys_log.login_time": "登录时间",
+  "sys_log.address": "登录地址",
+  "sys_log.login_status": "登录状态",
+  "sys_log.device_info": "设备信息",
+  "sys_log.operator": "操作者",
+  "sys_log.operate_time": "操作时间",
+  "sys_log.app_module": "所属模块",
+  "sys_log.operation_type": "操作类型",
+  "sys_log.description": "操作描述",
+  "sys_log.status": "状态"
+}

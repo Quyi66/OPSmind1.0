@@ -1,0 +1,20 @@
+{
+  "sys_param": {
+    "home": {
+      "title": "參數配置",
+      "createLabel": "新增",
+      "createParam": "新增",
+      "editParam": "編輯參數"
+    },
+    "delete": {
+      "question": "確定刪除 {{ name }} 嗎？"
+    },
+    "detail": {
+      "title": "參數詳情"
+    },
+    "domain": "主體",
+    "name": "參數名",
+    "value": "參數值",
+    "description": "描述"
+  }
+}

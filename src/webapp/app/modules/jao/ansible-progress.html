@@ -1,0 +1,17 @@
+<div class="card">
+    <!--    <div class="card-header">-->
+    <!--        执行主机-->
+    <!--    </div>-->
+    <div class="card-body">
+        <opx-datatable table-config="$ctrl.tableConfig">
+            <!--<button class="btn btn-sm" ng-class="$ctrl.pause ? 'btn-info' : 'btn-warning'" ng-click="$ctrl.pauseJob($ctrl.pause)">-->
+                <!--<i ng-class="$ctrl.pause ? 'fa fa-play-circle' : 'fa fa-pause'"></i>-->
+                <!--<span>{{$ctrl.pause ? '继续作业' : '暂停作业'}}</span>-->
+            <!--</button>-->
+            <button class="btn btn-danger btn-sm ms-auto" ng-click="$ctrl.terminationAllHosts()">
+                <i class="fa fa-ban"></i>
+                <span>{{'jao.result.terminate_all' | translate}}</span>
+            </button>
+        </opx-datatable>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light navbar-expand bg-light">
+        <div class="navbar-brand">上下布局示例</div>
+        <div class="ms-auto">
+            <button type="button" class="btn btn-primary"><i class="fa fa-rocket"></i> 右侧按钮
+            </button>
+        </div>
+    </nav>
+    <div class="opx-flex-fill scroll-y bg-white">
+        <!--示例代码开始-->
+        <div class="p-5">
+            <h1 class="">上下布局示例</h1>
+            <hr class="my-4">
+            <p>上下布局通常是指：页面被分成上下两部分，其中一部分内容高度固定（一般是上半部分），另一部分内容高度不确定（可能占不满剩余高度，可能超出剩余高度）。</p>
+            <br>
+            <p>跟据滚动效果可以划分两类场景：整体滚动和局部滚动。</p>
+
+            <p>因为内容超限需要滚动时候，父容器出现滚动条，拖动滚动条上下两部分跟随滚动。</p>
+            <p>超高整体滚动示例代码:</p>
+            <pre class="bg-light">
+                    &lt;div class=&quot;opx-layout-vflex scroll-y&quot;&gt;
+                        &lt;div&gt;Header&lt;/div&gt;
+                        &lt;div class=&quot;opx-flex-fill&quot;&gt;
+                            Body
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+            </pre>
+            <br>
+            <p>局部滚动是因为内容超限需要滚动时时，滚动条出现在超限的那一部分，拖动滚动条只滚动自身内容。</p>
+            <p>超高局部滚动示例代码:</p>
+            <pre class="bg-light">
+                   &lt;div class=&quot;opx-layout-vflex&quot;&gt;
+                        &lt;div&gt;Header&lt;/div&gt;
+                        &lt;div class=&quot;opx-flex-fill scroll-y&quot;&gt;
+                            Body，超高部分
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+            </pre>
+        </div>
+        end
+    </div>
+</div>

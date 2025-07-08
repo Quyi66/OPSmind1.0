@@ -1,0 +1,38 @@
+<style>
+    .op-user-select-dialog .op-user-select-container {
+        margin-top: -20px;
+        min-height: 300px;
+        max-height: 550px;
+        padding-top: 20px;
+    }
+
+    .op-user-select-dialog .op-user-select-container .op-user-select-tree {
+        overflow-y: scroll;
+        max-height: 500px;
+    }
+
+</style>
+<div class="modal-header">
+    <h4 class="modal-title">{{userSelectDialogVm.params.title}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" ng-click="userSelectDialogVm.views.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body op-user-select-dialog">
+    <div class="op-user-select-container">
+        <op-user-select-tree check-type="userSelectDialogVm.params.checkType"
+                             default="userSelectDialogVm.params.default"
+                             disabled="userSelectDialogVm.params.disabled"
+                             exclude-login="userSelectDialogVm.params.excludeLogin"
+                             expand-all="userSelectDialogVm.params.expandAll"
+                             filter-type="userSelectDialogVm.params.filterType"
+                             get-selected-hook="userSelectDialogVm.views.registerSelectedUserHook"
+                             on-select="userSelectDialogVm.views.onUserSelected">
+        </op-user-select-tree>
+    </div>
+</div>
+<div class="modal-footer">
+    <p class="text-right">
+        <button type="reset" class="btn btn-default" ng-click="userSelectDialogVm.views.cancel()">{{'common.action.cancel'|translate}}</button>
+        <button type="submit" class="btn btn-info" ng-click="userSelectDialogVm.views.save()">{{'common.action.save'|translate}}</button>
+    </p>
+</div>
+

@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-stepper">
+                <div class="bs-stepper-header">
+                    <div class="bs-stepper-content" ng-repeat="parse in $ctrl.parseList track by $index">
+                        <div class="step">
+                            <div class="step-trigger">
+                                <div ng-class="parse.status">
+                                <span class="bs-stepper-circle" ng-class="{true: 'fa-stack fa-1x '}[parse.merge]">
+                                    <i class="fa {{::parse.icon}} "
+                                       ng-class="{true: 'fa-stack-2x'}[parse.merge]"></i>
+                                    <i ng-if="parse.merge" class="fa {{::parse.icon_with}} pbr"></i>
+                                </span>
+                                </div>
+                                <span class="bs-stepper-label">{{::parse.name}}</span>
+                            </div>
+                        </div>
+                        <div class="line" ng-if="$index !== $ctrl.parseList.length-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

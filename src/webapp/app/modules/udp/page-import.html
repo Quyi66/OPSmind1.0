@@ -1,0 +1,41 @@
+<form ng-submit="$pic.doImport()">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'udp.page.import.title'|translate}}</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <table class="table op-with-scroll-body" ng-show="$pic.pages.length>0">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="checkbox checkbox-primary checkbox-inline"><input type="checkbox"
+                                                                                      ng-click="$pic.selectAll()"
+                                                                                      ng-model="$pic.isAll"><label></label>
+                        </div>
+                    </th>
+                    <th>{{'udp.page.attrs.title'|translate}}</th>
+                </tr>
+                </thead>
+                <tbody style='height:200px'>
+                <tr ng-repeat="page in $pic.pages track by $index" ng-init="selected=[]"
+                    ng-class="{'info':page._selected}">
+                    <td>
+                        <div class="checkbox checkbox-primary checkbox-inline"><input type="checkbox"
+                                                                                      ng-model="page._selected"><label></label>
+                        </div>
+                    </td>
+                    <td>{{page.title}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <button class="btn btn-default" type="button" ng-click="$pic.cancelImport()">
+                {{'common.action.cancel' | translate}}
+            </button>
+            <button class="btn btn-primary" type="submit">{{'udp.page.import.submit'|translate}}</button>
+        </div>
+    </div>
+</form>

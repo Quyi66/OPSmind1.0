@@ -1,0 +1,83 @@
+<div class="p-3">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">Oplus Icons</h3>
+        </div>
+        <div class="card-body" ng-repeat="(key, def) in iconVm.oplusIcons track by $index">
+            Type:{{key}}
+            <ul class="list list-inline">
+                <li ng-repeat="icon in def.icons track by $index">
+                    <div class="text-center"><i class="fa fa-oplus-{{icon}} fa-fw fa-3x"></i>
+                        <p>{{icon}}</p></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">Icon-font</h3>
+        </div>
+        <div class="card-body">
+            <span class="iconfont icon-huawei"></span>
+            <span class="iconfont icon-cisco"></span>
+            <span class="iconfont icon-portal-icon-fenghuobiaoshi"></span>
+            <span class="iconfont icon-icon_logo"></span>
+            <span class="iconfont icon-H3C"></span>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">图标使用规范</h3>
+        </div>
+        <div class="card-body">
+            <div class="op-smartform form-inline">
+                <div class="form-group">
+                    <label class="control-label">样式</label>
+                    <div class="form-control-wrapper op-combo">
+                        <select ng-model="iconVm.theBtnColor" class="form-select"
+                                ng-options="def.color as def.color for def in iconVm.btnColors">
+                        </select>
+                        <select ng-model="iconVm.theBtnStyle" class="form-select"
+                                ng-options="def.style as def.title for def in iconVm.btnStyles">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <ul class="list list-inline mt-5">
+                <li ng-repeat="def in iconVm.standardIcons">
+                    <button class="btn btn{{iconVm.theBtnStyle?'-'+iconVm.theBtnStyle:''}}-{{iconVm.theBtnColor}}"><i
+                            class="far {{def.icon}}"></i> {{def.text}}
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-content mb-3">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-init="iconVm.selectedIcon='fa-check-circle'">Icon Picker</h3>
+        </div>
+        <div class="modal-body" style="height:15rem;overflow:auto">
+            <div class="alert alert-info">在对话框里面，图标选择器要能显示完整</div>
+            <div class="d-flex flex-row align-items-center">
+                <div style="width:8rem;">
+                    <div class="border rounded bg-light d-inline-flex flex-column align-items-center justify-content-center"
+                         style="width:4rem;height:4rem;">
+                        <i class="fa fa-4x" ng-class="iconVm.selectedIcon"></i>
+                    </div>
+                    <p>
+                        <span class="badge bg-secondary">{{iconVm.selectedIcon}}</span>
+                    </p>
+                </div>
+
+                <div>
+                    <op-iconpicker ng-model="iconVm.selectedIcon"></op-iconpicker>
+                    <button type="button" class="btn btn-default" ng-click="iconVm.selectedIcon=undefined;"
+                            title="Clear the icon"><i
+                            class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

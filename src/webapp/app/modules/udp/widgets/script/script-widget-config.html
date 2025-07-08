@@ -1,0 +1,48 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"
+                                   options="{allowServerPage:true,allowClientLimit:false}"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-code'></i> {{'udp.w.script.config.code' | translate}}</uib-tab-heading>
+        <uib-tabset class="tab-container" type="mdc-op" justified="true">
+            <uib-tab>
+                <uib-tab-heading>{{'udp.w.script.config.html' | translate}}</uib-tab-heading>
+                <div class="opx-layout-vflex">
+                    <p ng-bind-html="'udp.w.script.config.html_desc'|translate"></p>
+                    <op-code-editor the-model="uwProps.content.tpl" options="{syntax:'htmlmixed'}"
+                                    class="flex-fill"></op-code-editor>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>{{'udp.w.script.config.js' | translate}}</uib-tab-heading>
+                <div class="opx-layout-vflex">
+                    <div ng-bind-html="'udp.w.script.config.js_desc'|translate">
+                    </div>
+                    <op-code-editor the-model="uwProps.content.js" options="{syntax:'javascript'}"
+                                    class="flex-fill"></op-code-editor>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>{{'udp.w.script.config.css' | translate}}</uib-tab-heading>
+                <div class="opx-layout-vflex">
+                    <op-code-editor the-model="uwProps.content.css" options="{syntax:'css'}"
+                                    class="flex-fill"></op-code-editor>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access' | translate}}</uib-tab-heading>
+        <udp-widget-access-config the-model="uwProps.accesscontrol"></udp-widget-access-config>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

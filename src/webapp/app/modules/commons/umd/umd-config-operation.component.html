@@ -1,0 +1,61 @@
+<div class="opx-layout-vflex">
+    <div class="opx-flex-fill">
+        <div ui-sortable="{handle:'.op-drag-handle'}" ng-model="$ctrl.operationDefs"
+             class="d-flex flex-row align-items-start" style="gap:1rem;">
+            <div ng-repeat="operation in $ctrl.operationDefs track by $index"
+                 class="d-inline-block op-hover-trigger">
+                <button class="btn btn-default opx-icon-card">
+                    <i class="far {{operation.icon}}"></i>
+                    <span>{{operation.title}}</span>
+                </button>
+                <div class="op-hover-to-show mt-2 text-right op-drag-handle">
+                    <!--                    <span class="me-auto"><i class="fa fa-grip-horizontal op-drag-handle text-muted"></i></span>-->
+                    <button class="btn btn-default opx-btn-flat opx-btn-icon"
+                            ng-click="$ctrl.editOperation($index)"><i
+                            class="far fa-pencil"></i></button>
+                    <button class="btn btn-default opx-btn-flat opx-btn-icon"
+                            ng-click="$ctrl.removeOperation($index)">
+                        <i class="far fa-times"></i></button>
+                </div>
+            </div>
+<!--            <div class="d-inline-block">-->
+                <button class="btn btn-light opx-icon-card" ng-click="$ctrl.addOperation()">
+                    <i class="fal fa-plus text-muted"></i>
+                </button>
+<!--            </div>-->
+        </div>
+
+        <!--        <table class="table opx-table">-->
+        <!--            <thead>-->
+        <!--            <tr>-->
+        <!--                <th></th>-->
+        <!--                <th>Disabled</th>-->
+        <!--                <th>Title</th>-->
+        <!--                <th>-->
+        <!--                    <button class="btn btn-primary opx-btn-icon opx-btn-flat" ng-click="$ctrl.addOperation()"><i-->
+        <!--                            class="far fa-plus"></i></button>-->
+        <!--                </th>-->
+        <!--            </tr>-->
+        <!--            </thead>-->
+        <!--            <tbody ui-sortable="{handle:'.op-drag-handle'}" ng-model="$ctrl.operationDefs">-->
+        <!--            <tr ng-repeat="operation in $ctrl.operationDefs track by $index">-->
+        <!--                <th>-->
+        <!--                    <i class="fa fa-grip-horizontal op-drag-handle text-muted"></i>-->
+        <!--                </th>-->
+        <!--                <td>-->
+        <!--                    <div class="checkbox checkbox-primary"><input type="checkbox" id="uco_operation_{{$index}}"-->
+        <!--                                                                  ng-model="operation.disabled"><label-->
+        <!--                            for="uco_operation_{{$index}}"></label></div>-->
+        <!--                </td>-->
+        <!--                <td>{{operation.title}}</td>-->
+        <!--                <td>-->
+        <!--                    <button type="button" class="btn btn-default opx-btn-icon opx-btn-flat"-->
+        <!--                            ng-click="$ctrl.editOperation($index)"><i class="far fa-pencil"></i></button>-->
+        <!--                    <button type="button" class="btn btn-default opx-btn-icon opx-btn-flat"-->
+        <!--                            ng-click="$ctrl.removeOperation($index)"><i class="far fa-times"></i></button>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+    </div>
+</div>

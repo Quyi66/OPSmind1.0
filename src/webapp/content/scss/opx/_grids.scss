@@ -1,0 +1,41 @@
+// Evenly aligned column
+//---------------------------------
+$udp-even-columns: $grid-columns;
+$udp-even-column-space:1%;
+.row.op-row-colspace {
+  // no gutters
+  margin-left: 0;
+  margin-right: 0;
+  //justify-content: space-between;
+}
+
+@for $i from 1 through $udp-even-columns {
+  .row.op-row-colspace > .col-even-#{$i} {
+    //flex: 0 0 percentage(1/$i) - $udp-even-column-space;
+    $width: (100% - (($i - 1) * $udp-even-column-space)) / $i;
+    flex: 0 0  $width;
+    //max-width: percentage(1/$i) - $udp-even-column-space;
+    max-width: $width;//percentage(1/$i) - $udp-even-column-space;
+    margin-right: $udp-even-column-space;
+    &:nth-child(#{$i}n+1) {
+      margin-left: 0;
+    }
+    &:nth-child(#{$i}n) {
+      margin-right: 0;
+    }
+
+    //@include media-breakpoint-down(xs) {
+    //  flex: 0 0 100%;
+    //  max-width: 100%;
+    //}
+  }
+  .col-even-#{$i} {
+    flex: 0 0 percentage(1/$i);
+    max-width: percentage(1/$i);
+
+    //@include media-breakpoint-down(xs) {
+    //  flex: 0 0 100%;
+    //  max-width: 100%;
+    //}
+  }
+}

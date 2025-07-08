@@ -1,0 +1,15 @@
+<style>
+    .modal-dialog.modal-md {
+        height: 90%;
+    }
+</style>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10" ng-if="opUserSelectVm.filterType == 'inner'">
+        <!--<label for="exampleInputName2">Name</label>-->
+        <input name="userFilter" class="form-control no-border b-b rounded-0"
+               ng-model="opUserSelectVm.views.filterContent" ng-change="opUserSelectVm.views.filterUser()"
+               placeholder="{{'sys_userManagement.searchKeywords' | translate}}">
+    </div>
+</div>
+
+<div id="{{opUserSelectVm.views.departmentTreeId}}" class="op-user-select-tree"></div>

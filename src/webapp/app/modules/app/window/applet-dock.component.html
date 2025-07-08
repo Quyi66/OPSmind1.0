@@ -1,0 +1,8 @@
+<ul class="navbar-nav opx-win-dock">
+    <li class="nav-item" ng-repeat="applet in $ctrl.dockApplets"
+        ng-class="{'active':applet.active,'running':applet.running}"
+        style="width:2.5rem;text-align: center;">
+        <a ng-click="$ctrl.openApplet(applet.code)" class="px-3 nav-link" title="{{applet.title}}" data-debug="{{applet|json}}"><i
+                class="fa {{applet.icon}}"></i></a>
+    </li>
+</ul>

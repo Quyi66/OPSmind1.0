@@ -1,0 +1,63 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> 数据集</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> 字段属性</uib-tab-heading>
+        <fieldset>
+            <legend>图标</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2" op-help-info="目前只支持medialib目录下的图片">图片来源</label>
+                <div class="col-sm-10">
+                    <udp-dsfield-selector the-model="uwProps.fields.image"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">宽度</label>
+                <div class="col-sm-2">
+                    <input type="text" ng-model="uwProps.fields.image.width" class="form-control">
+                </div>
+            </div>
+        </fieldset>
+        <udp-widget-config-multi-values the-model="uwProps.fields.metrics"
+                                        fields="selectedDs.fields"
+                                        options="{font:{unit:'defined'}}"></udp-widget-config-multi-values>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">背景色</label>
+                <div class="form-control-wrapper">
+                    <udp-color-picker ng-model="uwProps.display.bgcolor"></udp-color-picker>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">文字位置</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.display.layout">
+                        <option value="">数据在上，名称在下</option>
+                        <option value="bottom">数据在下，名称在上</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">炫彩文字样式</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.display.fancyStyle">
+                        <option value="">不启用</option>
+                        <option value="primary">蓝底</option>
+                        <option value="warning">橙色</option>
+                        <option value="danger">红色</option>
+                        <option value="success">绿色</option>
+                    </select>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

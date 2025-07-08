@@ -1,0 +1,22 @@
+{
+  "plays": [
+    {
+      "name": "Module Return Values",
+      "hosts": "",
+      "roles": [],
+      "tasks": [
+        {
+          "name": "module-retval : Shell module",
+          "_module": "include_role, import_role, import_tasks",
+          "_parent": "roles,include_role,import_role,import_tasks",
+          "tasks": [
+            {
+              "name": "task name",
+              "_module": "include_role, import_role, import_tasks"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

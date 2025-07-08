@@ -1,0 +1,96 @@
+<div class="h-100 bg-secondary p-5">
+    <div class="op-blank-slate"
+         ng-if=CacTemplateSquareCtrlVm.views.templateList==null>
+        <div class="op-blank-slate-icon">
+            <i class="fa fa-cog fa-spin fa-4x"></i>
+        </div>
+        <p class="op-blank-slate-body">{{'common.entity.loading' | translate}}</p>
+    </div>
+    <div class="row bg-secondary">
+        <div class="col-sm-3 mb-5"
+             ng-repeat="template in CacTemplateSquareCtrlVm.views.templateList | orderBy:'executedAt' ">
+            <div class="card border-0 shadow bg-light opx-autocolor card udp-card udp-card-with-icon op-hover-trigger mb-5 mt-3 border-0 shadow-sm">
+                <div class="card-body bg-light" style="margin-bottom: 5px"
+                     ng-class="(template.jobId==null||template.jobId=='')?'cac-disable-click':'cac-click'"
+                     ui-sref="app.cac.result({jobId:template.jobId})">
+                    <h3 class="mb-3 font-weight-bold text-ellipsis" title="{{template.templateName}}">
+                        {{template.templateName}} </h3>
+                    <!--<div>-->
+                    <!--<div class="d-inline-block"-->
+                    <!--ng-class="(template.jobStatus==''||template.jobStatus==null)?'bg-secondary':(template.jobStatus=='success'?'bg-success':(template.jobStatus=='failure'?'bg-danger':'bg-warning'))"-->
+                    <!--style="width:1rem;height:1rem;display: inline-block; border-radius: 50%;"></div>-->
+                    <!--<div class="text-muted d-inline-block">-->
+                    <!--<span ng-if="template.hours===null||template.hours===''"> 未执行</span>-->
+                    <!--<span ng-if="template.hours!=null"> {{template.created_at}}执行</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--                    <div class="udp-card-icon">-->
+                    <div style="transition: all 0.3s linear;position: absolute;top: 0;right: 0.5rem;font-size: 2rem;opacity: 0.25;">
+                        <i class="fa" ng-class="template.icon ||'fas fa-server'"></i>
+                    </div>
+                </div>
+                <div class="card-footer px-3 py-2 xbg-light xopx-autocolor">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="font-weight-bold">
+                                <div class="d-inline-block"
+                                     ng-class="(template.executedBy==null||template.executedBy=='')?
+                                     'bg-secondary':'bg-warning'"
+                                     style="width:0.8rem;height:0.8rem;display: inline-block; border-radius: 50%;">
+                                </div>
+                                <div class="text-muted d-inline-block">
+                                    <small ng-if="template.executedBy===null||template.executedBy===''">{{'cac.common.not_run' | translate}}</small>
+                                    <small ng-if="template.executedBy!=null">
+                                        {{template.executedTime}}{{'cac.common.run' | translate}}</small>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{template.hostLength}}&nbsp;<small>{{'cac.common.device' | translate}}</small>
+                            </div>
+                        </div>
+                        <div class="op-hover-to-show text-nowrap dropdown " style="right:0;">
+                            <button class="btn btn-sm btn-default opx-btn-icon dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown"><i
+                                    class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end"
+                                style="min-width: auto;padding: 4px;width: 80px;">
+                                <li>
+                                    <a ui-sref="app.cac.job_add({templateId:template.id})">
+                                        <i class="fa fa-play-circle"></i> {{'cac.template.run' | translate}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a uaa-has-permission="cac:edit:*"
+                                       ui-sref="app.cac.template_edit({templateId:template.id})">
+                                        <i class="fa fa-pencil"></i> {{'cac.template.edit' | translate}}
+                                    </a>
+                                </li>
+                                <li  ng-if="'yes' === CacTemplateSquareCtrlVm.views.dashboardSwitch">
+                                    <a uaa-has-permission="cac:view:*"
+                                       ui-sref="app.cac.template_dashboard({templateId:template.id,templateName:template.templateName})">
+                                        <i class="fa fa-tachometer-alt"></i> {{'udp.w.gauge.name' | translate}}
+                                    </a>
+                                </li>
+                                <li  ng-if="'yes' === CacTemplateSquareCtrlVm.views.teamsSwitch">
+                                    <a uaa-has-permission="sysadmin:*:*"
+                                       ui-sref="app.cac.template_teams({templateId:template.id,templateName:template.templateName})">
+                                        <i class="fa fa-users-cog"></i> {{'acm.common.text.choose_team' | translate}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a uaa-has-permission="cac:edit:*"
+                                       ng-click="CacTemplateSquareCtrlVm.views.deleteTemplate(template.id)">
+                                        <i class="fa fa-trash-alt"></i> {{'cac.template.delete' | translate}}
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--<a class="btn btn-default btn-sm" title="执行" ui-sref="app.cac.job_add({templateId:template.id})"><i class="fa fa-play-circle"></i></a>-->
+                        </div>
+                        <!--<div style="width:20%">-->
+                        <!--<a class="btn btn-default btn-sm" title="编辑" ui-sref="app.cac.template_edit({templateId:template.id})"><i class="fa fa-pencil"></i></a>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

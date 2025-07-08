@@ -1,0 +1,17 @@
+<div class="form-group">
+    <div class="form-control-wrapper">
+        <op-code-editor the-model="$ctrl.props.expr" options="{syntax:'javascript'}" style="height:10rem;"></op-code-editor>
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.props.name==='closeme'">
+    <label class="control-label" op-help-info="{{'udp.wc.intx.code.params_helpinfo'|translate}}">{{'udp.wc.intx.code.params'|translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-page-params-config params-json="$ctrl.props.params" class="w-100"></udp-page-params-config>
+    </div>
+</div>
+<div class="form-group" ng-if="$ctrl.props.name==='download'">
+    <label class="control-label">{{'udp.wc.intx.code.download_url'|translate}}</label>
+    <div class="form-control-wrapper">
+        <input type="text" class="form-control" ng-model="$ctrl.props.download.url">
+    </div>
+</div>

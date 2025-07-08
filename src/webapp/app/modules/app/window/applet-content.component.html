@@ -1,0 +1,64 @@
+<div ng-class="$ctrl.applet.setting.nav.position==='left'?'opx-layout-hflex':'opx-layout-vflex'">
+    <div ng-if="$ctrl.applet.showNav && $ctrl.applet.navPos==='left'" class="opx-sidebar opx-autocolor"
+         ng-class="'bg-'+$ctrl.applet.theme"
+         style="min-width: 10rem;">
+        <div class="opx-sidebar-header" ng-if="!$ctrl.useWindowUI">
+            <a class="navbar-brand font-weight-bold"
+               ui-sref="app.applet_view({appletCode:$ctrl.applet.name})"
+               ng-bind-html="$ctrl.applet.title">{{$ctrl.applet.title}}</a>
+        </div>
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item" ng-class="{'with-space':$ctrl.useWindowUI}"
+                     ng-repeat="navItem in $ctrl.menuItems">
+                    <a ng-click="$ctrl.navTo(navItem)"
+                       ng-class="{'active':navItem.active}"
+                       ddui-state="navItem.state"
+                       ddui-state-params="{appletCode:$ctrl.applet.code,pageId:navItem.entry}"
+                       ddui-sref-active="active"
+                       ddtitle="{{navItem.state}}">
+                        <i class="fa fa-fw" ng-class="navItem.icon" ng-if="navItem.icon"></i>
+                        <span>{{navItem.title}}</span></a>
+                </div>
+<!--                <div class="opx-treenav-item" ng-class="{'with-space':$ctrl.useWindowUI}"-->
+<!--                     ng-if="$ctrl.applet.helpDocUrl">-->
+<!--                    <a ui-sref="app.applet_help({appletCode:$ctrl.applet.name})"-->
+<!--                       target="_blank"><i-->
+<!--                            class="fa fa-fw fa-question-circle"></i> {{ 'app.view.help' | translate}}</a>-->
+<!--                </div>-->
+            </div>
+        </div>
+
+        <div class="opx-sidebar-bg position-absolute p-3" ng-if="!$ctrl.useWindowUI"
+             style="width:100%; bottom:0; overflow:hidden;">
+            <div class="text-center" style="opacity: 0.25;">
+                <i class="fad {{$ctrl.applet.setting.icon}}" style="font-size:6rem;"></i>
+            </div>
+        </div>
+    </div>
+    <nav ng-if="$ctrl.applet.showNav && $ctrl.applet.navPos==='top'" class="navbar navbar-expand"
+         ng-class="'bg'-$ctrl.applet.theme">
+        <a class="navbar-brand"
+           ui-sref="app.applet_view({appletCode:$ctrl.applet.name})">{{$ctrl.applet.title}}</a>
+        <div class="navbar-nav">
+            <a ng-repeat="navItem in $ctrl.applet.setting.nav.items" class="nav-item nav-link"
+               ng-click="$ctrl.gotoNav(navItem)"
+               ui-state="'app.applet_view.open_page'"
+               ui-state-params="{pageId:navItem.entry,abc:'123'}"
+               ui-sref-active="active">{{navItem.name}}</a>
+        </div>
+        <div ng-if="$ctrl.applet.helpDocUrl" class="navbar-nav ms-auto">
+            <a ui-sref="app.applet_help({appletCode:$ctrl.applet.name})" target="_blank"><i
+                    class="fa fa-fw fa-question-circle"></i> {{ 'app.view.help' | translate}}</a>
+        </div>
+    </nav>
+    <div ui-view="{{$ctrl.uiView}}" class="opx-flex-fill">
+        <div class="alert alert-danger" ng-if="$ctrl.applet.id && !$ctrl.applet.entry">
+            <p data-translate="app.view.messages.info.entrance">未设置应用入口</p>
+        </div>
+        <udp-page-view ng-if="$ctrl.applet.entry.type !== 'InternalState' && $ctrl.showMainEntry"
+                       page-id="$ctrl.applet.entry.value" page-params='$ctrl.applet.entry.params'
+                       options="{navbar:false}"
+                       class="h-100"></udp-page-view>
+    </div>
+</div>

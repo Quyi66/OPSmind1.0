@@ -1,0 +1,27 @@
+<div id="js-job-quick-run">
+    <div class="op-smartform form-vertical op-bold-label" id="ajs-param-list">
+        <udp-input ng-repeat="param in $ctrl.params track by $index" type="string"
+                   label="{{param.label||param.name}}" showlabel="true"
+                   desc="{{param.description}}" showdesc="true" ng-model="param.defaultValue"
+                   control="input" ng-readonly="$ctrl.runType === 'approveLimitParams'"></udp-input>
+    </div>
+    <div class="d-flex align-items-center">
+        <div class="pull-left" ng-if="$ctrl.jobStatus">
+            <button class="btn btn-default rounded-pill jao-jobrun-status-btn status-{{$ctrl.jobStatus.name}} ani-outlined"
+                    ng-click="$ctrl.viewRunResult($ctrl.runId)">
+                <i class="fa fa-fw text-{{$ctrl.jobStatus.color}}" ng-class="$ctrl.jobStatus.icon"></i>
+                <span>{{$ctrl.jobStatus.title}}</span>
+            </button>
+        </div>
+        <div class="ms-auto">
+            <button class="btn btn-primary" ng-click="$ctrl.runJobJao()" ng-disabled="$ctrl.jobInRunningState"
+                    uaa-has-permission="jao:run:*">
+                <i class="fa fa-fw fa-chevron-right"></i>
+                {{'jao.job.run' | translate}}
+            </button>
+
+                <button class="btn btn-secondary" type="button" ng-click="$ctrl.dismiss()">{{'common.entity.action.cancel' | translate}}</button>
+
+        </div>
+    </div>
+</div>

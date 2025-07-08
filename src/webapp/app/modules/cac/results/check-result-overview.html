@@ -1,0 +1,290 @@
+<style>
+    #host-container td {
+        color: black;
+    }
+
+    .table-header-rotated th.row-header {
+        width: auto;
+    }
+
+    .table-header-rotated.table > tbody > tr > td {
+        width: 50px;
+        border-top: 1px solid #dddddd;
+        border-left: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table-header-rotated.table > tbody > tr > td:first-child {
+        border-left: 0;
+        width: auto !important;
+    }
+
+    .table-header-rotated.table > tbody > tr > td {
+        height: 50px;
+    }
+
+    .table-header-rotated th.rotate-45 {
+        height: 120px;
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+        position: relative;
+        vertical-align: bottom;
+        padding: 0;
+        font-size: 12px;
+        line-height: 1.2;
+        -ms-transform: skew(-45deg, 0deg);
+        -moz-transform: skew(-45deg, 0deg);
+        -webkit-transform: skew(-45deg, 0deg);
+        -o-transform: skew(-45deg, 0deg);
+        transform: skew(-45deg, 0deg);
+        left: 60px;
+    }
+
+    .table-header-rotated th.rotate-45 > div {
+        position: relative;
+        top: 0px;
+        height: 100%;
+        overflow: hidden;
+        border-left: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
+    }
+
+    .table-header-rotated th.rotate-45 span {
+        -ms-transform: skew(45deg, 0deg) rotate(315deg);
+        -moz-transform: skew(45deg, 0deg) rotate(315deg);
+        -webkit-transform: skew(45deg, 0deg) rotate(315deg);
+        -o-transform: skew(45deg, 0deg) rotate(315deg);
+        transform: skew(45deg, 0deg) rotate(315deg);
+        position: absolute;
+        bottom: 55px;
+        left: -46px;
+        display: inline-block;
+        width: 140px;
+        text-align: left;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+</style>
+<div class="opx-layout-vflex" xxx__uaa-has-permission="cac:view:*"
+     xxx__uaa-deny-message="{{'common.uaa.no_permission'}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.cac3.check_log.list({templateId:checkResultOverviewVm.views.checkLog.templateId})">{{'cac.index.job' | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">
+                    {{checkResultOverviewVm.views.checkLog.name}}
+                </li>
+            </ol>
+        </div>
+        <div  uaa-has-permission="cac:edit:*">
+            <a href="#" ng-click="checkResultOverviewVm.views.exportExcel($event)">
+                <button class="btn btn-default btn-sm">
+                    <i class="fa fa-file-export"></i> {{'cac.result.detail.export' | translate}}
+                </button>
+            </a>
+        </div>
+    </nav>
+    <div class="scroll-y opx-flex-fill p-3" ng-if="checkResultOverviewVm.views.profileView === 'normal'"
+         __when-scrolled="checkResultOverviewVm.views.loadMore()">
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <ul class="list-unstyled d-flex align-items-center">
+                    <li>
+                        <button type="button"
+                                class="rounded-pill btn btn-sm btn-{{checkResultOverviewVm.status[checkResultOverviewVm.views.checkLog.status].style}}"
+                                ng-click="checkResultOverviewVm.views.showLog()">
+                            {{checkResultOverviewVm.status[checkResultOverviewVm.views.checkLog.status].title}}
+                        </button>
+                    </li>
+                    <li class="ms-3">
+                        <strong>{{'common.entity.detail.start_at' | translate}}：</strong>{{checkResultOverviewVm.views.checkLog.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </li>
+                    <li class="ms-3">
+                        <strong>{{'common.entity.detail.end_at' | translate}}：</strong>{{checkResultOverviewVm.views.checkLog.endAt | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </li>
+                </ul>
+
+                <table class="table"ng-repeat="item in checkResultOverviewVm.views.auditParams">
+                    <tbody>
+                    <tr>
+                        <th style="width:8rem;">
+                            <div>{{'cac.common.host' | translate}} <span
+                                    class="rounded-pill badge bg-secondary">{{item.hosts.length}}</span>
+                                <div ng-if="item.hosts.length > 10">
+                                    <button class="btn btn-default btn-sm"
+                                            ng-click="checkResultOverviewVm.views.showHostKey = true"
+                                            ng-if="!checkResultOverviewVm.views.showHostKey && item.hosts.length > 10">
+                                        {{'common.entity.action.more' | translate}} <i
+                                            class="fa fa-angle-down"></i></button>
+                                    <button class="btn btn-default btn-sm"
+                                            ng-click="checkResultOverviewVm.views.showHostKey = false"
+                                            ng-if="checkResultOverviewVm.views.showHostKey">
+                                        {{'common.entity.action.collapse' | translate}} <i
+                                            class="fa fa-angle-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            <ul class="list list-unstyled list-inline">
+                                <li ng-repeat="host in item.hosts"
+                                    ng-if="$index <= 10 || checkResultOverviewVm.views.showHostKey">
+                                    <span class="badge bg-secondary">{{host.value}}</span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <th style="width:8rem;">
+                            <div>{{'cac3.title.patrolInspectionItems' | translate}} <span
+                                    class="rounded-pill badge bg-secondary">{{item.items.length}}</span>
+                                <div ng-if="item.items.length > 10">
+                                    <button class="btn btn-default btn-sm"
+                                            ng-click="checkResultOverviewVm.views.showItem = true"
+                                            ng-if="!checkResultOverviewVm.views.showItem && item.items.length > 10">
+                                        {{'common.entity.action.more' | translate}} <i
+                                            class="fa fa-angle-down"></i></button>
+                                    <button class="btn btn-default btn-sm"
+                                            ng-click="checkResultOverviewVm.views.showItem = false"
+                                            ng-if="checkResultOverviewVm.views.showItem">
+                                        {{'common.entity.action.collapse' | translate}} <i
+                                            class="fa fa-angle-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </th>
+                        <td>
+                            <ul class="list list-unstyled list-inline">
+                                <li ng-repeat="inspection in item.items"
+                                    ng-if="$index <= 10 || checkResultOverviewVm.views.showItem">
+                                    <span class="badge bg-secondary">{{inspection.name}}</span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <udp-page-view class="flex-fill scroll-y" page-id="'/cac/assets/udp/cac3-results'" page-source="file"
+                               page-params="checkResultOverviewVm.params"
+                               uaa-has-permission="cac:view:*"
+                               uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+                </udp-page-view>
+            </div>
+        </div>
+
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-title">
+                    <div class="pull-right">
+
+                        <a class="btn btn-default btn-sm" ng-click="checkResultOverviewVm.views.changeResultView()">
+                            <i class="fa"
+                               ng-class="checkResultOverviewVm.views.resultView === 'list'?'fa-th-large':'fa-list'"></i>
+                            {{checkResultOverviewVm.views.resultView === 'list' ? ('cac.result.detail.summary_view' | translate) : ('cac.result.detail.list_view' | translate)
+                            }}
+                        </a>
+
+                    </div>
+                    <h3>
+                        <strong>
+                        {{'cac.result.detail.check_item' | translate}}{{'common.entity.action.detail' | translate}}
+                        </strong>
+                    </h3>
+                </div>
+            </div>
+            <div class="card-body" ui-view="cacCheckResult">
+                <p ng-if="checkResultOverviewVm.views.data_table.length==0 && checkResultOverviewVm.views.isLoading == false"
+                   class="text-muted"
+                   style="text-align: center"><i
+                        class="fa fa-inbox"></i>{{'common.messages.no_data' | translate}}</p>
+
+
+                <div ng-if="checkResultOverviewVm.views.data_table.length>0">
+                    <ul class="text-right list-unstyled list-inline small mb-3">
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-success"><i class="fa fa-check"></i></span>
+                            {{'cac.result.audit_result.pass' | translate}}
+                        </li>
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-danger"><i class="fa fa-times"></i></span>
+                            {{'cac.result.audit_result.failed' | translate}}
+                        </li>
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-warning"><i class="fa fa-exclamation"></i></span>
+                            {{'cac.result.audit_result.check' | translate}}
+                        </li>
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-default"><i class="fa fa-question"></i></span>
+                            {{'common.messages.no_data' | translate}}
+                        </li>
+                    </ul>
+
+                    <div id="metric-container" style="width: 100%; height:20rem; overflow:auto;">
+                        <table class="table table-border table-header-rotated" style="max-width: 100%; width: auto;">
+                            <thead>
+                            <tr>
+                                <th class="border-0"></th>
+                                <th class="rotate-45" style="border-top: 0px;"
+                                    ng-repeat="rule in ::checkResultOverviewVm.views.rules track by $index">
+                                    <div title="{{::rule.itemName}}">
+                                        <span>{{::rule.itemName}}</span>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody vs-repeat="{autoresize:true, latch:false, scrollParent:'#metric-container'}">
+                            <tr ng-repeat="item in checkResultOverviewVm.views.data_table track by item.hostKey">
+                                <td class="cac-result-first-td text-center" title="{{::item.hostKey}}"
+                                    style="width: 150px!important;"
+                                    ng-class="{'text-danger':item.isUnreachable,'text-muted':item.isSkipping}">
+                                    <span ng-if="::item.isUnreachable"
+                                          title="{{'cac.result.audit_result.unreachable' | translate}}"><i
+                                            class="fa fa-ban"></i></span>
+                                    <span ng-if="::item.isSkipping"
+                                          title="{{'cac.result.audit_result.skipping' | translate}}"><i
+                                            class="fa fa-forward"></i></span>
+                                    {{::item.hostKey}}
+                                </td>
+                                <td class="text-center opx-autocolor {{::rule.class}}" title="{{::rule.title}}"
+                                    ng-repeat="rule in ::item.rules track by $index"
+                                    ng-click="::checkResultOverviewVm.views.clickResult(rule.id,rule)">
+                                    <i class="fa {{::rule.iconClass}}"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-show="checkResultOverviewVm.views.data_table.length==0&&checkResultOverviewVm.views.isLoading"
+                     class="op-blank-slate">
+                    <div class="op-blank-slate-icon"><i class="fa fa-inbox fa-4x"></i></div>
+                    <p>{{'common.entity.loading' | translate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+<div class="opx-layout-hflex">
+    <div class="opx-sidebar" style="width: 15rem;min-height: 630px; max-height: 650px;">
+        <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed" style="padding: 0.25rem 0.25rem !important;">
+            <op-searchbox search-text="$ctrl.jobFilter" style="width:10rem;" class="me-2"></op-searchbox>
+            <button type="button"
+                    style="margin-left:0 !important;padding: 0.125rem 0.3rem !important;"
+                    class="btn btn-default btn-sm "
+                    ng-click="$ctrl.createFlow()"
+                    title="{{'common.action.create' | translate}}">
+                <i class="fa fa-plus"></i>
+            </button>
+            <button type="button"
+                    class="btn btn-default btn-sm"
+                    style="margin-left:0 !important;padding: 0.125rem 0.3rem !important;"
+                    ng-click="$ctrl.importFlow()"
+                    title="{{'common.action.import' | translate}}">
+                <i class="fa fa-file-import"></i>
+            </button>
+            <button type="button"
+                    class="btn btn-default btn-sm"
+                    style="margin-left:0 !important;padding: 0.125rem 0.3rem !important;"
+                    ng-click="$ctrl.exportFlow()"
+                    title="{{'udp.w.datatable.column.data_export' | translate}}">
+                <i class="fa fa-cloud-download-alt"></i></button>
+            <button type="button"
+                    class="btn btn-default btn-sm"
+                    style="margin-left:0 !important;padding: 0.125rem 0.3rem !important;"
+                    ng-click="$ctrl.assignFlow()"
+                    uaa-has-any-role="ROLE_ADMIN, ROLE_TENANT_ADMIN"
+                    title="{{'udp.w.flow.manager.list.assign' | translate}}">
+                <i class="fa fa-users-cog"></i></button>
+        </nav>
+        <div class="opx-sidebar-body">
+            <div class="list-group list-group-flush op-styled-highlight" ng-if="$ctrl.flowList.length > 0">
+                <a ng-repeat="flow in $ctrl.flowList | filter:$ctrl.jobFilter | orderBy:[$ctrl.orderName,'createdAt']:$ctrl.orderMethod"
+                   ng-class="{'active':flow.id == $ctrl.activeFlowId}"
+                   class="list-group-item list-group-item-action op-hover-trigger ng-scope" title="{{flow.name}}"
+                   style="position:relative;">
+                    <div ng-click="$ctrl.changeActiveFlow(flow)">
+                        <h5 class="text-ellipsis">{{flow.name}}</h5>
+                        <div class="small text-muted">
+                            {{(flow.updatedAt||flow.createdAt) | date }}
+                        </div>
+                    </div>
+                    <div class="op-hover-to-show" style="position:absolute;right:0.25rem;bottom:0.25rem;">
+                        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.createInstance(flow.id)"
+                                title="{{'jao.flow.run' | translate}}">
+                            <i class="fa fa-play-circle"></i></button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.editFlow(flow.id)"
+                                title="{{'common.entity.action.edit' | translate}}">
+                            <i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"
+                                ng-click="$ctrl.deleteFlow(flow.name, flow.id)"
+                                class="m-r-sm" title="{{'common.entity.action.delete' | translate}}">
+                            <i class="fa fa-trash-alt"></i></button>
+                    </div>
+                </a>
+            </div>
+            <div class="h-100 bg-light op-blank-slate" ng-if="$ctrl.flowList.length === 0">
+                <div class="op-blank-slate-icon" style="padding-top: 20px">
+                    <p>{{'udp.w.flow-manager.list.default.tips.header' | translate}}</p>
+                </div>
+                <p>{{'udp.w.flow-manager.list.default.tips' | translate}} <i class="fa fa-plus"></i>{{'udp.w.flow-manager.list.default.tips.body'
+                    | translate}}</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="opx-flex-fill fade-in" style="overflow-y: hidden">
+        <flow-layout the-model="createOptions" _options="createOptions" ng-if="$ctrl.addTag"></flow-layout>
+        <flow-layout the-model="createOptions" _options="createOptions" ng-if="$ctrl.editTag"></flow-layout>
+        <flow-layout the-model="runOptions" _options="runOptions" ng-if="$ctrl.runTag"></flow-layout>
+        <flow-instance-list flow-id="$ctrl.activeFlowId" ng-if="$ctrl.recordTag"></flow-instance-list>
+        <flow-export applet-code="$ctrl.options.applet" ng-if="$ctrl.exportTag"></flow-export>
+        <flow-permission applet-code="$ctrl.options.applet" ng-if="$ctrl.assignTag"></flow-permission>
+        <div class="h-100 bg-light op-blank-slate"
+             ng-if="!$ctrl.addTag && !$ctrl.editTag && !$ctrl.recordTag && !$ctrl.runTag && !$ctrl.exportTag && !$ctrl.assignTag">
+            <div class="op-blank-slate-icon">
+                <i class="fa fa-inbox op-fa-8x"></i>
+            </div>
+            <p>{{'jao.flow.view' | translate}}</p>
+        </div>
+    </div>
+</div>

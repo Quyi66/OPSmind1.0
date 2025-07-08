@@ -1,0 +1,23 @@
+{
+  "sys_businessModule": {
+    "home": {
+      "title": "業務模組",
+      "createLabel": "新增模組",
+      "editLabel": "編輯模組"
+    },
+    "created": "業務模組 {{ param }} 建立成功",
+    "updated": "業務模組 {{ param }} 更新成功",
+    "deleted": "業務模組 {{ param }} 刪除成功",
+    "delete": {
+      "question": "確定刪除 業務模組 {{ name }} 嗎？"
+    },
+    "detail": {
+      "title": "模組詳情"
+    },
+    "name": "名稱",
+    "code": "編碼",
+    "description": "描述",
+    "permission": "許可權配置",
+    "dataSql": "資料查詢"
+  }
+}

@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'jao.result.name' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal"
+            ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <jao-job-result-view run-id="$ctrl.runId"></jao-job-result-view>
+</div>
+<div class="modal-footer text-right">
+    <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()">{{'common.entity.action.close' | translate}}</button>
+</div>

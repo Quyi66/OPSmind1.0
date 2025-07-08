@@ -1,0 +1,83 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data' | translate}}</uib-tab-heading>
+        <flow-process-selector the-model="uwProps.processId" selected-process="uwProps.selectedProcess"></flow-process-selector>
+    </uib-tab>
+
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}</uib-tab-heading>
+        <!-- <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param',enableAutoActive:true}"
+                                       param-vars="mapValue">
+        </udp-widget-config-interaction> -->
+
+        <fieldset>
+            <legend>{{'common.action.view' | translate}}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>
+            <udp-page-link-config class="d-block" props="uwProps.viewBtn"></udp-page-link-config>
+        </fieldset>
+
+        <button type="button" class="btn btn-outline-primary" 
+                ng-disabled="uwProps.customBtns.length >= 3" 
+                ng-click="addCustomBtn()">
+            <i class="fa fa-plus"></i> {{'udp.w.flow-process-result.btn.add_custom' | translate}}
+        </button>
+
+        <uib-tabset class="mt-3" type="pills">
+            <uib-tab ng-repeat="item in uwProps.customBtns track by $index" 
+                     heading="{{ item.label }} {{'udp.w.button.name' | translate}}">
+                <button type="button" class="btn btn-outline-danger mb-3" 
+                        ng-click="uwProps.customBtns.splice($index, 1)">
+                    <i class="fa fa-trash"></i> {{'common.action.delete' | translate}}{{'udp.w.button.name' | translate}}
+                </button>
+
+                <div class="op-smartform form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label" for="f_label">{{'udp.wc.button.label' | translate}}</label>
+                        <div class="form-control-wrapper">
+                            <input class="form-control w-sm" ng-model="item.label" maxlength="100" aria-invalid="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="f_label">{{'udp.wc.button.icon' | translate}}</label>
+                        <div class="form-control-wrapper">
+                            <op-iconpicker ng-model="item.icon"></op-iconpicker>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="f_label">{{'udp.wc.display.color' | translate}}</label>
+                        <div class="form-control-wrapper">
+                            <udp-theme-selector the-model="item.color" model-type="string"></udp-theme-selector>
+                        </div>
+                    </div>
+                </div>
+
+                <udp-widget-config-interaction  the-model="item.interaction"
+                                                options="{supports:'page, code, ajax, link'}">
+                </udp-widget-config-interaction>
+
+                <!-- <fieldset>
+                    <legend>{{ item.label }}{{'udp.w.button.name' | translate}} {{'udp.wc.intx.page.config_title' | translate}}</legend>
+                    <udp-page-link-config class="d-block" props="item.page"></udp-page-link-config>
+                </fieldset> -->
+            </uib-tab>
+        </uib-tabset>
+
+    </uib-tab>
+
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'common.term.tag' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'jao.log.props_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

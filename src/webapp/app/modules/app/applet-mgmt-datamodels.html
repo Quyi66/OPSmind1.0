@@ -1,0 +1,17 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">{{'jao.dc.list' | translate}}</li>
+            </ol>
+        </div>
+        <div uaa-has-permission="jao:edit:*" class="dropdown ms-auto">
+            <a class="btn btn-primary opx-btn-flat" title="{{'jao.dc.create' | translate}}" ui-sref="app.appman.datamodel.create({id:''})" ui-sref-active="active"><i
+                    class="fa fa-plus"></i> {{'jao.dc.create' | translate}}</a>
+        </div>
+        <button uaa-has-permission="jao:edit:*" ng-click="$ctrl.deleteModels()" class="btn btn-default opx-btn-flat ms-2" title="{{'common.entity.action.delete' | translate}}"
+                ng-disabled="!$ctrl.selectedModels.length>0"><i class="fa fa-trash"></i></button>
+    </nav>
+    <opx-datatable table-config="$ctrl.tableConfig" class="p-3">
+    </opx-datatable>
+</div>

@@ -1,0 +1,144 @@
+{
+  "tasks": [
+    {
+      "id": "1622042808467_3",
+      "type": "module",
+      "module": {
+        "name": "script",
+        "params": {
+          "cmd": "/demo/容灾切换/dr-precheck.sh ${db_username} ${db_password}"
+        }
+      },
+      "name": "切换前检查",
+      "when": "",
+      "ignoreErrors": false,
+      "runOnce": true,
+      "withHosts": [
+        "web",
+        "app"
+      ]
+    },
+    {
+      "type": "module",
+      "name": "停止应用",
+      "module": {
+        "name": "script",
+        "params": {
+          "cmd": "/demo/容灾切换/dr-stop-app.sh"
+        }
+      },
+      "withHosts": [
+        "app"
+      ],
+      "id": "1622042533579_1"
+    },
+    {
+      "type": "module",
+      "name": "关闭主数据库",
+      "module": {
+        "name": "script",
+        "params": {
+          "cmd": "/demo/容灾切换/dr-stop-db.sh ${db_old_ip}"
+        }
+      },
+      "id": "1622042533579_3",
+      "withHosts": [
+        "db"
+      ]
+    },
+    {
+      "id": "1622042661014_3",
+      "type": "module",
+      "module": {
+        "name": "shell",
+        "params": {
+          "cmd": "/demo/容灾切换/dr-start-db.sh"
+        }
+      },
+      "name": "启动备份数据库",
+      "withHosts": [
+        "db"
+      ]
+    },
+    {
+      "id": "1622042535069_6",
+      "type": "module",
+      "module": {
+        "name": "script",
+        "params": {
+          "cmd": "/demo/容灾切换/dr-start-app.sh ${db_new_ip}"
+        }
+      },
+      "name": "以新DB启动应用",
+      "withHosts": [
+        "app"
+      ]
+    },
+    {
+      "id": "1622074573485_3",
+      "name": "切换后检查",
+      "type": "module",
+      "runOnce": true,
+      "ignoreErrors": true,
+      "module": {
+        "name": "script",
+        "params": {
+          "cmd": "/demo/容灾切换/dr-postcheck.sh"
+        }
+      },
+      "withHosts": [
+        "app",
+        "db"
+      ]
+    },
+    {
+      "id": "1623382800999_7",
+      "name": "上传检查结果",
+      "type": "module",
+      "module": {
+        "name": "copy",
+        "params": {
+          "src": "/tmp/dr/switch-result.txt",
+          "dest": "/dr-result/"
+        }
+      },
+      "runOnce": true
+    }
+  ],
+  "params": [],
+  "inventory": [
+    {
+      "hosts": [
+        {
+          "key": "a001.oplus-example.com"
+        },
+        {
+          "key": "a002.oplus-example.com"
+        }
+      ],
+      "group": "web"
+    },
+    {
+      "hosts": [
+        {
+          "key": "m001.oplus-example.com"
+        },
+        {
+          "key": "m002.oplus-example.com"
+        }
+      ],
+      "group": "app"
+    },
+    {
+      "hosts": [
+        {
+          "key": "c001.oplus-example.com"
+        },
+        {
+          "key": "c002.oplus-example.com"
+        }
+      ],
+      "group": "db"
+    }
+  ]
+}

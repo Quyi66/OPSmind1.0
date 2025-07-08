@@ -1,0 +1,69 @@
+<form name="editForm" class="form-horizontal op-smartform" role="form" novalidate show-validation>
+
+    <div class="wrapper">
+        <div class="card card-default">
+            <nav class="navbar navbar-light">
+                <div class="opx-navbar-title">{{'ssc.applet.manage.detail' | translate}}</div>
+                <button type="button" class="btn-close" data-dismiss="modal"
+                        ng-click="$ctrl.clear()">
+                </button>
+            </nav>
+
+            <div class="modal-body">
+
+                <uib-tabset class="tab-container wrapper" active="1">
+                    <uib-tab index="1" heading="{{'ssc.applet.manage.detail.basic'|translate}}">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label">{{'ssc.applet.manage.detail.basic.name' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" name="title" ng-model="$ctrl.applet.title"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'ssc.applet.manage.detail.basic.code' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" name="name" ng-model="$ctrl.applet.name"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'ssc.applet.manage.detail.basic.version' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" name="version"
+                                           ng-model="$ctrl.applet.version" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">{{'common.attr.created_at' | translate}}</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" name="createdAt"
+                                           ng-model="$ctrl.applet.createdAt" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="2" heading="{{'ssc.applet.manage.detail.page'|translate}}">
+                        <page-list show-applet="false" applet-code="$ctrl.applet.name"
+                                   options="{enableEdit:false}"></page-list>
+                    </uib-tab>
+                    <uib-tab index="3" heading="{{'ssc.applet.manage.detail.dts'|translate}}">
+                        <opx-datatable table-config="$ctrl.dtsTableConfig"></opx-datatable>
+                    </uib-tab>
+                    <uib-tab index="4" heading="{{'ssc.applet.manage.detail.jao'|translate}}">
+                        <job-list show-applet="false" applet-code="$ctrl.applet.name"></job-list>
+                    </uib-tab>
+                    <uib-tab index="5" heading="{{'ssc.applet.manage.detail.dcModel'|translate}}">
+                        <opx-datatable table-config="$ctrl.dcModelTableConfig"></opx-datatable>
+                    </uib-tab>
+                    <uib-tab index="6" heading="{{'ssc.applet.manage.detail.jobFlow'|translate}}">
+                        <opx-datatable table-config="$ctrl.jobFlowTableConfig"></opx-datatable>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+
+        </div>
+    </div>
+</form>
+

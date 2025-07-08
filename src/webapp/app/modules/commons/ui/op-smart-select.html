@@ -1,0 +1,5 @@
+<div class="checkbox" ng-class="$ctrl.extraCss"
+     ng-repeat="item in $ctrl.itemList track by $index">
+    <input type="checkbox" multiple checkbox-model="$ctrl.selectedItems" checkbox-value="item.value" id="{{item.id}}">
+    <label for="{{item.id}}" ng-bind-html="item.label||item.value"></label>
+</div>

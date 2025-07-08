@@ -1,0 +1,20 @@
+$_popover-action-bar-bg: black;
+
+// Fix compatability with bs4 rem unit.
+$fix-popover-arrow-outer-width: 12px;
+
+.popover {
+  &.bottom > .arrow {
+    margin-left: -$fix-popover-arrow-outer-width;
+    top: -$fix-popover-arrow-outer-width;
+  }
+
+  &.top > .arrow {
+    margin-left: -$fix-popover-arrow-outer-width;
+    bottom: -$fix-popover-arrow-outer-width;
+  }
+
+  > .arrow {
+    border-width: $fix-popover-arrow-outer-width;
+  }
+}

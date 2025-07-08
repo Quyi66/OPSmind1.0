@@ -1,0 +1,240 @@
+{
+  "dts": {
+    "datasource": {
+      "title": "資料來源",
+      "action": {
+        "create_datasource": "新建資料來源"
+      },
+      "program_error": "程式錯誤",
+      "operation_must_logged": "此操作必須登入後才能執行",
+      "dataset": "資料集",
+      "query_failures": "出現連續的查詢失敗",
+      "query_dataset": "查詢資料集",
+      "times_error": "時報錯",
+      "dataset_query_error": "資料集查詢錯誤",
+      "not_supported": "暫不支援",
+      "file_type_datasource": "檔案型別資料來源",
+      "only": "唯一",
+      "data_file": "資料檔案",
+      "support_format": "支援格式",
+      "please_save_dataset": "請先儲存資料來源",
+      "success": "成功",
+      "test_success": "測試成功",
+      "fail": "失敗",
+      "data_service": "資料服務",
+      "edit_data_service": "編輯資料來源",
+      "test_result": "測試結果",
+      "choose_dataset_type": "選擇資料來源型別",
+      "other": "其他",
+      "fill_corresponding": "填寫相應的",
+      "connect": "連線"
+    },
+    "dataset": {
+      "title": "資料集",
+      "desc": "透過SQL、Web Service等方式從資料來源讀取資料",
+      "action": {
+        "create": "新建資料集",
+        "move_dataset": "移動資料集",
+        "move_dataset_confirm": "將選定的<strong>{{recordNum}}</strong>個數據集移動到應用 <strong class=\"text-primary\">{{applet}}</strong>？",
+        "delete": "刪除資料集",
+        "delete_confirm": "刪除資料集 <strong class=\"text-primary\">{{name}}</strong>？",
+        "edit": "編輯資料集"
+      },
+      "attr": {
+        "name": "名稱",
+        "code": "程式碼",
+        "applet": "所屬應用",
+        "datasource": "資料來源"
+      },
+      "edit": {
+        "basic": "基本設定",
+        "code": "程式碼",
+        "code_helpinfo": "標識資料集的唯一程式碼，儲存之後不可更改",
+        "code_placeholder": "只允許字母A-Z，下滑線，數字",
+        "name": "名稱",
+        "description": "說明",
+        "datasource": "資料來源",
+        "query": "查詢條件",
+        "test": "測試",
+        "test_run": "執行測試查詢",
+        "test_result": "測試查詢結果",
+        "options": "選項",
+        "parse_param": "獲取參數",
+        "parse_param_helpinfo": "解析SQL中的參數，在參數列表中列出",
+        "add_param": "新增參數",
+        "parse_field": "獲取結果欄位",
+        "field_desc": "欄位說明",
+        "field_desc_helpinfo": "為結果欄位新增中文說明，便於理解",
+        "field_name": "欄位名",
+        "field_cnname": "中文名",
+        "choose_dataset": "請選擇資料來源型別"
+      },
+      "jdbc": {
+        "proc": "這是儲存過程",
+        "sql": "查詢SQL",
+        "params": "查詢參數"
+      },
+      "param": {
+        "name": "參數",
+        "type": "型別",
+        "default_value": "測試值",
+        "desc": "說明",
+        "required": "必需"
+      }
+    },
+    "datatype": {
+      "string": "字串",
+      "number": "數值",
+      "date": "日期",
+      "array": "陣列"
+    },
+    "status": {
+      "fail": "失敗",
+      "point": "提示",
+      "not_get_data": "獲取不到資料"
+    },
+    "operate": {
+      "delete": "刪除"
+    },
+    "list": {
+      "database": "資料庫",
+      "multiple_datasets": "多資料集",
+      "document": "檔案",
+      "server": "伺服器",
+      "api": "介面",
+      "please_input": "請輸入",
+      "copy_success": "複製成功",
+      "sort": "排序",
+      "which_page": "第幾頁",
+      "page_count": "每頁條數",
+      "request_param": "請求參數",
+      "search": "搜尋",
+      "filter": "過濾",
+      "sort_column": "排序列",
+      "page_number": "分頁頁碼",
+      "query_param": "查詢參數",
+      "publish_failed": "釋出失敗",
+      "publish_success": "釋出成功",
+      "no_datasource_defined": "還沒有定義任何資料來源"
+    },
+    "commons": {
+      "search": "查詢",
+      "get_params": "獲取參數",
+      "search_params": "查詢參數",
+      "params": "參數",
+      "add_params": "新增參數",
+      "type": "型別",
+      "test_value": "測試值",
+      "desc": "說明",
+      "required": "必需",
+      "string": "字串",
+      "number": "數值",
+      "date": "日期",
+      "array": "陣列",
+      "field_desc": "欄位說明",
+      "field": "欄位",
+      "get_field": "獲取欄位",
+      "chinese": "中文",
+      "save": "儲存",
+      "only": "唯一",
+      "file_type_datasource": "檔案型別資料來源",
+      "path": "路徑",
+      "support_format": "支援格式",
+      "data_source": "資料來源",
+      "name": "名稱",
+      "edit": "編輯",
+      "delete": "刪除",
+      "confirm_delete_datasource": "確認刪除資料來源",
+      "delete_success": "刪除成功",
+      "add": "新建"
+    },
+    "query": {
+      "search_statement": "查詢語句"
+    },
+    "join": {
+      "match_mode": "匹配模式",
+      "datasets": "資料集集合",
+      "relation_field": "關聯欄位",
+      "multiple_datasets": "多資料集",
+      "only": "唯一"
+    },
+    "rest": {
+      "coding_format": "編碼格式",
+      "data_convert": "資料轉換",
+      "convert_to": "轉換為",
+      "get_assign_result": "是否取指定結果",
+      "array_result": "陣列結果",
+      "name_group_dataset": "名稱僅用於資料集的分組",
+      "interface_access_address": "介面訪問地址",
+      "access_mode": "訪問模式",
+      "interface_access_parameters": "介面訪問參數"
+    },
+    "es": {
+      "only": "唯一",
+      "address": "地址",
+      "test_statement": "測試語句",
+      "test_connectivity": "測試連通性"
+    },
+    "jdbc": {
+      "type_datasource": "型別資料來源",
+      "name": "名稱",
+      "only": "唯一",
+      "not_allow_chinese": "不允許中文",
+      "space": "空格",
+      "drive": "驅動",
+      "sample": "樣例",
+      "verification_statement": "驗證語句",
+      "username": "使用者名稱",
+      "password": "密碼",
+      "principal": "負責人",
+      "desc": "說明",
+      "test_connectivity": "測試連通性"
+    },
+    "cache": {
+      "realtime_transaction_volume": "實時交易量",
+      "cache": "快取",
+      "group_conditions": "分組條件",
+      "support": "支援",
+      "parameter_grouping_condition": "分組條件的參數值",
+      "group_count": "對應每組數量",
+      "several_groups": "幾組",
+      "filed_name": "欄位名稱"
+    },
+    "mock": {
+      "indicator_data": "指標資料",
+      "time_series_data": "時序資料",
+      "datasource": "資料來源",
+      "to_request": "要請求的",
+      "request_from_browser": "由於是從瀏覽器直接發起請求",
+      "this": "此",
+      "must_support_cross": "必須支援跨域訪問",
+      "request_method": "請求的方法",
+      "default_is": "預設是",
+      "format_represents_result_set": "格式表示結果集裡的一個樣例元素",
+      "parse_result_filed": "用以解析結果資料包含哪些欄位",
+      "if_field_not_set": "如果沒有設定此欄位",
+      "automatically_called_once": "會自動呼叫一次",
+      "parse_result": "以解析結果",
+      "extract": "提取",
+      "return_path_result": "返回結果的哪個路徑作為結果",
+      "start_time": "開始時間",
+      "end_time": "結束時間",
+      "interval_seconds": "取樣間隔秒數",
+      "default": "預設",
+      "least": "最小",
+      "for": "為",
+      "from": "從",
+      "counted_sampling_points": "算起的取樣點數",
+      "if_set_then": "如果設定則",
+      "and": "和",
+      "dot_work": "不起作用",
+      "separated_keywords": "逗號分隔的關鍵字",
+      "input_parameters_returned": "輸入的參數原樣返回",
+      "verify_parameters": "用以驗證能夠接受參數",
+      "number_of_data_return": "返回的資料個數"
+    },
+    "approve": {
+      "message": "Excel後臺匯出完成，點選檢視詳情"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+<div class="opx-layout-vflex">
+    <div class="mb-3">
+    </div>
+    <div class="opx-flex-fill">
+        <ul class="list list-unstyled list-inline">
+            <li class="mb-1" ng-repeat="(type,view) in $ctrl.VIEW_DEFS track by $index">
+                <div class="btn-group __op-hover-trigger">
+                    <button type="button" class="btn btn-outline-default"
+                            ng-class="$ctrl.currentView.type===type?'active':''"
+                            ng-click="$ctrl.clickView(type)"><i class="far fa-fw {{view.icon}}"></i> {{view.title}}
+                    </button>
+                    <button type="button" class="btn btn-outline-default"
+                            ng-click="$ctrl.previewView(type)"><i class="far fa-search"></i></button>
+                </div>
+            </li>
+        </ul>
+        <div ng-if="$ctrl.currentView.type==='detail'">
+            <div class="form-group">
+                <!--                <div class="form-control-wrapper">-->
+                <!--                    <div class="checkbox checkbox-primary">-->
+                <!--                        <input type="checkbox" ng-model="$ctrl.currentView.config.showOperations"-->
+                <!--                               id="ucv_showoperations"><label-->
+                <!--                            for="ucv_showoperations">Show Operations</label>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+            </div>
+        </div>
+        <div ng-if="$ctrl.currentView.type==='detail'">
+            <div class="form-group">
+                <label class="control-label">Data</label>
+                <div class="form-control-wrapper">
+                    <udp-data-converter the-model="$ctrl.currentView.data"
+                                        options="{kinds:'js,yaml,json'}"></udp-data-converter>
+                </div>
+            </div>
+        </div>
+        <div ng-if="['selector','list'].indexOf($ctrl.currentView.type)>-1">
+            <div>
+                <div class="mb-3 d-flex align-items-center">
+                    <div>{{ 'umd.view.table_column' | translate}}</div>
+                </div>
+                <div class="d-flex p-3 bg-light">
+                    <ul class="mb-0 list list-inline" ng-sortable ng-model="$ctrl.currentView.config.columns">
+                        <li class="mb-2" ng-repeat="column in $ctrl.currentView.config.columns track by $index">
+                            <span class="badge op-text-normal p-3 badge-secondary xxborder xxbg-light">{{$ctrl.attrsByCode[column.attr].title}} [{{column.attr}}]
+                            <span ng-click="$ctrl.toggleSelectionOfAttr(column.attr)" class="op-cursor-hand ms-2"><i
+                                    class="fal fa-times"></i></span></span>
+                        </li>
+                    </ul>
+                    <div class="dropdown ms-auto">
+                        <button class="btn btn-outline-primary" data-bs-toggle="dropdown" opx-popdrop><i
+                                class="fal fa-sliders-h"></i>
+                            {{ 'umd.view.add_column' | translate}}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a ng-repeat="attr in $ctrl.availAttrs"
+                               class="dropdown-item d-flex align-items-center w-100"
+                               title="{{attr|json}}"
+                               href="" ng-click="$ctrl.toggleSelectionOfAttr(attr.code)">
+                                        <span style="width:1rem;" class="d-inline-block"><i class="fa fa-check"
+                                                                                            ng-if="attr._selected"></i></span>
+                                {{attr.title}} [{{attr.code}}]</a>
+                            <div class="divider"></div>
+                            <a class="dropdown-item" class="text-primary" href=""
+                               ng-click="$ctrl.toggleSelectionOfAllAttrs(true)"><span style="width:1rem;"
+                                                                                      class="d-inline-block"><i
+                                    class="fa fa-plus-square"></i></span>
+                                {{ 'umd.view.add_all_column' | translate}}</a>
+                            <a class="dropdown-item text-danger" href=""
+                               ng-click="$ctrl.toggleSelectionOfAllAttrs(false)"><span style="width:1rem;"
+                                                                                       class="d-inline-block"><i
+                                    class="fa fa-times-square"></i></span>
+                                {{ 'umd.view.remove_all_column' | translate}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        <div ng-if="$ctrl.currentView">-->
+        <!--            <div class="mb-3">-->
+        <!--                <button class="btn btn-outline-primary" ng-click="$ctrl.previewView($ctrl.currentView.type)">-->
+        <!--                    {{ 'umd.view.view_preview' | translate}}-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>

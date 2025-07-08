@@ -1,0 +1,102 @@
+{
+  "global": {
+    "menu": {
+      "account": {
+        "settings": "賬戶設定",
+        "password": "密碼",
+        "login": "登入",
+        "logout": "退出"
+      },
+      "admin": {
+        "tenantManagement": "租戶管理",
+        "tenantDataConfig": "租戶資料",
+        "parameterConfiguration": "參數配置",
+        "userManagement": "使用者管理",
+        "roleManagement": "角色管理",
+        "dataPermissionManagement": "資料許可權",
+        "subordinate": "Subordinate",
+        "logs": "日誌",
+        "apidocs": "API"
+      }
+    },
+    "form": {
+      "username": "賬號",
+      "username.placeholder": "您的賬號",
+      "fullname": "名字",
+      "fullname.placeholder": "您的姓名",
+      "department": "部門",
+      "department.placeholder": "部門名稱",
+      "mobile": "手機",
+      "mobile.placeholder": "手機號",
+      "telephoneNumber": "座機",
+      "telephoneNumber.placeholder": "座機號",
+      "newpassword": "新密碼",
+      "newpassword.placeholder": "新密碼",
+      "confirmpassword": "確認密碼",
+      "confirmpassword.placeholder": "確認密碼",
+      "email": "郵箱",
+      "email.placeholder": "您的郵箱"
+    },
+    "messages": {
+      "info": {
+        "authenticated": "如果您要<a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">登入</a>, 您可以使用預設賬號:<br/>- 管理員 (賬號=\"admin\"和密碼=\"admin\") <br/>- 普通使用者 (賬號=\"user\"和密碼=\"user\")."
+      },
+      "error": {
+        "dontmatch": "您輸入的密碼和確認密碼不匹配!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "您的密碼是必填項.",
+          "minlength": "您的密碼長度至少要有8個字元",
+          "maxlength": "您的密碼長度不能超過32個字元",
+          "strength": "密碼強度:",
+          "qualified": "密碼必須包含大小寫字母、數字和特殊字元的組合"
+        },
+        "confirmpassword": {
+          "required": "您的確認密碼是必填項.",
+          "minlength": "您的確認密碼長度至少要有8個字元",
+          "maxlength": "您的確認密碼長度不能超過32個字元"
+        },
+        "email": {
+          "required": "您的電子郵件是必填項.",
+          "invalid": "您的電子郵件格式格式不正確.",
+          "minlength": "您的電子郵件長度至少要有5個字元",
+          "maxlength": "您的電子郵件長度不能超過50個字元"
+        }
+      }
+    },
+    "item-count": "顯示第 {{first}} - {{second}} 條，共 {{total}} 條"
+  },
+  "entity": {
+    "action": {
+      "back": "返回",
+      "cancel": "取消",
+      "delete": "刪除",
+      "edit": "編輯",
+      "save": "儲存",
+      "copy": "複製",
+      "view": "檢視",
+      "confirm": "確認"
+    },
+    "delete": {
+      "title": "確認刪除"
+    },
+    "validation": {
+      "required": "本欄位不能為空.",
+      "minlength": "本欄位最短長度為 {{min}} 個字元.",
+      "maxlength": "本欄位最大長度為 {{max}} 個字元.",
+      "min": "本欄位不能小於 {{min}}.",
+      "max": "本欄位不能大於 {{max}}.",
+      "minbytes": "本欄位不少於 {{min}} 字元.",
+      "maxbytes": "本欄位不多餘 {{max}} 字元.",
+      "pattern": "本欄位必須符合模式 {{pattern}}.",
+      "number": "本欄位必須為數字.",
+      "datetimelocal": "本欄位必須為日期和時間."
+    }
+  },
+  "error": {
+    "userexists": "該使用者名稱已存在!",
+    "emailexists": "該郵箱已被使用!"
+  },
+  "footer": "這裡是頁尾"
+}

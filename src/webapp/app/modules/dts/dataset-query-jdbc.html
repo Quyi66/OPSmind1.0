@@ -1,0 +1,102 @@
+<div class="form-group">
+    <label class="control-label">{{'dts.dataset.edit.options' | translate}}</label>
+    <div class="form-control-wrapper">
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" ng-model="dataset.options.proc" id="is_proc"><label
+                for="is_proc">{{'dts.dataset.jdbc.proc' | translate}}</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label">{{'dts.dataset.jdbc.sql' | translate}} *</label>
+    <div class="form-control-wrapper">
+        <op-code-editor the-model="dataset.query" options="{syntax:'text/x-sql'}" class="w-100"></op-code-editor>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label">{{'dts.dataset.jdbc.params' | translate}}</label>
+    <div class="form-control-wrapper">
+        <table class="table op-param-table">
+            <thead>
+            <tr>
+                <th>{{'dts.dataset.param.name' | translate}}
+                    <button type="button" class="btn btn-sm btn-default" ng-click="addQueryParam()"
+                            title="{{'dts.dataset.edit.add_param'|translate}}"><i
+                            class="fa fa-plus"></i></button>
+                    <button type="button" ng-click="queryMeta('param',selectedDatasource.type)"
+                            title="{{'dts.dataset.edit.parse_param_helpinfo'|translate}}"
+                            class="btn btn-sm btn-outline-primary">{{'dts.dataset.edit.parse_param' | translate}}
+                    </button>
+                </th>
+                <th>{{'dts.dataset.param.type' | translate}}</th>
+                <th>{{'dts.dataset.param.default_value' | translate}}</th>
+                <th>{{'dts.dataset.param.desc' | translate}}</th>
+                <th>{{'dts.dataset.param.required' | translate}}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(name,detail) in dataset.params track by $index">
+
+                <td><input type="text" class="form-control" ng-model="name" ng-change="changeParam($index,name)"></td>
+                <td>
+                    <select class="form-select" ng-model="detail.type">
+                        <option value="string">{{'dts.datatype.string' | translate}}</option>
+                        <option value="number">{{'dts.datatype.number' | translate}}</option>
+                        <option value="date">{{'dts.datatype.date' | translate}}</option>
+                        <option value="array">{{'dts.datatype.array' | translate}}</option>
+                    </select>
+                </td>
+                <td><input type="text" class="form-control" ng-model="detail.defaultValue"></td>
+                <td><input type="text" class="form-control" ng-model="detail.desc"></td>
+                <td>
+                    <div class="checkbox checkbox-inline"><input type="checkbox" name="display_panel"
+                                                                 ng-model="detail.required"
+                                                                 id="dqj_paramrequired_{{$index}}"><label
+                            for="dqj_paramrequired_{{$index}}"></label></div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-default opx-btn-icon" ng-click="removeQueryParam(name)">
+                        <i
+                                class="fa fa-minus"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label"
+           op-help-info="{{'dts.dataset.edit.field_desc.helpinfo'|translate}}">{{'dts.dataset.edit.field_desc' | translate}}</label>
+    <div class="form-control-wrapper">
+        <table class="table op-param-table">
+            <thead>
+            <tr>
+                <th>{{'dts.dataset.edit.field_name' | translate}}
+                    <button type="button" class="btn btn-sm btn-outline-primary"
+                            ng-click="queryMeta('field',selectedDatasource.type)">
+                        {{'dts.dataset.edit.parse_field' | translate}}
+                    </button>
+                    <!--<button type="button" class="btn btn-sm btn-primary" ng-click="addColumns()" title="添加字段"><i-->
+                    <!--class="fa fa-plus"></i></button>-->
+                </th>
+                <th>{{'dts.dataset.edit.field_cnname' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(name,detail) in dataset.options.columns track by $index">
+
+                <td><input type="text" class="form-control" ng-model="name" ng-change="changeColumn($index,name)"></td>
+                <td><input type="text" class="form-control" ng-model="detail" ng-change="changeColumnDesc(name,detail)">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-default opx-btn-icon" ng-click="removeColumn(name)"><i
+                            class="fa fa-minus"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

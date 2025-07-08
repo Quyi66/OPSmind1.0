@@ -1,0 +1,52 @@
+<div ng-if="$ctrl.options.view==='dropdown'" class="dropdown">
+    <button class="btn btn-outline-default" data-bs-toggle="dropdown">
+        <span ng-if="$ctrl.selectTag|isEmpty" ><i class="far fa-server fa-fw"></i> {{ 'acm.common.list.choose_tag' | translate}}</span>
+        <span ng-if="$ctrl.selectTag|isNotEmpty" ><i class="far fa-server fa-fw"></i> {{$ctrl.selectTag}}</span>
+    </button>
+    <div class="dropdown-menu" style="min-width: 12rem;max-height:300px; overflow-y:auto;padding: 0px !important;">
+        <ul class="list-group" >
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                ng-click="$ctrl.options.tagCallback('@@');$ctrl.selectTag=null;">
+                &nbsp;
+            </li>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                ng-repeat="tag in $ctrl.tags"
+                ng-click="$ctrl.options.tagCallback([{key:tag.name, value:tag.name}]);$ctrl.selectTag=tag.name">
+                {{tag.name}}
+                <span class="badge bg-primary badge-pill">{{tag.hostCount}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="cm_tag_card_div" ng-if="$ctrl.options.view==='card'" class="flex-fill scroll-y">
+    <div class="card udp-card-mode __opx-autocolor " style="background-color:transparent;color:rgb(0, 0, 0)">
+        <div class="card-body" style="background-color:rgba(231, 230, 230, 0.18);color:rgb(0, 0, 0)">
+            <ul class="list list-unstyled list-inline" >
+                <li class="mb-2" ng-repeat="tag in $ctrl.tags">
+                    <button type="button" class="btn  btn-sm"
+                            ng-class="tag.status?'btn-primary':'btn-secondary'"
+                            ng-click="tag.status=!tag.status;$ctrl.setTag('#'+tag.name, tag.assetType)"
+                            value="{{tag}}">
+                        {{tag.name}} &nbsp;&nbsp;
+                        <span class="badge bg-secondary badge-pill">{{tag.hostCount}}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.options.view==='list'" class="flex-fill scroll-y">
+    <ul class="list-group" >
+        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            ng-click="$ctrl.options.tagCallback('@@');$ctrl.selectTag=null;">
+            &nbsp;
+        </li>
+        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            ng-repeat="tag in $ctrl.tags"
+            ng-click="$ctrl.options.tagCallback(tag.name);$ctrl.selectTag=tag.name"
+            >
+            {{tag.name}}
+            <span class="badge bg-primary badge-pill">{{tag.hostCount}}</span>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,86 @@
+<div class="p-3">
+    <h2>Universal Modeled Data</h2>
+    <div class="card mb-3">
+        <div class="card-header d-flex bg-light">
+            <span>Model Config</span>
+            <div class="ms-auto">
+                <button type="button" class="btn btn-primary opx-btn-ok" ng-click="umdVm.saveModel()"
+                        ng-disabled="!modelConfigForm.$valid">保存模型
+                </button>
+                <button type="button" class="btn btn-outline-default" ng-click="umdVm.showModelJson()">查看模型定义JSON
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <form class="op-smartform form-vertical" name="modelConfigForm">
+                <uib-tabset class="tab-container" type="mdc-op" active="3">
+                    <uib-tab>
+                        <uib-tab-heading>Basic Info</uib-tab-heading>
+                        <div class="form-group">
+                            <label class="control-label">Code</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" ng-model="umdVm.modelConfig.code" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Title</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" ng-model="umdVm.modelConfig.title" class="form-control">
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading>Attributes</uib-tab-heading>
+                        <span class="text-danger" ng-if="!modelConfigForm.modelAttrs.$valid"><i
+                                class="fa fa-exclamation-circle"></i></span>
+                        <umd-config-attrs ng-model="umdVm.modelConfig.attrs" name="modelAttrs"
+                                          fffng-model-options="{allowInvalid:true}"
+                                          options="{placement:'#js-model-attrs-config'}"
+                                          xxxregister-instance="umdVm.registerInstance($instance)"></umd-config-attrs>
+                    </uib-tab>
+                    <uib-tab index="3">
+                        <uib-tab-heading>Views</uib-tab-heading>
+                        <umd-config-view model-def="umdVm.modelConfig"></umd-config-view>
+                    </uib-tab>
+                    <uib-tab index="4">
+                        <uib-tab-heading>Operations</uib-tab-heading>
+                        <umd-config-operation operation-defs="umdVm.modelConfig.operations"></umd-config-operation>
+                    </uib-tab>
+                </uib-tabset>
+            </form>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            列表查看
+        </div>
+        <div class="card-body">
+            <button type="button" ng-click="umdVm.reloadListData()" class="btn btn-default">Reload Table Data</button>
+            <div class="form-group">
+                <label class="control-label">Input values and mark as selected</label>
+                <div class="form-control-wrapper">
+                    <div class="input-group">
+                        <input type="text" ng-model="umdVm.selected" class="form-control">
+                        <div class="input-group-append">
+                            <button type="button" ng-click="umdVm.markItemsAsSelected(umdVm.selected)"
+                                    class="btn btn-outline-default">Mark as Selected
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="help-block">dev-umd.html:selectedItems = <code>{{umdVm.viewInstance.tableConfig.selectedItems | json}}</code></p>
+            </div>
+            <umd-data-view view-type="'selector'"
+                           model-def="umdVm.modelConfig"
+                           the-data="umdVm.listDataFn"
+                           options="{selectionConfig:umdVm.selectionConfig,tableInstance:umdVm.viewInstance}"></umd-data-view>
+        </div>
+    </div>
+
+    <!--    <div class="card mt-3">-->
+    <!--        <div class="card-header">Model View</div>-->
+    <!--        <div class="card-body">-->
+    <!--            <umd-data-detail the-data="umdVm.detailedData" the-model="umdVm.modelConfig"></umd-data-detail>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>

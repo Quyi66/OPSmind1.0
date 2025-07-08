@@ -1,0 +1,25 @@
+<div style="background-color:#1D2939;  background-position: center center;  background-repeat: no-repeat;  background-size: cover;__background-image: url('content/images/bg-oplus-01.jpg')"
+     class="h-100 d-flex align-items-center justify-content-center">
+    <!--    <div class="login-cover">-->
+    <!--    <img src="content/images/bg-2.png">-->
+    <!--    </div>-->
+
+    <div class="login-box-wrapper" style="padding-bottom:12rem;">
+        <div style="padding: 1rem; background: rgba(0, 0, 0, 0.4); color: #ccc; width: 30rem; border-radius: 0.5rem;">
+            <div class="mb-3">
+                <img ng-src="{{loginMainVm.logoNavbarPath}}" height="48">
+            </div>
+            <op-login as-modal="false"></op-login>
+        </div>
+        <div class="text-light mt-3 text-center">
+            <ul class="list list-unstyled list-inline">
+                <li class="me-3">
+                {{'common.system.browser_support'|translate}}
+                </li>
+                <li ng-repeat="(key,value) in loginMainVm.browsers" class="me-4" style="font-size:1.25em;"><i class="fab fa-{{key}}"></i>
+                    {{value.version}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

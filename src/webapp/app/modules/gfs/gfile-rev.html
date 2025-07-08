@@ -1,0 +1,45 @@
+<!--<style>-->
+<!--    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {-->
+<!--        display: none !important;-->
+<!--    }-->
+
+<!--    ng\:form {-->
+<!--        display: block;-->
+<!--    }-->
+<!--</style>-->
+<div ng-if="$ctrl.options.mode==='list-only'" class="list-group list-group-flush m-b-none">
+    <a ng-repeat="rev in $ctrl.fileRevs | limitTo:5 track by $index" class="list-group-item px-3 py-2"
+       style="white-space: nowrap;"
+       ng-click="$ctrl.clickRev(rev)" title="{{'gfs.rev.modifier' | translate}}：{{rev.author}}">
+        <i class="fa {{rev._change.icon}}" title="{{rev._change.name}}"></i> {{rev.date | date:'yyyy-MM-dd HH:mm'}}
+    </a>
+    <a ng-if="$ctrl.fileRevs.length>5" class="list-group-item"
+       ng-click="$ctrl.clickRev()">
+        {{'gfs.rev.more' | translate}}...
+    </a>
+</div>
+<div ng-if="$ctrl.options.mode!=='list-only'" class="h-100 opx-layout-hflex">
+    <div class="opx-sidebar" style="min-width:15rem;padding: 0.5rem 0;">
+        <div class="list-group list-group-flush op-styled-highlight">
+            <a class="list-group-item py-2 px-3"
+               ng-repeat="rev in $ctrl.fileRevs track by $index"
+               ng-class="{'active':rev.name===$ctrl.currentRev.name}"
+               ng-click="$ctrl.clickRev(rev)">
+                <div style="float: left">
+                    <i class="fa {{rev._change.icon}}" title="{{rev._change.name}}"></i>
+                    {{rev.date | date:'yyyy-MM-dd HH:mm'}}
+                    <div class="text-muted">{{rev.author}}</div>
+                </div>
+                <div class="ng-hide" ng-show="rev.rollback">
+                    <button class="btn btn-danger opx-btn-cancel" type="button"
+                            style="padding: revert;float: right;margin-top: 5px;"
+                            ng-click="$ctrl.rollback(rev)">{{'gfs.rev.go_back' | translate}}
+                    </button>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="p-3" style="overflow:auto">
+        <div id="diff">{{$ctrl.currentRev.change}}</div>
+    </div>
+</div>

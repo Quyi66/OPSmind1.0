@@ -1,0 +1,15 @@
+<button type="button" class="btn btn-outline-primary" ng-click="$ctrl.params.push({})"><i
+        class="fa fa-plus"></i> {{'udp.param.add_param' | translate}}
+</button>
+<table class="table table-sm op-param-table">
+    <tbody>
+    <tr ng-repeat="param in $ctrl.params track by $index">
+        <td><input type="text" class="form-control" ng-model="param.name" title="{{'udp.param.param_name'|translate}}">
+        </td>
+        <td>
+            <udp-data-converter the-model="param.value" options="$ctrl.options.converter"
+                                title="{{'udp.param.param_value'|translate}}"></udp-data-converter>
+        </td>
+    </tr>
+    </tbody>
+</table>

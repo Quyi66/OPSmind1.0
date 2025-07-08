@@ -1,0 +1,65 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.page.setting.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'udp.page.attrs.title' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control" ng-model="$ctrl.page.title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.page.attrs.code' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control" ng-model="$ctrl.page.code">
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.page.setting.display' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'udp.page.attrs.bg_color' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-theme-selector the-model="$ctrl.page.setting" customizable="false"
+                                    theme-group="page"></udp-theme-selector>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.page.attrs.font_color' | translate}}</label>
+            <div class="form-control-wrapper">
+                <udp-color-picker title="{{'common.term.font'|translate}}"
+                                  ng-model="$ctrl.page.setting.fontColor"></udp-color-picker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label"
+                   op-help-info="{{'udp.page.setting.bgimage_helpinfo'|translate}}">{{'udp.page.attrs.bg_image' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="input-group">
+                    <div class="input-group-text"><input type="checkbox"
+                                                         ng-model="$ctrl.page.setting.useBgimage"></div>
+                    <input type="text" ng-model="$ctrl.page.setting.bgimage" class="form-control"
+                           ng-disabled="!$ctrl.page.setting.useBgimage">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.page.attrs.view' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="$ctrl.page.setting.view">
+                    <option value=""></option>
+                    <option value="app">{{'udp.page.attrs.view_app' | translate}}</option>
+                </select>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class="fa fa-lock"></i> {{'udp.wc.tab.access' | translate}}
+        </uib-tab-heading>
+        <udp-widget-access-config the-model="$ctrl.page.setting.accessControl"></udp-widget-access-config>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-code'></i> {{'udp.page.setting.param' | translate}}</uib-tab-heading>
+        <pre>{{pageParams | json}}</pre>
+        <pre>{{page.setting}}</pre>
+    </uib-tab>
+</uib-tabset>

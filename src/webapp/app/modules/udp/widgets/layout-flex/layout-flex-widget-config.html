@@ -1,0 +1,143 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label" op-help-info="{{'udp.w.layout-flex.config.id_desc'|translate}}">ID</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" ng-model="uwProps.id">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'common.term.width' | translate}}</label>
+            <div class="form-control-wrapper op-combo">
+                <div class="input-group">
+                    <div class="input-group-text"
+                         op-help-info="{{'udp.w.layout-flex.config.span_by_grid_desc'|translate}}">
+                        {{'udp.w.layout-flex.config.span_by_grid' | translate}}
+                    </div>
+                    <select ng-model="uwProps.span" class="form-select"
+                            ng-options="grid.value as grid.label for grid in grids">
+                    </select>
+                </div>
+                <span>{{'common.term.or' | translate}}</span>
+                <div class="input-group">
+                    <div class="input-group-text">{{'udp.w.layout-flex.config.span_by_pct' | translate}}</div>
+                    <select ng-model="uwProps.span" class="form-select"
+                            ng-options="pct.value as pct.title for pct in percents">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.layout-flex.config.dir' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select op-w-sm" ng-model="uwProps.flex.direction">
+                    <option value="flex-row">{{'udp.w.layout-flex.config.dir_horizontal' | translate}}</option>
+                    <option value="flex-column">{{'udp.w.layout-flex.config.dir_vertical' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.layout-flex.config.gap' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" ng-model="uwProps.flex.gap" class="form-control w-sm">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.layout-flex.config.alignh' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="opx-check-group btn-group">
+                    <input type="radio" name="lfwc_alignh" value="" id="lfwc_alignh_1"
+                           ng-model="uwProps.flex.alignH"><label for="lfwc_alignh_1"
+                                                                 title="{{'udp.w.layout-flex.config.alignh_left'|translate}}"><i
+                        class="fa fa-align-left"></i></label>
+                    <input type="radio" name="lfwc_alignh" value="center" id="lfwc_alignh_2"
+                           ng-model="uwProps.flex.alignH"><label
+                        for="lfwc_alignh_2" class="btn btn-outline-default opx-btn-icon"
+                        title="{{'udp.w.layout-flex.config.alignh_center'|translate}}"><i
+                        class="fa fa-align-center"></i></label>
+                    <input type="radio" name="lfwc_alignh" value="right" id="lfwc_alignh_3"
+                           ng-model="uwProps.flex.alignH"><label for="lfwc_alignh_3"
+                                                                 title="{{'udp.w.layout-flex.config.alignh_right'|translate}}"><i
+                        class="fa fa-align-right"></i></label>
+                    <input type="radio" name="lfwc_alignh" value="justify" id="lfwc_alignh_4"
+                           ng-model="uwProps.flex.alignH"><label for="lfwc_alignh_4"
+                                                                 title="{{'udp.w.layout-flex.config.alignh_both'|translate}}"><i
+                        class="fa fa-align-justify"></i></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.layout-flex.config.alignv' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="opx-check-group btn-group">
+                    <input type="radio" name="lfwc_alignv" value="top" id="lfwc_alignv_1"
+                           ng-model="uwProps.flex.alignV"><label for="lfwc_alignv_1"><i
+                        class="fa fa-arrow-to-top"></i> {{'udp.w.layout-flex.config.alignv_top' | translate}}</label>
+                    <input type="radio" name="lfwc_alignv" value="middle" id="lfwc_alignv_2"
+                           ng-model="uwProps.flex.alignV"><label
+                        for="lfwc_alignv_2"><i
+                        class="fa fa-horizontal-rule"></i>
+                    {{'udp.w.layout-flex.config.alignv_middle' | translate}}</label>
+                    <input type="radio" name="lfwc_alignv" value="bottom" id="lfwc_alignv_3"
+                           ng-model="uwProps.flex.alignV"><label
+                        for="lfwc_alignv_3"><i
+                        class="fa fa-arrow-to-bottom"></i>
+                    {{'udp.w.layout-flex.config.alignv_bottom' | translate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">邊框設置</label>
+            <div class="form-control-wrapper op-combo">
+                <div >
+                    <select class="form-select op-w-sm" ng-model="uwProps.flex.border">
+                        <option value="none">默認</option>
+                        <option value="custom">自定義</option>
+                    </select>
+                </div>
+                <div class="input-group" ng-if="uwProps.flex.border === 'custom'">
+                    <div class="input-group-text"
+                         op-help-info="設置邊框寬度，支持px">寬度
+                    </div>
+                    <input type="text" class="form-control" ng-model="uwProps.flex.borderSize">
+                </div>
+                <div class="input-group" ng-if="uwProps.flex.border === 'custom'">
+                    <div class="input-group-text"
+                         op-help-info="設置圓角邊框，支持px">圓角
+                    </div>
+                    <input type="text" class="form-control" ng-model="uwProps.flex.borderRadius">
+                </div>
+                <div class="input-group" ng-if="uwProps.flex.border === 'custom'">
+                    <udp-color-picker ng-model="uwProps.flex.borderColor" title="邊框顔色"></udp-color-picker>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'udp.w.layout-flex.config.form' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="input-group">
+                        <select class="form-select" ng-model="uwProps.display.form">
+                            <option value=""></option>
+                            <option value="horizontal">{{'udp.w.layout-flex.config.form_horizontal' | translate}}
+                            </option>
+                            <option value="vertical">{{'udp.w.layout-flex.config.form_vertical' | translate}}</option>
+                            <option value="inline">{{'udp.w.layout-flex.config.form_inline' | translate}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access' | translate}}</uib-tab-heading>
+        <udp-button-state-config the-model="uwProps.statecontrol"></udp-button-state-config>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,46 @@
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.intx.postproc.choose_action' | translate}}</label>
+    <div class="form-control-wrapper">
+        <select class="form-select op-w-md" ng-model="$ctrl.procProps.action"
+                ng-options="proc.key as proc.title for proc in $ctrl.postProcs">
+            <option value="">None</option>
+        </select>
+    </div>
+</div>
+<div ng-if="$ctrl.procProps.action==='ca_msg'">
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.intx.postproc.ca_msg.expr' | translate}}</label>
+        <div class="form-control-wrapper">
+            <udp-data-converter the-model="$ctrl.procProps.ca_msg.expr"
+                                options="{kinds:'js,str'}"></udp-data-converter>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'udp.wc.intx.postproc.ca_msg.style' | translate}}</label>
+        <div class="form-control-wrapper">
+            <select class="form-select op-w-sm" ng-model="$ctrl.procProps.ca_msg.style">
+                <option value="dialog">{{'udp.wc.intx.postproc.ca_msg.style_dialog' | translate}}</option>
+                <option value="toast">{{'udp.wc.intx.postproc.ca_msg.style_toast' | translate}}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<!--<div ng-if="$ctrl.procProps.action==='ca_msg'" class="form-group">-->
+<!--    <label class="control-label">消息内容</label>-->
+<!--    <div class="form-control-wrapper">-->
+<!--        <udp-data-converter the-model="$ctrl.procProps.ca_msg.expr"-->
+<!--                            options="{kinds:'js,str'}"></udp-data-converter>-->
+<!--    </div>-->
+<!--</div>-->
+<div ng-if="$ctrl.procProps.action==='ca_param'" class="form-group">
+    <label class="control-label">{{'udp.wc.intx.postproc.ca_param.param' | translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-page-params-config params-json="$ctrl.procProps.ca_param" class="w-full"></udp-page-params-config>
+        <p class="help-block" ng-bind-html="'udp.wc.intx.postproc.ca_param.param_desc' | translate"></p>
+    </div>
+</div>
+
+<div ng-if="$ctrl.procProps.action==='ca_event'">
+   <udp-widget-interaction-event-config props="$ctrl.procProps.ca_event">
+   </udp-widget-interaction-event-config>
+</div>

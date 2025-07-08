@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myParamLabel">
+        <span>{{'jao.job.runlogs.clean.confirm.title' | translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
+    </button>
+</div>
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label">{{'jao.job.runlogs.clean.policies.choose' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select " ng-model="vm.choose_clean_policy">
+                    <option ng-repeat="option in vm.clean_policies" value={{option.policy}}>
+                        {{option.desc}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" uaa-has-permission="jao:edit:*">
+            <span>{{'jao.job.runlogs.clean.start' | translate}}</span>
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span>{{'common.action.cancel' | translate}}</span>
+        </button>
+    </div>
+
+</form>

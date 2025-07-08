@@ -1,0 +1,48 @@
+<fieldset>
+    <div class="pull-right">
+        <button type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.addMetric()"><i
+                class="fa fa-plus-square"></i> {{'udp.w.echart.metric.add_metric'|translate}}
+        </button>
+    </div>
+    <legend>{{'udp.w.echart.metric.metric'|translate}}</legend>
+    <div>
+        <ul ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.theModel" class="nav nav-pills">
+            <!-- It seems adding class to li will make ui-sortable unstable -->
+            <li ng-repeat="field in $ctrl.theModel track by $index" style="height:32px;">
+                    <span class="badge op-text-normal rounded-0"
+                          ng-class="$ctrl.current.index === $index?'badge-info':'badge-default'">
+                        <i ng-if="!field.field" class="fa fa-bolt"></i>
+                        <a href ng-dblclick="$ctrl.removeMetric($index)" ng-click="$ctrl.selectMetric($index)">{{ field.label || field.field || '&nbsp;&nbsp;&nbsp;'}}</a>
+                    </span></li>
+        </ul>
+    </div>
+    <div ng-if="$ctrl.current.index>=0" class="bg-light lt p-2">
+        <div class="form-group">
+            <label class="control-label col-sm-2">{{'udp.w.echart.metric.metric.label'|translate}}</label>
+            <div class="col-sm-4"> <input class="form-control" ng-model="$ctrl.current.item.label"></div>
+            <div class="col-sm-2">
+                <udp-color-picker ng-model="$ctrl.current.item.fontColor"></udp-color-picker>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">{{'common.term.data'|translate}}</label>
+            <div class="col-sm-10">
+                <udp-dsfield-selector the-model="$ctrl.current.item" fields="$ctrl.fields"
+                                      options="{disableConverter:$ctrl.options.disableConverter}"></udp-dsfield-selector>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">{{'common.term.color'|translate}}</label>
+            <div class="col-sm-10">
+                <udp-color-picker ng-model="$ctrl.current.item.color"></udp-color-picker>
+            </div>
+        </div>
+        <div class="form-group" ng-if="$ctrl.options.font">
+            <label class="control-label col-sm-2">{{'common.term.font'|translate}}</label>
+            <div class="col-sm-2">
+                <udp-font-editor the-model="$ctrl.current.item.fontSize" options="$ctrl.options.font"></udp-font-editor>
+            </div>
+        </div>
+    </div>
+</fieldset>
+

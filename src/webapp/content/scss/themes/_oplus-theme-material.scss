@@ -1,0 +1,54 @@
+//==============================================================================
+// Theme of material design for bootstrap 3
+// Reference:
+// https://material-components.github.io/material-components-web-catalog
+// https://material.io/develop/web/
+// https://fezvrasta.github.io/bootstrap-material-design/
+// @author leoliaolei@gmail.com, created on 2018/11/25
+//==============================================================================
+
+$omd-spacing-base: 0.5rem;
+$omd-spacing-min: $omd-spacing-base/2;
+$omd-spacing-max: $omd-spacing-base*2;
+$omd-border-radius: 0.25rem;
+
+.op-theme-material {
+  .card {
+    //background-color: white !important;
+    border-radius: $omd-border-radius;
+    //border: 0;
+    //box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+    //transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    .card-header {
+      font-weight: bold;
+      //font-size: 1.25rem;
+      //background-color: transparent !important;
+      border-bottom: 0;
+      padding: $omd-spacing-base * 2;
+    }
+
+    //.card-body {
+    //.card-title {
+    //  font-size: 18px;
+    //  font-weight: bold;
+    //}
+    //}
+
+    > :first-child {
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+    }
+
+    > :last-child {
+      border-bottom-left-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+
+    .card-footer {
+      border-bottom-left-radius: $omd-border-radius;
+      border-bottom-right-radius: $omd-border-radius;
+      border-top: 0;
+    }
+  }
+}

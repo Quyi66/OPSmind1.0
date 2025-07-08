@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'cac.profile.inspection_results_profile' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal"
+            ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body">
+    <div style="margin: 10px;">
+        <p>
+            <span style="font-weight: bolder; font-size: 14px;">
+                <span>{{ $ctrl.maps.secondaryService }}</span>
+            </span>
+        </p>
+        <p>
+            <span style="font-size: 14px;">{{'cac.structural.primary_service' | translate}}：
+                <span>{{ $ctrl.maps.primaryService }}</span>
+            </span>
+        </p>
+        <div class="d-flex align-items-center">
+            <div>
+                <p>
+                    <span style="font-size: 14px;">{{'common.term.failed' | translate}}{{'cac.result.detail.check_item' | translate}}：
+                        <span>{{$ctrl.counts[0]}}</span>
+                    </span>
+                </p>
+                <p>
+                    <span style="font-size: 14px;">{{'common.term.failed' | translate}}{{'cac3.title.hostItem' | translate}}：
+                        <span>{{$ctrl.counts[1]}}</span>
+                    </span>
+                </p>
+            </div>
+            <div class="ml-auto"><i class="fad fa-desktop fa-5x text-secondary"></i></div>
+        </div>
+    </div>
+
+    <uib-tabset class="tab-container" type="mdc-op" active="1">
+        <uib-tab index="1">
+            <uib-tab-heading>{{'common.term.failed' | translate}}{{'cac.result.detail.check_item' | translate}}</uib-tab-heading>
+            <opx-datatable table-config="$ctrl.tableConfigItem">
+            </opx-datatable>
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading>{{'common.term.failed' | translate}}{{'cac3.title.hostItem' | translate}}</uib-tab-heading>
+            <opx-datatable table-config="$ctrl.tableConfigHost">
+            </opx-datatable>
+        </uib-tab>
+    </uib-tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="$ctrl.cancel()">{{'common.action.close' | translate}}
+    </button>
+</div>
+<!--<style>-->
+<!--    .modal-dialog.modal-lg {-->
+<!--        height: 45rem;-->
+<!--    }-->
+<!--</style>-->

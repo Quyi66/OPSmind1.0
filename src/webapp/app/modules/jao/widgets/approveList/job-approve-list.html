@@ -1,0 +1,22 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active opx-navbar-title">{{$ctrl.title}}</li>
+            </ol>
+        </div>
+        <div uaa-has-permission="jao:edit:*" class="dropdown ms-auto">
+            <div class="dropdown-menu dropdown-menu-left">
+                <a class="dropdown-item" ng-repeat="(type,def) in $ctrl.jobTypeList"
+                   ui-sref="app.appman.job.create({type:type})">
+                    <i class="fa fa-fw {{def.icon}}"></i>{{def.title}}</a>
+            </div>
+        </div>
+        <button ng-if="$ctrl.approveType === 'my'" ng-click="$ctrl.deleteJob()"
+                class="btn btn-default opx-btn-flat ms-2" title="{{'common.entity.action.delete' | translate}}"
+                ng-disabled="!$ctrl.tableConfig.selectedItems.length > 0"><i class="fa fa-trash"></i></button>
+    </nav>
+
+    <opx-datatable table-config="$ctrl.tableConfig" class="p-3">
+    </opx-datatable>
+</div>

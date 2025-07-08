@@ -1,0 +1,50 @@
+<form class="form-horizontal">
+    <div class="modal-header">
+        <div>
+            <label class="modal-title">Rest Api</label>
+        </div>
+        <button type="button" class="btn-close" data-dismiss="modal" ng-click="dismissModal()">×</button>
+    </div>
+
+
+    <div class="modal-body">
+
+        <uib-tabset>
+            <uib-tab>
+                <uib-tab-heading><i class='fa fa-link'></i> URL <span class="badge bg-warning">GET</span>
+                </uib-tab-heading>
+                <div class="p-2">
+                    <p>
+                        接口访问地址
+                    </p>
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               ng-model="getUrl" id="js-text1">
+<!--                        <span class="input-group-btn">-->
+                            <button type="button"
+                                    class="btn btn-defaul"
+                                    ngclipboard=""
+                                    data-clipboard-target="#js-text1">
+                                <i class="fa fa-clipboard"></i></button>
+                            <button type="button"
+                                    class="btn btn-info"
+                                    ng-click="getDictByCode()">
+                            <i class="fa fa-send"></i>测试</button>
+
+<!--                        </span>-->
+
+                    </div>
+
+                    <br>
+                    <p>
+                        结果
+                    </p>
+                    <div style="font-variant: all-petite-caps; max-height: 300px;overflow-y: scroll;">
+                        <pre style="word-wrap: break-word; white-space: pre-wrap;">{{folder}}</pre>
+                    </div>
+
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</form>

@@ -1,0 +1,64 @@
+<style>
+    .help-block {
+        margin: 0px;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="myParamLabel" ng-if="!vm.detailSign">
+        <span  ng-show="vm.param.id == null">{{'adm.content.add_param' | translate}}</span>
+        <span  ng-show="vm.param.id != null">{{'adm.content.update_param' | translate}}</span>
+    </h4>
+    <h4 class="modal-title" ng-if="vm.detailSign">
+        <span>{{'adm.content.param_desc' | translate}}</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
+    </button>
+</div>
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <div class="modal-body">
+        <div class="form-group" ng-if="vm.detailSign">
+            <label class="control-label"  for="field_name">ID</label>
+            <input type="text" class="form-control" ng-model="vm.param.id" ng-disabled="vm.detailSign"/>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label"  for="field_name">{{'adm.content.param_name' | translate}}</label>
+            <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1
+                   ng-maxlength=50 ng-model="vm.param.name" ng-disabled="vm.detailSign"/>
+        </div>
+        <div class="form-group" ng-class="{'has-error':editForm.value.$error.pattern}">
+            <label class="control-label" for="field_value">{{'adm.content.param_value' | translate}}</label>
+            <textarea type="text" class="form-control" name="value" id="field_value" rows="5"
+                      ng-model="vm.param.value" ng-disabled="vm.detailSign"></textarea>
+            <p class="help-block">
+                <span ng-show="editForm.value.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                <span ng-show="editForm.value.$error.pattern">{{'adm.content.param_value_tips' | translate}}</span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="control-label"  for="field_description">{{'common.entity.detail.description' | translate}}</label>
+            <input type="text" class="form-control" name="description" id="field_description" ng-minlength=1
+                   ng-maxlength=100 ng-model="vm.param.description" ng-disabled="vm.detailSign"/>
+            <p class="help-block">
+                            <span ng-show="editForm.desc.$error.maxlength" data-translate="entity.validation.maxlength"
+                                  translate-value-max="100">This field cannot be longer than 100 characters.</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="modal-footer" ng-if="vm.detailSign">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" >
+            <span class="fa fa-arrow-left">{{'common.entity.action.back' | translate}}</span>
+        </button>
+    </div>
+    <div class="modal-footer" ng-if="!vm.detailSign">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()" >
+            <span >{{'common.action.cancel'|translate}}</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary" uaa-has-permission="adm:edit:*">
+            <span >{{'common.action.save'|translate}}</span>
+        </button>
+    </div>
+
+</form>

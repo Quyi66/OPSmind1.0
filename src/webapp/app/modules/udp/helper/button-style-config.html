@@ -1,0 +1,36 @@
+<div class="form-group">
+    <label class="control-label" for="f_label">{{'udp.wc.button.label' | translate}}</label>
+    <div class="form-control-wrapper">
+        <input class="form-control w-sm" ng-model="$ctrl.editCopy.label" id="f_label" maxlength="100">
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'udp.wc.button.icon' | translate}}</label>
+    <div class="form-control-wrapper">
+        <op-iconpicker ng-model="$ctrl.editCopy.icon" class="me-2"></op-iconpicker>
+        <select class="form-select d-inline-block" ng-model="$ctrl.editCopy.layout" style="width:8rem;"
+                ng-options="layout.value as layout.title for layout in $ctrl.buttonLayouts">
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'common.term.color' | translate}}</label>
+    <div class="form-control-wrapper">
+        <udp-theme-selector the-model="$ctrl.editCopy.color" model-type="string"></udp-theme-selector>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'common.term.size' | translate}}</label>
+    <div class="form-control-wrapper">
+        <select class="form-select w-sm" ng-options="size.value as size.title for size in $ctrl.buttonSizes"
+                ng-model="$ctrl.editCopy.size"></select>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'common.term.style' | translate}}</label>
+    <div class="form-control-wrapper">
+        <select class="form-select" op-select style="width:100%;" multiple ng-model="$ctrl.editCopy.buttonStyles"
+                ng-options="style.value as style.title for style in $ctrl.availButtonStyles">
+        </select>
+    </div>
+</div>

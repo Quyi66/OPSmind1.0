@@ -1,0 +1,108 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'gfs.selector.basic_setting' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'gfs.selector.database_type' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="opx-check-group opx-primary">
+                    <input type="radio" ng-model="uwProps.core.repoType" value="git"
+                           id="js_fwc_repotype1"><label
+                        for="js_fwc_repotype1">{{'gfs.selector.script_library' | translate}}</label>
+                    <input type="radio" ng-model="uwProps.core.repoType" value="staticfs"
+                           id="js_fwc_repotype2"><label
+                        for="js_fwc_repotype2">{{'gfs.selector.file_server' | translate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'gfs.selector.file_options' | translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" ng-model="uwProps.core.multipleSelect"
+                           id="js_fwc_multipleselect"><label
+                        for="js_fwc_multipleselect">{{'gfs.selector.allow_multiple_selection' | translate}}</label>
+                </div>
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" ng-model="uwProps.core.downloadButton"
+                           id="js_fwc_download"><label
+                        for="js_fwc_download">{{'gfs.selector.show_download_button' | translate}}</label>
+                </div>
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" ng-model="uwProps.core.refreshButton"
+                           id="js_fwc_refresh"><label
+                        for="js_fwc_refresh">{{'gfs.selector.refresh' | translate}}</label>
+                </div>
+                <div class="checkbox checkbox-inline checkbox-primary">
+                    <input type="checkbox" ng-model="uwProps.core.searchButton"
+                           id="js_fwc_search"><label
+                        for="js_fwc_search">{{'gfs.selector.showSearch' | translate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'gfs.selector.restricted_directory' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" ng-model="uwProps.core.strictDir" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'gfs.selector.sync_page_parameters' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" ng-model="uwProps.core.exportParam">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'gfs.selector.parameter_value_type' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="uwProps.core.exportType">
+                    <option value="string">{{'gfs.selector.string' | translate}}</option>
+                    <option value="array">{{'gfs.selector.array' | translate}}option>
+                    <option value="object" ng-if="!uwProps.core.multipleSelect">
+                        {{'gfs.selector.single_object' | translate}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label"></label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" ng-model="uwProps.core.rememberSelection"
+                           id="js_fwc_rememberselection"><label
+                        for="js_fwc_rememberselection">{{'gfs.selector.remember_last_choice' | translate}}</label>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <!--    <uib-tab>-->
+    <!--        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>-->
+    <!--    </uib-tab>-->
+    <!--    <uib-tab>-->
+    <!--        <uib-tab-heading><i class='fa fa-lock'></i> {{'udp.wc.tab.access'|translate}}</uib-tab-heading>-->
+    <!--    </uib-tab>-->
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'gfs.selector.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'gfs.selector.label' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'gfs.selector.operation_mode' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <div class="opx-check-group">
+                        <input type="radio" ng-model="uwProps.display.viewMode" value="dialog" id="js_fwc_viewmode_1">
+                        <label for="js_fwc_viewmode_1">{{'gfs.selector.buttons_and_bullets' | translate}}</label>
+                        <input type="radio" ng-model="uwProps.display.viewMode" value="browser" id="js_fwc_viewmode_2">
+                        <label for="js_fwc_viewmode_2">{{'gfs.selector.document_list' | translate}}</label>
+                    </div>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'gfs.selector.attribute_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

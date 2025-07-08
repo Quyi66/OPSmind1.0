@@ -1,0 +1,126 @@
+<div ng-if="$ctrl.error">
+    <div class="alert alert-danger">{{$ctrl.error}}</div>
+</div>
+<div class="h-100" ng-if="!$ctrl.error">
+    <div class="position-absolute mt-3" style="right:0;"
+         ng-if="$ctrl.autoRefreshEnabled">
+        <button ng-click="$ctrl.toggleAutoRefresh()" class="btn"
+                ng-class="$ctrl.autoRefresh?'btn-secondary':'btn-default'"
+                title="{{'common.entity.action.refresh' | translate}}"><i
+                class="far fa-sync-alt" ng-class="{'fa-spin':$ctrl.autoRefresh}"></i>
+        </button>
+        <!--        <button ng-click="$ctrl.refresh()" class="btn btn-outline-primary" title="{{'common.entity.action.refresh' | translate}}"><i-->
+        <!--                class="fa fa-sync-alt"></i> {{'common.entity.action.refresh' | translate}}-->
+        <!--        </button>-->
+    </div>
+    <uib-tabset class="tab-container h-100 scroll-y op-tab-pane-scroll" type="mdc-op">
+        <uib-tab>
+            <uib-tab-heading><i class="fa fa-info-circle"></i> {{'jao.result.detail.summary' | translate}}
+            </uib-tab-heading>
+            <div ng-if="!$ctrl.result" op-loading=""></div>
+            <div ng-if="$ctrl.result">
+                <div class="mb-3 clearfix d-flex align-items-center">
+                <span class="badge bg-{{$ctrl.JOB_STATUS[$ctrl.result.status].color}}"
+                      title="{{'jao.result.detail.status' | translate}}">{{$ctrl.result.status}}</span>
+                    <div ng-bind-html="$ctrl.result._stats" class="ms-3 d-flex align-items-center"></div>
+                    <span class="text-muted ms-auto small">{{$ctrl.runId}}</span>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                <span class="badge bg-secondary"
+                      title="{{'jao.result.detail.duration' | translate}}">{{($ctrl.result.endTime) | diff:$ctrl.result.startTime}}</span>
+                    <span class="ms-3 text-muted">{{$ctrl.result.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</span> <span
+                        class="ps-3 pe-3"><i class="fa fa-long-arrow-right"></i></span> <span
+                        class="text-muted">{{($ctrl.result.endTime) | date:'HH:mm:ss'}}</span>
+                    <button class="btn js-op-button btn-secondary btn-sm ms-auto small"
+                            ng-if="'WAITING,RUNNING,CALLBACK'.indexOf($ctrl.result.status) === -1 && $ctrl.result.jobType === 'script' "
+                            ng-click="$ctrl.rerunJob($ctrl.runId)"
+                    >
+                        <i class="fa fa-rocket">&nbsp;{{'jao.log.rerun' | translate}}</i>
+                    </button>
+                </div>
+                <pre class="mb-3 text-danger" ng-if="$ctrl.result.error"
+                     style="max-height:10em;overflow:auto;">{{::$ctrl.result.error}}</pre>
+            </div>
+            <div>
+                <div ng-repeat="batch in $ctrl.result.detail.batches" class="card mb-3">
+                    <div class="card-header bg-light d-flex align-items-center">
+                    <span class="small text-{{$ctrl.JOB_STATUS[batch.status].color}} me-3"
+                          title="{{$ctrl.JOB_STATUS[batch.status].title}}"><i
+                            class="fa fa-circle"></i></span>
+                        <span>{{batch.batch}}</span>
+                        <span class="ms-auto">{{'jao.common.host' | translate}} <span
+                                class="badge bg-secondary rounded-pill">{{batch.machineCount}}</span></span>
+                    </div>
+                    <div class="card-body">
+                        <div ng-repeat="(name,step) in batch.steps"
+                             class="jao-runstep d-flex flex-row align-items-start">
+                            <div style="min-width:8em;" class="px-3"><span
+                                    class="small text text-{{$ctrl.JOB_STATUS[step.status].color}}"
+                                    title="{{$ctrl.JOB_STATUS[step.status].title}}"><i
+                                    class="fa fa-circle"></i></span>
+                                <span class="jao-runstep-name">{{$ctrl.STEP_NAMES[name]}}</span>
+                            </div>
+                            <!--                        <div class="jao-runstep-message flex-fill" ng-bind-html="step.message | markdown"-->
+                            <!--                        style="max-height:10em;overflow:auto;"></div>-->
+                            <pre class="jao-runstep-message flex-fill"
+                                 style="max-height:10em;overflow:auto;">{{step.message}}</pre>
+                            <span class="badge bg-secondary font-weight-normal ms-auto">{{(step.end || $ctrl.dateNow) | diff:step.start}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="$ctrl.result.status==='RUNNING' && ($ctrl.result.jobType==='script' || $ctrl.result.jobType==='command' || $ctrl.result.jobType==='process')">
+                <jao-ansible-progress run-id="$ctrl.runId" auto-refresh="$ctrl.autoRefresh"></jao-ansible-progress>
+            </div>
+            <!--        <div class="mt-3">-->
+            <!--            &lt;!&ndash; Bad performance for 10M result  &ndash;&gt;-->
+            <!--            <a href="" ng-click="$ctrl.showDetailJson=!$ctrl.showDetailJson">查看详情 <i-->
+            <!--                    class="fa fa-angle-{{$ctrl.showDetailJson?'up':'down'}}"></i></a>-->
+            <!--            <pre ng-if="$ctrl.showDetailJson" class="bg-light p-3">{{$ctrl.result | json}}</pre>-->
+            <!--        </div>-->
+        </uib-tab>
+        <uib-tab ng-if="$ctrl.result.jobType==='process'">
+            <uib-tab-heading><i class="fa fa-random"></i> {{'jao.result.detail.process' | translate}}</uib-tab-heading>
+            <jao-process-modeler process-model="$ctrl.processModel"
+                                 options="{readonly:true,showElems:'diagram'}"
+                                 register-modeler="$ctrl.registerModeler($modeler)"></jao-process-modeler>
+        </uib-tab>
+        <uib-tab
+                ng-if="$ctrl.result.jobType==='script' || $ctrl.result.jobType==='command'|| $ctrl.result.jobType==='process'">
+            <uib-tab-heading><i class="fa fa-list"></i> {{'jao.result.detail.host_view' | translate}}</uib-tab-heading>
+            <jao-ao-view contents="$ctrl.ansibleContents"></jao-ao-view>
+        </uib-tab>
+        <uib-tab
+                ng-if="$ctrl.result.jobType==='script' || $ctrl.result.jobType==='command'|| $ctrl.result.jobType==='process'">
+            <uib-tab-heading><i class="fa fa-table"></i> {{'jao.result.detail.list_view' | translate}}</uib-tab-heading>
+            <jao-ao-view-table contents="$ctrl.ansibleContents"></jao-ao-view-table>
+        </uib-tab>
+        <uib-tab
+                ng-if="$ctrl.result.jobType==='script' || $ctrl.result.jobType==='command'|| $ctrl.result.jobType==='process'">
+            <uib-tab-heading><i class="fa fa-brackets-curly"></i> {{'jao.result.detail.raw_output' | translate}}
+            </uib-tab-heading>
+            <a href="{{$ctrl.getDownloadURL()}}" class="btn btn-outline-default ms-auto"><i
+                    class="fa fa-file-export"></i> {{'jao.result.detail.download_ansible_output' | translate}}</a>
+            <pre>{{$ctrl.ansibleRawOutput}}</pre>
+        </uib-tab>
+        <uib-tab
+                ng-if="$ctrl.result.jobType==='script' || $ctrl.result.jobType==='command'|| $ctrl.result.jobType==='process'">
+            <uib-tab-heading><i class="fa fa-list-alt"></i> Output</uib-tab-heading>
+            <ansible-log-viewer run-id="$ctrl.runId"></ansible-log-viewer>
+        </uib-tab>
+        <uib-tab ng-if="$ctrl.result.jobType==='rest'">
+            <uib-tab-heading>{{'jao.result.detail.api_output' | translate}}</uib-tab-heading>
+            <ul class="mb-3 list-inline list-unstyled">
+                <li title="{{'jao.result.detail.status_code' | translate}}"><span
+                        class="badge bg-{{$ctrl.JOB_STATUS[$ctrl.result.status].color}}">{{$ctrl.result.detail.statusCode}}</span>
+                </li>
+                <li title="{{'jao.result.detail.content_type' | translate}}"><span
+                        class="">{{$ctrl.result.detail.contentType}}</span></li>
+            </ul>
+            <pre ng-if="$ctrl.result.error" class="alert alert-danger">{{$ctrl.result.error}}</pre>
+            <div ng-if="!$ctrl.result.error">
+                <pre ng-if="!$ctrl.result.error" class="bg-light p-3">{{$ctrl.result.data | json}}</pre>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>

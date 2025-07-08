@@ -1,0 +1,51 @@
+<div class="opx-layout-hflex" __uaa-has-permission="cac:view:*">
+    <div class="opx-sidebar bg-light">
+<!--        <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed">-->
+<!--            <a class="opx-navbar-title" ng-click="cacVm.views.chosed = ''" ui-sref="app.cac.template.square" ui-sref-opts="{reload:'app.cac.template.square'}">{{'cac.index.square' | translate}}</a>-->
+<!--        </nav>-->
+        <div class="opx-sidebar-body">
+            <div class="opx-treenav">
+                <div class="opx-treenav-item">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'square'" title="{{'cac.common.square' | translate}}{{'app_uim.menu.dashboard' | translate}}"
+                       ui-sref="app.cac.template.square"
+                       ui-sref-opts="{reload:'app.cac.template',notify:true}">
+                        <i class="fad fa-fw fa-th-large"></i> {{'cac.common.square' | translate}}{{'app_uim.menu.dashboard' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'template'" title="{{'cac.index.template' | translate}}"
+                       ui-sref="app.cac.template.list"
+                       ui-sref-opts="{reload:'app.cac.template',notify:true}">
+                        <i class="fad fa-fw fa-list-alt"></i> {{'cac.index.template' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item">
+                    <a ng-click="cacVm.views.chosed = 'history'"
+                       ng-class="cacVm.views.chosed == 'history' ? 'active' : ''"
+                       title="{{'cac.index.job' | translate}}"
+                       ui-sref="app.cac.job.list({templateId:''})"
+                       ui-sref-opts="{reload:'app.cac.job',notify:true}">
+                        <i class="fad fa-fw fa-history"></i> {{'cac.index.job' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="cac:edit:*">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'config'" title="{{'cac.index.template' | translate}}"
+                       ui-sref="app.cac.export.list"
+                       ui-sref-opts="{reload:'app.cac.export',notify:true}">
+                        <i class="fad fa-fw fa-cog"></i> {{'cac.index.patrol_configuration' | translate}}
+                    </a>
+                </div>
+                <div class="opx-treenav-item" uaa-has-permission="cac:edit:*" ng-if="cacVm.views.emailMenuEnabled === 'yes'">
+                    <a ui-sref-active="active" ng-click="cacVm.views.chosed = 'email'" title="{{'cac.common.mail_configuration' | translate}}"
+                       ui-sref="app.cac.email.list"
+                       ui-sref-opts="{reload:'app.cac.email',notify:true}">
+                        <i class="fad fa-fw fa-envelope"></i> {{'cac.common.mail_configuration' | translate}}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="opx-flex-fill scroll-y" ui-view="cacList">
+    </div>
+</div>

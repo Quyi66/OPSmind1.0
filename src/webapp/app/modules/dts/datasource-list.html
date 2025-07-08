@@ -1,0 +1,56 @@
+<nav class="navbar navbar-light bg-light">
+    <div class="navbar-header">
+        <ol class="breadcrumb">
+            <li class="active">$translate.instant('dts.datasource.data_service')</li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper">
+    <div xclass="card-body">
+        <div class="list-group">
+            <div class="list-group-item clearfix">
+                <a ui-sref="app.dts_datasource_new" class="btn btn-primary pull-right"><i
+                        class="fa fa-plus"></i> {{'dts.commons.add' | translate}}</a>
+                <h4>{{'dts.datasource.title' | translate}} ({{datasources.length}})</h4>
+            </div>
+            <div ng-if="datasources.length===0" class="list-group-item vbox">
+                <div class="op-blank-slate">
+                    <div class="op-blank-slate-body">
+                        <div class="op-blank-slate-icon">
+                            <i class="fa fa-inbox op-fa-8x"></i>
+                        </div>
+                        <p>{{'dts.list.no_datasource_defined' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="datasource in datasources" class="list-group-item clearfix">
+                <div class="pull-left bg-light text-center img-circle m-r" style="width:48px">
+                    <i class="fa fa-2x fa-datasource-{{::datasource.type}}" style="line-height:48px"
+                       title="{{::datasource.type}}"></i>
+                </div>
+                <div class="pull-right">
+                    <a class="btn btn-default" ui-sref="app.dts_datasource_edit({id:datasource.id})"><i
+                            class="fa fa-pencil" title="{{'dts.commons.edit' | translate}}"></i> </a>
+                    <a class="btn btn-default" ng-click="deleteDatasource(datasource)"><i
+                            class="fa fa-times" title="{{'dts.commons.delete' | translate}}"></i> </a>
+                    <a class="btn btn-default"
+                       ui-sref="app.dts_dataset_new({type:datasource.type,datasourceName:datasource.name})"><i
+                            class="fa fa-cube" title="{{'dts.dataset.action.create' | translate}}"></i> </a>
+                </div>
+                <div class="clear">
+                    <span class="h4"> {{::datasource.name}}</span>
+                    <div class="m-t-sm">
+                        <ul class="list list-unstyled d-inline-block m-b-xs"
+                            ng-repeat="dataset in datasource.datasetDTOList">
+                            <li class="m-r"><a class="badge bg-secondary"
+                                               ui-sref="app.ssc.dts_dataset_edit({type:dataset.type,id:dataset.id})">{{dataset.name}}</a>
+                                <label style="cursor: pointer;" ng-click="showRestApi(dataset)"
+                                       class="badge-success badge">api</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

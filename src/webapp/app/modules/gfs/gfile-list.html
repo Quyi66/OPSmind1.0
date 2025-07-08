@@ -1,0 +1,383 @@
+<div class="d-flex">
+    <ol class="breadcrumb me-auto">
+        <li class="breadcrumb-item" ng-class="{'active':crumb.path===$ctrl.dir}" ng-repeat="crumb in $ctrl.breadcrumbs">
+            <a ng-if="crumb.path!==$ctrl.dir" ng-click="$ctrl.goDir(crumb.path)">{{crumb.name || '~'}}</a>
+            <span ng-if="crumb.path===$ctrl.dir">{{crumb.name || '~'}}</span>
+        </li>
+        <!--        <li>-->
+        <!--            <button class="btn btn-default ms-3">剪切</button>-->
+        <!--        </li>-->
+    </ol>
+    <div ng-if="$ctrl.options.allowAddFile">
+        <div class="btn-group" uaa-has-permission="gfs:edit">
+            <button class="btn btn-outline-default " title="{{'gfs.list.cut_title' | translate}}"
+                    ng-click="$ctrl.cut()"
+                    ng-disabled="$ctrl.selectionMap|isEmpty">
+                <i class="fa fa-fw fa-cut"></i>
+                <span class="badge bg-pill badge-primary"
+                      ng-hide="$ctrl.clipboard.data|isEmpty">{{$ctrl.clipboard.data | length}}</span>
+            </button>
+            <button class="btn btn-outline-default" title="{{'gfs.list.paste_title' | translate}}"
+                    ng-click="$ctrl.paste()"
+                    ng-disabled="!$ctrl.clipboard.canPaste">
+                <i class="fa fa-fw fa-paste"></i>
+            </button>
+            <button class="btn  btn-outline-default" title="{{'gfs.list.delete_title' | translate}}"
+                    ng-click="$ctrl.deleteFiles()"
+                    uaa-has-permission="gfs:edit" ng-disabled="$ctrl.selectionMap|isEmpty">
+                <i class="fa fa-fw fa-trash-alt"></i>
+            </button>
+            <button class="btn  btn-outline-default" title="{{'gfs.list.download_dir_title' | translate}}"
+                    ng-click="$ctrl.downloadFiles()"
+                    uaa-has-permission="gfs:edit" ng-disabled="$ctrl.selectionMap|isEmpty">
+                <i class="fa fa-download"></i>
+            </button>
+        </div>
+
+        <div class="btn-group" uaa-has-permission="gfs:approve" ng-if="$ctrl.repoType=='git'">
+            <button class="btn btn-outline-default " title="{{'gfs.list.down_title' | translate}}"
+                    data-bs-toggle="dropdown"
+                    ng-click="$ctrl.showFileStatus('patch-start')"
+                    ng-disabled="$ctrl.selectionMap|isEmpty">
+                <i class="fa fa-fw fa-stop-circle"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end js-inside-click px-5 py-3" style="min-width: 20rem;">
+                <gfs-file-change-status ng-if="$ctrl.currentFile==='patch-start'"
+                                        repo-type="$ctrl.repoType" file="$ctrl.selectedFiles"
+                                        after-change="$ctrl.afterChangeStatus"
+                                        watch-refresh="$ctrl.refreshFileStatusMark">
+                </gfs-file-change-status>
+            </div>
+        </div>
+
+        <div class="btn-group" uaa-has-permission="gfs:*:*">
+            <button class="btn btn-outline-default " title="{{'gfs.basic.repair' | translate}}"
+                    ng-click="$ctrl.repairJgit()" uaa-has-permission="gfs:*:*">
+                <i class="fa fa fa-tools"></i>
+            </button>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-outline-default " title="{{'gfs.basic.refresh' | translate}}"
+                    ng-click="$ctrl.refresh()">
+                <i class="fa fa fa-sync-alt"></i>
+            </button>
+        </div>
+
+        <div class="btn-group" ng-if="$ctrl.repoType=='git'">
+            <button class="btn btn-outline-default " title="{{'gfs.basic.base_repo' | translate}}"
+                    ng-click="$ctrl.goBaseRepo()">
+                <i class="fa fa fa-scroll"></i>
+            </button>
+        </div>
+
+        <div class="btn-group" uaa-has-permission="gfs:edit">
+            <button class="btn btn-outline-default" title="{{'gfs.list.add_folder_title' | translate}}"
+                    ng-click="$ctrl.addFolder()">
+                <i class="fa fa-fw fa-folder-plus"></i> {{'gfs.list.folder' | translate}}
+            </button>
+            <button class="btn btn-outline-default" title="{{'gfs.list.online_script' | translate}}"
+                    ng-if="$ctrl.repoType=='git'"
+                    ng-click="$ctrl.addOnlineFile()">
+                <i class="fa fa-file-code"></i> {{'gfs.list.script' | translate}}
+            </button>
+            <button class="btn  btn-outline-default" title="{{'gfs.list.add_file' | translate}}"
+                    ng-click="$ctrl.addFile()">
+                <i class="fa fa-fw fa-file-upload"></i> {{'gfs.list.file' | translate}}
+            </button>
+            <button class="btn  btn-outline-default" title="{{'gfs.list.sync_file_title' | translate}}"
+                    ng-if="$ctrl.repoType=='git'"
+                    uaa-has-permission="sysadmin:*:*"
+                    ng-click="$ctrl.syncFile()">
+                <i class="fa fa-cloud"></i> {{'gfs.list.sync_file' | translate}}
+            </button>
+        </div>
+        <div class="btn-group" uaa-has-permission="gfs:edit" ng-if="$ctrl.repoType=='git'">
+            <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.basic.pull_desc' | translate}}"
+                    uaa-has-permission="sysadmin:*:*"
+                    ng-click="$ctrl.gitPull()">
+                <i class="fa fa-cloud-download-alt"></i> {{'gfs.basic.pull' | translate}}
+            </button>
+            <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.basic.push_desc' | translate}}"
+                    uaa-has-permission="sysadmin:*:*"
+                    ng-click="$ctrl.gitPush()">
+                <i class="fa fa-cloud-upload-alt"></i> {{'gfs.basic.push' | translate}}
+            </button>
+            <!--            <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.list.settings' | translate}}"-->
+            <!--                    uaa-has-permission="sysadmin:*:*"-->
+            <!--                    ng-click="$ctrl.repoSettings()">-->
+            <!--                <i class="fa fa-cogs"></i> {{'gfs.list.settings' | translate}}-->
+            <!--            </button>-->
+            <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.list.git_list' | translate}}"
+                    uaa-has-permission="sysadmin:*:*"
+                    ng-click="$ctrl.repoList()">
+                <i class="fa fa-list-alt"></i> {{'gfs.list.git_list' | translate}}
+            </button>
+        </div>
+        <div class="btn-group" uaa-has-permission="gfs:edit" ng-if="$ctrl.repoType=='git' || $ctrl.repoType=='staticfs'"
+             style="margin-right: 5px;display: inline">
+            <input id="search" class="btn btn-outline-default " type="search"
+                   placeholder="{{'gfs.list.search_input'|translate}}"
+                   aria-controls="datatable" ng-model="$ctrl.searchText"
+                   ng-keyup="$event.keyCode==13 && $ctrl.search()">
+            <!--            <span class="input-group-addon btn btn-secondary" ng-keyup="$event.keyCode==13 && $ctrl.search()">Search</span>-->
+        </div>
+
+        <div class="dropdown" ng-if="$ctrl.repoType=='git'">
+            <button type="button" class="btn opx-btn-flat opx-btn-icon"
+                    data-bs-toggle="dropdown"
+                    title="{{'gfs.list.file_state' | translate}}"><i
+                    class="fa fa-info"></i>
+            </button>
+            <div class="dropdown-menu">
+                <div style="min-width:20rem;">
+                    <dl class="gfs-help-doc">
+                        <dt>
+                            <div class="gfs-stage-exist">
+                                <span class="gfs-ff-stage">filename</span>
+                            </div>
+                        </dt>
+                        <dd>{{'gfs.list.help_wait_approve' | translate}}</dd>
+                        <dt>
+                            <div class="gfs-stage-rejected">
+                                <span class="gfs-ff-stage">filename</span>
+                            </div>
+                        </dt>
+                        <dd>{{'gfs.list.help_refuse' | translate}}</dd>
+                        <dt>
+                            <div class="gfs-master-disabled">
+                                <span class="gfs-ff-name">filename</span>
+                            </div>
+                        </dt>
+                        <dd>{{'gfs.list.help_file_deact' | translate}}</dd>
+                        <dt>
+                            <div class="gfs-missing-file">
+                                <span class="gfs-ff-name">filename</span> <span class="gfs-ff-warn"></span>
+                            </div>
+                        </dt>
+                        <dd>{{'gfs.list.help_no_found_file' | translate}}</dd>
+                        <dt>
+                            <div class="gfs-missing-rec">
+                                <span class="gfs-ff-name">filename</span> <span class="gfs-ff-warn"></span>
+                            </div>
+                        </dt>
+                        <dd>{{'gfs.list.help_no_record_found' | translate}}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown" ng-if="$ctrl.options.canApprove" uaa-has-permission="gfs:approve">
+        <button class="btn btn-primary" title="{{'gfs.list.audit_title' | translate}}" data-bs-toggle="dropdown"
+                ng-click="$ctrl.showFileStatus('patch-approve')"
+                ng-disabled="$ctrl.selectionMap|isEmpty">
+            <i class="fa fa-fw fa-comment-alt-edit"></i> {{'gfs.list.audit' | translate}}
+        </button>
+        <div class="dropdown-menu dropdown-menu-end px-3 py-3 js-inside-click" style="min-width: 20rem;">
+            <gfs-file-change-status ng-if="$ctrl.options.canApprove && $ctrl.currentFile==='patch-approve'"
+                                    repo-type="$ctrl.repoType" file="$ctrl.selectedFiles"
+                                    after-change="$ctrl.afterChangeStatus"
+                                    watch-refresh="$ctrl.refreshFileStatusMark">
+            </gfs-file-change-status>
+        </div>
+    </div>
+    <div class="dropdown" style="margin-left: 10px" ng-if="$ctrl.options.canApprove" uaa-has-permission="gfs:view">
+        <button class="btn btn-primary" title="{{'gfs.vtable.approval_history' | translate}}"
+                ng-click="$ctrl.showApprovalHistory()">
+            <i class="fa fa-history"></i> {{'gfs.vtable.approval_history' | translate}}
+        </button>
+    </div>
+    <div ng-if="$ctrl.options.useSelector && $ctrl.options.refreshButton" style="margin-right: 0.5rem">
+        <button class="btn btn-default" title="{{'gfs.list.refresh_title' | translate}}"
+                ng-click="$ctrl.refreshPage()">
+            <i class="fa fa-sync-alt"></i> {{'gfs.list.refresh' | translate}}
+        </button>
+    </div>
+    <div ng-if="$ctrl.options.useSelector && $ctrl.options.downloadButton">
+        <button class="btn btn-default" title="{{'gfs.list.download_title' | translate}}"
+                ng-click="$ctrl.downloadFiles()"
+                ng-disabled="$ctrl.selectionMap|isEmpty">
+            <i class="fa fa-download"></i> {{'gfs.list.download' | translate}}
+        </button>
+    </div>
+    <div ng-if="$ctrl.options.useSelector && $ctrl.options.searchButton" style="margin-left: 5px">
+        <input id="component-search" class="btn btn-outline-default " type="search"
+               placeholder="{{'gfs.list.search_input' | translate}}"
+               aria-controls="datatable" ng-model="$ctrl.searchText" ng-keyup="$event.keyCode==13 && $ctrl.search()">
+    </div>
+</div>
+<div class="repeater-container">
+    <div class="opx-table table-hover js-file-list gfs-repo-{{$ctrl.repoType}}">
+        <div class="opx-table-thead" ng-class="{'thead-dark':$ctrl.repoType==='stage'}">
+            <div class="opx-table-tr">
+                <div class="opx-table-th" ng-if="$ctrl._multiSelect || $ctrl._singleSelect" style="width:2rem;">
+                    <div ng-if="$ctrl._multiSelect" class="checkbox checkbox-primary checkbox-inline">
+                        <input type="checkbox" ng-model="$ctrl.allChecked" ng-click="$ctrl.selectAll()"><label></label>
+                    </div>
+                </div>
+                <div class="opx-table-th sorting" data-sort="name" style="flex: 1;width:30rem;">
+                    {{'gfs.list.name' | translate}}
+                </div>
+                <div class="opx-table-th" style="flex:1;"
+                     ng-if="($ctrl.repoType==='git' && !$ctrl.hideDesc) || ($ctrl.repoType==='stage' && !$ctrl.hideDesc)">
+                    {{'gfs.list.desc' | translate}}
+                </div>
+                <div class="opx-table-th sorting" data-sort="size" style="width:6rem;">{{'gfs.list.size' | translate}}
+                </div>
+                <div class="opx-table-th sorting" data-sort="lastModified" style="width:8rem;">
+                    {{'gfs.list.modified_date' | translate}}
+                </div>
+                <div class="opx-table-th" style="width:4rem;"
+                     ng-if="$ctrl.repoType!=='staticfs' && ($ctrl.options.showStatus||$ctrl.options.showStageStatus)">
+                    {{'gfs.list.state' | translate}}
+                </div>
+                <!--        <div class="opx-table-th" ng-if="$ctrl.options.showActions" style="width:8rem;">&nbsp;</div>-->
+            </div>
+        </div>
+        <div class="opx-table-tbody opx-overflow-shadow scroll-y" style="max-height:40rem;overflow: visible;">
+            <div class="opx-table-tr op-hover-trigger {{file._statusClass}}"
+                 ng-repeat="file in $ctrl.fileList track by $index" data-file-id="{{file.id}}"
+                 ng-class="{'text-muted':(file._excluded && !file.directory),'table-primary':!file.directory && ($ctrl.selectionMap[file._key]||$ctrl.selectionMap._key===file._key)}">
+                <div class="opx-table-td" style="width:2rem;" ng-if="$ctrl._multiSelect || $ctrl._singleSelect">
+                    <div ng-if="file._selectable">
+                        <div ng-if="$ctrl._multiSelect" class="checkbox checkbox-inline">
+                            <input type="checkbox" title="{{file.id}} {{file._key}}" ng-click="$ctrl.selectFile(file)"
+                                   ng-checked="!!$ctrl.selectionMap[file._key]"><label></label>
+                            <!--                                   ng-disabled="!!file.conflict || (!$ctrl.options.canSelectDirectory && file.directory)"-->
+                        </div>
+                        <div ng-if="$ctrl._singleSelect" class="radio radio-inline">
+                            <input type="radio" title="{{file.id}}" ng-checked="!!$ctrl.selectionMap[file._key]"
+                                   name="gfile"
+                                   ng-click="$ctrl.selectFile(file)"
+                                   ng-value="file"><label></label>
+                            <!--                                   ng-disabled="!!file.conflict || (!$ctrl.options.canSelectDirectory && file.directory)"-->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="opx-table-td d-flex justify-content-between" style="flex:1;width:30rem;position:relative;">
+                    <i ng-if="file._iconCss" class="{{file._iconCss}} me-2"
+                       style="width:1.25rem;min-width:1.25rem;padding-top:0.25rem;font-size:1rem;"></i>
+                    <a class="d-flex w-100">
+                        <div class="flex-fill text-ellipsis" ng-click="$ctrl.goFile(file)">
+                            <span class="gfs-ff-name" title="{{file._statusDesc}}">{{file.name}}</span>
+                            <i ng-if="file._warnText" class="gfs-ff-warn" title="{{file._warnText}}"></i>
+                            <i ng-if="file._stageIndicator" ng-click="$ctrl.gotoStage(file)" class="gfs-ff-stage"
+                               title="{{file._stageIndicator.text}}"></i>
+                            <div class="help-block" title="{{file.description}}"
+                                 ng-if="file.description && $ctrl.hideDesc">{{file.description}}
+                            </div>
+                        </div>
+                    </a>
+                    <div ng-if="$ctrl.options.showActions && file.conflict!=='RecordNotFound' && !file._isParentDir && !$ctrl.options.canApprove && ((file.directory && file.canDelete)||!file.directory)"
+                         class="op-hover-to-show text-nowrap dropdown __op-hover-dropdown"
+                         style="position:absolute;right:0.25rem;top:0.25rem;">
+                        <button class="btn btn-sm btn-default opx-btn-icon dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown"><i
+                                class="fa fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item"
+                               ng-if="!file.directory"
+                               ng-click="$ctrl.singleDownloadFile(file)">
+                                <i class="fa fa-file-download fa-fw"></i>
+                                {{'gfs.content.download_file' | translate}}
+                            </a>
+                            <a class="dropdown-item" ng-if="!file.directory"
+                               ng-click="$ctrl.editFile(file)">
+                                <i class="fa fa-pencil fa-fw"></i> {{'gfs.list.modify_info' | translate}}
+                            </a>
+                            <a class="dropdown-item"
+                               ng-if="!file._isParentDir && !$ctrl.options.canApprove && file.canDelete"
+                               ng-click="$ctrl.deleteFiles([file])">
+                                <i class="fa fa-trash-alt fa-fw"></i>
+                                {{'gfs.list.delete_file' | translate}}
+                            </a>
+                            <a class="dropdown-item" ng-if="file.directory && $ctrl.repoType==='git' && file.canUpdate"
+                               ng-click="$ctrl.editDir(file)">
+                                <i class="fa fa-pencil fa-fw"></i> {{'gfs.list.modify_info' | translate}}
+                            </a>
+                            <a class="dropdown-item"
+                               ng-if="!file.directory && $ctrl.options.canTestRun && !(file._stageExists&&file._stageIsThis)"
+                               ng-click="$ctrl.testRun(file)" uaa-has-permission="gfs:run">
+                                <i class="fa fa-chevron-right fa-fw"></i>
+                                {{'gfs.list.test_run' | translate}}
+                            </a>
+                            <a class="dropdown-item"
+                               ng-if="!file.directory && !$ctrl.options.canApprove && $ctrl.repoType !== 'staticfs'"
+                               ng-click="$ctrl.checkApproveHistory(file)">
+                                <i class="fa fa-comment-alt-dots fa-fw"></i>
+                                {{'gfs.list.approval_history' | translate}}
+                            </a>
+                            <a class="dropdown-item"
+                               ng-if="file.directory"
+                               ng-click="$ctrl.singleDownloadDir(file)">
+                                <i class="fa fa-file-download fa-fw"></i>
+                                {{'gfs.content.download_dir' | translate}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="opx-table-td" style="flex:1;"
+                     ng-if="($ctrl.repoType==='git' && !$ctrl.hideDesc)||($ctrl.repoType==='stage' && !$ctrl.hideDesc)">
+                    <div class="text-muted __text-ellipsis gfs-ff-desc" title="{{file.description}}"
+                         ng-bind-html="file.description | markdown"></div>
+                </div>
+                <div class="opx-table-td" style="width:6rem;">
+                    {{file._size}}
+                </div>
+                <div class="opx-table-td" style="position:relative;width:8rem;">
+                    <a ng-if="!file.directory"
+                       data-bs-toggle="dropdown"
+                       class="dropdown-toggle" title="{{'gfs.list.history_version' | translate}}"
+                       ng-click="$ctrl.showRevList(file.path)">{{file.lastModified
+                    | fromNow}}</a>
+                    <div class="dropdown-menu __dropdown-menu-end">
+                        <gfs-gfile-rev ng-if="$ctrl.currentFile===file.path && $ctrl.repoType==='git'"
+                                       title="{{$ctrl.currentFile}}, {{file.path}}"
+                                       params="{repo:file.repo,path:file.path}"
+                                       options="{mode:'list-only', limit:5, detailTarget:'dialog',onClickFn:$ctrl.clickRevEntry,onClickArg:file.path}">
+                        </gfs-gfile-rev>
+                    </div>
+                </div>
+                <div class="opx-table-td" style="width:4rem;"
+                     ng-if="$ctrl.repoType!=='staticfs' && ($ctrl.options.showStatus || $ctrl.options.showStageStatus)"
+                     title="{{file._statusDesc}}">
+                    <div class="btn-group">
+                    <span data-bs-toggle="dropdown" ng-click="$ctrl.showFileStatus(file)"
+                          class="{{'text-' +  ($ctrl.options.showStageStatus?file._stageStatusColor:'')||file._statusCss}} gfs-ff-status"
+                          style="width:1rem;height:1rem;"
+                          title="{{file._statusText||($ctrl.options.showStageStatus?file._stageStatusText:'')}}">
+                    </span>
+                        <!--                        <gfs-file-change-status ng-if="$ctrl.currentFile===file.path"-->
+                        <!--                                                repo-type="$ctrl.repoType" file="file"-->
+                        <!--                                                after-change="$ctrl.afterChangeStatus"-->
+                        <!--                                                watch-refresh="$ctrl.refreshFileStatusMark"-->
+                        <!--                                                class="dropdown-menu dropdown-menu-end js-inside-click px-5 py-3"-->
+                        <!--                                                style="min-width: 20rem;">-->
+                        <!--                        </gfs-file-change-status>-->
+                        <div class="dropdown-menu dropdown-menu-end js-inside-click px-5 py-3"
+                             style="min-width: 20rem;">
+                            <gfs-file-change-status ng-if="$ctrl.currentFile===file.path"
+                                                    repo-type="$ctrl.repoType" file="file"
+                                                    after-change="$ctrl.afterChangeStatus"
+                                                    watch-refresh="$ctrl.refreshFileStatusMark">
+                            </gfs-file-change-status>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="$ctrl.emptyFolder">
+    <div class="op-blank-slate">
+        <div class="op-blank-slate-icon"><i class="fa fa-inbox fa-5x"></i></div>
+        <div>{{'gfs.list.no_file' | translate}}</div>
+    </div>
+    <!--<script type="text/ng-template" id="gfs/file-rev-popover.html">-->
+    <!--    <div>-->
+    <!--        <gfs-gfile-rev params="{repo:file.repo,path:file.path}"-->
+    <!--                       options="{mode:'list-only', limit:5, detailTarget:'dialog',onClickFn:$ctrl.clickRevEntry,onClickArg:file.path}"></gfs-gfile-rev>-->
+</div>

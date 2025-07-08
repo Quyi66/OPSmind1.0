@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h4 class="modal-title"> {{'jao.messages.select_host' | translate}}</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="pointer-events: auto;"
+            ng-click="$ctrl.cancel()"><span aria-hidden="true"></span></button>
+</div>
+<div class="modal-body cm-host-dialog">
+    <div >
+        <select class="form-select col-sm-3" ng-model="$ctrl.selectedStatus"
+                ng-options="status.title for status in $ctrl.statusList">
+         </select>
+        <div class="opx-flex-fill table-responsive">
+            <table id="flow-host-table" class="cm-table table opx-table"></table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer text-right">
+    <button type="reset" class="btn btn-default" ng-click="$ctrl.cancel()">{{'common.entity.action.cancel' | translate}}</button>
+    <button type="submit" class="btn btn-success" ng-click="$ctrl.confirm()">{{'common.entity.action.confirm' | translate}}</button>
+</div>

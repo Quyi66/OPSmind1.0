@@ -1,0 +1,33 @@
+<fieldset ng-disabled="!$ctrl.isEditMode">
+    <legend>{{'cmd.job.set_command' | translate}}</legend>
+    <div class="form-group">
+        <div class="d-flex mb-3">
+            <label class="control-label">{{'cmd.job.steps' | translate}}</label>
+        </div>
+        <div>
+            <div class="card card-default op-action-card op-w-full" ng-repeat="task in $ctrl.jobConfig.tasks">
+                <div class="card-body">
+
+                    <div class="form-group op-align-horizontal">
+                        <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'cmd.index.command' | translate}}</label>
+                        <div class="form-control-wrapper">
+                            <jao-dynamic-command-selector the-model="task.commands" the-data="$ctrl.commandList"
+                                                          class="w-full"></jao-dynamic-command-selector>
+                        </div>
+                    </div>
+
+                    <div class="form-group op-align-horizontal">
+                        <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'common.entity.variable.host' | translate}}<span
+                                op-help-info="{{'jao.job.script.host_info' | translate}}"></span></label>
+                        <div class="form-control-wrapper">
+                            <div class="w-full">
+                                <!--<acm-device-selector the-model="task.hosts"></acm-device-selector>-->
+                                <acm-device-selector ci-types="'[auto]'" the-model="task.hosts" mcheck-type="'map'"></acm-device-selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

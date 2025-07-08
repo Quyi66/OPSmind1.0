@@ -1,0 +1,15 @@
+<div class="form-group">
+    <div class="opx-check-group xxbtn-group opx-secondary">
+        <input ng-repeat-start="action in $ctrl._availActions track by $index" name="file_status"
+               type="radio" id="fcs_opt_{{$index}}_{{$ctrl.file.id}}" ng-click="$ctrl.model=action;" ng-if="action.hasPermission">
+        <label ng-repeat-end for="fcs_opt_{{$index}}_{{$ctrl.file.id}}" ng-if="action.hasPermission">
+            <i class="{{action.icon}}"></i> {{action.text}}
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label">{{'gfs.basic.remark_desc' | translate}}</label>
+    <div class="form-control-wrapper">
+        <textarea ng-model="$ctrl.comment" class="form-control" rows="3"></textarea>
+    </div>
+</div>

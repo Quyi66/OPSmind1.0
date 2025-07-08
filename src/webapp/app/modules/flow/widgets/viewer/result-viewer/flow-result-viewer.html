@@ -1,0 +1,197 @@
+<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar navbar-light opx-layout-hflex flex-nowrap" ng-if="$ctrl.options.viewMode !== 'hidden'">
+        <button class="btn btn-outline-primary" ng-if="!$ctrl.options.inPage" ng-click="$ctrl.back()">
+            <i class="fa fa-arrow-circle-left"></i> {{'common.action.back' | translate}}
+        </button>
+
+        <div class="opx-layout-hflex h-75"
+             style="width: 20%;"
+             ng-if="$ctrl.options.inPage && $ctrl.runningInstanceList && $ctrl.runningInstanceList.length > 0">
+            <select op-select="{ placeholder: ('flow.run.select_placeholder' | translate) }"
+                    style="width: 80%"
+                    ng-disabled="$ctrl.processAttrs['singleton'] === 'true'" 
+                    ng-model="$ctrl.currentInstance"
+                    ng-options="(instance.remarks ? instance.remarks + '_' + $ctrl.formatDate(instance.startTime, 'YYYYMMDDHHmmss') : instance.operator + '_' + $ctrl.formatDate(instance.startTime, 'YYYYMMDDHHmmss')) for instance in $ctrl.runningInstanceList"
+                    ng-change="$ctrl.changeInstance()"
+                    >
+                <option></option>
+            </select>
+
+            <!-- <button class="btn btn-outline-secondary ml-1" ng-if="$ctrl.processAttrs['singleton'] !== 'true'"  ng-click="$ctrl.queryRunningRunDetails()">
+                <i class="fa fa-sync-alt"></i>
+            </button> -->
+        </div>
+        
+        <p class="fw-bolder fs-4 ml-3 mr-3 m-0 w-100">{{ $ctrl.process.processName }}</p>
+        
+        <button uaa-has-permission="flow:run:*" class="btn btn-danger" ng-if="$ctrl.isRunning" ng-click="$ctrl.terminateInstance()">
+            <i class="fa fa-stop"></i> {{'jao.common.terminate' | translate}}
+        </button>
+
+        <!-- <div uaa-has-permission="jao:edit:*" class="dropdown ms-auto">
+            <div class="dropdown-menu dropdown-menu-left">
+                <a class="dropdown-item" ng-repeat="(type,def) in $ctrl.jobTypeList"
+                   ui-sref="app.appman.job.create({type:type})">
+                    <i class="fa fa-fw {{def.icon}}"></i>{{def.title}}</a>
+            </div>
+        </div> -->
+    </nav>
+
+    <div class="opx-layout-hflex" 
+        ng-style="{'height': $ctrl.options.viewMode !== 'hidden' ? 'calc( 100% - 2.5rem )' : '100%'}">
+        <flow-viewer    bpmn-xml="$ctrl.processDetail.processXml" 
+                        ng-class="{
+                            'viewer-fixed': $ctrl.options.viewMode === 'fixed',
+                            'viewer-drawer': $ctrl.options.viewMode === 'drawer',
+                            'viewer-hidden': $ctrl.options.viewMode === 'hidden',
+                        }"></flow-viewer>
+
+        <div id="operation-panel" class="opx-layout-vflex scroll-y" 
+                ng-class="{
+                    'operation-panel-fixed': $ctrl.options.viewMode === 'fixed',
+                    'operation-panel-drawer': $ctrl.options.viewMode === 'drawer',
+                    'operation-panel-hidden': $ctrl.options.viewMode === 'hidden',
+                    
+                    'operation-panel-drawer-show': $ctrl.options.viewMode === 'drawer' && $ctrl.currentNode.task,
+                    'operation-panel-drawer-hide': $ctrl.options.viewMode === 'drawer' && !$ctrl.currentNode.task,
+                }"
+                ng-if="$ctrl.options.viewMode !== 'hidden'">
+            <div class="mb-3" ng-if="$ctrl.currentNode.task">
+                <span class="badge bg-primary"
+                    ng-class="{
+                        'bg-success': $ctrl.currentNode.state === 'completed',
+                        'bg-primary': $ctrl.currentNode.state === 'active',
+                        'bg-secondary': $ctrl.currentNode.state === 'waiting',
+                        'bg-warning': $ctrl.currentNode.state === 'warning',
+                        'bg-danger': $ctrl.currentNode.state === 'error',
+                    }">
+                {{
+                $ctrl.currentNode.state === 'completed' ? 'common.term.completed' :
+                $ctrl.currentNode.state === 'active' ? 'jao.status.job.running' :
+                $ctrl.currentNode.state === 'waiting' ? 'jao.status.job.waiting' :
+                $ctrl.currentNode.state === 'warning' ? 'common.term.failed' :
+                $ctrl.currentNode.state === 'error' ? 'common.term.failed' : 
+                '' | translate
+                }}
+                </span>
+            </div>
+            <div  class="card shadow" ng-if="$ctrl.currentNode.element.businessObject.name"
+                    ng-class="{
+                        'border-success': $ctrl.currentNode.state === 'completed',
+                        'border-primary': $ctrl.currentNode.state === 'active',
+                        'border-secondary': $ctrl.currentNode.state === 'waiting',
+                        'border-warning': $ctrl.currentNode.state === 'warning',
+                        'border-danger': $ctrl.currentNode.state === 'error',
+                    }">
+                <div class="card-body">
+                    <h5 class="card-title fs-3 fw-bolder" ng-class="{'mb-2': $ctrl.currentNode.task}">{{$ctrl.currentNode.element.businessObject.name || $ctrl.currentNode.element.id || ''}}</h5>
+                    <!-- <div class="card-text fs-4 text-muted">{{$ctrl.currentNode.element.businessObject.name ? $ctrl.currentNode.element.id : ''}}</div> -->
+                </div>
+            </div> 
+
+            <div class="card shadow border-secondary mt-2" ng-if="$ctrl.currentNode.task.remark">
+                <div class="card-header fs-4">
+                    {{ 'flow.task.remark' | translate }}
+                </div>
+                <div class="card-body help-block" translate>
+                    {{ $ctrl.currentNode.task.remark }}
+                </div>
+            </div>
+
+            <div>
+
+                <flow-params    instance-id="$ctrl.instanceId" 
+                                current-node="$ctrl.currentNode" 
+                                params="$ctrl.params" 
+                                params-arr="$ctrl.paramsArr" 
+                                need-collapse="true"
+                                need-edit="true"
+                                can-edit="$ctrl.isRunning"
+                                params-changed="$ctrl.paramsChangedFunc(paramsFake)"
+                                ng-show="$ctrl.currentNode.task.needParams"
+                                ></flow-params>
+
+            </div>
+            
+        
+            <div class="operation">
+                <div ng-if="$ctrl.currentNode.state === 'active'">
+                    <div ng-if="$ctrl.currentNode.task.type === $ctrl.taskType.ManualTask" uaa-has-permission="flow:run:*">
+                        <div class="card shadow border-primary mt-2">
+                            <!-- 
+                            <div class="card-body">
+
+                            </div> -->
+                            <div class="card-footer text-right">
+                                <button ng-click="$ctrl.completeTask()" class="btn btn-primary">{{'flow.task.complete' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="$ctrl.currentNode.state === 'error' || $ctrl.currentNode.state === 'warning'">
+                    <div class="card shadow border-danger mt-2">
+                        <div class="card-body">
+                            <p>{{$ctrl.currentNode.incident.message}}</p>
+                            <p>{{$ctrl.currentNode.incident.timestamp}}</p>
+                        </div>
+                        <div class="card-footer text-right" uaa-has-permission="flow:run:*" ng-if="$ctrl.currentNode.state === 'error'">
+                            <button ng-click="$ctrl.retryTask()" class="btn btn-primary">{{'flow.task.retry' | translate}}</button>
+                            <button ng-click="$ctrl.completeTask()" class="btn btn-primary">{{'flow.task.complete' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="$ctrl.currentNode.task.type === $ctrl.taskType.JobTask">
+                    <div class="card shadow border-primary mt-2">
+                        <div class="card-body">
+                            {{'app.mgmt.job' | translate}} {{$ctrl.currentNode.task.variables.job.jobName}}
+                        </div>
+                        <div class="card-footer text-right">
+                            <button ng-disabled="!$ctrl.currentNode.task.runId"
+                                    ng-click="$ctrl.jobDetailView($event)"
+                                    class="btn btn-primary">{{'common.entity.action.detail' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="$ctrl.currentNode.task.type === $ctrl.taskType.ApproveTask"
+                    uaa-has-role="{{$ctrl.currentNode.task.variables.approver}}">
+                    <div class="card shadow border-danger mt-2">
+                        <div class="card-body">
+                            <p>{{$ctrl.currentNode.incident.message}}</p>
+                            <p>{{$ctrl.currentNode.incident.timestamp}}</p>
+                        </div>
+                        <div class="card-footer text-right" uaa-has-permission="flow:run:*">
+                            <button ng-click="$ctrl.terminateInstance()" class="btn btn-danger">审批拒绝</button>
+                            <button ng-click="$ctrl.completeTask()" class="btn btn-primary">审批通过</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div ng-if="$ctrl.currentNode.task.type === $ctrl.taskType.SubProcessTask">
+                    <div class="card shadow border-primary mt-2">
+                        <div class="card-body">
+                            {{'flow.process.name' | translate}} {{$ctrl.currentNode.task.variables.process.processName}}
+                        </div>
+                        <div class="card-footer text-right">
+                            <button ng-disabled="!$ctrl.currentNode.task.subInstanceId"
+                                    ng-click="$ctrl.processDetailView($event)"
+                                    class="btn btn-primary">{{'common.entity.action.detail' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="in-page-overlayer" ng-if="$ctrl.options.inPage && !$ctrl.processId">
+      <p class="w-100"><i class="fa fa-info-circle link-warning mr-3"></i>{{'udp.w.flow.process.no-process-lint' | translate}}</p>
+    </div>
+
+    <div class="in-page-overlayer" ng-if="!$ctrl.currentInstanceId && $ctrl.runningInstanceList && $ctrl.runningInstanceList.length === 0">
+      <p class="w-100"><i class="fa fa-info-circle link-warning mr-3"></i>{{'udp.w.flow.process.no-instance-lint' | translate}}</p>
+    </div>
+</div>

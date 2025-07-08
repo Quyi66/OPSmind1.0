@@ -1,0 +1,66 @@
+<div class="h-100" ui-view="template-view" uaa-has-permission="cac:view:*" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <!-- <div ng-include="'app/modules/cac/template/template-list.html'" ng-controller="CacTemplateListCtrl as cacTemplateListCtrlVm"></div>-->
+    <!--<div class="template-table-div" ng-controll er="CacTemplateListCtrl as cacTemplateListCtrlVm">
+        <div class="wrapper">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span hidden>模板列表</span>
+                        <button class="btn btn-primary btn-sm pull-right cac-title-button-l"
+                                uaa-has-permission="cac:*:*"
+                                ui-sref="app.cac.template_add"><i class="fa fa-plus m-r-xs"></i> 新增模板</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="template-table table table-striped table-hover table-bordered cac-table-line-height"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+ <!--   <div ng-controller="CacTemplateSquareCtrl as CacTemplateSquareCtrlVm">
+        <p ng-if=CacTemplateSquareCtrlVm.views.templateList==null||CacTemplateSquareCtrlVm.views.templateList.length==0>
+            没有数据</p>
+
+        <div class="col-sm-3" ng-repeat="template in CacTemplateSquareCtrlVm.views.templateList"
+             ui-sref="app.cac.result({jobId:template.jobId})"
+             ng-class="(template.hours==null||template.hours=='')?'cac-disable-click':'cac-click'">
+            <div class="card-default cac-div-card">
+                <div>
+                    <div class="card-header"
+                         ng-class="(template.jobStatus==''||template.jobStatus==null)?'bg-secondary':(template.jobStatus=='success'?'bg-success':(template.jobStatus=='failure'?'bg-danger':'bg-warning'))">
+
+                        <div class="cac-template-square-tile-l cac-template-tile">
+                            <span class="h4" title="{{template.templateName}}">{{template.templateName}} </span>
+                        </div>
+                        <div class="cac-template-square-tile-r pull-right cac-template-tile">
+                            &lt;!&ndash; <span ng-if="template.jobStatus==null||template.jobStatus==''" class="fa fa-info text-info cac-template-square-font" title="该模板还未执行"></span>
+                            <span ng-if="template.jobStatus==='running'" class="fa fa-exclamation text-warning cac-template-square-font" title="正在执行"></span>
+                            <span ng-if="template.jobStatus==='success'" class="fa fa-check text-success cac-template-square-font" title="执行成功"></span>
+                            <span ng-if="template.jobStatus==='error'" class="fa fa-times text-danger cac-template-square-font" title="执行失败"></span>&ndash;&gt;
+                        </div>
+
+                        <div class="cac-template-square-tile-info cac-template-tile">
+                <span class="fa fa-clock-o cac-template-square-info-font"
+                      ng-if="template.hours===null||template.hours===''"> 未执行</span>
+                            <span class="fa fa-clock-o cac-template-square-info-font" ng-if="template.hours!=null"> {{template.created_at}}执行</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body cac-template-square-body">
+                    <div class="cac-template-square-info">
+                        <p>{{template.hostLength}}</p>
+                        <p>设备</p>
+                    </div>
+                    <div class="cac-template-square-info cac-template-square-info-last">
+                        <p>{{template.rulesLength}}</p>
+                        <p>规则</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+

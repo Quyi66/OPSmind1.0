@@ -1,0 +1,27 @@
+
+{
+    "sys_dict" : {
+        "home": {
+            "title": "Dicts",
+            "createLabel": "创建新 Dict",
+            "createOrEditLabel": "创建或编辑 Dict",
+            "search": "查找 Dict"
+        },
+        "created": "Dict {{ param }} 创建成功",
+        "updated": "Dict {{ param }} 更新成功",
+        "deleted": "Dict {{ param }} 删除成功",
+        "delete": {
+            "question": "你确定要删除 Dict {{ id }} 吗？"
+        },
+        "detail": {
+            "title": "Dict"
+        },
+        "pid": "Pid",
+        "label": "Label",
+        "value": "Value",
+        "sort": "Sort",
+        "type": "Type",
+        "description": "Description",
+        "disabled": "Disabled"
+    }
+}

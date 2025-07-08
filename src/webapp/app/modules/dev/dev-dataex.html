@@ -1,0 +1,78 @@
+<button uaa-has-permission="udp:edit">Permi</button>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-title">数据转换输入</div>
+            </div>
+            <div class="card-body op-smartform form-horizontal">
+                <div class="form-group">
+                    <label class="control-label">变量值</label>
+                    <div class="form-control-wrapper">
+                        <code>{{dataVm.selectedItem.vars}}</code>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">选择测试项</label>
+                    <div class="form-control-wrapper op-combo">
+                        <select class="form-select"
+                                ng-model="dataVm.selectedItem"
+                                ng-options="expr as (expr.expr|limitTo:100) for expr in dataVm.exprs"></select>
+                        <udp-data-converter the-model="dataVm.selectedItem.expr" class=""
+                                            options="{kinds:'js,str,yaml,json,link',varTypes:'pageparam,global'}"></udp-data-converter>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">表达式</label>
+                    <div class="form-control-wrapper">
+                        <div class="form-text"><code>{{dataVm.selectedItem.expr}}</code></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">说明</label>
+                    <div class="form-control-wrapper">
+                        <div class="form-text text-muted">{{dataVm.selectedItem.desc}}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">变量替换后</label>
+                    <div class="form-control-wrapper">
+                        <div id="js-dd-preview" class="p-2 bg-light code"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-outline-primary" ng-click="dataVm.evalExpr()"><i class="fa fa-function"></i> 解析
+                    </button>
+                </div>
+                <div class="mt-3 bg-light" ng-if="dataVm.exprResult">{{dataVm.exprResult}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card card-default">
+    <div class="card-header">
+        <h4 class="card-title">ConvertData</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-sm">
+            <thead>
+            <tr>
+                <th>data</th>
+                <th>format</th>
+                <th>dataType</th>
+                <th>formatter</th>
+                <th>result</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="value in dataVm.valuesToConvert track by $index">
+                <td>{{value.data | json}}</td>
+                <td>{{value.format}}</td>
+                <td>{{value.dataTypes}}</td>
+                <td>{{value.formatter}}</td>
+                <td>{{value.result | json}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

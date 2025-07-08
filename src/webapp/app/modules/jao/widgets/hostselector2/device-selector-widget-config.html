@@ -1,0 +1,114 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'jao.job.detail.base' | translate}}</uib-tab-heading>
+        <!--        <div class="form-group">-->
+        <!--            <label class="control-label">选项</label>-->
+        <!--            <div class="form-control-wrapper">-->
+        <!--                <div class="checkbox checkbox-inline checkbox-primary">-->
+        <!--                    <input type="checkbox" ng-model="uwProps.core.multipleSelect"-->
+        <!--                           id="js_hswc_multipleselect"><label for="js_hswc_multipleselect">允许多选</label>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="form-group">
+            <label class="control-label">{{'jao.job.selector.sync_param' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" ng-model="uwProps.core.exportParam">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'jao.job.selector.param_type' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="uwProps.core.exportType">
+                    <option value="string">{{'common.entity.variable.string' | translate}}</option>
+                    <option value="array">{{'common.entity.variable.array' | translate}}</option>
+                    <option value="map">{{'jao.job.selector.param_type.map' | translate}}</option>
+                    <!--                    <option value="object" ng-if="!uwProps.core.multipleSelect">单个对象</option>-->
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">{{'jao.job.selector.device_type' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="uwProps.core.assetType"  op-select multiple ng-options="mode.value as mode.title for mode in selectCIT">
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label">{{'jao.job.selector.data_type' | translate}}</label>
+            <div class="form-control-wrapper">
+                <select class="form-select" ng-model="uwProps.core.dataType">
+                    <option value="all">{{'jao.job.selector.data_type.all' | translate}}</option>
+                    <option value="auto">{{'jao.job.selector.data_type.auto' | translate}}</option>
+                    <option value="no_auto">{{'jao.job.selector.data_type.no_auto' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <!--        <div class="form-group">-->
+        <!--            <label class="control-label"></label>-->
+        <!--            <div class="form-control-wrapper">-->
+        <!--                <div class="checkbox checkbox-inline">-->
+        <!--                    <input type="checkbox" ng-model="uwProps.core.rememberSelection" id="js_hswc_rememberselection"><label for="js_hswc_rememberselection">记住上次选择</label>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </uib-tab>
+    <!--    <uib-tab>-->
+    <!--        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>-->
+    <!--    </uib-tab>-->
+    <!--    <uib-tab>-->
+    <!--        <uib-tab-heading><i class='fa fa-lock'></i> 访问控制</uib-tab-heading>-->
+    <!--    </uib-tab>-->
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'common.term.tag' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+            <!--            <div class="form-group">-->
+            <!--                <label class="control-label">显示模式</label>-->
+            <!--                <div class="form-control-wrapper">-->
+            <!--                    <select class="form-select op-w-sm" ng-model="uwProps.display.viewMode">-->
+            <!--                        <option value="btnpop">按钮和弹框</option>-->
+            <!--                        <option value="grouplist">分组选择列表</option>-->
+            <!--                        <option value="taglist">标签选择列表</option>-->
+            <!--                        <option value="hostselectlist">分组和主机选择列表</option>-->
+            <!--                    </select>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div class="form-group">
+                <label class="control-label">{{'jao.job.selector.display_mode' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.display.viewAs"
+                            ng-options="mode.value as mode.title for mode in viewModeDefs">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <!--            <div class="form-group">-->
+            <!--                <label class="control-label">选择方式</label>-->
+            <!--                <div class="form-control-wrapper">-->
+            <!--                    <div class="opx-check-group btn-group">-->
+            <!--                        <input ng-repeat-start="(mode,def) in selectModeDefs track by $index" type="checkbox"-->
+            <!--                               value="{{mode}}" id="form-check-{{$index}}"-->
+            <!--                               ng-model="checkedModes">-->
+            <!--                        <label ng-repeat-end for="form-check-{{$index}}">{{def.title}}</label>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param',enableAutoActive:true}"
+                                       param-vars="mapValue">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab heading="{{'jao.log.props_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,80 @@
+<div class="opx-layout-vflex" >
+    <div class="scroll-y opx-flex-fill p-3" style="overflow: inherit;">
+        <div class="card mb-3" style="height: 50px">
+            <div class="card-body">
+                <ul class="list-unstyled d-flex align-items-center">
+                    <li class="ms-3">
+                        <strong>{{'jao.flow.detail.name' | translate}}：</strong>{{$ctrl.flowInstance.name}}
+                    </li>
+                    <li class="ms-3">
+                        <strong>{{'jao.flow.detail.step' | translate}}：</strong>{{$ctrl.flowInstance.steps.length}}
+                    </li>
+                    <li class="ms-3">
+                        <strong>{{'jao.flow.detail.hosts' | translate}}：</strong>{{$ctrl.flowInstance.hosts.length}}
+                    </li>
+                    <li class="ms-3">
+                        <strong>{{'common.entity.detail.start_at' | translate}}：</strong>{{$ctrl.flowInstance.createdAt
+                        | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-title">
+                    {{'jao.result.name' | translate}}
+                    <button ng-click="$ctrl.refreshComponent()" class="btn btn-default opx-btn-icon opx-btn-flat __btn-sm" tabindex="0"
+                            aria-controls="DataTables_Table_2" type="button">
+                        <span><i class="far fa-sync-alt" title="刷新表格"></i></span>
+                    </button>
+                    <ul class="text-right list-unstyled list-inline small mb-3" style="margin-top: -21px;height: 10px;">
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-info"><i class="fa fa-running"></i></span>
+                            {{'jao.status.job.running' | translate}}
+                        </li>
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-success"><i class="fa fa-check"></i></span>
+                            {{'jao.status.job.completed' | translate}}
+                        </li>
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-danger"><i class="fa fa-times"></i></span>
+                            {{'jao.status.job.failed' | translate}}
+                        </li>
+                        <li>
+                            <span class="btn btn-sm opx-btn-icon btn-warning"><i class="fa fa-exclamation"></i></span>
+                            {{'jao.status.job.not_run' | translate}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="host-status-table" style="z-index: 1" class="table opx-table"></table>
+            </div>
+            <div class="opx-flex-fill wrapper tab-container">
+                <div class="tab-content">
+                    <flow-record the-flow="$ctrl.flowInstance" selected-task-nodes="$ctrl.selectedTaskNodes" start-steps = "$ctrrl.startSteps"
+                                 ng-if="$ctrl.flowInstance"></flow-record>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-y opx-flex-fill p-3" style="overflow: inherit;" ng-if="$ctrl.selectedTaskLogId">
+        <nav class="navbar navbar-light" style="height: 3rem">
+            <span class="opx-navbar-title"> 步骤:{{$ctrl.selectedTasks.stepName}} 结果详情</span>
+            <div ng-if="$ctrl.selectedTaskRunLogIds && $ctrl.selectedTaskRunLogIds.length > 1">
+                <select class="form-select op-w-sm" op-select
+                        ng-model="$ctrl.selectedTaskLogId"
+                        ng-options="task.id as task.startTime for task in $ctrl.selectedTaskRunLogIds">
+                </select>
+            </div>
+        </nav>
+        <div class="card card-default" style="padding-bottom: 50px">
+            <div class="opx-flex-fill wrapper tab-container">
+                <div class="tab-content" style="overflow: inherit;">
+                    <jao-job-result-view run-id="$ctrl.selectedTaskLogId"></jao-job-result-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

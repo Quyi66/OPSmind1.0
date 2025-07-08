@@ -1,0 +1,80 @@
+.udp-data-preview .table {
+  th, td {
+    white-space: nowrap;
+  }
+}
+
+.dataTable {
+  // Default no wrap for th
+  th {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  th.nowrap, td.nowrap {
+    white-space: nowrap;
+  }
+
+  th.wrap, td.wrap {
+    white-space: normal;
+    // Use break-all for wrap
+    word-break: break-all;
+  }
+
+}
+
+.uwtype-datatable {
+
+
+  th.udp-col-filtered {
+    color: $primary;
+  }
+
+  input.udp-input-filtered {
+    background-color: lightyellow;
+    //color: $primary;
+    //font-weight: bold;
+  }
+
+  .table-autowidth {
+    th.wrap {
+      white-space: nowrap;
+    }
+  }
+
+  td.ellipsis {
+    //text-overflow: ellipsis;
+    //// Use max-width to make ellipsis work
+    //max-width: 1px;
+    //white-space: nowrap;
+  }
+
+  td.fixed, th.fixed {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  td span.ellipsis {
+    cursor: pointer;
+    //background-color: #ccc;
+  }
+
+  .dataTables_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .dataTables_scroll {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .dataTables_scrollBody {
+      //20200901: In IE11, setting flex:1 makes table body invisible.
+      flex: 1 1 auto;
+    }
+  }
+
+
+}

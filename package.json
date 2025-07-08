@@ -1,0 +1,71 @@
+{
+  "name": "oplus-modules",
+  "version": "1.0.0",
+  "description": "Oplus modules for development",
+  "private": true,
+  "cacheDirectories": [
+    "node_modules",
+    "src/webapp/bower_components"
+  ],
+  "devDependencies": {
+    "@google-cloud/translate": "^6.3.1",
+    "@imlinhanchao/google-translate-api": "^8.0.1",
+    "@opentranslate/baidu": "^1.4.1",
+    "adm-zip": "^0.5.9",
+    "axios": "^0.24.0",
+    "bing-translate-api": "^2.6.0",
+    "bunyan": "^1.8.15",
+    "del": "^2.2.2",
+    "docsify-combine": "file:./docsify-combine",
+    "event-stream": "^3.3.4",
+    "flat": "^5.0.2",
+    "fs-readdir-recursive": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-cache-bust": "^1.4.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-each": "^0.5.0",
+    "gulp-flatten": "^0.4.0",
+    "gulp-fs-cache": "^0.1.0",
+    "gulp-html2js": "^0.4.2",
+    "gulp-if": "^2.0.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-sort": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify-es": "^3.0.0",
+    "gulp-useref": "^3.1.6",
+    "gulp-util": "^3.0.8",
+    "gulp-zip": "^4.0.0",
+    "js-yaml": "^3.14.0",
+    "json5": "^2.2.0",
+    "lodash": "^4.17.21",
+    "luxon": "^1.27.0",
+    "minimist": "^1.2.5",
+    "moment": "^2.29.4",
+    "multipipe": "^2.0.1",
+    "q": "^1.5.1",
+    "request": "^2.88.2",
+    "restify": "^5.0.1",
+    "restify-cors-middleware": "^1.0.1",
+    "run-sequence": "^1.2.2",
+    "tslib": "^2.4.0"
+  },
+  "engines": {
+    "node": "^4.3"
+  },
+  "scripts": {
+    "serve": "gulp serve",
+    "dist": "gulp dist-modules",
+    "deploy": "gulp dist-modules && gulp update-pw",
+    "translator": "node tools/i18n/translator/server.js",
+    "detect-cn": "node tools/i18n/detect-cn.js",
+    "combine": "node docsify-combine/.bin/cli.js"
+  },
+  "dependencies": {
+    "bower": "^1.8.8",
+    "crypto-js": "^4.1.1",
+    "file-saver": "^2.0.5",
+    "react-scripts": "^5.0.1",
+    "sass": "^1.52.1"
+  }
+}

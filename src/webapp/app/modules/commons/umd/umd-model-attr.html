@@ -1,0 +1,8 @@
+<div class="form-group mb-0">
+    <label class="control-label"><i class="fa fa-key text-primary" ng-if="$ctrl.theAttr.unique" title="{{ 'umd.attrs.unique' | translate}}"></i>
+        <i class="fa fa-asterisk text-danger" ng-if="$ctrl.theAttr.required" title="{{ 'umd.attrs.required' | translate}}"></i>
+        <i class="fa fa-lock" ng-if="$ctrl.theAttr.internal" title="{{ 'umd.inner.inner_attr' | translate}}"></i>
+        {{$ctrl.theAttr.title || $ctrl.theAttr.code}}</label>
+    <div class="form-control-wrapper">
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <div class="card card-default">
+        <nav class="navbar navbar-light">
+            <div class="opx-navbar-title">{{'adm.content.udp_tag_detail'|translate}}: {{vm.tag.name}}</div>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
+            </button>
+        </nav>
+
+        <div class="card-body" style="padding-top: 50px">
+            <opx-datatable table-config="vm.tableConfig">
+                <button class="btn btn-primary"
+                        ng-disabled="!vm.selected.length>0"
+                        ng-click="vm.removeAppletByTags()">
+                    <i class="fa fa-caret-square-right fa-fw"></i> {{'adm.content.udp_tag_detail_remove'|translate}}
+                </button>
+            </opx-datatable>
+        </div>
+    </div>
+</div>

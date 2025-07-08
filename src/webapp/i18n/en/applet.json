@@ -1,0 +1,9 @@
+{
+    "applet.selector.title": "Select App",
+    "applet.selector.all": "All Apps",
+    "applet.selector.unsorted": "Unsorted",
+    "applet.selector.select_applet": "Please select an app",
+    "applet.list.quit_sort": "Quit Sort",
+    "applet.list.sort": "Apply Sort",
+    "applet.list.show_disabled": "Show Disabled Apps"
+}

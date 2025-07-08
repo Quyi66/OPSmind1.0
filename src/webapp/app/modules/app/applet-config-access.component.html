@@ -1,0 +1,36 @@
+<div>
+    <div class="form-group">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.addRole()">
+            {{'app.setting.ac.add_role' | translate}}
+        </button>
+    </div>
+    <div>
+        <div class="card mb-3" ng-repeat="role in $ctrl.viewData.roles track by $index">
+            <div class="card-header bg-light" ng-if="role._builtin">{{role._title || role.name}}</div>
+            <div class="card-header bg-light d-flex" ng-if="!role._builtin"><input type="text" ng-model="role.name"
+                                                                          style="font-weight: bold;"
+                                                                          class="form-control w-md">
+                <button type="button" class="ms-auto btn btn-default opx-btn-icon opx-btn-flat"
+                        title="{{'app.setting.ac.remove_role'|translate}}"
+                        ng-click="$ctrl.removeRole(role.name)"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="card-body">
+                <div class="opx-check-group opx-secondary btn-group" ng-if="role._builtin">
+                    <input ng-repeat-start="method in $ctrl.userMethods track by $index" type="radio"
+                           ng-model="role.method"
+                           name="role_{{role.name}}_method"
+                           value="{{method.value}}"
+                           id="aca_role_{{role.name}}_{{method.value}}">
+                    <label ng-repeat-end for="aca_role_{{role.name}}_{{method.value}}">{{method._title}}</label>
+                </div>
+                <div ng-if="role.method==='MANUAL' || !role._builtin" class="form-group">
+                    <label class="control-label"
+                           op-help-info="app.setting.ac.user_by_manual_desc">{{'app.setting.ac.user_by_manual' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <input type="text" class="form-control" ng-model="role.users">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

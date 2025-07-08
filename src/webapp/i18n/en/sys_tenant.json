@@ -1,0 +1,14 @@
+{
+    "sys_tenant.home.title": "Tenant Management",
+    "sys_tenant.home.createLabel": "Create Tenant",
+    "sys_tenant.home.createTenant": "Create Tenant",
+    "sys_tenant.home.editTenant": "Edit Tenant",
+    "sys_tenant.created": "Tenant {{ param }} created successfully",
+    "sys_tenant.updated": "Tenant {{ param }} updated successfully",
+    "sys_tenant.deleted": "Tenant {{ param }} deleted successfully",
+    "sys_tenant.delete.question": "Are you sure you want to delete tenant {{ name }}? ",
+    "sys_tenant.detail.title": "Tenant Details",
+    "sys_tenant.name": "Name",
+    "sys_tenant.code": "Code",
+    "sys_tenant.description": "Description"
+}

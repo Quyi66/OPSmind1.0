@@ -1,0 +1,38 @@
+<div class="opx-layout-vflex scriptTableDiv" uaa-has-permission="cac:run:*" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+    <nav class="navbar bg-light">
+        {{'cac.template.run' | translate}}
+    </nav>
+    <div class="opx-flex-fill scroll-y p-3">
+        <!--        <div class="job-form">-->
+        <form class="form-horizontal" name="jobForm">
+            <div ng-include="'app/modules/cac/template/template-edit-content.html'"
+                 ng-controller="CacEditTemplateCtrl as cacEditTemplateCtrlVm"></div>
+            <!--<div class="form-group">-->
+            <!--<label class="col-sm-2 control-label cac-control-label">任务描述</label>-->
+            <!--<div class="col-sm-10">-->
+            <!--<textarea type="text" class="form-control" rows="3"-->
+            <!--ng-model="cacJobRunCtrlVm.views.job.description"></textarea>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">
+                <div class="col-sm-offset-1 col-sm-11">
+                    <p ng-show="true" class="cac-text-required">{{cacJobRunCtrlVm.views.info}}</p>
+                </div>
+            </div>-->
+            <div class="form-group">
+                <button type="button" class="btn btn-primary cac-job-run-btn" ng-click="cacJobRunCtrlVm.views.run()"
+                        ng-disabled="jobForm.$invalid" data-loading-text="{{'cac.messages.running' | translate}}"><i class="fa fa-play"></i> {{'cac.template.run' | translate}}
+                </button>
+                <button type="cancel" class="btn btn-default" ng-click="cacJobRunCtrlVm.views.back()">{{'common.entity.action.back' | translate}}</button>
+            </div>
+        </form>
+    </div>
+    <!--    </div>-->
+</div>
+
+
+
+
+
+
+

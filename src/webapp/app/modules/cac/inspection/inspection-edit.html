@@ -1,0 +1,82 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.cac3.inspection.list({display:true})">{{'cac3.navigation.patrol_item_list' | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">{{vm.inspection.id == null ? ("cac3.button.new_inspection_items" | translate):
+                    ("cac3.button.edit_inspection_items" | translate)}}
+                </li>
+            </ol>
+        </div>
+        <div class="navbar-nav ms-auto" uaa-has-permission="cac:edit:*">
+            <button type="button" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="vm.save()"
+                    class="btn btn-primary opx-btn-ok">{{'common.entity.action.save' | translate}}
+            </button>
+            <button type="button" class="btn btn-default opx-btn-cancel" ng-click="vm.clear()">
+                {{'common.entity.action.back' | translate}}
+            </button>
+        </div>
+    </nav>
+    <div class="opx-flex-fill scroll-y p-3" uaa-has-permission="cac:edit:*" uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+        <form name="editForm" role="form">
+            <div class="form-group">
+                <label class="control-label">{{'cac3.table_fields.patrol_item_name' | translate}} <span class="text-danger">*</span></label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control"
+                           ng-model="vm.inspection.name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">{{'common.entity.detail.description' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <textarea type="text" class="form-control uneditable-input"
+                              ng-model="vm.inspection.description">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">{{'cac3.title.manualInspection' | translate}}</label>
+                <div class="form-control">
+                    <label class="radio-inline">
+                        <input type="radio" name="needCheck" ng-value="1" ng-model="vm.inspection.needCheck" >
+                        <span>{{'cac3.title.yes' | translate}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="needCheck" ng-value="0" ng-model="vm.inspection.needCheck">
+                        <span>{{'cac3.title.no' | translate}}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="card-body mb-5" ng-repeat="item in vm.views.auditParams" style="border: 1px solid #ced4da;">
+                <div class="form-group op-align-horizontal">
+                    <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'cac3.title.patrolScript' | translate}} <span class="text-danger">*</span></label>
+                    <gfs-file-selector the-model="item.inspectionScripts" class="w-full"
+                                       model-converter="{type: 'attrmap', attrmap: {'scriptPath': 'path', 'scriptParams': 'config'}, modelType: 'array'}"
+                                       config="vm.views.fileSelectorConfigCheck"></gfs-file-selector>
+                </div>
+
+                <div class="form-group op-align-horizontal">
+                    <label class="control-label font-weight-bold text-left" style="width:4rem;">{{'cac3.title.fixScript' | translate}}</label>
+                    <gfs-file-selector the-model="item.repairScripts" class="w-full"
+                                       model-converter="{type: 'attrmap', attrmap: {'scriptPath': 'path', 'scriptParams': 'config'}, modelType: 'array'}"
+                                       config="vm.views.fileSelectorConfigFix"></gfs-file-selector>
+                </div>
+                <div class="form-group op-align-horizontal">
+                    <label class="control-label font-weight-bold text-left" style="width:4rem;"><i class="fa fa-laptop"></i> {{'cac3.title.whiteList' | translate}}</label>
+                    <div class="form-control-wrapper">
+                        <div class="w-full">
+                            <div class="mt-3">
+                                <acm-device-selector the-model="item.hosts" ci-types="'[auto]'" mcheck-type="'map'"></acm-device-selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

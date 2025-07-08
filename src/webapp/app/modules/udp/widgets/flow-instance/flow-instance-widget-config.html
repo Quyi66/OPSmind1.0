@@ -1,0 +1,50 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'jao.job.detail.base' | translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label">{{'jao.job.selector.sync_param' | translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" ng-model="uwProps.core.exportParam">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">流程模板</label>
+            <div class="form-control-wrapper">
+                <udp-data-converter the-model="uwProps.core.flowId" class="op-w-full"
+                                    options="{kinds:'js,str',varTypes:'pageparam,global'}"></udp-data-converter>
+            </div>
+        </div>
+    </uib-tab>
+
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'jao.log.style' | translate}}</uib-tab-heading>
+        <udp-widget-config-display options="{palette:false}">
+            <div class="form-group">
+                <label class="control-label">{{'common.term.tag' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <input type="text" class="form-control op-w-sm" ng-model="uwProps.display.label">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">{{'jao.job.selector.display_mode' | translate}}</label>
+                <div class="form-control-wrapper">
+                    <select class="form-select op-w-sm" ng-model="uwProps.display.viewAs"
+                            ng-options="mode.value as mode.title for mode in viewModeDefs">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'jao.job.selector.interaction_settings' | translate}}
+        </uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page,param',enableAutoActive:true}"
+                                       param-vars="mapValue">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab heading="{{'jao.log.props_code' | translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

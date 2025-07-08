@@ -1,0 +1,14 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light">
+        <div class="opx-navbar-title">{{'cmd.index.approve' | translate}}</div>
+    </nav>
+    <div uaa-has-permission="cmd:approve:*" uaa-deny-message="{{'common.uaa.no_permission' | translate}}" class="p-3">
+        <opx-datatable table-config="$ctrl.tableConfig">
+            <button class="btn btn-outline-primary" ng-click="$ctrl.batchApprove()"
+                    ng-disabled="$ctrl.tableConfig.selectedItems.length<1">
+                <i class="fa fa-check"></i>
+                {{'cmd.approve.button_batch_approve' | translate}}
+            </button>
+        </opx-datatable>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+// Widget parameter controls
+.uwidget {
+  .uw-params {
+    > .dropdown.uw-params-dropdown {
+      //margin-bottom: $op-small-space;
+      .dropdown-menu {
+        width: 30rem;
+        //flex-wrap: wrap;
+        .form-vertical {
+          .form-group {
+            //margin: 0 .5rem .5rem 0;
+            flex-direction: column !important;
+            align-items: start !important;
+
+            &.udp-hidden {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+
+    &.form-inline {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+}
+
+

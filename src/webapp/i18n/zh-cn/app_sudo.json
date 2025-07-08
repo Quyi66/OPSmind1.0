@@ -1,0 +1,82 @@
+{
+  "app_sudo": {
+    "title": "sudo权限管理",
+    "menu": {
+      "sudo_list": {
+        "title": "sudo列表"
+      },
+      "sudo_apply": {
+        "title": "sudo申请"
+      },
+      "reset_password": {
+        "title": "重置密码"
+      },
+      "function_settings": {
+        "title": "功能设置"
+      },
+      "operation_record": {
+        "title": "操作记录"
+      }
+    },
+    "page_info": {
+      "scan_sudo_users": {
+        "title": "扫描sudo用户",
+        "prompt_information": "选择主机，扫描主机上具有sudo权限的用户信息",
+        "start_scanning": "开始扫描"
+      },
+      "sudo_permission_list": {
+        "title": "sudo权限列表",
+        "scanning_host": "扫描主机",
+        "form": {
+          "host": "主机",
+          "user_group": "用户/用户组",
+          "sudo_file": "sudo文件",
+          "sudo_config": "sudo配置",
+          "update_time": "更新时间"
+        }
+      },
+      "add_user_jurisdiction": {
+        "title": "新增用户Sudo权限",
+        "effective_duration": "有效时长",
+        "days": "天数",
+        "valid_duration_of_permission": "权限的有效时长",
+        "hour": "小时",
+        "minutes": "分钟数",
+        "user": "用户",
+        "help_description": "要添加权限的用户列表,多个用户之间采用逗号，空格，换行分隔",
+        "start_implement": "开始执行"
+      },
+      "sudo_permission_application": {
+        "title": "sudo权限申请",
+        "add_sudo": "新建sudo命令",
+        "form": {
+          "host": "主机",
+          "user": "用户",
+          "permissions": "sudo权限",
+          "state": "状态",
+          "recovery_time": "回收时间",
+          "update_time": "更新时间",
+          "effective_duration": "有效时长/(分钟)",
+          "configuration_time": "配置时间"
+        }
+      },
+      "password_complexity": {
+        "title": "密码复杂度",
+        "password_length": "密码长度",
+        "mno_lowercase_letters": "小写字母最少个数",
+        "mno_capital_letters": "大写字母最少个数",
+        "mno_numbers": "数字最少个数",
+        "mno_special_symbols": "特殊符号最少个数"
+      },
+      "reset_password": {
+        "title": "重置密码",
+        "select_update_host": "选择要修改的目标主机",
+        "update_username": "要修改的用户名",
+        "reset_password_user": "重置密码的用户",
+        "password_min_max": "密码最小长度8，最大长度16",
+        "random_password": "生成随机密码",
+        "start_reset": "开始重置"
+      }
+    }
+  }
+}

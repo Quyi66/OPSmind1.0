@@ -1,0 +1,34 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  //border: 1px solid transparent;
+  a:hover {
+    color: $component-active-bg;
+  }
+
+  &:hover {
+    //border-color: $gray-300;
+  }
+
+  // Breadcrumb in navbar
+  .navbar-nav & {
+    padding: 0;
+    margin-bottom: 0;
+    background: none;
+  }
+
+  .breadcrumb-item {
+    &.active {
+      font-weight: bold;
+    }
+
+    > * {
+      //20210512: middle align in case of breadbrumb contains different font size
+      //vertical-align: middle;
+    }
+
+    //+ .breadcrumb-item::before {
+    //  content: '›';
+    //}
+  }
+}

@@ -1,0 +1,14 @@
+<udp-page-view page-id="'$CUSTOM_PAGE$'" page-source="code" ng-if="!$ctrl.useOpxDatatable"
+               udp-page-data="$ctrl.udpPageData"
+               udp-callback-on-loaded="$ctrl.callbackOnLoaded" class="flex-fill scroll-y">
+    <div class="opx-layout-vflex">
+<!--                <div ng-if="datatableProps">-->
+<!--                    <uwidget uw-type="datatable" id="w-15874343408751" uw-props="datatableProps"></uwidget>-->
+<!--                </div>-->
+
+        <div class="card-body">
+            <opx-datatable table-config="$ctrl.tableConfig">
+            </opx-datatable>
+        </div>
+    </div>
+</udp-page-view>

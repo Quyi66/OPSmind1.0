@@ -1,0 +1,111 @@
+<style>
+    .help-block {
+        margin: 0px;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="myBusinessModuleLabel">
+        <span data-translate="sys_businessModule.home.createLabel" ng-show="businessModuleDialogVm.businessModule.id == null">Create BusinessModule</span>
+        <span data-translate="sys_businessModule.home.editLabel" ng-show="businessModuleDialogVm.businessModule.id != null">Edit BusinessModule</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="businessModuleDialogVm.clear()">
+        &times;
+    </button>
+</div>
+
+<form name="editForm" role="form" novalidate ng-submit="businessModuleDialogVm.save()" show-validation>
+    <div class="modal-body">
+        <!--        <jhi-alert-error></jhi-alert-error>-->
+        <uib-tabset class="tab-container row wrapper" active="1">
+            <uib-tab index="1" heading="基本信息">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" data-translate="sys_businessModule.name" for="field_name">Name</label>
+                        <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1 ng-maxlength=50 ng-model="businessModuleDialogVm.businessModule.name"/>
+                        <p class="help-block">
+                            <span ng-show="editForm.name.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                            <span ng-show="editForm.name.$error.maxlength" data-translate="entity.validation.maxlength" translate-value-max="50">This field cannot be longer than 50 characters.</span>
+                        </p>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error':editForm.code.$error.pattern}">
+                        <label class="control-label" data-translate="sys_businessModule.code" for="field_code">Code</label>
+                        <input type="text" class="form-control" name="code" id="field_code" required ng-minlength=1 ng-maxlength=100
+                               ng-pattern="/^[_a-z0-9-]*$/" ng-model="businessModuleDialogVm.businessModule.code" ng-disabled="businessModuleDialogVm.businessModule.id != null"/>
+                        <p class="help-block">
+                            <span ng-show="editForm.code.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                            <span ng-show="editForm.code.$error.maxlength" data-translate="entity.validation.maxlength"
+                                  translate-value-max="100">This field cannot be longer than 100 characters.</span>
+                            <span ng-show="editForm.code.$error.pattern">只允许数字（0-9）、小写字母（a-z）、下划线（_)、横线（-).</span>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" data-translate="sys_businessModule.description" for="field_description">Description</label>
+                        <input type="text" class="form-control" name="description" id="field_description" ng-minlength=1 ng-maxlength=100 ng-model="businessModuleDialogVm.businessModule.description"/>
+                        <p class="help-block">
+                            <span ng-show="editForm.desc.$error.maxlength" data-translate="entity.validation.maxlength"
+                                  translate-value-max="100">This field cannot be longer than 100 characters.</span>
+                        </p>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="元素">
+                <div>
+                    <div class="form-group col-md-2">
+                        <label>资源名</label>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>资源类型</label>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>数据库表名</label>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>描述</label>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button class="btn btn-info pull-right" type="button" ng-click="businessModuleDialogVm.businessModule.elements.push({})"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div>
+                    <div class="row" ng-repeat="element in businessModuleDialogVm.businessModule.elements track by $index" ng-show="!element.isRemoved">
+                        <div class="form-group col-md-2">
+                            <input type="text" class="form-control" name="elementName" placeholder="资源名" ng-model="element.name" required/>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="text" class="form-control" name="elementCompany" placeholder="资源类型" ng-model="element.type" required/>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="text" class="form-control" name="elementCompany" placeholder="数据库表名" ng-model="element.dbTable" required/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="elementCredentials" placeholder="描述" ng-model="element.description" required/>
+                        </div>
+                        <div class="form-group col-md-1 text-left">
+                            <button class="btn btn-default" type="button" ng-click="element.isRemoved=true;"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="3" heading="权限配置">
+                <div class="col-md-12">
+                    <textarea ui-codemirror="{mode:'javascript', lineNumbers:false, theme:'opluscode', lineWrapping:true}"
+                              rows="6" required ng-model="businessModuleDialogVm.businessModule.permission"></textarea>
+                </div>
+            </uib-tab>
+            <uib-tab index="4" heading="数据查询">
+                <div class="col-md-12">
+                    <textarea ui-codemirror="{mode:'javascript', lineNumbers:false, theme:'opluscode', lineWrapping:true}"
+                              rows="6" required ng-model="businessModuleDialogVm.businessModule.dataSql"></textarea>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="businessModuleDialogVm.clear()">
+            <span data-translate="common.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || businessModuleDialogVm.isSaving" class="btn btn-primary">
+            <span data-translate="common.action.save">Save</span>
+        </button>
+    </div>
+</form>

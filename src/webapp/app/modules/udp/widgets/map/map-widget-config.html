@@ -1,0 +1,67 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label col-sm-2">地图类型</label>
+            <div class="col-sm-12 col-md-4">
+                <select class="form-select" ng-model="uwProps.display.mapType"
+                        ng-options="type.name as type.title for type in mapTypes"/>
+            </div>
+        </div>
+        <udp-widget-config-chart-metrics uw-props="uwProps" chart-type="map" axis-options="axisOptions"
+                                         fields="selectedDs.fields"></udp-widget-config-chart-metrics>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <div class="form-group">
+                <label class="control-label">图例</label>
+                <div class="form-control-wrapper">
+                    <select id="wccd_legendpos" class="form-select op-w-sm" ng-model="uwProps.display.legend.position">
+                        <option value="none">不显示</option>
+                        <option value="auto">自动</option>
+                        <option value="bottom">下方</option>
+                        <option value="right">右方</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">颜色</label>
+                <div class="form-control-wrapper op-combo">
+                    <udp-color-picker ng-model="uwProps.display.mapBgColor" title="地图区域颜色"></udp-color-picker>
+                    <udp-color-picker ng-model="uwProps.display.mapHiColor" title="地图区域高亮颜色"></udp-color-picker>
+                    <udp-color-picker ng-model="uwProps.display.mapBorderColor" title="地图边界颜色"></udp-color-picker>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">其它</label>
+                <div class="form-control-wrapper op-combo">
+                    <div class="checkbox checkbox-inline"><input type="checkbox" id="mwc_showlabel"
+                                                                 ng-model="uwProps.display.showLabel"><label
+                            for="mwc_showlabel">显示地名</label></div>
+                    <div class="checkbox checkbox-inline"><input type="checkbox" id="mwc_zoomable"
+                                                                 ng-model="uwProps.display.zoomable"><label
+                            for="mwc_zoomable">鼠标滚轮缩放地图</label></div>
+                    <!--<div class="checkbox">-->
+                    <!--<label class="i-checks"><input type="checkbox"-->
+                    <!--ng-model="uwProps.display.visualMap"><i></i>数据鼠标缩放</label>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>
+        <udp-widget-config-interaction the-model="uwProps.interaction"
+                                       options="{supports:'page'}"
+                                       param-vars="{'${S}':'#{udp.w.echart.intx.var_series}','${X}':'#{udp.w.echart.intx.var_xvalue}','${Y}':'#{udp.w.echart.intx.var_yvalue}'}">
+        </udp-widget-config-interaction>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

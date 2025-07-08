@@ -1,0 +1,111 @@
+<style>
+    .help-block {
+        margin: 0px;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="myParamLabel">
+        <span data-translate="sys_param.home.createParam" ng-show="vm.param.id == null">Create Param</span>
+        <span data-translate="sys_param.home.editParam" ng-show="vm.param.id != null">Edit Param</span>
+    </h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
+    </button>
+</div>
+
+<div class="modal-body">
+    <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+        <!--        <jhi-alert-error></jhi-alert-error>-->
+        <!--<uib-tabset class="tab-container row wrapper" active="1">-->
+        <!--<uib-tab index="1" heading="基本信息">-->
+        <!--<div class="col-md-12">-->
+        <div class="alert alert-success js-uw-style" data-customcss="alert.*">
+            <button type="button" class="btn-close pull-right" data-dismiss="alert"></button>
+            <div>
+                <h4>{{'ssc.params.sys.dialog.tips'|translate}}</h4>
+                {{'ssc.params.sys.dialog.tips.desc'|translate}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sys_param.domain" for="field_domain">Domain</label>
+            <input type="text" class="form-control" name="domain" id="field_domain" required ng-minlength=1
+                   ng-maxlength=50 ng-model="vm.param.domain" ng-readonly="vm.param.editValueOnly"/>
+            <p class="help-block">
+                <span> {{'ssc.params.sys.dialog.domain.tips'|translate}}</span>
+                <!--<span ng-show="editForm.domain.$error.required" data-translate="entity.validation.required">This field is required.</span>-->
+                <!--<span ng-show="editForm.domain.$error.maxlength" data-translate="entity.validation.maxlength"-->
+                <!--translate-value-max="50">This field cannot be longer than 50 characters.</span>-->
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sys_param.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1
+                   ng-maxlength=50 ng-model="vm.param.name" ng-readonly="vm.param.editValueOnly"/>
+            <p class="help-block">
+                <span> {{'ssc.params.sys.dialog.name.tips'|translate}}</span>
+                <!--<span ng-show="editForm.name.$error.required" data-translate="entity.validation.required">This field is required.</span>-->
+                <!--<span ng-show="editForm.name.$error.maxlength" data-translate="entity.validation.maxlength"-->
+                <!--translate-value-max="50">This field cannot be longer than 50 characters.</span>-->
+            </p>
+        </div>
+        <div class="form-group">
+            <!--<label class="control-label" data-translate="sys_param.name" for="is_encrypt">IsEncrypt</label>-->
+            <!--<input type="text" class="form-control" name="name" id="is_encrypt" required ng-minlength=1-->
+            <!--ng-maxlength=50 ng-model="vm.param.name"/>-->
+            <label class="control-label">{{'ssc.params.sys.dialog.encryption'|translate}}</label>
+            <div class="form-control">
+                <label class="radio-inline">
+                    <input type="radio" name="isEncrypt" value="1" ng-model="vm.param.isEncrypt"
+                           class="ng-valid ng-not-empty ng-touched ng-dirty ng-valid-parse" aria-invalid="false">
+                    <span>{{'ssc.params.sys.dialog.encrypt.enable'|translate}}</span>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isEncrypt" value="0" ng-model="vm.param.isEncrypt"
+                           class="ng-valid ng-not-empty ng-dirty ng-touched" aria-invalid="false">
+                    <span>{{'ssc.params.sys.dialog.encrypt.disable'|translate}}</span>
+                </label>
+            </div>
+            <p class="help-block">
+                <span>{{'ssc.params.sys.dialog.encrypt.tips'|translate}}</span>
+                <!--<span ng-show="editForm.name.$error.required" data-translate="entity.validation.required">This field is required.</span>-->
+                <!--<span ng-show="editForm.name.$error.maxlength" data-translate="entity.validation.maxlength"-->
+                <!--translate-value-max="50">This field cannot be longer than 50 characters.</span>-->
+            </p>
+        </div>
+        <div class="form-group" ng-class="{'has-error':editForm.value.$error.pattern}">
+            <label class="control-label" data-translate="sys_param.value" for="field_value">Value</label>
+            <div id="jsoneditor" style="width: 400px; height: 400px;" ng-if="vm.param.useJsonEditor"></div>
+            <textarea type="text" class="form-control" name="value" id="field_value" rows="5"
+                      ng-model="vm.param.value" ng-readonly="1 === secret" ng-if="!vm.param.useJsonEditor"></textarea>
+            <p class="help-block">
+                <span ng-show="editForm.value.$error.required" data-translate="entity.validation.required">This field is required.</span>
+                <!--<span ng-show="editForm.value.$error.maxlength" data-translate="entity.validation.maxlength"-->
+                <!--translate-value-max="4000">This field cannot be longer than 4000 characters.</span>-->
+                <span ng-show="editForm.value.$error.pattern">{{'ssc.params.sys.dialog.value.tips' | translate}}</span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sys_param.description"
+                   for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description" ng-minlength=1
+                   ng-maxlength=100 ng-model="vm.param.description"/>
+            <p class="help-block">
+                            <span ng-show="editForm.desc.$error.maxlength" data-translate="entity.validation.maxlength"
+                                  translate-value-max="100">{{'ssc.params.sys.dialog.desc.tips' | translate}}</span>
+            </p>
+        </div>
+        <!--</div>-->
+        <!--</uib-tab>-->
+        <!--</uib-tabset>-->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+                <span data-translate="common.action.cancel">Cancel</span>
+            </button>
+            <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+                <span data-translate="common.action.save">Save</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,125 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar bg-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="tenant" data-translate="sys_tenant.home.title">Tenant Management</a>
+                </li>
+                <li class="breadcrumb-item active">{{'adm.content.import_config' | translate}}
+                </li>
+            </ol>
+        </div>
+    </nav>
+    <div class="hbox hbox-auto-xs hbox-auto-sm wrapper">
+        <div class="wrapper">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>{{'adm.content.import_config_info' | translate}}</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form class="form-group form-control-wrapper">
+                        <div class="alert alert-success js-uw-style" data-customcss="alert.*">
+                            <button type="button" class="btn-close" data-dismiss="alert"></button>
+                            <div>
+                                <h4><span data-translate="adm.content.tips"></span></h4>
+                                <span data-translate="adm.content.desc"></span>
+
+                                <div><span data-translate="adm.content.desc_1"></span></div>
+                                <div><span data-translate="adm.content.desc_2"></span></div>
+                            </div>
+                        </div>
+
+                        <label class="control-label" data-translate="adm.content.tenant_info"></label>
+
+                        <div class="row ">
+                            <div class="col-sm-3">
+                                <select class="form-select "
+                                        ng-model="$import.views.tenantDTO"
+                                        ng-options="tenant as tenant.name for tenant in $import.tenants">
+                                    <option value="">{{'adm.content.select_tenant' | translate}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2" style="max-width: 12.66667%">
+                                <div class="opx-check-group btn-group">
+                                    <input type="radio" name="update" ng-model="$import.views.update"
+                                           id="as_status_1" value="0">
+                                    <label for="as_status_1">{{'adm.content.update' | translate}}</label>
+                                    <input type="radio" name="update" ng-model="$import.views.update"
+                                           id="as_status_2" value="1">
+                                    <label for="as_status_2">{{'adm.content.new' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1" uaa-has-permission="adm:edit:*">
+                                <button class="btn btn-success form-control" ng-disabled="!displayImport"
+                                        ng-click="$import.doImport()"> {{'common.action.import' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <div class="form-group form-control-wrapper">
+                        <!--<label class="control-label" data-translate="app.setting.title"></label>-->
+                        <label class="control-label"> 导入类型</label>
+
+                        <div class="row ">
+                            <div class="col-sm-3">
+                                <select class="form-select "
+                                        ng-model="$import.views.type"
+                                        ng-options="handle as handle.label for handle in $import.types">
+                                    <option value="">{{'adm.content.select_import_type' | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-wrapper" ng-if="$import.views.update === '1'">
+                        <label class="control-label" data-translate="app.setting.title"></label>
+
+                        <div class="row ">
+                            <div class="col-sm-3">
+                                <div class="form-control-wrapper">
+                                    <input name="title" class="form-control"
+                                           ng-model="$import.views.title"
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-control-wrapper" ng-if="$import.views.update === '1'">
+                        <label class="control-label">{{'app.setting.code' | translate}}</label>
+
+                        <div class="row ">
+                            <div class="col-sm-3">
+                                <div class="form-control-wrapper">
+                                    <input name="name" class="form-control "
+                                           ng-model="$import.views.name"
+                                           required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="$import.views.tenantDTO">
+                        <div class="form-group" style="padding-top: 15px;padding-bottom: 10px">
+                            <button type="button" class="btn btn-outline-primary" udp-file-browser
+                                    ng-model="$import.selectedFile"
+                                    on-change="$import.parseFile">
+                                <i class="fa fa-folder-open-o"></i> {{'adm.content.select_import_file' | translate}}
+                            </button>
+                            <strong>{{$import.selectedFile.name}}</strong>
+                        </div>
+                        <div>
+                            <div id="tenantConfigTree" ng-show="displayTree"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

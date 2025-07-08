@@ -1,0 +1,255 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.circle.wc.dataset' | translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.circle.wc.field.attr' | translate}}</uib-tab-heading>
+        <fieldset>
+            <legend>{{'udp.circle.wc.icon' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.icon.data' | translate}}</label>
+                <div class="col-sm-10">
+                    <udp-dsfield-selector the-model="uwProps.fields.icon"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.icon' | translate}}</label>
+                <div class="col-sm-2">
+                    <input type="number" min="10" class="form-control" ng-model="uwProps.fields.icon.size">
+                    <!-- <udp-media-selector the-model="uwProps.fields.icon" options="{supports:'image'}"></udp-media-selector>-->
+                </div>
+                <label class="control-label col-sm-2">{{'udp.circle.wc.icon.pixel' | translate}}</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'udp.circle.wc.title' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.title.information' | translate}}</label>
+                <div class="col-sm-10">
+                    <input type="text" ng-model="uwProps.fields.title.text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.title.information.set' | translate}}</label>
+                <div class="col-sm-10">
+                    <udp-dsfield-selector the-model="uwProps.fields.name" fields="selectedDs.fields"></udp-dsfield-selector>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2 ">{{'udp.circle.wc.title.font' | translate}}</label>
+                <div class="col-sm-4">
+                    <udp-font-editor the-model="uwProps.fields.title.size" options="{unit:'px'}"></udp-font-editor>
+                </div>
+                <div class="col-sm-2">
+                    <udp-color-picker ng-model="uwProps.fields.title.color"></udp-color-picker>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.title.x' | translate}}</label>
+                <div class="col-sm-2">
+                    <select class="form-select" ng-model="uwProps.fields.title.left">
+                        <option value="center">{{'udp.w.layout-flex.config.alignh_center'|translate}}</option>
+                        <option value="right">{{'udp.w.echart.display.legend_right'|translate}}</option>
+                        <option value="left">{{'udp.w.echart.display.legend_left'|translate}}</option>
+                        <option value="custom">{{'udp.w.echart.display.custom'|translate}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2" ng-if="uwProps.fields.title.left === 'custom'">
+                    <input type="text" ng-model="uwProps.fields.title.leftCustom" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.title.y' | translate}}</label>
+                <div class="col-sm-2">
+                    <select class="form-select" ng-model="uwProps.fields.title.top">
+                        <option value="top">{{'udp.w.layout-flex.config.alignv_top'|translate}}</option>
+                        <option value="middle">{{'udp.w.layout-flex.config.alignv_middle'|translate}}</option>
+                        <option value="bottom">{{'udp.w.layout-flex.config.alignv_bottom'|translate}}</option>
+                        <option value="custom">{{'udp.w.echart.display.custom'|translate}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2" ng-if="uwProps.fields.title.top === 'custom'">
+                    <input type="text" ng-model="uwProps.fields.title.topCustom" class="form-control">
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'udp.circle.wc.main' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.main.tips'|translate}}">{{'udp.circle.wc.main.data' | translate}}</label>
+                <div class="col-sm-10">
+                    <udp-dsfield-selector the-model="uwProps.fields.mainText"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.main.tips2'|translate}}">{{'udp.circle.wc.main.x' | translate}}</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="uwProps.fields.mainText.posX" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group form-inline">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.main.tips3'|translate}}">{{'udp.circle.wc.main.top' | translate}}</label>
+                <div class="col-sm-2">
+                    <input type="text" ng-model="uwProps.fields.mainText.posY" class="form-control">
+                </div>
+                <label class="control-label col-sm-2 " style="text-align:right">{{'udp.circle.wc.title.font' | translate}}</label>
+                <div class="col-sm-4">
+                    <udp-font-editor the-model="uwProps.fields.mainText.size"></udp-font-editor>
+                </div>
+                <div class="col-sm-2">
+                    <udp-color-picker ng-model="uwProps.fields.mainText.color"></udp-color-picker>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'udp.circle.wc.secondary' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'udp.circle.wc.secondary.data' | translate}}</label>
+                <div class="col-sm-10">
+                    <udp-dsfield-selector the-model="uwProps.fields.displayText"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.main.tips2'|translate}}">{{'udp.circle.wc.main.x' | translate}}</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-model="uwProps.fields.displayText.posX" class="form-control">
+                </div>
+            </div>
+            <div class="form-group form-inline">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.secondary.tip'|translate}}">{{'udp.circle.wc.secondary.bottom' | translate}}</label>
+                <div class="col-sm-2">
+                    <input type="text" ng-model="uwProps.fields.displayText.posY" class="form-control">
+                </div>
+                <label class="control-label col-sm-2 " style="text-align:right">{{'udp.circle.wc.title.font' | translate}}</label>
+                <div class="col-sm-4">
+                    <udp-font-editor the-model="uwProps.fields.displayText.size"></udp-font-editor>
+                </div>
+                <div class="col-sm-2">
+                    <udp-color-picker ng-model="uwProps.fields.displayText.color"></udp-color-picker>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'udp.circle.wc.max.value' | translate}}</legend>
+            <div class="form-group">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.max.tips'|translate}}">{{'udp.circle.wc.max.data' | translate}}</label>
+                <div class="col-sm-10">
+                    <udp-dsfield-selector the-model="uwProps.fields.total"
+                                          fields="selectedDs.fields"></udp-dsfield-selector>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" op-help-info="{{'udp.circle.wc.max.color'|translate}}">{{'udp.circle.wc.max.color2' | translate}}</label>
+                <div class="col-sm-10">
+                    <udp-color-picker ng-model="uwProps.fields.total.color"></udp-color-picker>
+                </div>
+            </div>
+        </fieldset>
+        <!--        <div class="form-group">-->
+        <!--        <label class="control-label col-sm-2">数据单位</label>-->
+        <!--        <div class="col-sm-10">-->
+        <!--        <udp-dsfield-selector the-model="uwProps.fields.unit"-->
+        <!--        fields="selectedDs.fields"></udp-dsfield-selector>-->
+        <!--        </div>-->
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--        <label class="control-label col-sm-2">描述文字</label>-->
+        <!--        <div class="col-sm-10">-->
+        <!--        <udp-dsfield-selector the-model="uwProps.fields.text"-->
+        <!--        fields="selectedDs.fields"></udp-dsfield-selector>-->
+        <!--        </div>-->
+        <!--        </div>-->
+        <udp-widget-config-multi-values the-model="uwProps.fields.metrics" axis-options="axisOptions"
+                                        fields="selectedDs.fields"></udp-widget-config-multi-values>
+    </uib-tab>
+    <!--<uib-tab>-->
+    <!--<uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>-->
+    <!--<udp-widget-config-interaction the-model="uwProps.interaction"-->
+    <!--options="{supports:'page'}"-->
+    <!--param-vars="{'${S}':'所选数据点的序列名称','${X}':'所选数据点的标签','${Y}':'所选数据点的Y值'}">-->
+    <!--</udp-widget-config-interaction>-->
+    <!--</uib-tab>-->
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <udp-widget-config-chart-display ng-model="uwProps.display"></udp-widget-config-chart-display>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="cwc-rownum">{{'udp.wc.tab.style.row.num'|translate}}</label>
+                <div class="col-sm-10">
+                    <input type="number" id="cwc-rownum" min="1" max="12" class="form-control d-inline-block"
+                           ng-model="uwProps.display.rowNum">
+                    <!--</div>-->
+                    <label class="control-label ms-3 m-r" for="cwc-rowspace"
+                           op-help-info="{{'udp.wc.tab.style.row.tips'|translate}}">{{'udp.wc.tab.style.row.space'|translate}}</label>
+                    <!--<div class="col-sm-4">-->
+                    <input type="text" id="cwc-rowspace" class="form-control d-inline-block" style="width:6em;"
+                           ng-model="uwProps.display.rowSpace">
+                </div>
+            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="cwc-radius" class="control-label col-sm-2">环形宽度</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input id="cwc-radius" type="number" min="10" step="5" class="form-control d-inline-block"-->
+<!--                           ng-model="uwProps.display.radius">-->
+<!--                    &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+<!--                    <label for="cwc-sizunit" class="control-label ms-3 m-r"-->
+<!--                           op-help-info="宽度的单位，相对宽度使用百分比，绝对宽度使用像素">尺寸单位</label>-->
+<!--                    <select id="cwc-sizunit" class="form-select d-inline-block" ng-model="uwProps.display.sizeUnit"-->
+<!--                            style="width:auto;">-->
+<!--                        <option value="%">百分比%</option>-->
+<!--                        <option value="px">像素px</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="form-group">
+                <label class="control-label col-sm-2"> {{'common.css.bgcolor'|translate}}</label>
+                <div class="col-sm-2">
+                    <udp-color-picker ng-model="uwProps.display.bgcolor"></udp-color-picker>
+                </div>
+            </div>
+            <fieldset>
+                <legend  op-help-info="{{'udp.wc.tab.style.field.tips'|translate}}">{{'udp.circle.wc.tab.style.width'|translate}}</legend>
+                <div class="form-group">
+                    <label for="cwc-radius-x" class="control-label ms-3 m-r">{{'udp.circle.wc.tab.style.inner'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input id="cwc-radius-x" type="number"  min="10" max="100" class="form-control d-inline-block"
+                               ng-model="uwProps.display.radius.inner">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cwc-radius-y" class="control-label ms-3 m-r">{{'udp.circle.wc.tab.style.outer'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input id="cwc-radius-y" type="number" min="10" max="100" class="form-control d-inline-block"
+                               ng-model="uwProps.display.radius.outer">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend op-help-info="{{'udp.circle.wc.tab.style.tips'|translate}}">{{'udp.circle.wc.tab.style.index'|translate}}</legend>
+                <div class="form-group">
+                    <label for="cwc-center-x" class="control-label col-sm-2">{{'udp.circle.wc.tab.style.index.x'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input id="cwc-center-x" type="number"  min="10" max="100" class="form-control d-inline-block"
+                               ng-model="uwProps.display.center.x">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cwc-center-y" class="control-label col-sm-2">{{'udp.circle.wc.tab.style.index.y'|translate}}</label>
+                    <div class="col-sm-4">
+                        <input id="cwc-center-y" type="number"  min="10" max="100" class="form-control d-inline-block"
+                               ng-model="uwProps.display.center.y">
+                    </div>
+                </div>
+            </fieldset>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

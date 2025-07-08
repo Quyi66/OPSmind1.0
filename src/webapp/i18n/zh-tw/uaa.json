@@ -1,0 +1,15 @@
+{
+  "uaa": {
+    "user": {
+      "double_review": "雙人複核",
+      "action": "複核人輸入密碼後執行",
+      "account_password_review": "賬號密碼複核",
+      "message_otp": "複核人輸入一次性密碼後執行。OTP二維碼位於賬號管理--檢視OTP二維碼",
+      "otp_review": "OTP複核",
+      "reviewer": "複核人",
+      "password": "密碼",
+      "wrong_password": "密碼錯誤",
+      "message_wrong_password": "請確認您的密碼再試。"
+    }
+  }
+}

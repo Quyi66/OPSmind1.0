@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="OplusApp">
+<head>
+    <meta charset="utf-8"/>
+    <title id="oplusAppName">OPLUS</title>
+    <meta name="description" content="OPlus is Operation Plus"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+
+    <link id="oplusAppIcon" rel="icon" type="image/png" href="content/images/logo-default.png"/>
+    <link rel="apple-touch-icon" href="content/images/logo-default.png"/>
+    <!-- build:css content/css/oplus-vendors.css -->
+    <link rel='stylesheet' href='lib/luckysheet/dist/plugins/css/pluginsCss.css' />
+    <link rel='stylesheet' href='lib/luckysheet/dist/plugins/plugins.css' />
+    <link rel="stylesheet" href="lib/luckysheet/dist/css/luckysheet.css" type="text/css" />
+    <link rel="stylesheet" href="lib/luckysheet/dist/assets/iconfont/iconfont.css" type="text/css" />
+
+    <link rel="stylesheet" href="bower_components/fontawesome-5/css/all.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/resizable.css"/>
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.min.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/animate.css/animate.min.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/codemirror/addon/fold/foldgutter.css" type="text/css"/>
+    <link rel="stylesheet" href="app/modules/commons/editor/codemirror/dialog.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/diff2html/dist/diff2html.css" type="text/css"/>
+    <!--    <link rel="stylesheet" href="bower_components/summernote/dist/summernote-bs5.css" type="text/css"/>-->
+    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/jquery.fancytree/dist/skin-awesome/ui.fancytree.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/jQuery-contextMenu/dist/jquery.contextMenu.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/datatables.net-fixedcolumns/css/fixedColumns.dataTables.css"/>
+    <link rel="stylesheet" href="lib/ng-password-meter/ng-password-meter.css"/>
+    <link rel="stylesheet" href="lib/mergely/mergely.css" type="text/css"/>
+    <link rel="stylesheet" href="lib/json-editor/jsoneditor.min.css" type="text/css" />
+
+    <!-- endbuild -->
+    <!-- build:css content/css/oplus-all.css -->
+    <link rel="stylesheet" href="content/css/oplus-commons.css" type="text/css"/>
+    <link rel="stylesheet" href="content/css/oplus-gfs.css" type="text/css"/>
+    <link rel="stylesheet" href="content/css/oplus-udp.css" type="text/css"/>
+    <link rel="stylesheet" href="content/css/oplus-dts.css" type="text/css"/>
+    <link rel="stylesheet" href="content/css/oplus-jao.css" type="text/css">
+    <link rel="stylesheet" href="content/css/oplus-cac.css" type="text/css"/>
+    <link rel="stylesheet" href="content/css/oplus-cm.css" type="text/css">
+    <link rel="stylesheet" href="content/css/oplus-search.css" type="text/css">
+    <link rel="stylesheet" ng-if="false" href="content/css/oplus-flow.css" type="text/css">
+    <!-- endbuild -->
+
+    <!-- build:remove -->
+    <link rel="stylesheet" href="app/modules/flow/dist/oplus-flow.css" type="text/css">
+    <!-- endbuild -->
+</head>
+<body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl">
+<toaster-container toaster-options="$mainCtrl.toasterOptions"></toaster-container>
+<op-desktop
+        ng-style="{'background-image':$mainCtrl.uiConfig.backgroundImage,'background-color':$mainCtrl.uiConfig.backgroundColor}"
+        ng-if="!$root.$global.hideDesktop && !$root.$global.isAdminUI"></op-desktop>
+<div class="opx-layout-vflex">
+    <div id="master-header" ui-view="navbar" ng-if="!$root.$global.hideHeader"></div>
+    <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0"
+         ng-class="{'hidden':$root.$global.hideMasterContent}">
+        <div class="op-blank-slate bg-dark">
+            <div class="op-blank-slate-icon"><img src="content/images/preloader.svg" style="width:10rem;"></div>
+            <p>正在加载...</p>
+        </div>
+    </div>
+</div>
+</body>
+<!--<script-->
+<!--        async-->
+<!--        defer-->
+<!--        src="https://maxkb.famessoft.com/api/application/embed?protocol=https&host=maxkb.famessoft.com&token=5abf8444460a4f44">-->
+<!--</script>-->
+<!-- build:js app/modules/oplus-vendors.js -->
+<!-- ========== core ========= -->
+<!-- jquery and bootstrap -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap5/bootstrap.bundle.js"></script>
+<!-- angular -->
+<script src="bower_components/angular/angular.js"></script>
+<!--https://ui-router.github.io/blog/uirouter-for-angularjs-umd-bundles/-->
+<!--https://unpkg.com/browse/@uirouter/angularjs@1.0.30/release/-->
+<!--https://unpkg.com/browse/@uirouter/core@6.0.8/_bundles/-->
+<script src="lib/ui-router/ui-router-core.js"></script>
+<script src="lib/ui-router/ui-router-angularjs.js"></script>
+<script src="lib/ui-router/ui-router-sticky-states.js"></script>
+<script src="lib/ui-router/stateEvents.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/ngstorage/ngStorage.js"></script>
+<!--todo-->
+<script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
+<script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+<script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<!-- ========== ui foundation ========= -->
+<!-- jquery-ui -->
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+<!-- ui bootstrap -->
+<script src="app/modules/commons/bootstrap/ui-bootstrap-custom-tpls-2.5.0-modified.js"></script>
+<!-- sortable -->
+<script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+<script src="bower_components/Sortable/Sortable.js"></script>
+<script src="bower_components/angular-legacy-sortablejs-maintained/angular-legacy-sortable.js"></script>
+<!-- message and dialog -->
+<script src="bower_components/AngularJS-Toaster/toaster.min.js"></script>
+<script src="bower_components/alertify-js/build/alertify.min.js"></script>
+<!-- select and dropdown -->
+<script src="bower_components/select2/dist/js/select2.full.js"></script>
+<!-- ========== utility ========= -->
+<script src="bower_components/lodash/dist/lodash.min.js"></script>
+<!-- file formats -->
+<script src="bower_components/js-yaml/dist/js-yaml.min.js"></script>
+<script src="bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
+<script src="bower_components/html-docx-js/dist/html-docx.js"></script>
+<script src="lib/pdfobject/pdfobject.js"></script>
+<!-- markdown -->
+<script src="bower_components/marked/marked.min.js"></script>
+<!-- chart -->
+<script src="bower_components/echarts/dist/echarts.min.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/c3/c3.js"></script>
+<script src="bower_components/leader-line/leader-line.min.js"></script>
+<!-- date and number -->
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/moment/locale/zh-cn.js"></script>
+<script src="bower_components/moment/locale/zh-tw.js"></script>
+<script src="bower_components/numeral/numeral.js"></script>
+<!-- clipboard -->
+<script src="bower_components/clipboard/dist/clipboard.min.js"></script>
+<script src="bower_components/ngclipboard/dist/ngclipboard.min.js"></script>
+<!-- upload and download -->
+<script src="bower_components/file-saver/FileSaver.min.js"></script>
+<script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<!-- codemirror -->
+<script src="bower_components/codemirror/lib/codemirror.js"></script>
+<script src="bower_components/codemirror/mode/meta.js"></script>
+<script src="bower_components/codemirror/mode/css/css.js"></script>
+<!-- overlay needed by gfm.js -->
+<!--<script src="bower_components/codnvemirror/addon/mode/overlay.js"></script>-->
+<!--<script src="bower_components/codemirror/mode/gfm/gfm.js"></script>-->
+<script src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script src="bower_components/codemirror/mode/markdown/markdown.js"></script>
+<script src="bower_components/codemirror/mode/perl/perl.js"></script>
+<script src="bower_components/codemirror/mode/powershell/powershell.js"></script>
+<script src="bower_components/codemirror/mode/properties/properties.js"></script>
+<script src="bower_components/codemirror/mode/python/python.js"></script>
+<script src="bower_components/codemirror/mode/shell/shell.js"></script>
+<script src="bower_components/codemirror/mode/sql/sql.js"></script>
+<script src="bower_components/codemirror/mode/vbscript/vbscript.js"></script>
+<script src="bower_components/codemirror/mode/xml/xml.js"></script>
+<script src="bower_components/codemirror/mode/yaml/yaml.js"></script>
+<script src="bower_components/codemirror/addon/mode/simple.js"></script>
+<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="bower_components/codemirror/addon/edit/matchtags.js"></script>
+<script src="bower_components/codemirror/addon/fold/foldcode.js"></script>
+<script src="bower_components/codemirror/addon/fold/foldgutter.js"></script>
+<script src="bower_components/codemirror/addon/fold/foldcode.js"></script>
+<script src="bower_components/codemirror/addon/fold/foldgutter.js"></script>
+<script src="bower_components/codemirror/addon/fold/brace-fold.js"></script>
+<script src="bower_components/codemirror/addon/fold/xml-fold.js"></script>
+<script src="bower_components/codemirror/addon/fold/indent-fold.js"></script>
+<script src="bower_components/codemirror/addon/fold/markdown-fold.js"></script>
+<script src="bower_components/codemirror/addon/fold/comment-fold.js"></script>
+<script src="bower_components/codemirror/addon/display/autorefresh.js"></script>
+<script src="bower_components/codemirror/addon/display/panel.js"></script>
+<!--<script src="bower_components/codemirror/addon/search/search.js"></script>-->
+<!--<script src="bower_components/codemirror/addon/dialog/dialog.js"></script>-->
+<script src="bower_components/codemirror/addon/search/searchcursor.js"></script>
+<script src="bower_components/codemirror/addon/search/jump-to-line.js"></script>
+<script src="bower_components/codemirror/addon/search/match-highlighter.js"></script>
+<script src="bower_components/angular-ui-codemirror/ui-codemirror.min.js"></script>
+<!-- diff and beautifier -->
+<script src="bower_components/js-beautify/js/lib/beautify-html.js"></script>
+<script src="bower_components/deep-diff/dist/deep-diff.min.js"></script>
+<script src="bower_components/diff2html/dist/diff2html.js"></script>
+<script src="lib/json/jsondiffpatch.umd.js"></script>
+<script src="lib/mergely/mergely.js"></script>
+<!-- json-editor -->
+<script src="lib/json-editor/jsoneditor.min.js"></script>
+<!-- opencc-js -->
+<script src="bower_components/opencc-js-1.0.3/data.js"></script>
+<script src="bower_components/opencc-js-1.0.3/data.cn2t.js"></script>
+<script src="bower_components/opencc-js-1.0.3/data.t2cn.js"></script>
+<script src="bower_components/opencc-js-1.0.3/bundle-browser.js"></script>
+<!-- table -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
+<script src="bower_components/datatables.net-buttons/js/dataTables.buttons.js"></script>
+<script src="bower_components/datatables.net-buttons/js/buttons.colVis.js"></script>
+<script src="bower_components/datatables.net-select/js/dataTables.select.js"></script>
+<!--<script src="bower_components/datatables.net-buttons/js/buttons.html5.js"></script>-->
+<!--treeGrid must be imported before fixedColumns-->
+<script src="lib/datatable/dataTables.treeGrid.js"></script>
+<script src="lib/datatable/dataTables.fixedColumns.js"></script>
+<!-- color -->
+<script src="bower_components/tinycolor/tinycolor.js"></script>
+<script src="bower_components/spectrum/spectrum.js"></script>
+<script src="bower_components/spectrum/i18n/jquery.spectrum-zh-cn.js"></script>
+<!-- date and calendar -->
+<script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="bower_components/jQRangeSlider/jQRangeSlider.js"></script>
+<script src="bower_components/jQRangeSlider/jQRangeSliderMouseTouch.js"></script>
+<script src="bower_components/jQRangeSlider/jQRangeSliderDraggable.js"></script>
+<script src="bower_components/jQRangeSlider/jQRangeSliderHandle.js"></script>
+<script src="bower_components/jQRangeSlider/jQRangeSliderBar.js"></script>
+<script src="bower_components/jQRangeSlider/jQRangeSliderLabel.js"></script>
+<script src="bower_components/jQRangeSlider/jQDateRangeSliderHandle.js"></script>
+<script src="bower_components/jQRangeSlider/jQDateRangeSlider.js"></script>
+<script src="bower_components/jQRangeSlider/jQRuler.js"></script>
+<!-- ========== misc ui components ========= -->
+<!-- tree view -->
+<script src="bower_components/jquery.fancytree/dist/jquery.fancytree-all.js"></script>
+<!-- contextMenu -->
+<script src="bower_components/jQuery-contextMenu/dist/jquery.contextMenu.js"></script>
+<script src="app/modules/commons/tree/jquery.fancytree.contextMenu.js"></script>
+<!-- password -->
+<script src="lib/ng-password-meter/ng-password-meter.js"></script>
+<!-- wizard -->
+<!--<script src="bower_components/smartwizard/dist/js/jquery.smartWizard.js"></script>-->
+<script src="bower_components/angular-vs-repeat/dist/angular-vs-repeat.js"></script>
+<!-- i18n -->
+<script src="bower_components/angular-i18n/angular-locale_zh-cn.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+<script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+
+<script src="lib/luckysheet/dist/luckysheet.umd.js"></script>
+<script src="lib/luckyexcel/dist/luckyexcel.umd.js"></script>
+
+<script src="lib/echarts5/echarts.min.js"></script>
+<script src="lib/d3-old/d3.min.js"></script>
+<!-- endbuild -->
+
+<!-- build:js lib/tinymce/oplus-tinymice.js -->
+<!-- code editor -->
+<script src="lib/tinymce/tinymce.min.js"></script>
+<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+<!-- Decrypt Encrypt tools -->
+<script src="bower_components/crypto-js/crypto-js.js"></script>
+<!--<script src="bower_components/jssha/dist/sha256.js"></script>-->
+<!-- endbuild -->
+<script src="config.js"></script>
+<!-- build:js app/profiles.js  -->
+<script src="app/profiles.js"></script>
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-main.js -->
+<!--**************************************************
+   MODULE oplus-main: Main for init app bootstrap
+***************************************************-->
+<script src="app/modules/main/appconfig-init.js"></script>
+<script src="app/modules/main/main.module.js"></script>
+<script src="app/modules/main/tenant-config-init.js"></script>
+<script src="app/modules/main/main-init.js"></script>
+<script src="app/modules/main/main.state.js"></script>
+<script src="app/modules/main/main-config.js"></script>
+<script src="app/modules/main/main.controller.js"></script>
+<script src="app/modules/main/tenant-util.js"></script>
+<script src="app/modules/main/error.state.js"></script>
+<script src="app/modules/main/error.controller.js"></script>
+<!-- endbuild -->
+<!-- build:js app/modules/oplus-layout.js -->
+<!--**************************************************
+   MODULE oplus-layout
+***************************************************-->
+<script src="app/modules/layout/layout.module.js"></script>
+<!--<script src="app/modules/layout/home/cmb/widgets/widget-tool.component.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widgets/widget-task.component.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widgets/widget-shift.component.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widgets/widget-duty-task.component.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widgets/widget-bulletin.component.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget-ui-helper.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget-select.controller.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget-factory.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget-config.controller.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget-component.controller.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget.directive.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/widget.controller.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/home.controller.js"></script>-->
+<!--<script src="app/modules/layout/home/cmb/home.customize.controller.js"></script>-->
+<!-- BUILD_INSERT_JS:../../tmp/oplus-layout-tpls.js -->
+<!-- endbuild -->
+<!-- build:js app/modules/oplus-lang.js -->
+<script src="app/modules/oplus-lang.js"></script>
+<!-- endbuild -->
+<!-- build:js app/modules/oplus-commons.js -->
+<!--**************************************************
+   MODULE oplus-commons: Reusable utils
+***************************************************-->
+<script src="app/modules/commons/commons.module.js"></script>
+<!--<script src="app/modules/commons/table/datatable-sort-smart.js"></script>-->
+<script src="app/modules/commons/config/localstorage.config.js"></script>
+<script src="app/modules/commons/dao/local-dao-factory.js"></script>
+<script src="app/modules/commons/data/data-ex.js"></script>
+<script src="app/modules/commons/data/excel-mock-data.js"></script>
+<!--<script src="app/modules/commons/datetime/datetime-picker.js"></script>-->
+<script src="app/modules/commons/datetime/datetime.service.js"></script>
+<script src="app/modules/commons/dropdown/dropdown-enhanced.js"></script>
+<script src="app/modules/commons/dropdown/opx-popdrop.directive.js"></script>
+<script src="app/modules/commons/file/download.service.js"></script>
+<script src="app/modules/commons/file/upload.service.js"></script>
+<!--<script src="app/modules/commons/form/op-select.component.js"></script>-->
+<script src="app/modules/commons/http/access-deny.interceptor.js"></script>
+<script src="app/modules/commons/http/auth-expired.interceptor.js"></script>
+<script src="app/modules/commons/http/auth.interceptor.js"></script>
+<script src="app/modules/commons/http/errorhandler.interceptor.js"></script>
+<script src="app/modules/commons/http/http.config.js"></script>
+<script src="app/modules/commons/http/rest-utils.js"></script>
+<script src="app/modules/commons/i18n/i18n.config.js"></script>
+<script src="app/modules/commons/i18n/i18n.filter.js"></script>
+<script src="app/modules/commons/i18n/i18n.service.js"></script>
+<script src="app/modules/commons/i18n/lang-switch.controller.js"></script>
+<script src="app/modules/commons/i18n/language.constants.js"></script>
+<script src="app/modules/commons/i18n/translation-error.handler.js"></script>
+<script src="app/modules/commons/i18n/translation-storage.provider.js"></script>
+<script src="app/modules/commons/i18n/translation.handler.js"></script>
+<script src="app/modules/commons/icon/fa-icons.js"></script>
+<script src="app/modules/commons/icon/fontawesome-iconpicker.js"></script>
+<script src="app/modules/commons/icon/op-iconpicker.directive.js"></script>
+<script src="app/modules/commons/message/message.service.js"></script>
+<script src="app/modules/commons/modal/modal-helper.js"></script>
+<script src="app/modules/commons/datatable/buttons.bootstrap.js"></script>
+<script src="app/modules/commons/datatable/datatable-config.js"></script>
+<script src="app/modules/commons/datatable/buttons.html5-modified.js"></script>
+<script src="app/modules/commons/datatable/datatable-paging-input.js"></script>
+<script src="app/modules/commons/datatable/datatable.directive.js"></script>
+<script src="app/modules/commons/datatable/datatable.service.js"></script>
+<script src="app/modules/commons/datatable/dataTables.bootstrap4.js"></script>
+<script src="app/modules/commons/datatable/dataTables.colResize.js"></script>
+<script src="app/modules/commons/datatable/dataTables.ellipsis.js"></script>
+<script src="app/modules/commons/datatable/dataTables.responsive.js"></script>
+<script src="app/modules/commons/datatable/dataTables.search-highlight.js"></script>
+<script src="app/modules/commons/datatable/dataTables.select.js"></script>
+<script src="app/modules/commons/datatable/jquery.highlight.js"></script>
+<script src="app/modules/commons/datatable/op-datatable.js"></script>
+<script src="app/modules/commons/datatable/opx-datatable.directive.js"></script>
+<script src="app/modules/commons/ui/jquery.ui.pos.js"></script>
+<script src="app/modules/commons/ui/op-browser-support.directive.js"></script>
+<script src="app/modules/commons/editor/codemirror/search.js"></script>
+<script src="app/modules/commons/editor/codemirror/dialog.js"></script>
+<script src="app/modules/commons/editor/codemirror/ansiblelog-mode.js"></script>
+<script src="app/modules/commons/editor/op-code-editor.component.js"></script>
+<script src="app/modules/commons/ui/op-help-doc.directive.js"></script>
+<script src="app/modules/commons/ui/op-help-info.directive.js"></script>
+<script src="app/modules/commons/ui/op-loading.directive.js"></script>
+<script src="app/modules/commons/ui/op-param-table.component.js"></script>
+<script src="app/modules/commons/ui/op-searchbox.component.js"></script>
+<script src="app/modules/commons/ui/op-sectioned-form.directive.js"></script>
+<script src="app/modules/commons/ui/op-select.js"></script>
+<script src="app/modules/commons/ui/op-sidebar.directive.js"></script>
+<script src="app/modules/commons/ui/op-smart-select.component.js"></script>
+<script src="app/modules/commons/ui/op-tab-bar.directive.js"></script>
+<script src="app/modules/commons/ui/opx-foldable.directive.js"></script>
+<script src="app/modules/commons/ui/responsive-tabs.js"></script>
+<script src="app/modules/commons/ui/shadow-scroll.js"></script>
+<script src="app/modules/commons/ui/ui-utils.js"></script>
+<script src="app/modules/commons/tree/opx-tree.component.js"></script>
+<script src="app/modules/commons/umd/table-columns-config.component.js"></script>
+<script src="app/modules/commons/umd/umd-selector.component.js"></script>
+<script src="app/modules/commons/umd/umd-data-view.component.js"></script>
+<script src="app/modules/commons/umd/umd-data-edit.component.js"></script>
+<script src="app/modules/commons/umd/umd-model-attr.component.js"></script>
+<script src="app/modules/commons/umd/umd-util.js"></script>
+<script src="app/modules/commons/umd/umd-config-attrs.component.js"></script>
+<script src="app/modules/commons/umd/umd-config-view.component.js"></script>
+<script src="app/modules/commons/umd/umd-config-operation.component.js"></script>
+<script src="app/modules/commons/umd/team-res-table-permission.component.js"></script>
+<script src="app/modules/commons/user/user-pref.js"></script>
+<script src="app/modules/commons/util/debug-timer.js"></script>
+<script src="app/modules/commons/util/error.constants.js"></script>
+<script src="app/modules/commons/util/filters.js"></script>
+<script src="app/modules/commons/util/jhi-item-count.directive.js"></script>
+<script src="app/modules/commons/util/jquery-ext.js"></script>
+<script src="app/modules/commons/util/pagination-util.service.js"></script>
+<script src="app/modules/commons/util/show-validation.directive.js"></script>
+<script src="app/modules/commons/util/sort-by.directive.js"></script>
+<script src="app/modules/commons/util/sort.directive.js"></script>
+<script src="app/modules/commons/util/truncate-characters.filter.js"></script>
+<script src="app/modules/commons/util/utils.js"></script>
+<script src="app/modules/commons/security/security-utils.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-commons-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-uaa.js -->
+<!--**************************************************
+    MODULE: uaa
+***************************************************-->
+<script src="app/modules/uaa/uaa.module.js"></script>
+<script src="app/modules/uaa/current-user.js"></script>
+<script src="app/modules/uaa/uaa-init.js"></script>
+<script src="app/modules/uaa/permission-resolver.js"></script>
+<script src="app/modules/uaa/uaa-service.js"></script>
+<script src="app/modules/uaa/has-role.directive.js"></script>
+<script src="app/modules/uaa/has-any-role.directive.js"></script>
+<script src="app/modules/uaa/has-permission.directive.js"></script>
+<script src="app/modules/uaa/has-any-permission.directive.js"></script>
+<script src="app/modules/uaa/data-has-permission.directive.js"></script>
+<script src="app/modules/uaa/is-authenticated.directive.js"></script>
+<script src="app/modules/uaa/user/uaa-user-service.js"></script>
+<script src="app/modules/uaa/user/user-double-review.controller.js"></script>
+<script src="app/modules/uaa/user.service.js"></script>
+<script src="app/modules/uaa/ldap.service.js"></script>
+<script src="app/modules/uaa/user-habit.service.js"></script>
+<script src="app/modules/uaa/register.service.js"></script>
+<script src="app/modules/uaa/principal.service.js"></script>
+<script src="app/modules/uaa/password-reset-init.service.js"></script>
+<script src="app/modules/uaa/password-reset-finish.service.js"></script>
+<script src="app/modules/uaa/password.service.js"></script>
+<script src="app/modules/uaa/license.service.js"></script>
+<script src="app/modules/uaa/auth.service.js"></script>
+<script src="app/modules/uaa/auth.jwt.service.js"></script>
+<script src="app/modules/uaa/activate.service.js"></script>
+<script src="app/modules/uaa/account.service.js"></script>
+<script src="app/modules/uaa/settings/settings.state.js"></script>
+<script src="app/modules/uaa/settings/settings.controller.js"></script>
+<script src="app/modules/uaa/reset/request/reset.request.state.js"></script>
+<script src="app/modules/uaa/reset/request/reset.request.controller.js"></script>
+<script src="app/modules/uaa/reset/finish/reset.finish.state.js"></script>
+<script src="app/modules/uaa/reset/finish/reset.finish.controller.js"></script>
+<script src="app/modules/uaa/register/register.state.js"></script>
+<script src="app/modules/uaa/register/register.controller.js"></script>
+<script src="app/modules/uaa/qrcode/qrcode.controller.js"></script>
+<script src="app/modules/uaa/password/password-strength-bar.directive.js"></script>
+<script src="app/modules/uaa/password/password.state.js"></script>
+<script src="app/modules/uaa/password/password.controller.js"></script>
+<script src="app/modules/uaa/activate/activate.state.js"></script>
+<script src="app/modules/uaa/activate/activate.controller.js"></script>
+<script src="app/modules/uaa/account.state.js"></script>
+<script src="app/modules/uaa/login/login-main.controller.js"></script>
+<script src="app/modules/uaa/login/login.state.js"></script>
+<script src="app/modules/uaa/login/login.service.js"></script>
+<script src="app/modules/uaa/login/login.component.js"></script>
+<script src="app/modules/uaa/login/license-register.controller.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-uaa-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-dts.js -->
+<!--**************************************************
+    MODULE oplus-dts
+***************************************************-->
+<script src="app/modules/dts/dts.module.js"></script>
+<script src="app/modules/dts/dts.state.js"></script>
+<script src="app/modules/dts/datasource.service.js"></script>
+<script src="app/modules/dts/dataset.service.js"></script>
+<script src="app/modules/dts/api.service.js"></script>
+<script src="app/modules/dts/dao/datasource-dao.js"></script>
+<script src="app/modules/dts/dao/_datasource-local-dao.js"></script>
+<script src="app/modules/dts/dao/_datasource-remote-dao.js"></script>
+<script src="app/modules/dts/dao/dataset-dao.js"></script>
+<script src="app/modules/dts/dao/local-dataset-repo.js"></script>
+<script src="app/modules/dts/dao/_dataset-remote-dao.js"></script>
+<script src="app/modules/dts/dao/mock-js-dataset.js"></script>
+<script src="app/modules/dts/dao/mock-excel-dataset.js"></script>
+<script src="app/modules/dts/datasource-new.controller.js"></script>
+<script src="app/modules/dts/datasource-edit.controller.js"></script>
+<script src="app/modules/dts/datasource-list.component.js"></script>
+<script src="app/modules/dts/dataset-list.component.js"></script>
+<script src="app/modules/dts/dataset-edit.component.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-dts-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-udp.js -->
+<!--**************************************************
+    MODULE oplus-udp
+***************************************************-->
+<script src="app/modules/udp/udp.module.js"></script>
+<script src="app/modules/app/window/desktop.component.js"></script>
+<script src="app/modules/app/window/taskbar.component.js"></script>
+<script src="app/modules/app/window/applet-dock.component.js"></script>
+<script src="app/modules/app/window/status-bar.component.js"></script>
+<script src="app/modules/udp/error-handler.js"></script>
+<script src="app/modules/udp/udp.state.js"></script>
+<script src="app/modules/udp/udp-config.controller.js"></script>
+<script src="app/modules/udp/dao/_page-local-dao.js"></script>
+<script src="app/modules/udp/dao/_page-remote-dao.js"></script>
+<script src="app/modules/udp/dao/page-dao.js"></script>
+<script src="app/modules/udp/devel.js"></script>
+<script src="app/modules/udp/filters.js"></script>
+<script src="app/modules/udp/integration/zhaohu.js"></script>
+<script src="app/modules/udp/page.service.js"></script>
+<script src="app/modules/udp/page-data-util.js"></script>
+<script src="app/modules/udp/running-state.js"></script>
+<script src="app/modules/udp/page-import.controller.js"></script>
+<script src="app/modules/udp/page-view.controller.js"></script>
+<script src="app/modules/udp/page-actions.component.js"></script>
+<script src="app/modules/udp/page-view.component.js"></script>
+<script src="app/modules/udp/helper/theme.service.js"></script>
+<script src="app/modules/udp/helper/theme-selector.component.js"></script>
+<script src="app/modules/udp/helper/popover.directive.js"></script>
+<script src="app/modules/udp/page-designer.controller.js"></script>
+<script src="app/modules/udp/page-setting.component.js"></script>
+<script src="app/modules/udp/confirm-on-exit.directive.js"></script>
+<script src="app/modules/udp/page-designer-palette.component.js"></script>
+<script src="app/modules/udp/widgets/widget-factory.js"></script>
+<script src="app/modules/udp/widgets/widget.directive.js"></script>
+<script src="app/modules/udp/widgets/widget.controller.js"></script>
+<script src="app/modules/udp/widgets/widget-values.js"></script>
+<script src="app/modules/udp/page-link.directive.js"></script>
+<script src="app/modules/udp/widgets/widget-interaction.directive.js"></script>
+<script src="app/modules/udp/widgets/uinput.directive.js"></script>
+<script src="app/modules/udp/widgets/uinput-helper.js"></script>
+<script src="app/modules/udp/widgets/widget-props-viewer.js"></script>
+<script src="app/modules/udp/widgets/widget-interaction.js"></script>
+<script src="app/modules/udp/widgets/widget-data-interface.js"></script>
+<script src="app/modules/udp/helper/data-converter.component.js"></script>
+<script src="app/modules/udp/helper/data-converter-config.controller.js"></script>
+<script src="app/modules/udp/helper/page-params-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-postproc.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-page-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-job-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-ajax-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-link-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-event-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-func-config.component.js"></script>
+<script src="app/modules/udp/helper/widget-interaction-code-config.component.js"></script>
+<script src="app/modules/udp/helper/custom-function.js"></script>
+<script src="app/modules/udp/helper/locales/custom-function.zh-cn.js"></script>
+<script src="app/modules/udp/helper/locales/custom-function.zh-tw.js"></script>
+<script src="app/modules/udp/helper/expandable-editor.directive.js"></script>
+<script src="app/modules/udp/helper/widget-data-util.js"></script>
+<script src="app/modules/udp/helper/widget-ui-helper.js"></script>
+<script src="app/modules/udp/helper/widget-dnd.js"></script>
+<script src="app/modules/udp/helper/udp-filters.js"></script>
+<script src="app/modules/udp/helper/css-editor.component.js"></script>
+<script src="app/modules/udp/helper/button-style-config.component.js"></script>
+<script src="app/modules/udp/helper/color-picker.directive.js"></script>
+<script src="app/modules/udp/helper/font-editor.component.js"></script>
+<script src="app/modules/udp/helper/media-selector.component.js"></script>
+<script src="app/modules/udp/helper/page-selector.component.js"></script>
+<script src="app/modules/udp/helper/page-and-param-config.component.js"></script>
+<script src="app/modules/udp/helper/button-state-config.component.js"></script>
+<script src="app/modules/udp/helper/state-control.directive.js"></script>
+<script src="app/modules/udp/security/widget-security.js"></script>
+<script src="app/modules/udp/security/widget-access-config.component.js"></script>
+<script src="app/modules/udp/widgets/dsfield-selector.component.js"></script>
+<script src="app/modules/udp/widgets/layout/layout-widget.directive.js"></script>
+<script src="app/modules/udp/widgets/static/text-widget.js"></script>
+<script src="app/modules/udp/widgets/input/input-widget.js"></script>
+<script src="app/modules/udp/widgets/daterange/daterange-widget.js"></script>
+<script src="app/modules/udp/widgets/nav/nav-widget.js"></script>
+<script src="app/modules/udp/widgets/pageheader/pageheader-widget.js"></script>
+<script src="app/modules/udp/widgets/uinput-setting-basic.component.js"></script>
+<script src="app/modules/udp/widgets/uinput-setting-datacontrol.component.js"></script>
+<script src="app/modules/udp/widgets/uinput-setting-interaction.component.js"></script>
+<script src="app/modules/udp/widgets/button/button-widget.js"></script>
+<script src="app/modules/udp/widgets/timer/timer-widget.js"></script>
+<script src="app/modules/udp/widgets/param/param-widget.js"></script>
+<script src="app/modules/udp/widgets/clock/clock-widget.js"></script>
+<script src="app/modules/udp/widgets/datatable/datatable-widget.js"></script>
+<script src="app/modules/udp/widgets/datatable/datatable-updater.js"></script>
+
+<script src="app/modules/udp/widgets/echarts-widget-builder.js"></script>
+<script src="app/modules/udp/widgets/echarts-factory.js"></script>
+<script src="app/modules/udp/widgets/chart-updater.js"></script>
+<script src="app/modules/udp/widgets/echarts-map-config.js"></script>
+<script src="app/modules/udp/widgets/linechart/linechart-widget.js"></script>
+<script src="app/modules/udp/widgets/linechart/widget-linechart-format-yaxis.component.js"></script>
+<script src="app/modules/udp/widgets/barchart/barchart-widget.js"></script>
+<script src="app/modules/udp/widgets/piechart/piechart-widget.js"></script>
+<script src="app/modules/udp/widgets/route/route-widget.js"></script>
+<script src="app/modules/udp/widgets/map/map-widget.js"></script>
+<script src="app/modules/udp/widgets/repeated-items-widget-builder.js"></script>
+<script src="app/modules/udp/widgets/kpi/kpi-widget.js"></script>
+<script src="app/modules/udp/widgets/card/card-widget.js"></script>
+<script src="app/modules/udp/widgets/list/list-widget.js"></script>
+<script src="app/modules/udp/widgets/gauge/gauge-widget.js"></script>
+<script src="app/modules/udp/widgets/circle/circle-widget.js"></script>
+<script src="app/modules/udp/widgets/circle-kpi/circle-kpi-widget.js"></script>
+<script src="app/modules/udp/widgets/circle-kpi/circle-kpi.component.js"></script>
+
+
+<script src="app/modules/udp/widgets/wysiwyg/wysiwyg-widget.js"></script>
+<!--<script src="app/modules/udp/widgets/wysiwyg/summernote-ext-faicon.js"></script>-->
+<script src="app/modules/udp/widgets/radarchart/radarchart-widget.js"></script>
+<script src="app/modules/udp/widgets/rosechart/widget-config-rosechart-display.component.js"></script>
+<script src="app/modules/udp/widgets/rosechart/rosechart-widget.js"></script>
+<script src="app/modules/udp/widgets/rosechart/widget-config-rosechart-metrics.directive.js"></script>
+<script src="app/modules/udp/widgets/script/script-widget.js"></script>
+<script src="app/modules/udp/widgets/calendar/calendar-widget.js"></script>
+<script src="app/modules/udp/widgets/calendar/locales/fullcalendar-locale-zh-cn.js"></script>
+<script src="app/modules/udp/widgets/calendar/locales/fullcalendar-locale-zh-tw.js"></script>
+<script src="app/modules/udp/widgets/googlemap/googlemap-widget.js"></script>
+<script src="app/modules/udp/widgets/sample/sample-widget.js"></script>
+<script src="app/modules/udp/params-control-config.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config.controller.js"></script>
+<script src="app/modules/udp/widgets/widget-config-helper.js"></script>
+<script src="app/modules/udp/widgets/widget-config-chart-axes.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-multi-values.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-chart-metrics.directive.js"></script>
+<script src="app/modules/udp/widgets/widget-config-fields.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-interaction.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-display.directive.js"></script>
+<script src="app/modules/udp/widgets/widget-config-format-rule.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-chart-display.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-dataset.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-dataset-joinx.component.js"></script>
+<script src="app/modules/udp/widgets/widget-config-dataset-datax.component.js"></script>
+<script src="app/modules/udp/widgets/page-event-selector.component.js"></script>
+<script src="app/modules/udp/widgets/conditional-format.js"></script>
+<script src="app/modules/udp/widgets/pivot/pivot.js"></script>
+<script src="app/modules/udp/widgets/pivot/c3_renderers.js"></script>
+<script src="app/modules/udp/widgets/pivot/locales/pivot.zh.js"></script>
+<script src="app/modules/udp/widgets/pivot/pivot-widget.js"></script>
+<script src="app/modules/udp/widgets/tree/tree-widget.js"></script>
+<script src="app/modules/udp/dao/_folder-local-dao.js"></script>
+<script src="app/modules/udp/dao/_folder-remote-dao.js"></script>
+<script src="app/modules/udp/dao/folder-dao.js"></script>
+<script src="app/modules/udp/page-list.component.js"></script>
+<script src="app/modules/udp/widgets/flow-layout/flow-layout.component.js"></script>
+<script src="app/modules/udp/widgets/flow-layout/flow-layout-widget.js"></script>
+<script src="app/modules/udp/widgets/flow-instance/flow-instance.component.js"></script>
+<script src="app/modules/udp/widgets/flow-instance/flow-instance-widget.js"></script>
+<script src="app/modules/udp/widgets/flow-manager/flow-manager.component.js"></script>
+
+<script src="app/modules/udp/widgets/flow-manager/flow-permission.component.js"></script>
+<script src="app/modules/udp/widgets/flow-manager/flow-instance-list.component.js"></script>
+<script src="app/modules/udp/widgets/flow-manager/flow-export.component.js"></script>
+<script src="app/modules/udp/widgets/flow-manager/flow-import.component.js"></script>
+<script src="app/modules/udp/widgets/flow-manager/flow-manager-widget.js"></script>
+
+
+<script src="app/modules/udp/widgets/flow-record/flow-record.component.js"></script>
+<script src="app/modules/udp/widgets/flow-process/flow-process-widget.js"></script>
+<script src="app/modules/udp/widgets/flow-process-result/flow-process-result-widget.js"></script>
+<script src="app/modules/udp/widgets/umd-form/umd-form-widget-config.js"></script>
+<script src="app/modules/udp/widgets/dynamic-topology-chart/dynamic-topology-chart-widget.js"></script>
+<script src="app/modules/udp/widgets/task-scheduling/task-scheduling-edit.controller.js"></script>
+<script src="app/modules/udp/widgets/task-scheduling/task-scheduling-widget.js"></script>
+<script src="app/modules/udp/widgets/task-scheduling/task-scheduling.component.js"></script>
+<script src="app/modules/udp/widgets/code-editor/code-editor-widget.js"></script>
+
+<!--<script src="app/modules/udp/widgets/flow-record/flow-record-widget.js"></script>-->
+<!-- BUILD_INSERT_JS: ../../tmp/oplus-udp-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-app.js -->
+<!--**************************************************
+    MODULE oplus-applet
+***************************************************-->
+<script src="app/modules/app/applet.module.js"></script>
+<script src="app/modules/app/applet.state.js"></script>
+<script src="app/modules/app/helper/applet-helper.js"></script>
+<script src="app/modules/app/applet-list.component.js"></script>
+<script src="app/modules/app/applet-item.component.js"></script>
+<script src="app/modules/app/window/window-init.js"></script>
+<script src="app/modules/app/window/applet-runman.js"></script>
+<script src="app/modules/app/window/window-state-handler.js"></script>
+<script src="app/modules/app/window/applet-router.js"></script>
+<script src="app/modules/commons/state/state-provider-ref.provider.js"></script>
+<script src="app/modules/commons/modal/modal-state-provider.js"></script>
+<script src="app/modules/app/window/applet-registry.js"></script>
+<script src="app/modules/app/window/applet-content.component.js"></script>
+<script src="app/modules/app/applet-setting.controller.js"></script>
+<script src="app/modules/app/applet-mgmt-jobs.controller.js"></script>
+<script src="app/modules/app/applet-mgmt-pages.controller.js"></script>
+<script src="app/modules/app/applet-mgmt-datasets.controller.js"></script>
+<script src="app/modules/app/applet-mgmt-datasets-edit.controller.js"></script>
+<script src="app/modules/app/applet-mgmt-datamodels.controller.js"></script>
+<script src="app/modules/app/applet-help.controller.js"></script>
+<script src="app/modules/app/applet.service.js"></script>
+<script src="app/modules/app/applet-security.js"></script>
+<script src="app/modules/app/applet-config-access.component.js"></script>
+<script src="app/modules/app/helper/applet-selector.component.js"></script>
+<!-- BUILD_INSERT_JS: ../../tmp/oplus-app-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-dev.js -->
+<!--**************************************************
+    MODULE oplus-dev
+***************************************************-->
+<script src="app/modules/dev/dev.module.js"></script>
+<script src="app/modules/dev/dev.state.js"></script>
+<script src="app/modules/dev/dev.controller.js"></script>
+<script src="app/modules/dev/translator/translator.controller.js"></script>
+<script src="app/modules/dev/translator/translator.service.js"></script>
+<!-- BUILD_INSERT_JS: ../../tmp/oplus-dev-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-tm.js -->
+<!--**************************************************
+    MODULE tm: for CMB only
+***************************************************-->
+<!--<script src="app/modules/tm/tm.module.js"></script>-->
+<!--<script src="app/modules/tm/tm.service.js"></script>-->
+<!--<script src="app/modules/tm/dao/tm-dao.js"></script>-->
+<!--<script src="app/modules/tm/dao/_tm-remote-dao.js"></script>-->
+<!--<script src="app/modules/tm/dao/_tm-local-dao.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task.state.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task.service.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task.controller.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-reminder.controller.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-assistant.controller.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-project.controller.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-nav.component.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-select-user.component.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-list.component.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-detail.component.js"></script>-->
+<!--<script src="app/modules/tm/task/js/task-list-record.directive.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift-view.component.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift-view-change-person.controller.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift.state.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift.service.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift.controller.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift-config.controller.js"></script>-->
+<!--<script src="app/modules/tm/shift/js/shift-select-person.controller.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday.state.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday.controller.js "></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-category.state.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-category.service.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-category.controller.js "></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-category-dialog.controller.js "></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-category-delete-dialog.controller.js "></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-shift-index.controller.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-shift-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-shift.service.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-shift-config.controller.js"></script>-->
+<!--<script src="app/modules/tm/holiday-shift/js/holiday-shift-select-person.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-template/js/duty-template-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-template/js/duty-template-delete-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-template/js/duty-template-copy-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-template/js/duty-template.state.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-template/js/duty-template.service.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-template/js/duty-template.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task-process.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task.state.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task.service.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task-changes.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task-history.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task-unfinish.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task-widget-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty-task/js/duty-task.component.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty.state.js"></script>-->
+<!--<script src="app/modules/tm/duty/duty.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item-delete-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item.state.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item.service.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item.directive.js"></script>-->
+<!--<script src="app/modules/tm/duty/check-item/js/check-item.controller.js"></script>-->
+<!--<script src="app/modules/tm/config/js/config.controller.js"></script>-->
+<!--<script src="app/modules/tm/bulletin/js/bulletin.service.js"></script>-->
+<!--<script src="app/modules/tm/bulletin/js/bulletin.controller.js"></script>-->
+<!--<script src="app/modules/tm/bulletin/js/bulletin.dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/bulletin/js/bulletin.state.js"></script>-->
+<!--<script src="app/modules/tm/bulletin/js/bulletin.view.component.js"></script>-->
+<!--<script src="app/modules/tm/visit/js/visit.service.js"></script>-->
+<!--<script src="app/modules/tm/visit/js/visit.controller.js"></script>-->
+<!--<script src="app/modules/tm/visit/js/visit-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/visit/js/visit-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/visit/js/visit-approve.controller.js"></script>-->
+<!--<script src="app/modules/tm/visit/js/visit.state.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit.service.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit.controller.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit.state.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-category.service.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-module.service.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-module.controller.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-module-detail.controller.js"></script>-->
+<!--<script src="app/modules/tm/audit/js/audit-module-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/calendar/js/calendar.controller.js"></script>-->
+<!--<script src="app/modules/tm/calendar/js/calendar.service.js"></script>-->
+<!--<script src="app/modules/tm/calendar/js/calendar.state.js"></script>-->
+<!--<script src="app/modules/tm/event/js/event.state.js"></script>-->
+<!--<script src="app/modules/tm/event/js/event.service.js"></script>-->
+<!--<script src="app/modules/tm/event/js/event.controller.js"></script>-->
+<!--<script src="app/modules/tm/event/js/event-dialog.controller.js"></script>-->
+<!--<script src="app/modules/tm/event/js/event-changes.controller.js"></script>-->
+<!--<script src="app/modules/tm/event/js/event-status.filter.js"></script>-->
+<!--<script src="app/modules/tm/common/user-select-dialog.controller.js"></script>-->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-acm.js -->
+<!--**************************************************
+    MODULE oplus-acm
+***************************************************-->
+<script src="app/modules/acm/acm.module.js"></script>
+<script src="app/modules/acm/acm.service.js"></script>
+<script src="app/modules/acm/acm-util.js"></script>
+<script src="app/modules/acm/cm-actions.js"></script>
+<script src="app/modules/acm/acm-ci-model-config.component.js"></script>
+<script src="app/modules/acm/acm-ci-data-view.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-condition.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-group.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-tag.component.js"></script>
+<script src="app/modules/acm/acm-ci-filter.component.js"></script>
+<script src="app/modules/acm/acm-device-selector.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-instance.component.js"></script>
+<script src="app/modules/acm/acm-list-ci.component.js"></script>
+<script src="app/modules/acm/acm-permission.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-recently.component.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-acm-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-gfs.js -->
+<!--**************************************************
+    MODULE oplus-gfs
+***************************************************-->
+<script src="app/modules/gfs/gfs.module.js"></script>
+<script src="app/modules/gfs/gfs.state.js"></script>
+<script src="app/modules/gfs/gfs-example.controller.js"></script>
+<script src="app/modules/gfs/gfile.service.js"></script>
+<script src="app/modules/gfs/gfs-action-helper.js"></script>
+<script src="app/modules/gfs/repo-navi.controller.js"></script>
+<script src="app/modules/gfs/repo-approve.controller.js"></script>
+<script src="app/modules/gfs/file-change-status.component.js"></script>
+<script src="app/modules/gfs/gfile-rev.component.js"></script>
+<script src="app/modules/gfs/gfile-list.component.js"></script>
+<script src="app/modules/gfs/gfile-edit.controller.js"></script>
+<script src="app/modules/gfs/gfile-content.component.js"></script>
+<script src="app/modules/gfs/widgets/fileselector/fileselector-widget.js"></script>
+<script src="app/modules/gfs/widgets/fileselector/file-selector.component.js"></script>
+<!-- BUILD_INSERT_JS: ../../tmp/oplus-gfs-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-jao.js -->
+<!--**************************************************
+    MODULE oplus-jao
+***************************************************-->
+<script src="app/modules/jao/jao.module.js"></script>
+<script src="app/modules/jao/jao.state.js"></script>
+<script src="app/modules/jao/logview/logview-widget.js"></script>
+<script src="app/modules/jao/logview/jao-operation-log-list.component.js"></script>
+<script src="app/modules/jao/process/process-builder.service.js"></script>
+<script src="app/modules/jao/process/process-modeler.component.js"></script>
+<script src="app/modules/jao/logview/ao-view.component.js"></script>
+<script src="app/modules/jao/logview/ao-view-table.component.js"></script>
+<script src="app/modules/jao/ansible/playbook-info.component.js"></script>
+<script src="app/modules/jao/ansible/ansible-log-viewer.component.js"></script>
+<script src="app/modules/jao/widgets/job/job-widget.js"></script>
+<script src="app/modules/jao/flow/host-selector.component.js"></script>
+<script src="app/modules/jao/helper/job-selector.component.js"></script>
+<script src="app/modules/jao/helper/aap-template-selector.component.js"></script>
+<script src="app/modules/jao/job-run-button.directive.js"></script>
+<script src="app/modules/jao/jao-util.js"></script>
+<script src="app/modules/jao/job.service.js"></script>
+<script src="app/modules/jao/job.controller.js"></script>
+<script src="app/modules/jao/job-list.controller.js"></script>
+<script src="app/modules/jao/jao-demo.js"></script>
+<script src="app/modules/jao/job-edit.controller.js"></script>
+<script src="app/modules/jao/job-result-view.component.js"></script>
+<script src="app/modules/jao/ansible-progress-component.js"></script>
+<script src="app/modules/jao/job-quick-run.component.js"></script>
+<script src="app/modules/jao/script-job-config.component.js"></script>
+<script src="app/modules/jao/process-job-config.component.js"></script>
+<script src="app/modules/jao/script-test-run.component.js"></script>
+<script src="app/modules/jao/rest-job-config.component.js"></script>
+<script src="app/modules/jao/flow/host-dynamic-selector.component.js"></script>
+<script src="app/modules/jao/widgets/hostselector2/device-dynamic-selector.component.js"></script>
+<script src="app/modules/jao/widgets/hostselector2/device-selector-widget.js"></script>
+<script src="app/modules/jao/widgets/hostselector2/jao-device-selector.component.js"></script>
+<script src="app/modules/jao/job-list.component.js"></script>
+<script src="app/modules/jao/widgets/approveList/job-approve-list.component.js"></script>
+<script src="app/modules/jao/widgets/approveModal/job-approve-modal.component.js"></script>
+<script src="app/modules/jao/widgets/delayed/job-delayed.component.js"></script>
+<script src="app/modules/jao/flow/flow.controller.js"></script>
+<script src="app/modules/jao/flow/flow.service.js"></script>
+<script src="app/modules/jao/flow/flow-edit.controller.js"></script>
+<script src="app/modules/jao/flow/flow-instance-list.controller.js"></script>
+<script src="app/modules/jao/flow/flow-instance-view.controller.js"></script>
+<script src="app/modules/jao/flow/flow-step.controller.js"></script>
+<script src="app/modules/jao/command/command-list.controller.js"></script>
+<script src="app/modules/jao/command/command.service.js"></script>
+<script src="app/modules/jao/command/command.state.js"></script>
+<script src="app/modules/jao/command/command-edit.controller.js"></script>
+<script src="app/modules/jao/command/command-job-config.component.js"></script>
+<script src="app/modules/jao/command/command-approve.controller.js"></script>
+<script src="app/modules/jao/command/command-job-edit.controller.js"></script>
+<script src="app/modules/jao/command/command-console.controller.js"></script>
+<script src="app/modules/jao/command/commandselector/command-dynamic-selector.component.js"></script>
+<script src="app/modules/jao/logs/clean-log.controller.js"></script>
+<script src="app/modules/jao/cronJob/cron-job.state.js"></script>
+<script src="app/modules/jao/cronJob/cron-job.service.js"></script>
+<script src="app/modules/jao/cronJob/cron-job-list.controller.js"></script>
+<script src="app/modules/jao/cronJob/cron-job-dialog.controller.js"></script>
+<script src="app/modules/jao/cronJob/cron/init.js"></script>
+<script src="app/modules/jao/cronJob/cron/cronboot.js"></script>
+<script src="app/modules/jao/cronJob/cron/jquery.spinner.min.js"></script>
+<script src="app/modules/jao/cronJob/cron/icheck.min.js"></script>
+<script src="app/modules/jao/datamodel/dc-data-add.controller.js"></script>
+<script src="app/modules/jao/datamodel/dc-data-view.component.js"></script>
+<script src="app/modules/jao/datamodel/dc-model-config.component.js"></script>
+<script src="app/modules/jao/datamodel/dc-data.service.js"></script>
+<script src="app/modules/jao/datamodel/dc-selector.component.js"></script>
+<script src="app/modules/jao/widgets/jobParam/job-param.component.js"></script>
+<!-- BUILD_INSERT_JS: ../../tmp/oplus-jao-tpls.js -->
+<!-- endbuild -->
+
+
+<!-- build:js app/modules/oplus-os.js -->
+<!--**************************************************
+    MODULE oplus-os
+***************************************************-->
+<script src="app/modules/os/os.module.js"></script>
+<script src="app/modules/os/os.state.js"></script>
+<script src="app/modules/os/os.controller.js"></script>
+<script src="app/modules/os/os.service.js"></script>
+
+<script src="app/modules/os/flow/flow.controller.js"></script>
+<script src="app/modules/os/flow/flow.service.js"></script>
+<script src="app/modules/os/flow/flow-edit.controller.js"></script>
+<script src="app/modules/os/flow/flow-instance-list.controller.js"></script>
+<script src="app/modules/os/flow/flow-instance-view.controller.js"></script>
+<script src="app/modules/os/flow/flow-step.controller.js"></script>
+
+
+<!-- BUILD_INSERT_JS:../../tmp/oplus-os-tpls.js -->
+<!-- endbuild -->
+
+
+<!-- build:js app/modules/oplus-cac.js -->
+<!--**************************************************
+    MODULE oplus-cac
+***************************************************-->
+<script src="app/modules/cac/cac.module.js"></script>
+<script src="app/modules/cac/cac.service.js"></script>
+<script src="app/modules/cac/cac.controller.js"></script>
+<script src="app/modules/cac/cac.state.js"></script>
+
+<script src="app/modules/cac/echarts.directivce.js"></script>
+
+<script src="app/modules/cac/dao/_cac-dao.js"></script>
+<script src="app/modules/cac/dao/_cac-local-dao.js"></script>
+<script src="app/modules/cac/dao/_cac-remote-dao.js"></script>
+<script src="app/modules/cac/rule/rule.state.js"></script>
+<script src="app/modules/cac/rule/cac-rule.service.js"></script>
+<script src="app/modules/cac/rule/rule-list.controller.js"></script>
+<script src="app/modules/cac/rule/rule-edit.controller.js"></script>
+<script src="app/modules/cac/host/host.state.js"></script>
+<script src="app/modules/cac/host/host-list.controller.js"></script>
+<script src="app/modules/cac/host/cac-host.service.js"></script>
+<script src="app/modules/cac/template/template.state.js"></script>
+<script src="app/modules/cac/template/cac-template.service.js"></script>
+<script src="app/modules/cac/template/template-list.controller.js"></script>
+<script src="app/modules/cac/template/template.controller.js"></script>
+<script src="app/modules/cac/template/template-edit.controller.js"></script>
+<script src="app/modules/cac/template/template-dashboard.controller.js"></script>
+<script src="app/modules/cac/template/cac-team-config.controller.js"></script>
+<script src="app/modules/cac/template/template-find.controller.js"></script>
+<script src="app/modules/cac/template/template-host.controller.js"></script>
+<script src="app/modules/cac/template/template-rule.controller.js"></script>
+<script src="app/modules/cac/template/template-script.controller.js"></script>
+<script src="app/modules/cac/template/template-square.controller.js"></script>
+<script src="app/modules/cac/template/template.controller.js"></script>
+<script src="app/modules/cac/template/user/template-user.state.js"></script>
+<script src="app/modules/cac/template/user/cac-template-user.service.js"></script>
+<script src="app/modules/cac/template/user/template-user.controller.js"></script>
+<script src="app/modules/cac/job/job.state.js"></script>
+<script src="app/modules/cac/job/cac-job.service.js"></script>
+<script src="app/modules/cac/job/job-list.controller.js"></script>
+<script src="app/modules/cac/job/job-run.controller.js"></script>
+<script src="app/modules/cac/job/job-run-log.controller.js"></script>
+<script src="app/modules/cac/script/script.state.js"></script>
+<script src="app/modules/cac/script/cac-script.service.js"></script>
+<script src="app/modules/cac/script/script-list.controller.js"></script>
+<script src="app/modules/cac/script/scripts-upload.controller.js"></script>
+<script src="app/modules/cac/result/result.state.js"></script>
+<script src="app/modules/cac/result/cac-result.service.js"></script>
+<script src="app/modules/cac/result/job-result-overview.controller.js"></script>
+<script src="app/modules/cac/result/job-result-statistics-view.controller.js"></script>
+<script src="app/modules/cac/result/result-list.controller.js"></script>
+<script src="app/modules/cac/result/job-result-to-rule.controller.js"></script>
+<script src="app/modules/cac/result/result-execute-rule.controller.js"></script>
+<script src="app/modules/cac/result/result-output-log.controller.js"></script>
+<script src="app/modules/cac/result/result-output-list.controller.js"></script>
+<script src="app/modules/cac/result/structural-diagram.controller.js"></script>
+<script src="app/modules/cac/result/structural-diagrams.controller.js"></script>
+<script src="app/modules/cac/result/data-driven.controller.js"></script>
+
+<script src="app/modules/cac/export/asset-model.state.js"></script>
+<script src="app/modules/cac/export/asset-model.service.js"></script>
+<script src="app/modules/cac/export/asset-model.controller.js"></script>
+<script src="app/modules/cac/export/asset-model-export.controller.js"></script>
+
+<script src="app/modules/cac/email/email-recipient.state.js"></script>
+<script src="app/modules/cac/email/email-recipient.controller.js"></script>
+<script src="app/modules/cac/email/email-recipient-list.controller.js"></script>
+
+<script src="app/modules/cac/inspection/inspection.state.js"></script>
+<script src="app/modules/cac/inspection/inspection.service.js"></script>
+<script src="app/modules/cac/inspection/inspection.controller.js"></script>
+<script src="app/modules/cac/inspection/inspection-list.controller.js"></script>
+<script src="app/modules/cac/inspection/inspection-edit.controller.js"></script>
+<script src="app/modules/cac/inspection/inspection-dynamic-selector.component.js"></script>
+<script src="app/modules/cac/inspection/inspection-actions.js"></script>
+
+<script src="app/modules/cac/templates/templates.state.js"></script>
+<script src="app/modules/cac/templates/templates.service.js"></script>
+<script src="app/modules/cac/templates/templates.controller.js"></script>
+<script src="app/modules/cac/templates/templates-list.controller.js"></script>
+<script src="app/modules/cac/templates/templates-edit.controller.js"></script>
+
+<script src="app/modules/cac/log/check-log.state.js"></script>
+<script src="app/modules/cac/log/check-log.service.js"></script>
+<script src="app/modules/cac/log/check-log-list.controller.js"></script>
+<script src="app/modules/cac/log/check-log-result.controller.js"></script>
+
+<script src="app/modules/cac/results/check-result.state.js"></script>
+<script src="app/modules/cac/results/check-result.service.js"></script>
+<script src="app/modules/cac/results/check-result-overview.controller.js"></script>
+<script src="app/modules/cac/results/check-result-output-list.controller.js"></script>
+<script src="app/modules/cac/results/check-result-to-rule.controller.js"></script>
+
+<script src="app/modules/cac/fix/fix-log.service.js"></script>
+<script src="app/modules/cac/fix/fix-log.state.js"></script>
+<script src="app/modules/cac/fix/fix-log-list.controller.js"></script>
+<script src="app/modules/cac/fix/fix-log-result.controller.js"></script>
+<script src="app/modules/cac/fix/fix-data-show.controller.js"></script>
+
+<script src="app/modules/cac/exports/asset-configure.state.js"></script>
+<script src="app/modules/cac/exports/asset-configure.service.js"></script>
+<script src="app/modules/cac/exports/asset-configure.controller.js"></script>
+<script src="app/modules/cac/exports/asset-configure-export.controller.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-cac-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-ssc.js -->
+<!-- ***************************** -->
+<!--        MODULE: ssc            -->
+<!-- ***************************** -->
+<script src="app/modules/ssc/ssc.module.js"></script>
+<script src="app/modules/ssc/ssc.state.js"></script>
+
+<script src="app/modules/ssc/param/param-dao.js"></script>
+<script src="app/modules/ssc/param/param.state.js"></script>
+<script src="app/modules/ssc/param/param.service.js"></script>
+<script src="app/modules/ssc/param/param.controller.js"></script>
+<script src="app/modules/ssc/param/sys/param-dialog.controller.js"></script>
+<script src="app/modules/ssc/param/sys/param-detail.controller.js"></script>
+<script src="app/modules/ssc/param/sys/param-delete-dialog.controller.js"></script>
+<script src="app/modules/ssc/param/app/param-dialog.controller.js"></script>
+<script src="app/modules/ssc/param/app/param-delete.controller.js"></script>
+<script src="app/modules/ssc/param/app/param-detail.controller.js"></script>
+
+<script src="app/modules/ssc/team/team-dao.js"></script>
+<script src="app/modules/ssc/team/team.state.js"></script>
+<script src="app/modules/ssc/team/team.service.js"></script>
+<script src="app/modules/ssc/team/team.controller.js"></script>
+<script src="app/modules/ssc/team/team-dialog.controller.js"></script>
+<script src="app/modules/ssc/team/team-delete-dialog.controller.js"></script>
+
+<script src="app/modules/ssc/tags/tag.state.js"></script>
+<script src="app/modules/ssc/tags/tag.service.js"></script>
+<script src="app/modules/ssc/tags/tag.controller.js"></script>
+<script src="app/modules/ssc/tags/tag-dialog.controller.js"></script>
+<script src="app/modules/ssc/tags/tag-delete.controller.js"></script>
+<script src="app/modules/ssc/tags/tag-detail.controller.js"></script>
+
+<script src="app/modules/ssc/applet-manage/applet-manage.state.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage.service.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage.controller.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage-import.controller.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage-export.controller.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage-detail.controller.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage-copy.controller.js"></script>
+<script src="app/modules/ssc/applet-manage/applet-manage-delete.controller.js"></script>
+
+
+<script src="app/modules/ssc/email/email.state.js"></script>
+<script src="app/modules/ssc/email/email.service.js"></script>
+<script src="app/modules/ssc/email/email.controller.js"></script>
+
+<script src="app/modules/ssc/engine/engine.state.js"></script>
+<script src="app/modules/ssc/engine/engine.service.js"></script>
+<script src="app/modules/ssc/engine/engine.controller.js"></script>
+<script src="app/modules/ssc/engine/engine.aap.controller.js"></script>
+<script src="app/modules/ssc/engine/engine.ansible.controller.js"></script>
+
+<script src="app/modules/ssc/user/api-key/api-key.service.js"></script>
+<script src="app/modules/ssc/user/api-key/api-key-edit-dialog.component.js"></script>
+<script src="app/modules/ssc/user/view-tenant-user.directive.js"></script>
+<script src="app/modules/ssc/user/user-select.controller.js"></script>
+<script src="app/modules/ssc/user/user-select.component.js"></script>
+<script src="app/modules/ssc/user/user-management-link-tenant-user.controller.js"></script>
+<script src="app/modules/ssc/user/user-management-edit.controller.js"></script>
+<script src="app/modules/ssc/user/user-management-detail.controller.js"></script>
+<script src="app/modules/ssc/user/user-management-delete.controller.js"></script>
+<script src="app/modules/ssc/user/user-management-allocate-role.controller.js"></script>
+<script src="app/modules/ssc/user/user-management.state.js"></script>
+<script src="app/modules/ssc/user/user-management.controller.js"></script>
+<script src="app/modules/ssc/user/tenant-user-list.component.js"></script>
+<script src="app/modules/ssc/user/link-tenant-user.directive.js"></script>
+<script src="app/modules/ssc/user/edit-tenant-user.directive.js"></script>
+<script src="app/modules/ssc/user/delete-tenant-user.directive.js"></script>
+<script src="app/modules/ssc/user/create-user.directive.js"></script>
+
+<script src="app/modules/ssc/syslog/syslog.state.js"></script>
+<script src="app/modules/ssc/syslog/syslog.controller.js"></script>
+<script src="app/modules/ssc/syslog/syslog.service.js"></script>
+<script src="app/modules/ssc/syslog/operationlog.service.js"></script>
+
+
+<!--<script src="app/modules/ssc/data-permission/js/data-permission-tree.component.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission-module.controller.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission-detail-role.component.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission-detail-module.component.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission-assign-module.component.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission-assign.controller.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission.state.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission.service.js"></script>-->
+<!--<script src="app/modules/ssc/data-permission/js/data-permission.controller.js"></script>-->
+<!-- BUILD_INSERT_JS:../../tmp/oplus-ssc-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-adm.js -->
+<!--**************************************************
+    MODULE oplus-adm
+***************************************************-->
+<script src="app/modules/adm/adm.module.js"></script>
+<script src="app/modules/adm/adm.state.js"></script>
+<script src="app/modules/adm/adm.controller.js"></script>
+
+<script src="app/modules/adm/admin.state.js"></script>
+
+<script src="app/modules/adm/sysinfo.component.js"></script>
+
+<script src="app/modules/adm/tenant/tenant-export.controller.js"></script>
+<script src="app/modules/adm/tenant/tenant-import.controller.js"></script>
+<script src="app/modules/adm/tenant/tenant-dialog.controller.js"></script>
+<script src="app/modules/adm/tenant/tenant-detail.controller.js"></script>
+<script src="app/modules/adm/tenant/tenant-delete-dialog.controller.js"></script>
+<script src="app/modules/adm/tenant/tenant.state.js"></script>
+<script src="app/modules/adm/tenant/tenant.service.js"></script>
+<script src="app/modules/adm/tenant/tenant.controller.js"></script>
+
+<script src="app/modules/adm/tenant-config/tenant-config-dao.js"></script>
+<script src="app/modules/adm/tenant-config/tenant-config.state.js"></script>
+<script src="app/modules/adm/tenant-config/tenant-config.service.js"></script>
+<script src="app/modules/adm/tenant-config/tenant-config.controller.js"></script>
+<script src="app/modules/adm/tenant-config/tenant-config-import.controller.js"></script>
+<script src="app/modules/adm/tenant-config/tenant-config-export.controller.js"></script>
+
+<script src="app/modules/adm/subordinate/subordinate.state.js"></script>
+<script src="app/modules/adm/subordinate/subordinate.service.js"></script>
+<script src="app/modules/adm/subordinate/subordinate.controller.js"></script>
+<script src="app/modules/adm/subordinate/subordinate.config.controller.js"></script>
+
+<script src="app/modules/adm/role/role-dialog.controller.js"></script>
+<script src="app/modules/adm/role/role-detail.controller.js"></script>
+<script src="app/modules/adm/role/role-delete-dialog.controller.js"></script>
+<script src="app/modules/adm/role/role-allocate-perm.controller.js"></script>
+<script src="app/modules/adm/role/role.state.js"></script>
+<script src="app/modules/adm/role/role.service.js"></script>
+<script src="app/modules/adm/role/role.search.service.js"></script>
+<script src="app/modules/adm/role/role.controller.js"></script>
+
+<script src="app/modules/adm/permission/permission-dialog.controller.js"></script>
+<script src="app/modules/adm/permission/permission-detail.controller.js"></script>
+<script src="app/modules/adm/permission/permission-delete-dialog.controller.js"></script>
+<script src="app/modules/adm/permission/permission.state.js"></script>
+<script src="app/modules/adm/permission/permission.service.js"></script>
+<script src="app/modules/adm/permission/permission.search.service.js"></script>
+<script src="app/modules/adm/permission/permission.controller.js"></script>
+
+<script src="app/modules/adm/param/param-dialog.controller.js"></script>
+<script src="app/modules/adm/param/param-detail.controller.js"></script>
+<script src="app/modules/adm/param/param-delete-dialog.controller.js"></script>
+<script src="app/modules/adm/param/param.state.js"></script>
+<script src="app/modules/adm/param/param.service.js"></script>
+<script src="app/modules/adm/param/param.controller.js"></script>
+
+<script src="app/modules/adm/module/js/business-module-dialog.controller.js"></script>
+<script src="app/modules/adm/module/js/business-module-detail.controller.js"></script>
+<script src="app/modules/adm/module/js/business-module-delete-dialog.controller.js"></script>
+<script src="app/modules/adm/module/js/business-module.state.js"></script>
+<script src="app/modules/adm/module/js/business-module.service.js"></script>
+<script src="app/modules/adm/module/js/business-module.controller.js"></script>
+
+<script src="app/modules/adm/logs/logs.state.js"></script>
+<script src="app/modules/adm/logs/logs.service.js"></script>
+<script src="app/modules/adm/logs/logs.controller.js"></script>
+
+<!--<script src="app/modules/adm/link/links.controller.js"></script>-->
+<!--<script src="app/modules/adm/link/link-dialog.controller.js"></script>-->
+<!--<script src="app/modules/adm/link/link.state.js"></script>-->
+
+<!--<script src="app/modules/adm/home/home-page-dialog.controller.js"></script>-->
+<!--<script src="app/modules/adm/home/home-page-detail.controller.js"></script>-->
+<!--<script src="app/modules/adm/home/home-page-delete-dialog.controller.js"></script>-->
+<!--<script src="app/modules/adm/home/home-page.state.js"></script>-->
+<!--<script src="app/modules/adm/home/home-page.service.js"></script>-->
+<!--<script src="app/modules/adm/home/home-page.controller.js"></script>-->
+
+<script src="app/modules/adm/docs/docs.state.js"></script>
+<script src="app/modules/adm/docs/docs.controller.js"></script>
+
+<script src="app/modules/adm/dict/dict-api.controller.js"></script>
+<script src="app/modules/adm/dict/dict.state.js"></script>
+<script src="app/modules/adm/dict/dict.service.js"></script>
+<script src="app/modules/adm/dict/dict.controller.js"></script>
+
+<script src="app/modules/adm/configuration/configuration.state.js"></script>
+<script src="app/modules/adm/configuration/configuration.service.js"></script>
+<script src="app/modules/adm/configuration/configuration.controller.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-adm-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-mac.js -->
+<!--**************************************************
+    MODULE oplus-mac
+***************************************************-->
+<script src="app/modules/mac/mac.module.js"></script>
+<script src="app/modules/mac/mac.state.js"></script>
+<script src="app/modules/mac/mac.service.js"></script>
+<script src="app/modules/mac/api/message.api.js"></script>
+<script src="app/modules/mac/message/mac-message.component.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-mac-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-search.js -->
+<!--**************************************************
+    MODULE oplus-search
+***************************************************-->
+<script src="app/modules/search/search.module.js"></script>
+<script src="app/modules/search/search.state.js"></script>
+<script src="app/modules/search/search.controller.js"></script>
+<script src="app/modules/search/search.service.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-search-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-flow.js -->
+<!--**************************************************
+    MODULE oplus-flow
+***************************************************-->
+<script src="app/modules/flow/dist/oplus-flow.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-flow-tpls.js -->
+<!-- endbuild -->
+
+</html>
+<!-- Matomo -->
+<!--<script type="text/javascript">-->
+<!--var _paq = _paq || [];-->
+<!--/* tracker methods like "setCustomDimension" should be called before "trackPageView" */-->
+<!--_paq.push(['trackPageView']);-->
+<!--_paq.push(['enableLinkTracking']);-->
+<!--(function() {-->
+<!--var u="//localhost:81/";-->
+<!--_paq.push(['setTrackerUrl', u+'piwik.php']);-->
+<!--_paq.push(['setSiteId', '1']);-->
+<!--var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];-->
+<!--g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);-->
+<!--})();-->
+<!--</script>-->
+<!-- End Matomo Code -->

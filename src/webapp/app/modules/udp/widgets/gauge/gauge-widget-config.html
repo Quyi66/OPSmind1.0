@@ -1,0 +1,100 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-database'></i> {{'udp.wc.tab.data'|translate}}</uib-tab-heading>
+        <udp-widget-config-dataset props="uwProps.dataset" selected-ds="selectedDs"></udp-widget-config-dataset>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-list-ul'></i> {{'udp.wc.tab.field'|translate}}</uib-tab-heading>
+        <udp-widget-config-chart-metrics uw-props="uwProps" axis-options="axisOptions" chart-type="gauge" fields="selectedDs.fields">
+        </udp-widget-config-chart-metrics>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+        <udp-widget-config-display>
+            <udp-widget-config-chart-display ng-model="uwProps.display" chart-type="gauge" options="{enableVisualMap:false}"></udp-widget-config-chart-display>
+            <div class="form-group">
+                <label class="control-label col-sm-2">轴线颜色</label>
+                <div class="col-sm-10">
+                    <table class="jh-table table table-striped">
+                        <thead>
+                        <tr>
+                            <td>区间<span class=" text-muted ms-2">(0-1)</span></td>
+                            <td>颜色</td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-sm btn-info" type="button" ng-click="addGaugeColor()" title="添加新区间">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="color in getGaugeColor()">
+                            <td>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" ng-model="color[0]">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" ng-model="color[1]">
+                                </div>
+                            </td>
+                            <td>
+                                <udp-color-picker class="d-inline-block" title="区间颜色" ng-model="color[1]"></udp-color-picker>
+                                <!--<span style="background-color:{{color[1]}};margin-right:4px;width:24px;height:24px;display:inline-block;">&nbsp;</span>-->
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-default" type="button" ng-click="removeGaugeColor($index)" title="删除区间">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<span ng-repeat="color in $ctrl.palettes[uwProps.display.palette].colors"-->
+                    <!--style="background-color:{{color}};margin-right:4px;width:24px;height:24px;display:inline-block;">&nbsp;</span>-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">轴线配置</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.startAngle" title="轴线起始角度" placeholder="起始角度,默认 210"/>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.endAngle" title="轴线终止角度" placeholder="终止角度,默认 -30"/>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.axisLine.lineStyle.width" title="轴线宽度" placeholder="宽度,默认 30"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">指标配置</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.detail.offsetHorizontal" title="指标左右偏移,默认值 0%" placeholder="左右偏移,默认 0%"/>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.detail.offsetVertical" title="指标上下偏移,默认值 20%" placeholder="上下偏移,默认 20%"/>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.detail.fontSize" title="指标字体大小,默认值15" placeholder="字体大小,默认 15"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">标题配置</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.title.offsetHorizontal" title="标题左右偏移,默认值 0%" placeholder="左右偏移,默认 0%"/>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.title.offsetVertical" title="标题上下偏移,默认值 40%" placeholder="上下偏移,默认 40%"/>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" ng-model="uwProps.display.title.fontSize" title="标题字体大小,默认值15" placeholder="字体大小,默认 15"/>
+                </div>
+            </div>
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <pre>{{uwProps|json}}</pre>
+    </uib-tab>
+</uib-tabset>

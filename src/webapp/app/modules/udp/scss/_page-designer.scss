@@ -1,0 +1,289 @@
+//==============================================================================
+// Page Designer
+//==============================================================================
+
+$__border-color: rgba(128, 128, 128, 0.25);
+
+//@mixin widget_highlight {
+//  box-shadow: 0 0 0 $udp-widget-highlight-outline-size lighten($primary, 20%);
+//}
+
+#pd-palette-zone {
+  .uw-symbol {
+    //width: 180px;
+    //cursor: pointer;
+    cursor: grab;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    // Use z-index to ensure always visible when dragging
+    //z-index: 10;
+    font-size: $font-size-base;
+    line-height: 2rem;
+    text-align: left;
+    padding: 0 1rem;
+  }
+}
+
+.udp-pd-preview-mode #pd-canvas-zone {
+  //.uinput-control-hidden {
+  //  display: none;
+  //}
+
+  .uw-column {
+    // Override padding in visual mode
+    padding: 0;
+  }
+
+  //
+  //.js-page-content {
+  //  padding: 0;
+  //}
+}
+
+
+// 20200415: In edit mode, force padding to make other widget drag inside easily
+.udp-pd-visual-mode.udp-pd-more-space #pd-canvas-zone {
+  //padding: 1rem;
+
+  .uw-column {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .uwtype-layout-col, .uwtype-layout-flex {
+    //margin: 1rem;
+  }
+}
+.uinput-control-hidden{
+  display: none;
+}
+.udp-pd-visual-mode #pd-canvas-zone {
+  .uinput-control-hidden {
+    display: inline-block;
+  }
+
+  //20200606: box-shadow or outline may be clipped by page container (if page container has no padding)
+  .js-page-content {
+    padding: 4px;
+  }
+
+  .uw-include-container {
+    min-height: 2rem;
+    min-width: 10rem;
+
+    .uw-include-placeholder {
+      //width:10rem;
+    }
+
+    //background-color: $gray-200;
+  }
+
+  .uwidget {
+    // Use bottom margin to visually distinguish widget in edit mode
+    //margin-bottom: 8px;
+    transition: box-shadow 300ms;
+
+    > .uw-buttons.btn-group {
+      width: 120px;
+      transition: visibility 3000ms;
+    }
+
+    &.widget-layout.hover {
+      //box-shadow: inset 0 0 0px $udp-widget-highlight-outline-size lighten($primary, 20%);
+    }
+
+    //.ui-resizable-resizing{
+    //  box-shadow: 0 0 0 $udp-widget-highlight-outline-size lighten($primary, 20%);
+    //}
+    //&.hover{
+    //}
+    &.hover, .ui-resizable-resizing {
+      //20200606: box-shadow or outline may be clipped by page container (if page container has no padding)
+      box-shadow: 0 0 0 $udp-widget-highlight-outline-size lighten($primary, 20%);
+      //20200901: border will make element flicker
+      //border: 4px solid lighten($primary, 20%);
+
+
+      > .uw-buttons.btn-group {
+        //display: block;
+        // To prevent wrapping
+        display: flex;
+      }
+    }
+
+    &.hover {
+      // Make sure box-shadow not clipped by other elements
+      z-index: $udp-zindex-widget-highlight;
+    }
+
+    &.hover::after {
+      //content: " ";
+      //display: block;
+      //position: absolute;
+      //width: calc(100% - 1rem);
+      //height: calc(100% - 1rem);
+      //top: 0.5rem;
+      ////border: 4px solid lighten($primary, 20%);
+      //box-shadow: 0 0 0 $udp-widget-highlight-outline-size lighten($primary, 20%);
+      //transition: box-shadow 300ms;
+    }
+  }
+
+  .uwtype-layout-float {
+    background-color: rgba(128, 128, 128, 0.2);
+
+    .uw-float {
+      &:before {
+        //content: '浮动格'
+        content: 'F'
+      }
+    }
+  }
+
+  // TODO: rename uw-column and uw-float to uw-container?
+  //.uw-row:after,
+  .uw-column:before,
+  .uw-float:before {
+    color: #9DA0A4;
+    background-color: rgba(128, 128, 128, 0.2);
+    font-size: 10px;
+    //opacity: 0.8;
+    //padding: 2px 4px;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    left: -1rem;
+    line-height: 1rem;
+    text-align: center;
+  }
+
+  .uw-column.uw-flex:before {
+    left: 0;
+    top: 0;
+  }
+
+  .card-body > .uw-column:before {
+    // 20200414: offset with card-body padding (1rem)
+    left: -1rem - $card-spacer-x;
+  }
+
+  .card-body > .uw-column:before {
+    // 20200408: Move indicator close to the widget in card mode
+    top: -1rem;
+  }
+
+  .uw-column:before {
+    //content: "内容"
+    content: "L"
+  }
+
+  .uw-column.uw-flex:before {
+    //content: "内容"
+    content: none;
+  }
+
+  .widget-layout > .row {
+    outline: 1px dashed rgba(128, 128, 128, 0.25);
+    position: relative;
+    min-height: 30px;
+    padding: 8px;
+  }
+
+  .uwtype-input {
+    [control="text"] {
+      min-width: 34px;
+      line-height: 34px;
+    }
+
+    [control="hidden"] {
+      //width: 34px;
+      //height: 34px;
+      background-color: #ddd;
+      //&:before {
+      //  line-height: 34px;
+      //  margin-left: 8px;
+      //  content: '\f070';
+      //  font-family: 'FontAwesome';
+      //}
+    }
+  }
+
+  .uw-column {
+    //20200408:
+    position: relative;
+    border: 1px solid $__border-color;
+  }
+
+  .uw-column.uw-flex {
+    //border-style: dashed;
+    border-width: 0;
+  }
+
+  .uwtype-layout-flex {
+    border: 1px dashed $__border-color;
+    border-collapse: collapse;
+  }
+
+  // No border in card mode
+  .card-body > .uw-column {
+    border: 0;
+  }
+}
+
+.udp-pd-visual-mode.udp-pd-show-outline #pd-canvas-zone {
+  .uwidget:not(.widget-layout) {
+    //@include widget_outline;
+  }
+
+  .uw-buttons {
+    //display: block;
+    // Prevent text wrapping
+    display: flex;
+  }
+}
+
+// Page designer canvas
+//.udp-pd-canvas {
+//  background: #444;
+//padding: 8px;
+//}
+
+#pd-source-zone .CodeMirror {
+  height: 100%;
+}
+
+#pd-palette-zone {
+  .uw-symbol {
+    margin-bottom: 4px;
+    display: block !important;
+
+    .uw-icon {
+      display: inline-block;
+      width: 24px;
+      text-align: center;
+    }
+  }
+}
+
+udp-dsfield-selector .chosen-container {
+  //display: inline-block;
+  margin-right: .5rem;
+}
+
+udp-data-converter {
+  width: 100%;
+
+  .input-group-addon, .input-group-text {
+    width: 1.875rem !important;
+    color: $gray-600;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  vertical-align: middle;
+}
+
+.udp-widget-config-modal.modal .modal-body {
+  //min-height: 20rem;
+}
+

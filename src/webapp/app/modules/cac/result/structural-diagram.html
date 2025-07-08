@@ -1,0 +1,85 @@
+<div class="opx-layout-vflex" xxx__uaa-has-permission="cac:view:*"
+     xxx__uaa-deny-message="{{'common.uaa.no_permission'}}">
+    <nav class="navbar navbar-light">
+        <div class="navbar-nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a ui-sref="app.cac.job.list({templateId:structuralDiagramCtrlVm.views.job.templateId})">{{'cac.index.job'
+                    | translate}}</a>
+                </li>
+                <li class="breadcrumb-item active opx-navbar-title">
+                    {{structuralDiagramCtrlVm.views.job.templateName}}
+                </li>
+            </ol>
+        </div>
+
+        <div>
+            <a href="#" ng-click="structuralDiagramCtrlVm.views.exportExcel($event)">
+                <button class="btn btn-default btn-sm">
+                    <i class="fa fa-file-export"></i> {{'cac.result.detail.export' | translate}}
+                </button>
+            </a>
+        </div>
+    </nav>
+    <div class="scroll-y opx-flex-fill p-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <udp-page-view class="flex-fill scroll-y" page-id="'/cac/assets/udp/cac-kpi'" page-source="file"
+                               page-params="structuralDiagramCtrlVm.params"
+                               uaa-has-permission="cac:view:*"
+                               uaa-deny-message="{{'common.uaa.no_permission' | translate}}">
+                </udp-page-view>
+            </div>
+        </div>
+
+<!--        <div class="card mb-3">-->
+<!--            <div class="card-body">-->
+<!--                <a href="#" ng-click="structuralDiagramCtrlVm.views.downloadBtn($event,'images')">-->
+<!--                    {{'cac.structural.download_images' | translate}}-->
+<!--                </a>-->
+<!--                <a href="#" ng-click="structuralDiagramCtrlVm.views.downloadBtn($event,'resetting')">-->
+<!--                    {{'cac.structural.resetting' | translate}}-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="card mb-3">
+            <div class="card-body" style="width: 100%; overflow-x: auto;">
+<!--                <div id="tooltip">Tooltip content will appear here</div>-->
+                <div class="chart-size" e-echart ec-data="option" theme="macarons" id="eechart5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    /*#tooltip {*/
+    /*    position: absolute;*/
+    /*    display: none;*/
+    /*    border: 1px solid #ddd;*/
+    /*    background-color: #dc3545;*/
+    /*    padding: 5px;*/
+    /*    border-radius: 4px;*/
+    /*    font-size: 14px;*/
+    /*    color: #fff;*/
+    /*    z-index: 1000;*/
+    /*}*/
+
+    /*#tooltip::before {*/
+    /*    content: "";*/
+    /*    position: absolute;*/
+    /*    top: 50%;*/
+    /*    left: -10px; !* 根据箭头大小和边框调整 *!*/
+    /*    margin-top: -2px; !* 箭头中心与 tooltip 边框对齐 *!*/
+    /*    border-width: 5px;*/
+    /*    border-style: solid;*/
+    /*    border-color: transparent #dc3545 transparent transparent; !* 边框颜色，最后一个是箭头颜色 *!*/
+    /*    transform: translateY(-50%); !* 确保箭头垂直居中 *!*/
+    /*}*/
+
+    .chart-size {
+        width: 100%;
+        height: 620px;
+    }
+</style>

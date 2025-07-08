@@ -1,0 +1,46 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>
+        <div class="form-group">
+            <label class="control-label" for="f_name">{{'udp.w.timer.config.name'|translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="text" class="form-control" ng-model="uwProps.name" id="f_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_interval">{{'udp.w.timer.config.interval'|translate}}</label>
+            <div class="form-control-wrapper">
+                <input type="number" class="form-control" ng-model="uwProps.interval" id="f_interval">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_event"
+                   op-help-info="{{'udp.w.timer.config.event_desc'|translate}}">{{'udp.w.timer.config.event'|translate}}</label>
+            <div class="form-control-wrapper">
+                <input class="form-control" ng-model="uwProps.eventbytimer" id="f_event">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_initstate">{{'udp.w.timer.config.default_state'|translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" id="f_initstate"
+                           ng-model="uwProps.autoStart"><label for="f_initstate">{{'udp.w.timer.config.auto_start'|translate}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="f_style">{{'common.term.style'|translate}}</label>
+            <div class="form-control-wrapper">
+                <select ng-model="uwProps.display.style" class="form-select op-w-xs" id="f_style">
+                    <option value="switch">{{'udp.w.timer.config.style_switch'|translate}}</option>
+                    <option value="button">{{'udp.w.timer.config.style_button'|translate}}</option>
+                    <option value="hidden">{{'udp.w.timer.config.style_hidden'|translate}}</option>
+                </select>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb my-auto bg-transparent">
+            <li class="breadcrumb-item active">
+                <span data-translate="sys_permission.home.title">Permission Management</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper" uaa-has-permission="sysadmin:perm:*">
+    <div class="card-body">
+        <opx-datatable table-config="tableConfig">
+            <button class="btn btn-default" ui-sref="permission.new">
+                <span class="fa fa-plus"></span> <span data-translate="sys_permission.home.createLabel">Create a new Permission</span>
+            </button>
+        </opx-datatable>
+    </div>
+</div>

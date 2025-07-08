@@ -1,0 +1,92 @@
+
+<form name="editForm" role="form" class="form-horizontal" novalidate ng-submit="vm.save()">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"  for="field_pLabel">目录</label>
+        <div class="col-sm-8">
+            <input type="text" readonly="readonly" class="form-control" name="pLabel" id="field_pLabel"
+                   ng-model="vm.pLabel"
+            />
+        </div>
+    </div>
+
+    <div ng-if="vm.dict.type == '0'" class="form-group">
+        <label class="col-sm-2 control-label" >接口编码</label>
+        <div class="col-sm-8">
+            <input placeholder="命名模式 以英文模式 moudle_folder_..这样的格式" type="text" class="form-control" name="value"
+                   ng-model="vm.dict.value" required
+            />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="field_label">名称</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="label" id="field_label"
+                   ng-model="vm.dict.label" required
+            />
+        </div>
+    </div>
+
+    <div ng-if="vm.dict.type == '1'" class="form-group">
+        <label class="col-sm-2 control-label" for="field_value">值</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="value" id="field_value"
+                   ng-model="vm.dict.value" required
+            />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="field_sort">排序</label>
+        <div class="col-sm-8">
+            <input type="number" class="form-control" name="sort" id="field_sort"
+                   ng-model="vm.dict.sort" required
+            />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="field_type">类型</label>
+        <div class="col-sm-8">
+
+            <select  id="field_type" class="form-select" ng-model="vm.dict.type">
+                <option value="0">文件夹</option>
+                <option value="1">字典</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label"  for="field_description">描述</label>
+        <div class="col-sm-8">
+            <textarea class="form-control" name="description" id="field_description"  ng-model="vm.dict.description">
+
+            </textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">状态</label>
+        <div class="col-sm-8">
+            <label class="radio-inline">
+                <input type="radio" name="authMode" value="0" ng-model="vm.dict.disabled">
+                <span>启用</span>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="authMode" value="1" ng-model="vm.dict.disabled">
+                <span>禁用</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-2">
+            <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary pull-right">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="common.action.save">保存</span>
+            </button>
+        </div>
+    </div>
+
+</form>

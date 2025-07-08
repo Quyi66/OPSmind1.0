@@ -1,0 +1,30 @@
+<uib-tabset class="tab-container">
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-cog'></i> {{'udp.wc.tab.basic'|translate}}</uib-tab-heading>
+        <uinput-setting-basic props="uwProps" options="{disableBinding:true}"></uinput-setting-basic>
+        <hr/>
+        <div class="form-group">
+            <label class="control-label">{{'udp.w.input.config.other'|translate}}</label>
+            <div class="form-control-wrapper">
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" ng-model="uwProps.changeUrl" id="iwc_changeurl">
+                    <label for="iwc_changeurl" op-help-info="{{'udp.w.input.config.change_url_helpinfo'|translate}}">{{'udp.w.input.config.change_url'|translate}}</label>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-paint-brush'></i> {{'udp.wc.tab.style'|translate}}</uib-tab-heading>
+
+        <udp-widget-config-display options="{palette:false}">
+        </udp-widget-config-display>
+    </uib-tab>
+    <uib-tab>
+        <uib-tab-heading><i class='fa fa-random'></i> {{'udp.wc.tab.interaction'|translate}}</uib-tab-heading>
+        <uinput-setting-interaction props="uwProps"
+                                    ng-if="uwProps.control==='select' || uwProps.control==='typeahead'"></uinput-setting-interaction>
+    </uib-tab>
+    <uib-tab heading="{{'udp.wc.tab.props'|translate}}">
+        <udp-widget-props-viewer the-model="uwProps"></udp-widget-props-viewer>
+    </uib-tab>
+</uib-tabset>

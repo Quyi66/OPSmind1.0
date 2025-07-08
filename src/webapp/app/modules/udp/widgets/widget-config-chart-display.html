@@ -1,0 +1,59 @@
+<div class="form-group">
+    <label for="wccd_palette" class="control-label col-sm-2">{{'udp.w.echart.display.palette'|translate}}</label>
+    <div class="col-sm-4" ng-init="">
+        <select id="wccd_palette" class="form-select" ng-model="$ctrl.props.palette"
+                ng-options="id as p.title for (id,p) in $ctrl.palettes">
+        </select>
+    </div>
+    <div class="col-sm-6">
+        <span ng-repeat="color in $ctrl.palettes[$ctrl.props.palette].colors"
+              style="background-color:{{color}};margin-right:4px;width:24px;height:24px;display:inline-block;">&nbsp;</span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-2">{{'udp.w.echart.elem.gridline'|translate}}</label>
+    <div class="col-sm-4">
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" ng-model="$ctrl.props.showGridLineX" id="wccd_showgridx"><label for="wccd_showgridx">{{'udp.w.echart.elem.gridline_x'|translate}}</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" ng-model="$ctrl.props.showGridLineY" id="wccd_showgridy"><label for="wccd_showgridy">{{'udp.w.echart.elem.gridline_y'|translate}}</label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label for="wccd_legendpos" class="control-label col-sm-2">{{'udp.w.echart.elem.legend'|translate}}</label>
+    <div class="col-sm-2">
+        <select id="wccd_legendpos" class="form-select" ng-model="$ctrl.props.legend.position">
+            <option value="none">{{'udp.w.echart.display.legend_none'|translate}}</option>
+            <option value="auto">{{'udp.w.echart.display.legend_auto'|translate}}</option>
+            <option value="bottom">{{'udp.w.echart.display.legend_bottom'|translate}}</option>
+            <option value="right">{{'udp.w.echart.display.legend_right'|translate}}</option>
+            <option value="left">{{'udp.w.echart.display.legend_left'|translate}}</option>
+            <option value="custom">{{'udp.w.echart.display.custom'|translate}}</option>
+        </select>
+    </div>
+    <div class="col-sm-2" ng-if="$ctrl.props.legend.position === 'custom'">
+        <input type="text" ng-model="$ctrl.props.legend.positionCustom" class="form-control">
+    </div>
+
+    <label for="wccd_legendpos_icon" class="control-label col-sm-2">是否隐藏图例图标</label>
+    <div class="col-sm-2">
+        <select id="wccd_legendpos_icon" class="form-select" ng-model="$ctrl.props.legend.positionIcon">
+            <option value="yes">{{'udp.w.echart.display.yes'|translate}}</option>
+            <option value="no">{{'udp.w.echart.display.no'|translate}}</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="wccd_showExport"
+           class="control-label col-sm-2">{{'udp.w.datatable.config.controls_export'|translate}}</label>
+    <div class="col-sm-2">
+        <select id="wccd_showExport" class="form-select" ng-model="$ctrl.props.showExport">
+            <option value="none">{{'udp.w.echart.toolbox.export_none'|translate}}</option>
+            <option value="noMark">{{'udp.w.echart.toolbox.export_no_mark'|translate}}</option>
+            <option value="mark">{{'udp.w.echart.toolbox.export_mark'|translate}}</option>
+        </select>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+<ul class="navbar-nav" ng-switch="$ctrl.currentUser.isAuthenticated">
+<!--   <li class="nav-item dropdown" ng-if="$ctrl.currentUser.isAuthenticated && !$root.$global.isAdminUI">-->
+<!--        <a class="nav-link" ng-click="$ctrl.openSearch('search')"><i class="fa fa-search"></i> </a>-->
+<!--    </li>-->
+    <mac-message-header></mac-message-header>
+    <li class="nav-item" ng-if="!$ctrl.currentUser.isAuthenticated">
+        <a class="nav-link" ng-click="$ctrl.login()">{{'common.system.login' | translate}}</a>
+    </li>
+    <li class="nav-item dropdown" ng-if="$ctrl.currentUser.isAuthenticated">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="account-menu">
+             <span ng-repeat="flag in $ctrl.avatarRefreshFlags">
+              <img ng-src="{{::$ctrl.getAvatarUrl()}}" class="rounded-circle" style="width:1.5rem;height:1.5rem;object-fit: cover;">
+              </span>
+            <span>{{$ctrl.currentUser.displayName || $ctrl.currentUser.loginId || '未登录'}}</span>
+            <i class="fal fa-angle-down"></i>
+        </a>
+
+        <div class="dropdown-menu">
+            <a class="dropdown-item" ng-switch-when="true"
+               ui-sref="settings">
+                <i class="fa fa-fw fa-wrench"></i>
+                <span data-translate="common.menu.account.settings"></span>
+            </a>
+            <a class="dropdown-item" ng-switch-when="true"
+               href="" ng-click="$ctrl.logout()" id="logout">
+                <i class="fa fa-fw fa-sign-out"></i>
+                <span data-translate="common.menu.account.logout"></span>
+            </a>
+            <a class="dropdown-item" ng-switch-when="undefined">
+                href="" ng-click="$ctrl.login()" id="login">
+                <span class="fa fa-fw fa-sign-in"></span>
+                <span data-translate="global.menu.account.login"></span>
+            </a>
+        </div>
+    </li>
+    <li class="nav-item dropdown" ng-if="$ctrl.currentUser.isAuthenticated && !$root.$global.isAdminUI" uaa-has-role="ROLE_ADMIN">
+        <a class="nav-link" ng-click="$ctrl.openSsc('ssc')"><i class="fa fa-cog"></i> </a>
+    </li>
+    <div class="nav-item dropdown" ng-if="$root.$global.isAdminUI">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fa fa-cog"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" ng-repeat="item in $ctrl.admMenuItems" ng-if="!$root.$global.isAdminUI"
+               ui-sref="{{item.sref}}">
+                <i class="fa fa-fw {{item.faIcon}}"></i>
+                <span class="ms-3">{{item.name | translate}}</span>
+            </a>
+            <!-- =============== Admin Features in Tenant Scope ================-->
+            <!-- <li class="dropdown-item" uaa-has-permission="sysadmin:user:*">
+                <a ui-sref="user-management">
+                    <span class="fa fa-fw fa-users-cog"></span>
+                    <span xdata-translate="global.menu.admin.userManagement">用户管理</span>
+                </a>
+            </li>
+            <li class="dropdown-item" uaa-has-permission="sysadmin:dataperm:*">
+                <a ui-sref="dataPermission">
+                    <span class="fa fa-fw fa-tags"></span>
+                    <span xdata-translate="global.menu.admin.dataPermissionManagement">数据权限</span>
+                </a>
+            </li> -->
+            <!-- =============== Admin Features in System Scope ================-->
+            <a class="dropdown-item" uaa-has-permission="sysadmin:tenant:*" ng-if="$root.$global.isAdminUI"
+               ui-sref="tenant">
+                <span class="fa fa-fw fa-sitemap"></span>
+                <span xdata-translate="global.menu.admin.tenantManagement">租户管理</span>
+            </a>
+            <!--<a class="dropdown-item" uaa-has-permission="sysadmin:tenant:*" ng-if="$root.$global.isAdminUI"
+               ui-sref="tenantConfig">
+                <span class="fa fa-fw fa-sitemap"></span>
+                <span xdata-translate="global.menu.admin.tenantDataConfig">租户数据</span>
+            </a>-->
+            <a class="dropdown-item" uaa-has-permission="sysadmin:role:*" ng-if="$root.$global.isAdminUI"
+               ui-sref="role">
+                <span class="fa fa-fw fa-address-book"></span>
+                <span xdata-translate="global.menu.admin.roleManagement">角色管理</span>
+            </a>
+            <a class="dropdown-item" uaa-has-permission="sysadmin:perm:*" ng-if="$root.$global.isAdminUI"
+               ui-sref="permission">
+                <span class="fa fa-fw fa-key"></span>
+                <span xdata-translate="global.menu.admin.permissionManagement">权限管理</span>
+            </a>
+            <!--
+            <a class="dropdown-item" uaa-has-permission="sysadmin:module:*" ng-if="$ctrl.isTenantAdminUI"
+               ui-sref="businessModule">
+                <span class="fa fa-fw fa-cube"></span>
+                <span xdata-translate="global.menu.admin.businessModuleManagement">业务模块</span>
+            </a>
+            -->
+            <a class="dropdown-item" uaa-has-permission="sysadmin:param:*" ng-if="$ctrl.isTenantAdminUI"
+               a ui-sref="param">
+                <span class="fa fa-fw fa-code"></span>
+                <span xdata-translate="global.menu.admin.parameterConfiguration">参数配置</span>
+            </a>
+            <!--
+            <a class="dropdown-item" uaa-has-permission="sysadmin:dict:*" ng-if="$ctrl.isTenantAdminUI"
+               a ui-sref="dict">
+                <span class="fa fa-fw fa-book"></span>
+                <span>数据字典</span>
+            </a>
+            <a class="dropdown-item" uaa-has-permission="sysadmin:subordinate:*" ng-if="$root.$global.isAdminUI"
+               ui-sref="subordinate">
+                <span class="fa fa-fw fa-users"></span>
+                <span xdata-translate="global.menu.admin.subordinate">隶属关系</span>
+            </a>
+            -->
+            <a class="dropdown-item" uaa-has-permission="sysadmin:framework:*" ng-if="$root.$global.isAdminUI"
+               ui-sref="logs">
+                <span class="fa fa-fw fa-tasks"></span>
+                <span xdata-translate="global.menu.admin.logs">日志级别</span>
+            </a>
+            <a class="dropdown-item" uaa-has-permission="sysadmin:framework:*"
+               ng-if="$root.$global.isAdminUI && $ctrl.swaggerEnabled"
+               ui-sref="docs">
+                <span class="fa fa-fw fa-book"></span>
+                <span xdata-translate="global.menu.admin.apidocs">Swagger API</span>
+            </a>
+        </div>
+    </div>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-info-circle"></i></a>
+        <div class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="help/" target="_blank"><i
+                    class="fa fa-question"></i> {{'common.system.help' | translate}}</a>
+            <a class="dropdown-item" ng-click="$ctrl.about()">{{'common.system.about' | translate}}</a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown" ng-controller="LangSwitchController as langVm">
+        <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" ng-if="langVm.languages.length > 1"
+           title="{{'common.menu.language'|translate}}">
+            <i class="fa fa-globe"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end" ng-if="langVm.languages.length > 1">
+            <a class="dropdown-item" ng-repeat="langKey in langVm.languages"
+               href="" ng-click="langVm.changeLanguage(langKey);">{{langKey | findLanguageFromKey}}
+                <i class="fa fa-check" ng-if="langVm.currentLanguage===langKey"></i>
+            </a>
+        </div>
+    </li>
+</ul>

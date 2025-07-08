@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="collapse navbar-collapse ms-0">
+        <ol class="breadcrumb my-auto bg-transparent">
+            <li class="breadcrumb-item">
+                <a ui-sref="permission" data-translate="sys_permission.home.title">Permission Management</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <span data-translate="sys_permission.detail.title">Permission Detail</span>
+            </li>
+        </ol>
+    </div>
+</nav>
+<div class="wrapper">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+
+                <span data-translate="sys_permission.detail.title">User Detail</span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <dl class="dl-horizontal jh-entity-details">
+                <dt><span data-translate="sys_permission.domain">Domain</span></dt>
+                <dd>
+                    <span>{{vm.permission.domain}}</span>
+                </dd>
+                <dt><span data-translate="sys_permission.action">Action</span></dt>
+                <dd>
+                    <span>{{vm.permission.action}}</span>
+                </dd>
+                <dt><span data-translate="sys_permission.target">Target</span></dt>
+                <dd>
+                    <span>{{vm.permission.target}}</span>
+                </dd>
+                <dt><span data-translate="sys_permission.description">Description</span></dt>
+                <dd>
+                    <span>{{vm.permission.description}}</span>
+                </dd>
+                <!--<dt><span data-translate="permission.configJson">Config Json</span></dt>-->
+                <!--<dd>-->
+                    <!--<span>{{vm.permission.configJson}}</span>-->
+                <!--</dd>-->
+                <!--<dt><span data-translate="permission.role">Role</span></dt>-->
+                <!--<dd>-->
+                    <!--<a ui-sref="role.role-detail({id:vm.permission.roleId})">{{vm.permission.roleId}}</a>-->
+                <!--</dd>-->
+            </dl>
+        </div>
+        <div class="card-footer text-right">
+            <button type="button" ui-sref="permission" class="btn btn-default">
+                <span class="fa fa-arrow-left"></span>&nbsp;<span data-translate="common.action.back"> Back</span>
+            </button>
+        </div>
+    </div>
+</div>

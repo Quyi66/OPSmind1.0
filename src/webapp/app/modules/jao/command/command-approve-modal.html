@@ -1,0 +1,113 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'cmd.approve.command_approve' | translate}}</h4>
+    <button type="button" class="btn-close" ng-click="$ctrl.cancel()">
+    </button>
+</div>
+<div class="modal-body op-bold-label op-smartform" ng-if="$ctrl.type === 'single'">
+    <div class="form-group">
+        <div class="form-control-wrapper"><span class="badge bg-primary">{{$ctrl.action}}</span></div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'common.entity.detail.name' | translate}}</label>
+        <div class="form-control-wrapper"> {{$ctrl.thisCommand.name}}</div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">{{'common.entity.detail.type' | translate}}</label>
+        <div class="form-control-wrapper"> {{$ctrl.thisCommand.type}}</div>
+    </div>
+    <div class="form-group" ng-if="!$ctrl.thisCommand.command">
+        <label class="control-label">{{'common.entity.action.detail' | translate}}</label>
+        <div class="form-control-wrapper">
+            <pre class="p-2 bg-light">{{$ctrl.thisCommand.unapprovedCommand}}</pre>
+        </div>
+    </div>
+    <div ng-if="!!$ctrl.thisCommand.command">
+        <div class="form-group">
+            <label class="control-label">Old:</label>
+            <div class="form-control-wrapper">
+                <pre class="p-2 bg-light">{{$ctrl.thisCommand.command}}</pre>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">New:</label>
+            <div class="form-control-wrapper">
+                <pre class="p-2 bg-light">{{$ctrl.thisCommand.unapprovedCommand}}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-if="$ctrl.thisCommand.description">
+        <label class="control-label">{{'common.entity.detail.description' | translate}}:</label>
+        <div class="form-control-wrapper">
+            {{$ctrl.thisCommand.description}}
+        </div>
+    </div>
+</div>
+<div class="modal-body cac-history-find-dialog" ng-if="$ctrl.type === 'batch'">
+    <div class="form-group">
+        <strong class="control-label">{{ 'acm.common.selector.total' | translate}}<strong>{{$ctrl.selected.length}}</strong>{{ 'acm.common.selector.item' | translate}}</strong>
+    </div>
+    <div class="accordion-item" ng-repeat="command in $ctrl.selected">
+        <div class="accordion-header" id="headingOne">
+            <div class="card card-default">
+                <div class="card-body">
+                    <a class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#href{{command.id}}" aria-expanded="true" aria-controls="collapseOne">
+                        <strong class="d-inline-block">{{command.name}}</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="href{{command.id}}" class="accordion-body collapse">
+            <div class="accordion-body" style="padding-left: 15px" >
+                <div>
+                    <label class="control-label">{{'common.entity.detail.operation' | translate}}:</label>
+                    <span ng-if="!command.command">{{'cmd.approve.add_command' | translate}}</span>
+                    <span ng-if="!!command.command">{{'cmd.approve.edit_command' | translate}}</span>
+                </div>
+                <div>
+                    <label class="control-label">{{'common.entity.detail.type' | translate}}：</label>
+                    <span>{{command.type}}</span>
+                </div>
+                <div ng-if="!command.command">
+                    <label>{{'common.entity.action.detail' | translate}}:</label>
+                    <div class="bg-light p-3">
+                                <pre class="pre_command"
+                                     style="white-space: pre-wrap">{{command.unapprovedCommand}}</pre>
+                    </div>
+                </div>
+                <div ng-if="!!command.command">
+                    <label>Old:</label>
+                    <div class="bg-light p-3">
+                        <pre class="pre_command" style="white-space: pre-wrap">{{command.command}}</pre>
+                    </div>
+                    <label>New:</label>
+                    <div class="bg-light p-3">
+                                    <pre class="pre_command"
+                                         style="white-space: pre-wrap">{{command.unapprovedCommand}}</pre>
+                    </div>
+                </div>
+                <div>
+                    <label>{{'common.entity.detail.description' | translate}}:</label>
+                    <div class="bg-light p-3">
+                        <pre class="pre_command" style="white-space: pre-wrap">{{command.description}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer d-flex flex-row-reverse">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="$ctrl.isApprove(false)">
+        <i class="fa fa-times"></i> {{'cmd.approve.approve_failed' | translate}}
+    </button>
+    <button type="button" class="ms-auto btn btn-success" ng-click="$ctrl.isApprove(true)">
+        <i class="fa fa-check"></i> {{'cmd.approve.approve_success' | translate}}
+    </button>
+</div>
+<div>
+    <div style="padding-left: 15px">
+        <label>{{'cmd.approve.reason' | translate}}:</label>
+    </div>
+    <div class="modal-footer d-flex">
+        <op-code-editor id="field_value" the-model="$ctrl.unapprovedReason" style="height:10rem;"></op-code-editor>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{
+  "search": {
+    "type": {
+      "all": "所有型別",
+      "jao": "一鍵作業",
+      "gfs": "腳本管理",
+      "udp": "自助頁面",
+      "dts": "資料服務",
+      "acm": "資產管理"
+    },
+    "index": {
+      "clean_result": "清空搜尋結果",
+      "history_record": "歷史搜尋記錄",
+      "clean_history_record": "清空歷史搜尋記錄",
+      "searching": "正在搜尋",
+      "by_keyword": "根據關鍵字",
+      "clean": "清空",
+      "not_found": "搜尋，暫未搜尋到相關資料"
+    }
+  }
+}
