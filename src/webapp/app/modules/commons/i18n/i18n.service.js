@@ -33,7 +33,18 @@
 
 
         // TODO temporary solution
-        var converterZhCnToZhTwP = OpenCC.Converter({ from: 'cn', to: 'twp' });
+        var converterZhCnToZhTwP;
+        if (typeof OpenCC !== 'undefined' && OpenCC && OpenCC.Converter) {
+            converterZhCnToZhTwP = OpenCC.Converter({ from: 'cn', to: 'twp' });
+        } else {
+            console.warn('OpenCC is not loaded yet, will retry later');
+            // 延迟初始化
+            setTimeout(function() {
+                if (typeof OpenCC !== 'undefined' && OpenCC && OpenCC.Converter) {
+                    converterZhCnToZhTwP = OpenCC.Converter({ from: 'cn', to: 'twp' });
+                }
+            }, 100);
+        }
 
         /**
          * Use Opencc-Js to translate zh-CN to zh-TW(Phrases)
@@ -57,8 +68,12 @@
 
                     res = obj;
                 }
-                else
+                else if (converterZhCnToZhTwP) {
                     res = JSON.parse(converterZhCnToZhTwP(JSON.stringify(obj)));
+                } else {
+                    console.warn('OpenCC converter not available, returning original object');
+                    res = obj;
+                }
 
                 // console.log('%c[OpenccJs]%c Translate used:', 'color:teal', '', Date.now() - beginTranslateTs + 'ms');
                 return res;
@@ -66,6 +81,10 @@
             else return obj;
 
             function dataKeyHandler(objItem, dataKeys) {
+                if (!converterZhCnToZhTwP) {
+                    console.warn('OpenCC converter not available for dataKeyHandler');
+                    return;
+                }
                 dataKeys.forEach(function (key) {
                     if (objItem[key]) objItem[key] = converterZhCnToZhTwP(objItem[key])
                 })

@@ -116,17 +116,21 @@
          * @param {function} cancelCallback Callback when user clicks cancel
          */
         this.prompt = function (title, body, defaultValue, okCallback, cancelCallback) {
-            alertify.prompt(title, body, defaultValue,
-                function (evt, value) {
-                    $timeout(function () {
-                        okCallback(value);
+            if (typeof alertify !== 'undefined' && alertify && alertify.prompt) {
+                alertify.prompt(title, body, defaultValue,
+                    function (evt, value) {
+                        $timeout(function () {
+                            okCallback(value);
+                        });
+                    },
+                    function () {
+                        $timeout(function () {
+                            cancelCallback && cancelCallback();
+                        });
                     });
-                },
-                function () {
-                    $timeout(function () {
-                        cancelCallback && cancelCallback();
-                    });
-                });
+            } else {
+                console.error('alertify is not available for prompt');
+            }
         };
 
         /**
@@ -183,7 +187,11 @@
             if (style === 'danger') {
                 setting.defaultFocus = 'cancel';
             }
-            alertify.confirm().setting(setting).show(true, 'opx-' + style);
+            if (typeof alertify !== 'undefined' && alertify && alertify.confirm) {
+                alertify.confirm().setting(setting).show(true, 'opx-' + style);
+            } else {
+                console.error('alertify is not available for confirm');
+            }
             // return;
             // alertify.confirm(title || '', formatMessage(style, message),
             //     function () {
@@ -198,27 +206,38 @@
         }
 
         function callAlert(style, title, message, callback) {
-            alertify.alert().set({
-                label: $translate.instant('common.entity.action.close'),
-                onshow: function (e) {
-                    $('.ajs-button.btn-primary').addClass('btn-default').removeClass('btn-primary');
-                }
-            });
-            alertify.alert(title, formatMessage(style, message), function () {
-                $timeout(function () {
-                    callback && callback();
+            if (typeof alertify !== 'undefined' && alertify && alertify.alert) {
+                alertify.alert().set({
+                    label: $translate.instant('common.entity.action.close'),
+                    onshow: function (e) {
+                        $('.ajs-button.btn-primary').addClass('btn-default').removeClass('btn-primary');
+                    }
                 });
-            });
+                alertify.alert(title, formatMessage(style, message), function () {
+                    $timeout(function () {
+                        callback && callback();
+                    });
+                });
+            } else {
+                console.error('alertify is not available for alert');
+            }
         }
 
         function init() {
-            alertify.defaults.transition = "none";
-            alertify.defaults.theme.ok = "btn btn-primary";
-            alertify.defaults.theme.cancel = "btn btn-default";
-            alertify.defaults.theme.input = "form-control";
-            // console.log('messageService.init()...........',{$translate:$translate.instant('common.action.cancel')});
-            // alertify.defaults.glossary.ok = $translate.instant('common.action.ok');
-            // alertify.defaults.glossary.cancel = $translate.instant('common.action.cancel');
+            // 确保 alertify 已经加载
+            if (typeof alertify !== 'undefined' && alertify && alertify.defaults) {
+                alertify.defaults.transition = "none";
+                alertify.defaults.theme.ok = "btn btn-primary";
+                alertify.defaults.theme.cancel = "btn btn-default";
+                alertify.defaults.theme.input = "form-control";
+                // console.log('messageService.init()...........',{$translate:$translate.instant('common.action.cancel')});
+                // alertify.defaults.glossary.ok = $translate.instant('common.action.ok');
+                // alertify.defaults.glossary.cancel = $translate.instant('common.action.cancel');
+            } else {
+                console.warn('alertify is not loaded yet, initialization will be retried later');
+                // 延迟重试
+                setTimeout(init, 100);
+            }
         }
     }
 })();

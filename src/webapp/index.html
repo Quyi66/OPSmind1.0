@@ -113,7 +113,7 @@
 <script src="node_modules/angular-legacy-sortablejs-maintained/angular-legacy-sortable.js"></script>
 <!-- message and dialog -->
 <script src="node_modules/angularjs-toaster/toaster.min.js"></script>
-<!-- <script src="node_modules/alertify.js/build/alertify.min.js"></script> -->
+<script src="node_modules/alertify.js/dist/js/alertify.js"></script>
 <!-- select and dropdown -->
 <script src="node_modules/select2/dist/js/select2.full.js"></script>
 <!-- ========== utility ========= -->
@@ -190,10 +190,7 @@
 <!-- json-editor -->
 <script src="lib/json-editor/jsoneditor.min.js"></script>
 <!-- opencc-js -->
-<!-- <script src="node_modules/opencc-js-1.0.3/data.js"></script> -->
-<!-- <script src="node_modules/opencc-js-1.0.3/data.cn2t.js"></script> -->
-<!-- <script src="node_modules/opencc-js-1.0.3/data.t2cn.js"></script> -->
-<!-- <script src="node_modules/opencc-js-1.0.3/bundle-browser.js"></script> -->
+<script src="node_modules/opencc-js/dist/umd/full.js"></script>
 <!-- table -->
 <script src="node_modules/datatables.net/js/jquery.dataTables.js"></script>
 <script src="node_modules/datatables.net-buttons/js/dataTables.buttons.js"></script>
@@ -235,10 +232,10 @@
 <!-- i18n -->
 <script src="node_modules/angular-i18n/angular-locale_zh-cn.js"></script>
 <script src="node_modules/angular-cookies/angular-cookies.js"></script>
-<script src="node_modules/angular-translate/dist/angular-translate.js"></script>
-<script src="node_modules/angular-translate-handler-log/angular-translate-handler-log.js"></script>
-<!-- <script src="node_modules/angular-translate-storage-local/angular-translate-storage-local.js"></script> -->
-<script src="node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+        <script src="node_modules/angular-translate/dist/angular-translate.js"></script>
+        <script src="node_modules/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+        <script src="node_modules/angular-translate/dist/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+        <script src="node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
 <script src="node_modules/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 
 <script src="lib/luckysheet/dist/luckysheet.umd.js"></script>
@@ -449,6 +446,35 @@
 <script src="app/modules/uaa/login/login.component.js"></script>
 <script src="app/modules/uaa/login/license-register.controller.js"></script>
 <!-- BUILD_INSERT_JS:../../tmp/oplus-uaa-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-jao.js -->
+<!--**************************************************
+    MODULE oplus-jao
+***************************************************-->
+<script src="app/modules/jao/jao.module.js"></script>
+<script src="app/modules/jao/jao.state.js"></script>
+<script src="app/modules/jao/jao-util.js"></script>
+<script src="app/modules/jao/job.service.js"></script>
+<script src="app/modules/jao/job.controller.js"></script>
+<script src="app/modules/jao/job-edit.controller.js"></script>
+<script src="app/modules/jao/job-list.controller.js"></script>
+<script src="app/modules/jao/job-list.component.js"></script>
+<script src="app/modules/jao/job-quick-run.component.js"></script>
+<script src="app/modules/jao/job-result-view.component.js"></script>
+<script src="app/modules/jao/job-run-button.directive.js"></script>
+<script src="app/modules/jao/script-job-config.component.js"></script>
+<script src="app/modules/jao/script-test-run.component.js"></script>
+<script src="app/modules/jao/process-job-config.component.js"></script>
+<script src="app/modules/jao/rest-job-config.component.js"></script>
+<script src="app/modules/jao/ansible-progress-component.js"></script>
+<script src="app/modules/jao/jao-demo.js"></script>
+<script src="app/modules/jao/datamodel/dc-data.service.js"></script>
+<script src="app/modules/jao/datamodel/dc-data-add.controller.js"></script>
+<script src="app/modules/jao/datamodel/dc-data-view.component.js"></script>
+<script src="app/modules/jao/datamodel/dc-model-config.component.js"></script>
+<script src="app/modules/jao/datamodel/dc-selector.component.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-jao-tpls.js -->
 <!-- endbuild -->
 
 <!-- build:js app/modules/oplus-dts.js -->
@@ -1042,30 +1068,6 @@
 <script src="app/modules/acm/acm-device-selector.component.js"></script>
 <script src="app/modules/acm/acm-permission.component.js"></script>
 <!-- BUILD_INSERT_JS:../../tmp/oplus-acm-tpls.js -->
-<!-- endbuild -->
-
-<!-- build:js app/modules/oplus-jao.js -->
-<!--**************************************************
-    MODULE oplus-jao
-***************************************************-->
-<script src="app/modules/jao/jao.module.js"></script>
-<script src="app/modules/jao/jao.state.js"></script>
-<script src="app/modules/jao/jao-util.js"></script>
-<script src="app/modules/jao/job.service.js"></script>
-<script src="app/modules/jao/job.controller.js"></script>
-<script src="app/modules/jao/job-edit.controller.js"></script>
-<script src="app/modules/jao/job-list.controller.js"></script>
-<script src="app/modules/jao/job-list.component.js"></script>
-<script src="app/modules/jao/job-quick-run.component.js"></script>
-<script src="app/modules/jao/job-result-view.component.js"></script>
-<script src="app/modules/jao/job-run-button.directive.js"></script>
-<script src="app/modules/jao/script-job-config.component.js"></script>
-<script src="app/modules/jao/script-test-run.component.js"></script>
-<script src="app/modules/jao/process-job-config.component.js"></script>
-<script src="app/modules/jao/rest-job-config.component.js"></script>
-<script src="app/modules/jao/ansible-progress-component.js"></script>
-<script src="app/modules/jao/jao-demo.js"></script>
-<!-- BUILD_INSERT_JS:../../tmp/oplus-jao-tpls.js -->
 <!-- endbuild -->
 
 <!-- build:js app/modules/oplus-os.js -->
