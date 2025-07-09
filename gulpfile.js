@@ -216,7 +216,18 @@ gulp.task('serve', function serve() {
         port: 8888,
         livereload: true,
         host: '0.0.0.0',
-        index: 'index.html'
+        index: 'index.html',
+        middleware: function(connect, opt) {
+            return [
+                function(req, res, next) {
+                    // 对于所有非静态资源的请求，都返回 index.html
+                    if (req.url.indexOf('.') === -1 || req.url.endsWith('.html')) {
+                        req.url = '/index.html';
+                    }
+                    return next();
+                }
+            ];
+        }
         });
 });
 
