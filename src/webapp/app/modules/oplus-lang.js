@@ -524,13 +524,6 @@
     "app.setting.tags": "Label",
     "app.settings.target.blank": "New Page",
     "app.setting.scripts.title": "Scripts",
-    "applet.selector.title": "Select App",
-    "applet.selector.all": "All Apps",
-    "applet.selector.unsorted": "Unsorted",
-    "applet.selector.select_applet": "Please select an app",
-    "applet.list.quit_sort": "Quit Sort",
-    "applet.list.sort": "Apply Sort",
-    "applet.list.show_disabled": "Show Disabled Apps",
     "app_pms.title": "Password Manager",
     "app_pms.common.header.filter_all": "All",
     "app_pms.common.header.filter_new": "To Be Submitted",
@@ -1618,6 +1611,13 @@
     "app_vcm.create.alert_storage_limit": "Storage capacity cannot exceed",
     "app_vcm.create.section_vm": "VMware Configuration",
     "app_vcm.entity.free_capacity": "Surplus",
+    "applet.selector.title": "Select App",
+    "applet.selector.all": "All Apps",
+    "applet.selector.unsorted": "Unsorted",
+    "applet.selector.select_applet": "Please select an app",
+    "applet.list.quit_sort": "Quit Sort",
+    "applet.list.sort": "Apply Sort",
+    "applet.list.show_disabled": "Show Disabled Apps",
     "cac.common.device": "Device",
     "cac.common.template": "Template",
     "cac.common.run": "Execute",
@@ -5434,19 +5434,6 @@
     "app.view.messages.error.query": "查询应用信息出错",
     "app.settings.target.blank": "新页面",
     "app.setting.scripts.title": "关连脚本",
-    "applet": {
-      "selector": {
-        "title": "选择应用",
-        "all": "所有应用",
-        "unsorted": "未分类",
-        "select_applet": "请选择应用"
-      },
-      "list": {
-        "quit_sort": "退出排序",
-        "sort": "应用排序",
-        "show_disabled": "显示停用的应用"
-      }
-    },
     "app_pms.title": "密码管理",
     "app_pms.common.header.filter_all": "全部",
     "app_pms.common.header.filter_new": "待提交",
@@ -6612,6 +6599,19 @@
     "app_vcm.create.alert_storage_limit": "存储容量不能超过",
     "app_vcm.create.section_vm": "VMware 配置信息",
     "app_vcm.entity.free_capacity": "剩余",
+    "applet": {
+      "selector": {
+        "title": "选择应用",
+        "all": "所有应用",
+        "unsorted": "未分类",
+        "select_applet": "请选择应用"
+      },
+      "list": {
+        "quit_sort": "退出排序",
+        "sort": "应用排序",
+        "show_disabled": "显示停用的应用"
+      }
+    },
     "cac.common.device": "设备",
     "cac.common.template": "模板",
     "cac.common.run": "执行",
@@ -10655,19 +10655,6 @@
     "app.view.messages.error.query": "查詢應用資訊出錯",
     "app.settings.target.blank": "新頁面",
     "app.setting.scripts.title": "關連指令碼",
-    "applet": {
-      "selector": {
-        "title": "選擇應用",
-        "all": "所有應用",
-        "unsorted": "未分類",
-        "select_applet": "請選擇應用"
-      },
-      "list": {
-        "quit_sort": "退出排序",
-        "sort": "應用排序",
-        "show_disabled": "顯示停用的應用"
-      }
-    },
     "app_pms.title": "密碼管理",
     "app_pms.common.header.filter_all": "全部",
     "app_pms.common.header.filter_new": "待提交",
@@ -11833,6 +11820,19 @@
     "app_vcm.create.alert_storage_limit": "儲存容量不能超過",
     "app_vcm.create.section_vm": "VMware 配置資訊",
     "app_vcm.entity.free_capacity": "剩餘",
+    "applet": {
+      "selector": {
+        "title": "選擇應用",
+        "all": "所有應用",
+        "unsorted": "未分類",
+        "select_applet": "請選擇應用"
+      },
+      "list": {
+        "quit_sort": "退出排序",
+        "sort": "應用排序",
+        "show_disabled": "顯示停用的應用"
+      }
+    },
     "cac.common.device": "裝置",
     "cac.common.template": "模板",
     "cac.common.run": "執行",

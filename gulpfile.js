@@ -280,7 +280,7 @@ gulp.task('build-js', function buildUserJs() {
         // .pipe(babel())
         // .pipe(replace(/<!--\s*build.*vendors\.*-->/g, ''))
         // .pipe(replace(/<!--\s*build.*\.css.*-->/g, ''))
-        .pipe(useref())
+        .pipe(useref({searchPath: ['src/webapp', 'node_modules']}))
         .pipe(jsFsCache)
         .pipe(gulpif('*.js', uglifyAndVersion()))
         .pipe(jsFsCache.restore)

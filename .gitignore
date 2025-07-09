@@ -11,6 +11,8 @@
 /dist/webapp/app
 /dist/webapp/app/modules/*
 /tmp
+yarn-error.log
+yarn.lock
 /dist*
 /src/webapp/content/css/oplus-commons.css
 /src/webapp/content/css/oplus-dts.css

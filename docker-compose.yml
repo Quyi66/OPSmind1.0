@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  oplus-dev:
+    build: .
+    container_name: oplus-modules-dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/src/webapp/bower_components
+    ports:
+      - "8888:8888"
+      - "35729:35729"
+    environment:
+      - NODE_ENV=development
+    working_dir: /app
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true 
