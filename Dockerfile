@@ -12,7 +12,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # 安装全局依赖
-RUN npm install -g gulp@3.9.1 bower@1.8.8
+RUN npm install -g gulp@3.9.1
 
 # 创建启动脚本
 RUN echo '#!/bin/bash\n\
@@ -20,10 +20,8 @@ if [ ! -d "node_modules" ]; then\n\
   echo "安装 npm 依赖..."\n\
   npm install\n\
 fi\n\
-if [ ! -d "src/webapp/bower_components" ]; then\n\
-  echo "安装 bower 依赖..."\n\
-  cd src/webapp && bower install --allow-root\n\
-fi\n\
+echo "运行 postinstall 脚本..."\n\
+npm run postinstall || echo "postinstall failed, continuing..."\n\
 exec "$@"' > /entrypoint.sh && chmod +x /entrypoint.sh
 
 # 默认暴露端口（如有需要）

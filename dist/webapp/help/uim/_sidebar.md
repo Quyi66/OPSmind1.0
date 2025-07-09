@@ -1,4 +1,0 @@
-- [用户管理](uim/index.md)
-    - [快速入门](uim/quickstart.md)
-    - [使用指南](uim/guide.md)
-    - [常见问题](uim/faq.md)

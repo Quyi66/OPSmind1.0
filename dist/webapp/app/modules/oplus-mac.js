@@ -1,2 +1,365 @@
-/*! oplus-mac 0.1.0 */
-angular.module("oplus.mac",["oplus.commons","oplus.uaa"]),function(){"use strict";angular.module("oplus.mac").config(["$stateProvider",function(e){}])}(),function(){"use strict";function e(e,n,s,a){this.fetchNewMessagesCount=s.fetchNewMessagesCount,this.fetchMessages=s.fetchMessages,this.handleMessage=s.handleMessage,this.convertToZhTWP=a.translateTwp}angular.module("oplus.mac").service("macService",e),e.$inject=["currentUser","$uibModal","messageApi","i18nService"]}(),function(){"use strict";function e(e){var n="mac";this.fetchNewMessagesCount=function(s){return e.callApi(n,"GET","/api/mac/messages/count?lastTimestamp={lastTimestamp}",{lastTimestamp:s},null,{ignoreLoadingBar:!0})},this.fetchMessages=function(s,a){return e.callApi(n,"GET","/api/mac/messages?pageNum={pageNum}&pageSize={pageSize}",{pageNum:s,pageSize:a},null,{ignoreLoadingBar:!0})},this.handleMessage=function(s){return e.callApi(n,"PUT","/api/mac/messages/{messageId}",{messageId:s})}}angular.module("oplus.mac").service("messageApi",e),e.$inject=["restUtils"]}(),function(){"use strict";function e(e){this.newMessageCount=0,this.panelShow="none"===!$("mac-message-panel").css("display")}function n(e,n,s,a,t){var o=this;o.convertToZhTWP=a.convertToZhTWP,o.pageNum=1,o.pageSize=5,o.messages=[],o.newMessageCount=o.newMessageCount||0,o.panelShow=o.panelShow||!1,o.hasMore=!0,o.polling=!1,o.lastPollTimestamp=0,o.longPollTime=1,o.longPoll=setInterval((function(){$oplus.appConfig.modules.mac.poll&&!o.polling&&0==--o.longPollTime&&(o.polling=!0,a.fetchNewMessagesCount(o.lastPollTimestamp).then(o.longPollHandler).catch(o.longPollPreHandle))}),1e3),e.$on("destroy-poll-messages",(function(){console.log("destroy-poll-messages"),clearInterval(o.longPoll)})),o.longPollPreHandle=function(e){o.polling=!1,e||(o.lastPollTimestamp=Date.now()),o.longPollTime=30},o.longPollHandler=function(e){o.longPollPreHandle(),e>0&&o.fetchMessages(1,e,!0)},o.fetchMessages=function(e,n,s){a.fetchMessages(e,n).then((function(e){var a=o.messages.map((function(e){return e.id})),t=e.filter((function(e){return-1===a.indexOf(e.id)}));s?(o.messages.unshift.apply(o.messages,t),o.newMessageCount+=t.length):o.messages.push.apply(o.messages,t),e.length<n&&(o.hasMore=!1)}))},o.stopPropagation=function(e){e.stopPropagation()},o.handleMessage=function(e,s){0===e.status&&a.handleMessage(e.id).then((function(){e.status=1,o.newMessageCount-=1})),s&&("external"===e.linkType?window.open(e.link):"internal"===e.linkType&&n.go(e.link,JSON.parse(e.linkParams)))},o.fetchMoreMessages=function(){var e=o.pageSize+o.messages.length%o.pageSize;o.pageNum=Math.floor(o.messages.length/e)+1,o.fetchMessages(o.pageNum,e,!1)},o.getMessageText=function(e){return"zh-tw"===t.use()?o.convertToZhTWP(e):e}}angular.module("oplus.mac").component("macMessageHeader",{templateUrl:"app/modules/mac/message/mac-message-header.html",controller:e,controllerAs:"$ctrl"}),angular.module("oplus.mac").component("macMessageFixed",{templateUrl:"app/modules/mac/message/mac-message-fixed.html",controller:e,controllerAs:"$ctrl"}),angular.module("oplus.mac").component("macMessagePanel",{templateUrl:"app/modules/mac/message/mac-message-panel.html",controller:n,controllerAs:"$ctrl",bindings:{newMessageCount:"="}}),e.$inject=["$scope"],n.$inject=["$scope","$state","messageService","macService","$translate"]}(),function(e){try{e=angular.module("oplus.mac")}catch(n){e=angular.module("oplus.mac",[])}e.run(["$templateCache",function(e){"use strict";e.put("app/modules/mac/message/mac-message-fixed.html",'<style>\n    mac-message-fixed .op-badge { \n        color: white;\n        background-color: #dc3545; \n        position: absolute;\n        border-radius: 999px;\n        width: 1.2rem;\n        height: 1.2rem;\n        right: 0;\n        top: 0;\n        font-size: 12px;\n        line-height: 1.2rem;\n        text-align: center;\n    }\n\n    mac-message-fixed {\n      /* overflow: hidden; */\n      background-color: #fff !important;\n      color: #4b9cf3;\n      border: 1px solid #ccc;\n      border-radius: 999px;\n      position: fixed;\n      bottom: 2rem;\n      right: 2rem;\n      width: 4rem;\n      height: 4rem;\n      z-index: 2147000000;\n\n      box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);\n      transition: box-shadow .08s linear,min-width .15s cubic-bezier(0.4,0,0.2,1);\n    }\n\n    mac-message-fixed:hover{\n      box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);\n      background-color: #fafafb;\n    }\n</style>\n\n<div class="dropup w-100 h-100">\n    <a class="dropdown-toggle w-100 h-100 row justify-content-center align-content-center no-gutters" data-bs-toggle="dropdown">\n        <i class="fa fa-3x fa-envelope"></i>\n        <span class="op-badge" ng-if="$ctrl.newMessageCount > 0">{{$ctrl.newMessageCount > 99 ? 99 : $ctrl.newMessageCount}}</span>\n    </a>\n    \n    <mac-message-panel class="dropdown-menu dropdown-menu-end" new-message-count="$ctrl.newMessageCount"></mac-message-panel>\n</div>'),e.put("app/modules/mac/message/mac-message-header.html",'<style>\n    mac-message-header .op-badge { \n        background-color: #dc3545; \n        position: absolute;\n        border-radius: 999px;\n        width: 0.5rem;\n        height: 0.5rem;\n        right: 0.2rem;\n        top: 0.4rem;\n    }\n</style>\n<li class="nav-item dropdown">\n    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">\n        <i class="fa fa-bell"></i>\n        <span class="op-badge" ng-if="$ctrl.newMessageCount > 0"></span>\n    </a>\n    <mac-message-panel class="dropdown-menu dropdown-menu-end" new-message-count="$ctrl.newMessageCount"></mac-message-panel>\n</li>'),e.put("app/modules/mac/message/mac-message-panel.html",'<div style="min-width: 20rem;height: 20rem;overflow-y: scroll;" ng-click="$ctrl.stopPropagation($event)">\n    <div ng-repeat="item in $ctrl.messages track by item.id" >\n        <div class="card" style="width: 90%;margin:0.4rem auto;">\n            <div class="card-body">\n                <h5 class="card-title">From: {{item.addresserName}}</h5>\n                <h6 class="card-subtitle mb-2 text-muted">{{item.createAt}}</h6>\n                \x3c!-- <p class="card-text">{{$ctrl.getMessageText(item.content)}}</p> --\x3e\n                <p class="card-text">{{item.content}}</p>\n\n                <div class="d-flex justify-content-between">\n                    <button type="button" class="btn btn-link" ng-if="item.status === 0" ng-click="$ctrl.handleMessage(item,false)">{{\'mac.action.ignore\' | translate}}</button>\n                    <button type="button" class="btn" \n                            ng-class="{\'btn-primary\': item.status === 0, \'btn-secondary\': item.status === 1}"\n                            ng-click="$ctrl.handleMessage(item, true)">\n                        {{ (item.status === 0 ? \'mac.action.handle\' : \'mac.action.view\') | translate }}\n                    </button>\n                </div>\n\n                <i class="fa fa-circle position-absolute" style="top:0.4rem;right:0.4rem;"\n                    ng-class="{\'text-danger\': item.status === 0, \'text-secondary\': item.status === 1}"></i>\n            </div>\n        </div>\n    </div>\n\n    <div class="text-center" ng-if="$ctrl.messages.length > 0 && $ctrl.hasMore">\n        <a class="dropdown-item text-primary card-link" ng-click="$ctrl.fetchMoreMessages()">{{\'mac.action.more\' | translate}}</a>\n    </div>\n\n    <div class="text-center" ng-if="$ctrl.messages.length > 0 && !$ctrl.hasMore">\n        <span class="text-secondary">{{\'mac.message.no_more\' | translate}}</span>\n    </div>\n\n    <div class="opx-content text-center justify-content-center align-content-center flex-wrap" \n          ng-if="$ctrl.messages.length === 0">\n        <p class="col-md-12">{{\'mac.message.no_news\' | translate}}</p>\n        <a class="op-jumbo-link col-md-12 text-primary" ng-click="$ctrl.fetchMessages($ctrl.pageNum, $ctrl.pageSize, false)">{{\'mac.message.view_history\' | translate}}</a>\n    </div>\n</div>')}])}();
+/**
+ * @author chy, created on 2021-10-20.
+ */
+
+(function () {
+
+    /**
+     * @ngdoc module
+     */
+    angular.module('oplus.mac', [
+        'oplus.commons',
+        'oplus.uaa'
+    ]);
+})();
+
+/**
+ * @author Leo Liao (leoliaolei@gmail.com), created on 2020-01-03.
+ */
+(function () {
+    'use strict';
+
+    angular.module('oplus.mac').config(['$stateProvider',
+        function ($stateProvider) {
+            configRoutes($stateProvider);
+        }]);
+
+    function configRoutes($stateProvider) {
+        $stateProvider
+            // .state('app.mac', {
+            //     url: '/gfs',
+            //     views: {
+            //         'mainView': {
+            //             templateUrl: 'app/modules/gfs/gfs-index.html'
+            //         }
+            //     }
+            // })
+        ;
+    }
+})();
+
+/**
+ * @author chy, created on 2021-10-20.
+ */
+
+(function () {
+        'use strict';
+        var app = angular.module('oplus.mac');
+
+        app.service('macService', macService);
+
+        macService.$inject = ['currentUser', '$uibModal', 'messageApi', 'i18nService'];
+
+        /**
+         * @ngdoc service
+         * @name MacService
+         * @param currentUser {currentUser}
+         * @param $uibModal
+         * @param MessageApi
+         */
+        function macService(currentUser, $uibModal, messageApi, i18nService) {
+            var that = this;
+
+            // Data operation
+            this.fetchNewMessagesCount = messageApi.fetchNewMessagesCount;
+            this.fetchMessages = messageApi.fetchMessages;
+            this.handleMessage = messageApi.handleMessage;
+            this.convertToZhTWP = i18nService.translateTwp;
+        }
+    }
+)();
+
+/**
+ *
+ * @author chy, created on 22/10/2021
+ */
+
+(function () {
+    'use strict';
+
+    /**
+     * Data Access Object for page.
+     */
+    angular.module('oplus.mac').service('messageApi', messageApi);
+
+    messageApi.$inject = ['restUtils']
+
+    function messageApi(restUtils) {
+
+        var module = "mac";
+        
+        /**
+         * 获取新消息数量
+         */
+        this.fetchNewMessagesCount = function (lastTimestamp) {
+            return restUtils.callApi(module, 'GET',
+                '/api/mac/messages/count?lastTimestamp={lastTimestamp}',
+                { lastTimestamp: lastTimestamp },
+                null,
+                { ignoreLoadingBar: true });
+        }
+        /**
+         * 分页获取消息
+         */
+        this.fetchMessages = function (pageNum, pageSize) {
+            return restUtils.callApi(module, 'GET',
+                '/api/mac/messages?pageNum={pageNum}&pageSize={pageSize}',
+                { pageNum: pageNum, pageSize: pageSize },
+                null,
+                { ignoreLoadingBar: true });
+        }
+
+        /**
+         * 加载页面
+         * @param params
+         */
+        this.handleMessage = function (messageId) {
+            return restUtils.callApi(module, 'PUT',
+                '/api/mac/messages/{messageId}',
+                { messageId: messageId });
+        }
+    }
+})();
+
+/**
+ * @author chy, created on 2021-10-20.
+ */
+
+(function () {
+  'use strict';
+
+  angular.module('oplus.mac').component('macMessageHeader', {
+    templateUrl: 'app/modules/mac/message/mac-message-header.html',
+    controller: macMessageController,
+    controllerAs: '$ctrl'
+  });
+
+  angular.module('oplus.mac').component('macMessageFixed', {
+    templateUrl: 'app/modules/mac/message/mac-message-fixed.html',
+    controller: macMessageController,
+    controllerAs: '$ctrl'
+  });
+
+  angular.module('oplus.mac').component('macMessagePanel', {
+    templateUrl: 'app/modules/mac/message/mac-message-panel.html',
+    controller: macMessagePanelController,
+    controllerAs: '$ctrl',
+    bindings: {
+      newMessageCount: '='
+    }
+  });
+
+  // 收件箱载体 Controller
+  macMessageController.$inject = ['$scope']
+
+  function macMessageController($scope) {
+    var that = this;
+    that.newMessageCount = 0;
+    that.panelShow = function () { return !$('mac-message-panel').css('display') === 'none' }();
+
+    // Fixed
+    // that.mouseDownState = false;
+    // that.iX = 0;
+    // that.iY = 0,
+    // that.dX = 0;
+    // that.dY = 500; //  初始定位
+    // that.lastMoveIndex = 0; //  拖拽计数
+    // that.curMoveIndex = 0; //  历史计数
+
+    // that.mouseDown = function(event) {
+    //   //  如果打开了菜单，则不做响应
+    //   if (that.panelShow) {
+    //     that.mouseDownState = false;
+    //     return
+    //   }
+    //   console.log("mouseDown", event);
+
+    //   var touch = that.getTouchEvent(event);
+      
+    //   // 鼠标点击 面向页面 的 x坐标 y坐标
+    //   var { clientX, clientY } = touch;
+    //   // 鼠标x坐标 - 拖拽按钮x坐标  得到鼠标 距离 拖拽按钮 的间距
+    //   that.iX = clientX - that.$refs.actionMgr.offsetLeft;
+    //   // 鼠标y坐标 - 拖拽按钮y坐标  得到鼠标 距离 拖拽按钮 的间距
+    //   that.iY = clientY - that.$refs.actionMgr.offsetTop;
+    //   that.mouseDownState = true;
+    // }
+
+    // // 鼠标拖拽
+    // that.mouseMove = function(event) {
+    //   //鼠标按下 切移动中
+    //   if (that.mouseDownState) {
+    //     console.log("mouseMove", event);
+
+    //     var touch = that.getTouchEvent(event);
+    //     // 鼠标点击 面向页面 的 x坐标 y坐标
+    //     var { clientX, clientY } = touch;
+    //     //当前页面全局容器 dom 元素  获取容器 宽高
+    //     var { clientHeight: pageDivY, clientWidth: pageDivX } = that.$refs.pageDiv;
+    //     /* 鼠标坐标 - 鼠标与拖拽按钮的 间距坐标  得到 拖拽按钮的 左上角 x轴y轴坐标 */
+    //     var [x, y] = [clientX - this.iX, clientY - this.iY];
+    //     //拖拽按钮 dom 元素  获取 宽高 style 对象
+    //     var { clientHeight: actionMgrY, clientWidth: actionMgrX, style: actionMgrStyle } = that.$refs.actionMgr;
+    //     /* 此处判断 拖拽按钮 如果超出 屏幕宽高 或者 小于
+    //         设置 屏幕最大 x=全局容器x y=全局容器y 否则 设置 为 x=0 y=0
+    //     */
+    //     if (x > pageDivX - actionMgrX) x = pageDivX - actionMgrX;
+    //     else if (x < 0) x = 0;
+    //     if (y > pageDivY - actionMgrY) y = pageDivY - actionMgrY;
+    //     else if (y < 0) y = 0;
+
+    //     this.dX = x;
+    //     this.dY = y;
+    //     // 计算后坐标  设置 按钮位置
+    //     actionMgrStyle.left = x + 'px';
+    //     actionMgrStyle.top = y +'px';
+    //     actionMgrStyle.bottom = "auto";
+    //     actionMgrStyle.right = "auto";
+    //     //  move Index
+    //     this.lastMoveIndex++;
+    //     //  当按下键滑动时， 阻止屏幕滑动事件
+    //     event.preventDefault();
+    //   }
+    // }
+    
+    // // 鼠标抬起
+    // that.mouseUp = function(event) {
+    //   console.log("mouseUp", event);
+    //   //  当前页面全局容器 dom 元素  获取容器 宽高
+    //   var { clientHeight: windowHeight, clientWidth: windowWidth } = document.documentElement;
+    //   console.log('全局容器:', windowWidth, windowHeight);
+    //   //  拖拽按钮 dom 元素  获取 宽高 style 对象
+    //   var { clientHeight: actionMgrY, clientWidth: actionMgrX, style: actionMgrStyle } = that.$refs.actionMgr;
+    //   console.log('拖拽按钮', actionMgrY, actionMgrX, actionMgrStyle);
+
+    //   // 计算后坐标  设置 按钮位置
+    //   if (this.dY > 0 && this.dY < (windowHeight - 50)) { //  不在顶部 且 不在底部
+    //     if (this.dX <= (windowWidth / 2)) { //  left 小于等于屏幕一半
+    //       actionMgrStyle.left = 0;
+    //       actionMgrStyle.right = 'auto';
+    //     } else { //  left 大于屏幕一半
+    //       actionMgrStyle.left = 'auto';
+    //       actionMgrStyle.right = 0;
+    //     }
+    //     if (this.dY >= (windowHeight / 2)) { //  宽度大于1/2时，是将top改为auto，调整bottom
+    //       actionMgrStyle.top = 'auto';
+    //       actionMgrStyle.bottom = (windowHeight - this.dY - 50) + 'px';
+    //     }
+    //   }
+    //   else {
+    //     if (this.dY === 0) { //  在顶部
+    //       actionMgrStyle.top = 0;
+    //       actionMgrStyle.bottom = 'auto';
+    //     } else if (this.dY === (windowHeight - 50)) {
+    //       actionMgrStyle.bottom = 0;
+    //       actionMgrStyle.top = 'auto';
+    //     }
+    //     if (this.dX >= (windowWidth / 2)) { //  右侧是将left改为auto，调整right
+    //       actionMgrStyle.left = 'auto';
+    //       actionMgrStyle.right = (windowWidth - this.dX - 50) + 'px';
+    //     }
+    //   }
+    //   this.mouseDownState = false;
+    // }
+
+    // that.getTouchEvent = function (event) {
+    //   /* 此处判断  pc 或 移动端 得到 event 事件 */
+    //   if (event.touches) return event.touches[0];
+    //   return event;
+    // }
+  }
+
+  // 收件箱面板 Controller
+  macMessagePanelController.$inject = ['$scope', '$state', 'messageService', 'macService', '$translate'];
+
+  function macMessagePanelController($scope, $state, messageService, macService, $translate) {
+    var that = this;
+    var defaultPollTime = 30;
+
+    that.convertToZhTWP = macService.convertToZhTWP;
+
+    that.pageNum = 1;
+    that.pageSize = 5;
+
+    that.messages = [];
+    that.newMessageCount = that.newMessageCount || 0;
+    that.panelShow = that.panelShow || false;
+    that.hasMore = true;
+
+    that.polling = false;
+    that.lastPollTimestamp = 0;
+    that.longPollTime = 1;
+    that.longPoll = setInterval(function () {
+      if ($oplus.appConfig.modules.mac.poll && !that.polling && --that.longPollTime === 0) {
+        that.polling = true;
+        macService.fetchNewMessagesCount(that.lastPollTimestamp).then(that.longPollHandler).catch(that.longPollPreHandle);
+      }
+    }, 1000);
+
+    $scope.$on('destroy-poll-messages', function () {
+      console.log('destroy-poll-messages')
+      clearInterval(that.longPoll);
+    })
+
+    that.longPollPreHandle = function (ex) {
+      that.polling = false;
+      if(!ex) that.lastPollTimestamp = Date.now();
+      that.longPollTime = defaultPollTime;
+    }
+
+    that.longPollHandler = function (count) {
+      that.longPollPreHandle();
+
+      if (count > 0) that.fetchMessages(1, count, true);
+    }
+
+    that.fetchMessages = function (pageNum, pageSize, isNew) {
+      macService.fetchMessages(pageNum, pageSize).then(function (messages) {
+        var messageIds = that.messages.map(function(m){ return m.id })
+        var diff = messages.filter(function (f) { return messageIds.indexOf(f.id) === -1 })
+        if (isNew) {
+          that.messages.unshift.apply(that.messages, diff);
+          that.newMessageCount += diff.length;
+          // messageService.toast("info", " 您有未读消息待处理");
+        }
+        else that.messages.push.apply(that.messages, diff);
+        if (messages.length < pageSize) that.hasMore = false;
+      });
+    }
+
+    that.stopPropagation = function (e) {
+      e.stopPropagation();
+    }
+
+    that.handleMessage = function (message, doJump) {
+      if (message.status === 0) {
+        macService.handleMessage(message.id).then(function () {
+          message.status = 1;
+          that.newMessageCount -= 1;
+        });
+      }
+      
+      if (doJump) {
+        if (message.linkType === 'external')
+          window.open(message.link);
+        else if (message.linkType === 'internal') {
+          $state.go(message.link, JSON.parse(message.linkParams));
+        }
+      }
+    }
+
+    that.fetchMoreMessages = function () {
+      var pageSize = that.pageSize + (that.messages.length % that.pageSize);
+      that.pageNum = Math.floor(that.messages.length / pageSize) + 1;
+
+      that.fetchMessages(that.pageNum, pageSize, false);
+    }
+
+    that.getMessageText = function(term){
+      var currentLang = $translate.use();
+      if (currentLang === 'zh-tw')
+        return that.convertToZhTWP(term);
+      else return term;
+    }
+  }
+})();

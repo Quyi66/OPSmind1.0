@@ -22,11 +22,6 @@ fi
 
 if [ "$MODE" = "dev" ]; then
   echo "[build.sh] 启动开发模式..."
-  echo "[build.sh] 先安装bower依赖..."
-  docker run --rm \
-    -v "$PWD":/app \
-    -v "$PWD/output":/app/output \
-    oplus-angular-build bash -c "cd /app && bower install --allow-root"
   
   echo "[build.sh] 构建项目文件..."
   docker run --rm \
@@ -43,11 +38,6 @@ if [ "$MODE" = "dev" ]; then
     oplus-angular-build npm run serve
 else
   echo "[build.sh] 开始打包..."
-  echo "[build.sh] 先安装bower依赖..."
-  docker run --rm \
-    -v "$PWD":/app \
-    -v "$PWD/output":/app/output \
-    oplus-angular-build bash -c "cd /app && bower install --allow-root"
   
   docker run --rm \
     -v "$PWD":/app \

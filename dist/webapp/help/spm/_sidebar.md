@@ -1,5 +1,0 @@
-- [软件包管理](spm/index.md)
-    - [快速入门](spm/quickstart.md)
-    - [使用指南](spm/guide.md)
-    - [设置和管理](spm/config.md)
-    - [常见问题](spm/faq.md)

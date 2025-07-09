@@ -1,4 +1,6 @@
 /angulr2.2.1
+dist/webapp
+src/webapp/node_modules
 /node_modules
 /backups
 /.idea

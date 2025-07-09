@@ -1,5 +1,0 @@
-- [安全监测](sfm/index.md)
-    - [快速入门](sfm/quickstart.md)
-    - [使用指南](sfm/guide.md)
-    - [设置和管理](sfm/config.md)
-    - [常见问题](sfm/faq.md)

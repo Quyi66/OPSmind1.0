@@ -1,5 +1,0 @@
-- [补丁管理](vap/index.md)
-    - [快速入门](vap/quickstart.md)
-    - [使用指南](vap/guide.md)
-    - [设置和管理](vap/config.md)
-    - [常见问题](vap/faq.md)

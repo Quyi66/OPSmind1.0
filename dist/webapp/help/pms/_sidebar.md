@@ -1,6 +1,0 @@
-- [密码管理](pms/index.md)
-    - [快速入门](pms/quickstart.md)
-    - [使用指南](pms/guide.md)
-    - [设置和管理](pms/config.md)
-    - [开发指南](pms/dev.md)
-    - [常见问题](pms/faq.md)

@@ -1,5 +1,0 @@
-- [CI/CD](cicd/index.md)
-    - [快速入门](cicd/quickstart.md)
-    - [使用指南](cicd/guide.md)
-    - [设置和管理](cicd/config.md)
-    - [常见问题](cicd/faq.md)

@@ -8,7 +8,8 @@ const { exec, execSync } = require('child_process');
 // const post = require("gulp-http-post");
 // const openCC = require('opencc')
 // const windowsBuildTools = require('windows-build-tools')
-const sass = require('gulp-sass')(require('sass'));
+const sass = require('gulp-sass');
+sass.compiler = require('sass');
 // const sass = require('gulp-dart-sass');
 // const less = require('gulp-less');
 const gulpif = require('gulp-if');
@@ -107,10 +108,27 @@ const jsFsCache = fsCache(dirs.cache); // save cache to .tmp/jscache
 
 function uglifyAndVersion() {
     info('Minify js and prepend version number to header');
-    return multipipe(uglify(), versioning())
-        .on('error', function (err) {
-            gutil.log(gutil.colors.red('[Error]'), err.toString());
-        });
+    return multipipe(
+        uglify({
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+                pure_funcs: ['console.log', 'console.info', 'console.debug']
+            },
+            mangle: {
+                reserved: ['angular', 'jQuery', '$']
+            },
+            output: {
+                comments: false
+            }
+        }).on('error', function(err) {
+            gutil.log(gutil.colors.red('[Uglify Error]'), err.toString());
+            this.emit('end');
+        }), 
+        versioning()
+    ).on('error', function (err) {
+        gutil.log(gutil.colors.red('[Error]'), err.toString());
+    });
 
     function versioning() {
         return each(function (content, file, callback) {
@@ -269,6 +287,61 @@ gulp.task('copy-lazyload-files', function copyVendorFiles() {
     return gulp.src(unpackedFiles).pipe(gulp.dest('dist/webapp/lib/tinymce'));
 });
 
+gulp.task('copy-npm-assets', function copyNpmAssets() {
+    info('Copy npm assets to webapp directory');
+    
+    const webappNodeModulesPath = 'src/webapp/node_modules';
+    const rootNodeModulesPath = path.resolve('node_modules');
+    const webappNodeModulesFullPath = path.resolve(webappNodeModulesPath);
+    
+    try {
+        // 检查目标是否已存在
+        if (fs.existsSync(webappNodeModulesFullPath)) {
+            const stats = fs.lstatSync(webappNodeModulesFullPath);
+            if (stats.isSymbolicLink()) {
+                info('Symbolic link already exists, skipping...');
+                return Promise.resolve();
+            } else {
+                info('Removing existing directory...');
+                fs.rmSync(webappNodeModulesFullPath, { recursive: true, force: true });
+            }
+        }
+        
+        // 创建符号链接
+        const relativePath = path.relative(path.dirname(webappNodeModulesFullPath), rootNodeModulesPath);
+        fs.symlinkSync(relativePath, webappNodeModulesFullPath, 'junction');
+        info('Created symbolic link: ' + webappNodeModulesPath + ' -> ' + relativePath);
+        
+    } catch (error) {
+        console.warn('Failed to create symbolic link, copying essential files instead:', error.message);
+        
+        // 如果符号链接失败，复制关键文件
+        const streams = [
+            // 复制Angular
+            gulp.src('node_modules/angular/angular.js')
+                .pipe(gulp.dest('src/webapp/lib/angular')),
+            
+            // 复制lodash
+            gulp.src('node_modules/lodash/lodash.min.js')
+                .pipe(gulp.dest('src/webapp/lib/lodash')),
+            
+            // 复制其他关键依赖到对应位置
+            gulp.src('node_modules/jquery/dist/jquery.min.js')
+                .pipe(gulp.dest('src/webapp/node_modules/jquery/dist')),
+            
+            gulp.src('node_modules/angular/**/*')
+                .pipe(gulp.dest('src/webapp/node_modules/angular')),
+                
+            gulp.src('node_modules/lodash/**/*')
+                .pipe(gulp.dest('src/webapp/node_modules/lodash'))
+        ];
+        
+        return es.merge(streams);
+    }
+    
+    return Promise.resolve();
+});
+
 gulp.task('cache-burst', function cacheBurst() {
     return gulp.src('dist/webapp/index.html')
         .pipe(cachebust({})).pipe(gulp.dest('dist/webapp'));
@@ -276,7 +349,7 @@ gulp.task('cache-burst', function cacheBurst() {
 
 gulp.task('build-vendors', function buildVendors() {
     return gulp.src('src/webapp/index.html')
-        .pipe(useref())
+        .pipe(useref({allowEmpty: true}))
         .pipe(gulpif('**/oplus-vendors.js', multipipe(
             sourcemaps.init(),
             uglify().on('error', function(err) {
@@ -295,7 +368,7 @@ gulp.task('build-js', ['build-vendors'], function buildUserJs() {
         // .pipe(babel())
         // .pipe(replace(/<!--\s*build.*vendors\.*-->/g, ''))
         // .pipe(replace(/<!--\s*build.*\.css.*-->/g, ''))
-        .pipe(useref({searchPath: ['src/webapp', 'node_modules']}))
+        .pipe(useref({searchPath: ['src/webapp', 'node_modules'], allowEmpty: true}))
         .pipe(jsFsCache)
         .pipe(gulpif('*.js', uglifyAndVersion()))
         .pipe(jsFsCache.restore)

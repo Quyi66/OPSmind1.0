@@ -56,12 +56,12 @@
   },
   "scripts": {
     "serve": "gulp serve",
-    "dist": "gulp dist-modules",
+    "dist": "node --max-old-space-size=4096 ./node_modules/.bin/gulp dist-modules",
     "deploy": "gulp dist-modules && gulp update-pw",
     "translator": "node tools/i18n/translator/server.js",
     "detect-cn": "node tools/i18n/detect-cn.js",
     "combine": "node docsify-combine/.bin/cli.js",
-    "postinstall": "gulp copy-npm-assets"
+    "postinstall": "bash copy-vendor-libs.sh && ln -sf ../../node_modules src/webapp/node_modules"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
