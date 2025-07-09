@@ -79,24 +79,29 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="lib/bootstrap5/bootstrap.bundle.js"></script>
-<!-- angular -->
-<script src="node_modules/angular/angular.js"></script>
-<!--https://ui-router.github.io/blog/uirouter-for-angularjs-umd-bundles/-->
-<!--https://unpkg.com/browse/@uirouter/angularjs@1.0.30/release/-->
-<!--https://unpkg.com/browse/@uirouter/core@6.0.8/_bundles/-->
-<script src="lib/ui-router/ui-router-core.js"></script>
-<script src="lib/ui-router/ui-router-angularjs.js"></script>
-<script src="lib/ui-router/ui-router-sticky-states.js"></script>
-<script src="lib/ui-router/stateEvents.js"></script>
+
+<!-- lodash -->
+<script src="node_modules/lodash/dist/lodash.min.js"></script>
+
+<!-- angular core -->
+<script src="lib/angular/angular.js"></script>
 <script src="node_modules/angular-aria/angular-aria.js"></script>
 <script src="node_modules/angular-resource/angular-resource.js"></script>
 <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="node_modules/angular-animate/angular-animate.min.js"></script>
 <script src="node_modules/ngstorage/ngStorage.js"></script>
-<!--todo-->
+
+<!-- ui-router -->
+<script src="lib/ui-router/ui-router-core.js"></script>
+<script src="lib/ui-router/ui-router-angularjs.js"></script>
+<script src="lib/ui-router/ui-router-sticky-states.js"></script>
+<script src="lib/ui-router/stateEvents.js"></script>
+
+<!-- angular plugins -->
 <script src="node_modules/angular-cache-buster/angular-cache-buster.js"></script>
 <script src="node_modules/angular-loading-bar/build/loading-bar.js"></script>
 <script src="node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js"></script>
+
 <!-- ========== ui foundation ========= -->
 <!-- jquery-ui -->
 <script src="node_modules/jquery-ui/jquery-ui.js"></script>
@@ -199,41 +204,42 @@
 <script src="lib/datatable/dataTables.treeGrid.js"></script>
 <script src="lib/datatable/dataTables.fixedColumns.js"></script>
 <!-- color -->
-<script src="bower_components/tinycolor/tinycolor.js"></script>
-<script src="bower_components/spectrum/spectrum.js"></script>
-<script src="bower_components/spectrum/i18n/jquery.spectrum-zh-cn.js"></script>
+<script src="node_modules/tinycolor2/tinycolor.js"></script>
+<script src="node_modules/spectrum-colorpicker/spectrum.js"></script>
+<script src="node_modules/spectrum-colorpicker/i18n/jquery.spectrum-zh-cn.js"></script>
 <!-- date and calendar -->
-<script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
-<script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
-<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="bower_components/jQRangeSlider/jQRangeSlider.js"></script>
-<script src="bower_components/jQRangeSlider/jQRangeSliderMouseTouch.js"></script>
-<script src="bower_components/jQRangeSlider/jQRangeSliderDraggable.js"></script>
-<script src="bower_components/jQRangeSlider/jQRangeSliderHandle.js"></script>
-<script src="bower_components/jQRangeSlider/jQRangeSliderBar.js"></script>
-<script src="bower_components/jQRangeSlider/jQRangeSliderLabel.js"></script>
-<script src="bower_components/jQRangeSlider/jQDateRangeSliderHandle.js"></script>
-<script src="bower_components/jQRangeSlider/jQDateRangeSlider.js"></script>
-<script src="bower_components/jQRangeSlider/jQRuler.js"></script>
+<script src="node_modules/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="node_modules/angular-ui-calendar/src/calendar.js"></script>
+<script src="node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- jQRangeSlider - 这个包在 npm 中不存在，暂时注释掉 -->
+<!-- <script src="node_modules/jQRangeSlider/jQRangeSlider.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQRangeSliderMouseTouch.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQRangeSliderDraggable.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQRangeSliderHandle.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQRangeSliderBar.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQRangeSliderLabel.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQDateRangeSliderHandle.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQDateRangeSlider.js"></script> -->
+<!-- <script src="node_modules/jQRangeSlider/jQRuler.js"></script> -->
 <!-- ========== misc ui components ========= -->
 <!-- tree view -->
-<script src="bower_components/jquery.fancytree/dist/jquery.fancytree-all.js"></script>
+<script src="node_modules/jquery.fancytree/dist/jquery.fancytree-all.js"></script>
 <!-- contextMenu -->
-<script src="bower_components/jQuery-contextMenu/dist/jquery.contextMenu.js"></script>
+<script src="node_modules/jQuery-contextMenu/dist/jquery.contextMenu.js"></script>
 <script src="app/modules/commons/tree/jquery.fancytree.contextMenu.js"></script>
 <!-- password -->
 <script src="lib/ng-password-meter/ng-password-meter.js"></script>
 <!-- wizard -->
-<!--<script src="bower_components/smartwizard/dist/js/jquery.smartWizard.js"></script>-->
-<script src="bower_components/angular-vs-repeat/dist/angular-vs-repeat.js"></script>
+<!--<script src="node_modules/smartwizard/dist/js/jquery.smartWizard.js"></script>-->
+<script src="node_modules/angular-vs-repeat/dist/angular-vs-repeat.js"></script>
 <!-- i18n -->
-<script src="bower_components/angular-i18n/angular-locale_zh-cn.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-translate/angular-translate.js"></script>
-<script src="bower_components/angular-translate-handler-log/angular-translate-handler-log.js"></script>
-<script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
-<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
-<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+<script src="node_modules/angular-i18n/angular-locale_zh-cn.js"></script>
+<script src="node_modules/angular-cookies/angular-cookies.js"></script>
+<script src="node_modules/angular-translate/angular-translate.js"></script>
+<script src="node_modules/angular-translate-handler-log/angular-translate-handler-log.js"></script>
+<script src="node_modules/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+<script src="node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="node_modules/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 
 <script src="lib/luckysheet/dist/luckysheet.umd.js"></script>
 <script src="lib/luckyexcel/dist/luckyexcel.umd.js"></script>
@@ -245,9 +251,9 @@
 <!-- build:js lib/tinymce/oplus-tinymice.js -->
 <!-- code editor -->
 <script src="lib/tinymce/tinymce.min.js"></script>
-<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+<script src="node_modules/angular-ui-tinymce/src/tinymce.js"></script>
 <!-- Decrypt Encrypt tools -->
-<script src="bower_components/crypto-js/crypto-js.js"></script>
+<script src="node_modules/crypto-js/crypto-js.js"></script>
 <!--<script src="bower_components/jssha/dist/sha256.js"></script>-->
 <!-- endbuild -->
 <script src="config.js"></script>

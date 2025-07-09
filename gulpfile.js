@@ -197,7 +197,8 @@ gulp.task('serve', function serve() {
         root: dirs.dist.webapp,
         port: 8888,
         livereload: true,
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        index: 'index.html'
         });
 });
 
@@ -273,7 +274,21 @@ gulp.task('cache-burst', function cacheBurst() {
         .pipe(cachebust({})).pipe(gulp.dest('dist/webapp'));
 });
 
-gulp.task('build-js', function buildUserJs() {
+gulp.task('build-vendors', function buildVendors() {
+    return gulp.src('src/webapp/index.html')
+        .pipe(useref())
+        .pipe(gulpif('**/oplus-vendors.js', multipipe(
+            sourcemaps.init(),
+            uglify().on('error', function(err) {
+                gutil.log(gutil.colors.red('[Error]'), err.toString());
+                this.emit('end');
+            }),
+            sourcemaps.write('.')
+        )))
+        .pipe(gulp.dest(dirs.dist.webapp));
+});
+
+gulp.task('build-js', ['build-vendors'], function buildUserJs() {
     info('Pack js from ' + appSpec.indexHtml + ' and udp viewer js from ' + udpViewerHtml);
     // return replaceIndex(gulp.src([appSpec.indexHtml, viewerHtml]))
     return replaceIndex(gulp.src([appSpec.indexHtml/*, udpViewerHtml*/]))
