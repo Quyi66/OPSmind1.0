@@ -100,7 +100,7 @@
 <!-- angular plugins -->
 <script src="node_modules/angular-cache-buster/angular-cache-buster.js"></script>
 <script src="node_modules/angular-loading-bar/build/loading-bar.js"></script>
-<!-- <!-- <!-- <!-- <script src="node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js"></script> --> --> --> -->
+<script src="node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js"></script>
 
 <!-- ========== ui foundation ========= -->
 <!-- jquery-ui -->
@@ -180,7 +180,7 @@
 <script src="node_modules/codemirror/addon/search/searchcursor.js"></script>
 <script src="node_modules/codemirror/addon/search/jump-to-line.js"></script>
 <script src="node_modules/codemirror/addon/search/match-highlighter.js"></script>
-<!-- <script src="node_modules/angular-ui-codemirror/ui-codemirror.min.js"></script> -->
+<script src="node_modules/angular-ui-codemirror/src/ui-codemirror.js"></script>
 <!-- diff and beautifier -->
 <script src="node_modules/js-beautify/js/lib/beautify-html.js"></script>
 <!-- <script src="node_modules/deep-diff/dist/deep-diff.min.js"></script> -->
@@ -1001,6 +1001,82 @@
 <script src="app/modules/search/search.controller.js"></script>
 <script src="app/modules/search/search.service.js"></script>
 <!-- BUILD_INSERT_JS:../../tmp/oplus-search-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-gfs.js -->
+<!--**************************************************
+    MODULE oplus-gfs
+***************************************************-->
+<script src="app/modules/gfs/gfs.module.js"></script>
+<script src="app/modules/gfs/gfs.state.js"></script>
+<script src="app/modules/gfs/gfile.service.js"></script>
+<script src="app/modules/gfs/gfs-action-helper.js"></script>
+<script src="app/modules/gfs/gfile-edit.controller.js"></script>
+<script src="app/modules/gfs/gfile-list.component.js"></script>
+<script src="app/modules/gfs/gfile-content.component.js"></script>
+<script src="app/modules/gfs/gfile-rev.component.js"></script>
+<script src="app/modules/gfs/file-change-status.component.js"></script>
+<script src="app/modules/gfs/gfs-example.controller.js"></script>
+<script src="app/modules/gfs/repo-approve.controller.js"></script>
+<script src="app/modules/gfs/repo-navi.controller.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-gfs-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-acm.js -->
+<!--**************************************************
+    MODULE oplus-acm
+***************************************************-->
+<script src="app/modules/acm/acm.module.js"></script>
+<script src="app/modules/acm/acm.service.js"></script>
+<script src="app/modules/acm/acm-util.js"></script>
+<script src="app/modules/acm/cm-actions.js"></script>
+<script src="app/modules/acm/acm-list-ci.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-group.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-instance.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-recently.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-condition.component.js"></script>
+<script src="app/modules/acm/acm-list-ci-tag.component.js"></script>
+<script src="app/modules/acm/acm-ci-data-view.component.js"></script>
+<script src="app/modules/acm/acm-ci-filter.component.js"></script>
+<script src="app/modules/acm/acm-ci-model-config.component.js"></script>
+<script src="app/modules/acm/acm-device-selector.component.js"></script>
+<script src="app/modules/acm/acm-permission.component.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-acm-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-jao.js -->
+<!--**************************************************
+    MODULE oplus-jao
+***************************************************-->
+<script src="app/modules/jao/jao.module.js"></script>
+<script src="app/modules/jao/jao.state.js"></script>
+<script src="app/modules/jao/jao-util.js"></script>
+<script src="app/modules/jao/job.service.js"></script>
+<script src="app/modules/jao/job.controller.js"></script>
+<script src="app/modules/jao/job-edit.controller.js"></script>
+<script src="app/modules/jao/job-list.controller.js"></script>
+<script src="app/modules/jao/job-list.component.js"></script>
+<script src="app/modules/jao/job-quick-run.component.js"></script>
+<script src="app/modules/jao/job-result-view.component.js"></script>
+<script src="app/modules/jao/job-run-button.directive.js"></script>
+<script src="app/modules/jao/script-job-config.component.js"></script>
+<script src="app/modules/jao/script-test-run.component.js"></script>
+<script src="app/modules/jao/process-job-config.component.js"></script>
+<script src="app/modules/jao/rest-job-config.component.js"></script>
+<script src="app/modules/jao/ansible-progress-component.js"></script>
+<script src="app/modules/jao/jao-demo.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-jao-tpls.js -->
+<!-- endbuild -->
+
+<!-- build:js app/modules/oplus-os.js -->
+<!--**************************************************
+    MODULE oplus-os
+***************************************************-->
+<script src="app/modules/os/os.module.js"></script>
+<script src="app/modules/os/os.state.js"></script>
+<script src="app/modules/os/os.service.js"></script>
+<script src="app/modules/os/os.controller.js"></script>
+<!-- BUILD_INSERT_JS:../../tmp/oplus-os-tpls.js -->
 <!-- endbuild -->
 
 <!-- build:js app/modules/oplus-flow.js -->
