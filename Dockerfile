@@ -11,15 +11,24 @@ RUN apt-get update && \
 # 设置工作目录
 WORKDIR /app
 
-# 复制依赖声明
-COPY package.json package-lock.json ./
+# 安装全局依赖
+RUN npm install -g gulp@3.9.1 bower@1.8.8
 
-# 安装依赖，使用 npm ci 保证锁定
-RUN npm install
-
-# 再复制其他所有文件（不包含 node_modules）
-COPY . .
+# 创建启动脚本
+RUN echo '#!/bin/bash\n\
+if [ ! -d "node_modules" ]; then\n\
+  echo "安装 npm 依赖..."\n\
+  npm install\n\
+fi\n\
+if [ ! -d "src/webapp/bower_components" ]; then\n\
+  echo "安装 bower 依赖..."\n\
+  cd src/webapp && bower install --allow-root\n\
+fi\n\
+exec "$@"' > /entrypoint.sh && chmod +x /entrypoint.sh
 
 # 默认暴露端口（如有需要）
 EXPOSE 8888
 EXPOSE 35729
+
+# 设置入口点
+ENTRYPOINT ["/entrypoint.sh"]
