@@ -47,6 +47,7 @@
     "restify": "^5.0.1",
     "restify-cors-middleware": "^1.0.1",
     "run-sequence": "^1.2.2",
+    "sass": "^1.32.0",
     "tslib": "^2.4.0"
   },
   "engines": {
@@ -63,8 +64,7 @@
     "postinstall": "gulp copy-npm-assets"
   },
   "dependencies": {
-    "angularjs-toaster": "^3.0.0",
-    "sortablejs": "^1.10.2",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "alertify.js": "^1.0.12",
     "angular": "1.5.8",
     "angular-animate": "1.5.8",
@@ -88,6 +88,7 @@
     "angular-ui-sortable": "^0.17.2",
     "angular-ui-tinymce": "^0.0.19",
     "angular-vs-repeat": "^2.0.13",
+    "angularjs-toaster": "^3.0.0",
     "animate.css": "^3.5.2",
     "bootstrap": "^3.3.7",
     "bootstrap-daterangepicker": "^3.0.3",
@@ -128,8 +129,7 @@
     "numeral": "^2.0.6",
     "pivottable": "^2.23.0",
     "select2": "^4.0.13",
-    "tinymce": "^4.5.1",
-    "sass": "^1.32.0",
-    "@fortawesome/fontawesome-free": "^5.15.4"
+    "sortablejs": "^1.10.2",
+    "tinymce": "^4.5.1"
   }
 }
