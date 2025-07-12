@@ -82,8 +82,8 @@ build_dist() {
         log_info "清理输出目录: $DIST_PATH"
     fi
     
-    # 执行构建
-    $GULP_CMD dist-modules
+    # 执行构建（增加内存限制）
+    node --max-old-space-size=4096 ./node_modules/.bin/gulp dist-modules
     
     log_success "生产版本构建完成！"
     log_info "构建文件位于: $DIST_PATH"
