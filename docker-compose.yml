@@ -1,18 +1,105 @@
 version: '3.8'
 
+# 定义网络
+networks:
+  oplus-network:
+    driver: bridge
+
+# 定义数据卷
+volumes:
+  node_modules:
+    driver: local
+  output:
+    driver: local
+
 services:
+  # 开发服务
   oplus-dev:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: development
     container_name: oplus-modules-dev
+    networks:
+      - oplus-network
     volumes:
       - .:/app
-      - /app/node_modules
+      - node_modules:/app/node_modules
+      - output:/app/output
     ports:
-      - "8888:8888"
-      - "35729:35729"
+      - "${DEV_PORT:-8888}:8888"
+      - "${LIVERELOAD_PORT:-35729}:35729"
     environment:
       - NODE_ENV=development
+      - DEBUG=true
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
     working_dir: /app
-    command: tail -f /dev/null
+    command: npm run serve
     stdin_open: true
-    tty: true 
+    tty: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/index.html"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.oplus-dev.rule=Host(`localhost`)"
+      - "traefik.http.services.oplus-dev.loadbalancer.server.port=8888"
+
+  # 生产构建服务
+  oplus-build:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: oplus-modules-build
+    networks:
+      - oplus-network
+    volumes:
+      - .:/app
+      - output:/app/output
+    environment:
+      - NODE_ENV=production
+      - BUILD_ENV=production
+    working_dir: /app
+    command: npm run dist
+    profiles:
+      - production
+    
+  # 可选：Redis服务（如果需要缓存）
+  redis:
+    image: redis:6-alpine
+    container_name: oplus-redis
+    networks:
+      - oplus-network
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    profiles:
+      - full
+    
+  # 可选：Nginx代理服务
+  nginx:
+    image: nginx:alpine
+    container_name: oplus-nginx
+    networks:
+      - oplus-network
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - output:/usr/share/nginx/html:ro
+    depends_on:
+      - oplus-dev
+    restart: unless-stopped
+    profiles:
+      - nginx
+
+  redis_data:
+    driver: local 

@@ -37,11 +37,8 @@ const sort = require('gulp-sort');
 const minimist = require('minimist');
 const gutil = require('gulp-util');
 const DateTime = require('luxon').DateTime;
-// 添加代理中间件依赖
-const proxy = require('http-proxy-middleware');
 
 const config = require('./gulp/config');
-const proxyConfig = require('./gulp/proxy-config');
 const pkg = require('./package.json');
 const timestamp = DateTime.now().toFormat('yyMMddHHmm');
 const versionNumber = DateTime.now().toFormat('yyyy.MM.dd');
@@ -214,27 +211,15 @@ gulp.task('clean', function clean() {
 });
 
 gulp.task('serve', function serve() {
-    // 获取环境配置，默认为development
-    const env = process.env.NODE_ENV || 'development';
-    const config = proxyConfig[env] || proxyConfig.development;
-    
-    // 创建代理中间件数组
-    const proxyMiddlewares = Object.keys(config).map(path => 
-        proxy(path, config[path])
-    );
-    
     connect.server({
         root: dirs.dist.webapp,
-        port: 8888,
+        port: 3000,
         livereload: true,
         host: '0.0.0.0',
         index: 'index.html',
         middleware: function(connect, opt) {
             return [
-                // 代理中间件
-                ...proxyMiddlewares,
-                
-                // 原有的中间件 - 处理SPA路由
+                // SPA路由处理中间件
                 function(req, res, next) {
                     // 对于所有非静态资源的请求，都返回 index.html
                     if (req.url.indexOf('.') === -1 || req.url.endsWith('.html')) {
@@ -246,9 +231,8 @@ gulp.task('serve', function serve() {
         }
     });
     
-    console.log(`🚀 Development server started on http://localhost:8888`);
-    console.log(`📡 Proxy configuration for environment: ${env}`);
-    console.log(`🔗 Available proxy paths: ${Object.keys(config).join(', ')}`);
+    console.log(`🚀 Development server started on http://localhost:3000`);
+    console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
 });
 
 gulp.task('build-icons', function buildIcons(cb) {

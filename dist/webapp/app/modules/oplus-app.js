@@ -1,2 +1,3258 @@
-/*! oplus-app 1.0.0 */
-angular.module("oplus.app",["oplus.commons","oplus.uaa"]),function(){"use strict";function e(e,t){e.state("app.appman",{url:"/applets/{appletCode}/mgmt",__useAsApplet:{type:"PrivateTool",code:"appeditor",title:"Applet Editor",icon:"fa-magic",color:"#00739D"},views:{mainView:{templateUrl:"app/modules/app/applet-mgmt.html",controller:"AppletSettingCtrl",controllerAs:"appSettingVm"}}}).state("app.appman.setting",{url:"/setting",views:{appman_main_view:{templateUrl:"app/modules/app/applet-setting.html",controller:"AppletSettingCtrl",controllerAs:"appSettingVm"}}}).state("app.appman.page",{url:"/pages",views:{appman_main_view:{templateUrl:"app/modules/app/applet-mgmt-pages.html",controller:"AppletMgmtPagesCtrl",controllerAs:"$ctrl"}}}).state("app.appman.page.create",{url:"/new",views:{"appman_main_view@^.^":{templateUrl:"app/modules/udp/page-designer.html",controller:"PageDesignerCtrl"}}}).state("app.appman.page.edit",{url:"/:pageId/edit",views:{"appman_main_view@^.^":{templateUrl:"app/modules/udp/page-designer.html",controller:"PageDesignerCtrl"}}}).state("app.appman.dataset",{url:"/dataset",views:{appman_main_view:{templateUrl:"app/modules/app/applet-mgmt-datasets.html"}}}).state("app.appman.dataset.create",{url:"/new",views:{dts_dataset_list:{templateUrl:"app/modules/app/applet-mgmt-datasets-edit.html",controller:"AppletMgmtDatasetsEditCtrl"}}}).state("app.appman.dataset.edit",{url:"/:id/edit",views:{dts_dataset_list:{templateUrl:"app/modules/app/applet-mgmt-datasets-edit.html",controller:"AppletMgmtDatasetsEditCtrl"}},cache:!1}).state("app.appman.job",{url:"/jobs",views:{appman_main_view:{templateUrl:"app/modules/app/applet-mgmt-jobs.html",controller:"AppletMgmtJobsCtrl",controllerAs:"$ctrl"}}}).state("app.appman.job.view",{url:"/jobs/{id}/view",views:{"appman_main_view@^.^":{templateUrl:"app/modules/jao/job-edit.html",controller:"jaoJobEditCtrl",controllerAs:"$ctrl"}},cache:!1}).state("app.appman.job.edit",{url:"/jobs/{id}/edit",views:{"appman_main_view@^.^":{templateUrl:"app/modules/jao/job-edit.html",controller:"jaoJobEditCtrl",controllerAs:"$ctrl"}}}).state("app.appman.job.create",{url:"/jobs/new/{type}",views:{"appman_main_view@^.^":{templateUrl:"app/modules/jao/job-edit.html",controller:"jaoJobEditCtrl",controllerAs:"$ctrl"}}}).state("app.appman.datamodel",{url:"/data/models",views:{appman_main_view:{templateUrl:"app/modules/app/applet-mgmt-datamodels.html",controller:"AppletMgmtDataModelsCtrl",controllerAs:"$ctrl"}}}).state("app.appman.datamodel.create",{url:"/data/model/add/{id}",views:{"appman_main_view@^.^":{templateUrl:"app/modules/jao/datamodel/dc-data-add.html",controller:"jaodcDataCtrl",controllerAs:"$ctrl"}}}).state("app.appman.datamodel.edit",{url:"/data/model/edit/{id}",views:{"appman_main_view@^.^":{templateUrl:"app/modules/jao/datamodel/dc-data-add.html",controller:"jaodcDataCtrl",controllerAs:"$ctrl"}}}).state("app.appman.datamodel.view",{url:"/data/model/view/{id}",views:{"appman_main_view@^.^":{templateUrl:"app/modules/jao/datamodel/dc-data-add.html",controller:"jaodcDataCtrl",controllerAs:"$ctrl"}}}),e.state("app.applist",{url:"/applets",views:{mainView:{template:'<div ui-view="applist_main_view" class="h-100"><applet-list></applet-list></div>'}},useAsApplet:{code:"applets",type:"PrivateTool",title:"app.nav.applet",icon:"fa-oplus-applet",color:"#2196F3",showIn:{desktop:100},windowSize:"md"}}).state("app.applist.create",{url:"/create",views:{applist_main_view:{templateUrl:"app/modules/app/applet-setting.html",controller:"AppletSettingCtrl",controllerAs:"appSettingVm"}}}),window.$oplus.appConfig.useWindowUI||e.state("app.applet_view",{url:"/applets/{appletCode}",views:{mainView:{template:'<applet-content the-applet="theApplet"></applet-content>',controller:["$scope","theApplet",function(e,t){e.theApplet=t}]}},resolve:{theApplet:["$stateParams","appletRunman",function(e,t){return t.prepareAppletWindowContent(e.appletCode)}]}}).state("app.applet_view.open_menu",{url:"/menu/:pageId?:p",views:{applet_main_view:{templateUrl:"app/modules/udp/page-view-applet.html",controller:"PageViewCtrl"}},resolve:{pageId:["$stateParams",function(e){return e.pageId}],pageParams:[function(){return{}}]}}).state("app.applet_view.open_page",{url:"/page/:pageId?:p",views:{applet_main_view:{templateUrl:"app/modules/udp/page-view-applet.html",controller:"PageViewCtrl"}},resolve:{pageId:["$stateParams",function(e){return e.pageId}],pageParams:[function(){return{}}]}}),e.state("app.applet_help",{url:"/applets/{appletCode}/help",views:{mainView:{templateUrl:"app/modules/app/applet-help.html",controller:"AppletHelpCtrl",controllerAs:"appHelpVm"}}})}angular.module("oplus.app").config(e),e.$inject=["$stateProvider","$urlRouterProvider"]}(),function(){"use strict";angular.module("oplus.udp").service("appletHelper",["runningState","$timeout","userPref","appletRegistry","$state","modalHelper","$location",function(e,t,a,n,l,s,i){var p=this,o="active",r="js-applet-window-",c="windowLayouts";p.findAppletModal=function(e){var t=$("#"+r+e);return 0===t.length?null:t},p.buildOptions=function(e){var a={resizable:!0,onModalessActivated:function(){t((function(){}))},specSize:"FILL_CONTENT"};if(e.windowSize){var n=$("body"),l=n.width()/(n.height()-0);a.specSize={width:"90%",aspectRatio:l},"md"===e.windowSize?a.specSize.width="80%":"full"===e.windowSize&&(a.specSize={width:"100%",height:"100%"})}return a},p.appletModalOpened=function(e,t){$(".modal").eq(0).attr("id",r+e).data("appletcode",e),p.activateRunningApplet(e,t)},p.appletModalRendered=function(t){e.emptyBreadcrumb(t)},p.minimizeAppletWindow=function(t){var a=_.find(e.allRunningApplets(),{code:t});a&&(a.active=!1);var n=p.findAppletModal(t);n&&n.removeClass("maximized").removeClass(o).hide()},p.saveWindowLayout=function(e){var t=p.findAppletModal(e);if(t){var n=t.position(),l=$("body"),s=l.width(),i=l.height(),o={left:n.left/s*100+"%",top:n.top/i*100+"%",width:t.width()/s*100+"%",height:t.height()/i*100+"%"},r=a.readItem(c,{});r[e]=o,a.saveItem(c,r)}},p.closeAppletWindow=function(a){var s,i;s=n.findAppletDef(a)._resolvedState,i=l.router.getPlugin("sticky-states"),t((function(){i.exitSticky(s)})),e.removeAppletFromRunning(a),function(){var e,t=0;if($(".op-applet-window").each((function(){var n=$(this);if(n.data("appletcode")!==a){var l=parseInt(n.css("z-index"));l>=t&&(t=l,e=n)}n.removeClass(o)})),e){e.addClass(o);var n=e.data("appletcode");p.activateRunningApplet(n,!0)}else l.go("app.home")}()},p.activateRunningApplet=function(a,n){e.allRunningApplets().forEach((function(e){e.active=e.code===a}));var l=p.findAppletModal(a);if(!l)return console.error("ProgramError: Cannot find window of running applet [%s]. Now try close applet window to exit state.",a),void p.closeAppletWindow(a);if(t((function(){s.bringModalessToFront(l)})),n){var o=e.findRunningApplet(a).url;i.url(o)}}}])}(),function(){"use strict";angular.module("oplus.commons").component("appletList",{bindings:{options:"<"},templateUrl:"app/modules/app/applet-list.component.html",controller:["$scope","$rootScope","$state","$timeout","$uibModal","messageService","udpTagsService","appletService","themeService","currentUser","userPref","appletRunman","appletRegistry","appletSecurity","$translate",function(e,t,a,n,l,s,i,p,o,r,c,d,u,m,g){var f=this,v="ShowDisabledChange",h="applet.showDisabled";function b(){p.getMyRolesInAllApplets().then((function(e){return Object.keys(e).forEach((function(t){r.setAppletRoles(t,e[t])})),u.loadAllAppletDefs(!0,f.selectTags)})).then((function(e){f.applets=w(e)})).catch((function(e){s.alertError("Error",e.message)}))}function w(e){var t=_.map(f.selectTags,"id"),a=[];return a=!t||_.isEmpty(t)?[].concat(e):t&&_.indexOf(t,"system")>=0?1===t.length?_.filter(e,(function(e){return"system"===e.tag})):[].concat(e):_.filter(e,(function(e){return"system"!==e.tag})),_.remove(a,(function(e){return"PrivateTool"===e.type||!f.showDisabled&&"O"===e.status})),_.forEach(a,(function(e){"CodeDefined"!==e.sourceType&&(e._canUpdate=m.canUpdateApplet(e.code))})),a}this.options=this.options||{},this.sort=["default"],this.selectTags=[],this.openApplet=function(e,t){d.openApplet(e),"launcher"!==f.options.viewAs&&t.stopPropagation()},this.editApplet=function(e,t){t.preventDefault(),t.stopPropagation(),a.go("app.appman.setting",{appletCode:e})},this.isInSortMode=!1,this.sortApplet=function(){f.isInSortMode=!f.isInSortMode,f.isInSortMode?(f.isInSortMode=!0,$(".applet-container").sortable({axis:!1,cancel:".ignore-elements",items:'>div.d-block:not(".ignore-elements")',cursor:"move",opacity:.8,delay:100,revert:!1,start:function(e,t){t.item.addClass("active")},stop:function(e,t){t.item.removeClass("active"),t.item.data("type");var a=t.item.data("order"),n=t.item.prev().length?t.item.prev():null,l=t.item.next().length?t.item.next():null,i=n?parseInt(n.data("order")||0):0,o=l?parseInt(l.data("order")||0):0;(n&&i>a||l&&a>o)&&(a=0===i&&0!==o?o-1e4:n?l?Math.ceil((i+o)/2):i+1e4:o-1e4,t.item.data("order",a),p.updateAppletOrder(t.item.data("id"),a).then((function(){0})).catch((function(e){s.toast("error","Error",e.message)})))}})):$(".applet-container").sortable("destroy")},this.toggleDisabledApplets=function(){f.showDisabled=!f.showDisabled,c.saveItem(h,f.showDisabled),b(),t.$broadcast(v,{showDisabled:f.showDisabled})},this.showDisabled=c.readItem(h,!1),this.$onInit=function(){m.canViewAppletList()?(b(),i.findTagsByTenantId().then((function(e){f.tags=[].concat(f.defalutTags).concat(e)})),"launcher"===f.options.viewAs&&e.$on(v,(function(e,t){f.showDisabled=t.showDisabled,b()})),e.$on("APPLET_CHANGED",(function(){b()}))):f.ctrlError=g.instant("common.uaa.no_permission")},this.setTag=function(e,t){var a=$(e.target),n=angular.element("#applet_tag_list_ul li .btn-primary");n.length>0&&angular.forEach(n,(function(e,a){var n=e.value;n&&angular.fromJson(n).id!==t.id&&(angular.element(e).toggleClass("btn-primary",!1),angular.element(e).toggleClass("btn-secondary",!0))})),a.hasClass("btn-primary")?(a.toggleClass("btn-primary",!1),a.toggleClass("btn-secondary",!0),f.selectTags=[]):(a.toggleClass("btn-secondary",!1),a.toggleClass("btn-primary",!0),f.selectTags=[],f.selectTags.push(t)),u.loadAllAppletDefs(!0,f.selectTags).then((function(e){f.applets=w(e)}))},this.defalutTags=[{id:"system",name:"系统内置",tenantId:r.tenantId,type:"System"}]}]})}(),function(){"use strict";angular.module("oplus.commons").component("opxAppletItem",{transclude:!0,bindings:{appletDef:"<",onClickApplet:"&"},templateUrl:"app/modules/app/applet-item.component.html",controller:["$scope",function(e){var t=this,a=t.appletDef;this.$onInit=function(){a._colors=function(e,t){var a={iconColor:"#aaa",iconBackColor:"#666"};if("O"===t)return a;e.color&&(a.iconColor=e.color);var n=tinycolor(a.iconColor);return n.getBrightness()>200?a.iconBackColor=n.darken(30).toRgbString():(a.iconBackColor=a.iconColor,a.iconColor=tinycolor.mix("#fff",a.iconColor,50).toRgbString()),a}({color:a.color,theme:a.theme},a.status)},this.clickApplet=function(e){t.onClickApplet({applet:a,$event:e})}}]})}(),function(){"use strict";angular.module("oplus.udp").config(["$urlRouterProvider",function(e){e.deferIntercept()}]),angular.module("oplus.udp").service("windowInit",["$q","$state","$rootScope","$urlRouter","messageService","currentUser","appletRunman","appletRouter","appletService","appletRegistry","windowStateHandler",function(e,t,a,n,l,s,i,p,o,r,c){function d(){if(!window.$oplus.appConfig.useWindowUI)return n.listen(),n.sync(),e.resolve([]);var t=e.defer();return r.loadAllAppletDefs(!0).then((function(e){var a=p.initRouters(e);n.listen(),n.sync(),t.resolve(a)})).catch((function(e){l.alertError("Error","Cannot init window: "+e.message),t.reject(e)})),t.promise}this.initRun=function(){return c.initStateListeners(),d()},this.initAppletDefsAndRouters=d,a.$on("APPLET_CHANGED",(function(){d()}))}])}(),function(){"use strict";function e(e,t,a,n,l,s){var i=this;this.applet=e,this.minimizeWindow=function(e){n.minimizeAppletWindow(i.applet.code),e.stopPropagation()},this.restoreOrMaxWindow=function(){a.maximizeOrRestoreModal(n.findAppletModal(e.code))},this.closeWindow=function(e){n.saveWindowLayout(i.applet.code),l.dismiss(),n.closeAppletWindow(i.applet.code),e.stopPropagation()},this.$onInit=function(){t.addAppletToRunning(e),i.applet&&"ExternalState"===i.applet.entry.type&&(i.url=s.trustAsResourceUrl(i.applet.entry.value))}}angular.module("oplus.udp").service("appletRunman",["$q","$rootScope","$translate","$state","$timeout","$location","modalHelper","messageService","runningState","appletService","appletHelper","appletRegistry","userPref","appletRouter","currentUser","appletSecurity","widgetInteraction",function(e,t,a,n,l,s,i,p,o,r,c,d,u,m,g,f,v){var h="op-applet-window";function b(t){var a,n=d.findAppletDef(t);a=n&&"CodeDefined"===n.sourceType?e.when(n):function(){var a=e.defer();return r.findAppletByCode(t).then((function(e){if(e){if((e=angular.merge({setting:{nav:{}}},e)).icon=e.setting.icon,e.code=e.code||e.name,e.windowSize=e.setting.windowSize,e.entry=function(e){var t,a=e.entry;angular.isObject(a)?t={type:a.type,value:a.value}:angular.isString(a)&&(t={},0===a.indexOf("#")?(console.warn("TODO: hardcode change to app.cac"),t.value="app.cac",t.type="InternalState"):(t.type=a.indexOf(".")>0?"InternalState":"udp",t.value=a));t&&e.entryParams&&(t.params=JSON.parse(e.entryParams));return delete e.entryParams,t}(e),!e.entry){var n="Entry is not specified for this applet "+e.code;return p.alertError("Error",n),a.reject(new Error(n))}_.merge(e,function(e){var t={navCss:"",theme:"",navPos:"",showNav:!1,showNavOnHome:!1},a=e.items&&e.items.length>0;t.navCss="bg-"+e.theme,t.theme=e.theme||"light",t.navPos="left"===e.position?"left":"top",a&&(!0!==e.hide&&(t.showNav=!0),!0!==e.hideOnHome&&(t.showNavOnHome=!0));return t}(e.setting.nav)),a.resolve(e)}else a.reject(new Error("Cannot find applet "+t))})).catch((function(e){a.reject(e)})),a.promise}();var l,s=e.defer();return a.then((function(e){return l=e,r.getMyRolesInApplet(t)})).then((function(e){g.setAppletRoles(t,e),s.resolve(l)})).catch((function(e){s.reject(e)})),s.promise}this.prepareAppletWindowContent=b,this.openApplet=function(e){if(o.findRunningApplet(e))c.activateRunningApplet(e,!0);else{var t=d.findAppletDef(e);if("InternalState"===t.entry.type)n.go(t.entry.value);else if("ExternalState"===t.entry.type)if(t.entry.value)v.openUrlLink({url:t.entry.value,target:t.entry.target||"_blank"},t.entry.params,{applet:t});else{var a="Entry value is not specified for this applet "+t.code;p.alertError("Error",a)}else n.go(m.getAppletState(e),{appletCode:e})}},this.openAppletWindow=function(t){if(o.findRunningApplet(t))return c.activateRunningApplet(t,!0),e.when(null);var n,l=e.defer();return b(t).then((function(e){"CodeDefined"===e.sourceType||f.canUseApplet(t)||(e.launchError=a.instant("common.uaa.no_permission"));var s={modaless:!0,windowClass:h,templateUrl:"app/modules/app/window/applet-window-modal.html",resolve:{theApplet:function(){return e}},controller:"AppletModalCtrl",controllerAs:"$ctrl"};(n=i.openModal(s,c.buildOptions(e))).opened.then((function(){c.appletModalOpened(t,!0)})),n.rendered.then((function(){c.appletModalRendered(t),l.resolve()}))})).catch((function(e){console.error(e),l.reject(e)})),l.promise}}]),angular.module("oplus.udp").controller("AppletModalCtrl",e),e.$inject=["theApplet","runningState","modalHelper","appletHelper","$uibModalInstance","$sce"]}(),function(){"use strict";angular.module("oplus.udp").service("windowStateHandler",["$q","$rootScope","$state","$timeout","$location","appletRunman","runningState","appletService","appletRegistry","messageService","appletHelper",function(e,t,a,n,l,s,i,p,o,r,c){this.initStateListeners=function(){t.$on("$stateChangeError",(function(e,t,a,n,l,s){})),t.$on("$stateChangeSuccess",(function(e,t,a,n,l){})),t.$on("$locationChangeSuccess",(function(e,t,a,n,l){})),t.$on("$stateNotFound",(function(e,t,a,n){console.error("$stateNotFound ",t)})),t.$on("$stateChangeStart",(function(e,a,n,l,s){t.$global.hideDesktop=a.data&&a.data.hideDesktop})),t.$on("$stateChangeSuccess",(function(e,n,l,s,p){var r,d,u,m,g=n.name,f=function(){var e=/^app\.appletwindow_([^.]+)\.?(open_page|open_menu)?/.exec(g);if(e)return{type:"__ByDynamicState",code:e[1],action:e[2]};var t=o.findAppletDef((function(e){return"InternalState"===e.entry.type&&(g===e.entry.value||0===g.indexOf(e.entry.value+"."))}),!0);if(t)return{type:"ByPredefinedState",code:t.code};var l=/\/apw\/([^\/?#]+)/.exec(a.href(n.name));return l?{type:"__UDP",code:l[1]}:null}();if(i.activeAppletCode=f?f.code:void 0,f){var v=a.href(g,l).substring(1);i.urlByWidgetInteraction&&(v=i.urlByWidgetInteraction,i.urlByWidgetInteraction=void 0),r=f.code,d={url:v},(u=i.findRunningApplet(r))&&(u.url=d.url),"ByPredefinedState"!==f.type&&("open_menu"===f.action&&i.emptyBreadcrumb(f.code),i.pushBreadcrumb(f.code,{title:"",url:v}))}else i.allRunningApplets().forEach((function(e){c.minimizeAppletWindow(e.code)}));t.$global.isAdminUI?t.$global.hideMasterContent=!1:window.$oplus.appConfig.useWindowUI?t.$global.hideMasterContent=!!f||"app.home"===n.name:(t.$global.hideMasterContent="app.home"===n.name,m=!1,"app.applet_view"!==s.name&&"app.applet_view.open_menu"!==s.name&&"app.applet_view.open_page"!==s.name||"app.applet_view.open_page"!==n.name||(m=!0),m||i.emptyHistory())}))}}])}(),function(){"use strict";angular.module("oplus.udp").service("appletRouter",["$state","$stateRegistry",function(e,t){var a=!0,n=!0,l=[];this.initRouters=function(o){var r=[];if(!window.$oplus.appConfig.useWindowUI)return r;return o.forEach((function(e){var t=c(e);t&&r.push(t)})),r;function c(e){if(!s)return null;!e.entry.type&&/^#\/|\./.test(e.entry.value)&&(e.entry.type="InternalState");var t=e.code;return"InternalState"===e.entry.type?u(t,e.entry.value):"ExternalState"===e.entry.type||d(t),t}function d(e){var a=[],l={name:p(e),url:"/apw/"+e,sticky:n,onEnter:["$rootScope","$state","$stateParams","appletRunman",function(t,a,n,l){return l.openAppletWindow(e)}]};a.push(l);var s={name:p(e,"open_page"),url:"/page/:pageId?:p",views:{},resolve:{pageId:["$stateParams",function(e){return e.pageId}],pageParams:[function(){return{}}]}};s.views[i(e)+"@"]={templateUrl:"app/modules/udp/page-view-applet.html",controller:"PageViewCtrl"};var o=_.extend({},s,{name:p(e,"open_menu"),url:"/menu/:pageId?:p"});a.push(s),a.push(o),a.forEach((function(e){t.get(e.name)&&t.deregister(e.name),t.register(e)}))}function u(n,s){var i=e.get(s);if(i||console.warn('updateStateForCodeDefinedApplet: Cannot find state of "%s" for applet "%s"',s,n),!(l.indexOf(s)>-1)){l.push(s);var p=_.filter(t.get(),(function(e){return 0===e.name.indexOf(s+".")})),o={name:s,url:i.url,sticky:a,views:{},resolve:{_WaitWindowRendered_:["$rootScope","$stateParams","appletRunman",function(e,t,a){return a.openAppletWindow(n)}]}},r="modal_main_view_"+n+"@";o.views[r]=i.views.mainView,t.deregister(s),[o].concat(p).forEach((function(e){t.register(e)}))}}},this.getAppletWindowUiView=i,this.getAppletState=p,this.detectIfCurrentStateIsApplet=function(e){var t=/^app\.appletwindow_([^.]+)\.?(open_page|open_menu)?/.exec(e);if(t)return{appletCode:t[1],action:t[2]};return null};var s=window.$oplus.appConfig.useWindowUI;function i(e){return s?"appletwindow_view_"+e:"applet_main_view"}function p(e,t){var a=s?"app.appletwindow_"+e:"app.applet_view";return t&&(a+="."+t),a}}]),angular.module("oplus.udp").config(["$urlRouterProvider","$uiRouterProvider",function(e,t){var a=window["@uirouter/sticky-states"].StickyStatesPlugin;t.plugin(a)}])}(),function(){"use strict";angular.module("oplus.commons").provider("stateProviderRef",[function(){var e={};this.injectStateProvider=function(t){e.$stateProvider=t},this.$get=[function(){return{get:function(){return e.$stateProvider}}}]}])}(),function(){"use strict";angular.module("oplus.commons").provider("modalState",["$stateProvider",function(e){var t=this;this.$get=function(){return t},this.state=function(a,n){var l;return e.state(a,{url:n.url,onEnter:["$state","modalHelper",function(e,t){console.log("onEnter modal");var s=Object.values(n.views)[0];s.modaless=!0,(l=t.openModal(s)).result.finally((function(){l=null,e.$current.name===a&&e.go("^")}))}],onExit:function(){l&&l.close()}}),t}}])}(),function(){"use strict";angular.module("oplus.udp").service("appletRegistry",["$q","$translate","$state","restUtils","currentUser","themeService","appletRouter",function(e,t,a,n,l,s,i){var p,o=[],r=this,c=!1;function d(){return p}this.CODE_DEFINED_APPLET_CODE_PREFIX="__",this.findAppletDef=function(e,t){var a;a=angular.isString(e)?{code:e}:e;var n=_.find(p,a);return n||t||console.warn("Cannot find applet definition:",{condition:e,allAppletDefs:p}),n},this.loadAllAppletDefs=function(t,a){if(c&&!t)return e.when(p);var s,r=a?_.map(a,"id").join(","):"",d=e.defer(),u=[],m=!1;return l.isAuthenticated?(m=!0,s=n.callApi("udp","GET","/api/udp/applets?isPaging=true",null,{query:r})):(console.warn("appletRegistry.loadAllAppletDefs: User has not signed in"),s=e.when([])),s.then((function(e){c=m,_.forEach(e,(function(e){u.push(function(e){var t=JSON.parse(e.setting),a={id:e.id,code:e.code||e.name,title:e.title,type:e.type,status:e.status,version:e.version,order:e.order,icon:t.icon,color:t.color,windowSize:t.windowSize,entry:{type:e.entryType,value:e.entry,params:e.entryParams}};return"cac"===a.code?(console.warn("Hardcode change cac entry to app.cac"),a.entry={type:"InternalState",value:"app.cac"}):!a.entry.type&&/^#\/|\app./.test(a.entry.value)?a.entry={type:"InternalState",value:a.entry.value}:!a.entry.type&&/^http[s]?:\/\//.test(a.entry.value)&&(a.entry={type:"ExternalState",value:a.entry.value,params:a.entry.params,target:t.target||void 0}),a.code.toString().indexOf("ipam")>=0&&(a.entry={type:"ExternalState",value:e.entry,params:e.entryParams}),a}(e))})),m&&console.log("appletRegistry.loadAllAppletDefs: %d applet loaded from DB",e.length),(p=[].concat(o).concat(u)).forEach((function(e){"InternalState"===e.entry.type||!e.entry.type&&/^#\/|\./.test(e.entry.value)?e._resolvedState=e.entry.value:"ExternalState"===e.entry.type||!e.entry.type&&/^#\/|\./.test(e.entry.value)||(e._resolvedState=i.getAppletState(e.code))})),d.resolve(p)})).catch((function(e){d.reject(e)})),d.promise},this.getAppletDefs=d,this.getDesktopApplets=function(){return _.sortBy(_.filter(d(),(function(e){return e.showIn&&angular.isNumber(e.showIn.desktop)})),[function(e){return e.showIn.desktop}])},this.getDockApplets=function(){return _.sortBy(_.filter(d(),(function(e){return e.showIn&&angular.isNumber(e.showIn.dock)})),[function(e){return e.showIn.dock}])},u=a.get(),m=_.filter(u,(function(e){return!!e.useAsApplet})),_.map(m,(function(e){var a=e.useAsApplet;return{code:r.CODE_DEFINED_APPLET_CODE_PREFIX+a.code,title:t.instant(a.title)||a.code,icon:a.icon,color:a.color,type:a.type||"Application",sourceType:"CodeDefined",showIn:a.showIn,windowSize:a.windowSize,entry:{type:"InternalState",value:e.name},tag:"system"}})).forEach((function(e){!function(e){if(!e.code)throw new TypeError("Applet code is required");_.find(o,{code:e.code})||o.push(e)}(e)}));var u,m}])}(),function(){"use strict";angular.module("oplus.commons").component("appletContent",{bindings:{theApplet:"<",onClose:"&"},templateUrl:"app/modules/app/window/applet-content.component.html",controller:["$timeout","$rootScope","$element","$state","$translate","messageService","appletRunman","runningState","appletRouter",function(e,t,a,n,l,s,i,p,o){var r=this;this.applet=this.theApplet,this.appletCode=this.applet.code||this.applet.name,this.useWindowUI=window.$oplus.appConfig.useWindowUI,this.menuItems=[],this.uiView=o.getAppletWindowUiView(this.applet.code),this.$onInit=function(){if(a.addClass("js-applet-content").attr("data-applet-code",r.applet.code),"InternalState"!==r.applet.entry.type){for(let e=0;e<r.applet.setting.nav.items.length;e++){let t=r.applet.setting.nav.items[e];if(t.hide)continue;let a=o.getAppletState(r.applet.code,"open_menu"),l={icon:t.icon,title:t.name,entry:t.entry,url:n.href(a,{pageId:t.entry}),state:a};r.menuItems.push(l)}r.showMainEntry=!1,e((function(){var e=o.getAppletState(r.applet.code);n.current.name===e&&(r.showMainEntry=!0)}),100)}},this.navTo=function(e){r.menuItems.forEach((function(e){e.active=!1})),e.active=!0,n.go(e.state,{pageId:e.entry})}}]})}(),function(){"use strict";function e(e,t,a,n,l,s,i,p,o,r,c){var d,u=this;u.sortableOptions={handle:".op-drag-handle"},u.applet={},u.tags=[],u.entryTypes=i.getAllEntryTypes(),u.entryType=u.entryTypes[0].code,u.removeNavItem=function(e){e.isRemoved=!0,e.name="-"},u.save=function(){u.applet.id?h():i.isNameInUse(u.applet.name).then((function(e){e?s.confirmWarning(l.instant("app.setting.messages.warn.codeUse.title"),l.instant("app.setting.messages.warn.codeUse.body")):h()})).catch((function(e){s.alertError(l.instant("app.setting.messages.error.jugeCode"),e.message)}))},u.delete=function(){s.confirm(l.instant("common.entity.delete.title"),l.instant("app.setting.messages.warn.deleteApp.question",{title:u.applet.title}),(function(){i.deleteAppletAdm(u.applet.id).then((function(){s.toast("success",l.instant("app.setting.messages.info.deletedApp")),t.$broadcast("APPLET_CHANGED"),a.go("app.applist",{},{reload:!0})})).catch((function(e){s.alertError(l.instant("app.setting.messages.error.deletedApp"),e.message)}))}))},u.uploadHelpDoc=function(e){if(null!=e){if(e.size>1024e4)return void s.confirm(l.instant("app.setting.messages.warn.uploadFile.title"),l.instant("app.setting.messages.warn.uploadFile.body"),(function(){}));p.preUpload("applet","help",[e]).then((function(e){g=e.data[0].path,m=e.data[0].id,u.applet.helpDocUrl=g,s.toast("success",l.instant("app.setting.messages.info.uploadFile"))})).catch((function(e){s.alertError(l.instant("app.setting.messages.error.uploadFile"),e.message)}))}else s.toast("warning",l.instant("app.setting.messages.warn.uploadFile"))},u.getHelpDocName=function(){return u.applet.helpDocUrl?p.getOriginalNameFromPath(u.applet.helpDocUrl):""},u.removeHelpDoc=function(){u.applet.helpDocUrl="",m=null,g="_delete",s.toast("success",l.instant("app.setting.messages.info.removeDoc1")+(d?l.instant("app.setting.messages.info.removeDoc2"):""))};var m,g,f={setting:{icon:"fa-question-circle",nav:{theme:"light",position:"left",hide:!1,hideOnHome:!1,items:[]}},version:"1.0",status:"C"},v={roles:{}};function h(){var t,a=[i.saveApplet(u.applet)];m&&d!==g&&a.push(p.confirm("applet","help",[m])),d&&g&&d!==g&&(t=d,p.delete("applet","help",null,[t]).then((function(){console.log("file["+t+"]successfully removed from disk")})).catch((function(e){s.alertError(l.instant("app.setting.messages.error.removeFile"),e.message)}))),e.all(a).then((function(){d=g,s.toast("success",l.instant("app.setting.messages.info.appCreated"))})).catch((function(e){s.alertError(l.instant("app.setting.messages.error.appCreated"),e.message)}))}c.findTagsByTenantId().then((function(e){u.tags=e})),n.appletCode?i.findAppletByCode(n.appletCode,{disableI18n:!0}).then((function(e){u.applet=e,u.applet.accessControl=u.applet.accessControl?JSON.parse(e.accessControl):v,d=e.helpDocUrl,u.applet.setting=$.extend(!0,f.setting,u.applet.setting),u.applet.isOwner=o.loginId===u.applet.createdBy,u.applet.canDelete=r.canDeleteApplet(u.applet.code,u.applet.createdBy),u.applet.canUpdate=u.applet.isOwner||o.hasPermission("app:edit:*"),u.entryType=i.getEntryTypeFromEntry(u.applet.entry)})).catch((function(e){s.alertError(l.instant("app.setting.messages.error.queryApp"),e.message)})):(u.applet=f,u.applet.canUpdate=o.hasPermission("app:edit:*"),u.applet.accessControl=v)}angular.module("oplus.app").controller("AppletSettingCtrl",e),e.$inject=["$q","$rootScope","$state","$stateParams","$translate","messageService","appletService","OpUpload","currentUser","appletSecurity","udpTagsService"]}(),function(){"use strict";function e(e){this.appletCode=e.appletCode}angular.module("oplus.app").controller("AppletMgmtJobsCtrl",e),e.$inject=["$stateParams"]}(),function(){"use strict";function e(e){this.appletCode=e.appletCode}angular.module("oplus.app").controller("AppletMgmtPagesCtrl",e),e.$inject=["$stateParams"]}(),function(){"use strict";function e(e){this.appletCode=e.appletCode}angular.module("oplus.app").controller("AppletMgmtDatasetsCtrl",e),e.$inject=["$stateParams"]}(),function(){"use strict";function e(e){this.appletCode=e.appletCode}angular.module("oplus.app").controller("AppletMgmtDatasetsEditCtrl",e),e.$inject=["$stateParams"]}(),function(){"use strict";function e(e,t,a,n,l,s,i,p,o,r){var c=this;c.selectedCommands=[],c.deleteDcModel=function(e,a){s.confirm(o.instant("common.messages.operation.title",{operation:o.instant("common.entity.action.delete")}),o.instant("jao.messages.delete_model",{code:a}),(function(){p.deleteModelById(e).then((function(e){s.toast("success",o.instant("common.messages.operation.success",{operation:o.instant("common.entity.action.delete")})),t.reload()})).catch((function(e){throw s.alertError(o.instant("common.messages.operation.failed",{operation:o.instant("common.entity.action.delete")}),e.message),e}))}))},c.refreshModes=function(){p.dcModelList().then((function(e){c.tableConfig.data=e}))},c.deleteModels=function(){var e=c.selectedModels.map((function(e){return e}));s.confirm(o.instant("common.messages.operation.title",{operation:o.instant("common.entity.action.delete")}),o.instant("jao.messages.delete_models"),(function(){p.deleteModels(e).then((function(e){s.toast("success",o.instant("common.messages.operation.success",{operation:o.instant("common.entity.action.delete")})),t.reload()})).catch((function(e){throw s.alertError(o.instant("common.messages.operation.failed",{operation:o.instant("common.entity.action.delete")}),e.message),e}))}))},c.selectedModels=[],c.appletCode=n.appletCode;var d=[{data:"code",title:o.instant("jao.dc.detail.code"),render:function(e,t,a,n){return'<a class="d-block text-wrap" ui-sref="app.appman.datamodel.view({id:\''+a.id+"'})\">"+e+"</a>"}},{data:"appletCode",title:o.instant("jao.dc.detail.owner_application")},{data:"dataMode",title:o.instant("jao.dc.detail.mode")},{data:"updateBy",title:o.instant("common.entity.detail.update_by")},{data:"updateAt",title:o.instant("common.entity.detail.update_at"),render:function(e,t,a,n){var l=a.updateAt;return $$.formatDate(l,"YYYY-MM-DD hh:mm:ss")}},{data:"id",title:o.instant("common.entity.detail.operation"),className:"text-center",searchable:!1,orderable:!1,render:function(e,t,a,n){if(!r.canModifyAppletResource(a.appletCode))return"";var l="'"+a.id+"'",s="'"+a.code+"'";return' <button type="submit" ui-sref=app.appman.datamodel.edit({id:\''+a.id+'\'}) class="btn btn-default opx-btn-icon opx-btn-flat" uaa-has-permission="jao:edit:*" title="{{\'common.entity.action.edit\' | translate}}">     <i class="fa fa-pencil"></i> </button> <button type="submit" ng-click="$ctrl.deleteDcModel('+l+","+s+')" class="btn btn-default opx-btn-icon opx-btn-flat" uaa-has-permission="jao:edit:*" title="{{\'common.entity.action.delete\' | translate}}">     <i class="fa fa-trash-alt"></i> </button>'}}];c.tableConfig={columns:d,data:[function(){return p.dcModelList(c.appletCode)}],selection:{valueData:"id",labelData:"name",preselected:c.selectedModels},order:[[1,"desc"],[4,"desc"]],buttons:[]}}angular.module("oplus.app").controller("AppletMgmtDataModelsCtrl",e),e.$inject=["$scope","$state","jaoJobService","$stateParams","$location","messageService","userPref","dcDataService","$translate","appletSecurity"]}(),function(){"use strict";function e(e,t,a,n){var l=this;l.isHelpDocExisting=!0,e.appletCode?a.findAppletByCode(e.appletCode).then((function(e){var t=e.helpDocUrl;t?-1!=t.indexOf(".pdf")&&function(e){PDFObject.embed(function(e){return a.getHelpDocDownloadUrl(e)}(e),"#pdf-container")}(t):l.isHelpDocExisting=!1})).catch((function(){n.alertWarning(t.instant("app.help.messages.warn.findAppletByCode.error"),t.instant("app.help.messages.warn.findAppletByCode.noExit"))})):n.alertWarning(t.instant("app.help.messages.warn.findAppletByCode.error"),t.instant("app.help.messages.warn.findAppletByCode.noName"))}angular.module("oplus.app").controller("AppletHelpCtrl",e),e.$inject=["$stateParams","$translate","appletService","messageService"]}(),function(){"use strict";function e(e,t,a,n,l,s,i,p){function o(){e.$broadcast("APPLET_CHANGED")}function r(e,t){return t=t||{},s.callApi("udp","GET","/api/udp/applets/name/{name}"+(t.disableI18n?"?__noi18n":""),{name:e}).then((function(l){return l?(l.setting=JSON.parse(l.setting),a.resolve(l)):(t.alertIfFail&&i.alertError(n.instant("app.service.messages.error.findAppletByCode.title"),n.instant("app.service.messages.error.findAppletByCode.body",{name:e})),a.reject(new Error(n.instant("app.service.messages.error.findAppletByCode.title")+e)))})).catch((function(t){return 404===t._errorCode?a.reject(new Error(n.instant("app.service.messages.error.findAppletByCode.title")+e)):a.reject(t)}))}function c(e){return window.$oplus.appConfig.apiBaseUrls.upload+e}this.findAppletByCode=r,this.findApplets=function(){return s.callApi("udp","GET","/api/udp/applets?isPaging=true",null)},this.saveApplet=function(e){var t=angular.copy(e);(function(){if(!p.isAuthenticated)throw i.alertError(n.instant("app.uaa.no_permission_title"),n.instant("app.uaa.no_permission_desc")),new Error("401")})(),t.id?(t.modifiedBy=p.loginId,t.modifiedName=p.displayName):(t.author=p.displayName,t.createdBy=p.loginId,t.createdName=p.displayName,t.modifiedBy=p.loginId,t.modifiedName=p.displayName);var l=t.setting.nav;l.items&&l.items.length>0&&(l.items=_.filter(l.items,(function(e){return!e.isRemoved})));t.setting=JSON.stringify(t.setting),t.accessControl=JSON.stringify(t.accessControl);var r=s.callApi("udp",t.id?"PUT":"POST","/api/udp/applets",null,t);return a.when(r,(function(){o()}))},this.deleteApplet=function(e){var t=a.defer();return s.callApi("udp","DELETE","/api/udp/applets/{id}",{id:e}).then((function(e){t.resolve(e),o()})).catch((function(e){t.reject(e)})),t.promise},this.deleteAppletAdm=function(e){var t=a.defer();return s.callApi("adm","DELETE","/api/adm/applet/{id}",{id:e}).then((function(e){t.resolve(e),o()})).catch((function(e){t.reject(e)})),t.promise},this.isNameInUse=function(e){var t=a.defer();return r(e).then((function(e){t.resolve(e)}),(function(e){t.resolve(!1)})),t.promise},this.getHelpDocDownloadUrl=c,this.updateAppletOrder=function(e,t){var n=a.defer();return s.callApi("udp","PUT","/api/udp/applets/orders",null,{id:e,order:t}).then((function(e){n.resolve(e),o()})).catch((function(e){n.reject(e)})),n.promise},this.getAllEntryTypes=function(){return[{name:n.instant("app.service.customPage"),code:"udp-page"},{name:n.instant("app.service.internalPage"),code:"inner-page"},{name:n.instant("app.service.externalPage"),code:"outer-page"}]},this.getEntryTypeFromEntry=function(e){if(!e)return null;if(e.type)return e.type;if(e){if(/^#\/|\app./.test(e))return"inner-page";if(/^http[s]?:\/\//.test(e))return"outer-page"}return"udp-page"},this.openAppletSelectorModal=function(e,t){var a={template:'<div class="modal-header"><h4 class="modal-title">{{"applet.selector.title"|translate}}</h4><button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"></button></div><div class="modal-body"><div class="form-group"><label class="control-label">'+((t=t||{}).label?t.label:'{{"applet.selector.select_applet"|translate}}')+'</label><div class="form-control-wrapper"><applet-selector applet-code="$ctrl.appletCode" on-change="$ctrl.onChange" options="{showAll:true,includeAllAndNull:false}"></applet-selector></div></div><div ng-if="$ctrl.history.length>0"><ul class="list list-inline"><li class="" ng-repeat="item in $ctrl.history track by $index"><a href="" class="badge bg-secondary" ng-click="$ctrl.appletCode=item.code">{{item.title}}</a></li></ul></div></div><div class="modal-footer"><button type="button" ng-disabled="!$ctrl.appletCode" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.submit()">{{"common.action.ok"|translate}}</button><button type="button" class="btn btn-default opx-btn-cancel" ng-click="$ctrl.cancel()">{{"common.action.cancel"|translate}}</button></div>',controller:["userPref",function(e){var t=this,a="appletSelector";this.history=e.load()[a]||[],this.cancel=function(){n.dismiss()},this.submit=function(){var l=t.selectedApplet,s={code:l.name,title:l.title};n.close(s),_.remove(t.history,{code:l.name}),t.history.unshift(s),e.saveItem(a,t.history.slice(0,10))},this.onChange=function(e){t.selectedApplet=e}}],controllerAs:"$ctrl"},n=l.openModal(a,{onOk:function(t){e(t)}})},this.getMyRolesInApplet=function(e){return s.callApi("udp","GET","/api/udp/applets/{appletCode}/my-roles",{appletCode:e})},this.getMyRolesInAllApplets=function(){return s.callApi("udp","GET","/api/udp/applets/my-roles")},this.saveAppletsByTenantUser=function(e,t){return s.callApi("udp","POST","/api/udp/applet/tenant/{tenantUserId}",{tenantUserId:t},e)},this.findAppletsByTenantUser=function(e,t){return s.callApi("udp","GET","/api/udp/applets/tenant/user",null,{tenantUserId:e,login:t})}}angular.module("oplus.app").service("appletService",e),e.$inject=["$rootScope","$http","$q","$translate","modalHelper","restUtils","messageService","currentUser"]}(),function(){"use strict";angular.module("oplus.commons").service("appletSecurity",["currentUser",function(e){function t(t){return e.hasAnyRole(["ROLE_DEVELOPER","ROLE_ADMIN"],t)}function a(t,a){return e.loginId===a||e.hasAnyRole(["ROLE_ADMIN","ROLE_PRIVUSER","ROLE_DEVELOPER"],t)}this.canViewAppletList=function(){return e.isAuthenticated},this.canCreateApplet=function(t){return e.hasPermission("app:edit:*")},this.canUpdateApplet=t,this.canModifyAppletResource=function(e){return t(e)},this.canDevelopApplet=function(t){return e.hasAnyRole(["ROLE_DEVELOPER"],t)},this.canDeleteApplet=a,this.canPublishApplet=function(e,t){return a(e,t)},this.canUseApplet=function(t){return e.hasAnyRole(["ROLE_USER"],t)}}])}(),function(){"use strict";angular.module("oplus.commons").component("appletConfigAccess",{require:{ngModelCtrl:"?ngModel"},bindings:{theModel:"=ngModel"},templateUrl:"app/modules/app/applet-config-access.component.html",controller:["$scope","$element","$translate","messageService",function(e,t,a,n){var l=this,s="SYSTEM",i="MANUAL";this.$onInit=function(){l.ngModelCtrl.$formatters.push(r),l.ngModelCtrl.$render=o,l.ngModelCtrl.$parsers.push(c),e.$watch("$ctrl.viewData",(function(e,t){e&&l.ngModelCtrl.$setViewValue(angular.copy(e))}),!0)},this.addRole=function(){var e={name:"NEW_ROLE",method:i};_.find(l.viewData.roles,{name:e.name})||l.viewData.roles.push(e)},this.removeRole=function(e){n.confirm("Remove","Remove the role?",(function(){_.remove(l.viewData.roles,{name:e})}))},this.userMethods=[{value:s,_title:a.instant("app.setting.ac.user_by_system")},{value:i,_title:a.instant("app.setting.ac.user_by_manual")}];var p={ROLE_USER:{method:s},ROLE_PRIVUSER:{method:s},ROLE_DEVELOPER:{method:s},ROLE_ADMIN:{method:s}};function o(){l.viewData=l.ngModelCtrl.$viewValue}function r(e){if(e){var t=_.merge({},p,e.roles),a={roles:[]};return Object.keys(t).forEach((function(e){var n=_.merge({name:e},t[e]);p[e]&&(n._builtin=!0),a.roles.push(n)})),a}}function c(e){var t={roles:{}};return e.roles.forEach((function(e){t.roles[e.name]={method:e.method,users:e.users}})),t}}]})}(),function(){"use strict";angular.module("oplus.app").component("appletSelector",{bindings:{excluded:"<",appletCode:"=",onChange:"&",options:"<"},templateUrl:"app/modules/app/helper/applet-selector.html",controller:["$scope","appletService","$translate","userPref",function(e,t,a,n){var l=this,s=l.excluded||[];l.options=_.extend({},{viewAs:"dropdown",showAll:!1},l.options),this.selectItem=function(e){l.appletCode=e.name,l.selectedItem=e.name},this.$onInit=function(){e.$watch("$ctrl.appletCode",(function(e,t){if(angular.isFunction(l.onChange())){var a=_.find(l.applets,{name:e});a&&angular.isFunction(l.onChange)&&l.onChange()(a)}})),t.findApplets().then((function(e){_.remove(e,(function(e){return s.indexOf(e.name)>=0})),_.each(e,(function(e){e.setting=JSON.parse(e.setting)})),l.applets=_.orderBy(_.filter(e,(function(e){return!!l.options.showAll||"P"===e.status})),"name"),l.options.includeAllAndNull&&(l.applets.unshift({name:"$NULL$",title:a.instant("applet.selector.unsorted"),setting:{icon:""}}),l.applets.unshift({name:"",title:a.instant("applet.selector.all"),setting:{icon:""}})),l.appletCode||(l.appletCode="")})).catch((function(e){throw e}))}}]})}(),function(e){try{e=angular.module("oplus.app")}catch(t){e=angular.module("oplus.app",[])}e.run(["$templateCache",function(e){"use strict";e.put("app/modules/app/applet-config-access.component.html",'<div>\n    <div class="form-group">\n        <button type="button" class="btn btn-default" ng-click="$ctrl.addRole()">\n            {{\'app.setting.ac.add_role\' | translate}}\n        </button>\n    </div>\n    <div>\n        <div class="card mb-3" ng-repeat="role in $ctrl.viewData.roles track by $index">\n            <div class="card-header bg-light" ng-if="role._builtin">{{role._title || role.name}}</div>\n            <div class="card-header bg-light d-flex" ng-if="!role._builtin"><input type="text" ng-model="role.name"\n                                                                          style="font-weight: bold;"\n                                                                          class="form-control w-md">\n                <button type="button" class="ms-auto btn btn-default opx-btn-icon opx-btn-flat"\n                        title="{{\'app.setting.ac.remove_role\'|translate}}"\n                        ng-click="$ctrl.removeRole(role.name)"><i class="fa fa-times"></i></button>\n            </div>\n            <div class="card-body">\n                <div class="opx-check-group opx-secondary btn-group" ng-if="role._builtin">\n                    <input ng-repeat-start="method in $ctrl.userMethods track by $index" type="radio"\n                           ng-model="role.method"\n                           name="role_{{role.name}}_method"\n                           value="{{method.value}}"\n                           id="aca_role_{{role.name}}_{{method.value}}">\n                    <label ng-repeat-end for="aca_role_{{role.name}}_{{method.value}}">{{method._title}}</label>\n                </div>\n                <div ng-if="role.method===\'MANUAL\' || !role._builtin" class="form-group">\n                    <label class="control-label"\n                           op-help-info="app.setting.ac.user_by_manual_desc">{{\'app.setting.ac.user_by_manual\' | translate}}</label>\n                    <div class="form-control-wrapper">\n                        <input type="text" class="form-control" ng-model="role.users">\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>'),e.put("app/modules/app/applet-help.html",'<style>\n    [ui-view=navbar] {\n        display: none;\n    }\n</style>\n<div class="text-center" style="padding-top: 40vh" ng-if="!appHelpVm.isHelpDocExisting">\n    <h2>{{\'app.help.noDoc\' | translate}}</h2>\n</div>\n\n<div id="pdf-container" class="h-full w-full" ng-if="appHelpVm.isHelpDocExisting"></div>\n'),e.put("app/modules/app/applet-item.component.html",'<div class="op-hover-trigger opx-applet-item js-dropdown-click-to-close">\n    <a class="opx-applet-item-cover" href="" ng-click="$ctrl.clickApplet($event)">\n        <div class="opx-applet-item-icon"\n             ng-style="{\'background-color\': $ctrl.appletDef._colors.iconBackColor}">\n            <i class="fad {{$ctrl.appletDef.icon}} fa-fw"\n               ng-style="{color:$ctrl.appletDef._colors.iconColor}"></i>\n            <div ng-if="$ctrl.appletDef.status == \'O\'" class="opx-applet-item-badge"><i\n                    class="fa fa-ban text-white"></i></div>\n        </div>\n    </a>\n    <a href="" class="opx-applet-item-title"\n       ng-click="$ctrl.clickApplet($event)">{{$ctrl.appletDef.title}}</a>\n    <div ng-transclude class="opx-applet-item-footer" style="position: relative"></div>\n</div>'),e.put("app/modules/app/applet-list.component.html",'<div ng-if="$ctrl.ctrlError" class="h-100 p-5">\n    <div class="alert alert-danger">{{$ctrl.ctrlError}}</div>\n</div>\n<div ng-if="!$ctrl.ctrlError" class="h-100 opx-layout-vflex">\n    <nav class="navbar" ng-class="{\'justify-content-center\':$ctrl.options.viewAs===\'launcher\'}">\n        <form class="form-inline">\n            <op-searchbox search-text="$ctrl.query"></op-searchbox>\n            <div id="applet_tag_list_ul" class="form-control-wrapper">\n                <ul class="list list-inline">\n                    <li ng-class="{\'mt-4\':$ctrl.options.viewAs!==\'launcher\'}" ng-repeat="tag in $ctrl.tags">\n                        <button type="button" class="btn btn-radius btn-sm btn-secondary"\n                                ng-click="$ctrl.setTag($event, tag)"\n                                value="{{tag}}">\n                            {{tag.name}}\n                        </button>\n\x3c!--                        <button type="button" class="btn btn-radius btn-sm btn-secondary"--\x3e\n\x3c!--                                ng-class="tag.status?\'btn-primary\':\'btn-secondary\'"--\x3e\n\x3c!--                                ng-click="tag.status=!tag.status;$ctrl.setTag(tag)"--\x3e\n\x3c!--                                value="{{tag}}">--\x3e\n\x3c!--                            {{tag.name}}--\x3e\n\x3c!--                        </button>--\x3e\n                    </li>\n                </ul>\n            </div>\n\n        </form>\n        <div class="navbar-nav" ng-if="$ctrl.options.viewAs!==\'launcher\'">\n            <button ng-if="$ctrl.showActions" uaa-has-permission="app:edit:*" class="btn btn-outline-primary"\n                    ui-sref="app.applist.create">\n                <i class="fa fa-plus"></i> {{\'common.action.create\' | translate}}\n            </button>\n            <button ng-if="$ctrl.showActions" uaa-has-permission="app:edit:*" class="btn"\n                    ng-class="{\'btn-secondary\':$ctrl.isInSortMode,\'btn-default\':!$ctrl.isInSortMode}"\n                    ng-click="$ctrl.sortApplet()">\n                <i class="fa fa-exchange"></i>\n                <span>{{$ctrl.isInSortMode ? (\'applet.list.quit_sort\' | translate) : (\'applet.list.sort\' | translate) }}</span>\n            </button>\n            <button ng-if="$ctrl.showActions" class="btn rounded-pill" ng-click="$ctrl.toggleDisabledApplets()"\n                    ng-class="{\'btn-default\':!$ctrl.showDisabled,\'btn-success\':$ctrl.showDisabled}">\n                {{\'applet.list.show_disabled\' | translate}}\n            </button>\n            <button class="btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.showActions=!$ctrl.showActions">\n                <i class="fa fa-ellipsis-v"></i>\n            </button>\n        </div>\n    </nav>\n    <div class="flex-fill scroll-y p-3">\n        <div class="op-blank-slate" ng-hide="$ctrl.applets.length>=0">\n            <div op-loading></div>\n        </div>\n        <div class="d-flex flex-wrap gallery applet-container">\n            <div ng-repeat="applet in $ctrl.applets | filter:{\'title\':($ctrl.query||\'\')}"\n                class="d-block" ng-class="{\'ignore-elements\': !applet.order}"\n                data-type="{{ applet.sourceType }}"\n                data-id="{{ applet.id }}" data-order="{{ applet.order }}">\n                <opx-applet-item applet-def="applet" on-click-applet="$ctrl.openApplet(applet.code,$event)">\n                    <div class="op-hover-to-show" ng-if="$ctrl.options.viewAs!==\'launcher\' && applet._canUpdate"\n                        style="position: absolute;right:.5rem;top:-.5rem;">\n                        <a class="btn btn-default opx-btn-flat opx-btn-icon"\n                        ui-sref="app.appman.setting({appletCode: applet.code})"\n                        ng-click="$ctrl.editApplet(applet.code,$event)"\n                        title="{{\'common.action.modify\'|translate}}"><i\n                                class="fa fa-pencil fa-fw"></i></a>\n                    </div>\n                </opx-applet-item>\n            </div>\n        </div>\n    </div>\n</div>\n\n\n'),e.put("app/modules/app/applet-mgmt-datamodels.html",'<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{\'common.uaa.no_permission\' | translate}}">\n    <nav class="navbar navbar-light">\n        <div class="navbar-nav">\n            <ol class="breadcrumb">\n                <li class="breadcrumb-item active opx-navbar-title">{{\'jao.dc.list\' | translate}}</li>\n            </ol>\n        </div>\n        <div uaa-has-permission="jao:edit:*" class="dropdown ms-auto">\n            <a class="btn btn-primary opx-btn-flat" title="{{\'jao.dc.create\' | translate}}" ui-sref="app.appman.datamodel.create({id:\'\'})" ui-sref-active="active"><i\n                    class="fa fa-plus"></i> {{\'jao.dc.create\' | translate}}</a>\n        </div>\n        <button uaa-has-permission="jao:edit:*" ng-click="$ctrl.deleteModels()" class="btn btn-default opx-btn-flat ms-2" title="{{\'common.entity.action.delete\' | translate}}"\n                ng-disabled="!$ctrl.selectedModels.length>0"><i class="fa fa-trash"></i></button>\n    </nav>\n    <opx-datatable table-config="$ctrl.tableConfig" class="p-3">\n    </opx-datatable>\n</div>\n'),e.put("app/modules/app/applet-mgmt-datasets-edit.html",'<dataset-edit applet-code="$ctrl.appletCode" edit-state="\'app.appman.dataset.edit\'"></dataset-edit>\n'),e.put("app/modules/app/applet-mgmt-datasets.html",'<div class="opx-layout-vflex" ui-view="dts_dataset_list">\n    <nav class="navbar navbar-light">\n        <div class="navbar-nav">\n            <ol class="breadcrumb">\n                <li class="breadcrumb-item active opx-navbar-title">{{\'app.mgmt.dataset.title\' | translate}}</li>\n            </ol>\n        </div>\n        <div class="navbar-nav ms-auto">\n            <a class="btn btn-primary opx-btn-flat" ui-sref="app.appman.dataset.create"> <i class="fa fa-plus"></i>\n                {{\'common.action.create\' | translate}}\n            </a>\n        </div>\n    </nav>\n    <div class="opx-flex-fill">\n        <dataset-list show-applet="false" applet-code="appMgmtDatasetsVm.appletCode" ui-view-url="\'edit_dataset\'"\n                      create-state="\'app.appman.dataset.create\'"\n                      edit-state="\'app.appman.dataset.edit\'"\n                      dataset-state="\'app.appman.dataset\'" options="{enableEdit:true}"></dataset-list>\n    </div>\n</div>'),e.put("app/modules/app/applet-mgmt-datasource.html",'<datasource-list ui-view-url="\'aplMgmtDatasetsView\'" dataset-state="\'app.appman.dataset\'" style="height: 100%;"></datasource-list>'),e.put("app/modules/app/applet-mgmt-jobs.html",'<div class="opx-layout-vflex">\n    <div class="opx-flex-fill">\n        <job-list show-applet="true" applet-code="$ctrl.appletCode"></job-list>\n    </div>\n</div>'),e.put("app/modules/app/applet-mgmt-pages.html",'<div class="opx-layout-vflex" ui-view="app_mgmt_page_view">\n    <nav class="navbar navbar-light">\n        <div class="opx-navbar-title">{{\'udp.page.title\' | translate}}</div>\n        <div class="navbar-nav ms-auto">\n            <div class="nav-item me-2">\n\x3c!--                <a class="btn btn-outline-primary" ui-sref="app.appman.page.create"--\x3e\n                <a class="btn btn-primary opx-btn-flat" ui-sref="app.appman.page.create"\n                   uaa-has-permission="udp:edit:*"><i\n                        class="fa fa-plus"></i> {{\'common.action.create\' | translate}}</a>\n            </div>\n        </div>\n    </nav>\n    <div class="opx-flex-fill">\n        <page-list show-applet="false" applet-code="$ctrl.appletCode" options="{enableEdit:true}"></page-list>\n    </div>\n</div>'),e.put("app/modules/app/applet-mgmt.html",'<div class="opx-layout-vflex">\n    <nav class="navbar navbar-light">\n        <div class="navbar-nav">\n            <ol class="breadcrumb">\n                <li class="breadcrumb-item">\n                    <a ui-sref="app.applist" ui-sref-opts="{reload: true}" data-translate="app.mgmt.name"></a>\n                </li>\n                <li class="breadcrumb-item active opx-navbar-title">{{appSettingVm.applet.title | translate}}</li>\n            </ol>\n        </div>\n    </nav>\n    <div class="opx-layout-hflex opx-flex-fill scroll-y">\n        <div class="opx-sidebar bg-light" ddopx-foldable>\n            <div class="opx-sidebar-body">\n                <div class="opx-treenav">\n                    <div class="opx-treenav-item">\n                        <a ui-sref="app.appman.setting" ui-sref-active="active"\n                           title="{{\'app.mgmt.appConfig\' | translate}}"><i\n                                class="opx-treenav-item-icon fa fa-cog fa-fw"></i> <span class="opx-treenav-item-title">{{\'app.mgmt.appConfig\' | translate}}</span></a>\n                    </div>\n                    <div class="opx-treenav-item">\n                        <a ui-sref="app.appman.page" ui-sref-active="active"\n                           title="{{\'udp.page.title\' | translate}}"><i\n                                class="opx-treenav-item-icon fa fa-oplus-udp-page fa-fw"></i>\n                            <span class="opx-treenav-item-title">{{\'app.mgmt.page\' | translate}}</span></a>\n                    </div>\n                    <div class="opx-treenav-item">\n                        <a ui-sref="app.appman.job" ui-sref-active="active"\n                           title="{{\'jao.job.title\' | translate}}"><i\n                                class="opx-treenav-item-icon fa fa-oplus-jao-job fa-fw"></i>\n                            <span class="opx-treenav-item-title">{{\'app.mgmt.job\' | translate}}</span></a>\n                    </div>\n                    <div class="opx-treenav-item">\n                        <a ui-sref="app.appman.dataset" ui-sref-active="active"\n                           title="{{\'dts.dataset.title\' | translate}}"><i\n                                class="opx-treenav-item-icon fa fa-oplus-dts-dataset fa-fw"></i>\n                            <span class="opx-treenav-item-title">{{\'app.mgmt.dataset\' | translate}}</span></a>\n                    </div>\n                    <div class="opx-treenav-item">\n                        <a ui-sref="app.appman.datamodel" ui-sref-active="active"\n                           title="{{\'jao.common.data_model\' | translate}}"><i\n                                class="opx-treenav-item-icon fad fa-bring-front fa-fw"></i>\n                            <span class="opx-treenav-item-title">{{\'app.mgmt.datamodel\' | translate}}</span></a>\n                    </div>\n                </div>\n\n            </div>\n        </div>\n        <div class="opx-flex-fill opx-layout-vflex" ui-view="appman_main_view">\n        </div>\n    </div>\n</div>\n'),e.put("app/modules/app/applet-setting.html",'<div class="opx-layout-hflex opx-flex-fill scroll-y">\n    <div class="opx-flex-fill opx-layout-vflex">\n        <nav class="navbar navbar-light">\n            <div class="opx-navbar-title" data-translate="app.setting.appConfig"></div>\n            <div class="navbar-nav ms-auto">\n                <button type="submit" class="btn btn-primary opx-btn-ok"\n                        ng-disabled="appletSettingForm.$invalid" ng-click="appSettingVm.save()"\n                        data-translate="common.entity.action.save">\n                </button>\n                \x3c!--                <button type="button" class="btn btn-default opx-btn-cancel"--\x3e\n                \x3c!--                        ng-click="appSettingVm.cancel($event)" data-translate="common.entity.action.cancel"> 取消--\x3e\n                \x3c!--                </button>--\x3e\n            </div>\n        </nav>\n        <div class="opx-flex-fill scroll-y p-3" ng-if="appSettingVm.applet.canUpdate">\n            <form class="form-vertical op-smartform needs-validation op-bold-label __p-3 __card"\n                  name="appletSettingForm"\n                  ng-submit="appSettingVm.save()" novalidate>\n                <uib-tabset class="tab-container" type="mdc-op" active="1">\n                    <uib-tab index="1">\n                        <uib-tab-heading><i class="fa fa-info-circle"></i> {{\'app.setting.basicInfo\' | translate}}</uib-tab-heading>\n                        <div class="form-group">\n                            <label class="control-label" data-translate="app.setting.title"></label>\n                            <div class="form-control-wrapper">\n                                <input name="title" class="form-control op-w-sm"\n                                       ng-model="appSettingVm.applet.title"\n                                       required>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label"\n                                   op-help-info="{{\'app.setting.code_desc\'|translate}}">{{\'app.setting.code\' | translate}}</label>\n                            <div class="form-control-wrapper">\n                                <input name="name" class="form-control op-w-sm"\n                                       placeholder="{{\'app.setting.code.placeholder\' | translate}}"\n                                       ng-disabled="appSettingVm.applet.id" ng-model="appSettingVm.applet.name"\n                                       required>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label">{{\'app.setting.version\' | translate}}</label>\n                            <div class="form-control-wrapper">\n                                <input name="version" class="form-control op-w-sm"\n                                       ng-model="appSettingVm.applet.version"\n                                       required>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label">{{\'app.setting.tags\' | translate}}</label>\n                            <div class="form-control-wrapper">\n                                <select class="form-select op-w-sm" op-select multiple\n                                        ng-model="appSettingVm.applet.appletTagList"\n                                        ng-options="tag.id as tag.name for tag in appSettingVm.tags"\n                                        ></select>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label" data-translate="app.setting.status"></label>\n                            <div class="form-control-wrapper">\n                                <div class="opx-check-group btn-group">\n                                    <input type="radio" name="status" ng-model="appSettingVm.applet.status"\n                                           id="as_status_1" value="O">\n                                    <label for="as_status_1">{{\'app.setting.stop\' | translate}}</label>\n                                    <input type="radio" name="status" ng-model="appSettingVm.applet.status"\n                                           id="as_status_2" value="P">\n                                    <label for="as_status_2">{{\'app.setting.published\' | translate}}</label>\n                                </div>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label">{{\'app.setting.icon\' | translate}}</label>\n                            <div class="form-control-wrapper">\n                                <op-iconpicker ng-model="appSettingVm.applet.setting.icon"\n                                               options="{excludeBrandIcon:true}"\n                                               required=""></op-iconpicker>\n                                <udp-color-picker class="ms-3"\n                                                  ng-model="appSettingVm.applet.setting.color"></udp-color-picker>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label">{{\'app.setting.window_size\' | translate}}</label>\n                            <div class="form-control-wrapper">\n                                <select class="form-select w-sm" ng-model="appSettingVm.applet.setting.windowSize">\n                                    <option value="">Default</option>\n                                    <option value="md">Middle</option>\n                                </select>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label">{{\'app.setting.description\' | translate}}</label>\n                            <div class="form-control-wrapper">\n                                    <textarea name="description" class="form-control" rows="4"\n                                              ng-model="appSettingVm.applet.description"></textarea>\n                            </div>\n                        </div>\n                    </uib-tab>\n                    <uib-tab index="2">\n                        <uib-tab-heading><i class="fa fa-list-ul"></i> {{\'app.setting.content\' | translate}}</uib-tab-heading>\n                        <div class="form-group">\n                            <label class="control-label">{{\'app.setting.entrance\' | translate}}</label>\n                            <div class="form-control-wrapper op-combo">\n                                <select class="form-select op-w-sm"\n                                        ng-options="type.code as type.name for type in appSettingVm.entryTypes"\n                                        ng-model="appSettingVm.entryType"></select>\n\n                            </div>\n                        </div>\n                        <div class="op-form-subgroup">\n                            \x3c!--                            <div class="form-group" ng-if="appSettingVm.entryType === \'udp-page\'">--\x3e\n                            \x3c!--                                <udp-page-and-param-config page-id="appSettingVm.applet.entry" params-json="appSettingVm.applet.entryParams"></udp-page-and-param-config>--\x3e\n                            \x3c!--                            </div>--\x3e\n                            <div class="form-group" ng-if="appSettingVm.entryType === \'udp-page\'">\n                                <label class="control-label">{{\'app.setting.pageEntrance\' | translate}}</label>\n                                <div class="form-control-wrapper op-combo">\n                                    <udp-page-selector page-id="appSettingVm.applet.entry"\n                                                       options="{converter:{kinds:\'js,str\', varTypes:\'global\'}}"\n                                                       class="op-w-full"></udp-page-selector>\n                                </div>\n                            </div>\n                            <div class="form-group" ng-if="appSettingVm.entryType === \'udp-page\'">\n                                <label class="control-label">{{\'app.setting.pageParams\' | translate}}</label>\n                                <div class="form-control-wrapper">\n                                    <udp-page-params-config class="op-w-full"\n                                                            params-json="appSettingVm.applet.entryParams"></udp-page-params-config>\n                                </div>\n                            </div>\n                            <div class="form-group" ng-if="appSettingVm.entryType === \'inner-page\'">\n                                <label class="control-label" data-translate="app.setting.pageAddress"></label>\n                                <div class="form-control-wrapper">\n                                    <input name="entry" class="form-control op-w-md"\n                                           ng-model="appSettingVm.applet.entry"\n                                           placeholder="{{\'app.setting.pageAddress.placeholder1\' | translate}}"\n                                           ng-pattern="/^#\\/|\\./">\n                                </div>\n                            </div>\n\n                            <div ng-if="appSettingVm.entryType === \'outer-page\'">\n                                <div class="form-group">\n                                    <label class="control-label" data-translate="app.setting.pageAddress"></label>\n                                    <div class="form-control-wrapper">\n                                        <input name="entry" class="form-control op-w-md" ng-model="appSettingVm.applet.entry"\n                                            placeholder="{{\'app.setting.pageAddress.placeholder2\' | translate}}" ng-pattern="/^http[s]?:\\/\\//">\n                                    </div>\n                                </div>\n\n\n                                <div class="form-group">\n                                    <label class="control-label" data-translate="udp.wc.intx.link.target"></label>\n                                    <div class="form-control-wrapper">\n                                        <select op-select class="form-select w-sm" ng-model="appSettingVm.applet.setting.target">\n                                            <option value="">{{ \'app.settings.target.blank\' | translate }}</option>\n                                            <option value="dialog">{{ \'udp.wc.intx.link.target_new\' | translate }}</option>\n                                        </select>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label" data-translate="app.setting.navigation"></label>\n                            <div class="form-control-wrapper">\n                                <div class="opx-check-group btn-group">\n                                    <input type="radio" name="navPosition" value="left" id="as_navposition_left"\n                                           ng-model="appSettingVm.applet.setting.nav.position"/><label\n                                        for="as_navposition_left"><i class="fa fa-arrow-to-left"></i>\n                                    {{\'app.setting.left\' | translate}}</label>\n                                    <input type="radio" name="navPosition" value="top" id="as_navposition_top"\n                                           ng-model="appSettingVm.applet.setting.nav.position"/><label\n                                        for="as_navposition_top"><i class="fa fa-arrow-to-top"></i>\n                                    {{\'app.setting.top\' | translate}}</label>\n                                </div>\n                                <div class="opx-check-group btn-group ms-3">\n                                    <input type="radio" name="navTheme" value="dark" id="as_navtheme_1"\n                                           ng-model="appSettingVm.applet.setting.nav.theme"/> <label\n                                        for="as_navtheme_1" data-translate="app.setting.darkColor"></label>\n                                    <input type="radio" name="navTheme" value="light" id="as_navtheme_2"\n                                           ng-model="appSettingVm.applet.setting.nav.theme"/> <label\n                                        for="as_navtheme_2" data-translate="app.setting.lightColor"></label>\n                                </div>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label justify-content-end"\n                                   data-translate="app.setting.viewConfig"></label>\n                            <div class="form-control-wrapper">\n                                <div class="checkbox checkbox-inline">\n                                    <input type="checkbox" name="navHide" id="as_navdisplay_1"\n                                           ng-model="appSettingVm.applet.setting.nav.hide"/> <label\n                                        for="as_navdisplay_1" data-translate="app.setting.noNav"></label>\n                                </div>\n                                <div class="checkbox checkbox-inline">\n                                    <input type="checkbox" name="navHideOnHome" id="as_navhideonhome"\n                                           ng-model="appSettingVm.applet.setting.nav.hideOnHome"\n                                           ng-disabled="appSettingVm.applet.setting.nav.hide"/> <label\n                                        for="as_navhideonhome" data-translate="app.setting.notInHome"></label>\n                                </div>\n                            </div>\n                        </div>\n                        <div class="form-group">\n                            <label class="control-label" data-translate="app.setting.menu"></label>\n                            <div class="form-control-wrapper">\n                                <table class="table op-param-table">\n                                    <thead>\n                                    <tr>\n                                        <th></th>\n                                        <th style="width: 10rem;" data-translate="app.setting.menuName"></th>\n                                        <th data-translate="app.setting.menuIcon"></th>\n                                        <th data-translate="app.setting.associatedPage"></th>\n                                        <th class="text-center text-nowrap" data-translate="app.setting.hide"></th>\n                                        <th class="text-center">\n                                            <button class="btn btn-outline-primary btn-sm opx-btn-icon"\n                                                    type="button"\n                                                    title="添加菜单项"\n                                                    ng-click="appSettingVm.applet.setting.nav.items.push({})">\n                                                <i class="fa fa-plus"></i></button>\n                                        </th>\n                                    </tr>\n                                    </thead>\n                                    <tbody ng-sortable="{handle:\'.op-drag-handle\'}"\n                                           ng-model="appSettingVm.applet.setting.nav.items">\n                                    <tr ng-repeat="item in appSettingVm.applet.setting.nav.items track by $index"\n                                        ng-show="!item.isRemoved">\n                                        <td class="text-center">\n                                            <i class="fa fa-grip-horizontal op-drag-handle text-muted"></i>\n                                        </td>\n                                        <td>\n                                            <input type="text" class="form-control" name="navItemName"\n                                                   placeholder="{{\'app.setting.menuItem.placeholder\' | translate}}"\n                                                   ng-model="item.name" required/>\n                                        </td>\n                                        <td>\n                                            <op-iconpicker ng-model="item.icon"></op-iconpicker>\n                                        </td>\n                                        <td>\n                                            <udp-page-selector page-id="item.entry"\n                                                               options="{converter:{kinds:\'js,str\',varTypes:\'global\'}}"\n                                                               class="op-w-full"></udp-page-selector>\n                                        </td>\n                                        <td class="text-center">\n                                            <div class="checkbox checkbox-inline">\n                                                <input type="checkbox" name="navItemDisplay" ng-model="item.hide"\n                                                       id="as_navitemdisplay_{{$index}}"/> <label\n                                                    for="as_navitemdisplay_{{$index}}"></label>\n                                            </div>\n                                        </td>\n                                        <td class="text-center">\n                                            <button class="btn btn-default btn-sm opx-btn-flat opx-btn-icon"\n                                                    type="button"\n                                                    title="{{\'app.setting.delItem.title\' | translate}}"\n                                                    ng-click="appSettingVm.removeNavItem(item)">\n                                                <i class="fa fa-times"></i>\n                                            </button>\n                                        </td>\n                                    </tr>\n                                    </tbody>\n                                </table>\n                            </div>\n                        </div>\n                        \x3c!--                        <div class="form-group">--\x3e\n                        \x3c!--                            <label class="control-label" data-translate="app.setting.helpDoc">帮助文档</label>--\x3e\n                        \x3c!--                            <div class="form-control-wrapper">--\x3e\n                        \x3c!--                                <div class="border p-2 rounded w-100 d-flex align-items-center">--\x3e\n                        \x3c!--                                    <a class="text-primary me-auto"--\x3e\n                        \x3c!--                                       ui-sref="app.applet_help({appletCode:appSettingVm.applet.name})"--\x3e\n                        \x3c!--                                       target="_blank">{{appSettingVm.getHelpDocName()}}</a>--\x3e\n                        \x3c!--                                    <button class="btn btn-default btn-sm ms-3" type="file" ngf-select--\x3e\n                        \x3c!--                                            ngf-pattern="\'.pdf\'"--\x3e\n                        \x3c!--                                            ngf-accept="\'application/pdf\'"--\x3e\n                        \x3c!--                                            ngf-change="appSettingVm.uploadHelpDoc($file)">--\x3e\n                        \x3c!--                                        <i class="fa fa-upload"></i> {{\'app.setting.uploadDoc\' | translate}}--\x3e\n                        \x3c!--                                    </button>--\x3e\n                        \x3c!--                                    <button class="btn btn-sm btn-default ms-3 opx-btn-icon opx-btn-flat" type="button"--\x3e\n                        \x3c!--                                            ng-click="appSettingVm.removeHelpDoc()"--\x3e\n                        \x3c!--                                            title="{{\'app.setting.delDoc.title\' | translate}}"--\x3e\n                        \x3c!--                                            ng-if="appSettingVm.applet.helpDocUrl">--\x3e\n                        \x3c!--                                        <i class="fa fa-times"></i>--\x3e\n                        \x3c!--                                    </button>--\x3e\n                        \x3c!--                                </div>--\x3e\n                        \x3c!--                                <p class="help-block" data-translate="app.setting.docInfo">注意：只支持pdf格式文件</p>--\x3e\n                        \x3c!--                            </div>--\x3e\n                        \x3c!--                        </div>--\x3e\n                    </uib-tab>\n                    <uib-tab>\n                        <uib-tab-heading><i class="fa fa-unlock-alt"></i> {{\'app.setting.ac.title\'|translate}}</uib-tab-heading>\n                        <applet-config-access ng-model="appSettingVm.applet.accessControl"></applet-config-access>\n                    </uib-tab>\n                    <uib-tab>\n                        <uib-tab-heading><i class="fa fa-ellipsis-h"></i> {{\'app.setting.other\' | translate}}</uib-tab-heading>\n                        <div class="alert alert-danger">\n                            <div class="d-flex">\n                                <button type="button" class="btn btn-danger ms-auto"\n                                        ng-disabled="!appSettingVm.applet.canDelete"\n                                        ng-click="appSettingVm.delete($event)"\n                                        ng-show="appSettingVm.applet.id"><i class="fa fa-trash-alt"></i>\n                                    {{\'app.setting.delApp\' | translate}}\n                                </button>\n                            </div>\n                        </div>\n                    </uib-tab>\n                </uib-tabset>\n            </form>\n        </div>\n    </div>\n</div>\n'),e.put("app/modules/app/helper/applet-selector.html",'<div ng-if="$ctrl.options.viewAs!==\'list\'">\n    <select op-select="{width:\'100%\'}"\n            ng-model="$ctrl.appletCode" class="form-control"\n            data-placeholder-text-single="{{\'applet.selector.select_applet\'|translate}}"\n            ng-options="applet.name as applet.title for applet in $ctrl.applets"></select>\n</div>\n<div ng-if="$ctrl.options.viewAs===\'list\'">\n    <nav class="navbar opx-sidebar-header opx-sidebar-header-fixed" ng-if="$ctrl.options.showFilter">\n        <op-searchbox search-text="$ctrl.filter" style="width:10rem;" class="me-2"></op-searchbox>\n    </nav>\n    <div class="list-group list-group-flush op-styled-highlight op-styled-highlight-right">\n        <a ng-repeat="applet in $ctrl.applets | filter: $ctrl.filter track by $index "\n           href=""\n           class="list-group-item list-group-item-action op-hover-trigger d-flex align-items-center"\n           title="{{applet.title || \'Untitled\'}}"\n           ng-class="{\'active\': (applet.name===$ctrl.selectedItem || (!$ctrl.selectedItem && !applet.name))}"\n           ng-click="$ctrl.selectItem(applet)"> <i class="fa fa-fw me-3" ng-class="applet.icon"></i>\n            <div class="text-ellipsis m-0">{{ applet.title || \'Untitled\' }}</div>\n        </a>\n    </div>\n</div>\n'),e.put("app/modules/app/window/applet-content.component.html",'<div ng-class="$ctrl.applet.setting.nav.position===\'left\'?\'opx-layout-hflex\':\'opx-layout-vflex\'">\n    <div ng-if="$ctrl.applet.showNav && $ctrl.applet.navPos===\'left\'" class="opx-sidebar opx-autocolor"\n         ng-class="\'bg-\'+$ctrl.applet.theme"\n         style="min-width: 10rem;">\n        <div class="opx-sidebar-header" ng-if="!$ctrl.useWindowUI">\n            <a class="navbar-brand font-weight-bold"\n               ui-sref="app.applet_view({appletCode:$ctrl.applet.name})"\n               ng-bind-html="$ctrl.applet.title">{{$ctrl.applet.title}}</a>\n        </div>\n        <div class="opx-sidebar-body">\n            <div class="opx-treenav">\n                <div class="opx-treenav-item" ng-class="{\'with-space\':$ctrl.useWindowUI}"\n                     ng-repeat="navItem in $ctrl.menuItems">\n                    <a ng-click="$ctrl.navTo(navItem)"\n                       ng-class="{\'active\':navItem.active}"\n                       ddui-state="navItem.state"\n                       ddui-state-params="{appletCode:$ctrl.applet.code,pageId:navItem.entry}"\n                       ddui-sref-active="active"\n                       ddtitle="{{navItem.state}}">\n                        <i class="fa fa-fw" ng-class="navItem.icon" ng-if="navItem.icon"></i>\n                        <span>{{navItem.title}}</span></a>\n                </div>\n\x3c!--                <div class="opx-treenav-item" ng-class="{\'with-space\':$ctrl.useWindowUI}"--\x3e\n\x3c!--                     ng-if="$ctrl.applet.helpDocUrl">--\x3e\n\x3c!--                    <a ui-sref="app.applet_help({appletCode:$ctrl.applet.name})"--\x3e\n\x3c!--                       target="_blank"><i--\x3e\n\x3c!--                            class="fa fa-fw fa-question-circle"></i> {{ \'app.view.help\' | translate}}</a>--\x3e\n\x3c!--                </div>--\x3e\n            </div>\n        </div>\n\n        <div class="opx-sidebar-bg position-absolute p-3" ng-if="!$ctrl.useWindowUI"\n             style="width:100%; bottom:0; overflow:hidden;">\n            <div class="text-center" style="opacity: 0.25;">\n                <i class="fad {{$ctrl.applet.setting.icon}}" style="font-size:6rem;"></i>\n            </div>\n        </div>\n    </div>\n    <nav ng-if="$ctrl.applet.showNav && $ctrl.applet.navPos===\'top\'" class="navbar navbar-expand"\n         ng-class="\'bg\'-$ctrl.applet.theme">\n        <a class="navbar-brand"\n           ui-sref="app.applet_view({appletCode:$ctrl.applet.name})">{{$ctrl.applet.title}}</a>\n        <div class="navbar-nav">\n            <a ng-repeat="navItem in $ctrl.applet.setting.nav.items" class="nav-item nav-link"\n               ng-click="$ctrl.gotoNav(navItem)"\n               ui-state="\'app.applet_view.open_page\'"\n               ui-state-params="{pageId:navItem.entry,abc:\'123\'}"\n               ui-sref-active="active">{{navItem.name}}</a>\n        </div>\n        <div ng-if="$ctrl.applet.helpDocUrl" class="navbar-nav ms-auto">\n            <a ui-sref="app.applet_help({appletCode:$ctrl.applet.name})" target="_blank"><i\n                    class="fa fa-fw fa-question-circle"></i> {{ \'app.view.help\' | translate}}</a>\n        </div>\n    </nav>\n    <div ui-view="{{$ctrl.uiView}}" class="opx-flex-fill">\n        <div class="alert alert-danger" ng-if="$ctrl.applet.id && !$ctrl.applet.entry">\n            <p data-translate="app.view.messages.info.entrance">未设置应用入口</p>\n        </div>\n        <udp-page-view ng-if="$ctrl.applet.entry.type !== \'InternalState\' && $ctrl.showMainEntry"\n                       page-id="$ctrl.applet.entry.value" page-params=\'$ctrl.applet.entry.params\'\n                       options="{navbar:false}"\n                       class="h-100"></udp-page-view>\n    </div>\n</div>'),e.put("app/modules/app/window/applet-dock.component.html",'<ul class="navbar-nav opx-win-dock">\n    <li class="nav-item" ng-repeat="applet in $ctrl.dockApplets"\n        ng-class="{\'active\':applet.active,\'running\':applet.running}"\n        style="width:2.5rem;text-align: center;">\n        <a ng-click="$ctrl.openApplet(applet.code)" class="px-3 nav-link" title="{{applet.title}}" data-debug="{{applet|json}}"><i\n                class="fa {{applet.icon}}"></i></a>\n    </li>\n</ul>'),e.put("app/modules/app/window/applet-window-modal.html",'<div class="modal-header" ng-class="{\'bg-dark\':$ctrl.applet.theme===\'dark\'}" ng-dblclick="$ctrl.restoreOrMaxWindow()">\n    <h4 class="modal-title"><i class="fad {{$ctrl.applet.icon}}"></i> {{$ctrl.applet.title}}</h4>\n    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)"><i\n            class="far fa-minus"></i></button>\n    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window"\n            ng-click="$ctrl.closeWindow($event)" data-dismiss="modal"><i class="far fa-times"></i></button>\n</div>\n<div class="modal-body" ng-if="$ctrl.applet.launchError">\n    <div class="p-3 text-center">{{$ctrl.applet.launchError}}</div>\n</div>\n<div class="modal-body" ng-if="!$ctrl.applet.launchError && $ctrl.applet.entry.type!==\'InternalState\'">\n    <applet-content the-applet="$ctrl.applet"></applet-content>\n</div>\n<div class="modal-body" ng-if="!$ctrl.applet.launchError && $ctrl.applet.entry.type===\'InternalState\'"\n     ui-view="{{\'modal_main_view_\'+$ctrl.applet.code}}">\n    <div class="op-blank-slate bg-light">\n        <div class="op-blank-slate-icon"><i class="fad fa-10x fa-ramp-loading"></i></div>\n    </div>\n</div>'),e.put("app/modules/app/window/desktop.component.html",'<div class="opx-win-desktop">\n    <div class="p-3 h-100 d-flex flex-column flex-wrap align-content-start">\n        <div ng-repeat="shortcut in $ctrl.shortcuts">\n            <opx-applet-item applet-def="shortcut" on-click-applet="$ctrl.openShortcut(shortcut)"></opx-applet-item>\n        </div>\n    </div>\n</div>\n'),e.put("app/modules/app/window/status-bar.component.html",'<ul class="navbar-nav" ng-switch="$ctrl.currentUser.isAuthenticated">\n\x3c!--   <li class="nav-item dropdown" ng-if="$ctrl.currentUser.isAuthenticated && !$root.$global.isAdminUI">--\x3e\n\x3c!--        <a class="nav-link" ng-click="$ctrl.openSearch(\'search\')"><i class="fa fa-search"></i> </a>--\x3e\n\x3c!--    </li>--\x3e\n    <mac-message-header></mac-message-header>\n    <li class="nav-item" ng-if="!$ctrl.currentUser.isAuthenticated">\n        <a class="nav-link" ng-click="$ctrl.login()">{{\'common.system.login\' | translate}}</a>\n    </li>\n    <li class="nav-item dropdown" ng-if="$ctrl.currentUser.isAuthenticated">\n        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="account-menu">\n             <span ng-repeat="flag in $ctrl.avatarRefreshFlags">\n              <img ng-src="{{::$ctrl.getAvatarUrl()}}" class="rounded-circle" style="width:1.5rem;height:1.5rem;object-fit: cover;">\n              </span>\n            <span>{{$ctrl.currentUser.displayName || $ctrl.currentUser.loginId || \'未登录\'}}</span>\n            <i class="fal fa-angle-down"></i>\n        </a>\n\n        <div class="dropdown-menu">\n            <a class="dropdown-item" ng-switch-when="true"\n               ui-sref="settings">\n                <i class="fa fa-fw fa-wrench"></i>\n                <span data-translate="common.menu.account.settings"></span>\n            </a>\n            <a class="dropdown-item" ng-switch-when="true"\n               href="" ng-click="$ctrl.logout()" id="logout">\n                <i class="fa fa-fw fa-sign-out"></i>\n                <span data-translate="common.menu.account.logout"></span>\n            </a>\n            <a class="dropdown-item" ng-switch-when="undefined">\n                href="" ng-click="$ctrl.login()" id="login">\n                <span class="fa fa-fw fa-sign-in"></span>\n                <span data-translate="global.menu.account.login"></span>\n            </a>\n        </div>\n    </li>\n    <li class="nav-item dropdown" ng-if="$ctrl.currentUser.isAuthenticated && !$root.$global.isAdminUI" uaa-has-role="ROLE_ADMIN">\n        <a class="nav-link" ng-click="$ctrl.openSsc(\'ssc\')"><i class="fa fa-cog"></i> </a>\n    </li>\n    <div class="nav-item dropdown" ng-if="$root.$global.isAdminUI">\n        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">\n            <i class="fa fa-cog"></i>\n        </a>\n        <div class="dropdown-menu dropdown-menu-end">\n            <a class="dropdown-item" ng-repeat="item in $ctrl.admMenuItems" ng-if="!$root.$global.isAdminUI"\n               ui-sref="{{item.sref}}">\n                <i class="fa fa-fw {{item.faIcon}}"></i>\n                <span class="ms-3">{{item.name | translate}}</span>\n            </a>\n            \x3c!-- =============== Admin Features in Tenant Scope ================--\x3e\n            \x3c!-- <li class="dropdown-item" uaa-has-permission="sysadmin:user:*">\n                <a ui-sref="user-management">\n                    <span class="fa fa-fw fa-users-cog"></span>\n                    <span xdata-translate="global.menu.admin.userManagement">用户管理</span>\n                </a>\n            </li>\n            <li class="dropdown-item" uaa-has-permission="sysadmin:dataperm:*">\n                <a ui-sref="dataPermission">\n                    <span class="fa fa-fw fa-tags"></span>\n                    <span xdata-translate="global.menu.admin.dataPermissionManagement">数据权限</span>\n                </a>\n            </li> --\x3e\n            \x3c!-- =============== Admin Features in System Scope ================--\x3e\n            <a class="dropdown-item" uaa-has-permission="sysadmin:tenant:*" ng-if="$root.$global.isAdminUI"\n               ui-sref="tenant">\n                <span class="fa fa-fw fa-sitemap"></span>\n                <span xdata-translate="global.menu.admin.tenantManagement">租户管理</span>\n            </a>\n            \x3c!--<a class="dropdown-item" uaa-has-permission="sysadmin:tenant:*" ng-if="$root.$global.isAdminUI"\n               ui-sref="tenantConfig">\n                <span class="fa fa-fw fa-sitemap"></span>\n                <span xdata-translate="global.menu.admin.tenantDataConfig">租户数据</span>\n            </a>--\x3e\n            <a class="dropdown-item" uaa-has-permission="sysadmin:role:*" ng-if="$root.$global.isAdminUI"\n               ui-sref="role">\n                <span class="fa fa-fw fa-address-book"></span>\n                <span xdata-translate="global.menu.admin.roleManagement">角色管理</span>\n            </a>\n            <a class="dropdown-item" uaa-has-permission="sysadmin:perm:*" ng-if="$root.$global.isAdminUI"\n               ui-sref="permission">\n                <span class="fa fa-fw fa-key"></span>\n                <span xdata-translate="global.menu.admin.permissionManagement">权限管理</span>\n            </a>\n            \x3c!--\n            <a class="dropdown-item" uaa-has-permission="sysadmin:module:*" ng-if="$ctrl.isTenantAdminUI"\n               ui-sref="businessModule">\n                <span class="fa fa-fw fa-cube"></span>\n                <span xdata-translate="global.menu.admin.businessModuleManagement">业务模块</span>\n            </a>\n            --\x3e\n            <a class="dropdown-item" uaa-has-permission="sysadmin:param:*" ng-if="$ctrl.isTenantAdminUI"\n               a ui-sref="param">\n                <span class="fa fa-fw fa-code"></span>\n                <span xdata-translate="global.menu.admin.parameterConfiguration">参数配置</span>\n            </a>\n            \x3c!--\n            <a class="dropdown-item" uaa-has-permission="sysadmin:dict:*" ng-if="$ctrl.isTenantAdminUI"\n               a ui-sref="dict">\n                <span class="fa fa-fw fa-book"></span>\n                <span>数据字典</span>\n            </a>\n            <a class="dropdown-item" uaa-has-permission="sysadmin:subordinate:*" ng-if="$root.$global.isAdminUI"\n               ui-sref="subordinate">\n                <span class="fa fa-fw fa-users"></span>\n                <span xdata-translate="global.menu.admin.subordinate">隶属关系</span>\n            </a>\n            --\x3e\n            <a class="dropdown-item" uaa-has-permission="sysadmin:framework:*" ng-if="$root.$global.isAdminUI"\n               ui-sref="logs">\n                <span class="fa fa-fw fa-tasks"></span>\n                <span xdata-translate="global.menu.admin.logs">日志级别</span>\n            </a>\n            <a class="dropdown-item" uaa-has-permission="sysadmin:framework:*"\n               ng-if="$root.$global.isAdminUI && $ctrl.swaggerEnabled"\n               ui-sref="docs">\n                <span class="fa fa-fw fa-book"></span>\n                <span xdata-translate="global.menu.admin.apidocs">Swagger API</span>\n            </a>\n        </div>\n    </div>\n    <li class="nav-item dropdown">\n        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-info-circle"></i></a>\n        <div class="dropdown-menu dropdown-menu-end">\n            <a class="dropdown-item" href="help/" target="_blank"><i\n                    class="fa fa-question"></i> {{\'common.system.help\' | translate}}</a>\n            <a class="dropdown-item" ng-click="$ctrl.about()">{{\'common.system.about\' | translate}}</a>\n        </div>\n    </li>\n\n    <li class="nav-item dropdown" ng-controller="LangSwitchController as langVm">\n        <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" ng-if="langVm.languages.length > 1"\n           title="{{\'common.menu.language\'|translate}}">\n            <i class="fa fa-globe"></i>\n        </a>\n        <div class="dropdown-menu dropdown-menu-end" ng-if="langVm.languages.length > 1">\n            <a class="dropdown-item" ng-repeat="langKey in langVm.languages"\n               href="" ng-click="langVm.changeLanguage(langKey);">{{langKey | findLanguageFromKey}}\n                <i class="fa fa-check" ng-if="langVm.currentLanguage===langKey"></i>\n            </a>\n        </div>\n    </li>\n</ul>\n'),e.put("app/modules/app/window/taskbar.component.html",'<nav ng-style="{\'background-color\':$ctrl.barBackgroundColor}"\n     class="navbar navbar-expand opx-win-taskbar" ng-class="$ctrl.useWindowUI?\'op-navbar-transparent\':\'bg-dark text-light\'">\n    <ul class="navbar-nav px-3">\n        <li class="nav-item">\n            <a class="navbar-brand px-3" ui-sref="app.home">\n                <img style="height:1.5rem;" ng-src="{{$ctrl.logoNavbarPath}}"/>\n            </a>\n        </li>\n        <li class="nav-item" ng-if="!$root.$global.isAdminUI">\n            <div class="dropdown">\n                <button type="button" class="btn btn-default" data-bs-toggle="dropdown">\n                    <i class="text-white fa fa-th"></i>\n                </button>\n                <div class="op-theme-dark dropdown-menu p-0 js-inside-click"\n                     style="width:50rem;height:37.5rem;z-index:100000;overflow:auto;border-radius: .5rem;background:transparent;border:1px solid #444;">\n                    <div id="opx-win-launcher" style="overflow:auto;height:100%;">\n                        <applet-list options="{viewAs:\'launcher\'}"></applet-list>\n                    </div>\n                </div>\n            </div>\n        </li>\n    </ul>\n    <div ng-if="$ctrl.useWindowUI && !$root.$global.isAdminUI" class="op-nav-divider"></div>\n    <op-applet-dock ng-if="$ctrl.useWindowUI && !$root.$global.isAdminUI" class="px-3"></op-applet-dock>\n    <div class="navbar-nav ms-auto me-auto"></div>\n    <op-status-bar class="px-3"></op-status-bar>\n</nav>')}])}();
+/**
+ *
+ * @author Joker Liu (qdjoker@126.com), created on 04/27/2020
+ */
+(function () {
+
+    /**
+     * @ngdoc module
+     * @name oplus.app
+     */
+    angular.module('oplus.app', [
+        'oplus.commons',
+        'oplus.uaa'
+    ]);
+})();
+
+/**
+ * @author Joker Liu (qdjoker@126.com), created on 04/27/2020
+ */
+
+(function () {
+    'use strict';
+    angular.module('oplus.app').config(appletStates);
+    appletStates.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+    /**
+     *
+     * @param {$stateProvider} $stateProvider
+     * @param {$urlRouterProvider} $urlRouterProvider
+     */
+    function appletStates($stateProvider, $urlRouterProvider) {
+        appletMgmtStates();
+        appletCrudStates();
+        if (!window.$oplus.appConfig.useWindowUI) {
+            appletViewStatesForNormalMode();
+        }
+
+        $stateProvider
+            .state('app.applet_help', {
+                url: '/applets/{appletCode}/help',
+                views: {
+                    'mainView': {
+                        templateUrl: 'app/modules/app/applet-help.html',
+                        controller: 'AppletHelpCtrl',
+                        controllerAs: 'appHelpVm'
+                    }
+                }
+            });
+
+        function appletViewStatesForNormalMode() {
+            $stateProvider
+                .state('app.applet_view', {
+                    url: '/applets/{appletCode}',
+                    views: {
+                        'mainView': {
+                            template: '<applet-content the-applet="theApplet"></applet-content>',
+                            //TODO: optimize with ui-router and component?
+                            controller: ['$scope', 'theApplet', function ($scope, theApplet) {
+                                $scope.theApplet = theApplet;
+                            }]
+                        }
+                    },
+                    resolve: {
+                        theApplet: ['$stateParams', 'appletRunman', function ($stateParams, appletRunman) {
+                            //console.log('app.applet_view')
+                            return appletRunman.prepareAppletWindowContent($stateParams.appletCode);
+                        }]
+                    }
+                })
+                .state('app.applet_view.open_menu', {
+                    url: '/menu/:pageId?:p',
+                    views: {
+                        // Use root
+                        //https://github.com/angular-ui/ui-router/wiki/Multiple-Named-Views
+                        // 'mainView@app': {
+                        'applet_main_view': {
+                            templateUrl: 'app/modules/udp/page-view-applet.html',
+                            controller: 'PageViewCtrl'
+                        }
+                    },
+                    resolve: {
+                        pageId: ['$stateParams', function ($stateParams) {
+                            return $stateParams.pageId;
+                        }],
+                        pageParams: [function () {
+                            return {};
+                        }]
+                    }
+                })
+                .state('app.applet_view.open_page', {
+                    url: '/page/:pageId?:p',
+                    views: {
+                        // Use root
+                        //https://github.com/angular-ui/ui-router/wiki/Multiple-Named-Views
+                        // 'mainView@app': {
+                        'applet_main_view': {
+                            templateUrl: 'app/modules/udp/page-view-applet.html',
+                            controller: 'PageViewCtrl'
+                        }
+                    },
+                    resolve: {
+                        pageId: ['$stateParams', function ($stateParams) {
+                            return $stateParams.pageId;
+                        }],
+                        pageParams: [function () {
+                            return {};
+                        }]
+                    }
+                });
+        }
+
+        function appletCrudStates() {
+            $stateProvider
+                .state('app.applist', {
+                    url: '/applets',
+                    views: {
+                        'mainView': {
+                            template: '<div ui-view="applist_main_view" class="h-100"><applet-list></applet-list></div>'
+                        }
+                    },
+                    useAsApplet: {
+                        code: 'applets',
+                        type: 'PrivateTool',
+                        title: 'app.nav.applet',
+                        icon: 'fa-oplus-applet',
+                        color: '#2196F3',
+                        showIn: {desktop: 100},
+                        windowSize: 'md'
+                    }
+                })
+                // .state('app.applist.list', {
+                //     url: '/list',
+                //     views: {
+                //         'applist_main_view': {
+                //             template: '<applet-list></applet-list>'
+                //         }
+                //     }
+                // })
+                .state('app.applist.create', {
+                    url: '/create',
+                    views: {
+                        'applist_main_view': {
+                            templateUrl: 'app/modules/app/applet-setting.html',
+                            controller: 'AppletSettingCtrl',
+                            controllerAs: 'appSettingVm'
+                        }
+                    }
+                });
+            // .state('app.applet_edit', {
+            //     url: '/applets/{appletCode}/edit',
+            //     views: {
+            //         'applist_main_view': {
+            //             templateUrl: 'app/modules/app/applet-setting.html',
+            //             controller: 'AppletSettingCtrl',
+            //             controllerAs: 'appSettingVm'
+            //         }
+            //     }
+            // });
+
+        }
+
+        function appletMgmtStates() {
+            $stateProvider
+                .state('app.appman', {
+                    url: '/applets/{appletCode}/mgmt',
+                    //TODO: If use as applet, udp page edit does not display properly
+                    __useAsApplet: {
+                        type: 'PrivateTool',
+                        code: 'appeditor',
+                        title: 'Applet Editor',
+                        icon: 'fa-magic',
+                        color: '#00739D'
+                    },
+                    views: {
+                        'mainView': {
+                            templateUrl: 'app/modules/app/applet-mgmt.html',
+                            controller: 'AppletSettingCtrl',
+                            controllerAs: 'appSettingVm'
+                        }
+                    }
+                })
+                .state('app.appman.setting', {
+                    url: '/setting',
+                    views: {
+                        'appman_main_view': {
+                            templateUrl: 'app/modules/app/applet-setting.html',
+                            controller: 'AppletSettingCtrl',
+                            controllerAs: 'appSettingVm'
+                        }
+                    }
+                })
+                .state('app.appman.page', {
+                    url: '/pages',
+                    views: {
+                        'appman_main_view': {
+                            templateUrl: 'app/modules/app/applet-mgmt-pages.html',
+                            controller: 'AppletMgmtPagesCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.page.create', {
+                    url: '/new',
+                    views: {
+                        // 'content@': {
+                        // 'app_mgmt_page_view': {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/udp/page-designer.html',
+                            controller: 'PageDesignerCtrl'
+                        }
+                    }
+                })
+                .state('app.appman.page.edit', {
+                    url: '/:pageId/edit',
+                    views: {
+                        // 'app_mgmt_page_view': {
+                        // 'content@': {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/udp/page-designer.html',
+                            controller: 'PageDesignerCtrl'
+                        }
+                    }
+                })
+                .state('app.appman.dataset', {
+                    url: '/dataset',
+                    views: {
+                        'appman_main_view': {
+                            templateUrl: 'app/modules/app/applet-mgmt-datasets.html'
+                        }
+                    }
+                })
+                .state('app.appman.dataset.create', {
+                    url: '/new',
+                    views: {
+                        'dts_dataset_list': {
+                            templateUrl: 'app/modules/app/applet-mgmt-datasets-edit.html',
+                            controller: 'AppletMgmtDatasetsEditCtrl'
+                        }
+                    }
+                })
+                .state('app.appman.dataset.edit', {
+                    url: '/:id/edit',
+                    views: {
+                        'dts_dataset_list': {
+                            templateUrl: 'app/modules/app/applet-mgmt-datasets-edit.html',
+                            controller: 'AppletMgmtDatasetsEditCtrl'
+                        }
+                    },
+                    cache: false
+                })
+                .state('app.appman.job', {
+                    url: '/jobs',
+                    views: {
+                        'appman_main_view': {
+                            templateUrl: 'app/modules/app/applet-mgmt-jobs.html',
+                            controller: 'AppletMgmtJobsCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.job.view', {
+                    url: '/jobs/{id}/view',
+                    views: {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/jao/job-edit.html',
+                            controller: 'jaoJobEditCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    },
+                    cache: false
+                })
+                .state('app.appman.job.edit', {
+                    url: '/jobs/{id}/edit',
+                    views: {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/jao/job-edit.html',
+                            controller: 'jaoJobEditCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.job.create', {
+                    url: '/jobs/new/{type}',
+                    views: {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/jao/job-edit.html',
+                            controller: 'jaoJobEditCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.datamodel', {
+                    url: '/data/models',
+                    views: {
+                        'appman_main_view': {
+                            templateUrl: 'app/modules/app/applet-mgmt-datamodels.html',
+                            controller: 'AppletMgmtDataModelsCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.datamodel.create', {
+                    url: '/data/model/add/{id}',
+                    views: {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/jao/datamodel/dc-data-add.html',
+                            controller: 'jaodcDataCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.datamodel.edit', {
+                    url: '/data/model/edit/{id}',
+                    views: {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/jao/datamodel/dc-data-add.html',
+                            controller: 'jaodcDataCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                })
+                .state('app.appman.datamodel.view', {
+                    url: '/data/model/view/{id}',
+                    views: {
+                        'appman_main_view@^.^': {
+                            templateUrl: 'app/modules/jao/datamodel/dc-data-add.html',
+                            controller: 'jaodcDataCtrl',
+                            controllerAs: '$ctrl'
+                        }
+                    }
+                });
+        }
+    }
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('oplus.udp').service('appletHelper', ['runningState', '$timeout', 'userPref', 'appletRegistry', '$state', 'modalHelper', '$location', appletHelper]);
+
+  function appletHelper(runningState, $timeout, userPref, appletRegistry, $state, modalHelper, $location) {
+    var that = this;
+
+    var MAX_CSS = 'maximized';
+    var ACTIVE_CSS = 'active';
+    var APPLET_WINDOW_CSS = 'op-applet-window';
+    var APPLET_WINDOW_ID_PREFIX = 'js-applet-window-';
+    var USER_PREF_WINDOW_LAYOUTS = 'windowLayouts';
+    var updateLocationWhenActivate = true;
+
+    
+    /**
+     * Find applet modal window.
+     * @param {string} appletCode
+     * @return {angular.element} Element of modal or null
+     */
+    that.findAppletModal = function(appletCode) {
+      var elem = $('#' + APPLET_WINDOW_ID_PREFIX + appletCode);
+      if (elem.length === 0) return null;
+      return elem;
+    }
+
+    that.buildOptions = function (applet) {
+      var options = {
+        resizable: true,
+        onModalessActivated: function () {
+          //LEO@20220105: activateRunningApplet will change URL
+          $timeout(function () {
+              // activateRunningApplet(appletCode);
+          });
+        }
+      };
+      // console.log('....applet.windowSize', applet.windowSize);
+      // applet.windowSize = 'full';
+      // applet.windowSize = applet.windowSize || 'md';
+      options.specSize = 'FILL_CONTENT';
+      if (applet.windowSize) {
+          var body = $('body');
+          var headerHeight = 0;
+          var aspectRatio = body.width() / (body.height() - headerHeight);
+          // aspectRatio = 1.618;
+          options.specSize = {
+              width: '90%',
+              aspectRatio: aspectRatio,
+              // height: 'calc(100% - ' + headerHeight + 'px)'
+          };
+          if (applet.windowSize === 'md') {
+              options.specSize.width = '80%';
+              // options.specSize.height = '46rem'; // High enough to contain 10 rows table
+          } else if (applet.windowSize === 'full') {
+              options.specSize = {width: '100%', height: '100%'};
+          }
+      }
+      // if (openWithMaxWindow) {
+      //     options.specSize = 'FILL_CONTENT';
+      // }
+      
+      
+      return options;
+    }
+
+    that.appletModalOpened = function (appletCode, updateLocationWhenActivate) {
+      var modalElem = $('.modal').eq(0);
+      modalElem.attr('id', APPLET_WINDOW_ID_PREFIX + appletCode)
+        .data('appletcode', appletCode);
+      // arrangeWindowPosition(modalElem);
+      // restoreWindowLayout(appletCode);
+      that.activateRunningApplet(appletCode, updateLocationWhenActivate);
+    }
+
+    that.appletModalRendered = function (appletCode) {
+        // console.log('appletRunman.openAppletWindow: AppletWindowRendered');
+        runningState.emptyBreadcrumb(appletCode);
+    }
+
+    /**
+     * Hide an applet and show its icon on taskbar
+     * @param appletCode
+     */
+    that.minimizeAppletWindow = function(appletCode) {
+      // console.warn('minimizeAppletWindow:' + appletCode);
+      var runningApplet = _.find(runningState.allRunningApplets(), {
+        code: appletCode
+      });
+      if (runningApplet) {
+
+        runningApplet.active = false;
+      }
+      var win = that.findAppletModal(appletCode);
+      if (win) {
+        win.removeClass(MAX_CSS).removeClass(ACTIVE_CSS).hide();
+      }
+    }
+
+    that.saveWindowLayout = function(appletCode) {
+        var modal = that.findAppletModal(appletCode);
+        if (!modal) return;
+        var pos = modal.position();
+        var container = $('body');
+        var containerSize = {width: container.width(), height: container.height()};
+        var layout = {
+            left: (pos.left / containerSize.width) * 100 + '%',
+            top: (pos.top / containerSize.height) * 100 + '%',
+            width: (modal.width() / containerSize.width) * 100 + '%',
+            height: (modal.height() / containerSize.height) * 100 + '%'
+        };
+        var layouts = userPref.readItem(USER_PREF_WINDOW_LAYOUTS, {});
+        layouts[appletCode] = layout;
+        userPref.saveItem(USER_PREF_WINDOW_LAYOUTS, layouts);
+    }
+
+    that.closeAppletWindow = function(appletCode) {
+      // console.log('appletRunman.closeAppletWindow: applet=%c%s', 'color:orange', appletCode);
+      exitStickyState();
+      runningState.removeAppletFromRunning(appletCode);
+      bringNextWindowToFront();
+
+      function exitStickyState() {
+        var def = appletRegistry.findAppletDef(appletCode);
+        // LEO@20211216: Exit sticky states when closing, otherwise we cannot re-open the applet.
+        // To exit sticky state, we need go to another state, sticky-states will put this state into inactives list.
+        // Only inactive states can be exited.
+        var currentStateName = def._resolvedState;
+        var plugin = $state.router.getPlugin('sticky-states');
+        //https://github.com/ui-router/sticky-states/issues/5
+        // The code previously didn't allow exitSticky for a state that is currently active, but is scheduled to be inactivated during the new transition. This should be fixed now.
+        $timeout(function () {
+          // console.log('ExitStickyState', {state: currentStateName, inactives: plugin.inactives()});
+          plugin.exitSticky(currentStateName);
+        });
+      }
+
+      function bringNextWindowToFront() {
+        var nextWin;
+        var maxZindex = 0;
+        $('.' + APPLET_WINDOW_CSS).each(function () {
+          var elem = $(this);
+          if (elem.data('appletcode') !== appletCode) {
+            var zindex = parseInt(elem.css('z-index'));
+            if (zindex >= maxZindex) {
+              maxZindex = zindex;
+              nextWin = elem;
+            }
+          }
+          elem.removeClass(ACTIVE_CSS);
+        });
+        if (nextWin) {
+          nextWin.addClass(ACTIVE_CSS);
+          var nextCode = nextWin.data('appletcode');
+          // console.log('appletRunman.bringNextWindowToFront: applet=%s, window=%o', nextCode, nextWin);
+          that.activateRunningApplet(nextCode, true);
+        } else {
+          $state.go('app.home')
+        }
+      }
+    }
+
+    
+    /**
+     * Activate an opened applet, it will
+     * - highlight dock icon
+     * - bring window to front
+     * - update location url
+     * @param {string} appletCode
+     */
+    that.activateRunningApplet = function (appletCode, updateLocationWhenActivate) {
+        // console.log('appletRunman.activateRunningApplet: %c%s', 'color:orange', appletCode);
+        runningState.allRunningApplets().forEach(function (o) {
+            o.active = o.code === appletCode;
+        });
+        var win = that.findAppletModal(appletCode);
+        if (!win) {
+            console.error('ProgramError: Cannot find window of running applet [%s]. Now try close applet window to exit state.', appletCode);
+            that.closeAppletWindow(appletCode);
+            return;
+        }
+        //LEO@20211225: Use timeout. uibmodal will dynamic change modal z-index, use timeout to wait z-index change
+        // To reproduce the issue, open applet from applet list window twice.
+        $timeout(function () {
+            modalHelper.bringModalessToFront(win);
+        });
+        // Update location URL.
+        // Also, this is a must to change state to exist sticky state of closed window
+        if (updateLocationWhenActivate) {
+            // console.warn('............updateLocationWhenActivate', JSON.stringify(runningState.allRunningApplets()));
+            var url = runningState.findRunningApplet(appletCode).url;
+            $location.url(url);
+        }
+    }
+
+
+  }
+
+}
+)();
+/**
+ * @author Joker Liu (qdjoker@126.com), created on 2/12/2020.
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/12, change to component
+ */
+(function () {
+    'use strict';
+
+    /**
+     * @ngdoc component
+     * @name appletList
+     * @description
+     * ```html
+     * <applet-list options="{viewAs:string}">
+     * ```
+     * @param {string} options.viewAs 'launcher'
+     */
+    angular.module('oplus.commons').component('appletList', {
+        bindings: {
+            options: '<'
+        },
+        templateUrl: 'app/modules/app/applet-list.component.html',
+        controller: ['$scope', '$rootScope', '$state', '$timeout', '$uibModal', 'messageService', 'udpTagsService',
+            'appletService', 'themeService', 'currentUser', 'userPref', 'appletRunman', 'appletRegistry', 'appletSecurity', '$translate', AppletListCtrl]
+    });
+
+    /**
+     *
+     * @param $scope
+     * @param $rootScope
+     * @param $state
+     * @param $timeout
+     * @param $uibModal
+     * @param {messageService} messageService
+     * @param {appletService} appletService
+     * @param {themeService} themeService
+     * @param {currentUser} currentUser
+     * @param {userPref} userPref
+     * @param {appletRunman} appletRunman
+     * @param {appletRegistry} appletRegistry
+     * @param {appletSecurity} appletSecurity
+     * @constructor
+     */
+    function AppletListCtrl($scope, $rootScope, $state, $timeout, $uibModal, messageService, udpTagsService, appletService, themeService, currentUser, userPref, appletRunman, appletRegistry, appletSecurity, $translate) {
+        var that = this;//$scope;
+        var isUpdatingOrder = false;
+        var EVENT_SHOW_DISABLED_CHANGED = 'ShowDisabledChange';
+        var USER_PREF_SHOW_DISABLED_KEY = 'applet.showDisabled';
+        var STATUS_OFFLINE = 'O';
+        this.options = this.options || {};
+        this.sort = ['default'];
+        this.selectTags = [];
+        this.openApplet = openApplet;
+        this.editApplet = editApplet;
+        this.isInSortMode = false;
+        this.sortApplet = sortApplet;
+        this.toggleDisabledApplets = toggleDisabledApplets;
+        this.showDisabled = userPref.readItem(USER_PREF_SHOW_DISABLED_KEY, false);
+        this.$onInit = onInit;
+
+        this.setTag = setTag;
+
+        this.defalutTags = [{
+            "id": "system",
+            "name": "系统内置",
+            "tenantId": currentUser.tenantId,
+            "type": "System"
+        }];
+
+        function setTag(event, tag) {
+            var element = $(event.target);
+            var sTagElement = angular.element("#applet_tag_list_ul li .btn-primary");
+            if (sTagElement.length > 0) {
+                angular.forEach(sTagElement, function (value, key) {
+                    var tagValue = value.value;
+                    if (tagValue) {
+                        var tagMap = angular.fromJson(tagValue);
+                        if (tagMap.id !== tag.id) {
+                            angular.element(value).toggleClass("btn-primary", false);
+                            angular.element(value).toggleClass("btn-secondary", true);
+                        }
+                    }
+                });
+            }
+            var isChecked = element.hasClass("btn-primary");
+            if (isChecked) {
+                element.toggleClass("btn-primary", false);
+                element.toggleClass("btn-secondary", true);
+                that.selectTags = [];
+            } else {
+                element.toggleClass("btn-secondary", false);
+                element.toggleClass("btn-primary", true);
+                that.selectTags = [];
+                that.selectTags.push(tag);
+            }
+            appletRegistry.loadAllAppletDefs(true, that.selectTags).then(function (result) {
+                that.applets = filterApplet(result);
+            });
+        }
+
+        function onInit() {
+            if (!appletSecurity.canViewAppletList()) {
+                that.ctrlError = $translate.instant('common.uaa.no_permission');
+                return;
+            }
+
+            loadApplets();
+            loadTags();
+            if (that.options.viewAs === 'launcher') {
+                $scope.$on(EVENT_SHOW_DISABLED_CHANGED, function (event, arg) {
+                    that.showDisabled = arg.showDisabled;
+                    loadApplets();
+                });
+            }
+            $scope.$on('APPLET_CHANGED', function () {
+                loadApplets();
+            });
+
+        }
+
+
+        function loadTags() {
+            udpTagsService.findTagsByTenantId().then(function (result) {
+                that.tags = [].concat(that.defalutTags).concat(result);
+            });
+        }
+
+        function openApplet(code, $event) {
+            appletRunman.openApplet(code);
+            if (that.options.viewAs !== 'launcher') {
+                $event.stopPropagation();
+            }
+        }
+
+
+        function editApplet(code, event) {
+            // In window mode, prevent activate applet list window self again.
+            event.preventDefault();
+            event.stopPropagation();
+            $state.go('app.appman.setting', {appletCode: code});
+        }
+
+        function loadApplets() {
+            // that.query = $.trim(query) ? query : null;
+            appletService.getMyRolesInAllApplets().then(function (roles) {
+                Object.keys(roles).forEach(function (appletCode) {
+                    currentUser.setAppletRoles(appletCode, roles[appletCode]);
+                });
+                return appletRegistry.loadAllAppletDefs(true, that.selectTags);
+            }).then(function (appletDefs) {
+                that.applets = filterApplet(appletDefs);
+            }).catch(function (e) {
+                messageService.alertError('Error', e.message);
+            });
+        }
+
+        function filterApplet(appletDefs) {
+            var tags = _.map(that.selectTags, "id");
+            var all = [];
+            if (!tags || _.isEmpty(tags)) {
+                all = [].concat(appletDefs);
+            } else if (tags && _.indexOf(tags, "system") >= 0) {
+                if (tags.length === 1) {
+                    all = _.filter(appletDefs, function (app) {
+                        return app.tag === "system";
+                    });
+                } else {
+                    all = [].concat(appletDefs);
+                }
+            } else {
+                all = _.filter(appletDefs, function (app) {
+                    return app.tag !== "system";
+                });
+            }
+            _.remove(all, function (o) {
+                return o.type === 'PrivateTool' || (!that.showDisabled && o.status === STATUS_OFFLINE);
+            });
+            // var hasPermission = currentUser.hasPermission('app:edit:*');
+            _.forEach(all, function (applet) {
+                if (applet.sourceType !== 'CodeDefined') {
+                    // var isOwner = currentUser.loginId === applet.createdBy;
+                    // applet._canUpdate = isOwner || hasPermission;
+                    applet._canUpdate = appletSecurity.canUpdateApplet(applet.code);
+                }
+            });
+            return all;
+        }
+
+        function toggleDisabledApplets() {
+            that.showDisabled = !that.showDisabled;
+            userPref.saveItem(USER_PREF_SHOW_DISABLED_KEY, that.showDisabled);
+            loadApplets();
+            // When toggle visibility in applet list, applet launcher should change as well
+            $rootScope.$broadcast(EVENT_SHOW_DISABLED_CHANGED, {showDisabled: that.showDisabled});
+        }
+
+
+        function sortApplet() {
+            that.isInSortMode = !that.isInSortMode;
+            if (!that.isInSortMode) {
+                $(".applet-container").sortable("destroy");
+            } else {
+                // if (that.sort[0] !== 'default') {
+                //     that.sort = ['default'];
+                //     loadApplets(that.sort).then(function () {
+                //         makeSortable();
+                //     });
+                // } else {
+                makeSortable();
+                // }
+            }
+        }
+
+        function cancelSort() {
+            that.isInSortMode = false;
+            $(".applet-container").sortable("destroy");
+        }
+
+        function makeSortable(total) {
+            // if (total <= 1 || isUpdatingOrder || that.isInSortMode) {
+            //     return;
+            // }
+            that.isInSortMode = true;
+
+            // Sortable.create($(".applet-container")[0], {
+            //     filter: '.ignore-elements',
+            //     handle: 'opx-applet-item',
+            //     swapThreshold: 1,
+            //     // Element dragging ended
+            //     onEnd: function ( /**Event*/ evt) {
+            //         var itemEl = evt.item; // dragged HTMLElement
+            //         evt.to; // target list
+            //         evt.from; // previous list
+            //         evt.oldIndex; // element's old index within old parent
+            //         evt.newIndex; // element's new index within new parent
+            //         evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
+            //         evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
+            //         evt.clone // the clone element
+            //         evt.pullMode; // when item is in another sortable: `"clone"` if cloning, `true` if moving
+
+            //         debugger;
+            //     },
+            // })
+
+            // return;
+
+            $(".applet-container").sortable({
+                axis: false,
+                cancel: '.ignore-elements', 
+                items: '>div.d-block:not(".ignore-elements")',
+                cursor: 'move',
+                // placeholder: "sortableFormElementHighlight",
+                opacity: 0.8,
+                delay: 100,
+                revert: false,
+                start: function (event, ui) {
+                    // console.log("Sort start");
+                    ui.item.addClass("active");
+                },
+                stop: function (event, ui) {
+                    ui.item.removeClass("active");
+
+                    var sourceType = ui.item.data('type');
+
+                    var currentOrder = ui.item.data('order');
+                    var prevItem = ui.item.prev().length ? ui.item.prev() : null;
+                    var nextItem = ui.item.next().length ? ui.item.next() : null;
+                    var prevOrder = prevItem ? parseInt(prevItem.data('order') || 0) : 0;
+                    var nextOrder = nextItem ? parseInt(nextItem.data('order') || 0) : 0;
+
+
+                    if ((prevItem && prevOrder > currentOrder) || (nextItem && currentOrder > nextOrder)) {
+                        if (prevOrder === 0 && nextOrder !== 0) {
+                            currentOrder = nextOrder - 10000;
+                        }
+                        else if (!prevItem) {
+                            currentOrder = nextOrder - 10000;
+                        } else if (!nextItem) {
+                            currentOrder = prevOrder + 10000;
+                        } else {
+                            currentOrder = Math.ceil((prevOrder + nextOrder) / 2);
+                        }
+                        ui.item.data('order', currentOrder);
+                        isUpdatingOrder = true;
+                        appletService.updateAppletOrder(ui.item.data('id'), currentOrder).then(function () {
+                            isUpdatingOrder = false;
+                            // messageService.toast('success', '更新成功');
+                        }).catch(function (e) {
+                            messageService.toast('error', 'Error', e.message);
+                        });
+                    }
+                }
+            });
+        }
+    }
+})();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/24, created
+ */
+(function () {
+    'use strict';
+
+    /**
+     * @ngdoc component
+     * @name opxAppletItem
+     * @description
+     * ```html
+     * ```
+     */
+    angular.module('oplus.commons').component('opxAppletItem', {
+        transclude: true,
+        bindings: {
+            appletDef: '<',
+            onClickApplet: '&'
+        },
+        templateUrl: 'app/modules/app/applet-item.component.html',
+        controller: ['$scope', AppletItemCtrl]
+    });
+
+    function AppletItemCtrl($scope) {
+        var that = this;
+        var appletDef = that.appletDef;
+        this.$onInit = onInit;
+        this.clickApplet = clickApplet;
+
+        function onInit() {
+            appletDef._colors = calcColor({color: appletDef.color, theme: appletDef.theme}, appletDef.status);
+        }
+
+        function clickApplet($event) {
+            that.onClickApplet({applet: appletDef, $event: $event});
+        }
+
+        /**
+         *
+         * @param {{color:string, theme:string}} setting
+         * @param {string} appletStatus
+         * @return {{iconBackColor: string, iconColor: string}}
+         */
+        function calcColor(setting, appletStatus) {
+            var result = {iconColor: '#aaa', iconBackColor: '#666'};
+            if (appletStatus === 'O') {
+                return result;
+            }
+            if (setting.color) {
+                result.iconColor = setting.color;
+            }
+            var main = tinycolor(result.iconColor);
+            var isMainBright = main.getBrightness() > 200;
+            if (isMainBright) {
+                result.iconBackColor = main.darken(30).toRgbString();
+            } else {
+                result.iconBackColor = result.iconColor;
+                result.iconColor = tinycolor.mix('#fff', result.iconColor, 50).toRgbString();
+            }
+            return result;
+        }
+    }
+})();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/17, created
+ */
+(function () {
+        'use strict';
+        // var useDeferIntercept = !!window.$oplus.appConfig.useWindowUI;
+
+        angular.module('oplus.udp').config(['$urlRouterProvider',
+            function appletStates($urlRouterProvider) {
+                // Bootstrap ui-router after applet defs async loaded in applet-init.run
+                // https://ui-router.github.io/ng1/docs/latest/classes/url.urlrouterprovider.html
+                // Call this method before UI-Router has bootstrapped. It will stop UI-Router from performing the initial url sync.
+                // This can be useful to perform some asynchronous initialization before the router starts. Once the initialization is complete, call listen to tell UI-Router to start watching and synchronizing the URL.
+                $urlRouterProvider.deferIntercept();
+            }
+        ]);
+
+        angular.module('oplus.udp').service('windowInit', ['$q', '$state', '$rootScope', '$urlRouter', 'messageService', 'currentUser', 'appletRunman', 'appletRouter', 'appletService', 'appletRegistry', 'windowStateHandler', windowInit]);
+
+        /**
+         *
+         * @param $q
+         * @param $state
+         * @param $rootScope
+         * @param $urlRouter
+         * @param {messageService} messageService
+         * @param {currentUser} currentUser
+         * @param appletRunman
+         * @param appletRouter
+         * @param appletService
+         * @param appletRegistry
+         * @param windowStateHandler
+         */
+        function windowInit($q, $state, $rootScope, $urlRouter, messageService, currentUser, appletRunman, appletRouter, appletService, appletRegistry, windowStateHandler) {
+            this.initRun = initRun;
+            this.initAppletDefsAndRouters = initAppletDefsAndRouters;
+            $rootScope.$on('APPLET_CHANGED', function () {
+                //console.log('windowInit: on APPLET_CHANGED');
+                initAppletDefsAndRouters();
+            });
+
+            /**
+             * This shall be called by `angular.module().run()`
+             * @return {Promise<[string]>}
+             */
+            function initRun() {
+                windowStateHandler.initStateListeners();
+                // appletRouter.initRouters(appletRegistry.getCodeDefinedAppletDefs());
+                return initAppletDefsAndRouters();
+            }
+
+            /**
+             * Load and init applet definitions
+             * @return {Promise<[string]>} Applet codes whose router changed
+             */
+            function initAppletDefsAndRouters() {
+                if (!window.$oplus.appConfig.useWindowUI) {
+                    $urlRouter.listen();
+                    $urlRouter.sync();
+                    return $q.resolve([]);
+                }
+                var d = $q.defer();
+                // console.log('windowInit.initAppletDefsAndRouters: currentUser.isAuthenticated=' + currentUser.isAuthenticated);
+                appletRegistry.loadAllAppletDefs(true).then(function (allDefs) {
+                    // appletRegistry.initAppletDefs(defs);
+                    // var allDefs = appletRegistry.getAppletDefs();
+                    var changes = appletRouter.initRouters(allDefs);
+                    // console.log('%c[WindowInit]%c Routers inited for %s applets: %s', 'color:teal', '', allDefs.length, _.map(allDefs, 'code').join(','));
+                    // if (useDeferIntercept) {
+                    $urlRouter.listen();
+                    $urlRouter.sync();
+                    // }
+                    d.resolve(changes);
+                }).catch(function (err) {
+                    messageService.alertError('Error', 'Cannot init window: ' + err.message);
+                    d.reject(err);
+                })
+                return d.promise;
+            }
+        }
+    }
+)();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/11, created
+ */
+(function () {
+    'use strict';
+    angular.module('oplus.udp').service('appletRunman',
+        ['$q', '$rootScope', '$translate', '$state', '$timeout', '$location', 'modalHelper', 'messageService', 'runningState', 'appletService', 'appletHelper', 'appletRegistry', 'userPref', 'appletRouter', 'currentUser', 'appletSecurity', 'widgetInteraction', appletRunman]);
+
+    /**
+     * @ngdoc service
+     * @name appletRunman
+     * @description
+     * Management of running applet
+     * @param {$q} $q
+     * @param {$rootScope} $rootScope
+     * @param $translate
+     * @param {$state} $state
+     * @param {$timeout} $timeout
+     * @param {$location} $location
+     * @param {modalHelper} modalHelper
+     * @param {messageService} messageService
+     * @param {runningState} runningState
+     * @param {appletService} appletService
+     * @param {appletRegistry} appletRegistry
+     * @param {userPref} userPref
+     * @param {appletRouter} appletRouter
+     * @param {currentUser} currentUser
+     * @param {appletSecurity} appletSecurity
+     */
+    function appletRunman($q, $rootScope, $translate, $state, $timeout, $location, modalHelper, messageService, runningState, appletService, appletHelper, appletRegistry, userPref, appletRouter, currentUser, appletSecurity, widgetInteraction) {
+        var that = this;
+        var APPLET_WINDOW_CSS = 'op-applet-window';
+        var APPLET_WINDOW_ID_PREFIX = 'js-applet-window-';
+        var USER_PREF_WINDOW_LAYOUTS = 'windowLayouts';
+
+        this.prepareAppletWindowContent = prepareAppletWindowContent;
+        // this.maximizeAppletWindow = maximizeAppletWindow;
+        this.openApplet = openApplet;
+        this.openAppletWindow = openAppletWindow;
+
+        /**
+         * Open an applet by code.
+         * If applet is running, activate it.
+         *
+         * @param {string} appletCode
+         */
+        function openApplet(appletCode) {
+            if (runningState.findRunningApplet(appletCode)) {
+                appletHelper.activateRunningApplet(appletCode, true);
+                return;
+            }
+            var appletDef = appletRegistry.findAppletDef(appletCode);
+            if (appletDef.entry.type === 'InternalState') {
+                $state.go(appletDef.entry.value);
+            } else if (appletDef.entry.type === 'ExternalState') {
+                //$state.go(appletRouter.getAppletState(appletCode), {appletCode: appletCode});
+                if (appletDef.entry.value) {
+                    widgetInteraction.openUrlLink({
+                        url: appletDef.entry.value,
+                        target: appletDef.entry.target || '_blank'
+                    }, appletDef.entry.params, {applet: appletDef})
+                } else {
+                    var msg = 'Entry value is not specified for this applet ' + appletDef.code;
+                    messageService.alertError('Error', msg);
+                }
+            } else {
+                $state.go(appletRouter.getAppletState(appletCode), {appletCode: appletCode});
+            }
+            /*else if (window.$oplus.appConfig.useWindowUI) {
+                $state.go('app.appletwindow_' + appletCode);
+            } else {
+                $state.go('app.applet_view', {appletCode: appletCode});
+            }*/
+        }
+
+        /**
+         *
+         * @param appletCode
+         * @return {Promise<[string]>}
+         */
+        function getAppletRoles(appletCode) {
+            var d = $q.defer();
+            d.resolve([]);
+            return d.promise;
+        }
+
+        /**
+         * Read applet definition and prepare its attributes to display on window.
+         * @param {string} appletCode
+         * @return {Promise<AppletDefinition>}
+         */
+        function prepareAppletWindowContent(appletCode) {
+            var appletDef = appletRegistry.findAppletDef(appletCode);
+            var promise;
+            if (appletDef && appletDef.sourceType === 'CodeDefined') {
+                promise = $q.when(appletDef);
+            } else {
+                promise = findDbDefinedApplet();
+            }
+            var d = $q.defer();
+            var result;
+            promise.then(function (applet) {
+                result = applet;
+                return appletService.getMyRolesInApplet(appletCode);
+            }).then(function (roles) {
+                currentUser.setAppletRoles(appletCode, roles);
+                d.resolve(result);
+            }).catch(function (err) {
+                d.reject(err);
+            });
+            return d.promise;
+
+            function findDbDefinedApplet() {
+                var d = $q.defer();
+                appletService.findAppletByCode(appletCode).then(function (applet) {
+                    // console.log('appletRunman.prepareAppletWindowContent: applet=%o',angular.copy(applet));
+                    if (!applet) {
+                        d.reject(new Error('Cannot find applet ' + appletCode));
+                        return;
+                    }
+
+                    applet = angular.merge({setting: {nav: {}}}, applet);
+                    applet.icon = applet.setting.icon;
+                    applet.code = applet.code || applet.name;
+                    applet.windowSize = applet.setting.windowSize;
+                    applet.entry = parseEntry(applet);
+                    // applet.entryType = appletService.getEntryTypeFromEntry(applet.entry);
+                    if (!applet.entry) {
+                        var msg = 'Entry is not specified for this applet ' + applet.code;
+                        messageService.alertError('Error', msg);
+                        return d.reject(new Error(msg));
+                    }
+
+                    _.merge(applet, parseNav(applet.setting.nav));
+                    d.resolve(applet);
+                }).catch(function (err) {
+                    d.reject(err);
+                });
+                return d.promise;
+            }
+
+            /**
+             *
+             * @param {{entry:{type:string,value:string}|string,entryParams:string}} applet
+             * @return {{type:string,value:string,params:object}}
+             */
+            function parseEntry(applet) {
+                var result;
+                var entry = applet.entry;
+                if (angular.isObject(entry)) {
+                    result = {type: entry.type, value: entry.value};
+                } else if (angular.isString(entry)) {
+                    result = {};
+                    if (entry.indexOf('#') === 0) {
+                        console.warn('TODO: hardcode change to app.cac');
+                        result.value = 'app.cac';
+                        result.type = 'InternalState';
+                    } else {
+                        result.type = entry.indexOf('.') > 0 ? 'InternalState' : 'udp';
+                        result.value = entry;
+                    }
+                }
+                if (result && applet.entryParams) {
+                    result.params = JSON.parse(applet.entryParams);
+                }
+                delete applet.entryParams;
+                return result;
+            }
+
+            /**
+             *
+             * @param navSetting
+             * @return {{navCss: string, navPos: string, theme: string, showNavOnHome: boolean, showNav: boolean}}
+             */
+            function parseNav(navSetting) {
+                var applet = {navCss: '', theme: '', navPos: '', showNav: false, showNavOnHome: false};
+                var hasItems = navSetting.items && navSetting.items.length > 0;
+                // if (window.$oplus.appConfig.useWindowUI) {
+                //     applet.navCss = 'bg-light';
+                // } else if (navSetting.theme) {
+                applet.navCss = 'bg-' + navSetting.theme;
+                applet.theme = navSetting.theme || 'light';
+                // }
+                applet.navPos = navSetting.position === 'left' ? 'left' : 'top';
+                if (hasItems) {
+                    if (navSetting.hide !== true) {
+                        applet.showNav = true;
+                    }
+                    if (navSetting.hideOnHome !== true) {
+                        applet.showNavOnHome = true;
+                    }
+                }
+                return applet;
+            }
+        }
+
+        /**
+         * Activate an existing or open a new applet window.
+         * If an applet is not opened, open it.
+         * If an applet is opened, activate it and put to front.
+         * @param appletCode
+         * @return {Promise} When window is rendered
+         */
+        function openAppletWindow(appletCode) {
+            // console.log('openAppletWindow...', appletCode);
+            if (runningState.findRunningApplet(appletCode)) {
+                appletHelper.activateRunningApplet(appletCode, true);
+                return $q.when(null);
+            }
+            // return doOpenAppletWindow(appletCode);
+
+            // function doOpenAppletWindow(appletCode) {
+            var d = $q.defer();
+            var modalInstance;
+            prepareAppletWindowContent(appletCode).then(function (applet) {
+                if (applet.sourceType !== 'CodeDefined' && !appletSecurity.canUseApplet(appletCode)) {
+                    applet.launchError = $translate.instant('common.uaa.no_permission');
+                }
+                var config = {
+                    modaless: true,
+                    windowClass: APPLET_WINDOW_CSS,
+                    templateUrl: 'app/modules/app/window/applet-window-modal.html',
+                    resolve: {
+                        theApplet: function () {
+                            return applet;
+                        }
+                    },
+                    controller: 'AppletModalCtrl',
+                    controllerAs: '$ctrl'
+                };
+                
+                modalInstance = modalHelper.openModal(config, appletHelper.buildOptions(applet));
+                modalInstance.opened.then(function () {
+                    appletHelper.appletModalOpened(appletCode, true);
+                });
+                modalInstance.rendered.then(function () {
+                    appletHelper.appletModalRendered(appletCode);
+                    d.resolve();
+                });
+            }).catch(function (err) {
+                console.error(err);
+                d.reject(err);
+            });
+
+            return d.promise;
+
+
+            function restoreWindowLayout(appletCode) {
+                var layouts = userPref.readItem(USER_PREF_WINDOW_LAYOUTS, {});
+                var layout = layouts[appletCode];
+                var modal = appletHelper.findAppletModal(appletCode);
+                if (!modal || !layout) return;
+                modal.css(layout);
+            }
+
+            function arrangeWindowPosition(modalElem) {
+                var positions = [];
+                $('.' + APPLET_WINDOW_CSS).each(function () {
+                    var elem = $(this);
+                    if (!elem.is(modalElem)) {
+                        var pos = elem.position();
+                        positions.push(pos);
+                    }
+                });
+                var self = modalElem.position();
+                if (positions.length > 0) {
+                    var max = _.maxBy(positions, function (o) {
+                        return o.left;
+                    });
+                    // console.log('max', max);
+                    if (max) {
+                        modalElem.css({
+                            left: max.left + 40,
+                            top: max.top + 40
+                        });
+                    }
+                }
+                // }
+            }
+        }
+
+
+
+    }
+    
+    angular.module('oplus.udp').controller('AppletModalCtrl',AppletModalCtrl);
+    
+    AppletModalCtrl.$inject = ['theApplet', 'runningState', 'modalHelper', 'appletHelper', '$uibModalInstance', '$sce'];
+    
+    /**
+     *
+     * @param {{code:string,title:string,icon:string,color:string,theme:string,entry:{}}} theApplet
+     * @constructor
+     */
+    function AppletModalCtrl(theApplet, runningState, modalHelper, appletHelper, $uibModalInstance, $sce) {
+        var that = this;
+        // var useWindowUI = window.$oplus.appConfig.useWindowUI;
+        this.applet = theApplet;
+        this.minimizeWindow = minimizeWindow;
+        this.restoreOrMaxWindow = restoreOrMaxWindow;
+        this.closeWindow = closeWindow;
+        this.$onInit = onInit;
+
+        function onInit() {
+            runningState.addAppletToRunning(theApplet);
+
+            if (that.applet && that.applet.entry.type === 'ExternalState') {
+                that.url = $sce.trustAsResourceUrl(that.applet.entry.value);
+            }
+        }
+
+        function restoreOrMaxWindow() {
+            modalHelper.maximizeOrRestoreModal(appletHelper.findAppletModal(theApplet.code));
+        }
+
+        function closeWindow($event) {
+            appletHelper.saveWindowLayout(that.applet.code);
+            $uibModalInstance.dismiss();
+            appletHelper.closeAppletWindow(that.applet.code);
+            // Stop propagation to try activating window
+            $event.stopPropagation();
+        }
+
+        function minimizeWindow($event) {
+            appletHelper.minimizeAppletWindow(that.applet.code);
+            $event.stopPropagation();
+        }
+    }
+}
+)();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/20, extracted from windowStateHandler
+ */
+(function () {
+        'use strict';
+        angular.module('oplus.udp').service('windowStateHandler', ['$q', '$rootScope', '$state', '$timeout', '$location', 'appletRunman', 'runningState', 'appletService', 'appletRegistry', 'messageService', 'appletHelper', windowStateHandler]);
+
+        /**
+         * @ngdoc service
+         * @name windowStateHandler
+         * @description
+         * Management of running applet
+         * @param {$q} $q
+         * @param {$rootScope} $rootScope
+         * @param {$state} $state
+         * @param {$timeout} $timeout
+         * @param {$location} $location
+         * @param {appletRunman} appletRunman
+         * @param {runningState} runningState
+         * @param {appletService} appletService
+         * @param {appletRegistry} appletRegistry
+         * @param {messageService} messageService
+         */
+        function windowStateHandler($q, $rootScope, $state, $timeout, $location, appletRunman, runningState, appletService, appletRegistry, messageService, appletHelper) {
+            this.initStateListeners = initStateListeners;
+
+            function initStateListeners() {
+                $rootScope.$on('$stateChangeError', function onErrorHandle(event, toState, toParams, fromState, fromParams, error) {
+                    // var match = /^(TenantNotFound|TenantNotActivated):(.*)/.exec(error.detail.message);
+                    // if (match) {
+                    //     var tenantCode = match[2].trim();
+                    //     messageService.alertError('Error', 'Invalid tenant "' + tenantCode + '". Please check the URL is correct. ' + error.detail.message);
+                    // }
+                });
+
+                $rootScope.$on('$stateChangeSuccess', function onErrorHandle(event, toState, toParams, fromState, fromParams) {
+                });
+                // $rootScope.$on('$stateChangeError', function (event, unfoundState, fromState, fromParams, options) {
+                //     console.error('$stateChangeError', {
+                //         unfoundState: unfoundState,
+                //         fromState: fromState,
+                //         fromParams: fromParams,
+                //         options: options
+                //     });
+                // });
+                $rootScope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl, newState, oldState) {
+                    // console.log('$locationChangeSuccess: url=%s', newUrl);
+                });
+                $rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
+                    console.error('$stateNotFound ', unfoundState);
+                });
+                $rootScope.$on('$stateChangeStart', function hideDesktop(event, toState, toParams, fromState, fromParams) {
+                    // console.log('$stateChangeStart');
+                    // Set value before state changed, i.e. not in `$stateChangeSuccess`
+                    $rootScope.$global.hideDesktop = toState.data && toState.data.hideDesktop;
+                });
+                $rootScope.$on('$stateChangeSuccess', function handleWindowAndPageView(event, toState, toParams, fromState, fromParams) {
+                    var stateName = toState.name;
+                    var toApplet = detectToApplet();
+                    runningState.activeAppletCode = toApplet ? toApplet.code : undefined;
+                    if (toApplet) {
+                        // console.log('%cToAppletState:%c [%s]-->%c[%s]', 'color:orange', '', fromState.name, 'color:orange', stateName);
+                        // Use substring to remove #
+                        var url = $state.href(stateName, toParams).substring(1);
+                        // LEO@20220104: widget interaction may append arbitrary URL query parameters which is not defined in state
+                        // `$state.href(...)` will ignore the query parameters.
+                        // We use `runningState.urlByWidgetInteraction` to keep URL invoked by `widgetInteraction.openPageInSelf`
+                        // NOTE: There is a minor issue: in widgetInteraction.changePageParam, it will only update URL search by $location.search(...)
+                        // For example, from `/apw/acm/menu/JVKEFJ?citype=windows_server` to `/apw/acm/menu/JVKEFJ?citype=linux`
+                        // In this case, the state does not change, so "$stateChangeSuccess" will not be called and the applet url will not change
+                        if (runningState.urlByWidgetInteraction) {
+                            url = runningState.urlByWidgetInteraction;
+                            // Use once and remove it
+                            runningState.urlByWidgetInteraction = undefined;
+                        }
+                        updateAppletRunningState(toApplet.code, {url: url});
+                        if (toApplet.type !== 'ByPredefinedState') {
+                            // Start new breadcrumbs if click a menu
+                            if (toApplet.action === 'open_menu') {
+                                runningState.emptyBreadcrumb(toApplet.code);
+                            }
+                            //Push a placeholder title
+                            runningState.pushBreadcrumb(toApplet.code, {title: '', url: url});
+                        }
+                    } else {
+                        // If this is a normal view, minimize all applet window
+                        // console.log('%cToNoneAppletState:%c [%s]-->%c[%s]', 'color:red', '', fromState.name, 'color:red', stateName);
+                        runningState.allRunningApplets().forEach(function (applet) {
+                            appletHelper.minimizeAppletWindow(applet.code);
+                        });
+                    }
+                    if ($rootScope.$global.isAdminUI) {
+                        $rootScope.$global.hideMasterContent = false;
+                    } else if (window.$oplus.appConfig.useWindowUI) {
+                        $rootScope.$global.hideMasterContent = !!toApplet || toState.name === 'app.home';
+                    } else {
+                        $rootScope.$global.hideMasterContent = toState.name === 'app.home';
+                        handleHistoryForSpaMode();
+                    }
+
+                    /**
+                     * If current state is for applet window
+                     * @return {null|{code: string, action: string, type: string}} null if not.
+                     * `type` is applet state type
+                     * `action` is either open_page or open_menu.
+                     * `code` is applet code
+                     */
+                    function detectToApplet() {
+                        // 1. Check if next state is dynamic applet window
+                        var APPLET_STATE_DETECT_REGEX = /^app\.appletwindow_([^.]+)\.?(open_page|open_menu)?/;
+                        var matches = APPLET_STATE_DETECT_REGEX.exec(stateName);
+                        if (matches) {
+                            return {
+                                type: '__ByDynamicState',
+                                code: matches[1],
+                                action: matches[2]
+                            };
+                        }
+                        // 2. Check if next state is predefined window state
+                        // Check appletRegistry.allAppletDefs is not empty, in case of appletDefs are not loaded from remote, if we refresh URL directly in browser
+                        var def = appletRegistry.findAppletDef(function (o) {
+                            return o.entry.type === 'InternalState' && (stateName === o.entry.value || stateName.indexOf(o.entry.value + '.') === 0);
+                        }, true);
+                        if (def) {
+                            return {
+                                type: 'ByPredefinedState',
+                                code: def.code
+                            };
+                        }
+                        // 3. Check if next URL is applet window
+                        //NOTE: Use state.href instead of $location.url() because at this time location url is not refreshed to new state
+                        var m = /\/apw\/([^\/?#]+)/.exec($state.href(toState.name));
+                        if (m) {
+                            return {
+                                type: '__UDP',
+                                code: m[1]
+                            };
+                        }
+                        return null;
+                    }
+
+
+                    /**
+                     *
+                     * @param appletCode
+                     * @param {{url:string}} state
+                     */
+                    function updateAppletRunningState(appletCode, state) {
+                        var applet = runningState.findRunningApplet(appletCode);
+                        if (applet) {
+                            applet.url = state.url;
+                        }
+                    }
+
+
+                    //TODO: has problem, need recode!!!
+                    function handleHistoryForSpaMode() {
+                        // console.log('PageViewCtrl.state', $state.$current.name);
+                        // Save history for page change in _self which is the same state
+                        var toKeepHistory = false;
+                        if ((fromState.name === 'app.applet_view' || fromState.name === 'app.applet_view.open_menu' || fromState.name === 'app.applet_view.open_page')
+                            && toState.name === 'app.applet_view.open_page') {
+                            toKeepHistory = true;
+                        }
+                        if (!toKeepHistory) {
+                            runningState.emptyHistory();
+                        }
+                        // var statesToKeepHistory = ['app.udp_pageview', 'app.applet_view.open_page', '__app.applet_view'];
+                        // if (statesToKeepHistory.indexOf(stateName) < 0) {
+                        //     runningState.emptyHistory();
+                        // }
+                    }
+                });
+            }
+        }
+    }
+
+)();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/17, created
+ */
+(function () {
+        'use strict';
+        angular.module('oplus.udp').service('appletRouter', ['$state', '$stateRegistry', appletRouter]);
+        angular.module('oplus.udp').config(['$urlRouterProvider', '$uiRouterProvider',
+            function ($urlRouterProvider, $uiRouterProvider) {
+                var StickyStatesPlugin = window['@uirouter/sticky-states'].StickyStatesPlugin;
+                $uiRouterProvider.plugin(StickyStatesPlugin);
+            }]);
+
+        /**
+         * @ngdoc service
+         * @name appletRouter
+         * @description
+         * Config state routers for window mode.
+         * @param {$state} $state
+         * @param {$stateRegistry} $stateRegistry
+         */
+        function appletRouter($state, $stateRegistry) {
+            var useStickyForCodeDefinedApplet = true;
+            var useStickyForUdpApplet = true;
+            var modifiedStates = [];
+            this.initRouters = initRouters;
+            this.getAppletWindowUiView = getAppletWindowUiView;
+            this.getAppletState = getAppletState;
+            this.detectIfCurrentStateIsApplet = detectIfCurrentStateIsApplet;
+            var useWindowUI = window.$oplus.appConfig.useWindowUI;
+
+            /**
+             * Detect if current state is applet mode.
+             * @return {null|{appletCode: string, action: string}} Null if not in applet mode.
+             */
+            function detectIfCurrentStateIsApplet(stateName) {
+                var APPLET_STATE_REGEX = /^app\.appletwindow_([^.]+)\.?(open_page|open_menu)?/;
+                var matches = APPLET_STATE_REGEX.exec(stateName);
+                if (matches) {
+                    return {appletCode: matches[1], action: matches[2]};
+                }
+                return null;
+            }
+
+            function getAppletWindowUiView(appletCode) {
+                return useWindowUI ? 'appletwindow_view_' + appletCode : 'applet_main_view';
+            }
+
+            function getAppletState(appletCode, action) {
+                var state = useWindowUI ? 'app.appletwindow_' + appletCode : 'app.applet_view';
+                if (action) {
+                    state += '.' + action;
+                }
+                return state;
+            }
+
+            /**
+             * Init state routers with applet definition.
+             * @param {[AppletDefinition]} defs
+             * @return {[string]} Applet codes whose router changed
+             */
+            function initRouters(defs) {
+                var changes = [];
+                if (!window.$oplus.appConfig.useWindowUI) {
+                    return changes;
+                }
+                defs.forEach(function (def) {
+                    var appletCode = initAppletRouterState(def);
+                    if (appletCode) {
+                        changes.push(appletCode);
+                    }
+                });
+                return changes;
+
+                /**
+                 * Init or update dynamic routers.
+                 * @param {AppletDefinition} appletDef
+                 * @return {string|null} appletCode if router changed, null if not changed
+                 */
+                function initAppletRouterState(appletDef) {
+                    if (!useWindowUI) {
+                        return null;
+                    }
+                    if (!appletDef.entry.type && /^#\/|\./.test(appletDef.entry.value)) {
+                        appletDef.entry.type = 'InternalState';
+                    }
+                    var appletCode = appletDef.code;
+                    if (appletDef.entry.type === 'InternalState') {
+                        updateStateForCodeDefinedApplet(appletCode, appletDef.entry.value);
+                    } else if (appletDef.entry.type === 'ExternalState') {
+                        //Todo Need a new routing method for ExternalState
+                    } else {
+                        createDynamicStateForUdpApplet(appletCode);
+                    }
+                    return appletCode;
+                }
+                function createDynamicStateForUdpApplet(appletCode) {
+                    var allStates = [];
+                    var windowState = {
+                        // name: 'app.appletwindow_' + appletCode,
+                        name: getAppletState(appletCode),
+                        url: '/apw/' + appletCode,
+                        // Add sticky to root state only
+                        sticky: useStickyForUdpApplet,
+                        onEnter: ['$rootScope', '$state', '$stateParams', 'appletRunman', function ($rootScope, $state, $stateParams, appletRunman) {
+                            // console.log('WaitWindowRendered:OpenAppletWithDynamicState: state=%s', $state.current.name);
+                            return appletRunman.openAppletWindow(appletCode);
+                        }]
+                        // resolve: {
+                        //     _WaitWindowRendered_: ['$rootScope', '$stateParams', 'appletRunman', function ($rootScope, $stateParams, appletRunman) {
+                        //         // console.log('WaitWindowRendered:OpenAppletWithDynamicState')
+                        //         return appletRunman.openAppletWindow(appletCode);
+                        //     }]
+                        // }
+                    };
+                    allStates.push(windowState);
+                    var pageState = {
+                        // name: 'app.appletwindow_' + appletCode + '.open_page',
+                        name: getAppletState(appletCode, 'open_page'),
+                        url: '/page/:pageId?:p',
+                        views: {},
+                        resolve: {
+                            pageId: ['$stateParams', function ($stateParams) {
+                                return $stateParams.pageId;
+                            }],
+                            pageParams: [function () {
+                                return {};
+                            }]
+                        }
+                    }
+                    pageState.views[getAppletWindowUiView(appletCode) + '@'] = {
+                        templateUrl: 'app/modules/udp/page-view-applet.html',
+                        controller: 'PageViewCtrl'
+                    };
+                    var menuState = _.extend({}, pageState, {
+                        // name: 'app.appletwindow_' + appletCode + '.open_menu',
+                        name: getAppletState(appletCode, 'open_menu'),
+                        url: '/menu/:pageId?:p'
+                    });
+                    allStates.push(pageState);
+                    allStates.push(menuState);
+                    allStates.forEach(function (state) {
+                        if ($stateRegistry.get(state.name)) {
+                            $stateRegistry.deregister(state.name);
+                        }
+                        $stateRegistry.register(state);
+                    });
+                }
+
+                function updateStateForCodeDefinedApplet(appletCode, stateName) {
+                    var oldStateDecl = $state.get(stateName);
+                    if (!oldStateDecl) {
+                        console.warn('updateStateForCodeDefinedApplet: Cannot find state of "%s" for applet "%s"', stateName, appletCode);
+                    }
+                    if (modifiedStates.indexOf(stateName) > -1) {
+                        // console.log('...UpdateSystemDefinedState.OmitModifiedState: applet=' + appletCode + ', state=' + stateName);
+                        return;
+                    }
+                    // console.log('appletRouter.updateStateForCodeDefinedApplet', {appletCode: appletCode, stateName: stateName});
+                    modifiedStates.push(stateName);
+                    var childrenStateDecls = _.filter($stateRegistry.get(), function (o) {
+                        return o.name.indexOf(stateName + '.') === 0;
+                    });
+                    var newStateDecl = {
+                        name: stateName,
+                        url: oldStateDecl.url,
+                        sticky: useStickyForCodeDefinedApplet,
+                        views: {},
+                        resolve: {
+                            _WaitWindowRendered_: ['$rootScope', '$stateParams', 'appletRunman', function ($rootScope, $stateParams, appletRunman) {
+                                // console.log('WaitWindowRendered:OpenAppletByPredefinedState')
+                                return appletRunman.openAppletWindow(appletCode);
+                            }]
+                        }
+                    };
+                    var newViewName = 'modal_main_view_' + appletCode + '@';
+                    newStateDecl.views[newViewName] = oldStateDecl.views['mainView'];
+                    $stateRegistry.deregister(stateName);
+                    [newStateDecl].concat(childrenStateDecls).forEach(function (o) {
+                        $stateRegistry.register(o);
+                    });
+                }
+            }
+        }
+    }
+)();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/14, created
+ */
+(function () {
+    'use strict';
+    angular.module('oplus.commons').provider('stateProviderRef', [stateProviderRefProvider]);
+
+    /**
+     * @ngdoc provider
+     * @name stateProviderRefProvider
+     * @description
+     * @deprecated
+     * Use $stateRegistry instead.
+     */
+    function stateProviderRefProvider() {
+        var refs = {};
+        this.injectStateProvider = function ($stateProvider) {
+            refs['$stateProvider'] = $stateProvider;
+        };
+        this.$get = [function () {
+            return {
+                get: function () {
+                    return refs['$stateProvider'];
+                }
+            };
+        }];
+    }
+})();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/15, created
+ */
+(function () {
+    'use strict';
+    angular.module('oplus.commons').provider('modalState', ['$stateProvider', modalStateProvider]);
+
+    /**
+     * @ngdoc provider
+     * @name modalState
+     * @description
+     */
+    function modalStateProvider($stateProvider) {
+        var provider = this;
+        this.$get = function () {
+            return provider;
+        }
+        this.state = function (stateName, options) {
+            var modalInstance;
+            $stateProvider.state(stateName, {
+                url: options.url,
+                onEnter: ['$state', 'modalHelper', function ($state, modalHelper) {
+                    console.log('onEnter modal');
+                    var modalConfig = Object.values(options.views)[0];
+                    modalConfig.modaless = true;
+                    modalInstance = modalHelper.openModal(modalConfig);
+                    modalInstance.result['finally'](function () {
+                        modalInstance = null;
+                        if ($state.$current.name === stateName) {
+                            $state.go('^');
+                        }
+                    });
+                }],
+                onExit: function () {
+                    if (modalInstance) {
+                        modalInstance.close();
+                    }
+                }
+            });
+            return provider;
+        };
+    }
+})();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2021/12/12, created
+ */
+(function () {
+    'use strict';
+    angular.module('oplus.udp').service('appletRegistry', ['$q', '$translate', '$state', 'restUtils', 'currentUser', 'themeService', 'appletRouter', appletRegistry]);
+
+
+    /**
+     * @ngdoc service
+     * @name appletRegistry
+     * @description
+     * Contains all the registered applets
+     * @param {$q} $q
+     * @param {$translate} $translate
+     * @param {$state} $state
+     * @param {restUtils} restUtils
+     * @param {currentUser} currentUser
+     * @param {themeService} themeService
+     * @param {appletRouter} appletRouter
+     */
+    function appletRegistry($q, $translate, $state, restUtils, currentUser, themeService, appletRouter) {
+        /**
+         *
+         * @type {[AppletDefinition]}
+         */
+        var codeDefinedApps = [];
+        /**
+         * @type {[AppletDefinition]}
+         */
+        var allAppletDefs;
+        var that = this;
+        var dbLoaded = false;
+        this.CODE_DEFINED_APPLET_CODE_PREFIX = '__';
+        this.findAppletDef = findAppletDef;
+        this.loadAllAppletDefs = loadAllAppletDefs;
+        this.getAppletDefs = getAppletDefs;
+        this.getDesktopApplets = getDesktopApplets;
+        this.getDockApplets = getDockApplets;
+        initCodeDefinedApplets();
+
+        /**
+         * Get applets shown on desktop
+         * @return {[AppletDefinition]}
+         */
+        function getDesktopApplets() {
+            return _.sortBy(_.filter(getAppletDefs(), function (def) {
+                return def.showIn && angular.isNumber(def.showIn.desktop);
+            }), [function (o) {
+                return o.showIn.desktop;
+            }]);
+        }
+
+        /**
+         * Get applets shown on dock
+         * @return {[AppletDefinition]}
+         */
+        function getDockApplets() {
+            return _.sortBy(_.filter(getAppletDefs(), function (def) {
+                return def.showIn && angular.isNumber(def.showIn.dock);
+            }), [function (o) {
+                return o.showIn.dock;
+            }]);
+        }
+
+        function getAppletDefs() {
+            return allAppletDefs;
+        }
+
+        /**
+         * Find all applet definitions including code defined and db defined
+         * If user is not authenticated, only code defined loaded.
+         * @param {boolean=} forceReload
+         * @param {Object=tag} tag
+         * @return {Promise<[AppletDefinition]>}
+         */
+        function loadAllAppletDefs(forceReload, tag) {
+            if (dbLoaded && !forceReload) {
+                return $q.when(allAppletDefs);
+            }
+            var query = tag ? _.map(tag, "id").join(",") : "";
+            var d = $q.defer();
+            var result = [];
+            var toLoadDb = false;
+            var promise;
+            if (currentUser.isAuthenticated) {
+                toLoadDb = true;
+                promise = restUtils.callApi('udp', 'GET', '/api/udp/applets?isPaging=true', null, {query: query});
+            } else {
+                console.warn('appletRegistry.loadAllAppletDefs: User has not signed in');
+                promise = $q.when([]);
+            }
+            promise.then(function (records) {
+                dbLoaded = toLoadDb;
+                _.forEach(records, function (rec) {
+                    result.push(dbRecordToAppletDefinition(rec));
+                });
+                if (toLoadDb) {
+                    console.log('appletRegistry.loadAllAppletDefs: %d applet loaded from DB', records.length);
+                }
+                allAppletDefs = [].concat(codeDefinedApps).concat(result);
+                resolveAppState(allAppletDefs);
+                d.resolve(allAppletDefs);
+            }).catch(function (e) {
+                d.reject(e);
+            });
+            return d.promise;
+
+            function resolveAppState(defs) {
+                // console.log('appletRegistry.resolveAppState: %d applets', defs.length);
+                defs.forEach(function (def) {
+                    if (def.entry.type === 'InternalState' || (!def.entry.type && /^#\/|\./.test(def.entry.value))) {
+                        def._resolvedState = def.entry.value;
+                    } else if (def.entry.type === 'ExternalState' || (!def.entry.type && /^#\/|\./.test(def.entry.value))) {
+                        //def._resolvedState = window.$oplus.appConfig.useWindowUI ? 'app.appletwindow_' + def.code : 'app.applet_view';
+                        //def._resolvedState = appletRouter.getAppletState(def.code);
+                        //Todo external state router config
+                    } else {
+                        // def._resolvedState = window.$oplus.appConfig.useWindowUI ? 'app.appletwindow_' + def.code : 'app.applet_view';
+                        def._resolvedState = appletRouter.getAppletState(def.code);
+                    }
+                });
+            }
+
+            function dbRecordToAppletDefinition(rec) {
+                var setting = JSON.parse(rec.setting);
+                var def = {
+                    id: rec.id,
+                    code: rec.code || rec.name,
+                    title: rec.title,
+                    type: rec.type,
+                    status: rec.status,
+                    version: rec.version,
+                    order: rec.order,
+                    icon: setting.icon,
+                    color: setting.color,
+                    windowSize: setting.windowSize,
+                    entry: {type: rec.entryType, value: rec.entry, params: rec.entryParams},
+                };
+
+                if (def.code === 'cac') {
+                    console.warn('Hardcode change cac entry to app.cac');
+                    def.entry = {type: 'InternalState', value: 'app.cac'};
+                } else if ((!def.entry.type && /^#\/|\app./.test(def.entry.value))) {
+                    def.entry = {type: 'InternalState', value: def.entry.value};
+                } else if ((!def.entry.type && /^http[s]?:\/\//.test(def.entry.value))) {
+                    def.entry = {type: 'ExternalState', value: def.entry.value, params: def.entry.params, target: setting.target || undefined};
+                }
+                if (def.code.toString().indexOf('ipam') >= 0) {
+                    def.entry = {type: 'ExternalState', value: rec.entry, params: rec.entryParams};
+                }
+                return def;
+            }
+        }
+
+
+        /**
+         * Init code defined applets from router states
+         */
+        function initCodeDefinedApplets() {
+            var allStates = $state.get();
+            var appletStates = _.filter(allStates, function (o) {
+                return !!o.useAsApplet;
+            });
+            var defs = _.map(appletStates, function (state) {
+                var def = state.useAsApplet;
+                return {
+                    code: that.CODE_DEFINED_APPLET_CODE_PREFIX + def.code,
+                    title: $translate.instant(def.title) || def.code,
+                    icon: def.icon,
+                    color: def.color,
+                    type: def.type || 'Application',
+                    sourceType: 'CodeDefined',
+                    showIn: def.showIn,
+                    windowSize: def.windowSize,
+                    entry: {type: 'InternalState', value: state.name},
+                    tag: "system"
+                };
+            });
+            defs.forEach(function (def) {
+                defineApplet(def);
+            });
+            //console.log('%cappletRegistry.initCodeDefinedApplets: %d', 'color:teal', defs.length);
+        }
+
+        /**
+         *
+         * @param {AppletDefinition} appDef
+         */
+        function defineApplet(appDef) {
+            if (!appDef.code) {
+                throw new TypeError('Applet code is required');
+            }
+            if (_.find(codeDefinedApps, {code: appDef.code})) {
+                return;
+            }
+            codeDefinedApps.push(appDef);
+        }
+
+        /**
+         *
+         * @param condition
+         * @param {boolean=} ignoreWarning
+         * @return {AppletDefinition}
+         */
+        function findAppletDef(condition, ignoreWarning) {
+            var predicate;
+            if (angular.isString(condition)) {
+                predicate = {code: condition};
+            } else {
+                predicate = condition;
+            }
+            // if (!code) return undefined;
+            // Find from builtin first in case of remote applet defs not loaded
+            // var result = _.find(codeDefinedApps, predicate);
+            var result = _.find(allAppletDefs, predicate);
+            // if (!result) {
+            //     result = _.find(that.allAppletDefs, predicate);
+            // }
+            if (!result && !ignoreWarning) {
+                console.warn('Cannot find applet definition:', {
+                    condition: condition,
+                    allAppletDefs: allAppletDefs
+                });
+            }
+            return result;
+        }
+    }
+
+    /**
+     * Reference of core attributes for applet definition
+     * @constructor
+     */
+    function AppletDefinition() {
+        this.code = '';
+        this.title = '';
+        /**
+         * It supports:
+         * - `Application`:
+         * - `Library`:
+         * @type {string}
+         */
+        this.type = '';
+        /**
+         * Two values:
+         * - `CodeDefined`: applet is statically defined by code
+         * - `DbDefined`: applet is dynamically defined in database
+         * @type {string}
+         */
+        this.sourceType = '';
+        this.icon = '';
+        this.color = '';
+        this.showIn = {desktop: 0, dock: 0};
+        /**
+         * Entry point of the applet.
+         *
+         * `type` supports:
+         * - `state`: entry value is a ui-router state name, e.g. `app.gfs`
+         * - `udp`: entry value is a udp page
+         * @type {{type: string, value: string}}
+         */
+        this.entry = {type: '', value: '', params: ''}
+
+        /**
+         * Resolved router state for entry
+         * @type {string}
+         */
+        this._resolvedState = '';
+        this.windowSize = '';
+
+    }
+
+    /**
+     *
+     * @constructor
+     */
+    function AppletDisplay() {
+        this.code = '';
+        this.title = '';
+        this.icon = '';
+        this.color = '';
+    }
+})();
+
+(function () {
+    'use strict';
+    /**
+     * @ngdoc component
+     * @name appletContent
+     * @description
+     * Applet window layout.
+     * ```
+     * <applet-content the-applet="object" on-close="function">
+     * ```
+     */
+    angular.module('oplus.commons').component('appletContent', {
+        bindings: {
+            theApplet: '<',
+            onClose: '&'
+        },
+        templateUrl: 'app/modules/app/window/applet-content.component.html',
+        controller: ['$timeout', '$rootScope', '$element', '$state', '$translate', 'messageService', 'appletRunman', 'runningState', 'appletRouter', AppletContentCtrl]
+    });
+
+    /**
+     *
+     * @param $timeout
+     * @param {$rootScope} $rootScope
+     * @param $element
+     * @param $state
+     * @param $translate
+     * @param {messageService} messageService
+     * @param {appletRunman} appletRunman
+     * @param {runningState} runningState
+     * @param {appletRouter} appletRouter
+     * @constructor
+     */
+    function AppletContentCtrl($timeout, $rootScope, $element, $state, $translate, messageService, appletRunman, runningState, appletRouter) {
+        var that = this;
+        this.applet = this.theApplet;
+        this.appletCode = this.applet.code || this.applet.name;
+        this.useWindowUI = window.$oplus.appConfig.useWindowUI;
+        this.menuItems = [];
+        this.uiView = appletRouter.getAppletWindowUiView(this.applet.code);
+        this.$onInit = onInit;
+        this.navTo = navTo;
+
+        function onInit() {
+            $element.addClass('js-applet-content').attr('data-applet-code', that.applet.code);
+            if (that.applet.entry.type === 'InternalState') {
+                return;
+            }
+            for (let i = 0; i < that.applet.setting.nav.items.length; i++) {
+                let item = that.applet.setting.nav.items[i];
+                if (item.hide)
+                    continue;
+                let state = appletRouter.getAppletState(that.applet.code, 'open_menu');
+                let menu = {
+                    icon: item.icon,
+                    title: item.name,
+                    entry: item.entry,
+                    url: $state.href(state, {pageId: item.entry}),
+                    // https://github.com/angular-ui/ui-router/issues/2944#issuecomment-242780318
+                    // ui-sref doesn't watch the state expression for perf reasons.
+                    // We added a ui-state and ui-state-params directives to allow dynamic links:
+                    // sref: (that.useDynamicState ? ('app.applet_view_' + that.applet.code + '.menu') : 'app.applet_view.open_menu')
+                    state: state
+                }
+                that.menuItems.push(menu);
+            }
+
+            detectIfShowMainEntry();
+
+            /**
+             * If press F5 at open_menu or open_page state, it should not load main entry page defined in template.
+             */
+            function detectIfShowMainEntry() {
+                that.showMainEntry = false;
+                // NOTE: If no $timeout, the $state.current.name is empty
+                $timeout(function () {
+                    var appletMainState = appletRouter.getAppletState(that.applet.code);
+                    // console.log('onInit: currentState=%s, appletMainState=%s', $state.current.name, appletMainState);
+                    if ($state.current.name === appletMainState) {
+                        that.showMainEntry = true;
+                    }
+                }, 100);
+            }
+        }
+
+        function navTo(menuItem) {
+            that.menuItems.forEach(function (o) {
+                o.active = false;
+            });
+            menuItem.active = true;
+            $state.go(menuItem.state, {pageId: menuItem.entry});
+        }
+    }
+})();
+
+/**
+ * @author Joker Liu (qdjoker@126.com), created on 2/12/2020.
+ */
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletSettingCtrl', AppletSettingCtrl);
+
+    AppletSettingCtrl.$inject = ['$q', '$rootScope', '$state', '$stateParams', '$translate', 'messageService', 'appletService', 'OpUpload', 'currentUser', 'appletSecurity', 'udpTagsService'];
+
+    /**
+     *
+     * @param $q
+     * @param $rootScope
+     * @param $state
+     * @param $stateParams
+     * @param $translate
+     * @param messageService {messageService}
+     * @param appletService {appletService}
+     * @param OpUpload
+     * @param currentUser
+     * @param {appletSecurity} appletSecurity
+     * @constructor
+     */
+    function AppletSettingCtrl($q, $rootScope, $state, $stateParams, $translate, messageService, appletService, OpUpload, currentUser, appletSecurity, udpTagsService) {
+
+        var that = this;//$scope;
+        that.sortableOptions = {
+            handle: '.op-drag-handle'
+        };
+        that.applet = {};
+        that.tags = [];
+        that.entryTypes = appletService.getAllEntryTypes();
+        that.entryType = that.entryTypes[0].code;
+        that.removeNavItem = removeNavItem;
+        that.save = save;
+        that.delete = deleteApplet;
+        that.uploadHelpDoc = uploadHelpDoc;
+        that.getHelpDocName = getHelpDocName;
+        that.removeHelpDoc = removeHelpDoc;
+        var existingHelpDocUrl;//缓存文档路径，用于替换操作
+
+        var defaultOption = {
+            setting: {
+                icon: 'fa-question-circle',
+                // theme: 'default',//应用主题
+                nav: {
+                    theme: 'light',//导航主题风格
+                    position: 'left',
+                    hide: false,//是否隐藏
+                    hideOnHome: false,//不显示在首页
+                    items: []
+                },
+                // accessControl: {roles: {}}
+            },
+            version: '1.0',
+            status: 'C'//Composing;Published;Deleted
+        };
+
+        var defaultAccessControl = {roles: {}};
+
+        /**
+         * query app by name
+         */
+        function init() {
+            udpTagsService.findTagsByTenantId().then(function (result) {
+                that.tags = result;
+            });
+            if ($stateParams.appletCode) {
+                appletService.findAppletByCode($stateParams.appletCode, {disableI18n: true}).then(function (result) {
+                    that.applet = result;
+                    that.applet.accessControl = !that.applet.accessControl ? defaultAccessControl : JSON.parse(result.accessControl)
+                    existingHelpDocUrl = result.helpDocUrl;
+                    //to adjust the existing app which not have nav setting
+                    that.applet.setting = $.extend(true, defaultOption.setting, that.applet.setting);
+                    that.applet.isOwner = currentUser.loginId === that.applet.createdBy;
+                    that.applet.canDelete = appletSecurity.canDeleteApplet(that.applet.code, that.applet.createdBy);
+                    that.applet.canUpdate = that.applet.isOwner || currentUser.hasPermission('app:edit:*');
+                    that.entryType = appletService.getEntryTypeFromEntry(that.applet.entry);
+                }).catch(function (e) {
+                    messageService.alertError($translate.instant("app.setting.messages.error.queryApp"), e.message);
+                });
+            } else {
+                that.applet = defaultOption;
+                that.applet.canUpdate = currentUser.hasPermission('app:edit:*');
+                that.applet.accessControl = defaultAccessControl;
+            }
+        }
+
+        init();
+
+
+        /**
+         * app code id unique
+         */
+        function save() {
+            if (that.applet.id) {
+                doSave();
+            } else {
+                appletService.isNameInUse(that.applet.name).then(function (result) {
+                    if (result) {
+                        messageService.confirmWarning($translate.instant("app.setting.messages.warn.codeUse.title"), $translate.instant("app.setting.messages.warn.codeUse.body"))
+                    } else {
+                        doSave();
+                    }
+                }).catch(function (e) {
+                    messageService.alertError($translate.instant("app.setting.messages.error.jugeCode"), e.message);
+                    //console.log(e);
+                });
+            }
+        }
+
+        // function cancel() {
+        //     $state.go('app.appman');
+        // }
+
+        /**
+         * reload app list after saving
+         */
+        function doSave() {
+            var promiseArr = [appletService.saveApplet(that.applet)];
+            if (tempHelpDocFileId && existingHelpDocUrl !== tempHelpDocPath) {
+                promiseArr.push(OpUpload.confirm('applet', 'help', [tempHelpDocFileId]));
+            }
+
+            //替换帮助文档，需要清理已有文档
+            if (existingHelpDocUrl && tempHelpDocPath && existingHelpDocUrl !== tempHelpDocPath) {
+                removeFileFromDisk(existingHelpDocUrl);
+            }
+
+            $q.all(promiseArr).then(function () {
+                existingHelpDocUrl = tempHelpDocPath;
+
+                messageService.toast('success', $translate.instant("app.setting.messages.info.appCreated"));
+            }).catch(function (e) {
+                messageService.alertError($translate.instant("app.setting.messages.error.appCreated"), e.message);
+            });
+        }
+
+        /**
+         * delete by id
+         */
+        function deleteApplet() {
+            messageService.confirm($translate.instant("common.entity.delete.title"), $translate.instant("app.setting.messages.warn.deleteApp.question", {"title": that.applet.title}), function () {
+                appletService.deleteAppletAdm(that.applet.id).then(function () {
+                    messageService.toast('success', $translate.instant("app.setting.messages.info.deletedApp"));
+                    $rootScope.$broadcast('APPLET_CHANGED');
+                    $state.go('app.applist', {}, {reload: true});
+                }).catch(function (e) {
+                    messageService.alertError($translate.instant("app.setting.messages.error.deletedApp"), e.message);
+                    //console.log(e);
+                });
+            });
+        }
+
+        /**
+         * get doc name for show
+         * @returns {string}
+         */
+        function getHelpDocName() {
+            if (that.applet.helpDocUrl) {
+                return OpUpload.getOriginalNameFromPath(that.applet.helpDocUrl);
+            } else {
+                return '';
+            }
+        }
+
+
+        /**
+         * 临时上传帮助文档
+         * @param files
+         */
+        var tempHelpDocFileId;
+        var tempHelpDocPath;
+
+        function uploadHelpDoc(file) {
+            if (file != null) {
+                if (file.size > 10000 * 1024) {//图片大小不能超过2000kb
+                    messageService.confirm($translate.instant("app.setting.messages.warn.uploadFile.title"), $translate.instant("app.setting.messages.warn.uploadFile.body"), function () {
+                    });
+                    return;
+                }
+
+                OpUpload.preUpload('applet', 'help', [file]).then(function (result) {
+                    tempHelpDocPath = result.data[0].path;
+                    tempHelpDocFileId = result.data[0].id;
+
+                    that.applet.helpDocUrl = tempHelpDocPath;
+                    messageService.toast('success', $translate.instant("app.setting.messages.info.uploadFile"));
+
+                    // refreshAvatar(filePath, true);
+                }).catch(function (e) {
+                    messageService.alertError($translate.instant("app.setting.messages.error.uploadFile"), e.message);
+                    //console.log(e);
+                });
+            } else {
+                messageService.toast('warning', $translate.instant("app.setting.messages.warn.uploadFile"));
+            }
+        }
+
+        /**
+         * 移除帮助文档
+         */
+        function removeHelpDoc() {
+            that.applet.helpDocUrl = '';
+            tempHelpDocFileId = null;
+            tempHelpDocPath = '_delete';
+            messageService.toast('success', $translate.instant("app.setting.messages.info.removeDoc1") + (existingHelpDocUrl ? $translate.instant("app.setting.messages.info.removeDoc2") : ''));
+
+        }
+
+        /**
+         * make name not empty to satisfy form validate
+         * @param item nav item
+         */
+        function removeNavItem(item) {
+            item.isRemoved = true;
+            item.name = '-';
+        }
+
+        /**
+         * remove file from disk
+         * @param fileUrl
+         */
+        function removeFileFromDisk(fileUrl) {
+            return OpUpload.delete('applet', 'help', null, [fileUrl]).then(function () {
+                console.log('file[' + fileUrl + ']successfully removed from disk');
+            }).catch(function (e) {
+                messageService.alertError($translate.instant("app.setting.messages.error.removeFile"), e.message);
+                //console.log('file[' + fileUrl + ']failed removed from disk', e);
+            });
+        }
+
+    }
+})();
+
+/**
+ *
+ * @author chy, created on 2020 / 10 / 12
+ *
+ */
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletMgmtJobsCtrl', AppletMgmtJobsCtrl);
+
+    AppletMgmtJobsCtrl.$inject = ['$stateParams'];
+
+    function AppletMgmtJobsCtrl($stateParams) {
+        this.appletCode = $stateParams.appletCode;
+    }
+})();
+
+/**
+ * @author Leo Liao (leoliaolei@gmail.com), created on 6/16/2017.
+ * @author chy , created on 2021/10/13.
+ */
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletMgmtPagesCtrl', AppletMgmtPagesCtrl);
+
+    AppletMgmtPagesCtrl.$inject = ['$stateParams'];
+
+    function AppletMgmtPagesCtrl($stateParams) {
+        this.appletCode = $stateParams.appletCode;
+    }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletMgmtDatasetsCtrl', AppletMgmtDatasetsCtrl);
+
+    AppletMgmtDatasetsCtrl.$inject = ['$stateParams'];
+
+    function AppletMgmtDatasetsCtrl($stateParams) {
+        this.appletCode = $stateParams.appletCode;
+    }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletMgmtDatasetsEditCtrl', AppletMgmtDatasetsEditCtrl);
+
+    AppletMgmtDatasetsEditCtrl.$inject = ['$stateParams'];
+
+    function AppletMgmtDatasetsEditCtrl($stateParams) {
+        this.appletCode = $stateParams['appletCode'];
+        //console.log('AppletMgmtDatasetEditCtrl',this.appletCode);
+    }
+})();
+
+/**
+ * @author mr.kongqi@gmail.com,2021/9/3 14:00,created
+ */
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletMgmtDataModelsCtrl', AppletMgmtDataModelsCtrl);
+
+    AppletMgmtDataModelsCtrl.$inject = ['$scope', '$state', 'jaoJobService', '$stateParams', '$location', 'messageService', 'userPref', 'dcDataService', '$translate','appletSecurity'];
+
+    /**
+     *
+     * @param $scope
+     * @param $state
+     * @param {jaoJobService} jaoJobService
+     * @param $stateParams
+     * @param $location
+     * @param {messageService} messageService
+     * @param {userPref} userPref
+     * @param {dcDataService} dcDataService
+     * @param $translate
+     * @param {appletSecurity} appletSecurity
+     * @constructor
+     */
+    function AppletMgmtDataModelsCtrl($scope, $state, jaoJobService, $stateParams, $location, messageService, userPref, dcDataService, $translate,appletSecurity) {
+        var that = this;
+        that.selectedCommands = [];
+        that.deleteDcModel = deleteDcModel;
+        that.refreshModes = refreshModes;
+        that.deleteModels = deleteModels;
+
+        that.selectedModels = []
+
+        that.appletCode = $stateParams.appletCode;
+
+        var columnDefs = [
+            {
+                data: 'code',
+                title: $translate.instant('jao.dc.detail.code'),
+                render: function (data, type, row, meta) {
+                    return '<a class="d-block text-wrap" ui-sref="app.appman.datamodel.view({id:\'' + row.id + '\'})">' + data + '</a>';
+                }
+            },
+            {data: 'appletCode', title: $translate.instant('jao.dc.detail.owner_application')},
+            {data: 'dataMode', title: $translate.instant('jao.dc.detail.mode')},
+            {
+                data: 'updateBy',
+                title: $translate.instant('common.entity.detail.update_by')
+            },
+            {
+                data: 'updateAt',
+                title: $translate.instant('common.entity.detail.update_at'),
+                render: function (data, type, row, meta) {
+                    var date = row.updateAt;
+                    return $$.formatDate(date, 'YYYY-MM-DD hh:mm:ss');
+                }
+            },
+            {
+                data: 'id',
+                title: $translate.instant('common.entity.detail.operation'),
+                className: 'text-center',
+                searchable: false,
+                orderable: false,
+                render: function (data, type, row, meta) {
+                    if (!appletSecurity.canModifyAppletResource(row['appletCode'])){
+                        return '';
+                    }
+
+                    var id = "'" + row.id + "'";
+                    var code = "'" + row.code + "'";
+                    return ' <button type="submit" ui-sref=app.appman.datamodel.edit({id:\'' + row.id + '\'}) class="btn btn-default opx-btn-icon opx-btn-flat" uaa-has-permission="jao:edit:*" title="{{\'common.entity.action.edit\' | translate}}">' +
+                        '     <i class="fa fa-pencil"></i>' +
+                        ' </button>' +
+                        ' <button type="submit" ng-click="$ctrl.deleteDcModel(' + id + ',' + code + ')" class="btn btn-default opx-btn-icon opx-btn-flat" uaa-has-permission="jao:edit:*" title="{{\'common.entity.action.delete\' | translate}}">' +
+                        '     <i class="fa fa-trash-alt"></i>' +
+                        ' </button>';
+                }
+            }
+        ];
+        that.tableConfig = {
+            columns: columnDefs,
+            data: [dcModelList],
+            selection: {
+                valueData: 'id', labelData: 'name', preselected: that.selectedModels
+            },
+            order: [[1, 'desc'], [4, 'desc']],
+            buttons: []
+        };
+
+        function dcModelList() {
+            return dcDataService.dcModelList(that.appletCode);
+        }
+
+        function deleteDcModel(id, code) {
+            //console.log("id is " + id + "code is " + code)
+            messageService.confirm(
+                $translate.instant('common.messages.operation.title', {operation: $translate.instant('common.entity.action.delete')}),
+                $translate.instant('jao.messages.delete_model', {code: code}),
+                function () {
+                    dcDataService.deleteModelById(id).then(function (data) {
+                        messageService.toast('success', $translate.instant('common.messages.operation.success', {operation: $translate.instant('common.entity.action.delete')}));
+                        $state.reload();
+                    }).catch(function (err) {
+                        messageService.alertError($translate.instant('common.messages.operation.failed', {operation: $translate.instant('common.entity.action.delete')}), err.message);
+                        throw err;
+                    })
+                })
+        }
+
+        function refreshModes() {
+            dcDataService.dcModelList().then(function (data) {
+                that.tableConfig.data = data;
+            })
+        }
+
+        function deleteModels() {
+            var ids = that.selectedModels.map(function (m) {
+                return m;
+            });
+            messageService.confirm(
+                $translate.instant('common.messages.operation.title', {operation: $translate.instant('common.entity.action.delete')}),
+                $translate.instant('jao.messages.delete_models'),
+                function () {
+                    dcDataService.deleteModels(ids).then(function (data) {
+                        messageService.toast('success', $translate.instant('common.messages.operation.success', {operation: $translate.instant('common.entity.action.delete')}));
+                        $state.reload();
+                    }).catch(function (err) {
+                        messageService.alertError($translate.instant('common.messages.operation.failed', {operation: $translate.instant('common.entity.action.delete')}), err.message);
+                        throw err;
+                    })
+                })
+        }
+
+    }
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('oplus.app').controller('AppletHelpCtrl', AppletHelpCtrl);
+
+    AppletHelpCtrl.$inject = ['$stateParams', '$translate', 'appletService', 'messageService'];
+
+    /**
+     *
+     * @param $stateParams
+     * @param appletService {appletService}
+     * @constructor
+     */
+    function AppletHelpCtrl($stateParams, $translate, appletService, messageService) {
+        var vm = this;//$scope;
+        vm.isHelpDocExisting = true;
+
+        function init() {
+            if ($stateParams.appletCode) {
+                appletService.findAppletByCode($stateParams.appletCode).then(function (result) {
+                    var helpDocUrl = result.helpDocUrl;
+                    if (helpDocUrl) {
+                        if (helpDocUrl.indexOf(".pdf") != -1) {
+                            viewPdf(helpDocUrl);
+                        }
+                    } else {
+                        vm.isHelpDocExisting = false;
+                    }
+                }).catch(function () {
+                    messageService.alertWarning($translate.instant("app.help.messages.warn.findAppletByCode.error"), $translate.instant("app.help.messages.warn.findAppletByCode.noExit"));
+                });
+            } else {
+                messageService.alertWarning($translate.instant("app.help.messages.warn.findAppletByCode.error"), $translate.instant("app.help.messages.warn.findAppletByCode.noName"));
+            }
+        }
+
+        init();
+
+
+        /**
+         * view pdf
+         * @param helpDocUrl
+         */
+        function viewPdf(helpDocUrl) {
+            PDFObject.embed(getDocFileUrl(helpDocUrl), "#pdf-container");
+        }
+
+        function getDocFileUrl(helpDocUrl) {
+            return appletService.getHelpDocDownloadUrl(helpDocUrl);
+        }
+    }
+})();
+
+/**
+ * @author Joker Liu (qdjoker@126.com), created on 2/12/2020.
+ */
+
+(function () {
+        'use strict';
+        var app = angular.module('oplus.app');
+
+        app.service('appletService', appletService);
+
+        appletService.$inject = ['$rootScope', '$http', '$q', '$translate', 'modalHelper', 'restUtils', 'messageService', 'currentUser'];
+
+        /**
+         * @ngdoc service
+         * @name appletService
+         * @param $http
+         * @param $q
+         * @param {restUtils} restUtils
+         * @param {$translate} $translate
+         * @param {modalHelper} modalHelper
+         * @param messageService {messageService}
+         * @param currentUser {currentUser}
+         */
+        function appletService($rootScope, $http, $q,
+                               $translate, modalHelper,
+                               restUtils, messageService, currentUser) {
+            // var that = this, clipboards = [];
+            // var appletInEdit = undefined;
+            // this.PAGE_WRAPPER_SELECTOR = '.js-applet-wrapper';
+
+            // CRUD
+            var ADM_MODULE = "adm";
+
+            this.findAppletByCode = findAppletByCode;
+            this.findApplets = findApplets;
+            this.saveApplet = saveApplet;
+            this.deleteApplet = deleteApplet;
+            this.deleteAppletAdm = deleteAppletAdm;
+            this.isNameInUse = isNameInUse;
+            // this.downloadHelpDoc = downloadHelpDoc;
+            this.getHelpDocDownloadUrl = getHelpDocDownloadUrl;
+            this.updateAppletOrder = updateAppletOrder;
+            this.getAllEntryTypes = getAllEntryTypes;
+            this.getEntryTypeFromEntry = getEntryTypeFromEntry;
+            this.openAppletSelectorModal = openAppletSelectorModal;
+            this.getMyRolesInApplet = getMyRolesInApplet;
+            this.getMyRolesInAllApplets = getMyRolesInAllApplets;
+            this.saveAppletsByTenantUser = saveAppletsByTenantUser;
+            this.findAppletsByTenantUser = findAppletsByTenantUser;
+
+
+            /**
+             * Get roles of current user in an applet
+             * @param {string} appletCode
+             * @return {Promise<[string]>}
+             */
+            function getMyRolesInApplet(appletCode) {
+                return restUtils.callApi('udp', 'GET', '/api/udp/applets/{appletCode}/my-roles', {appletCode: appletCode});
+            }
+
+            /**
+             * Get roles of current user in all applets
+             * @return {Promise<{"appletCode":[string]}>}
+             */
+            function getMyRolesInAllApplets() {
+                return restUtils.callApi('udp', 'GET', '/api/udp/applets/my-roles');
+            }
+
+            /**
+             * save当前用户的Applets
+             * @returns {Promise}
+             */
+            function saveAppletsByTenantUser(applets, tenantUserId) {
+                return restUtils.callApi('udp', 'POST', '/api/udp/applet/tenant/{tenantUserId}', {tenantUserId: tenantUserId}, applets);
+            }
+
+
+            /**
+             * 查看用户的Applets
+             * @returns {Promise}
+             */
+            function findAppletsByTenantUser(tenantUserId, login) {
+                return restUtils.callApi('udp', 'GET', '/api/udp/applets/tenant/user', null, {
+                    tenantUserId: tenantUserId,
+                    login: login
+                });
+            }
+
+            /**
+             * Open applet selector modal.
+             * @param {function({code:string,title:string})} onSubmit Callback function when click submit/ok button.
+             * Function argument is the code, title of selected applet.
+             * @param {object} options
+             * @param {string} options.label Label text displayed on top of selector control
+             */
+            function openAppletSelectorModal(onSubmit, options) {
+                options = options || {};
+                var label = options.label ? options.label : '{{"applet.selector.select_applet"|translate}}';
+                var config = {
+                    template: '<div class="modal-header">' +
+                        '<h4 class="modal-title">{{"applet.selector.title"|translate}}</h4>' +
+                        '<button type="button" class="btn-close" data-dismiss="modal" ng-click="$ctrl.cancel()"></button>' +
+                        '</div>' +
+                        '<div class="modal-body">' +
+                        '<div class="form-group">' +
+                        '<label class="control-label">' + label + '</label>' +
+                        '<div class="form-control-wrapper"><applet-selector applet-code="$ctrl.appletCode" on-change="$ctrl.onChange" options="{showAll:true,includeAllAndNull:false}"></applet-selector></div>' +
+                        '</div>' +
+                        '<div ng-if="$ctrl.history.length>0">' +
+                        '<ul class="list list-inline">' +
+                        '<li class="" ng-repeat="item in $ctrl.history track by $index">' +
+                        '<a href="" class="badge bg-secondary" ng-click="$ctrl.appletCode=item.code">{{item.title}}</a>' +
+                        '</li>' +
+                        '</ul>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="modal-footer">' +
+                        '<button type="button" ng-disabled="!$ctrl.appletCode" class="btn btn-primary opx-btn-ok" ng-click="$ctrl.submit()">{{"common.action.ok"|translate}}</button>' +
+                        '<button type="button" class="btn btn-default opx-btn-cancel" ng-click="$ctrl.cancel()">{{"common.action.cancel"|translate}}</button>' +
+                        '</div>',
+                    controller: ['userPref', AppletSelectorModalCtrl],
+                    controllerAs: '$ctrl'
+                };
+                var modal = modalHelper.openModal(config, {
+                    onOk: function (applet) {
+                        onSubmit(applet);
+                    }
+                });
+
+                /**
+                 *
+                 * @param {userPref} userPref
+                 * @constructor
+                 */
+                function AppletSelectorModalCtrl(userPref) {
+                    var that = this;
+                    var HISTORY_STORAGE_KEY = 'appletSelector';
+                    this.history = (userPref.load()[HISTORY_STORAGE_KEY]) || [];
+                    this.cancel = function () {
+                        modal.dismiss();
+                    }
+                    this.submit = function () {
+                        var applet = that.selectedApplet;
+                        var result = {code: applet.name, title: applet.title};
+                        modal.close(result);
+                        _.remove(that.history, {code: applet.name});
+                        that.history.unshift(result);
+                        userPref.saveItem(HISTORY_STORAGE_KEY, that.history.slice(0, 10));
+                    }
+                    this.onChange = function (applet) {
+                        that.selectedApplet = applet;
+                    }
+                }
+            }
+
+            function deleteApplet(id) {
+                var d = $q.defer();
+                restUtils.callApi('udp', 'DELETE', '/api/udp/applets/{id}', {id: id}).then(function (data) {
+                    d.resolve(data);
+                    broadcastAppletChanged();
+                }).catch(function (err) {
+                    d.reject(err);
+                });
+                return d.promise;
+            }
+
+            function deleteAppletAdm(id) {
+                var d = $q.defer();
+                restUtils.callApi('adm', 'DELETE', '/api/adm/applet/{id}', {id: id}).then(function (data) {
+                    d.resolve(data);
+                    broadcastAppletChanged();
+                }).catch(function (err) {
+                    d.reject(err);
+                });
+                return d.promise;
+            }
+
+            function findApplets() {
+                return restUtils.callApi('udp', 'GET', '/api/udp/applets?isPaging=true', null);
+            }
+
+            function saveApplet(app) {
+                var applet = angular.copy(app);
+                assertAuthentication();
+                if (!applet.id) {
+                    applet.author = currentUser.displayName;
+                    applet.createdBy = currentUser.loginId;
+                    applet.createdName = currentUser.displayName;
+                    applet.modifiedBy = currentUser.loginId;
+                    applet.modifiedName = currentUser.displayName;
+                } else {
+                    applet.modifiedBy = currentUser.loginId;
+                    applet.modifiedName = currentUser.displayName;
+                }
+
+                //clean removed nav items
+                var nav = applet.setting.nav;
+                if (nav.items && nav.items.length > 0) {
+                    nav.items = _.filter(nav.items, function (element) {
+                        return !element.isRemoved;
+                    });
+                }
+
+                //save setting as json string
+                applet.setting = JSON.stringify(applet.setting);
+                applet.accessControl = JSON.stringify(applet.accessControl);
+
+                // console.log("applet = " + JSON.stringify(vm.applet));
+
+                var promise = restUtils.callApi('udp', applet.id ? 'PUT' : 'POST', '/api/udp/applets', null, applet);
+                return $q.when(promise, function () {
+                    broadcastAppletChanged();
+                });
+                // var d = $q.defer();
+                // restUtils.callApi('udp', applet.id ? 'PUT' : 'POST', '/api/udp/applets', null, applet).then(function (data) {
+                //     d.resolve(data);
+                //     broadcastAppletChanged();
+                // }).catch(function (err) {
+                //     d.reject(err);
+                // });
+                // return d.promise;
+            }
+
+            function broadcastAppletChanged() {
+                //console.log('appletService: broadcastAppletChanged');
+                $rootScope.$broadcast('APPLET_CHANGED');
+            }
+
+            function updateAppletOrder(id, order) {
+                var d = $q.defer();
+                restUtils.callApi('udp', 'PUT', '/api/udp/applets/orders', null, {
+                    id: id,
+                    order: order
+                }).then(function (data) {
+                    d.resolve(data);
+                    broadcastAppletChanged();
+                }).catch(function (err) {
+                    d.reject(err);
+                });
+                return d.promise;
+            }
+
+            function getAllEntryTypes() {
+                return [
+                    {
+                        name: $translate.instant("app.service.customPage"),
+                        code: 'udp-page'
+                    },
+                    {
+                        name: $translate.instant("app.service.internalPage"),
+                        code: 'inner-page'
+                    },
+                    {
+                        name: $translate.instant("app.service.externalPage"),
+                        code: 'outer-page'
+                    }
+                ];
+            }
+
+            function getEntryTypeFromEntry(entry) {
+                if (!entry) {
+                    return null;
+                }
+                // var allEntries = getAllEntryTypes();
+                if (entry.type) {
+                    return entry.type;
+                }
+                if (entry) {
+                    if (/^#\/|\app./.test(entry)) {
+                        return 'inner-page';
+                    } else if (/^http[s]?:\/\//.test(entry)) {
+                        return 'outer-page';
+                    }
+                }
+
+                return 'udp-page';
+            }
+
+            function assertAuthentication() {
+                if (!currentUser.isAuthenticated) {
+                    messageService.alertError($translate.instant("app.uaa.no_permission_title"), $translate.instant("app.uaa.no_permission_desc"));
+                    throw new Error('401');
+                }
+            }
+
+            /**
+             * Load applet definition from DB.
+             * @param code
+             * @param {object=} options
+             * @param {boolean=} options.alertIfFail Show error if fail to load applet
+             * @param {boolean=} options.disableI18n
+             * @returns {Promise<object>} An applet object from DB
+             *
+             */
+            function findAppletByCode(code, options) {
+                options = options || {};
+                return restUtils.callApi('udp', 'GET', '/api/udp/applets/name/{name}' + (options.disableI18n ? '?__noi18n' : ''), {name: code})
+                    .then(function (applet) {
+                        if (applet) {
+                            applet.setting = JSON.parse(applet.setting);
+                            return $q.resolve(applet);
+                        } else {
+                            if (options.alertIfFail) {
+                                messageService.alertError($translate.instant("app.service.messages.error.findAppletByCode.title"), $translate.instant("app.service.messages.error.findAppletByCode.body", {name: code}));
+                            }
+                            return $q.reject(new Error($translate.instant("app.service.messages.error.findAppletByCode.title") + code));
+                        }
+                    }).catch(function (err) {
+                        if (err._errorCode === 404) {
+                            return $q.reject(new Error($translate.instant("app.service.messages.error.findAppletByCode.title") + code));
+                        }
+                        return $q.reject(err);
+                    });
+            }
+
+            /**
+             * download help foc
+             * @param helpDocUrl
+             */
+            function downloadHelpDoc(helpDocUrl) {
+                if (helpDocUrl) {
+                    helpDocUrl = getHelpDocDownloadUrl(helpDocUrl);
+                    if (helpDocUrl.indexOf('.doc') != -1 && typeof ActiveXObject !== 'undefined') {
+                        var word = new ActiveXObject("Word.Application");
+                        word.Visible = true;
+                        word.Documents.Open(helpDocUrl);
+                    } else {
+                        window.open(helpDocUrl);
+                    }
+                }
+            }
+
+            /**
+             * construct absolute url
+             * @param relativeUrl
+             */
+            function getHelpDocDownloadUrl(relativeUrl) {
+                return window.$oplus.appConfig.apiBaseUrls.upload + relativeUrl;
+            }
+
+            /**
+             * 验证name是否被占用
+             * @param name
+             */
+            function isNameInUse(name) {
+                var defered = $q.defer();
+
+                findAppletByCode(name).then(function (result) {
+                    defered.resolve(result);
+                }, function (result) {
+                    defered.resolve(false);
+                });
+
+                return defered.promise;
+            }
+
+
+            function getStyles() {
+                var styles = [
+                    {
+                        name: ""
+                    }
+                ];
+
+            }
+        }
+    }
+)();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2022/2/18, created
+ */
+(function () {
+    'use strict';
+    angular.module('oplus.commons').service('appletSecurity', ['currentUser', appletSecurity]);
+
+    /**
+     * @ngdoc service
+     * @name appletSecurity
+     * @param {currentUser} currentUser
+     * @description
+     */
+    function appletSecurity(currentUser) {
+        // Access control
+        this.canViewAppletList = canViewAppletList;
+        this.canCreateApplet = canCreateApplet;
+        this.canUpdateApplet = canUpdateApplet;
+        this.canModifyAppletResource = canModifyAppletResource;
+        this.canDevelopApplet = canDevelopApplet;
+        this.canDeleteApplet = canDeleteApplet;
+        this.canPublishApplet = canPublishApplet;
+        this.canUseApplet = canUseApplet;
+
+        function canViewAppletList() {
+            return currentUser.isAuthenticated;
+        }
+
+        function canCreateApplet(appletCode) {
+            return currentUser.hasPermission('app:edit:*');
+        }
+
+        function canUpdateApplet(appletCode) {
+            return currentUser.hasAnyRole(['ROLE_DEVELOPER', 'ROLE_ADMIN'], appletCode);
+        }
+
+        function canModifyAppletResource(appletCode) {
+            return canUpdateApplet(appletCode);
+        }
+
+        function canDevelopApplet(appletCode) {
+            return currentUser.hasAnyRole(['ROLE_DEVELOPER'], appletCode);
+        }
+
+        function canDeleteApplet(appletCode, appletOwnerId) {
+            return currentUser.loginId === appletOwnerId || currentUser.hasAnyRole(['ROLE_ADMIN','ROLE_PRIVUSER','ROLE_DEVELOPER'], appletCode);
+        }
+
+        function canPublishApplet(appletCode, appletOwnerId) {
+            return canDeleteApplet(appletCode, appletOwnerId);
+        }
+
+        function canUseApplet(appletCode) {
+            return currentUser.hasAnyRole(['ROLE_USER'], appletCode);
+        }
+    }
+})();
+
+/**
+ * @author Leo Liao(leoliaolei@gmail.com), 2022/1/13, created
+ */
+(function () {
+    'use strict';
+
+    /**
+     * @ngdoc component
+     * @name appletConfigAccess
+     * @description
+     * ```html
+     * <applet-config-access ng-model="">
+     * ```
+     * @param {{}} ngModel
+     */
+    angular.module('oplus.commons').component('appletConfigAccess', {
+        require: {
+            ngModelCtrl: '?ngModel'
+        },
+        bindings: {
+            theModel: '=ngModel'
+        },
+        templateUrl: 'app/modules/app/applet-config-access.component.html',
+        controller: ['$scope', '$element', '$translate', 'messageService', AppletConfigAccessCtrl]
+    });
+
+    function AppletConfigAccessCtrl($scope, $element, $translate, messageService) {
+        var that = this;
+        var USER_BY_SYSTEM = 'SYSTEM';
+        var USER_BY_MANUAL = 'MANUAL';
+        // console.log('AppletConfigAccessCtrl: ngModel=%o', JSON.stringify(this.theModel));
+        // this.theModel = this.theModel || {};
+        this.$onInit = onInit;
+        this.addRole = addRole;
+        this.removeRole = removeRole;
+        this.userMethods = [
+            {value: USER_BY_SYSTEM, _title: $translate.instant('app.setting.ac.user_by_system')},
+            {value: USER_BY_MANUAL, _title: $translate.instant('app.setting.ac.user_by_manual')}
+        ]
+        var defaultRoles = {
+            ROLE_USER: {
+                method: USER_BY_SYSTEM
+            },
+            ROLE_PRIVUSER: {
+                method: USER_BY_SYSTEM
+            },
+            ROLE_DEVELOPER: {
+                method: USER_BY_SYSTEM
+            },
+            ROLE_ADMIN: {
+                method: USER_BY_SYSTEM
+            }
+        };
+
+        function onInit() {
+            // ngModel --> $modelValue --> Formatters --> $viewValue --> $render().
+            // Widget --> $viewValue --> Parsers --> Validators? --> $modelValue --> ngModel.
+            that.ngModelCtrl.$formatters.push(formatInput);
+            that.ngModelCtrl.$render = renderViewValue;
+            that.ngModelCtrl.$parsers.push(parseOutput);
+            $scope.$watch('$ctrl.viewData', function (newVal, oldVal) {
+                if (!newVal) return;
+                // Custom controls might also pass objects to this method.
+                // In this case, we should make a copy of the object before passing it to $setViewValue.
+                // This is because ngModel does not perform a deep watch of objects,
+                // it only looks for a change of identity.
+                that.ngModelCtrl.$setViewValue(angular.copy(newVal));
+            }, true)
+        }
+
+        function renderViewValue() {
+            that.viewData = that.ngModelCtrl.$viewValue;
+        }
+
+        function formatInput(modelValue) {
+            if (!modelValue) {
+                return;
+            }
+            var allRoles = _.merge({}, defaultRoles, modelValue.roles);
+            var viewValue = {roles: []};
+            Object.keys(allRoles).forEach(function (roleName) {
+                var role = _.merge({name: roleName}, allRoles[roleName]);
+                if (defaultRoles[roleName]) {
+                    role._builtin = true;
+                }
+                viewValue.roles.push(role);
+            });
+            return viewValue;
+        }
+
+        /**
+         *
+         * @param {{roles:[{name:string,method:string,users:[string]}]}} viewValue
+         * @return {{roles: {"ROLE_NAME":{method:string,users:[string]}}}}
+         */
+        function parseOutput(viewValue) {
+            var modelValue = {roles: {}};
+            viewValue.roles.forEach(function (role) {
+                modelValue.roles[role.name] = {method: role.method, users: role.users};
+            });
+            return modelValue;
+        }
+
+        /**
+         *
+         * @param {string} roleName
+         */
+        function removeRole(roleName) {
+            messageService.confirm('Remove', 'Remove the role?', function () {
+                _.remove(that.viewData.roles, {name: roleName});
+            });
+        }
+
+        function addRole() {
+            var role = {name: 'NEW_ROLE', method: USER_BY_MANUAL};
+            var find = _.find(that.viewData.roles, {name: role.name});
+            if (!find) {
+                that.viewData.roles.push(role);
+            }
+        }
+    }
+})();
+
+/**
+ *
+ * @author chy, created on 2021/10/12
+ */
+(function () {
+    'use strict';
+    /**
+     * @usage
+     * ```
+     * <udp-applet-selector
+     * applet-code="string"
+     * on-change="function"
+     * excluded="[string]"
+     * options="{viewAs:string,showAll:boolean,includeAllAndNull:boolean}"/>
+     * ```
+     * @param {[string]} excluded Applet codes to be excluded
+     * @param {function} onChange Callback on selection changes
+     * @param {string} options.viewAs "dropdown"(default) or "list"
+     * @param {boolean} options.showAll True to include unpublished applets. Default is false.
+     * @param {boolean} options.includeAllAndNull True to include all and null applet. Default is false
+     * @param {boolean} options.showFilter True to show search box to filter applets
+     */
+    angular.module('oplus.app').component('appletSelector', {
+        bindings: {
+            excluded: '<',
+            appletCode: '=',
+            onChange: '&',
+            options: '<'
+        },
+        templateUrl: 'app/modules/app/helper/applet-selector.html',
+        controller: ['$scope', 'appletService', '$translate', 'userPref', AppletSelectorCtrl]
+    });
+
+    /**
+     *
+     * @param $scope
+     * @param {appletService} appletService
+     * @param $translate
+     * @param {userPref} userPref
+     * @constructor
+     */
+    function AppletSelectorCtrl($scope, appletService, $translate, userPref) {
+        var that = this;
+        var excluded = that.excluded || [];
+        that.options = _.extend({}, {viewAs: 'dropdown', showAll: false}, that.options);
+        this.selectItem = selectItem;
+        this.$onInit = onInit;
+
+        function onInit() {
+            $scope.$watch('$ctrl.appletCode', function (newVal, oldVal) {
+                if (angular.isFunction(that.onChange())) {
+                    var applet = _.find(that.applets, {name: newVal});
+                    if (applet && angular.isFunction(that.onChange)) {
+                        // Use onChange()(page) instead ot onChange(page)
+                        // https://stackoverflow.com/a/26244600/1524900
+                        that.onChange()(applet);
+                    }
+                }
+            });
+
+            appletService.findApplets().then(function (applets) {
+                _.remove(applets, function (o) {
+                    return excluded.indexOf(o.name) >= 0;
+                });
+                _.each(applets, function (applet) {
+                    applet.setting = JSON.parse(applet.setting);
+                });
+                that.applets = _.orderBy(_.filter(applets, function (f) {
+                    return that.options.showAll ? true : f.status === 'P';
+                }), 'name');
+                // that.applets = _.orderBy(applets, 'name');
+
+                if (that.options.includeAllAndNull) {
+                    that.applets.unshift({
+                        name: '$NULL$',
+                        title: $translate.instant('applet.selector.unsorted'),
+                        setting: {icon: ''}
+                    });
+                    that.applets.unshift({
+                        name: '',
+                        title: $translate.instant('applet.selector.all'),
+                        setting: {icon: ''}
+                    });
+                }
+
+                if (!that.appletCode) {
+                    that.appletCode = '';
+                }
+            }).catch(function (err) {
+                throw err;
+            });
+        }
+
+        function selectItem(applet) {
+            that.appletCode = applet.name;
+            that.selectedItem = applet.name;
+        }
+    }
+})();
