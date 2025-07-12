@@ -1,239 +1,200 @@
-# Oplus Modules
+<p align="center">
+	<a href="https://caddyserver.com">
+		<picture>
+			<source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/1128849/210187358-e2c39003-9a5e-4dd5-a783-6deb6483ee72.svg">
+			<source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/1128849/210187356-dfb7f1c5-ac2e-43aa-bb23-fc014280ae1f.svg">
+			<img src="https://user-images.githubusercontent.com/1128849/210187356-dfb7f1c5-ac2e-43aa-bb23-fc014280ae1f.svg" alt="Caddy" width="550">
+		</picture>
+	</a>
+	<br>
+	<h3 align="center">a <a href="https://zerossl.com"><img src="https://user-images.githubusercontent.com/55066419/208327323-2770dc16-ec09-43a0-9035-c5b872c2ad7f.svg" height="28" style="vertical-align: -7.7px" valign="middle"></a> project</h3>
+</p>
+<hr>
+<h3 align="center">Every site on HTTPS</h3>
+<p align="center">Caddy is an extensible server platform that uses TLS by default.</p>
+<p align="center">
+	<a href="https://github.com/caddyserver/caddy/actions/workflows/ci.yml"><img src="https://github.com/caddyserver/caddy/actions/workflows/ci.yml/badge.svg"></a>
+	<a href="https://pkg.go.dev/github.com/caddyserver/caddy/v2"><img src="https://img.shields.io/badge/godoc-reference-%23007d9c.svg"></a>
+	<br>
+	<a href="https://twitter.com/caddyserver" title="@caddyserver on Twitter"><img src="https://img.shields.io/badge/twitter-@caddyserver-55acee.svg" alt="@caddyserver on Twitter"></a>
+	<a href="https://caddy.community" title="Caddy Forum"><img src="https://img.shields.io/badge/community-forum-ff69b4.svg" alt="Caddy Forum"></a>
+	<br>
+	<a href="https://sourcegraph.com/github.com/caddyserver/caddy?badge" title="Caddy on Sourcegraph"><img src="https://sourcegraph.com/github.com/caddyserver/caddy/-/badge.svg" alt="Caddy on Sourcegraph"></a>
+	<a href="https://cloudsmith.io/~caddy/repos/"><img src="https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith" alt="Cloudsmith"></a>
+</p>
+<p align="center">
+	<a href="https://github.com/caddyserver/caddy/releases">Releases</a> ·
+	<a href="https://caddyserver.com/docs/">Documentation</a> ·
+	<a href="https://caddy.community">Get Help</a>
+</p>
 
-这是Oplus各模块的前端开发项目，最终输出是各模块的JS和CSS。
-各模块的内容放在 `src/webapp/app/modules` 下面，其它目录都是为了模块的开发调试使用的。
 
-## 🚀 快速开始
 
-### 环境要求
-- Node.js (推荐 v14+)
-- npm (推荐 v6+)
+### Menu
 
-### 安装依赖
-```bash
-npm install
-```
+- [Features](#features)
+- [Install](#install)
+- [Build from source](#build-from-source)
+	- [For development](#for-development)
+	- [With version information and/or plugins](#with-version-information-andor-plugins)
+- [Quick start](#quick-start)
+- [Overview](#overview)
+- [Full documentation](#full-documentation)
+- [Getting help](#getting-help)
+- [About](#about)
 
-### 开发模式
+<p align="center">
+	<b>Powered by</b>
+	<br>
+	<a href="https://github.com/caddyserver/certmagic">
+		<picture>
+			<source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/55066419/206946718-740b6371-3df3-4d72-a822-47e4c48af999.png">
+			<source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/1128849/49704830-49d37200-fbd5-11e8-8385-767e0cd033c3.png">
+			<img src="https://user-images.githubusercontent.com/1128849/49704830-49d37200-fbd5-11e8-8385-767e0cd033c3.png" alt="CertMagic" width="250">
+		</picture>
+	</a>
+</p>
 
-```bash
-# 开发模式 + 热重载（推荐）
-npm start
-# 或
-npm run watch
 
-# 仅开发模式（构建 + 启动服务器）
-npm run dev
+## [Features](https://caddyserver.com/v2)
 
-# 仅构建开发版本
-npm run build
+- **Easy configuration** with the [Caddyfile](https://caddyserver.com/docs/caddyfile)
+- **Powerful configuration** with its [native JSON config](https://caddyserver.com/docs/json/)
+- **Dynamic configuration** with the [JSON API](https://caddyserver.com/docs/api)
+- [**Config adapters**](https://caddyserver.com/docs/config-adapters) if you don't like JSON
+- **Automatic HTTPS** by default
+	- [ZeroSSL](https://zerossl.com) and [Let's Encrypt](https://letsencrypt.org) for public names
+	- Fully-managed local CA for internal names & IPs
+	- Can coordinate with other Caddy instances in a cluster
+	- Multi-issuer fallback
+- **Stays up when other servers go down** due to TLS/OCSP/certificate-related issues
+- **Production-ready** after serving trillions of requests and managing millions of TLS certificates
+- **Scales to hundreds of thousands of sites** as proven in production
+- **HTTP/1.1, HTTP/2, and HTTP/3** all supported by default
+- **Highly extensible** [modular architecture](https://caddyserver.com/docs/architecture) lets Caddy do anything without bloat
+- **Runs anywhere** with **no external dependencies** (not even libc)
+- Written in Go, a language with higher **memory safety guarantees** than other servers
+- Actually **fun to use**
+- So much more to [discover](https://caddyserver.com/v2)
 
-# 仅启动服务器
-npm run serve
-```
+## Install
 
-### 生产构建
+The simplest, cross-platform way to get started is to download Caddy from [GitHub Releases](https://github.com/caddyserver/caddy/releases) and place the executable file in your PATH.
 
-```bash
-# 构建生产版本
-npm run build:prod
+See [our online documentation](https://caddyserver.com/docs/install) for other install instructions.
 
-# 构建并部署
-npm run deploy
-```
+## Build from source
 
-### 其他命令
+Requirements:
 
-```bash
-# 清理构建文件
-npm run clean
+- [Go 1.20 or newer](https://golang.org/dl/)
 
-# 查看所有可用命令
-npm run
+### For development
 
-# 启动翻译服务
-npm run translator
-```
-
-### 开发流程
-
-1. **开发调试**：`npm start` - 启动开发服务器+热重载
-2. **构建测试**：`npm run build` - 构建开发版本
-3. **生产部署**：`npm run build:prod` - 构建生产版本
-
-访问地址：`http://localhost:3000`
-
-### 热重载功能
-
-开发模式下支持以下文件的热重载：
-- 🎨 CSS/SCSS 文件变化自动重新编译
-- 📄 HTML 模板变化自动重新构建
-- 📜 JavaScript 文件变化自动重新构建  
-- 🌐 i18n 文件变化自动更新
-- ⚙️ 配置文件变化自动同步
-- 🔄 浏览器自动刷新
-
-## 🚀 开发服务器
-
-### 快速启动
-```bash
-npm run dev-simple    # 快速启动（推荐）
-npm run dev           # 完整构建启动
-npm start             # 启动 + 热重载
-```
-
-### 🔄 代理配置
-
-现在所有开发命令都自动支持代理功能！配置非常简单，类似 Vite/webpack-dev-server：
-
-**配置文件**: `gulp/proxy-config.js`
-
-```javascript
-module.exports = {
-    // 简单配置 - 字符串形式
-    '/api': 'http://localhost:8080',
-    '/auth': 'http://localhost:8081',
-    '/upload': 'http://localhost:8082',
-    
-    // 高级配置 - 对象形式
-    '/ws': {
-        target: 'ws://localhost:8080',
-        ws: true,
-        changeOrigin: true
-    },
-    
-    // 路径重写
-    '/admin': {
-        target: 'http://localhost:8080',
-        pathRewrite: {
-            '^/admin': '/api/admin'
-        }
-    }
-};
-```
-
-### 代理示例
-
-启动开发服务器后，所有匹配的请求会自动代理：
+_**Note:** These steps [will not embed proper version information](https://github.com/golang/go/issues/29228). For that, please follow the instructions in the next section._
 
 ```bash
-# 前端请求                          后端目标
-http://localhost:3001/api/users  →  http://localhost:8080/api/users
-http://localhost:3001/auth/login →  http://localhost:8081/auth/login
-http://localhost:3001/upload     →  http://localhost:8082/upload
+$ git clone "https://github.com/caddyserver/caddy.git"
+$ cd caddy/cmd/caddy/
+$ go build
 ```
 
-### 开发命令对比
+When you run Caddy, it may try to bind to low ports unless otherwise specified in your config. If your OS requires elevated privileges for this, you will need to give your new binary permission to do so. On Linux, this can be done easily with: `sudo setcap cap_net_bind_service=+ep ./caddy`
 
-| 命令 | 构建时间 | 功能完整性 | 适用场景 |
-|------|----------|------------|----------|
-| `npm run dev-simple` | ⚡ 快 | 90% | 日常开发 |
-| `npm run dev` | 🐌 慢 | 100% | 功能测试 |
-| `npm start` | ⚡ 快 + 热重载 | 90% | 开发调试 |
+If you prefer to use `go run` which only creates temporary binaries, you can still do this with the included `setcap.sh` like so:
 
-## Oplus模块使用
-
-你可以建立一个应用，然后引入Oplus模块，例如建立一个应用叫`oplusdemoapp`，引入Oplus模块的步骤如下。
-
-### 1. 在 `index.html` 中引入 Javascript 和 CSS
-
-```html
-<link rel="stylesheet" href="content/css/oplus-vendors.css">
-<link rel="stylesheet" href="content/css/oplus-commons.css">
-<link rel="stylesheet" href="content/css/oplus-udp.css">
-<link rel="stylesheet" href="content/css/oplus-dts.css">
-<link rel="stylesheet" href="content/css/oplusdemoapp.css">
-
-<script src="config.js"></script>                     <!-- config.js 必须放在最前面 -->
-<script src="app/modules/oplus-vendors.js"></script>  <!-- 打包好的第三方库 -->
-<script src="app/modules/oplus-commons.js"></script>  <!-- Oplus的通用库 -->
-<script src="app/oplusdemoapp.js"></script>           <!-- 应用自己的主js -->
-<script src="app/modules/oplus-uaa.js"></script>
-<script src="app/modules/oplus-dts.js"></script>
-<script src="app/modules/oplus-udp.js"></script>
-<script src="app/modules/oplus-dev.js"></script>
-```
-
-### 2. 在 `oplusdemoapp.js` 中引入模块
-
-```javascript
-angular.module('oplusdemoapp', [
-    'ngAnimate',
-    'ngSanitize', 
-    'ui.router',
-    'oplus.commons',
-    'oplus.main',
-    'oplus.udp',
-    'oplus.dev',
-    'oplus.dts'
-]);
-```
-
-### 3. 模块配置（可选）
-
-```javascript
-angular.module('oplusdemoapp')
-    .config(['pageDaoProvider', function (pageDaoProvider) {
-        pageDaoProvider.useLocalDb(window.$oplus.appConfig.modules.udp.useLocalDb);
-    }])
-    .config(['datasetDaoProvider', 'datasourceDaoProvider', 
-        function (datasetDaoProvider, datasourceDaoProvider) {
-            datasetDaoProvider.useLocalDb(window.$oplus.appConfig.modules.dts.useLocalDb);
-            datasourceDaoProvider.useLocalDb(window.$oplus.appConfig.modules.dts.useLocalDb);
-    }]);
-```
-
-## 项目结构
-
-```
-oplus-modules/
-├── src/webapp/              # 源代码
-│   ├── app/modules/         # 各模块源码
-│   ├── content/             # 样式和静态资源
-│   ├── i18n/               # 国际化文件
-│   └── index.html          # 主页面
-├── dist/                   # 构建输出
-├── gulpfile.js            # 构建配置
-├── package.json           # 项目配置
-└── README.md              # 说明文档
-```
-
-## 开发指引
-
-### 规范
-
-1. `src/webapp/app/modules` 下面建立模块目录，该模块所有的CSS、HTML、JS都放目录下
-2. 使用 npm 管理第三方依赖
-3. 遵循 Angular 1.x 最佳实践
-
-### 注意事项
-
-1. 不要使用 `const`，因为它在某些环境下不兼容
-2. jQuery 使用 2.x 版本，避免与 jQuery UI 冲突
-3. 导出 Word 采用 `html-docx-js`，CSS 多个 class 时只认第一个
-
-### 技术栈
-
-- **框架**：AngularJS 1.5.8
-- **构建工具**：Gulp 3.9.1
-- **样式**：SCSS + Bootstrap 3.3.7
-- **包管理**：npm
-
-## 发布流程
-
-1. 提交代码并打标签
 ```bash
-git commit -m "Release version x.x.x"
-git tag -a vx.x.x -m "version x.x.x"
-git push origin --tags
+$ go run -exec ./setcap.sh main.go
 ```
 
-2. 构建生产版本
-```bash
-npm run build:prod
+If you don't want to type your password for `setcap`, use `sudo visudo` to edit your sudoers file and allow your user account to run that command without a password, for example:
+
+```
+username ALL=(ALL:ALL) NOPASSWD: /usr/sbin/setcap
 ```
 
-3. 部署
-```bash
-npm run deploy
+replacing `username` with your actual username. Please be careful and only do this if you know what you are doing! We are only qualified to document how to use Caddy, not Go tooling or your computer, and we are providing these instructions for convenience only; please learn how to use your own computer at your own risk and make any needful adjustments.
+
+### With version information and/or plugins
+
+Using [our builder tool, `xcaddy`](https://github.com/caddyserver/xcaddy)...
+
 ```
+$ xcaddy build
+```
+
+...the following steps are automated:
+
+1. Create a new folder: `mkdir caddy`
+2. Change into it: `cd caddy`
+3. Copy [Caddy's main.go](https://github.com/caddyserver/caddy/blob/master/cmd/caddy/main.go) into the empty folder. Add imports for any custom plugins you want to add.
+4. Initialize a Go module: `go mod init caddy`
+5. (Optional) Pin Caddy version: `go get github.com/caddyserver/caddy/v2@version` replacing `version` with a git tag, commit, or branch name.
+6. (Optional) Add plugins by adding their import: `_ "import/path/here"`
+7. Compile: `go build`
+
+
+
+
+## Quick start
+
+The [Caddy website](https://caddyserver.com/docs/) has documentation that includes tutorials, quick-start guides, reference, and more.
+
+**We recommend that all users -- regardless of experience level -- do our [Getting Started](https://caddyserver.com/docs/getting-started) guide to become familiar with using Caddy.**
+
+If you've only got a minute, [the website has several quick-start tutorials](https://caddyserver.com/docs/quick-starts) to choose from! However, after finishing a quick-start tutorial, please read more documentation to understand how the software works. 🙂
+
+
+
+
+## Overview
+
+Caddy is most often used as an HTTPS server, but it is suitable for any long-running Go program. First and foremost, it is a platform to run Go applications. Caddy "apps" are just Go programs that are implemented as Caddy modules. Two apps -- `tls` and `http` -- ship standard with Caddy.
+
+Caddy apps instantly benefit from [automated documentation](https://caddyserver.com/docs/json/), graceful on-line [config changes via API](https://caddyserver.com/docs/api), and unification with other Caddy apps.
+
+Although [JSON](https://caddyserver.com/docs/json/) is Caddy's native config language, Caddy can accept input from [config adapters](https://caddyserver.com/docs/config-adapters) which can essentially convert any config format of your choice into JSON: Caddyfile, JSON 5, YAML, TOML, NGINX config, and more.
+
+The primary way to configure Caddy is through [its API](https://caddyserver.com/docs/api), but if you prefer config files, the [command-line interface](https://caddyserver.com/docs/command-line) supports those too.
+
+Caddy exposes an unprecedented level of control compared to any web server in existence. In Caddy, you are usually setting the actual values of the initialized types in memory that power everything from your HTTP handlers and TLS handshakes to your storage medium. Caddy is also ridiculously extensible, with a powerful plugin system that makes vast improvements over other web servers.
+
+To wield the power of this design, you need to know how the config document is structured. Please see [our documentation site](https://caddyserver.com/docs/) for details about [Caddy's config structure](https://caddyserver.com/docs/json/).
+
+Nearly all of Caddy's configuration is contained in a single config document, rather than being scattered across CLI flags and env variables and a configuration file as with other web servers. This makes managing your server config more straightforward and reduces hidden variables/factors.
+
+
+## Full documentation
+
+Our website has complete documentation:
+
+**https://caddyserver.com/docs/**
+
+The docs are also open source. You can contribute to them here: https://github.com/caddyserver/website
+
+
+
+## Getting help
+
+- We advise companies using Caddy to secure a support contract through [Ardan Labs](https://www.ardanlabs.com/my/contact-us?dd=caddy) before help is needed.
+
+- A [sponsorship](https://github.com/sponsors/mholt) goes a long way! We can offer private help to sponsors. If Caddy is benefitting your company, please consider a sponsorship. This not only helps fund full-time work to ensure the longevity of the project, it provides your company the resources, support, and discounts you need; along with being a great look for your company to your customers and potential customers!
+
+- Individuals can exchange help for free on our community forum at https://caddy.community. Remember that people give help out of their spare time and good will. The best way to get help is to give it first!
+
+Please use our [issue tracker](https://github.com/caddyserver/caddy/issues) only for bug reports and feature requests, i.e. actionable development items (support questions will usually be referred to the forums).
+
+
+
+## About
+
+Matthew Holt began developing Caddy in 2014 while studying computer science at Brigham Young University. (The name "Caddy" was chosen because this software helps with the tedious, mundane tasks of serving the Web, and is also a single place for multiple things to be organized together.) It soon became the first web server to use HTTPS automatically and by default, and now has hundreds of contributors and has served trillions of HTTPS requests.
+
+**The name "Caddy" is trademarked.** The name of the software is "Caddy", not "Caddy Server" or "CaddyServer". Please call it "Caddy" or, if you wish to clarify, "the Caddy web server". Caddy is a registered trademark of Stack Holdings GmbH.
+
+- _Project on Twitter: [@caddyserver](https://twitter.com/caddyserver)_
+- _Author on Twitter: [@mholt6](https://twitter.com/mholt6)_
+
+Caddy is a project of [ZeroSSL](https://zerossl.com), a Stack Holdings company.
+
+Debian package repository hosting is graciously provided by [Cloudsmith](https://cloudsmith.com). Cloudsmith is the only fully hosted, cloud-native, universal package management solution, that enables your organization to create, store and share packages in any format, to any place, with total confidence.

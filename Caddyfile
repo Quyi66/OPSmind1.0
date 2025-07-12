@@ -1,0 +1,27 @@
+:8080 {
+	# 处理API代理请求
+	handle /local-portal/api/* {
+		# 添加CORS头
+		header Access-Control-Allow-Origin "*"
+		header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+		header Access-Control-Allow-Headers "Content-Type, Authorization"
+		
+		# 处理OPTIONS预检请求
+		@options method OPTIONS
+		respond @options 200
+		
+		# 重写路径：/local-portal/api/* -> /oplus-portal/api/*
+		uri replace /local-portal/api /oplus-portal/api
+		
+		# 代理到目标服务器
+		reverse_proxy http://10.1.40.112 {
+			header_up Host {upstream_hostport}
+			header_up X-Real-IP {remote_host}
+		}
+	}
+
+	# 其他请求返回404
+	handle * {
+		respond "Caddy Proxy Server - Only API requests are handled" 404
+	}
+} 
