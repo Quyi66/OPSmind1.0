@@ -21,13 +21,13 @@
 		level DEBUG
 	}
 	
-	# 处理API代理请求
-	handle /local-portal/api/* {
+	# 处理所有local-portal请求 - 统一路径重写
+	handle /local-portal/* {
 		# 移除Caddy的CORS头部 - 完全交给目标服务器处理
 		# 目标服务器已经有正确的CORS配置，避免重复导致浏览器混淆
 		
-		# 重写路径：/local-portal/api/* -> /oplus-portal/api/*
-		uri replace /local-portal/api /oplus-portal/api
+		# 统一重写路径：/local-portal/* -> /oplus-portal/*
+		uri replace /local-portal /oplus-portal
 		
 		# 代理到目标服务器 - 添加详细日志
 		reverse_proxy http://10.1.40.112 {
@@ -35,11 +35,17 @@
 			header_up X-Real-IP {remote_host}
 			header_up X-Forwarded-For {remote_host}
 			header_up X-Forwarded-Proto {scheme}
-			
-			# 移除健康检查 - 目标服务器没有/health端点
-			# health_uri /health
-			# health_interval 30s
-			# health_timeout 10s
+		}
+	}
+
+	# 处理直接oplus-portal API请求 - 无路径重写
+	handle /oplus-portal/* {
+		# 直接代理到目标服务器，保持原始路径
+		reverse_proxy http://10.1.40.112 {
+			header_up Host {upstream_hostport}
+			header_up X-Real-IP {remote_host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
 		}
 	}
 
