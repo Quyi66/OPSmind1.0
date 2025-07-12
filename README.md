@@ -73,6 +73,64 @@ npm run translator
 - ⚙️ 配置文件变化自动同步
 - 🔄 浏览器自动刷新
 
+## 🚀 开发服务器
+
+### 快速启动
+```bash
+npm run dev-simple    # 快速启动（推荐）
+npm run dev           # 完整构建启动
+npm start             # 启动 + 热重载
+```
+
+### 🔄 代理配置
+
+现在所有开发命令都自动支持代理功能！配置非常简单，类似 Vite/webpack-dev-server：
+
+**配置文件**: `gulp/proxy-config.js`
+
+```javascript
+module.exports = {
+    // 简单配置 - 字符串形式
+    '/api': 'http://localhost:8080',
+    '/auth': 'http://localhost:8081',
+    '/upload': 'http://localhost:8082',
+    
+    // 高级配置 - 对象形式
+    '/ws': {
+        target: 'ws://localhost:8080',
+        ws: true,
+        changeOrigin: true
+    },
+    
+    // 路径重写
+    '/admin': {
+        target: 'http://localhost:8080',
+        pathRewrite: {
+            '^/admin': '/api/admin'
+        }
+    }
+};
+```
+
+### 代理示例
+
+启动开发服务器后，所有匹配的请求会自动代理：
+
+```bash
+# 前端请求                          后端目标
+http://localhost:3001/api/users  →  http://localhost:8080/api/users
+http://localhost:3001/auth/login →  http://localhost:8081/auth/login
+http://localhost:3001/upload     →  http://localhost:8082/upload
+```
+
+### 开发命令对比
+
+| 命令 | 构建时间 | 功能完整性 | 适用场景 |
+|------|----------|------------|----------|
+| `npm run dev-simple` | ⚡ 快 | 90% | 日常开发 |
+| `npm run dev` | 🐌 慢 | 100% | 功能测试 |
+| `npm start` | ⚡ 快 + 热重载 | 90% | 开发调试 |
+
 ## Oplus模块使用
 
 你可以建立一个应用，然后引入Oplus模块，例如建立一个应用叫`oplusdemoapp`，引入Oplus模块的步骤如下。

@@ -37,6 +37,8 @@ const sort = require('gulp-sort');
 const minimist = require('minimist');
 const gutil = require('gulp-util');
 const DateTime = require('luxon').DateTime;
+const httpProxy = require('http-proxy');
+const proxyConfig = require('./gulp/proxy-config.js');
 
 const config = require('./gulp/config');
 const pkg = require('./package.json');
@@ -211,6 +213,16 @@ gulp.task('clean', function clean() {
 });
 
 gulp.task('serve', function serve() {
+    // 创建代理服务器
+    const proxy = httpProxy.createProxyServer({});
+    
+    // 处理代理错误
+    proxy.on('error', function(err, req, res) {
+        console.error('🚨 Proxy error:', err.message);
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Proxy error: ' + err.message);
+    });
+    
     connect.server({
         root: dirs.dist.webapp,
         port: 3001,
@@ -219,6 +231,45 @@ gulp.task('serve', function serve() {
         index: 'index.html',
         middleware: function(connect, opt) {
             return [
+                // 现代化代理中间件
+                function(req, res, next) {
+                    // 检查是否匹配代理规则
+                    for (const [path, config] of Object.entries(proxyConfig)) {
+                        if (req.url.startsWith(path)) {
+                            // 标准化配置 - 支持简单字符串和对象两种形式
+                            const proxyOpts = typeof config === 'string' 
+                                ? { target: config, changeOrigin: true } 
+                                : { changeOrigin: true, ...config };
+                            
+                            console.log(`🔄 ${req.method} ${req.url} -> ${proxyOpts.target}`);
+                            
+                            // 路径重写
+                            let targetUrl = req.url;
+                            if (proxyOpts.pathRewrite) {
+                                for (const [from, to] of Object.entries(proxyOpts.pathRewrite)) {
+                                    targetUrl = targetUrl.replace(new RegExp(from), to);
+                                }
+                            }
+                            
+                            // 修改请求URL
+                            req.url = targetUrl;
+                            
+                            // 代理到目标服务器
+                            proxy.web(req, res, {
+                                target: proxyOpts.target,
+                                changeOrigin: proxyOpts.changeOrigin,
+                                secure: false,
+                                ws: proxyOpts.ws || false
+                            });
+                            
+                            return; // 不调用next()，因为请求已被代理
+                        }
+                    }
+                    
+                    // 如果没有匹配的代理规则，继续下一个中间件
+                    next();
+                },
+                
                 // SPA路由处理中间件
                 function(req, res, next) {
                     // 对于所有非静态资源的请求，都返回 index.html
@@ -233,6 +284,11 @@ gulp.task('serve', function serve() {
     
     console.log(`🚀 Development server started on http://localhost:3001`);
     console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
+    console.log(`🔄 Proxy configured:`);
+    for (const [path, config] of Object.entries(proxyConfig)) {
+        const target = typeof config === 'string' ? config : config.target;
+        console.log(`   ${path} -> ${target}`);
+    }
 });
 
 gulp.task('build-icons', function buildIcons(cb) {
@@ -714,4 +770,16 @@ gulp.task('watch-dev', function watchDev() {
 gulp.task('serve-watch', function serveWatch() {
     info('Starting server with file watching...');
     return runSequence('serve', 'watch-enhanced');
+});
+
+// 现在代理是默认功能，所以这些任务可以移除或重命名
+// 保留dev-proxy和dev-simple-proxy作为向后兼容的别名
+gulp.task('dev-proxy', function devProxy() {
+    info('Starting development mode with proxy...');
+    return runSequence('build-dev-simple', 'serve', 'watch-enhanced');
+});
+
+gulp.task('dev-simple-proxy', function devSimpleProxy() {
+    info('Starting development mode with proxy (simplified)...');
+    return runSequence('build-dev-simple', 'serve');
 });
