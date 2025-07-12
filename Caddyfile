@@ -23,10 +23,11 @@
 	
 	# 处理API代理请求
 	handle /local-portal/api/* {
-		# 添加CORS头
+		# 添加CORS头 - 支持前端应用的所有自定义头部
 		header Access-Control-Allow-Origin "*"
 		header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-		header Access-Control-Allow-Headers "Content-Type, Authorization"
+		header Access-Control-Allow-Headers "Content-Type, Authorization, nonce, timestamp, Language, Tenant-Id"
+		header Access-Control-Expose-Headers "Content-Disposition"
 		
 		# 处理OPTIONS预检请求
 		@options method OPTIONS
