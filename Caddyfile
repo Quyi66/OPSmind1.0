@@ -23,15 +23,8 @@
 	
 	# 处理API代理请求
 	handle /local-portal/api/* {
-		# 添加CORS头 - 支持前端应用的所有自定义头部
-		header Access-Control-Allow-Origin "*"
-		header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-		header Access-Control-Allow-Headers "Content-Type, Authorization, nonce, timestamp, Language, Tenant-Id"
-		header Access-Control-Expose-Headers "Content-Disposition"
-		
-		# 处理OPTIONS预检请求
-		@options method OPTIONS
-		respond @options 200
+		# 移除Caddy的CORS头部 - 完全交给目标服务器处理
+		# 目标服务器已经有正确的CORS配置，避免重复导致浏览器混淆
 		
 		# 重写路径：/local-portal/api/* -> /oplus-portal/api/*
 		uri replace /local-portal/api /oplus-portal/api
