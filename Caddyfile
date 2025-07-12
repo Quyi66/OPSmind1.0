@@ -42,10 +42,10 @@
 			header_up X-Forwarded-For {remote_host}
 			header_up X-Forwarded-Proto {scheme}
 			
-			# 健康检查
-			health_uri /health
-			health_interval 30s
-			health_timeout 10s
+			# 移除健康检查 - 目标服务器没有/health端点
+			# health_uri /health
+			# health_interval 30s
+			# health_timeout 10s
 		}
 	}
 
