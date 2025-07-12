@@ -213,7 +213,7 @@ gulp.task('clean', function clean() {
 gulp.task('serve', function serve() {
     connect.server({
         root: dirs.dist.webapp,
-        port: 3000,
+        port: 3001,
         livereload: true,
         host: '0.0.0.0',
         index: 'index.html',
@@ -231,7 +231,7 @@ gulp.task('serve', function serve() {
         }
     });
     
-    console.log(`🚀 Development server started on http://localhost:3000`);
+    console.log(`🚀 Development server started on http://localhost:3001`);
     console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
 });
 
@@ -603,3 +603,115 @@ gulp.task('update-versions', function () {
 const info = message => {
     console.log(message);
 }
+
+// ============ 复合任务定义 ============
+
+// 简化的开发环境构建任务（跳过HTML模板编译）
+gulp.task('build-dev-simple', function buildDevSimple() {
+    info('Building development version (simplified)...');
+    return runSequence(
+        'clean',
+        'combine-i18n',
+        // 跳过 'module-html2js' 任务
+        ['build-css', 'build-js'],
+        'copy-files',
+        'copy-lazyload-files',
+        'copy-npm-assets'
+    );
+});
+
+// 开发环境构建任务
+gulp.task('build-dev', function buildDev() {
+    info('Building development version...');
+    return runSequence(
+        'clean',
+        'combine-i18n',
+        'module-html2js',
+        ['build-css', 'build-js'],
+        'copy-files',
+        'copy-lazyload-files',
+        'copy-npm-assets'
+    );
+});
+
+// 生产环境构建任务
+gulp.task('build-prod', function buildProd() {
+    info('Building production version...');
+    return runSequence('dist-modules');
+});
+
+// 简化的开发模式：构建 + 启动服务器
+gulp.task('dev-simple', function devSimple() {
+    info('Starting development mode (simplified)...');
+    return runSequence('build-dev-simple', 'serve');
+});
+
+// 开发模式：构建 + 启动服务器
+gulp.task('dev', function dev() {
+    info('Starting development mode...');
+    return runSequence('build-dev', 'serve');
+});
+
+// 增强的 watch 任务
+gulp.task('watch-enhanced', function watchEnhanced() {
+    const cssFiles = config.sassSrc.concat(config.lessSrc);
+    const jsFiles = ['src/webapp/app/modules/**/*.js', '!src/webapp/app/modules/**/node_modules/**/*.js'];
+    const htmlFiles = ['src/webapp/app/modules/**/*.html', '!src/webapp/app/modules/**/node_modules/**/*.html'];
+    const configFiles = ['src/webapp/config.js'];
+    
+    // 监视 CSS 文件
+    gulp.watch(cssFiles, function(event) {
+        console.log('🎨 CSS file changed:', path.basename(event.path));
+        return gulp.start('build-css');
+    });
+    
+    // 监视 i18n 文件
+    gulp.watch(config.i18nDir + '/*/*.json', function(event) {
+        console.log('🌐 i18n file changed:', path.basename(event.path));
+        return gulp.start('combine-i18n');
+    });
+    
+    // 监视 HTML 模板文件
+    gulp.watch(htmlFiles, function(event) {
+        console.log('📄 HTML template changed:', path.basename(event.path));
+        return gulp.start('module-html2js');
+    });
+    
+    // 监视 JS 文件
+    gulp.watch(jsFiles, function(event) {
+        console.log('📜 JS file changed:', path.basename(event.path));
+        return gulp.start('build-js');
+    });
+    
+    // 监视配置文件
+    gulp.watch(configFiles, function(event) {
+        console.log('⚙️ Config file changed:', path.basename(event.path));
+        return gulp.src('src/webapp/config.js').pipe(gulp.dest(dirs.dist.webapp));
+    });
+    
+    // 监视构建输出目录，触发页面刷新
+    gulp.watch([
+        dirs.dist.webapp + '/**/*.js',
+        dirs.dist.webapp + '/**/*.css',
+        dirs.dist.webapp + '/**/*.html'
+    ], function(event) {
+        console.log('🔄 Built file changed, reloading browser...');
+        return gulp.src(event.path).pipe(connect.reload());
+    });
+    
+    console.log('👀 File watcher started...');
+    console.log('📁 Watching: JS, HTML, CSS, i18n, config files');
+    console.log('🔥 Hot-reload enabled - changes will auto-refresh browser');
+});
+
+// 开发模式 + 热重载：构建 + 启动服务器 + 监视文件
+gulp.task('watch-dev', function watchDev() {
+    info('Starting development mode with hot reload...');
+    return runSequence('build-dev', 'serve', 'watch-enhanced');
+});
+
+// 仅启动服务器 + 监视（假设已经构建过）
+gulp.task('serve-watch', function serveWatch() {
+    info('Starting server with file watching...');
+    return runSequence('serve', 'watch-enhanced');
+});
