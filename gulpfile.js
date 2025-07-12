@@ -37,9 +37,7 @@ const sort = require('gulp-sort');
 const minimist = require('minimist');
 const gutil = require('gulp-util');
 const DateTime = require('luxon').DateTime;
-// Proxy functionality removed - use external proxy (e.g., Caddy) if needed
-// const httpProxy = require('http-proxy');
-// const proxyConfig = require('./gulp/proxy-config.js');
+
 
 const config = require('./gulp/config');
 const pkg = require('./package.json');
@@ -236,7 +234,6 @@ gulp.task('serve', function serve() {
     
     console.log(`🚀 Development server started on http://localhost:3000`);
     console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
-    console.log(`⚠️  No proxy configured - serving static files only`);
 });
 
 gulp.task('build-icons', function buildIcons(cb) {
@@ -720,14 +717,4 @@ gulp.task('serve-watch', function serveWatch() {
     return runSequence('serve', 'watch-enhanced');
 });
 
-// 现在代理是默认功能，所以这些任务可以移除或重命名
-// 保留dev-proxy和dev-simple-proxy作为向后兼容的别名
-gulp.task('dev-proxy', function devProxy() {
-    info('Starting development mode with proxy...');
-    return runSequence('build-dev-simple', 'serve', 'watch-enhanced');
-});
 
-gulp.task('dev-simple-proxy', function devSimpleProxy() {
-    info('Starting development mode with proxy (simplified)...');
-    return runSequence('build-dev-simple', 'serve');
-});
