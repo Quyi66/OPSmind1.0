@@ -48,7 +48,14 @@ angular.module('oplus.main').config(['$stateProvider', '$urlRouterProvider', 'te
                     'content@': homeContent
                 }
             });
-            $urlRouterProvider.otherwise('/home');
+            // 修改默认路由，未登录时跳转到登录页面
+            $urlRouterProvider.otherwise(function($injector, $location) {
+                var currentUser = $injector.get('currentUser');
+                if (!currentUser.isAuthenticated) {
+                    return '/login';
+                }
+                return '/home';
+            });
         }
     ]
 );

@@ -24,7 +24,7 @@
                         title: 'app.nav.cmd',
                         icon: 'fa-oplus-cmd',
                         color: '#212529',
-                        showIn: {desktop: 0, dock: 0},
+                        showIn: {desktop: 1, dock: 1},
                         windowSize:'md'
                     }
                 });
