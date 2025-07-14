@@ -153,6 +153,34 @@ npm install
 
 脚本会自动检测并使用 `npx gulp`，无需全局安装gulp。
 
+### 5. /oplus/base 路径访问问题
+
+如果访问 `http://localhost:3000/oplus/base` 时遇到静态资源加载失败的问题：
+
+**问题现象**:
+- CSS和JS文件返回404错误
+- 资源MIME类型错误 (返回 `text/html` 而不是正确类型)
+
+**解决方案**:
+开发服务器已配置路径重写中间件来处理此问题。确保：
+
+```bash
+# 重新构建项目
+npm run build-dev
+
+# 启动开发服务器  
+npm run serve
+```
+
+**访问方式**:
+- 根路径访问: `http://localhost:3000/`
+- 标准路径访问: `http://localhost:3000/oplus/base/`
+
+两种方式都能正常工作，推荐使用 `/oplus/base/` 路径以匹配生产环境。
+
+**技术原理**:
+开发服务器中间件会自动将 `/oplus/base/xxx` 的请求重写为 `/xxx`，确保静态资源能够正确加载和返回正确的MIME类型。
+
 ## 性能优化
 
 - 使用本地Node.js环境，避免Docker容器开销

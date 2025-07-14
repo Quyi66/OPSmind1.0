@@ -220,6 +220,18 @@ gulp.task('serve', function serve() {
         index: 'index.html',
         middleware: function(connect, opt) {
             return [
+                // 处理 /oplus/base 路径的静态资源请求
+                function(req, res, next) {
+                    // 如果请求路径以 /oplus/base 开头，去掉这个前缀
+                    if (req.url.startsWith('/oplus/base')) {
+                        req.url = req.url.replace('/oplus/base', '');
+                        // 如果去掉前缀后变成空字符串，重定向到根目录
+                        if (req.url === '') {
+                            req.url = '/';
+                        }
+                    }
+                    return next();
+                },
                 // SPA路由处理中间件
                 function(req, res, next) {
                     // 对于所有非静态资源的请求，都返回 index.html
@@ -234,6 +246,7 @@ gulp.task('serve', function serve() {
     
     console.log(`🚀 Development server started on http://localhost:3000`);
     console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
+    console.log(`🔗 Access via: http://localhost:3000/oplus/base`);
 });
 
 gulp.task('build-icons', function buildIcons(cb) {

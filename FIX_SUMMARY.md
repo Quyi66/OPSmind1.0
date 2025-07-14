@@ -208,6 +208,100 @@ bash build.sh dist
 #### 6.2 网页加载状态
 现在网页应该可以正常加载，不再出现JavaScript依赖错误。
 
+### 7. 开发服务器路径修复 (2025-01-12)
+
+#### 7.1 `/oplus/base` 路径无法访问问题
+**问题描述**: 
+- 访问 `http://localhost:3000/oplus/base` 时出现静态资源 404 错误
+- CSS 和 JS 文件返回错误的 MIME 类型 (`text/html` 而不是正确的类型)
+- 所有静态资源路径都无法正确解析
+
+**错误现象**:
+```
+base/:18 Refused to apply style from 'http://localhost:3000/oplus/base/content/css/oplus-vendors.css' 
+because its MIME type ('text/html') is not a supported stylesheet MIME type
+
+base/:38 GET http://localhost:3000/oplus/base/app/modules/oplus-vendors.js net::ERR_ABORTED 404 (Not Found)
+```
+
+**根本原因**: 
+应用在生产环境中期望部署在 `/oplus/base` 路径下，但开发服务器配置没有正确处理这个路径的静态资源请求。
+
+#### 7.2 修复方案
+**修改文件**: `gulpfile.js`
+
+在 `serve` 任务中添加路径重写中间件：
+
+```javascript
+gulp.task('serve', function serve() {
+    connect.server({
+        root: dirs.dist.webapp,
+        port: 3000,
+        livereload: true,
+        host: '0.0.0.0',
+        index: 'index.html',
+        middleware: function(connect, opt) {
+            return [
+                // 处理 /oplus/base 路径的静态资源请求
+                function(req, res, next) {
+                    // 如果请求路径以 /oplus/base 开头，去掉这个前缀
+                    if (req.url.startsWith('/oplus/base')) {
+                        req.url = req.url.replace('/oplus/base', '');
+                        // 如果去掉前缀后变成空字符串，重定向到根目录
+                        if (req.url === '') {
+                            req.url = '/';
+                        }
+                    }
+                    return next();
+                },
+                // SPA路由处理中间件
+                function(req, res, next) {
+                    // 对于所有非静态资源的请求，都返回 index.html
+                    if (req.url.indexOf('.') === -1 || req.url.endsWith('.html')) {
+                        req.url = '/index.html';
+                    }
+                    return next();
+                }
+            ];
+        }
+    });
+    
+    console.log(`🚀 Development server started on http://localhost:3000`);
+    console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
+    console.log(`🔗 Access via: http://localhost:3000/oplus/base`);
+});
+```
+
+#### 7.3 工作原理
+新的中间件将所有 `/oplus/base/xxx` 的请求重写为 `/xxx`，这样：
+- 浏览器请求 `/oplus/base/content/css/oplus-vendors.css`
+- 服务器将其重写为 `/content/css/oplus-vendors.css` 并从文件系统中找到对应文件
+- 返回正确的 MIME 类型和文件内容
+
+#### 7.4 验证结果
+修复后，所有关键资源现在都可以正常访问：
+
+- ✅ **主页面**: `http://localhost:3000/oplus/base/` (200 OK)
+- ✅ **CSS文件**: `http://localhost:3000/oplus/base/content/css/oplus-vendors.css` (200 OK)  
+- ✅ **SVG图像**: `http://localhost:3000/oplus/base/content/images/preloader.svg` (200 OK)
+- ✅ **JavaScript文件**: `http://localhost:3000/oplus/base/app/modules/oplus-vendors.js` (200 OK)
+
+#### 7.5 使用说明
+**启动开发服务器**:
+```bash
+# 构建项目
+npm run build-dev
+
+# 启动开发服务器
+npm run serve
+
+# 访问应用
+# 根路径: http://localhost:3000/
+# 标准路径: http://localhost:3000/oplus/base/
+```
+
+现在访问 `http://localhost:3000/oplus/base` 应该能正常工作，所有静态资源都能正确加载，不会再出现 MIME 类型错误和 404 错误。
+
 ## 总结
 
-通过以上修复，项目成功完成了从 bower 到 npm 的迁移，解决了所有依赖加载问题，构建流程现在可以正常工作。建议使用 Node.js 10 环境进行本地开发以获得最佳兼容性。 
+通过以上修复，项目成功完成了从 bower 到 npm 的迁移，解决了所有依赖加载问题，同时修复了开发环境中 `/oplus/base` 路径的访问问题。构建流程现在可以正常工作，开发服务器能够正确处理生产环境的路径结构。建议使用 Node.js 10 环境进行本地开发以获得最佳兼容性。 

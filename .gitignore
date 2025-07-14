@@ -1,5 +1,5 @@
 /angulr2.2.1
-/dist/webapp
+/dist/
 src/webapp/node_modules
 /node_modules
 /backups
@@ -7,16 +7,9 @@ src/webapp/node_modules
 /oplus.iml
 /src/webapp/bower_components
 /build
-/dist*
-/dist/tmp
-/dist/webapp
-/dist/webapp/app
-/dist/webapp/lib/*
-/dist/webapp/app/modules/*
 /tmp
 yarn-error.log
 yarn.lock
-/dist*
 /src/webapp/content/css/oplus-commons.css
 /src/webapp/content/css/oplus-dts.css
 /src/webapp/content/css/oplus-jat.css
