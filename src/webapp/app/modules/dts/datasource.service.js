@@ -73,6 +73,12 @@
                     className: "com.huawei.gauss.jdbc.ZenithDriver",
                     urlTemplate: "jdbc:zenith:@<server>:<port>",
                     validationQuery: "SELECT 1 from dual"
+                },
+                {
+                    dbName: "AS400",
+                    className: "com.ibm.as400.access.AS400JDBCDriver",
+                    urlTemplate: "jdbc:as400://<server>:<port>",
+                    validationQuery: "SELECT 1 from dual"
                 }
                 // {
                 //     dbName: $translate.instant('dts.datasource.other'),
