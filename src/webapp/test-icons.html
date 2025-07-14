@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8"/>
+    <title>FontAwesome 图标测试</title>
+    <link rel="stylesheet" href="content/css/fontawesome-pro.css" type="text/css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .icon-test {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            min-width: 150px;
+            text-align: center;
+        }
+        .icon-test i {
+            font-size: 2em;
+            margin-bottom: 5px;
+            display: block;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>FontAwesome 图标测试页面</h1>
+    
+    <div class="status success">
+        <strong>测试目的：</strong>验证 FontAwesome Duotone (fad) 图标是否正常显示，而不是显示为方块字符。
+    </div>
+
+    <div class="test-section">
+        <h2>项目中使用的 Duotone 图标测试</h2>
+        
+        <div class="icon-test">
+            <i class="fad fa-laptop-code fa-fw"></i>
+            <div>laptop-code</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-water fa-fw"></i>
+            <div>water</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-hand-paper fa-fw"></i>
+            <div>hand-paper</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-clipboard-check fa-fw"></i>
+            <div>clipboard-check</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-history fa-fw"></i>
+            <div>history</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-analytics fa-fw"></i>
+            <div>analytics</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-calendar-alt fa-fw"></i>
+            <div>calendar-alt</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-th-large fa-fw"></i>
+            <div>th-large</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-list-alt fa-fw"></i>
+            <div>list-alt</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-cog fa-fw"></i>
+            <div>cog</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-envelope fa-fw"></i>
+            <div>envelope</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-warehouse fa-fw"></i>
+            <div>warehouse</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-toolbox fa-fw"></i>
+            <div>toolbox</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-terminal fa-fw"></i>
+            <div>terminal</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fad fa-desktop fa-fw"></i>
+            <div>desktop</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>对比测试：Solid 图标 (应该正常显示)</h2>
+        
+        <div class="icon-test">
+            <i class="fas fa-home fa-fw"></i>
+            <div>home (solid)</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fas fa-user fa-fw"></i>
+            <div>user (solid)</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fas fa-search fa-fw"></i>
+            <div>search (solid)</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fas fa-cog fa-fw"></i>
+            <div>cog (solid)</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>自定义 Oplus 图标测试</h2>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-cmd fa-fw"></i>
+            <div>oplus-cmd</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-udp fa-fw"></i>
+            <div>oplus-udp</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-jao fa-fw"></i>
+            <div>oplus-jao</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-gfs fa-fw"></i>
+            <div>oplus-gfs</div>
+        </div>
+    </div>
+
+    <div class="status">
+        <strong>如何判断修复是否成功：</strong>
+        <ul>
+            <li>如果图标显示为正常的图形符号，说明修复成功</li>
+            <li>如果图标显示为方块字符（□），说明字体文件未正确加载</li>
+            <li>Duotone 图标应该有双色效果（主色和半透明的次色）</li>
+        </ul>
+    </div>
+
+    <script>
+        // 检查字体是否加载成功
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const testElement = document.createElement('span');
+                testElement.style.fontFamily = 'Font Awesome 5 Duotone';
+                testElement.style.fontSize = '16px';
+                testElement.innerHTML = '&#xf5fc;'; // laptop-code icon
+                document.body.appendChild(testElement);
+                
+                const computedStyle = window.getComputedStyle(testElement);
+                const fontFamily = computedStyle.fontFamily;
+                
+                console.log('检测到的字体家族:', fontFamily);
+                
+                if (fontFamily.includes('Font Awesome 5 Duotone')) {
+                    console.log('✅ FontAwesome Duotone 字体已成功加载');
+                } else {
+                    console.log('❌ FontAwesome Duotone 字体加载失败');
+                }
+                
+                document.body.removeChild(testElement);
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

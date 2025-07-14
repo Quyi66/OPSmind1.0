@@ -1,5 +1,8 @@
 /angulr2.2.1
 /dist/
+/dist/*
+dist/
+dist/*
 src/webapp/node_modules
 /node_modules
 /backups
