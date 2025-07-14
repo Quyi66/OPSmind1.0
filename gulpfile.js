@@ -220,8 +220,14 @@ gulp.task('serve', function serve() {
         index: 'index.html',
         middleware: function(connect, opt) {
             return [
-                // 处理 URL 重定向，确保 /oplus-admin 重定向到 /oplus-admin/
+                // 处理 URL 重定向，确保 /oplus/base 和 /oplus-admin 重定向到带斜杠的版本
                 function(req, res, next) {
+                    // 如果请求的是 /oplus/base（没有斜杠结尾），重定向到 /oplus/base/
+                    if (req.url === '/oplus/base') {
+                        res.writeHead(301, { 'Location': '/oplus/base/' });
+                        res.end();
+                        return;
+                    }
                     // 如果请求的是 /oplus-admin（没有斜杠结尾），重定向到 /oplus-admin/
                     if (req.url === '/oplus-admin') {
                         res.writeHead(301, { 'Location': '/oplus-admin/' });
