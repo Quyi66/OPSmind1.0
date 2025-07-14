@@ -220,11 +220,29 @@ gulp.task('serve', function serve() {
         index: 'index.html',
         middleware: function(connect, opt) {
             return [
-                // 处理 /oplus/base 路径的静态资源请求
+                // 处理 URL 重定向，确保 /oplus-admin 重定向到 /oplus-admin/
+                function(req, res, next) {
+                    // 如果请求的是 /oplus-admin（没有斜杠结尾），重定向到 /oplus-admin/
+                    if (req.url === '/oplus-admin') {
+                        res.writeHead(301, { 'Location': '/oplus-admin/' });
+                        res.end();
+                        return;
+                    }
+                    return next();
+                },
+                // 处理 /oplus/base 和 /oplus-admin 路径的静态资源请求
                 function(req, res, next) {
                     // 如果请求路径以 /oplus/base 开头，去掉这个前缀
                     if (req.url.startsWith('/oplus/base')) {
                         req.url = req.url.replace('/oplus/base', '');
+                        // 如果去掉前缀后变成空字符串，重定向到根目录
+                        if (req.url === '') {
+                            req.url = '/';
+                        }
+                    }
+                    // 如果请求路径以 /oplus-admin 开头，去掉这个前缀
+                    else if (req.url.startsWith('/oplus-admin')) {
+                        req.url = req.url.replace('/oplus-admin', '');
                         // 如果去掉前缀后变成空字符串，重定向到根目录
                         if (req.url === '') {
                             req.url = '/';
@@ -247,6 +265,7 @@ gulp.task('serve', function serve() {
     console.log(`🚀 Development server started on http://localhost:3000`);
     console.log(`📁 Serving files from: ${dirs.dist.webapp}`);
     console.log(`🔗 Access via: http://localhost:3000/oplus/base`);
+    console.log(`🔗 Admin access via: http://localhost:3000/oplus-admin`);
 });
 
 gulp.task('build-icons', function buildIcons(cb) {
@@ -413,7 +432,7 @@ gulp.task('copy-files', function copyModules() {
         //---- help docs
         gulp.src(config.app + '/help/**').pipe(gulp.dest(destDir + '/help')),
         //---- i18n JS
-        // gulp.src(config.i18nDir + '/*').pipe(gulp.dest(destDir + '/i18n')),
+        gulp.src(config.i18nDir + '/*').pipe(gulp.dest(destDir + '/i18n')),
         // gulp.src(dirs.src.webapp + '/content/**/oplus-*.css').pipe(flatten()).pipe(gulp.dest(destDir + '/content/css')),
         //---- bower file
         gulp.src(['bower.json']).pipe(gulp.dest(destDir + '/app/modules/lib')),

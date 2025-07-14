@@ -4,7 +4,7 @@
     angular.module('oplus.uaa')
         .component('opLogin', {
             templateUrl: 'app/modules/uaa/login/login.component.html',
-            controller: ['$scope', '$rootScope', '$state', '$timeout', 'Auth', '$uibModalStack', '$uibModal', 'licenseService', 'windowInit','$translate', LoginController],
+            controller: ['$scope', '$rootScope', '$state', '$timeout', 'Auth', '$uibModalStack', '$uibModal', 'licenseService', 'windowInit','$translate', 'tenantUtil', LoginController],
             bindings: {
                 asModal: '<'
             }
@@ -21,9 +21,11 @@
      * @param $uibModal
      * @param {licenseService} licenseService
      * @param {windowInit} windowInit
+     * @param $translate
+     * @param {tenantUtil} tenantUtil
      * @constructor
      */
-    function LoginController($scope, $rootScope, $state, $timeout, Auth, $uibModalStack, $uibModal, licenseService, windowInit,$translate) {
+    function LoginController($scope, $rootScope, $state, $timeout, Auth, $uibModalStack, $uibModal, licenseService, windowInit,$translate, tenantUtil) {
         var that = this;
         var asModal = that.asModal;
         that.authenticationError = false;

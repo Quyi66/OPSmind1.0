@@ -25,7 +25,7 @@
          * @returns {boolean}
          */
         function isTenantAdminUI() {
-            return this.useMultiTenantEnv() && !!window.location.href.match(/\/oplus-admin\//);
+            return this.useMultiTenantEnv() && !!window.location.href.match(/\/oplus-admin(\/|#|$)/);
         }
 
         /**
@@ -36,7 +36,7 @@
          * @returns {boolean}
          */
         function isOplusAdminUI() {
-            return !!window.location.href.match(/\/oplus-admin\//) || !window.location.href.match(/\/oplus\//);
+            return !!window.location.href.match(/\/oplus-admin(\/|#|$)/) || !window.location.href.match(/\/oplus\//);
         }
 
         var service = {
