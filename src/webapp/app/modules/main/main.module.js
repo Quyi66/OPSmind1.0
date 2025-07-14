@@ -1,7 +1,7 @@
 (function () {
 
     'use strict';
-    angular.module('OplusApp', ['oplus.main']);
+    // OplusApp 模块现在在 app.js 中定义，这里只定义 oplus.main
     angular.module('oplus.main', [
         'ui.router',
         'ui.router.state.events',
@@ -16,7 +16,7 @@
         'ngLocale',
         'tmh.dynamicLocale',
         'pascalprecht.translate',
-        'ngFileUpload',
+        'angularFileUpload',
         'infinite-scroll',
         'angular-loading-bar',
         // 'angulartics',

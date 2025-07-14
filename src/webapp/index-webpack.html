@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="OplusApp">
+<head>
+    <meta charset="utf-8"/>
+    <title id="oplusAppName">OPLUS</title>
+    <meta name="description" content="OPlus is Operation Plus"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+
+    <link id="oplusAppIcon" rel="icon" type="image/png" href="content/images/logo-default.png"/>
+    <link rel="apple-touch-icon" href="content/images/logo-default.png"/>
+    
+    <!-- Webpack will inject CSS and JS files here -->
+    
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="lib/luckysheet/dist/plugins/css/pluginsCss.css" />
+    <link rel="stylesheet" href="lib/luckysheet/dist/plugins/plugins.css" />
+    <link rel="stylesheet" href="lib/luckysheet/dist/css/luckysheet.css" type="text/css" />
+    <link rel="stylesheet" href="lib/luckysheet/dist/assets/iconfont/iconfont.css" type="text/css" />
+    <link rel="stylesheet" href="content/css/fontawesome-pro.css" type="text/css"/>
+    <link rel="stylesheet" href="app/modules/commons/editor/codemirror/dialog.css" type="text/css"/>
+    <link rel="stylesheet" href="lib/ng-password-meter/ng-password-meter.css"/>
+    <link rel="stylesheet" href="lib/mergely/mergely.css" type="text/css"/>
+    <link rel="stylesheet" href="lib/json-editor/jsoneditor.min.css" type="text/css" />
+    
+    <!-- Flow module CSS (conditional) -->
+    <link rel="stylesheet" ng-if="false" href="content/css/oplus-flow.css" type="text/css">
+    <link rel="stylesheet" href="app/modules/flow/dist/oplus-flow.css" type="text/css">
+</head>
+<body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl">
+<toaster-container toaster-options="$mainCtrl.toasterOptions"></toaster-container>
+<op-desktop
+        ng-style="{'background-image':$mainCtrl.uiConfig.backgroundImage,'background-color':$mainCtrl.uiConfig.backgroundColor}"
+        ng-if="!$root.$global.hideDesktop && !$root.$global.isAdminUI"></op-desktop>
+<div class="opx-layout-vflex">
+
+    <header id="opx-header" class="opx-header opx-layout-sticky"
+            ng-class="{'opx-header-collapsed': $mainCtrl.headerCollapsed, 'opx-header-hide-on-small-screen': $mainCtrl.sidebarMode==='over', 'admin-header': $root.$global.isAdminUI}">
+        <!-- 头部内容将由 Angular 模板渲染 -->
+    </header>
+
+    <div class="opx-layout-hflex">
+        <aside id="opx-sidebar" class="opx-sidebar"
+               ng-class="{'opx-sidebar-expanded': $mainCtrl.sidebarExpanded, 'opx-sidebar-mode-over': $mainCtrl.sidebarMode==='over', 'admin-sidebar': $root.$global.isAdminUI}">
+            <!-- 侧边栏内容将由 Angular 模板渲染 -->
+        </aside>
+
+        <main id="opx-main" class="opx-main opx-layout-flex"
+              ng-class="{'opx-main-margin-sidebar': $mainCtrl.sidebarMode!=='over' && $mainCtrl.sidebarExpanded, 'admin-main': $root.$global.isAdminUI}">
+            <div id="opx-main-container" class="opx-main-container opx-layout-vflex">
+                <!-- 主要内容区域 -->
+                <div ui-view class="opx-layout-flex opx-page"></div>
+            </div>
+        </main>
+    </div>
+
+    <footer id="opx-footer" class="opx-footer"
+            ng-class="{'admin-footer': $root.$global.isAdminUI}">
+        <!-- 页脚内容将由 Angular 模板渲染 -->
+    </footer>
+
+</div>
+
+<!-- Loading indicator -->
+<div id="opx-loading" ng-show="$mainCtrl.loading" class="opx-loading">
+    <div class="opx-loading-content">
+        <i class="fa fa-spinner fa-spin fa-2x"></i>
+        <div class="opx-loading-text">{{ $mainCtrl.loadingText || '加载中...' }}</div>
+    </div>
+</div>
+
+<!-- Global dialogs and overlays -->
+<div id="opx-dialogs"></div>
+
+<!-- 全局初始化脚本 -->
+<script type="text/javascript">
+    // 全局初始化对象
+    window["@oplus/init"] = {
+        timestamp: '<%= BUILD_TIMESTAMP %>',
+        version: '<%= VERSION %>',
+        profiles: [] // 将由 profiles.js 填充
+    };
+    
+    // 全局配置
+    window["@oplus/config"] = {
+        debug: '<%= process.env.NODE_ENV %>' === 'development',
+        version: '<%= VERSION %>',
+        buildTime: '<%= BUILD_TIMESTAMP %>'
+    };
+</script>
+
+<!-- Webpack 将在这里自动注入 JS 文件 -->
+
+</body>
+</html> 

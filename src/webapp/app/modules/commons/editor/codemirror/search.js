@@ -10,9 +10,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 (function (mod) {
     if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) == "object" && (typeof module === "undefined" ? "undefined" : _typeof(module)) == "object")
         // CommonJS
-        mod(require("codemirror"), require("codemirror-find-and-replace-dialog"));else if (typeof define == "function" && define.amd)
+        mod(require("codemirror"), require("./dialog"));else if (typeof define == "function" && define.amd)
         // AMD
-        define(["codemirror", "codemirror-find-and-replace-dialog"], mod);
+        define(["codemirror", "./dialog"], mod);
     // Plain browser env
     else mod(CodeMirror);
 })(function (CodeMirror) {

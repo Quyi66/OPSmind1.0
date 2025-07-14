@@ -9,7 +9,7 @@
      */
     angular.module('oplus.gfs', [
         'ui.router.state.events',
-        'ngFileUpload',
+        'angularFileUpload',
         'ngclipboard',
         'ui.sortable',
         'ui.codemirror',

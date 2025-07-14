@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    var app = angular.module('oplus.commons', ['toaster', 'ui.bootstrap', 'vs-repeat', 'ngFileUpload']);
+    var app = angular.module('oplus.commons', ['toaster', 'ui.bootstrap', 'vs-repeat', 'angularFileUpload']);
     app.provider('commonsConfig', function CommonsConfigProvider() {
         // console.log('CommonsConfigProvider');
         var defaultUnresolvedVar;
