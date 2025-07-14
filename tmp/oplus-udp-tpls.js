@@ -4804,6 +4804,7 @@ $templateCache.put("app/modules/udp/widgets/task-scheduling/task-scheduling-edit
     "            </select>\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "    \n" +
     "    <div class=\"form-group jao-cron-input-style\">\n" +
     "        <label class=\"control-label\">\n" +
     "            {{ 'task_scheduling.execution_job_type' | translate}} <span class=\"text-danger\">*</span>\n" +
@@ -4849,6 +4850,20 @@ $templateCache.put("app/modules/udp/widgets/task-scheduling/task-scheduling-edit
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
+    "    <!-- 新增：选择作业团队 -->\n" +
+    "    <div class=\"form-group jao-cron-input-style\">\n" +
+    "        <label class=\"control-label\">\n" +
+    "            {{ 'task_scheduling.select_job_team' | translate}} <span class=\"text-danger\">*</span>\n" +
+    "        </label>\n" +
+    "        <div class=\"form-control-wrapper\">\n" +
+    "            <select class=\"form-select\" ng-model=\"vm.cron.teamId\" required>\n" +
+    "                <option value=\"\">{{ 'task_scheduling.select_job_team_placeholder' | translate}}</option>\n" +
+    "                <option ng-repeat=\"team in teamList\" value=\"{{team.id}}\">\n" +
+    "                    {{team.name}}\n" +
+    "                </option>\n" +
+    "            </select>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "</div>\n" +
     "<div class=\"modal-footer\">\n" +
     "    <div class=\"form-group w-100 m-b-sm\">\n" +

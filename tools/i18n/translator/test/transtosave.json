@@ -17017,6 +17017,13 @@
     }
   },
   {
+    "key": "task_scheduling.select_job_team",
+    "trans": {
+      "zh-cn": "选择作业团队",
+      "zh-tw": "選擇作業團隊"
+    }
+  },
+  {
     "key": "task_scheduling.operating_param",
     "trans": {
       "zh-cn": "运行参数",

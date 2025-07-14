@@ -124,6 +124,20 @@
         </div>
     </div>
 
+    <!-- 新增：选择作业团队
+    <div class="form-group jao-cron-input-style">
+        <label class="control-label">
+            {{ 'task_scheduling.select_job_team' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+            <select class="form-select" ng-model="vm.cron.teamId" required>
+                <option value="">{{ 'task_scheduling.select_job_team_placeholder' | translate}}</option>
+                <option ng-repeat="team in teamList" value="{{team.id}}">
+                    {{team.name}}
+                </option>
+            </select>
+        </div>
+    </div> -->
 </div>
 <div class="modal-footer">
     <div class="form-group w-100 m-b-sm">
