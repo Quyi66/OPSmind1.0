@@ -212,6 +212,16 @@
                     }
                 }
             })
+            .state('app.jao.cron_job', {
+                url: '/cron-list',
+                views: {
+                    'jaoMainView': {
+                        templateUrl: 'app/modules/jao/cronJob/cron.html',
+                        controller: 'CronJobController',
+                        controllerAs: '$ctrl'
+                    }
+                }
+            })
         ;
     }
 })();

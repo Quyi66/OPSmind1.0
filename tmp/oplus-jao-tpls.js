@@ -2727,14 +2727,14 @@ $templateCache.put("app/modules/jao/jao-index.html","<div class=\"opx-layout-hfl
     "                    <a ui-sref=\"app.jao.stats\" ui-sref-active=\"active\"><i class=\"fad fa-analytics fa-fw\"></i>\n" +
     "                        {{'jao.index.stats' | translate}}</a>\n" +
     "                </div>\n" +
-    "<!--                <div class=\"opx-treenav-item\">-->\n" +
-    "<!--                    <a ui-sref=\"app.jao.data_model\" ui-sref-active=\"active\"><i class=\"fad fa-bring-front fa-fw\"></i>-->\n" +
-    "<!--                        {{'jao.index.data_model' | translate}}</a>-->\n" +
-    "<!--                </div>-->\n" +
     "                <div class=\"opx-treenav-item\">\n" +
     "                    <a ui-sref=\"app.jao.cron_job\" ui-sref-active=\"active\"><i class=\"fad fa-calendar-alt fa-fw\"></i>\n" +
     "                        {{'jao.index.cron' | translate}}</a>\n" +
     "                </div>\n" +
+    "                <!-- <div class=\"opx-treenav-item\">\n" +
+    "                    <a ui-sref=\"app.jao.data_model\" ui-sref-active=\"active\"><i class=\"fad fa-bring-front fa-fw\"></i>\n" +
+    "                        {{'jao.index.data_model' | translate}}</a>\n" +
+    "                </div> -->\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
