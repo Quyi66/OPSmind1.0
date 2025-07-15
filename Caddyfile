@@ -30,7 +30,7 @@
 		uri replace /local-portal /oplus-portal
 		
 		# 代理到目标服务器 - 添加详细日志
-		reverse_proxy http://10.1.40.112 {
+		reverse_proxy http://10.1.40.112:18080 {
 			header_up Host {upstream_hostport}
 			header_up X-Real-IP {remote_host}
 			header_up X-Forwarded-For {remote_host}
@@ -41,7 +41,7 @@
 	# 处理直接oplus-portal API请求 - 无路径重写
 	handle /oplus-portal/* {
 		# 直接代理到目标服务器，保持原始路径
-		reverse_proxy http://10.1.40.112 {
+		reverse_proxy http://10.1.40.112:18080 {
 			header_up Host {upstream_hostport}
 			header_up X-Real-IP {remote_host}
 			header_up X-Forwarded-For {remote_host}
