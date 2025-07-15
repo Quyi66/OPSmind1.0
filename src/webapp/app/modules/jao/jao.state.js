@@ -216,7 +216,7 @@
                 url: '/cron-list',
                 views: {
                     'jaoMainView': {
-                        templateUrl: 'app/modules/jao/cronJob/cron.html',
+                        templateUrl: 'app/modules/jao/cronJob/cron-job-list.html',
                         controller: 'CronJobController',
                         controllerAs: '$ctrl'
                     }

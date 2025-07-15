@@ -1,22 +1,40 @@
-<div class="opx-layout-vflex" uaa-is-authenticated uaa-deny-message="{{ 'task_scheduling.cron_job_list' | translate}}">
+<div class="opx-layout-vflex h-full" ng-controller="CronJobController as $ctrl">
     <nav class="navbar navbar-light">
-        <div class="navbar-nav">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active opx-navbar-title">{{ 'task_scheduling.menu.home' | translate}}</li>
-            </ol>
+        <div class="opx-navbar-title">任务调度管理</div>
+        <div class="ms-auto">
+            <button class="btn btn-primary" ui-sref="app.jao.cron_job.new({id: 'new'})" uaa-has-permission="jao:edit:*">
+                <i class="fa fa-plus"></i> 新增任务
+            </button>
+            <button class="btn btn-outline-secondary" ng-click="$ctrl.batchStartStopCron()" ng-show="$ctrl.selectedCrons && $ctrl.selectedCrons.length > 0" uaa-has-permission="jao:edit:*">
+                <i class="fa fa-play-pause"></i> 批量启停
+            </button>
+            <button class="btn btn-outline-info" ng-click="$ctrl.debugApiConnection()" title="测试API连接">
+                <i class="fa fa-bug"></i> 调试
+            </button>
         </div>
     </nav>
-    <div class="card-body">
-        <opx-datatable table-config="$ctrl.tableConfig">
-            <button uaa-has-permission="jao:edit:*" type="button" class="btn btn-outline-primary" ui-sref="app.jao.cron_job.new({id:''})">
-                <i class="fa fa-plus"></i>
-                <span>{{ 'task_scheduling.menu.add' | translate}}</span>
-            </button>
-
-            <button uaa-has-permission="jao:edit:*" type="button" class="btn btn-outline-primary" ng-click="$ctrl.batchStartStopCron()" ng-disabled="!$ctrl.selectedCrons.length>0">
-                <i class="fab fa-uikit"></i>
-                <span>{{ 'task_scheduling.batch_start_stop_CRON' | translate}}</span>
-            </button>
-        </opx-datatable>
+    
+    <div class="flex-fill p-3">
+        <div class="card">
+            <div class="card-body">
+                <!-- 调试信息 -->
+                <div class="alert alert-info" ng-if="$ctrl.debugMode">
+                    <h5>调试信息:</h5>
+                    <p>控制器状态: {{ $ctrl ? '已加载' : '未加载' }}</p>
+                    <p>表格配置: {{ $ctrl.tableConfig ? '已配置' : '未配置' }}</p>
+                    <p>API基础URL: {{ $ctrl.apiBaseUrl || '未设置' }}</p>
+                </div>
+                
+                <!-- 数据表格 -->
+                <div ng-if="$ctrl.tableConfig">
+                    <opx-datatable table-config="$ctrl.tableConfig" class="table-responsive"></opx-datatable>
+                </div>
+                
+                <!-- 加载状态 -->
+                <div ng-if="!$ctrl.tableConfig" class="text-center p-4">
+                    <i class="fa fa-spinner fa-spin"></i> 正在初始化...
+                </div>
+            </div>
+        </div>
     </div>
 </div>

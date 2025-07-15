@@ -877,29 +877,46 @@ $templateCache.put("app/modules/jao/cronJob/cron-job-dialog.html","<style>\n" +
     "    </div>\n" +
     "</div>")
 
-$templateCache.put("app/modules/jao/cronJob/cron-job-list.html","<div class=\"opx-layout-vflex\" uaa-is-authenticated uaa-deny-message=\"{{ 'task_scheduling.cron_job_list' | translate}}\">\n" +
+$templateCache.put("app/modules/jao/cronJob/cron-job-list.html","<div class=\"opx-layout-vflex h-full\" ng-controller=\"CronJobController as $ctrl\">\n" +
     "    <nav class=\"navbar navbar-light\">\n" +
-    "        <div class=\"navbar-nav\">\n" +
-    "            <ol class=\"breadcrumb\">\n" +
-    "                <li class=\"breadcrumb-item active opx-navbar-title\">{{ 'task_scheduling.menu.home' | translate}}</li>\n" +
-    "            </ol>\n" +
+    "        <div class=\"opx-navbar-title\">任务调度管理</div>\n" +
+    "        <div class=\"ms-auto\">\n" +
+    "            <button class=\"btn btn-primary\" ui-sref=\"app.jao.cron_job.new({id: 'new'})\" uaa-has-permission=\"jao:edit:*\">\n" +
+    "                <i class=\"fa fa-plus\"></i> 新增任务\n" +
+    "            </button>\n" +
+    "            <button class=\"btn btn-outline-secondary\" ng-click=\"$ctrl.batchStartStopCron()\" ng-show=\"$ctrl.selectedCrons && $ctrl.selectedCrons.length > 0\" uaa-has-permission=\"jao:edit:*\">\n" +
+    "                <i class=\"fa fa-play-pause\"></i> 批量启停\n" +
+    "            </button>\n" +
+    "            <button class=\"btn btn-outline-info\" ng-click=\"$ctrl.debugApiConnection()\" title=\"测试API连接\">\n" +
+    "                <i class=\"fa fa-bug\"></i> 调试\n" +
+    "            </button>\n" +
     "        </div>\n" +
     "    </nav>\n" +
-    "    <div class=\"card-body\">\n" +
-    "        <opx-datatable table-config=\"$ctrl.tableConfig\">\n" +
-    "            <button uaa-has-permission=\"jao:edit:*\" type=\"button\" class=\"btn btn-outline-primary\" ui-sref=\"app.jao.cron_job.new({id:''})\">\n" +
-    "                <i class=\"fa fa-plus\"></i>\n" +
-    "                <span>{{ 'task_scheduling.menu.add' | translate}}</span>\n" +
-    "            </button>\n" +
-    "\n" +
-    "            <button uaa-has-permission=\"jao:edit:*\" type=\"button\" class=\"btn btn-outline-primary\" ng-click=\"$ctrl.batchStartStopCron()\" ng-disabled=\"!$ctrl.selectedCrons.length>0\">\n" +
-    "                <i class=\"fab fa-uikit\"></i>\n" +
-    "                <span>{{ 'task_scheduling.batch_start_stop_CRON' | translate}}</span>\n" +
-    "            </button>\n" +
-    "        </opx-datatable>\n" +
+    "    \n" +
+    "    <div class=\"flex-fill p-3\">\n" +
+    "        <div class=\"card\">\n" +
+    "            <div class=\"card-body\">\n" +
+    "                <!-- 调试信息 -->\n" +
+    "                <div class=\"alert alert-info\" ng-if=\"$ctrl.debugMode\">\n" +
+    "                    <h5>调试信息:</h5>\n" +
+    "                    <p>控制器状态: {{ $ctrl ? '已加载' : '未加载' }}</p>\n" +
+    "                    <p>表格配置: {{ $ctrl.tableConfig ? '已配置' : '未配置' }}</p>\n" +
+    "                    <p>API基础URL: {{ $ctrl.apiBaseUrl || '未设置' }}</p>\n" +
+    "                </div>\n" +
+    "                \n" +
+    "                <!-- 数据表格 -->\n" +
+    "                <div ng-if=\"$ctrl.tableConfig\">\n" +
+    "                    <opx-datatable table-config=\"$ctrl.tableConfig\" class=\"table-responsive\"></opx-datatable>\n" +
+    "                </div>\n" +
+    "                \n" +
+    "                <!-- 加载状态 -->\n" +
+    "                <div ng-if=\"!$ctrl.tableConfig\" class=\"text-center p-4\">\n" +
+    "                    <i class=\"fa fa-spinner fa-spin\"></i> 正在初始化...\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
     "    </div>\n" +
-    "</div>\n" +
-    "")
+    "</div>")
 
 $templateCache.put("app/modules/jao/cronJob/cron.html","<style>\n" +
     "    .zdy div {\n" +
