@@ -22,6 +22,13 @@ import "../../webapp/app/modules/uaa/uaa-service.js";
 import "../../webapp/app/modules/uaa/user-habit.service.js";
 import "../../webapp/app/modules/uaa/user.service.js";
 
+// 登录相关
+import "../../webapp/app/modules/uaa/login/login.service.js";
+import "../../webapp/app/modules/uaa/login/login.state.js";
+import "../../webapp/app/modules/uaa/login/login.component.js";
+import "../../webapp/app/modules/uaa/login/login-main.controller.js";
+import "../../webapp/app/modules/uaa/login/license-register.controller.js";
+
 // 权限指令
 import "../../webapp/app/modules/uaa/data-has-permission.directive.js";
 import "../../webapp/app/modules/uaa/has-any-permission.directive.js";
