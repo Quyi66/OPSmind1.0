@@ -5,9 +5,11 @@
         .module('oplus.commons')
         .factory('authInterceptor', authInterceptor);
 
-    authInterceptor.$inject = ['$q', 'currentUser', '$translate'];
+    authInterceptor.$inject = ['$q', 'currentUser', '$injector'];
 
-    function authInterceptor($q, currentUser, $translate) {
+    function authInterceptor($q, currentUser, $injector) {
+        // 使用 $injector 延迟加载 $translate，避免循环依赖
+        var $translate;
         var service = {
             request: request
         };
@@ -28,6 +30,10 @@
             var tenantId = window.$oplus.appConfig.tenantId;
             if (tenantId) {
                 config.headers['Tenant-Id'] = tenantId;
+                // 延迟加载 $translate，避免循环依赖
+                if (!$translate) {
+                    $translate = $injector.get('$translate');
+                }
                 config.headers['Language'] = $translate.use();
             }
             // 目前暂时没有对请求参数签名校验，只是简单的防止重放攻击

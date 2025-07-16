@@ -16,7 +16,7 @@
             }
         });
 
-    JobListComponentCtrl.$inject = ['$timeout', 'jaoJobService', 'messageService', 'jaoUtil', 'currentUser', 'jaoDemo', '$translate', 'appletService', 'appletSecurity'];
+    JobListComponentCtrl.$inject = ['$timeout', 'jaoJobService', 'messageService', 'jaoUtil', 'currentUser', 'jaoDemo', '$translate', '$injector'];
 
     /**
      *
@@ -31,7 +31,7 @@
      * @param {appletSecurity} appletSecurity
      * @constructor
      */
-    function JobListComponentCtrl($timeout, jaoJobService, messageService, jaoUtil, currentUser, jaoDemo, $translate, appletService, appletSecurity) {
+    function JobListComponentCtrl($timeout, jaoJobService, messageService, jaoUtil, currentUser, jaoDemo, $translate, $injector) {
         var that = this;
         this.showApplet = that.showApplet || false;
         this.appletCode = that.appletCode || '';

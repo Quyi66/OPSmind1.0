@@ -24,11 +24,11 @@
         configTranslateProvider();
 
         function addTranslations() {
-            Object.keys(window['@oplus/langs']).forEach(function (key) {
-                $translateProvider.translations(key, window['@oplus/langs'][key]);
+            // 使用 StaticFilesLoader 替代直接设置翻译
+            $translateProvider.useStaticFilesLoader({
+                prefix: 'i18n/',
+                suffix: '/common.json'
             });
-            // Delete languages to release memory
-            delete window['@oplus/langs'];
         }
 
         /**
@@ -42,10 +42,8 @@
 
         function getDefaultLanguage() {
             var browserLang = navigator.language.toLowerCase();
-            if (angular.isDefined($translateProvider.translations()[browserLang])) {
-                return browserLang;
-            }
-            return window.$oplus.appConfig.i18n.defaultLanguage;
+            // 简化逻辑，直接返回默认语言
+            return 'zh-cn';
         }
 
         function configTranslateProvider() {
@@ -87,15 +85,16 @@
      */
     function i18nInterceptorConfig($httpProvider) {
         // console.log('i18nInterceptorConfig');
-        $httpProvider.interceptors.push(['$q', 'i18nService', i18nInterceptor]);
+        $httpProvider.interceptors.push(['$q', '$injector', i18nInterceptor]);
 
         /**
          *
          * @param $q
-         * @param {i18nService} i18nService
+         * @param $injector
          * @see https://docs.angularjs.org/api/ng/service/$http#interceptors
          */
-        function i18nInterceptor($q, i18nService) {
+        function i18nInterceptor($q, $injector) {
+            var i18nService;
             var TRANSLATE_STATIC_HTML = true;
             var TRANSLATE_API_DATA = true;
             var apiDataDefs = [
@@ -159,6 +158,16 @@
                         return resp;
                     }
 
+                    // Lazy load i18nService to avoid circular dependency
+                    if (!i18nService) {
+                        try {
+                            i18nService = $injector.get('i18nService');
+                        } catch (e) {
+                            // Service not ready yet, skip translation
+                            return resp;
+                        }
+                    }
+
                     if (TRANSLATE_STATIC_HTML) {
                         for (var j = 0; j < htmlDefs.length; j++) {
                             var html = htmlDefs[j];
@@ -202,13 +211,15 @@
                     }
 
                     // opencc
-                    _.forEach(openccI18nDefs, function (item) {
-                        if (item.urlPattern.test(url)) {
-                            if (item.dataKeys)
-                                resp.data = i18nService.translateTwp(resp.data, item.dataKeys);
-                        } else
-                            resp.data = i18nService.translateTwp(resp.data);
-                    })
+                    if (i18nService) {
+                        _.forEach(openccI18nDefs, function (item) {
+                            if (item.urlPattern.test(url)) {
+                                if (item.dataKeys)
+                                    resp.data = i18nService.translateTwp(resp.data, item.dataKeys);
+                            } else
+                                resp.data = i18nService.translateTwp(resp.data);
+                        });
+                    }
 
                     return resp;
                 },

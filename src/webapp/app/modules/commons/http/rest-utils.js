@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('oplus.commons').service('restUtils', ['$q', '$http', '$state', 'Upload', 'messageService', '$translate','currentUser', restUtils]);
+    angular.module('oplus.commons').service('restUtils', ['$q', '$http', '$state', '$injector', 'messageService', '$translate','currentUser', restUtils]);
     angular.module('oplus.commons').run(['restUtils', function (restUtils) {
         // console.log('restUtils.initApiBaseUrls...');
         Object.keys(window.$oplus.appConfig.apiBaseUrls).forEach(function (module) {
@@ -26,7 +26,7 @@
      * @param Upload
      * @param {messageService} messageService
      */
-    function restUtils($q, $http, $state, Upload, messageService, $translate,currentUser) {
+    function restUtils($q, $http, $state, $injector, messageService, $translate, currentUser) {
         // API base URLs for modules
         var prefix = window.location.protocol + "//" + window.location.host + window.location.pathname;
 
@@ -160,20 +160,27 @@
         function callUpload(url, fileInfo, progressCallback) {
             console.log('callUpload', {url: url, fileInfo: fileInfo});
             var d = $q.defer();
-            Upload.upload({
-                url: url,
-                data: fileInfo
-            }).then(function (resp) {
-                d.resolve(resp.data);
-            }, function (resp) {
-                var error = guessError(resp);
-                d.reject(error);
-            }, function (evt) {
-                if (angular.isFunction(progressCallback)) {
-                    var progressPct = parseInt(100.0 * evt.loaded / evt.total);
-                    progressCallback(progressPct);
-                }
-            });
+            
+            try {
+                var Upload = $injector.get('Upload');
+                Upload.upload({
+                    url: url,
+                    data: fileInfo
+                }).then(function (resp) {
+                    d.resolve(resp.data);
+                }, function (resp) {
+                    var error = guessError(resp);
+                    d.reject(error);
+                }, function (evt) {
+                    if (angular.isFunction(progressCallback)) {
+                        var progressPct = parseInt(100.0 * evt.loaded / evt.total);
+                        progressCallback(progressPct);
+                    }
+                });
+            } catch (e) {
+                d.reject(new Error('Upload service is not available. Please ensure ng-file-upload is loaded.'));
+            }
+            
             return d.promise;
         }
 

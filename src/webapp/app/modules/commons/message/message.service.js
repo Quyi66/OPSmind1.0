@@ -233,10 +233,17 @@
                 // console.log('messageService.init()...........',{$translate:$translate.instant('common.action.cancel')});
                 // alertify.defaults.glossary.ok = $translate.instant('common.action.ok');
                 // alertify.defaults.glossary.cancel = $translate.instant('common.action.cancel');
+                console.log('✅ alertify initialized successfully');
             } else {
-                console.warn('alertify is not loaded yet, initialization will be retried later');
-                // 延迟重试
-                setTimeout(init, 100);
+                // 限制重试次数，避免无限循环
+                if (!init.retryCount) init.retryCount = 0;
+                if (init.retryCount < 50) { // 最多重试5秒
+                    init.retryCount++;
+                    console.warn('alertify is not loaded yet, initialization will be retried later (' + init.retryCount + '/50)');
+                    setTimeout(init, 100);
+                } else {
+                    console.error('❌ alertify failed to load after 50 retries, message dialogs may not work properly');
+                }
             }
         }
     }

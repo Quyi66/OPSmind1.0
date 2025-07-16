@@ -1,43 +1,30 @@
 /**
  * @author chy, created on 2022-06-28.
+ * 修改于 2025-07-17: 转换为传统 Angular 1.x 模块格式
  */
 
-import flowState from './flow.state'
+(function() {
+    'use strict';
 
-import flowApi from './api/flow.api'
-import flowService from './flow.service'
+    // 注意：模块已经在入口文件中创建，这里只是获取引用
+    var flowModule = angular.module('oplus.flow');
 
-import flowController from './flow.controller'
-import flowModelerController from './widgets/modeler/flow-modeler.component'
-import flowViewerController from './widgets/viewer/flow-viewer.component'
-import flowParamsController from './widgets/viewer/params/flow-params.component'
-import flowDetailViewerCtrl from './widgets/viewer/detail-viewer/flow-detail-viewer.component'
-import flowRunViewerCtrl from './widgets/viewer/run-viewer/flow-run-viewer.component'
-import flowResultViewerCtrl from './widgets/viewer/result-viewer/flow-result-viewer.component'
-import flowBpmnXmlCtrl from './widgets/bpmn-xml/flow-bpmn-xml.component'
-import flowProcessListCtrl from './widgets/process-list/process-list.controller'
-import flowProcessEditDialogCtrl from './widgets/process-edit-dialog/process-edit-dialog.controller'
-import flowProcessSelectorController from './widgets/process-selector/process-selector.component'
-import flowSceneSelectorController from './widgets/scene-selector/scene-selector.component'
-import flowSceneEditDialogCtrl from './widgets/scene-edit-dialog/scene-edit-dialog.controller'
-import flowProcessHistoryCtrl from './widgets/process-history/process-history.controller'
+    // 配置模块
+    flowModule.config(['$stateProvider', function($stateProvider) {
+        // 这里会在 flow.state.js 中进行详细配置
+    }]);
 
-import flowProcessDesignCtrl from './widgets/process-design/process-design.controller'
-import flowProcessExecCtrl from './widgets/process-exec/process-exec.controller'
-import flowProcessResultListCtrl from './widgets/process-result-list/process-result-list.controller'
-import flowProcessResultListTableCtrl from './widgets/process-result-list/process-result-list-table.controller'
-import flowProcessResultCtrl from './widgets/process-result/process-result.controller'
-
-import extensionProps from './components/custom-modeler/custom/properties-panel/prop/ExtensionProps'
-
-import camundaModdleDescriptor from './constants/moddle-descriptor.constants'
-import customModdleDescriptor from './constants/custom-moddle-descriptor.constants'
-import flowNewDiagram from './constants/new-diagram.constants'
-
-const flowModule = angular.module('oplus.flow', [
-    'oplus.commons',
-    'oplus.uaa'
-]);
+    // 注册常量
+    // 这些常量会在各自的文件中定义和注册
+    
+    // 注册控制器和组件
+    // 这些控制器和组件会在各自的文件中定义和注册
+    
+    // 注册服务
+    // 这些服务会在各自的文件中定义和注册
+    
+    console.log('Flow module configured');
+})();
 
 // Config
 flowModule.config(flowState);

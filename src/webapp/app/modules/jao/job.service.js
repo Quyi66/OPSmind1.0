@@ -28,7 +28,7 @@
     }]);
 
 
-    jaoJobService.$inject = ['$q', '$http', '$interval', '$uibModal', '$state', 'restUtils', 'jaoUtil', 'dataEx', 'messageService', 'modalHelper', 'uaaUserService', '$translate'];
+    jaoJobService.$inject = ['$q', '$http', '$interval', '$uibModal', '$state', 'restUtils', 'jaoUtil', 'dataEx', 'messageService', 'modalHelper', '$injector', '$translate'];
 
     /**
      * @ngdoc service
@@ -44,7 +44,7 @@
      * @param {messageService} messageService
      * @param {modalHelper} modalHelper
      */
-    function jaoJobService($q, $http, $interval, $uibModal, $state, restUtils, jaoUtil, dataEx, messageService, modalHelper, uaaUserService, $translate) {
+    function jaoJobService($q, $http, $interval, $uibModal, $state, restUtils, jaoUtil, dataEx, messageService, modalHelper, $injector, $translate) {
         var module = "jao";
         var that = this;
         this.findAllJobs = findAllJobs;
@@ -430,20 +430,29 @@
 
                         if (result.needReview) {
                             console.log("current job need review");
-                            return uaaUserService.openUserDoubleReviewDialog().then(function (data) {
-                                if (fnHandler instanceof Function) fnHandler(fnHandlerParams);
-                                // 复核人账号 = data.reviewUser = login_user
-                                // job.reviewUser =
-                                if (angular.isString(job)) {
-                                    params.reviewUser = data.reviewUser
-                                } else {
-                                    job.reviewUser = data.reviewUser
-                                }
+                            try {
+                                var uaaUserService = $injector.get('uaaUserService');
+                                return uaaUserService.openUserDoubleReviewDialog().then(function (data) {
+                                    if (fnHandler instanceof Function) fnHandler(fnHandlerParams);
+                                    // 复核人账号 = data.reviewUser = login_user
+                                    // job.reviewUser =
+                                    if (angular.isString(job)) {
+                                        params.reviewUser = data.reviewUser
+                                    } else {
+                                        job.reviewUser = data.reviewUser
+                                    }
+                                    if (result.needDelayed) {
+                                        return delayedRun(result, params);
+                                    }
+                                    return run();
+                                });
+                            } catch (e) {
+                                console.warn('uaaUserService not available, skipping user review dialog');
                                 if (result.needDelayed) {
                                     return delayedRun(result, params);
                                 }
                                 return run();
-                            })
+                            }
                         }
 
                         if (result.needDelayed) {

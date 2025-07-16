@@ -42,6 +42,7 @@ const OplusApp = angular.module('OplusApp', [
     'oplus.app',
     'oplus.cac',
     'oplus.dts',
+    'oplus.flow',
     'oplus.gfs',
     'oplus.jao',
     'oplus.mac',
@@ -66,6 +67,7 @@ OplusApp.config(['$locationProvider', '$urlRouterProvider', '$stateProvider', '$
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         
         // 国际化配置
+        // 使用 StaticFilesLoader
         $translateProvider.useStaticFilesLoader({
             prefix: 'i18n/',
             suffix: '.json'
@@ -73,7 +75,7 @@ OplusApp.config(['$locationProvider', '$urlRouterProvider', '$stateProvider', '$
         $translateProvider.preferredLanguage('zh-cn');
         $translateProvider.fallbackLanguage('zh-cn');
         $translateProvider.useCookieStorage();
-        $translateProvider.useSanitizeValueStrategy(null);
+        $translateProvider.useSanitizeValueStrategy('escaped');
         
         // 开发环境禁用调试信息
         if (typeof DEBUG_INFO_ENABLED !== 'undefined' && !DEBUG_INFO_ENABLED) {

@@ -57,7 +57,7 @@ module.exports = (env = {}, argv = {}) => {
             // 主应用样式入口 (依赖所有模块)
             'oplus-styles': {
                 import: './src/webapp/app/app.js',
-                dependOn: ['oplus-vendors', 'oplus-commons', 'oplus-layout', 'oplus-main', 'oplus-acm', 'oplus-adm', 'oplus-app', 'oplus-cac', 'oplus-dts', 'oplus-gfs', 'oplus-jao', 'oplus-mac', 'oplus-os', 'oplus-search', 'oplus-ssc', 'oplus-uaa', 'oplus-udp', 'oplus-dev']
+                dependOn: ['oplus-vendors', 'oplus-commons', 'oplus-layout', 'oplus-main', 'oplus-acm', 'oplus-adm', 'oplus-app', 'oplus-cac', 'oplus-dts', 'oplus-flow', 'oplus-gfs', 'oplus-jao', 'oplus-mac', 'oplus-os', 'oplus-search', 'oplus-ssc', 'oplus-uaa', 'oplus-udp', 'oplus-dev']
             }
         },
 
@@ -232,13 +232,32 @@ module.exports = (env = {}, argv = {}) => {
                 // 项目 JSON 文件 (非 node_modules)
                 {
                     test: /\.json$/,
-                    exclude: /node_modules/,
+                    exclude: [
+                        /node_modules/,
+                        /src\/webapp\/app\/modules\/flow\/components\/.*\/resources\/.*\.json$/
+                    ],
                     use: {
                         loader: 'file-loader',
                         options: {
                             outputPath: 'content/template/',
                             name: '[path][name].[ext]'
                         }
+                    }
+                },
+                // 特殊处理 flow 模块中的 JSON 资源文件
+                {
+                    test: /src\/webapp\/app\/modules\/flow\/components\/.*\/resources\/.*\.json$/,
+                    type: 'javascript/auto',
+                    use: {
+                        loader: 'json-loader'
+                    }
+                },
+                // 处理 .bpmnlintrc 文件
+                {
+                    test: /\.bpmnlintrc$/,
+                    type: 'javascript/auto',
+                    use: {
+                        loader: 'json-loader'
                     }
                 }
             ]
@@ -268,6 +287,7 @@ module.exports = (env = {}, argv = {}) => {
                     'oplus-adm', 
                     'oplus-cac', 
                     'oplus-dts', 
+                    'oplus-flow',     // 添加 flow 模块
                     'oplus-gfs', 
                     'oplus-jao', 
                     'oplus-mac', 
