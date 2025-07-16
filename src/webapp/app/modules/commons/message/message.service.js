@@ -225,24 +225,26 @@
 
         function init() {
             // 确保 alertify 已经加载
-            if (typeof alertify !== 'undefined' && alertify && alertify.defaults) {
-                alertify.defaults.transition = "none";
-                alertify.defaults.theme.ok = "btn btn-primary";
-                alertify.defaults.theme.cancel = "btn btn-default";
-                alertify.defaults.theme.input = "form-control";
+            if (typeof window.alertify !== 'undefined' && window.alertify && window.alertify.defaults) {
+                window.alertify.defaults.transition = "none";
+                window.alertify.defaults.theme.ok = "btn btn-primary";
+                window.alertify.defaults.theme.cancel = "btn btn-default";
+                window.alertify.defaults.theme.input = "form-control";
                 // console.log('messageService.init()...........',{$translate:$translate.instant('common.action.cancel')});
-                // alertify.defaults.glossary.ok = $translate.instant('common.action.ok');
-                // alertify.defaults.glossary.cancel = $translate.instant('common.action.cancel');
+                // window.alertify.defaults.glossary.ok = $translate.instant('common.action.ok');
+                // window.alertify.defaults.glossary.cancel = $translate.instant('common.action.cancel');
                 console.log('✅ alertify initialized successfully');
             } else {
                 // 限制重试次数，避免无限循环
                 if (!init.retryCount) init.retryCount = 0;
-                if (init.retryCount < 50) { // 最多重试5秒
+                if (init.retryCount < 10) { // 减少重试次数到1秒
                     init.retryCount++;
-                    console.warn('alertify is not loaded yet, initialization will be retried later (' + init.retryCount + '/50)');
+                    console.warn('alertify is not loaded yet, initialization will be retried later (' + init.retryCount + '/10)');
                     setTimeout(init, 100);
                 } else {
-                    console.error('❌ alertify failed to load after 50 retries, message dialogs may not work properly');
+                    console.error('❌ alertify failed to load after 10 retries, message dialogs may not work properly');
+                    console.error('Available global objects:', Object.keys(window).filter(k => k.includes('alert')));
+                    console.error('window.alertify:', window.alertify);
                 }
             }
         }

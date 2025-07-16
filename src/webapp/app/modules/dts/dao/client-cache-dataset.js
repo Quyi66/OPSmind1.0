@@ -8,8 +8,8 @@
 
     clientCacheDataset.$inject = ['$q', 'localDatasetRepo', 'datasetDao', '$translate'];
 
-    angular.module('oplus.dts').run(['localDatasetRepo', 'clientCacheDataset',
-        function (localDatasetRepo, clientCacheDataset) {
+    angular.module('oplus.dts').run(['localDatasetRepo', 'clientCacheDataset', '$translate',
+        function (localDatasetRepo, clientCacheDataset, $translate) {
             clientCacheDataset.defineDataset('CACHE_UP_REALTIME', 'UP_' + $translate.instant('dts.cache.realtime_transaction_volume'), 'UP_' + $translate.instant('dts.cache.realtime_transaction_volume') + '（' + $translate.instant('dts.cache.cache') + '）');
         }]);
 
