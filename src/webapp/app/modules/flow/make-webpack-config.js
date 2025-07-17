@@ -154,7 +154,7 @@ module.exports = function makeWebpackConfig(options) {
     if (options.isServer) {
       loader.use = ['null-loader'];
     } else if (options.separateStylesheet) {
-      loader.loader = [MiniCssExtractPlugin.loader].concat(loaderIn.use);
+      loader.use = [MiniCssExtractPlugin.loader].concat(loaderIn.use);
     } else {
       loader.use = ['style-loader', ...loaderIn.use];
     }
@@ -165,7 +165,6 @@ module.exports = function makeWebpackConfig(options) {
     plugins.push(new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      path: path.join(__dirname, 'dist'),
       filename: `oplus-flow.css`,
       chunkFilename: '[id].css',
     }));

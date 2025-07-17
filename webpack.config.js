@@ -7,6 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const DateTime = require('luxon').DateTime;
 const I18nCombinePlugin = require('./webpack-plugins/i18n-combine-plugin');
+const HtmlTemplatePlugin = require('./webpack-plugins/html-template-plugin');
+const FlowBuildPlugin = require('./webpack-plugins/flow-build-plugin');
 
 // 读取模块列表
 function getModules() {
@@ -272,34 +274,11 @@ module.exports = (env = {}, argv = {}) => {
                 'VERSION_NUMBER': JSON.stringify(versionNumber)
             }),
 
-            // HTML 模板处理
+            // HTML 模板处理 - 直接使用原来的 index.html
             new HtmlWebpackPlugin({
-                template: './src/webapp/index-webpack.html',
+                template: './src/webapp/index.html',
                 filename: 'index.html',
-                inject: 'body',
-                chunks: [
-                    'oplus-vendors', 
-                    'oplus-commons', 
-                    'oplus-app',      // oplus.app 模块，必须在 oplus-main 之前加载
-                    'oplus-main',     // OplusApp 主模块定义在这里，依赖 oplus.app
-                    'oplus-layout', 
-                    'oplus-acm', 
-                    'oplus-adm', 
-                    'oplus-cac', 
-                    'oplus-dts', 
-                    'oplus-flow',     // 添加 flow 模块
-                    'oplus-gfs', 
-                    'oplus-jao', 
-                    'oplus-mac', 
-                    'oplus-os', 
-                    'oplus-search', 
-                    'oplus-ssc', 
-                    'oplus-uaa', 
-                    'oplus-udp', 
-                    'oplus-dev',
-                    'oplus-styles'    // 样式文件，最后加载
-                ],
-                chunksSortMode: 'manual',
+                inject: false, // 不自动注入，使用原有的脚本标签
                 minify: isProduction ? {
                     removeComments: true,
                     collapseWhitespace: true,
@@ -325,6 +304,19 @@ module.exports = (env = {}, argv = {}) => {
                 inputDir: 'src/webapp/i18n',
                 outputFileName: 'app/modules/oplus-lang.js'
             }),
+
+            // HTML 模板编译
+            new HtmlTemplatePlugin({
+                modulesRoot: 'src/webapp/app/modules/',
+                outputDir: 'tmp'
+            }),
+
+            // Flow 模块构建
+            new FlowBuildPlugin({
+                flowModulePath: 'src/webapp/app/modules/flow',
+                outputPath: 'dist/webapp/app/modules',
+                cssOutputPath: 'src/webapp/content/css'
+            }),
             
             // 提供全局 polyfills 和库
             new webpack.ProvidePlugin({
@@ -337,13 +329,18 @@ module.exports = (env = {}, argv = {}) => {
                 // 注意：angular 和 lodash 由 vendors.js 显式设置到全局
             }),
 
-            // 静态资源复制
+            // 静态资源复制 - 复制原 index.html 需要的所有资源
             new CopyWebpackPlugin({
                 patterns: [
                     // 配置文件
                     {
                         from: 'src/webapp/config.js',
                         to: 'config.js'
+                    },
+                    // profiles.js 文件
+                    {
+                        from: 'src/webapp/app/profiles.js',
+                        to: 'app/profiles.js'
                     },
                     // 国际化文件
                     {
@@ -357,67 +354,26 @@ module.exports = (env = {}, argv = {}) => {
                     },
                     // 静态资源
                     {
-                        from: 'src/webapp/content/fonts',
-                        to: 'content/fonts'
-                    },
-                    {
-                        from: 'src/webapp/content/images',
-                        to: 'content/images',
+                        from: 'src/webapp/content',
+                        to: 'content',
                         globOptions: {
                             ignore: ['**/test/**']
                         }
                     },
+                    // 所有库文件 - 包括 node_modules 的符号链接内容
                     {
-                        from: 'src/webapp/content/medialib',
-                        to: 'content/medialib',
-                        globOptions: {
-                            ignore: ['**/test/**']
-                        }
+                        from: 'src/webapp/lib',
+                        to: 'lib'
                     },
+                    // 不复制整个 node_modules，而是创建符号链接
+                    // 这样可以避免巨大的文件复制和潜在的循环引用问题
+                    // 应用模块的所有文件
                     {
-                        from: 'src/webapp/content/template',
-                        to: 'content/template'
-                    },
-                    {
-                        from: 'src/webapp/content/webfonts',
-                        to: 'content/webfonts'
-                    },
-                    // 库文件
-                    {
-                        from: 'src/webapp/lib/tinymce',
-                        to: 'lib/tinymce'
-                    },
-                    {
-                        from: 'src/webapp/lib/luckysheet',
-                        to: 'lib/luckysheet'
-                    },
-                    {
-                        from: 'src/webapp/lib/json-editor',
-                        to: 'lib/json-editor'
-                    },
-                    {
-                        from: 'src/webapp/lib/mergely',
-                        to: 'lib/mergely'
-                    },
-                    {
-                        from: 'src/webapp/lib/ng-password-meter',
-                        to: 'lib/ng-password-meter'
-                    },
-                    // 模块资源
-                    {
-                        from: 'src/webapp/app/modules/**/assets/**/*',
-                        to: ({ context, absoluteFilename }) => {
-                            const relativePath = path.relative(context, absoluteFilename);
-                            return relativePath.replace('src/webapp/', '');
-                        },
+                        from: 'src/webapp/app',
+                        to: 'app',
                         globOptions: {
                             ignore: ['**/node_modules/**']
                         }
-                    },
-                    // 版本文件
-                    {
-                        from: 'src/webapp/app/modules/VERSION.json',
-                        to: 'app/modules/VERSION.json'
                     }
                 ]
             })
