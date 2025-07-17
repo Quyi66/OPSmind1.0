@@ -25,10 +25,16 @@
 
         function addTranslations() {
             // 使用 StaticFilesLoader 替代直接设置翻译
-            $translateProvider.useStaticFilesLoader({
-                prefix: 'i18n/',
-                suffix: '/common.json'
-            });
+            try {
+                $translateProvider.useStaticFilesLoader({
+                    prefix: 'i18n/',
+                    suffix: '/common.json'
+                });
+            } catch (e) {
+                console.warn('StaticFilesLoader not available, falling back to manual translation setup:', e);
+                // 如果 StaticFilesLoader 不可用，可以考虑其他方案
+                // 暂时跳过，让应用继续运行
+            }
         }
 
         /**

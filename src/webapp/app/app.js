@@ -1,6 +1,3 @@
-// 这个文件现在主要用于导入应用样式
-// OplusApp 模块定义已移至 main 模块中
-
 // 导入模块样式
 import '../content/css/oplus-commons.css';
 import '../content/css/oplus-gfs.css';

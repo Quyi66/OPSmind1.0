@@ -17,6 +17,7 @@
         'tmh.dynamicLocale',
         'pascalprecht.translate',
         'angularFileUpload',
+        'ngFileUpload',
         'infinite-scroll',
         'angular-loading-bar',
         // 'angulartics',

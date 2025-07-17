@@ -7,62 +7,61 @@ module.exports = (env, argv) => {
 
     return merge(commonConfig, {
         mode: 'development',
-        
+
         devtool: 'eval-source-map',
-        
+
         devServer: {
             static: [
                 {
                     directory: path.join(__dirname, 'dist/webapp'),
                     publicPath: '/'
+                },
+                {
+                    directory: path.join(__dirname, 'node_modules'),
+                    publicPath: '/node_modules'
+                },
+                {
+                    directory: path.join(__dirname, 'src/webapp'),
+                    publicPath: '/'
                 }
             ],
-            port: 3000,
+            port: 3002,
             host: '0.0.0.0',
             hot: true,
             liveReload: true,
             open: false,
-            historyApiFallback: {
-                index: '/index.html',
-                rewrites: [
-                    // 支持 /oplus/base 路径
-                    { from: /^\/oplus\/base/, to: '/index.html' },
-                    // 支持 /oplus-admin 路径
-                    { from: /^\/oplus-admin/, to: '/index.html' }
-                ]
-            },
+            // 完全禁用 historyApiFallback，因为这是传统的 AngularJS 应用
+            historyApiFallback: false,
             setupMiddlewares: (middlewares, devServer) => {
                 if (!devServer) {
                     throw new Error('webpack-dev-server is not defined');
                 }
 
-                // 路径重写中间件
-                devServer.app.use('*', (req, res, next) => {
+                // 路径重写中间件 - 只处理特定路径
+                devServer.app.use((req, res, next) => {
                     const url = req.originalUrl || req.url;
-                    
-                    // 处理 /oplus/base 路径重定向
+
+                    // 处理 /oplus/base 路径重定向（不带尾部斜杠）
                     if (url === '/oplus/base') {
                         return res.redirect(301, '/oplus/base/');
                     }
-                    
-                    // 处理 /oplus-admin 路径重定向  
+
+                    // 处理 /oplus-admin 路径重定向（不带尾部斜杠）
                     if (url === '/oplus-admin') {
                         return res.redirect(301, '/oplus-admin/');
                     }
-                    
-                    // 处理静态资源路径重写
+
+                    // 只对以 /oplus/base/ 开头的请求进行路径重写
                     if (url.startsWith('/oplus/base/')) {
-                        req.url = url.replace('/oplus/base', '');
-                        if (req.url === '') {
-                            req.url = '/';
-                        }
-                    } else if (url.startsWith('/oplus-admin/')) {
-                        req.url = url.replace('/oplus-admin', '');
-                        if (req.url === '') {
-                            req.url = '/';
-                        }
+                        const newPath = url.replace('/oplus/base', '');
+                        req.url = newPath === '' ? '/' : newPath;
+                    } 
+                    // 只对以 /oplus-admin/ 开头的请求进行路径重写
+                    else if (url.startsWith('/oplus-admin/')) {
+                        const newPath = url.replace('/oplus-admin', '');
+                        req.url = newPath === '' ? '/' : newPath;
                     }
-                    
+
                     next();
                 });
 

@@ -225,11 +225,23 @@
 
         function init() {
             // 确保 alertify 已经加载
-            if (typeof window.alertify !== 'undefined' && window.alertify && window.alertify.defaults) {
-                window.alertify.defaults.transition = "none";
-                window.alertify.defaults.theme.ok = "btn btn-primary";
-                window.alertify.defaults.theme.cancel = "btn btn-default";
-                window.alertify.defaults.theme.input = "form-control";
+            if (typeof window.alertify !== 'undefined' && window.alertify) {
+                // 确保 defaults 对象存在
+                if (!window.alertify.defaults) {
+                    window.alertify.defaults = {
+                        transition: "none",
+                        theme: {
+                            ok: "btn btn-primary",
+                            cancel: "btn btn-default",
+                            input: "form-control"
+                        }
+                    };
+                } else {
+                    window.alertify.defaults.transition = "none";
+                    window.alertify.defaults.theme.ok = "btn btn-primary";
+                    window.alertify.defaults.theme.cancel = "btn btn-default";
+                    window.alertify.defaults.theme.input = "form-control";
+                }
                 // console.log('messageService.init()...........',{$translate:$translate.instant('common.action.cancel')});
                 // window.alertify.defaults.glossary.ok = $translate.instant('common.action.ok');
                 // window.alertify.defaults.glossary.cancel = $translate.instant('common.action.cancel');
