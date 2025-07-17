@@ -719,9 +719,72 @@ $templateCache.put("app/modules/jao/command/commandselector/command-selector.htm
 
 $templateCache.put("app/modules/jao/cronJob/cron-job-dialog.html","<style>\n" +
     "    .jao-cron-input-style{\n" +
-    "        width: 94%;\n" +
+    "        width: 100%;\n" +
     "        margin: auto;\n" +
     "        margin-bottom: 16px;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 修复模态框宽度问题 */\n" +
+    "    .modal-dialog.modal-md {\n" +
+    "        max-width: 400px !important;\n" +
+    "        width: 60% !important;\n" +
+    "    }\n" +
+    "    \n" +
+    "    .modal-dialog.modal-lg {\n" +
+    "        max-width: 500px !important;\n" +
+    "        width: 70% !important;\n" +
+    "    }\n" +
+    "    \n" +
+    "    .modal-dialog.modal-xl {\n" +
+    "        max-width: 500px !important;\n" +
+    "        width: 70% !important;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 确保表单元素不会过度拉伸 */\n" +
+    "    .form-control, .form-select {\n" +
+    "        max-width: 100%;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 优化输入组样式 */\n" +
+    "    .input-group {\n" +
+    "        max-width: 100%;\n" +
+    "    }\n" +
+    "    \n" +
+    "    .input-group .form-control {\n" +
+    "        flex: 1;\n" +
+    "        min-width: 0;\n" +
+    "    }\n" +
+    "    \n" +
+    "    .input-group .btn {\n" +
+    "        flex-shrink: 0;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 修复模态框内容宽度 */\n" +
+    "    .modal-content {\n" +
+    "        max-width: 100%;\n" +
+    "        margin: 0 auto;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 确保模态框在小屏幕上也能正常显示 */\n" +
+    "    @media (max-width: 768px) {\n" +
+    "        .modal-dialog.modal-md {\n" +
+    "            width: 85% !important;\n" +
+    "            margin: 10px auto;\n" +
+    "        }\n" +
+    "        .modal-dialog.modal-lg,\n" +
+    "        .modal-dialog.modal-xl {\n" +
+    "            width: 90% !important;\n" +
+    "            margin: 10px auto;\n" +
+    "        }\n" +
+    "    }\n" +
+    "    \n" +
+    "    @media (max-width: 480px) {\n" +
+    "        .modal-dialog.modal-md,\n" +
+    "        .modal-dialog.modal-lg,\n" +
+    "        .modal-dialog.modal-xl {\n" +
+    "            width: 95% !important;\n" +
+    "            margin: 5px auto;\n" +
+    "        }\n" +
     "    }\n" +
     "</style>\n" +
     "<div class=\"modal-header m-t-xs\">\n" +
@@ -996,9 +1059,49 @@ $templateCache.put("app/modules/jao/cronJob/cron.html","<style>\n" +
     "            background-size: 240px 24px;\n" +
     "        }\n" +
     "    }\n" +
+    "    \n" +
+    "    /* 修复Cron生成器模态框宽度 - 保持原来大小 */\n" +
+    "    .modal-dialog.modal-lg {\n" +
+    "        max-width: 1200px !important;\n" +
+    "        width: 98% !important;\n" +
+    "    }\n" +
+    "    \n" +
+    "    .modal-dialog.modal-xl {\n" +
+    "        max-width: 1200px !important;\n" +
+    "        width: 98% !important;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 确保内容不会过度拉伸 */\n" +
+    "    .container-fluid {\n" +
+    "        max-width: 100%;\n" +
+    "        padding: 0 15px;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 优化卡片样式 */\n" +
+    "    .card {\n" +
+    "        max-width: 100%;\n" +
+    "        margin: 0 auto;\n" +
+    "    }\n" +
+    "    \n" +
+    "    /* 确保在小屏幕上也能正常显示 */\n" +
+    "    @media (max-width: 768px) {\n" +
+    "        .modal-dialog.modal-lg,\n" +
+    "        .modal-dialog.modal-xl {\n" +
+    "            width: 98% !important;\n" +
+    "            margin: 5px auto;\n" +
+    "        }\n" +
+    "    }\n" +
+    "    \n" +
+    "    @media (max-width: 480px) {\n" +
+    "        .modal-dialog.modal-lg,\n" +
+    "        .modal-dialog.modal-xl {\n" +
+    "            width: 99% !important;\n" +
+    "            margin: 2px auto;\n" +
+    "        }\n" +
+    "    }\n" +
     "</style>\n" +
     "<div class=\"container-fluid\">\n" +
-    "    <div style=\"margin-left: -18px;width: 850px;height: 400px;margin-left: -100px;margin-right: 98px;\">\n" +
+    "    <div style=\"width: 100%; max-width: 1150px; margin: 0 auto; height: 400px;\">\n" +
     "        <div class=\"card card-primary\">\n" +
     "            <div class=\"card-header\">\n" +
     "                <h3 class=\"card-title\">{{ 'task_scheduling.cron_control.generator' | translate}}</h3>\n" +

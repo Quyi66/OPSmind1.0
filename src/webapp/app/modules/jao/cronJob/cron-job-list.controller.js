@@ -13,23 +13,36 @@
         var that = this;
         
         // 将控制器方法暴露到全局，供DataTables渲染的HTML调用
-        window.cronJobController = {
-            startStop: function(id, triggerStatus, scheduleConf) {
-                that.startStop(id, triggerStatus, scheduleConf);
-            },
-            executeCronJob: function(id) {
-                that.executeCronJob(id);
-            },
-            deleteCronJob: function(id) {
-                that.deleteCronJob(id);
-            },
-            copyCronJob: function(id) {
-                that.copyCronJob(id);
-            },
-            nextExecutionTime: function(scheduleConf) {
-                that.nextExecutionTime(scheduleConf);
-            }
-        };
+        function setGlobalController() {
+            window.cronJobController = {
+                startStop: function(id, triggerStatus, scheduleConf) {
+                    console.log('startStop called with:', {id, triggerStatus, scheduleConf});
+                    that.startStop(id, triggerStatus, scheduleConf);
+                },
+                executeCronJob: function(id) {
+                    console.log('executeCronJob called with:', id);
+                    that.executeCronJob(id);
+                },
+                deleteCronJob: function(id) {
+                    console.log('deleteCronJob called with:', id);
+                    that.deleteCronJob(id);
+                },
+                copyCronJob: function(id) {
+                    console.log('copyCronJob called with:', id);
+                    that.copyCronJob(id);
+                },
+                nextExecutionTime: function(scheduleConf) {
+                    console.log('nextExecutionTime called with:', scheduleConf);
+                    that.nextExecutionTime(scheduleConf);
+                },
+                editCronJob: function(id) {
+                    console.log('editCronJob called with:', id);
+                    that.editCronJob(id);
+                }
+            };
+            console.log('window.cronJobController initialized:', window.cronJobController);
+        }
+        setGlobalController();
         
         // 清理函数
         $scope.$on('$destroy', function() {
@@ -55,6 +68,10 @@
             console.log('messageService 可用:', !!messageService);
             console.log('当前状态:', $state.current);
             console.log('Angular 版本:', angular.version);
+            console.log('当前用户:', currentUser);
+            console.log('用户权限 jao:edit:', currentUser.hasPermission("jao:edit"));
+            console.log('用户权限 jao:edit:*:', currentUser.hasPermission("jao:edit:*"));
+            console.log('window.cronJobController:', window.cronJobController);
             
             messageService.toast('info', '调试信息已输出到控制台');
         };
@@ -68,7 +85,7 @@
                     controller: 'CronJobDialogCtrl',
                     controllerAs: 'vm',
                     backdrop: 'static',
-                    size: 'lg',
+                    size: 'md',
                     resolve: {
                         cronJobData: function () {
                             return {
@@ -166,8 +183,11 @@
         };
 
         that.executeCronJob = function (id) {
+            console.log('executeCronJob controller method called with:', id);
             messageService.confirm($translate.instant("task_scheduling.confirm_operation"), $translate.instant("task_scheduling.whether_execute_once", {id: id}), function () {
+                console.log('Confirmed to execute cron job:', id);
                 cronJobService.cronRestInterface("execute", id).then(function (result) {
+                    console.log('cronJobService.cronRestInterface execute result:', result);
                     if ("200" === result.code)
                         messageService.toast('success', $translate.instant("task_scheduling.execute_success", {id: id}));
                     else
@@ -175,6 +195,8 @@
                             id: id,
                             desc: result.code
                         }));
+                }).catch(function(err) {
+                    console.error('cronJobService.cronRestInterface execute error:', err);
                 });
             });
         };
@@ -205,6 +227,7 @@
         }
 
         that.startStop = function (id, triggerStatus, scheduleConf) {
+            console.log('startStop method called with:', {id, triggerStatus, scheduleConf});
             let nextDatas = "";
             cronJobService.cronRestInterface("scheduleConf", scheduleConf).then(function (data) {
                 let count = 0;
@@ -253,6 +276,12 @@
                     content += nextDatas;
                     triggerStatus = "start";
                 }
+                
+                // 确保 content 不为 undefined
+                if (!content) {
+                    content = $translate.instant("task_scheduling.trigger_status_stop", {id: id});
+                }
+                
                 messageService.confirm($translate.instant("task_scheduling.confirm_operation"), content, function () {
                     //启 停
                     cronJobService.cronRestInterface(triggerStatus, id).then(function (result) {
@@ -260,7 +289,21 @@
                         $state.go('app.jao.cron_job', null, {reload: true});
                     });
                 });
-            })
+            }).catch(function (error) {
+                console.error('Failed to get schedule configuration:', error);
+                // 如果获取调度配置失败，显示简单的确认对话框
+                let content = $translate.instant("task_scheduling.trigger_status_stop", {id: id});
+                if ("0" === triggerStatus) {
+                    content = $translate.instant("task_scheduling.trigger_status_start", {id: id});
+                }
+                messageService.confirm($translate.instant("task_scheduling.confirm_operation"), content, function () {
+                    let action = "1" === triggerStatus ? "stop" : "start";
+                    cronJobService.cronRestInterface(action, id).then(function (result) {
+                        messageService.toast('success', content);
+                        $state.go('app.jao.cron_job', null, {reload: true});
+                    });
+                });
+            });
         }
 
         that.nextExecutionTime = function (scheduleConf) {
@@ -316,6 +359,26 @@
             });
         }
 
+        that.editCronJob = function(id) {
+            console.log('editCronJob controller method called with:', id);
+            $uibModal.open({
+                templateUrl: 'app/modules/jao/cronJob/cron-job-dialog.html',
+                controller: 'CronJobDialogCtrl',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                size: 'md',
+                resolve: {
+                    cronJobData: function () {
+                        return { id: id };
+                    }
+                }
+            }).result.then(function () {
+                if (that.tableConfig && that.tableConfig.reloadData) {
+                    that.tableConfig.reloadData();
+                }
+            });
+        };
+
         function controlQuery() {
             var tableColumns = [
                 {data: 'id', title: $translate.instant("task_scheduling.datatable.id")},
@@ -350,9 +413,14 @@
                     render: function (data, type, row, meta) {
                         var html;
                         var isDisabled = "";
-                        if (!currentUser.hasPermission("jao:edit")) {
+                        var hasPermission = currentUser.hasPermission("jao:edit") || currentUser.hasPermission("jao:edit:*");
+                        console.log('Permission check for jao:edit:', currentUser.hasPermission("jao:edit"));
+                        console.log('Permission check for jao:edit:*:', currentUser.hasPermission("jao:edit:*"));
+                        
+                        if (!hasPermission) {
                             isDisabled = "disabled";
                         }
+                        
                         if ("1" === row.triggerStatus)
                             html = '<div class="btn-group">' +
                                 '    <button ' + isDisabled + ' type="button" onclick="window.cronJobController.startStop(\'' + row.id + '\', \'' + row.triggerStatus + '\', \'' + row.scheduleConf + '\')" class="btn btn-success btn-sm">已启用</button>' +
@@ -382,14 +450,14 @@
                     orderable: false,
                     render: function (data, type, row, meta) {
                         var isDisabled = "";
-                        if (!currentUser.hasPermission("jao:edit")) {
+                        if (!currentUser.hasPermission("jao:edit") && !currentUser.hasPermission("jao:edit:*")) {
                             isDisabled = "disabled";
                         }
                         return '<div class="btn-group">' +
                             '    <button ' + isDisabled + ' type="button" onclick="window.cronJobController.executeCronJob(\'' + row.id + '\')" class="btn btn-default btn opx-btn-icon opx-btn-flat" title="' + $translate.instant("task_scheduling.datatable.execute_once") + '">' +
                             '        <i class="fa fa-play-circle"></i>' +
                             '    </button>' +
-                            '    <button ' + isDisabled + ' type="button" onclick="window.location.href=\'#/app/jao/cron_job/new?id=' + row.id + '\'" class="btn btn-default opx-btn-icon opx-btn-flat" title="' + $translate.instant("common.entity.action.edit") + '">' +
+                            '    <button ' + isDisabled + ' type="button" onclick="window.cronJobController.editCronJob(\'' + row.id + '\')" class="btn btn-default opx-btn-icon opx-btn-flat" title="' + $translate.instant("common.entity.action.edit") + '">' +
                             '        <i class="fa fa-pencil"></i>' +
                             '    </button>' +
                             '    <button ' + isDisabled + ' type="button" onclick="window.cronJobController.deleteCronJob(\'' + row.id + '\')" class="btn btn-default opx-btn-icon opx-btn-flat" title="' + $translate.instant("common.entity.action.delete") + '">' +
@@ -436,6 +504,8 @@
                 var deferred = $q.defer();
                 
                 console.log('Starting data load...'); // 调试日志
+                setGlobalController(); // 保证每次数据加载后全局方法都可用
+                console.log('window.cronJobController in getPromise:', window.cronJobController);
                 
                 // 先尝试直接加载任务数据，简化流程
                 cronJobService.cronRestInterface("query").then(function (listCron) {
@@ -517,3 +587,4 @@
         }
     }
 })();
+

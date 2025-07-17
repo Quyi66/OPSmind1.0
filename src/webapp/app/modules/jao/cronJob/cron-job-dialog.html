@@ -1,8 +1,71 @@
 <style>
     .jao-cron-input-style{
-        width: 94%;
+        width: 100%;
         margin: auto;
         margin-bottom: 16px;
+    }
+    
+    /* 修复模态框宽度问题 */
+    .modal-dialog.modal-md {
+        max-width: 400px !important;
+        width: 60% !important;
+    }
+    
+    .modal-dialog.modal-lg {
+        max-width: 500px !important;
+        width: 70% !important;
+    }
+    
+    .modal-dialog.modal-xl {
+        max-width: 500px !important;
+        width: 70% !important;
+    }
+    
+    /* 确保表单元素不会过度拉伸 */
+    .form-control, .form-select {
+        max-width: 100%;
+    }
+    
+    /* 优化输入组样式 */
+    .input-group {
+        max-width: 100%;
+    }
+    
+    .input-group .form-control {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .input-group .btn {
+        flex-shrink: 0;
+    }
+    
+    /* 修复模态框内容宽度 */
+    .modal-content {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    /* 确保模态框在小屏幕上也能正常显示 */
+    @media (max-width: 768px) {
+        .modal-dialog.modal-md {
+            width: 85% !important;
+            margin: 10px auto;
+        }
+        .modal-dialog.modal-lg,
+        .modal-dialog.modal-xl {
+            width: 90% !important;
+            margin: 10px auto;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .modal-dialog.modal-md,
+        .modal-dialog.modal-lg,
+        .modal-dialog.modal-xl {
+            width: 95% !important;
+            margin: 5px auto;
+        }
     }
 </style>
 <div class="modal-header m-t-xs">
