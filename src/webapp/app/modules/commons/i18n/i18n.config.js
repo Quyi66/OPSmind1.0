@@ -24,16 +24,26 @@
         configTranslateProvider();
 
         function addTranslations() {
-            // 使用 StaticFilesLoader 替代直接设置翻译
-            try {
-                $translateProvider.useStaticFilesLoader({
-                    prefix: 'i18n/',
-                    suffix: '/common.json'
-                });
-            } catch (e) {
-                console.warn('StaticFilesLoader not available, falling back to manual translation setup:', e);
-                // 如果 StaticFilesLoader 不可用，可以考虑其他方案
-                // 暂时跳过，让应用继续运行
+            // 使用预编译的翻译数据，而不是动态加载JSON文件
+            if (window["@oplus/langs"]) {
+                var langs = window["@oplus/langs"];
+                for (var langKey in langs) {
+                    if (langs.hasOwnProperty(langKey)) {
+                        $translateProvider.translations(langKey, langs[langKey]);
+                    }
+                }
+                console.log('✅ Loaded translations for languages:', Object.keys(langs));
+            } else {
+                console.warn('⚠️ Pre-compiled translations not found, falling back to StaticFilesLoader');
+                // 如果预编译的翻译不可用，回退到StaticFilesLoader
+                try {
+                    $translateProvider.useStaticFilesLoader({
+                        prefix: 'i18n/',
+                        suffix: '/common.json'
+                    });
+                } catch (e) {
+                    console.error('❌ Both pre-compiled translations and StaticFilesLoader failed:', e);
+                }
             }
         }
 
@@ -42,8 +52,10 @@
          */
         function setUserLanguage() {
             var defaultLanguage = getDefaultLanguage();
-            // console.log('defaultLanguage:%s',defaultLanguage);
+            console.log('🌐 Setting default language to:', defaultLanguage);
             $translateProvider.preferredLanguage(defaultLanguage);
+            // 确保立即使用默认语言
+            $translateProvider.use(defaultLanguage);
         }
 
         function getDefaultLanguage() {
