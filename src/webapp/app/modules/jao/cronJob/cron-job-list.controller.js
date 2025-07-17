@@ -47,8 +47,105 @@
             console.log('Table config:', that.tableConfig);
         };
         
+        that.showDebugInfo = function() {
+            console.log('=== 调试信息 ===');
+            console.log('控制器已加载:', !!that);
+            console.log('$uibModal 可用:', !!$uibModal);
+            console.log('$state 可用:', !!$state);
+            console.log('messageService 可用:', !!messageService);
+            console.log('当前状态:', $state.current);
+            console.log('Angular 版本:', angular.version);
+            
+            messageService.toast('info', '调试信息已输出到控制台');
+        };
+        
+        that.openNewTaskModal = function() {
+            console.log('Opening new task modal...');
+            
+            try {
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'app/modules/jao/cronJob/cron-job-dialog.html',
+                    controller: 'CronJobDialogCtrl',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        cronJobData: function () {
+                            return {
+                                jobDesc: "",
+                                scheduleConf:"",
+                                jobType:"",
+                                jobId:"",
+                                id:""
+                            };
+                        }
+                    }
+                });
+                
+                modalInstance.result.then(function () {
+                    console.log('Modal closed successfully');
+                    // 刷新页面数据
+                    if (that.tableConfig && that.tableConfig.reloadData) {
+                        that.tableConfig.reloadData();
+                    }
+                }, function () {
+                    console.log('Modal dismissed');
+                });
+            } catch (error) {
+                console.error('Error opening modal:', error);
+                messageService.toast('error', '打开模态框时发生错误: ' + error.message);
+            }
+        };
+        
+        that.testNewTask = function() {
+            console.log('Testing new task...');
+            console.log('Current state:', $state.current);
+            console.log('Available states:', $state.get());
+            
+            // 先尝试一个简单的模态框
+            try {
+                var simpleModal = $uibModal.open({
+                    template: '<div class="modal-header"><h3>测试模态框</h3></div><div class="modal-body">这是一个测试模态框</div><div class="modal-footer"><button class="btn btn-primary" ng-click="$close()">关闭</button></div>',
+                    controller: ['$scope', function($scope) {
+                        $scope.$close = function() {
+                            simpleModal.close();
+                        };
+                    }],
+                    size: 'sm'
+                });
+                
+                simpleModal.result.then(function() {
+                    console.log('Simple modal closed');
+                    messageService.toast('success', '简单模态框测试成功');
+                    
+                    // 如果简单模态框工作，再尝试复杂的
+                    setTimeout(function() {
+                        that.openNewTaskModal();
+                    }, 1000);
+                });
+            } catch (error) {
+                console.error('Error in simple modal:', error);
+                messageService.toast('error', '简单模态框测试失败: ' + error.message);
+            }
+        };
+        
         // 初始化
         controlQuery();
+        
+        // 添加初始化检查
+        console.log('CronJobController 已初始化');
+        console.log('控制器方法:', Object.keys(that));
+        
+        // 确保方法可用
+        if (!that.openNewTaskModal) {
+            console.error('openNewTaskModal 方法未定义');
+        }
+        if (!that.testNewTask) {
+            console.error('testNewTask 方法未定义');
+        }
+        if (!that.showDebugInfo) {
+            console.error('showDebugInfo 方法未定义');
+        }
 
         that.deleteCronJob = function (id) {
             messageService.confirm($translate.instant("task_scheduling.confirm_operation"), $translate.instant("task_scheduling.confirm_operation_id", {id: id}), function () {

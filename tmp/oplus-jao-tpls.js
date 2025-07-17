@@ -880,9 +880,18 @@ $templateCache.put("app/modules/jao/cronJob/cron-job-dialog.html","<style>\n" +
 $templateCache.put("app/modules/jao/cronJob/cron-job-list.html","<div class=\"opx-layout-vflex h-full\" ng-controller=\"CronJobController as $ctrl\">\n" +
     "    <nav class=\"navbar navbar-light\">\n" +
     "        <div class=\"opx-navbar-title\">任务调度管理</div>\n" +
-    "        <div class=\"ms-auto\">\n" +
-    "            <button class=\"btn btn-primary\" ui-sref=\"app.jao.cron_job.new({id: 'new'})\" uaa-has-permission=\"jao:edit:*\">\n" +
+    "        <div class=\"ms-auto\" style=\"display: flex; align-items: center;\">\n" +
+    "            <button class=\"btn btn-primary\" ng-click=\"$ctrl.openNewTaskModal()\" uaa-has-permission=\"jao:edit:*\" style=\"margin-right: 5px;\">\n" +
     "                <i class=\"fa fa-plus\"></i> 新增任务\n" +
+    "            </button>\n" +
+    "            <button class=\"btn btn-warning\" ng-click=\"$ctrl.testNewTask()\" title=\"测试新增任务\" style=\"margin-right: 5px;\">\n" +
+    "                <i class=\"fa fa-bug\"></i> 测试新增\n" +
+    "            </button>\n" +
+    "            <button class=\"btn btn-danger\" ng-click=\"$ctrl.showDebugInfo()\" title=\"显示调试信息\" style=\"margin-right: 5px;\">\n" +
+    "                <i class=\"fa fa-info\"></i> 调试信息\n" +
+    "            </button>\n" +
+    "            <button class=\"btn btn-success\" ng-click=\"alert('按钮点击测试')\" title=\"简单测试\" style=\"margin-right: 5px;\">\n" +
+    "                <i class=\"fa fa-check\"></i> 简单测试\n" +
     "            </button>\n" +
     "            <button class=\"btn btn-outline-secondary\" ng-click=\"$ctrl.batchStartStopCron()\" ng-show=\"$ctrl.selectedCrons && $ctrl.selectedCrons.length > 0\" uaa-has-permission=\"jao:edit:*\">\n" +
     "                <i class=\"fa fa-play-pause\"></i> 批量启停\n" +
@@ -926,7 +935,6 @@ $templateCache.put("app/modules/jao/cronJob/cron.html","<style>\n" +
     "    .icheckbox_square-blue,\n" +
     "    .iradio_square-blue {\n" +
     "        display: inline-block;\n" +
-    "        *display: inline;\n" +
     "        vertical-align: middle;\n" +
     "        margin: 0;\n" +
     "        padding: 0;\n" +
@@ -1686,230 +1694,17 @@ $templateCache.put("app/modules/jao/cronJob/cron.html","<style>\n" +
     "</div>\n" +
     "\n" +
     "<script>\n" +
-    "    /**\n" +
-    "     * Created by LinJ on 2015/11/5.\n" +
-    "     * 初始化页面模块js\n" +
-    "     */\n" +
-    "\n" +
-    "//初始化各类元素以及监听\n" +
+    "    // Cron 表达式生成器初始化\n" +
+    "    // 初始化函数已移至外部 init.js 文件\n" +
+    "    // 这里只保留必要的初始化调用\n" +
     "    $(function () {\n" +
-    "        inition();\n" +
-    "        //初始化控件视图\n" +
+    "        // 延迟初始化，确保外部函数已加载\n" +
     "        setTimeout(function () {\n" +
-    "            reverseExp();\n" +
+    "            if (typeof window.cronInit === 'function') {\n" +
+    "                window.cronInit();\n" +
+    "            }\n" +
     "        }, 100);\n" +
     "    });\n" +
-    "\n" +
-    "    //页面所有的页签名称\n" +
-    "    var itemList = [\"second\", \"min\", \"hour\", \"day\", \"month\", \"week\"];\n" +
-    "\n" +
-    "    //初始化各个页签自主选择的最大值\n" +
-    "    var max_second = 59;\n" +
-    "    var max_min = 59;\n" +
-    "    var max_hour = 23;\n" +
-    "    var max_day = 31;\n" +
-    "    var max_month = 12;\n" +
-    "    var max_week = 7;\n" +
-    "\n" +
-    "    function inition() {\n" +
-    "        //初始化checkbox\n" +
-    "        initCheckBox(\"l_second\", 0, 59);\n" +
-    "        initCheckBox(\"l_min\", 0, 59);\n" +
-    "        initCheckBox(\"l_hour\", 0, 23);\n" +
-    "        initCheckBox(\"l_day\", 1, 31);\n" +
-    "        initCheckBox(\"l_month\", 1, 12);\n" +
-    "        initCheckBox(\"l_week\", 1, 7);\n" +
-    "\n" +
-    "\n" +
-    "        //初始化单选、复选框\n" +
-    "        $('input').iCheck({\n" +
-    "            checkboxClass: 'icheckbox_square-blue',\n" +
-    "            radioClass: 'iradio_square-blue',\n" +
-    "            increaseArea: '20%' // optional\n" +
-    "        });\n" +
-    "\n" +
-    "        //解析按钮绑定函数\n" +
-    "        $('#explain').click(function () {\n" +
-    "            reverseExp();\n" +
-    "        });\n" +
-    "\n" +
-    "        initFirstRadio();\n" +
-    "        initNoConfirmRadio();\n" +
-    "        initRadio();\n" +
-    "        initRadioCheckDiv();\n" +
-    "        initSpinner();\n" +
-    "        initCronFromTable();\n" +
-    "        initListChange();\n" +
-    "\n" +
-    "        //如果已有传输过来的值，那么放入cron字段并且反解析\n" +
-    "        var instr = $(\"#transCron\").val();\n" +
-    "        if (instr) {\n" +
-    "            $(\"#cron\").val(instr);\n" +
-    "            reverseExp();\n" +
-    "        }\n" +
-    "\n" +
-    "    }\n" +
-    "\n" +
-    "    //初始化大量的复选框 根据div的id以及数量进行初始化 每个复选框占1/12宽度\n" +
-    "    function initCheckBox(divid, start, cnt) {\n" +
-    "        if (cnt != null && cnt > 0) {\n" +
-    "            for (dc = start; dc <= cnt; dc++) {\n" +
-    "                $(\"#\" + divid).append(\" <div class='col-sm-1' style='margin-top: 2px;'> <label><input type='checkbox' value=\" + dc + \"> &nbsp;\" + dc + \"</label></div>\");\n" +
-    "            }\n" +
-    "        }\n" +
-    "        test('t_second');\n" +
-    "\n" +
-    "    }\n" +
-    "\n" +
-    "    //初始化每个页签第一排的radio，即*条件\n" +
-    "    function initFirstRadio() {\n" +
-    "        $('.firstradio').on('ifChecked', function () {\n" +
-    "            everyTime(this);\n" +
-    "        });\n" +
-    "        $('.unselectradio').on('ifChecked', function () {\n" +
-    "            clearSpan(this);\n" +
-    "        });\n" +
-    "\n" +
-    "        //季度的第一排radio，需要指定为month\n" +
-    "        $('.firstradioreactor').on('ifChecked', function () {\n" +
-    "            everyTimeByName(\"v_month\");\n" +
-    "        });\n" +
-    "    }\n" +
-    "\n" +
-    "    //初始化不指定的radio 即？条件 以及最后一日条件\n" +
-    "    function initNoConfirmRadio() {\n" +
-    "        $('.noconfirmradio').on('ifChecked', function () {\n" +
-    "            unAppoint(this);\n" +
-    "        });\n" +
-    "        $('.lastdayradio').on('ifChecked', function () {\n" +
-    "            lastDay(this);\n" +
-    "        });\n" +
-    "\n" +
-    "    }\n" +
-    "\n" +
-    "    //初始化每个页签选择的的radio\n" +
-    "    function initRadio() {\n" +
-    "        //周期选择的radio\n" +
-    "        $('.cycleradio').on('ifChecked', function () {\n" +
-    "            writeStartAndEnd(this, \"-\");\n" +
-    "        });\n" +
-    "        //循环选择的radio\n" +
-    "        $('.loopradio').on('ifChecked', function () {\n" +
-    "            writeStartAndEnd(this, \"/\");\n" +
-    "        });\n" +
-    "\n" +
-    "        //指定选择的radio 即#\n" +
-    "        $('.designradio').on('ifChecked', function () {\n" +
-    "            writeStartAndEnd(this, \"#\");\n" +
-    "        });\n" +
-    "\n" +
-    "\n" +
-    "        //自主选择的radio\n" +
-    "        $('.choiceradio').on('ifChecked', function () {\n" +
-    "\n" +
-    "            var spanname = this.name;\n" +
-    "            var theList = $(\".\" + spanname + \"List\").find(':checkbox');\n" +
-    "            var maxvalue = eval(\"max_\" + this.name);\n" +
-    "            changeSpanFromCheckList(theList, maxvalue, spanname);\n" +
-    "        });\n" +
-    "\n" +
-    "        //最近工作日的radio\n" +
-    "        $('.nearradio').on('ifChecked', function () {\n" +
-    "            writeEnd(this, \"W\");\n" +
-    "        });\n" +
-    "\n" +
-    "        //最后一个周几的radio\n" +
-    "        $('.lastradio').on('ifChecked', function () {\n" +
-    "            writeEnd(this, \"L\");\n" +
-    "        });\n" +
-    "\n" +
-    "\n" +
-    "    }\n" +
-    "\n" +
-    "    //初始化div内容监听绑定函数，即点击div，对应radio被选中\n" +
-    "    function initRadioCheckDiv() {\n" +
-    "        $('.radiocheck').click(function () {\n" +
-    "            radioCheckByClick(this);\n" +
-    "        });\n" +
-    "\n" +
-    "        $.each(itemList, function (n, value) {\n" +
-    "            var checkList = $(\".\" + value + \"List\");\n" +
-    "            checkList.click(function () {\n" +
-    "                var theRadio = this.closest('.radiocheck').find(':radio');\n" +
-    "                theRadio.eq(0).iCheck('check');\n" +
-    "            });\n" +
-    "        });\n" +
-    "    }\n" +
-    "\n" +
-    "\n" +
-    "    //绑定数字微调器\n" +
-    "    function initSpinner() {\n" +
-    "        //绑定数字微调器\n" +
-    "        $(\".cyclespin\").spinner('changing', function (e, newVal, oldVal) {\n" +
-    "            //trigger immediately\n" +
-    "            writeStartAndEnd(this, \"-\");\n" +
-    "        });\n" +
-    "        $(\".loopspin\").spinner('changing', function (e, newVal, oldVal) {\n" +
-    "            //trigger immediately\n" +
-    "            writeStartAndEnd(this, \"/\");\n" +
-    "        });\n" +
-    "        $(\".designspin\").spinner('changing', function (e, newVal, oldVal) {\n" +
-    "            //trigger immediately\n" +
-    "            writeStartAndEnd(this, \"#\");\n" +
-    "        });\n" +
-    "        $(\".nearspin\").spinner('changing', function (e, newVal, oldVal) {\n" +
-    "            //trigger immediately\n" +
-    "            writeEnd(this, \"W\");\n" +
-    "        });\n" +
-    "        $(\".lastspin\").spinner('changing', function (e, newVal, oldVal) {\n" +
-    "            //trigger immediately\n" +
-    "            writeEnd(this, \"L\");\n" +
-    "        });\n" +
-    "    }\n" +
-    "\n" +
-    "    //表达式结果由表格生成到cron表达式\n" +
-    "    function initCronFromTable() {\n" +
-    "        //查找所有name以v_开头的span元素\n" +
-    "        var vals = $(\"span[name^='v_']\");\n" +
-    "        var cron = $(\"#cron\");\n" +
-    "        vals.change(function () {\n" +
-    "            var item = [];\n" +
-    "            vals.each(function () {\n" +
-    "                item.push(this.innerHTML);\n" +
-    "            });\n" +
-    "            cron.val(item.join(\" \"));\n" +
-    "        });\n" +
-    "    }\n" +
-    "\n" +
-    "    //定义checkbox在被点击的时候的绑定函数  循环遍历页签数组\n" +
-    "    function initListChange() {\n" +
-    "        $.each(itemList, function (n, value) {\n" +
-    "            var checkList = $(\".\" + value + \"List\").find(':checkbox');\n" +
-    "            var maxvalue = eval(\"max_\" + value);\n" +
-    "            initChangeOnCheckboxList(checkList, maxvalue, value);\n" +
-    "        });\n" +
-    "    }\n" +
-    "\n" +
-    "    //给list的checkbox绑定点击方法 入参是list，最大值，指定输出的span名称\n" +
-    "    function initChangeOnCheckboxList(checkList, maxvalue, spanname) {\n" +
-    "        checkList.on('ifChanged', function () {\n" +
-    "            //模拟div被点击过一次\n" +
-    "            this.closest('.radiocheck').click();\n" +
-    "            changeSpanFromCheckList(checkList, maxvalue, spanname);\n" +
-    "        });\n" +
-    "    }\n" +
-    "\n" +
-    "\n" +
-    "    function test(type) {\n" +
-    "        var arr = [\"t_second\", \"t_min\", \"t_hour\", \"t_day\", \"t_month\", \"t_week\", \"t_year\"];\n" +
-    "        for (var i = 0; i < 8; i++) {\n" +
-    "            if (arr[i] != type) {\n" +
-    "                $(\"#\" + arr[i]).hide();\n" +
-    "            } else {\n" +
-    "                $(\"#\" + arr[i]).show();\n" +
-    "            }\n" +
-    "        }\n" +
-    "    }\n" +
     "</script>\n" +
     "\n" +
     "")

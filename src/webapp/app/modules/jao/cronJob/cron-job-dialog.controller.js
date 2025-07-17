@@ -261,9 +261,24 @@
                         vm.cron.scheduleConf = cron;
                         cancel();
                     }
+                    
+                    // 初始化 Cron 表达式生成器
+                    $scope.$on('$viewContentLoaded', function() {
+                        // 延迟初始化，确保 DOM 已加载
+                        setTimeout(function() {
+                            // 设置初始值到隐藏字段
+                            if (that.cron && that.cron !== "* * * * * ? ") {
+                                angular.element("#transCron").val(that.cron);
+                            }
+                            
+                            if (typeof window.cronInit === 'function') {
+                                window.cronInit();
+                            }
+                        }, 100);
+                    });
                 }],
                 controllerAs: '$ctrl',
-                size: 'sm',
+                size: 'lg',
                 backdrop: true
             });
 

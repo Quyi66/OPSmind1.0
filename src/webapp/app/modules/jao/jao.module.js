@@ -9,6 +9,7 @@
      */
     angular.module('oplus.jao', [
         'ui.router.state.events',
+        'ui.bootstrap',
         'ngFileUpload',
         'ngclipboard',
         'ui.sortable',

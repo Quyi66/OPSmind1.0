@@ -1,9 +1,18 @@
 <div class="opx-layout-vflex h-full" ng-controller="CronJobController as $ctrl">
     <nav class="navbar navbar-light">
         <div class="opx-navbar-title">任务调度管理</div>
-        <div class="ms-auto">
-            <button class="btn btn-primary" ui-sref="app.jao.cron_job.new({id: 'new'})" uaa-has-permission="jao:edit:*">
+        <div class="ms-auto" style="display: flex; align-items: center;">
+            <button class="btn btn-primary" ng-click="$ctrl.openNewTaskModal()" uaa-has-permission="jao:edit:*" style="margin-right: 5px;">
                 <i class="fa fa-plus"></i> 新增任务
+            </button>
+            <button class="btn btn-warning" ng-click="$ctrl.testNewTask()" title="测试新增任务" style="margin-right: 5px;">
+                <i class="fa fa-bug"></i> 测试新增
+            </button>
+            <button class="btn btn-danger" ng-click="$ctrl.showDebugInfo()" title="显示调试信息" style="margin-right: 5px;">
+                <i class="fa fa-info"></i> 调试信息
+            </button>
+            <button class="btn btn-success" ng-click="alert('按钮点击测试')" title="简单测试" style="margin-right: 5px;">
+                <i class="fa fa-check"></i> 简单测试
             </button>
             <button class="btn btn-outline-secondary" ng-click="$ctrl.batchStartStopCron()" ng-show="$ctrl.selectedCrons && $ctrl.selectedCrons.length > 0" uaa-has-permission="jao:edit:*">
                 <i class="fa fa-play-pause"></i> 批量启停

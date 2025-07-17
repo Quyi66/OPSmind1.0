@@ -252,5 +252,9 @@ function test(type){
     }
 }
 
-
-
+// 导出函数到全局作用域，供外部调用
+if (typeof window !== 'undefined') {
+    window.cronInit = inition;
+    window.cronReverseExp = reverseExp;
+    window.cronTest = test;
+}
