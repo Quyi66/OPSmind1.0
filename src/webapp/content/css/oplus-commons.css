@@ -5287,8 +5287,16 @@ textarea.form-control-lg {
   opacity: 0.5;
 }
 
-/* 备用方案：如果SVG背景图像不显示，使用文本内容 */
+/* Bootstrap关闭按钮的备用显示 */
 .btn-close:empty::before {
+  content: "×";
+  font-size: 1.2em;
+  line-height: 1;
+  display: block;
+  text-align: center;
+}
+
+.btn-close span[aria-hidden="true"]:empty::before {
   content: "×";
   font-size: 1.2em;
   line-height: 1;

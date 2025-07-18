@@ -168,12 +168,16 @@
             }
 
             function setMaxIconAndCss(modalElem, maximized) {
+                // Try to find maximize button icon - first try js-maxrestore class, then try by ng-click attribute
                 var iconElem = modalElem.find('.js-maxrestore i');
+                if (iconElem.length === 0) {
+                    iconElem = modalElem.find('button[ng-click*="restoreOrMaxWindow"] i');
+                }
                 console.log('setMaxIconAndCss: iconElem=%o', iconElem.length);
                 if (maximized) {
-                    iconElem.removeClass('fa-window').addClass('fa-window-restore');
+                    iconElem.removeClass('fa-square').removeClass('far').addClass('fa-window-restore').addClass('fas');
                 } else {
-                    iconElem.removeClass('fa-window-restore').addClass('fa-window');
+                    iconElem.removeClass('fa-window-restore').removeClass('fas').addClass('fa-square').addClass('far');
                 }
             }
 
@@ -314,20 +318,34 @@
                         if (buttonClose.length === 0) {
                             console.warn('Cannot find close button in modal-header. `.modal-header` is %c%s', 'color:orange', modalHeader.prop('outerHTML'));
                         } else {
-                            buttonClose.removeClass('btn-close').addClass('btn btn-default op-close-window opx-btn-flat opx-btn-icon').html('<i class="far fa-times"></i>');
+                            buttonClose.removeClass('btn-close').addClass('btn btn-default op-close-window opx-btn-flat opx-btn-icon').html('<i class="fas fa-times"></i>');
                         }
-                        if (options.minimizable) {
-                            var buttonMin = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-min" ng-click="$ctrl.minimizeWindow($event)"><i class="far fa-minus"></i></button>');
+                        
+                        // Check if buttons already exist in template to avoid duplication
+                        var existingMinButton = modalHeader.find('button[ng-click*="minimizeWindow"]');
+                        var existingMaxButton = modalHeader.find('button[ng-click*="restoreOrMaxWindow"]');
+                        
+                        if (options.minimizable && existingMinButton.length === 0) {
+                            var buttonMin = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-min" ng-click="$ctrl.minimizeWindow($event)"><i class="fas fa-minus"></i></button>');
                             insertButton(buttonMin);
                         }
-                        if (options.resizable) {
-                            var buttonMax = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-maxrestore" ng-click="$ctrl.maximizeWindow($event)"><i class="far fa-window"></i></button>');
+                        if (options.resizable && existingMaxButton.length === 0) {
+                            var buttonMax = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-maxrestore" ng-click="$ctrl.maximizeWindow($event)"><i class="far fa-square"></i></button>');
                             buttonMax.on('click', function () {
                                 var modalElem = $(this).closest('.modal');
                                 var maximized = maximizeOrRestoreModal(modalElem);
                                 setMaxIconAndCss(modalElem, maximized);
                             });
                             insertButton(buttonMax);
+                        }
+                        
+                        // If buttons exist in template, bind click handlers for maximize button
+                        if (existingMaxButton.length > 0) {
+                            existingMaxButton.on('click', function () {
+                                var modalElem = $(this).closest('.modal');
+                                var maximized = maximizeOrRestoreModal(modalElem);
+                                setMaxIconAndCss(modalElem, maximized);
+                            });
                         }
 
                         function insertButton(button) {

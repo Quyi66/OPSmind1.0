@@ -1,9 +1,15 @@
 <div class="modal-header" ng-class="{'bg-dark':$ctrl.applet.theme==='dark'}" ng-dblclick="$ctrl.restoreOrMaxWindow()">
     <h4 class="modal-title"><i class="fad {{$ctrl.applet.icon}}"></i> {{$ctrl.applet.title}}</h4>
-    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)"><i
-            class="far fa-minus"></i></button>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)" title="最小化">
+        <i class="fas fa-minus"></i>
+    </button>
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.restoreOrMaxWindow($event)" title="最大化">
+        <i class="far fa-square"></i>
+    </button>
     <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window"
-            ng-click="$ctrl.closeWindow($event)" data-dismiss="modal"><i class="far fa-times"></i></button>
+            ng-click="$ctrl.closeWindow($event)" data-dismiss="modal" title="关闭">
+        <i class="fas fa-times"></i>
+    </button>
 </div>
 <div class="modal-body" ng-if="$ctrl.applet.launchError">
     <div class="p-3 text-center">{{$ctrl.applet.launchError}}</div>

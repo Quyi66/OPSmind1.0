@@ -25,7 +25,7 @@ module.exports = (env, argv) => {
                     publicPath: '/'
                 }
             ],
-            port: 3002,
+            port: 3000,
             host: '0.0.0.0',
             hot: true,
             liveReload: true,

@@ -19,7 +19,7 @@
                     title: 'app.nav.jao',
                     icon: 'fa-oplus-jao',
                     color: '#212529',
-                    showIn: {desktop: 3, dock: 3}
+                    showIn: { desktop: 3, dock: 3 }
                     // }
                 },
                 views: {
@@ -198,7 +198,7 @@
                         backdrop: 'static',
                         size: 'sm'
                     }).result.then(function (result) {
-                        $state.go('^', {}, {reload: result.action !== "cancel"});
+                        $state.go('^', {}, { reload: result.action !== "cancel" });
                     }, function () {
                         $state.go('^');
                     });
@@ -212,6 +212,6 @@
                     }
                 }
             })
-        ;
+            ;
     }
 })();
