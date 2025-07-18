@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('oplus.commons').service('messageService', ['toaster', '$timeout', '$translate', messageService]);
+    angular.module('oplus.commons').service('messageService', ['toaster', '$timeout', '$translate', '$uibModal', '$sce', messageService]);
     angular.module('oplus.commons').run(['customFunctions', 'messageService', function (cf, messageService) {
         cf.defineFunction('alert', {
             func: function (title, body, callback) {
@@ -34,7 +34,7 @@
      * @description
      * Provides unified message and notification functions like alert, confirm, prompt, notification.
      */
-    function messageService(toaster, $timeout, $translate) {
+    function messageService(toaster, $timeout, $translate, $uibModal, $sce) {
         init();
         /**
          * Display message in a modal dialog which has one OK button.
@@ -82,8 +82,59 @@
          * @param {function} [cancelCallback] Callback when user clicks cancel
          */
         this.confirm = function (title, body, okCallback, cancelCallback) {
+            // 使用 $uibModal 替代 alertify，确保模态框在正确的层级显示
+            return $uibModal.open({
+                template:
+                    '<div class="modal-header">' +
+                    '   <h4 class="modal-title">{{$ctrl.title}}</h4>' +
+                    '   <button type="button" class="btn-close" ng-click="$ctrl.cancel()" aria-label="Close">' +
+                    '       <span aria-hidden="true">&times;</span>' +
+                    '   </button>' +
+                    '</div>' +
+                    '<div class="modal-body">' +
+                    '   <div ng-bind-html="$ctrl.body"></div>' +
+                    '</div>' +
+                    '<div class="modal-footer">' +
+                    '   <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()">{{$ctrl.cancelLabel}}</button>' +
+                    '   <button type="button" class="btn btn-primary" ng-click="$ctrl.ok()">{{$ctrl.okLabel}}</button>' +
+                    '</div>',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+                    var ctrl = this;
+                    ctrl.title = title;
+                    ctrl.body = $sce.trustAsHtml(body); // 安全地渲染HTML内容
+                    ctrl.okLabel = $translate.instant('common.action.ok');
+                    ctrl.cancelLabel = $translate.instant('common.action.cancel');
+
+                    ctrl.ok = function() {
+                        $uibModalInstance.close('ok');
+                        $timeout(function() {
+                            okCallback && okCallback();
+                        });
+                    };
+
+                    ctrl.cancel = function() {
+                        $uibModalInstance.dismiss('cancel');
+                        $timeout(function() {
+                            cancelCallback && cancelCallback();
+                        });
+                    };
+                }],
+                controllerAs: '$ctrl',
+                size: 'sm',
+                backdrop: true
+            });
+        };
+        /**
+         * Display a confirmation modal dialog using alertify (legacy method)
+         * @param {string} title Message title
+         * @param {string} body Message body
+         * @param {function} okCallback Callback when user clicks OK
+         * @param {function} [cancelCallback] Callback when user clicks cancel
+         */
+        this.confirmAlertify = function (title, body, okCallback, cancelCallback) {
             callConfirm(null, title, body, okCallback, cancelCallback);
         };
+
         /**
          * Display a confirmation modal dialog in warning style which has OK and cancel buttons.
          * @param {string} title Message title
@@ -188,12 +239,17 @@
                 setting.defaultFocus = 'cancel';
             }
             if (typeof alertify !== 'undefined' && alertify && alertify.confirm) {
-                // 使用 alertify.js 1.0.12 的正确API
-                alertify.confirm(setting.title, setting.message, setting.onok, setting.oncancel)
-                    .set('labels', setting.labels);
-                if (setting.defaultFocus) {
-                    alertify.confirm().set('defaultFocus', setting.defaultFocus);
-                }
+                // 设置alertify的父容器为当前活动的模态框或主内容区域
+                var parentContainer = document.querySelector('.modal-content') ||
+                                    document.querySelector('.opx-layout-main') ||
+                                    document.body;
+
+                // 使用alertify.js 1.0.12的正确API - 链式调用
+                alertify.reset()
+                    .parent(parentContainer)
+                    .okBtn(setting.labels.ok)
+                    .cancelBtn(setting.labels.cancel)
+                    .confirm(setting.title, setting.message, setting.onok, setting.oncancel);
             } else {
                 console.error('alertify is not available for confirm');
             }

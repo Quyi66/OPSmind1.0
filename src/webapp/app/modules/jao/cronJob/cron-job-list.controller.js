@@ -235,10 +235,10 @@
                             '        <i class="fa fa-play-circle"></i>' +
                             '    </button>' +
                             '    <button type="submit" ui-sref="app.jao.cron_job.new({id:\'' + row.id + '\'})" class="btn btn-default opx-btn-icon opx-btn-flat" title="{{\'common.entity.action.edit\' | translate}}">' +
-                            '        <i class="fa fa-pencil"></i>' +
+                            '        <i class="fa fa-edit"></i>' +
                             '    </button>' +
                             '    <button type="submit" ng-click="$ctrl.deleteCronJob(\'' + row.id + '\')" class="btn btn-default opx-btn-icon opx-btn-flat" title="{{\'common.entity.action.delete\' | translate}}">' +
-                            '        <i class="fa fa-trash-alt"></i>' +
+                            '        <i class="fa fa-trash"></i>' +
                             '    </button>' +
                             '    <button type="submit" ng-click="$ctrl.copyCronJob(\'' + row.id + '\')" class="btn btn-default opx-btn-icon opx-btn-flat" title="{{\'common.action.copy\' | translate}}">' +
                             '        <i class="fa fa-copy"></i>' +

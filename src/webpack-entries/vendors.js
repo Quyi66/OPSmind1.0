@@ -96,7 +96,7 @@ import 'js-beautify';
 import 'js-yaml';
 import 'diff2html';
 import 'crypto-js';
-import 'alertify.js';
+// alertify.js 已在 index.html 中通过 script 标签加载
 
 // Excel 相关
 import 'xlsx';
@@ -114,7 +114,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import 'jquery.fancytree/dist/skin-awesome/ui.fancytree.css';
 import 'jquery-contextmenu/dist/jquery.contextMenu.css';
 import 'diff2html/dist/diff2html.css';
-import 'alertify.js/dist/css/alertify.css';
+// alertify.css 样式文件保留，因为需要通过webpack处理
 
 // FontAwesome
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -131,9 +131,7 @@ window.CodeMirror = CodeMirror;
 window.c3 = c3;
 window.FullCalendar = FullCalendar;
 
-// 导入 alertify 并设置为全局变量
-import alertify from 'alertify.js';
-window.alertify = alertify;
+// alertify 已在 index.html 中通过 script 标签加载，无需重复导入
 
 // Summernote 富文本编辑器 (只导入JS，CSS已经在项目中)
 import 'summernote/dist/summernote-bs4.min.js';
