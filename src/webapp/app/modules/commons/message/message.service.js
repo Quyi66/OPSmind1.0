@@ -188,7 +188,12 @@
                 setting.defaultFocus = 'cancel';
             }
             if (typeof alertify !== 'undefined' && alertify && alertify.confirm) {
-                alertify.confirm().setting(setting).show(true, 'opx-' + style);
+                // 使用 alertify.js 1.0.12 的正确API
+                alertify.confirm(setting.title, setting.message, setting.onok, setting.oncancel)
+                    .set('labels', setting.labels);
+                if (setting.defaultFocus) {
+                    alertify.confirm().set('defaultFocus', setting.defaultFocus);
+                }
             } else {
                 console.error('alertify is not available for confirm');
             }
