@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('oplus.udp')
+    angular.module('oplus.jao')
         .run(['widgetFactory', 'messageService', 'pageDataUtil', 'widgetInteraction', 'widgetDataUtil', 'restUtils', 'datasetService', 'acmService', 'acmUtil', '$translate', deviceSelectorWidget]);
 
     /**

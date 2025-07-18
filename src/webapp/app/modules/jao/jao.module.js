@@ -15,6 +15,7 @@
         'ui.codemirror',
         'oplus.commons',
         'oplus.uaa',
-        'oplus.app'
+        'oplus.app',
+        'oplus.udp'
     ]);
 })();
