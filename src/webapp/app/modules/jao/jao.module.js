@@ -14,6 +14,7 @@
         'ui.sortable',
         'ui.codemirror',
         'oplus.commons',
-        'oplus.uaa'
+        'oplus.uaa',
+        'oplus.app'
     ]);
 })();

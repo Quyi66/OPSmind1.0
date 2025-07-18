@@ -7,7 +7,7 @@ import "../webapp/app/modules/dev/dev.module.js";
 import "../webapp/app/modules/dts/dts.module.js";
 import "../webapp/app/modules/flow/flow.module.js";
 import "../webapp/app/modules/gfs/gfs.module.js";
-import "../webapp/app/modules/jao/jao.module.js";
+import "../webapp/app/modules/jao/jao-all.js";
 import "../webapp/app/modules/layout/layout.module.js";
 import "../webapp/app/modules/mac/mac.module.js";
 import "../webapp/app/modules/main/main.module.js";
