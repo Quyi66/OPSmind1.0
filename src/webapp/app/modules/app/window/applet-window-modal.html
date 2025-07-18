@@ -1,13 +1,15 @@
 <div class="modal-header" ng-class="{'bg-dark':$ctrl.applet.theme==='dark'}" ng-dblclick="$ctrl.restoreOrMaxWindow()">
     <h4 class="modal-title"><i class="fad {{$ctrl.applet.icon}}"></i> {{$ctrl.applet.title}}</h4>
-    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)" title="最小化">
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)"
+        title="最小化">
         <i class="fas fa-minus"></i>
     </button>
-    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.restoreOrMaxWindow($event)" title="最大化">
+    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.restoreOrMaxWindow($event)"
+        title="最大化">
         <i class="far fa-square"></i>
     </button>
     <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window"
-            ng-click="$ctrl.closeWindow($event)" data-dismiss="modal" title="关闭">
+        ng-click="$ctrl.closeWindow($event)" data-dismiss="modal" title="关闭">
         <i class="fas fa-times"></i>
     </button>
 </div>
@@ -18,8 +20,8 @@
     <applet-content the-applet="$ctrl.applet"></applet-content>
 </div>
 <div class="modal-body" ng-if="!$ctrl.applet.launchError && $ctrl.applet.entry.type==='InternalState'"
-     ui-view="{{'modal_main_view_'+$ctrl.applet.code}}">
+    ui-view="{{'modal_main_view_'+$ctrl.applet.code}}">
     <div class="op-blank-slate bg-light">
-        <div class="op-blank-slate-icon"><i class="fad fa-10x fa-ramp-loading"></i></div>
+        <div class="op-blank-slate-icon"><i class="fas fa-10x fa-spinner fa-spin"></i></div>
     </div>
 </div>
