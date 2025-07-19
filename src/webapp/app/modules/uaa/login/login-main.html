@@ -1,5 +1,5 @@
-<div style="background-color:#1D2939;  background-position: center center;  background-repeat: no-repeat;  background-size: cover;__background-image: url('content/images/bg-oplus-01.jpg')"
-     class="h-100 d-flex align-items-center justify-content-center">
+<div style="background-color:#2C3E50;  background-position: center center;  background-repeat: no-repeat;  background-size: cover;__background-image: url('content/images/bg-oplus-01.jpg')"
+     class="h-100 d-flex align-items-center justify-content-center login-page">
     <!--    <div class="login-cover">-->
     <!--    <img src="content/images/bg-2.png">-->
     <!--    </div>-->
@@ -23,3 +23,59 @@
         </div>
     </div>
 </div>
+
+<style>
+/* 登录页面样式修复 */
+.login-page {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    z-index: 9999;
+}
+
+/* 隐藏body的滚动条 */
+body:has(.login-page) {
+    overflow: hidden !important;
+}
+
+/* 兼容性：如果:has不支持，使用类名 */
+body.login-active {
+    overflow: hidden !important;
+}
+</style>
+
+<style>
+/* 移除登录页面的白色边框 */
+body .login-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
+
+/* 隐藏主体容器的白色背景 */
+.login-page ~ .opx-layout-vflex #master-body {
+    background: none !important;
+}
+</style>
+
+<style>
+.login-page .form-control {
+    border: none !important;
+    border-radius: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.login-page .form-control:focus {
+    border: none !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    background-color: rgba(255, 255, 255, 1);
+}
+</style>

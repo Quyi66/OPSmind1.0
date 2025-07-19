@@ -32,6 +32,19 @@ module.exports = (env, argv) => {
             open: false,
             // 完全禁用 historyApiFallback，因为这是传统的 AngularJS 应用
             historyApiFallback: false,
+            // API代理配置 - 统一代理到后端服务器
+            proxy: {
+                '/api/**': {
+                    target: 'http://10.1.40.112',
+                    changeOrigin: true,
+                    secure: false
+                },
+                '/local-portal/**': {
+                    target: 'http://10.1.40.112',
+                    changeOrigin: true,
+                    secure: false
+                }
+            },
             setupMiddlewares: (middlewares, devServer) => {
                 if (!devServer) {
                     throw new Error('webpack-dev-server is not defined');

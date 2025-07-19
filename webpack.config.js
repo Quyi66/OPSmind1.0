@@ -95,24 +95,45 @@ module.exports = (env = {}, argv = {}) => {
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                ['@babel/preset-env', {
-                                    targets: {
-                                        browsers: ['> 1%', 'last 2 versions', 'ie >= 11']
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [
+                                    ['@babel/preset-env', {
+                                        targets: {
+                                            browsers: ['> 1%', 'last 2 versions', 'ie >= 11']
+                                        },
+                                        useBuiltIns: 'usage',
+                                        corejs: 3
+                                    }]
+                                ],
+                                plugins: [
+                                    '@babel/plugin-proposal-object-rest-spread',
+                                    '@babel/plugin-proposal-class-properties'
+                                ]
+                            }
+                        },
+                        {
+                            loader: 'string-replace-loader',
+                            options: {
+                                multiple: [
+                                    {
+                                        // 开发环境：将 /oplus-portal 替换为 /local-portal
+                                        search: '/oplus-portal',
+                                        replace: isProduction ? '/oplus-portal' : '/local-portal',
+                                        flags: 'g'
                                     },
-                                    useBuiltIns: 'usage',
-                                    corejs: 3
-                                }]
-                            ],
-                            plugins: [
-                                '@babel/plugin-proposal-object-rest-spread',
-                                '@babel/plugin-proposal-class-properties'
-                            ]
+                                    {
+                                        // 替换API基础路径
+                                        search: '/api/',
+                                        replace: isProduction ? '/oplus-portal/api/' : '/local-portal/api/',
+                                        flags: 'g'
+                                    }
+                                ]
+                            }
                         }
-                    }
+                    ]
                 },
 
                 // HTML 模板处理
@@ -252,7 +273,9 @@ module.exports = (env = {}, argv = {}) => {
                 'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
                 'VERSION': JSON.stringify(pkg.version),
                 'BUILD_TIMESTAMP': JSON.stringify(timestamp),
-                'VERSION_NUMBER': JSON.stringify(versionNumber)
+                'VERSION_NUMBER': JSON.stringify(versionNumber),
+                // API路径配置 - 根据环境自动选择
+                'API_BASE_PATH': JSON.stringify(isProduction ? '/oplus-portal' : '/local-portal')
             }),
 
             // HTML 模板处理 - 直接使用原来的 index.html

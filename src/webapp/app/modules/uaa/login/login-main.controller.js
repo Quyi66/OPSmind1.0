@@ -12,6 +12,14 @@
         this.logoNavbarPath = window.$oplus.appConfig.ui.headerLogo;
         $rootScope.$global.hideHeader = true;
         $rootScope.$global.settings.navigationMode = 'usermode';
+
+        // 添加body类名以隐藏滚动条
+        angular.element('body').addClass('login-active');
+
+        // 页面销毁时移除类名
+        $rootScope.$on('$destroy', function() {
+            angular.element('body').removeClass('login-active');
+        });
         //Recommended version to support flexbox: https://caniuse.com/flexbox-gap
         //Minimum version to support ES6: https://caniuse.com/es6
         this.browsers = {
