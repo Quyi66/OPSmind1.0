@@ -8,4 +8,4 @@ import '../content/css/oplus-cac.css';
 import '../content/css/oplus-cm.css';
 import '../content/css/oplus-search.css';
 
-console.log('✅ App styles loaded'); 
+console.log('✅ App styles loaded');

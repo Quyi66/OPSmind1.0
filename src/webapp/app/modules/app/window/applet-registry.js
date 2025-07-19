@@ -21,6 +21,14 @@
      */
     function appletRegistry($q, $translate, $state, restUtils, currentUser, themeService, appletRouter) {
         /**
+         * 应用入口点映射配置
+         * 用于处理特殊的应用入口点重定向
+         */
+        var ENTRY_MAPPINGS = {
+            'cac': {type: 'InternalState', value: 'app.cac'}
+        };
+
+        /**
          *
          * @type {[AppletDefinition]}
          */
@@ -138,9 +146,9 @@
                     entry: {type: rec.entryType, value: rec.entry, params: rec.entryParams},
                 };
 
-                if (def.code === 'cac') {
-                    console.warn('Hardcode change cac entry to app.cac');
-                    def.entry = {type: 'InternalState', value: 'app.cac'};
+                // 检查是否有配置的入口点映射
+                if (ENTRY_MAPPINGS[def.code]) {
+                    def.entry = ENTRY_MAPPINGS[def.code];
                 } else if ((!def.entry.type && /^#\/|\app./.test(def.entry.value))) {
                     def.entry = {type: 'InternalState', value: def.entry.value};
                 } else if ((!def.entry.type && /^http[s]?:\/\//.test(def.entry.value))) {

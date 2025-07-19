@@ -33,6 +33,14 @@
         var APPLET_WINDOW_ID_PREFIX = 'js-applet-window-';
         var USER_PREF_WINDOW_LAYOUTS = 'windowLayouts';
 
+        /**
+         * 旧版本入口点映射配置
+         * 用于处理以 # 开头的旧版本入口点
+         */
+        var LEGACY_ENTRY_MAPPINGS = {
+            '#': 'app.cac'  // 默认映射到 cac 应用
+        };
+
         this.prepareAppletWindowContent = prepareAppletWindowContent;
         // this.maximizeAppletWindow = maximizeAppletWindow;
         this.openApplet = openApplet;
@@ -152,8 +160,8 @@
                 } else if (angular.isString(entry)) {
                     result = {};
                     if (entry.indexOf('#') === 0) {
-                        console.warn('TODO: hardcode change to app.cac');
-                        result.value = 'app.cac';
+                        // 使用配置映射替代硬编码
+                        result.value = LEGACY_ENTRY_MAPPINGS['#'] || 'app.cac';
                         result.type = 'InternalState';
                     } else {
                         result.type = entry.indexOf('.') > 0 ? 'InternalState' : 'udp';

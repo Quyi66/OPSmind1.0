@@ -589,6 +589,11 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
         var modalWindow = openedWindows.get(modalInstance).value;
         var appendToElement = modalWindow.appendTo;
 
+        // 清理焦点事件监听器
+        if (modalWindow.focusHandler) {
+          document.removeEventListener('focusin', modalWindow.focusHandler);
+        }
+
         //clean up the stack
         openedWindows.remove(modalInstance);
         previousTopOpenedModal = openedWindows.top();
@@ -842,6 +847,28 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
 
         applyAriaHidden(angularDomEl);
 
+        // 添加焦点变化监听器来处理aria-hidden冲突
+        var focusHandler = function(event) {
+          var focusedElement = event.target;
+          var modalElement = angularDomEl[0];
+
+          // 如果焦点在模态框内，确保模态框及其祖先没有aria-hidden
+          if (modalElement && modalElement.contains && modalElement.contains(focusedElement)) {
+            var current = modalElement;
+            while (current && current !== document.body) {
+              if (current.getAttribute('aria-hidden') === 'true') {
+                current.removeAttribute('aria-hidden');
+              }
+              current = current.parentElement;
+            }
+          }
+        };
+
+        document.addEventListener('focusin', focusHandler);
+
+        // 存储处理器以便后续清理
+        openedWindows.top().value.focusHandler = focusHandler;
+
         function applyAriaHidden(el) {
           if (!el || el[0].tagName === 'BODY') {
             return;
@@ -855,8 +882,12 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
               ariaHiddenCount = elemIsAlreadyHidden ? 1 : 0;
             }
 
-            sibling.setAttribute(ARIA_HIDDEN_ATTRIBUTE_NAME, ariaHiddenCount + 1);
-            sibling.setAttribute('aria-hidden', 'true');
+            // 检查元素是否包含焦点元素，如果是则不设置aria-hidden
+            var containsFocusedElement = sibling.contains && sibling.contains(document.activeElement);
+            if (!containsFocusedElement) {
+              sibling.setAttribute(ARIA_HIDDEN_ATTRIBUTE_NAME, ariaHiddenCount + 1);
+              sibling.setAttribute('aria-hidden', 'true');
+            }
           });
 
           return applyAriaHidden(el.parent());

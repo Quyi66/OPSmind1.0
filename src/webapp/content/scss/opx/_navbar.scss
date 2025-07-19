@@ -1,6 +1,9 @@
-.navbar {
+.navbar,
+nav.navbar,
+.opx-win-taskbar.navbar,
+.navbar.navbar-expand.opx-win-taskbar {
   // No need vertical padding because elements are center aligned.
-  padding: 0 $spacer;
+  padding: 0 $spacer !important;
   height: $op-navbar-height;
   min-height: $op-navbar-height;
 
