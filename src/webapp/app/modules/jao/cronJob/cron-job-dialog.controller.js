@@ -5,9 +5,9 @@
 (function () {
     angular.module('oplus.jao').controller('CronJobDialogCtrl', CronJobDialogCtrl);
 
-    CronJobDialogCtrl.$inject = ['$scope', 'messageService', '$uibModalInstance', 'cronJobData', 'jaoJobService', '$uibModal', 'cronJobService', '$translate', '$timeout', 'currentUser', 'appletService', 'commandService', 'jaoFlowService'];
+    CronJobDialogCtrl.$inject = ['$scope', 'messageService', '$uibModalInstance', 'cronJobData', 'jaoJobService', '$uibModal', 'cronJobService', '$translate', '$timeout', 'currentUser', 'appletService', 'commandService', 'jaoFlowService', 'Team'];
 
-    function CronJobDialogCtrl($scope, messageService, $uibModalInstance, cronJobData, jaoJobService, $uibModal, cronJobService, $translate, $timeout, currentUser, appletService, commandService, jaoFlowService) {
+    function CronJobDialogCtrl($scope, messageService, $uibModalInstance, cronJobData, jaoJobService, $uibModal, cronJobService, $translate, $timeout, currentUser, appletService, commandService, jaoFlowService, Team) {
         var vm = this;
         vm.cron = cronJobData;
         vm.cancel = cancel;
@@ -45,13 +45,18 @@
 
                 $timeout(function () {
                     for (var key in vm.cron.jobParam) {
-                        vm.params.push({
-                            'name': key,
-                            'defaultValue': vm.cron.jobParam[key],
-                            'label': vm.echoLabel[key],
-                            'description': vm.echoDescription[key],
-                            'type': vm.echotype[key]
-                        });
+                        // 如果是团队信息，单独处理
+                        if (key === 'teamIds' && vm.cron.jobType === 'cac') {
+                            vm.cron.teamIds = vm.cron.jobParam[key].split(',');
+                        } else {
+                            vm.params.push({
+                                'name': key,
+                                'defaultValue': vm.cron.jobParam[key],
+                                'label': vm.echoLabel[key],
+                                'description': vm.echoDescription[key],
+                                'type': vm.echotype[key]
+                            });
+                        }
                     }
                     if (_jobConstant.indexOf(vm.cron.jobType) > -1) {
                         vm.ccfIds = vm.cron.jobId.split(",");
@@ -72,8 +77,22 @@
             vm.cron.isEncrypt = "1";//默认不加密
         }
 
+        // 初始化团队列表
+        vm.teamList = [];
+        loadTeamList();
+
         function cancel() {
             $uibModalInstance.close();
+        }
+
+        // 加载团队列表
+        function loadTeamList() {
+            Team.findTeams().then(function(teams) {
+                vm.teamList = teams;
+            }).catch(function(err) {
+                console.error('Failed to load teams:', err);
+                messageService.toast('error', '加载团队列表失败');
+            });
         }
 
 
@@ -278,6 +297,11 @@
                 jobId: _jobConstant.indexOf(vm.cron.jobType) > -1 ? vm.ccfIds.toString() : vm.cron.jobId,
                 jobParam: {}
             };
+
+            // 如果是巡检作业，添加团队信息到jobParam中
+            if (vm.cron.jobType === 'cac' && vm.cron.teamIds && vm.cron.teamIds.length > 0) {
+                cronRequest.jobParam.teamIds = vm.cron.teamIds.join(',');
+            }
 
             if (_jobConstant[2] === vm.cron.jobType && vm.params[0].defaultValue.length < 1) {
                 messageService.alertWarning("warning", "The running parameters are empty. Please enter the running parameters!");

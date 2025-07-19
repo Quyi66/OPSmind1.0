@@ -92,21 +92,7 @@
                     '   </button>' +
                     '</div>' +
                     '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
-                    '   <div class="d-flex align-items-start">' +
-                    '       <div style="margin-right: 1rem; display: flex; align-items: center;">' +
-                    '           <svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
-                    '               <circle cx="25" cy="25" r="20" fill="#ffc107"/>' +
-                    '               <text x="25" y="32" text-anchor="middle" fill="white" font-size="18" font-weight="bold">?</text>' +
-                    '           </svg>' +
-                    '           <svg width="40" height="40" viewBox="0 0 40 40">' +
-                    '               <circle cx="20" cy="20" r="16" fill="#ffc107"/>' +
-                    '               <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">?</text>' +
-                    '           </svg>' +
-                    '       </div>' +
-                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
-                    '           <div ng-bind-html="$ctrl.body" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
-                    '       </div>' +
-                    '   </div>' +
+                    '   <div ng-bind-html="$ctrl.body" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
                     '</div>' +
                     '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
                     '   <button type="button" class="btn" ng-click="$ctrl.cancel()" style="background-color: #e9ecef; border-color: #e9ecef; color: #333; padding: 0.5rem 1rem; margin-right: 0.5rem;">{{$ctrl.cancelLabel}}</button>' +
@@ -263,11 +249,8 @@
             if (!angular.isString(message))
                 message = JSON.stringify(message);
             var css = 'd-flex align-items-center overflow-auto';//style ? 'alert alert-' + style : 'alert';
-            var icon = '';
-            if (style === 'danger') {
-                icon = '<i class="fa fa-exclamation-triangle fa-3x text-danger me-3"></i>';
-            }
-            message = '<div class="' + css + '">' + icon + '<div>' + (message || '') + '</div></div>';
+            // 移除所有图标，包括danger样式的图标
+            message = '<div class="' + css + '"><div>' + (message || '') + '</div></div>';
             return message;
         }
 
@@ -343,7 +326,7 @@
 
             var template;
             if (isError) {
-                // 错误样式：简化为一个红色三角形警告图标
+                // 错误样式：移除SVG图标，使用formatMessage中的FontAwesome图标
                 template =
                     '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
                     '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
@@ -352,57 +335,13 @@
                     '   </button>' +
                     '</div>' +
                     '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
-                    '   <div class="d-flex align-items-start">' +
-                    '       <div style="margin-right: 1rem; flex-shrink: 0;">' +
-                    '           <svg width="50" height="50" viewBox="0 0 50 50">' +
-                    '               <polygon points="25,5 45,40 5,40" fill="#dc3545"/>' +
-                    '               <text x="25" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="bold">!</text>' +
-                    '           </svg>' +
-                    '       </div>' +
-                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
-                    '           <div ng-bind-html="$ctrl.message" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
-                    '       </div>' +
-                    '   </div>' +
+                    '   <div ng-bind-html="$ctrl.message" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
                     '</div>' +
                     '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
                     '   <button type="button" class="btn" ng-click="$ctrl.close()" style="background-color: #6c757d; border-color: #6c757d; color: white; padding: 0.5rem 1.5rem;">{{$ctrl.closeLabel}}</button>' +
                     '</div>';
             } else {
-                // 成功、警告、信息样式：与错误样式保持一致的大小和布局
-                var iconSvg = '';
-                if (style === 'success') {
-                    iconSvg =
-                        '<svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
-                        '   <circle cx="25" cy="25" r="20" fill="#28a745"/>' +
-                        '   <path d="M18 25l7 7 12-12" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
-                        '</svg>' +
-                        '<svg width="40" height="40" viewBox="0 0 40 40">' +
-                        '   <circle cx="20" cy="20" r="16" fill="#28a745"/>' +
-                        '   <path d="M14 20l6 6 10-10" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
-                        '</svg>';
-                } else if (style === 'warning') {
-                    iconSvg =
-                        '<svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
-                        '   <polygon points="25,5 45,40 5,40" fill="#ffc107"/>' +
-                        '   <text x="25" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="bold">!</text>' +
-                        '</svg>' +
-                        '<svg width="40" height="40" viewBox="0 0 40 40">' +
-                        '   <polygon points="20,4 36,32 4,32" fill="#ffc107"/>' +
-                        '   <text x="20" y="26" text-anchor="middle" fill="white" font-size="16" font-weight="bold">!</text>' +
-                        '</svg>';
-                } else {
-                    // info 样式
-                    iconSvg =
-                        '<svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
-                        '   <circle cx="25" cy="25" r="20" fill="#17a2b8"/>' +
-                        '   <text x="25" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="bold">i</text>' +
-                        '</svg>' +
-                        '<svg width="40" height="40" viewBox="0 0 40 40">' +
-                        '   <circle cx="20" cy="20" r="16" fill="#17a2b8"/>' +
-                        '   <text x="20" y="26" text-anchor="middle" fill="white" font-size="16" font-weight="bold">i</text>' +
-                        '</svg>';
-                }
-
+                // 成功、警告、信息样式：移除图标，只显示文本
                 template =
                     '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
                     '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
@@ -411,14 +350,7 @@
                     '   </button>' +
                     '</div>' +
                     '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
-                    '   <div class="d-flex align-items-start">' +
-                    '       <div style="margin-right: 1rem; display: flex; align-items: center;">' +
-                    iconSvg +
-                    '       </div>' +
-                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
-                    '           <div ng-bind-html="$ctrl.message" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
-                    '       </div>' +
-                    '   </div>' +
+                    '   <div ng-bind-html="$ctrl.message" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
                     '</div>' +
                     '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
                     '   <button type="button" class="btn" ng-click="$ctrl.close()" style="background-color: #6c757d; border-color: #6c757d; color: white; padding: 0.5rem 1.5rem;">{{$ctrl.closeLabel}}</button>' +

@@ -5,9 +5,9 @@
 (function () {
     angular.module('oplus.udp').controller('CronJobEditCtrl', CronJobEditCtrl);
 
-    CronJobEditCtrl.$inject = ['$scope', 'messageService', '$uibModalInstance', 'cronJobData', 'jaoJobService', '$uibModal', 'cronJobService', '$translate', '$timeout', 'currentUser', 'appletService', 'commandService', 'jaoFlowService'];
+    CronJobEditCtrl.$inject = ['$scope', 'messageService', '$uibModalInstance', 'cronJobData', 'jaoJobService', '$uibModal', 'cronJobService', '$translate', '$timeout', 'currentUser', 'appletService', 'commandService', 'jaoFlowService', 'Team'];
 
-    function CronJobEditCtrl($scope, messageService, $uibModalInstance, cronJobData, jaoJobService, $uibModal, cronJobService, $translate, $timeout, currentUser, appletService, commandService, jaoFlowService) {
+    function CronJobEditCtrl($scope, messageService, $uibModalInstance, cronJobData, jaoJobService, $uibModal, cronJobService, $translate, $timeout, currentUser, appletService, commandService, jaoFlowService, Team) {
         var vm = this;
         vm.cron = cronJobData;
         vm.cancel = cancel;

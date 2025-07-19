@@ -101,7 +101,7 @@
             </select>
             <div ng-if="!vm.displayType && 'cac' === vm.cron.jobType" class="form-control-wrapper">
                 <select ng-model="vm.ccfIds" class="form-select"
-                        op-select multiple
+                        op-select="{width:'100%'}" multiple
                         ng-options="city.id as city.templateName for city in jobList"></select>
             </div>
             <div ng-if="!vm.displayType && 'cmd' === vm.cron.jobType" class="form-control-wrapper">
@@ -124,6 +124,21 @@
         </div>
     </div>
 
+    <!-- 选择作业团队 - 仅在作业类型为'巡检作业'时显示 -->
+    <div class="form-group jao-cron-input-style" ng-show="vm.cron.jobType === 'cac'">
+        <label class="control-label">
+            {{ 'task_scheduling.select_job_team' | translate}} <span class="text-danger">*</span>
+        </label>
+        <div class="form-control-wrapper">
+            <div class="form-control-wrapper">
+                <select ng-model="vm.cron.teamIds" class="form-select"
+                        op-select="{width:'100%'}" multiple
+                        ng-options="team.id as team.name for team in vm.teamList">
+                </select>
+            </div>
+        </div>
+    </div>
+
 </div>
 <div class="modal-footer">
     <div class="form-group w-100 m-b-sm">
@@ -137,7 +152,7 @@
             {{ 'common.entity.action.back' | translate}}
         </button>
         <button class="btn btn-primary pull-right" style="margin-right: 6px;" ng-click="vm.save()"
-                ng-disabled="(!vm.cron.jobId && vm.ccfIds.length < 1) || !vm.cron.jobType || !vm.cron.scheduleConf || !vm.cron.jobDesc || !vm.cron.logOutput || !vm.cron.isEncrypt">
+                ng-disabled="(!vm.cron.jobId && vm.ccfIds.length < 1) || !vm.cron.jobType || !vm.cron.scheduleConf || !vm.cron.jobDesc || !vm.cron.logOutput || !vm.cron.isEncrypt || (vm.cron.jobType === 'cac' && (!vm.cron.teamIds || vm.cron.teamIds.length < 1))">
             <i class="fa fa-check"></i>
             {{ 'common.entity.action.save' | translate}}
         </button>
