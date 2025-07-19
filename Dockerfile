@@ -14,8 +14,7 @@ RUN apt-get update && \
 # 设置工作目录
 WORKDIR /app
 
-# 安装全局依赖
-RUN npm install -g gulp@3.9.1
+# 安装全局依赖（已移除gulp，现在使用webpack）
 
 # 多阶段构建：依赖安装阶段
 FROM base as dependencies

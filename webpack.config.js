@@ -38,10 +38,7 @@ module.exports = (env = {}, argv = {}) => {
         entry: {
             'oplus-vendors': './src/webpack-entries/vendors.js',
             'all-modules': './src/webpack-entries/all-modules.js',
-            'oplus-styles': {
-                import: './src/webapp/app/app.js',
-                dependOn: ['oplus-vendors', 'all-modules']
-            }
+            'oplus-styles': './src/webapp/app/app.js'
         },
 
         output: {

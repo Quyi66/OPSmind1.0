@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAO 图标测试</title>
+    <link rel="stylesheet" href="content/css/fontawesome-pro.css">
+    <link rel="stylesheet" href="content/css/oplus-commons.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .icon-test {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .icon-test i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .status {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            margin: 20px 0;
+        }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>JAO 作业图标测试</h1>
+    
+    <div class="test-section">
+        <h2>原生 Font Awesome 火箭图标</h2>
+        
+        <div class="icon-test">
+            <i class="fa fa-rocket"></i>
+            <div>fa-rocket</div>
+            <div>Unicode: f135</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>自定义 Oplus JAO 图标</h2>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-jao"></i>
+            <div>fa-oplus-jao</div>
+            <div>应该显示火箭</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-jao-job"></i>
+            <div>fa-oplus-jao-job</div>
+            <div>应该显示火箭</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>其他 Oplus 图标对比</h2>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-cmd"></i>
+            <div>fa-oplus-cmd</div>
+            <div>命令</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-udp"></i>
+            <div>fa-oplus-udp</div>
+            <div>UDP</div>
+        </div>
+        
+        <div class="icon-test">
+            <i class="fa fa-oplus-gfs"></i>
+            <div>fa-oplus-gfs</div>
+            <div>GFS</div>
+        </div>
+    </div>
+
+    <div class="status">
+        <strong>如何判断修复是否成功：</strong>
+        <ul>
+            <li>如果 JAO 图标显示为 🚀 火箭符号，说明修复成功</li>
+            <li>如果图标显示为方块字符（□），说明字体文件未正确加载</li>
+            <li>原生 fa-rocket 图标应该与 fa-oplus-jao 图标显示相同</li>
+        </ul>
+    </div>
+
+    <script>
+        // 检查图标是否正确加载
+        window.addEventListener('load', function() {
+            const jaoIcon = document.querySelector('.fa-oplus-jao');
+            const rocketIcon = document.querySelector('.fa-rocket');
+            
+            if (jaoIcon && rocketIcon) {
+                const jaoStyle = window.getComputedStyle(jaoIcon, ':before');
+                const rocketStyle = window.getComputedStyle(rocketIcon, ':before');
+                
+                console.log('JAO 图标 Unicode:', jaoStyle.content);
+                console.log('Rocket 图标 Unicode:', rocketStyle.content);
+                
+                if (jaoStyle.content === rocketStyle.content) {
+                    console.log('✅ 图标修复成功！JAO 图标现在使用火箭图标');
+                } else {
+                    console.log('❌ 图标可能还有问题');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
