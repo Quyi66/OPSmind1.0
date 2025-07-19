@@ -82,21 +82,35 @@
          * @param {function} [cancelCallback] Callback when user clicks cancel
          */
         this.confirm = function (title, body, okCallback, cancelCallback) {
-            // 使用 $uibModal 替代 alertify，确保模态框在正确的层级显示
+            // 使用 $uibModal 替代 alertify，确保模态框在正确的层级显示，样式与alert保持一致
             return $uibModal.open({
                 template:
-                    '<div class="modal-header">' +
-                    '   <h4 class="modal-title">{{$ctrl.title}}</h4>' +
-                    '   <button type="button" class="btn-close" ng-click="$ctrl.cancel()" aria-label="Close">' +
-                    '       <span aria-hidden="true">&times;</span>' +
+                    '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
+                    '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
+                    '   <button type="button" ng-click="$ctrl.cancel()" aria-label="Close" style="background:none;border:none;font-size:1rem;color:#999;padding:0;line-height:1;">' +
+                    '       <span aria-hidden="true">×</span>' +
                     '   </button>' +
                     '</div>' +
-                    '<div class="modal-body">' +
-                    '   <div ng-bind-html="$ctrl.body"></div>' +
+                    '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
+                    '   <div class="d-flex align-items-start">' +
+                    '       <div style="margin-right: 1rem; display: flex; align-items: center;">' +
+                    '           <svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
+                    '               <circle cx="25" cy="25" r="20" fill="#ffc107"/>' +
+                    '               <text x="25" y="32" text-anchor="middle" fill="white" font-size="18" font-weight="bold">?</text>' +
+                    '           </svg>' +
+                    '           <svg width="40" height="40" viewBox="0 0 40 40">' +
+                    '               <circle cx="20" cy="20" r="16" fill="#ffc107"/>' +
+                    '               <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">?</text>' +
+                    '           </svg>' +
+                    '       </div>' +
+                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
+                    '           <div ng-bind-html="$ctrl.body" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
+                    '       </div>' +
+                    '   </div>' +
                     '</div>' +
-                    '<div class="modal-footer">' +
-                    '   <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()">{{$ctrl.cancelLabel}}</button>' +
-                    '   <button type="button" class="btn btn-primary" ng-click="$ctrl.ok()">{{$ctrl.okLabel}}</button>' +
+                    '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.cancel()" style="background-color: #e9ecef; border-color: #e9ecef; color: #333; padding: 0.5rem 1rem; margin-right: 0.5rem;">{{$ctrl.cancelLabel}}</button>' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.ok()" style="background-color: #007bff; border-color: #007bff; color: white; padding: 0.5rem 1rem;">{{$ctrl.okLabel}}</button>' +
                     '</div>',
                 controller: ['$uibModalInstance', function($uibModalInstance) {
                     var ctrl = this;
@@ -167,21 +181,64 @@
          * @param {function} cancelCallback Callback when user clicks cancel
          */
         this.prompt = function (title, body, defaultValue, okCallback, cancelCallback) {
-            if (typeof alertify !== 'undefined' && alertify && alertify.prompt) {
-                alertify.prompt(title, body, defaultValue,
-                    function (evt, value) {
-                        $timeout(function () {
-                            okCallback(value);
+            // 使用 $uibModal 替代 alertify，确保模态框在正确的层级显示，样式与alert保持一致
+            return $uibModal.open({
+                template:
+                    '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
+                    '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
+                    '   <button type="button" ng-click="$ctrl.cancel()" aria-label="Close" style="background:none;border:none;font-size:1rem;color:#999;padding:0;line-height:1;">' +
+                    '       <span aria-hidden="true">×</span>' +
+                    '   </button>' +
+                    '</div>' +
+                    '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
+                    '   <div class="d-flex align-items-start">' +
+                    '       <div style="margin-right: 1rem; display: flex; align-items: center;">' +
+                    '           <svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
+                    '               <circle cx="25" cy="25" r="20" fill="#17a2b8"/>' +
+                    '               <text x="25" y="32" text-anchor="middle" fill="white" font-size="18" font-weight="bold">?</text>' +
+                    '           </svg>' +
+                    '           <svg width="40" height="40" viewBox="0 0 40 40">' +
+                    '               <circle cx="20" cy="20" r="16" fill="#17a2b8"/>' +
+                    '               <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">?</text>' +
+                    '           </svg>' +
+                    '       </div>' +
+                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
+                    '           <div ng-bind-html="$ctrl.body" style="color: #333; font-size: 14px; line-height: 1.4; margin-bottom: 1rem;"></div>' +
+                    '           <input type="text" class="form-control" ng-model="$ctrl.inputValue" placeholder="{{$ctrl.placeholder}}" autofocus style="font-size: 14px;">' +
+                    '       </div>' +
+                    '   </div>' +
+                    '</div>' +
+                    '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.cancel()" style="background-color: #e9ecef; border-color: #e9ecef; color: #333; padding: 0.5rem 1rem; margin-right: 0.5rem;">{{$ctrl.cancelLabel}}</button>' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.ok()" style="background-color: #007bff; border-color: #007bff; color: white; padding: 0.5rem 1rem;">{{$ctrl.okLabel}}</button>' +
+                    '</div>',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+                    var ctrl = this;
+                    ctrl.title = title;
+                    ctrl.body = $sce.trustAsHtml(body);
+                    ctrl.inputValue = defaultValue || '';
+                    ctrl.placeholder = defaultValue || '';
+                    ctrl.okLabel = $translate.instant('common.action.ok');
+                    ctrl.cancelLabel = $translate.instant('common.action.cancel');
+
+                    ctrl.ok = function() {
+                        $uibModalInstance.close('ok');
+                        $timeout(function() {
+                            okCallback && okCallback(ctrl.inputValue);
                         });
-                    },
-                    function () {
-                        $timeout(function () {
+                    };
+
+                    ctrl.cancel = function() {
+                        $uibModalInstance.dismiss('cancel');
+                        $timeout(function() {
                             cancelCallback && cancelCallback();
                         });
-                    });
-            } else {
-                console.error('alertify is not available for prompt');
-            }
+                    };
+                }],
+                controllerAs: '$ctrl',
+                size: 'sm',
+                backdrop: true
+            });
         };
 
         /**
@@ -267,21 +324,128 @@
         }
 
         function callAlert(style, title, message, callback) {
-            if (typeof alertify !== 'undefined' && alertify && alertify.alert) {
-                alertify.alert().set({
-                    label: $translate.instant('common.entity.action.close'),
-                    onshow: function (e) {
-                        $('.ajs-button.btn-primary').addClass('btn-default').removeClass('btn-primary');
-                    }
-                });
-                alertify.alert(title, formatMessage(style, message), function () {
-                    $timeout(function () {
-                        callback && callback();
-                    });
-                });
-            } else {
-                console.error('alertify is not available for alert');
+            // 使用 $uibModal 替代 alertify，确保模态框在正确的层级显示
+            var iconClass = 'fa-info-circle';
+            var iconColor = '#17a2b8'; // info blue
+            var isError = false;
+
+            if (style === 'danger') {
+                iconClass = 'fa-exclamation-triangle';
+                iconColor = '#dc3545'; // danger red
+                isError = true;
+            } else if (style === 'success') {
+                iconClass = 'fa-check-circle';
+                iconColor = '#28a745'; // success green
+            } else if (style === 'warning') {
+                iconClass = 'fa-exclamation-triangle';
+                iconColor = '#ffc107'; // warning yellow
             }
+
+            var template;
+            if (isError) {
+                // 错误样式：简化为一个红色三角形警告图标
+                template =
+                    '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
+                    '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
+                    '   <button type="button" ng-click="$ctrl.close()" aria-label="Close" style="background:none;border:none;font-size:1rem;color:#999;padding:0;line-height:1;">' +
+                    '       <span aria-hidden="true">×</span>' +
+                    '   </button>' +
+                    '</div>' +
+                    '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
+                    '   <div class="d-flex align-items-start">' +
+                    '       <div style="margin-right: 1rem; flex-shrink: 0;">' +
+                    '           <svg width="50" height="50" viewBox="0 0 50 50">' +
+                    '               <polygon points="25,5 45,40 5,40" fill="#dc3545"/>' +
+                    '               <text x="25" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="bold">!</text>' +
+                    '           </svg>' +
+                    '       </div>' +
+                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
+                    '           <div ng-bind-html="$ctrl.message" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
+                    '       </div>' +
+                    '   </div>' +
+                    '</div>' +
+                    '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.close()" style="background-color: #6c757d; border-color: #6c757d; color: white; padding: 0.5rem 1.5rem;">{{$ctrl.closeLabel}}</button>' +
+                    '</div>';
+            } else {
+                // 成功、警告、信息样式：与错误样式保持一致的大小和布局
+                var iconSvg = '';
+                if (style === 'success') {
+                    iconSvg =
+                        '<svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
+                        '   <circle cx="25" cy="25" r="20" fill="#28a745"/>' +
+                        '   <path d="M18 25l7 7 12-12" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+                        '</svg>' +
+                        '<svg width="40" height="40" viewBox="0 0 40 40">' +
+                        '   <circle cx="20" cy="20" r="16" fill="#28a745"/>' +
+                        '   <path d="M14 20l6 6 10-10" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+                        '</svg>';
+                } else if (style === 'warning') {
+                    iconSvg =
+                        '<svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
+                        '   <polygon points="25,5 45,40 5,40" fill="#ffc107"/>' +
+                        '   <text x="25" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="bold">!</text>' +
+                        '</svg>' +
+                        '<svg width="40" height="40" viewBox="0 0 40 40">' +
+                        '   <polygon points="20,4 36,32 4,32" fill="#ffc107"/>' +
+                        '   <text x="20" y="26" text-anchor="middle" fill="white" font-size="16" font-weight="bold">!</text>' +
+                        '</svg>';
+                } else {
+                    // info 样式
+                    iconSvg =
+                        '<svg width="50" height="50" viewBox="0 0 50 50" style="margin-right: 8px;">' +
+                        '   <circle cx="25" cy="25" r="20" fill="#17a2b8"/>' +
+                        '   <text x="25" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="bold">i</text>' +
+                        '</svg>' +
+                        '<svg width="40" height="40" viewBox="0 0 40 40">' +
+                        '   <circle cx="20" cy="20" r="16" fill="#17a2b8"/>' +
+                        '   <text x="20" y="26" text-anchor="middle" fill="white" font-size="16" font-weight="bold">i</text>' +
+                        '</svg>';
+                }
+
+                template =
+                    '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
+                    '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
+                    '   <button type="button" ng-click="$ctrl.close()" aria-label="Close" style="background:none;border:none;font-size:1rem;color:#999;padding:0;line-height:1;">' +
+                    '       <span aria-hidden="true">×</span>' +
+                    '   </button>' +
+                    '</div>' +
+                    '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
+                    '   <div class="d-flex align-items-start">' +
+                    '       <div style="margin-right: 1rem; display: flex; align-items: center;">' +
+                    iconSvg +
+                    '       </div>' +
+                    '       <div style="flex: 1; padding-top: 0.5rem;">' +
+                    '           <div ng-bind-html="$ctrl.message" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
+                    '       </div>' +
+                    '   </div>' +
+                    '</div>' +
+                    '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.close()" style="background-color: #6c757d; border-color: #6c757d; color: white; padding: 0.5rem 1.5rem;">{{$ctrl.closeLabel}}</button>' +
+                    '</div>';
+            }
+
+            return $uibModal.open({
+                template: template,
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+                    var ctrl = this;
+                    ctrl.title = title;
+                    ctrl.message = $sce.trustAsHtml(formatMessage(style, message));
+                    ctrl.iconClass = iconClass;
+                    ctrl.iconColor = iconColor;
+                    ctrl.closeLabel = $translate.instant('common.entity.action.close');
+
+                    ctrl.close = function() {
+                        $uibModalInstance.close('ok');
+                        $timeout(function() {
+                            callback && callback();
+                        });
+                    };
+                }],
+                controllerAs: '$ctrl',
+                size: 'md',
+                backdrop: true
+            });
         }
 
         function init() {
