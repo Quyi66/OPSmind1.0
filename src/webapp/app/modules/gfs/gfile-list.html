@@ -172,7 +172,7 @@
         <button class="btn btn-primary" title="{{'gfs.list.audit_title' | translate}}" data-bs-toggle="dropdown"
                 ng-click="$ctrl.showFileStatus('patch-approve')"
                 ng-disabled="$ctrl.selectionMap|isEmpty">
-            <i class="fa fa-fw fa-comment-alt-edit"></i> {{'gfs.list.audit' | translate}}
+            <i class="fa fa-fw fa-comment"></i> {{'gfs.list.audit' | translate}}
         </button>
         <div class="dropdown-menu dropdown-menu-end px-3 py-3 js-inside-click" style="min-width: 20rem;">
             <gfs-file-change-status ng-if="$ctrl.options.canApprove && $ctrl.currentFile==='patch-approve'"

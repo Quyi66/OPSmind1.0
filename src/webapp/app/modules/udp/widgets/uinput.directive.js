@@ -212,7 +212,7 @@
                             + attrHelper.attrTooltip(attrs)
                             + '>{{ctrlValue}}</span>'
                             + '<div class="input-group-append">'
-                            + '<button class="btn btn-outline-default" ng-click="popup()"><i class="far fa-comment-alt-edit"></i></button>'
+                            + '<button class="btn btn-outline-default" ng-click="popup()"><i class="far fa-comment"></i></button>'
                             + '</div>'
                             + '</div>';
                     } else {
