@@ -2,7 +2,7 @@
     'use strict';
 
     var config = {
-        name: 'Oplus Usage',//<img src="_media/images/logo-default.png" style="height:4rem">',
+        name: 'OPsMind Usage',//<img src="_media/images/logo-default.png" style="height:4rem">',
         coverpage: false,
         loadNavbar: false,
         loadSidebar: true,

@@ -3,6 +3,9 @@ const common = require('./webpack.config.js');
 const path = require('path');
 
 module.exports = (env, argv) => {
+    // 代理服务器配置
+    const PROXY_TARGET = 'http://10.1.40.112';
+
     const commonConfig = common(env, { ...argv, mode: 'development' });
 
     return merge(commonConfig, {
@@ -35,61 +38,45 @@ module.exports = (env, argv) => {
             // API代理配置 - 统一代理到后端服务器
             proxy: {
                 '/api/**': {
-                    target: 'http://10.1.40.112:18080',
+                    target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    onProxyReq: (proxyReq, req, res) => {
-                        console.log('🔄 Proxying /api request:', req.url, '-> http://10.1.40.112:18080' + req.url);
-                    }
                 },
                 '/local-portal/**': {
-                    target: 'http://10.1.40.112:18080',
+                    target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    pathRewrite: {
-                        '^/local-portal': '/oplus-portal'
+                    pathRewrite: function(path, req) {
+                        const newPath = path.replace(/^\/local-portal/, '/oplus-portal');
+                        console.log('🔄 Path rewrite:', path, '->', newPath);
+                        return newPath;
                     },
-                    onProxyReq: (proxyReq, req, res) => {
-                        console.log('🔄 Proxying /local-portal request:', req.url, '-> http://10.1.40.112:18080' + req.url.replace('/local-portal', '/oplus-portal'));
-                    }
                 },
                 '/oplus-portal/**': {
-                    target: 'http://10.1.40.112:18080',
+                    target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    onProxyReq: (proxyReq, req, res) => {
-                        console.log('🔄 Proxying /oplus-portal request:', req.url, '-> http://10.1.40.112:18080' + req.url);
-                    }
                 },
                 '/oplus-upload/**': {
-                    target: 'http://10.1.40.112:18080',
+                    target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    onProxyReq: (proxyReq, req, res) => {
-                        console.log('🔄 Proxying /oplus-upload request:', req.url, '-> http://10.1.40.112:18080' + req.url);
-                    }
                 },
                 '/oplus-njs/**': {
-                    target: 'http://10.1.40.112:18080',
+                    target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    onProxyReq: (proxyReq, req, res) => {
-                        console.log('🔄 Proxying /oplus-njs request:', req.url, '-> http://10.1.40.112:18080' + req.url);
-                    }
                 },
                 '/oplus-ws/**': {
-                    target: 'http://10.1.40.112:18080',
+                    target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
-                    onProxyReq: (proxyReq, req, res) => {
-                        console.log('🔄 Proxying /oplus-ws request:', req.url, '-> http://10.1.40.112:18080' + req.url);
-                    }
                 }
             },
             onBeforeSetupMiddleware: (devServer) => {
@@ -101,8 +88,6 @@ module.exports = (env, argv) => {
                 devServer.app.use((req, res, next) => {
                     const url = req.originalUrl || req.url;
 
-                    console.log('🔍 Processing request:', url);
-
                     // 跳过 API 请求，避免干扰代理
                     if (url.startsWith('/api/') ||
                         url.startsWith('/local-portal/') ||
@@ -110,19 +95,16 @@ module.exports = (env, argv) => {
                         url.startsWith('/oplus-upload/') ||
                         url.startsWith('/oplus-njs/') ||
                         url.startsWith('/oplus-ws/')) {
-                        console.log('🚀 API request, skipping rewrite:', url);
                         return next();
                     }
 
                     // 处理 /oplus/base 路径重定向（不带尾部斜杠）
                     if (url === '/oplus/base') {
-                        console.log('🔄 Redirecting to /oplus/base/');
                         return res.redirect(301, '/oplus/base/');
                     }
 
                     // 处理 /oplus-admin 路径重定向（不带尾部斜杠）
                     if (url === '/oplus-admin') {
-                        console.log('🔄 Redirecting to /oplus-admin/');
                         return res.redirect(301, '/oplus-admin/');
                     }
 
@@ -130,13 +112,11 @@ module.exports = (env, argv) => {
                     if (url.startsWith('/oplus/base/')) {
                         const newPath = url.replace('/oplus/base', '');
                         req.url = newPath === '' ? '/' : newPath;
-                        console.log('✏️ Rewriting /oplus/base/ path:', url, '->', req.url);
                     }
                     // 只对以 /oplus-admin/ 开头的静态资源请求进行路径重写
                     else if (url.startsWith('/oplus-admin/')) {
                         const newPath = url.replace('/oplus-admin', '');
                         req.url = newPath === '' ? '/' : newPath;
-                        console.log('✏️ Rewriting /oplus-admin/ path:', url, '->', req.url);
                     }
 
                     next();

@@ -6,7 +6,7 @@
         {
             // This is the default profile whose ID must be '$DEFAULT_PROFILE$'
             profileId: '$DEFAULT_PROFILE$',
-            name: "OPLUS",
+            name: "OPSMIND",
             apiBaseUrls: {
                 portal: '/local-portal',
                 com: '/oplus-portal/com',
@@ -75,7 +75,7 @@
         },
         {
             profileId: 'prod',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -86,7 +86,7 @@
         },
         {
             profileId: 'vivo',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -97,7 +97,7 @@
         },
         {
             profileId: 'migu',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -108,7 +108,7 @@
         },
         {
             profileId: 'csdc',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -119,7 +119,7 @@
         },
         {
             profileId: 'crc',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -130,7 +130,7 @@
         },
         {
             profileId: 'bcs',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -141,7 +141,7 @@
         },
         {
             profileId: 'kylin',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -154,7 +154,7 @@
         },
         {
             profileId: 'famessoft',
-            name: "OPLUS",
+            name: "OPSMIND",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
