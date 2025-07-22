@@ -74,16 +74,16 @@
         <div class="btn-group" uaa-has-permission="gfs:edit">
             <button class="btn btn-outline-default" title="{{'gfs.list.add_folder_title' | translate}}"
                     ng-click="$ctrl.addFolder()">
-                <i class="fa fa-fw fa-folder-plus"></i> {{'gfs.list.folder' | translate}}
+                <i class="fa fa-fw fa-folder"></i> {{'gfs.list.folder' | translate}}
             </button>
             <button class="btn btn-outline-default" title="{{'gfs.list.online_script' | translate}}"
                     ng-if="$ctrl.repoType=='git'"
                     ng-click="$ctrl.addOnlineFile()">
-                <i class="fa fa-file-code"></i> {{'gfs.list.script' | translate}}
+                <i class="fa fa-file"></i> {{'gfs.list.script' | translate}}
             </button>
             <button class="btn  btn-outline-default" title="{{'gfs.list.add_file' | translate}}"
                     ng-click="$ctrl.addFile()">
-                <i class="fa fa-fw fa-file-upload"></i> {{'gfs.list.file' | translate}}
+                <i class="fa fa-fw fa-upload"></i> {{'gfs.list.file' | translate}}
             </button>
             <button class="btn  btn-outline-default" title="{{'gfs.list.sync_file_title' | translate}}"
                     ng-if="$ctrl.repoType=='git'"
@@ -96,12 +96,12 @@
             <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.basic.pull_desc' | translate}}"
                     uaa-has-permission="sysadmin:*:*"
                     ng-click="$ctrl.gitPull()">
-                <i class="fa fa-cloud-download-alt"></i> {{'gfs.basic.pull' | translate}}
+                <i class="fa fa-download"></i> {{'gfs.basic.pull' | translate}}
             </button>
             <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.basic.push_desc' | translate}}"
                     uaa-has-permission="sysadmin:*:*"
                     ng-click="$ctrl.gitPush()">
-                <i class="fa fa-cloud-upload-alt"></i> {{'gfs.basic.push' | translate}}
+                <i class="fa fa-upload"></i> {{'gfs.basic.push' | translate}}
             </button>
             <!--            <button class="btn btn-outline-secondary fw-bolder" title="{{'gfs.list.settings' | translate}}"-->
             <!--                    uaa-has-permission="sysadmin:*:*"-->

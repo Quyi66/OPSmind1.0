@@ -8,7 +8,7 @@
             <div class="opx-treenav">
                 <div class="opx-treenav-item" uaa-has-permission="gfs:view:*">
                     <a ui-sref="app.gfs.git_repo_dir({repo:'$tnt',dir:''})" ui-sref-active="active"><i
-                            class="fas fa-fw fa-code-branch"></i> {{ 'gfs.index.script_library' | translate}}</a>
+                            class="fas fa-fw fa-file"></i> {{ 'gfs.index.script_library' | translate}}</a>
                 </div>
                 <div class="opx-treenav-item" ng-if="useStaticFs" uaa-has-permission="gfs:view:*">
                     <a ui-sref="app.gfs.staticfs_dir({repo:'$tnt',dir:''})" ui-sref-active="active"><i
@@ -16,7 +16,7 @@
                 </div>
                 <div class="opx-treenav-item" uaa-has-permission="gfs:approve:*">
                     <a ui-sref="app.gfs.git_repo_dir_approve({repo:'$tnt',dir:''})" ui-sref-active="active"><i
-                            class="fas fa-fw fa-check-square"></i> {{ 'gfs.index.script_review' | translate}}</a>
+                            class="fas fa-fw fa-check"></i> {{ 'gfs.index.script_review' | translate}}</a>
                 </div>
                 <!--                <div class="opx-treenav-item">-->
                 <!--                    <a ui-sref="app.gfs.example" ui-sref-active="active">示例</a>-->
