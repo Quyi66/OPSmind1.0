@@ -5,12 +5,10 @@ const path = require('path');
 module.exports = (env, argv) => {
     // 代理服务器配置
     const PROXY_TARGET = 'http://10.1.40.112';
-
     const commonConfig = common(env, { ...argv, mode: 'development' });
 
     return merge(commonConfig, {
         mode: 'development',
-
         devtool: 'eval-source-map',
 
         devServer: {
