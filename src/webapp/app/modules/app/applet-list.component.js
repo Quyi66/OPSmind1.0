@@ -176,7 +176,10 @@
             });
             // var hasPermission = currentUser.hasPermission('app:edit:*');
             _.forEach(all, function (applet) {
-                if (applet.sourceType !== 'CodeDefined') {
+                // 如果 _user_applet 为 true，直接允许编辑
+                if (applet._user_applet === true) {
+                    applet._canUpdate = true;
+                } else if (applet.sourceType !== 'CodeDefined') {
                     // var isOwner = currentUser.loginId === applet.createdBy;
                     // applet._canUpdate = isOwner || hasPermission;
                     applet._canUpdate = appletSecurity.canUpdateApplet(applet.code);

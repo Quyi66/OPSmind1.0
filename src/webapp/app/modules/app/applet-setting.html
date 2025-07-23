@@ -290,7 +290,10 @@
                                 <button type="button" class="btn btn-danger ms-auto"
                                         ng-disabled="!appSettingVm.applet.canDelete"
                                         ng-click="appSettingVm.delete($event)"
-                                        ng-show="appSettingVm.applet.id"><i class="fa fa-trash-alt"></i>
+                                        ng-show="appSettingVm.applet.id">
+                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-times" style="display:none;"></i>
+                                    <i class="fas fa-minus-circle" style="display:none;"></i>
                                     {{'app.setting.delApp' | translate}}
                                 </button>
                             </div>

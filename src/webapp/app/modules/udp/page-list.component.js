@@ -85,9 +85,9 @@
                     if (!appletSecurity.canModifyAppletResource(row['appletCode'])) {
                         return '';
                     }
-                    var html = '<a class="btn btn-default opx-btn-icon opx-btn-table" ui-sref="app.appman.page.edit({pageId:\'' + row.id + '\'})" title="{{\'common.action.modify\'|translate}}"><i class="fa fa-pencil"></i></a>';
-                    html += '<a class="btn btn-default opx-btn-icon opx-btn-table" ng-click="$ctrl.deletePage(\'' + row.id + '\',\'' + row.title + '\')" title="{{\'common.action.delete\'|translate}}"><i class="fa fa-trash-alt"></i></a>';
-                    html += '<a class="btn btn-default opx-btn-icon opx-btn-table" ng-click="$ctrl.clonePage(\'' + row.id + '\')" title="{{\'common.action.copy\'|translate}}"><i class="fa fa-copy"></i></a>';
+                    var html = '<a class="btn btn-default opx-btn-icon opx-btn-table" ui-sref="app.appman.page.edit({pageId:\'' + row.id + '\'})" title="{{\'common.action.modify\'|translate}}"><i class="fas fa-edit"></i></a>';
+                    html += '<a class="btn btn-default opx-btn-icon opx-btn-table" ng-click="$ctrl.deletePage(\'' + row.id + '\',\'' + row.title + '\')" title="{{\'common.action.delete\'|translate}}"><i class="fas fa-trash"></i><i class="fas fa-times" style="display:none;"></i></a>';
+                    html += '<a class="btn btn-default opx-btn-icon opx-btn-table" ng-click="$ctrl.clonePage(\'' + row.id + '\')" title="{{\'common.action.copy\'|translate}}"><i class="fas fa-copy"></i></a>';
                     return html;
                 }
             })

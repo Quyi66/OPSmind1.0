@@ -144,6 +144,7 @@
                     color: setting.color,
                     windowSize: setting.windowSize,
                     entry: {type: rec.entryType, value: rec.entry, params: rec.entryParams},
+                    _user_applet: rec._user_applet,  // 传递 _user_applet 字段
                 };
 
                 // 检查是否有配置的入口点映射

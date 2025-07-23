@@ -50,17 +50,19 @@
         </div>
         <div class="d-flex flex-wrap gallery applet-container">
             <div ng-repeat="applet in $ctrl.applets | filter:{'title':($ctrl.query||'')}"
-                class="d-block" ng-class="{'ignore-elements': !applet.order}"
+                class="d-block applet-item-container" ng-class="{'ignore-elements': !applet.order}"
                 data-type="{{ applet.sourceType }}"
                 data-id="{{ applet.id }}" data-order="{{ applet.order }}">
                 <opx-applet-item applet-def="applet" on-click-applet="$ctrl.openApplet(applet.code,$event)">
-                    <div class="op-hover-to-show" ng-if="$ctrl.options.viewAs!=='launcher' && applet._canUpdate"
+                    <div class="applet-edit-btn" ng-if="$ctrl.options.viewAs!=='launcher' && applet._canUpdate"
                         style="position: absolute;right:.5rem;top:-.5rem;">
-                        <a class="btn btn-default opx-btn-flat opx-btn-icon"
+                        <a class="btn opx-btn-flat opx-btn-icon"
                         ui-sref="app.appman.setting({appletCode: applet.code})"
                         ng-click="$ctrl.editApplet(applet.code,$event)"
-                        title="{{'common.action.modify'|translate}}"><i
-                                class="fa fa-pencil fa-fw"></i></a>
+                        title="{{'common.action.modify'|translate}}"
+                        style="color: #666; font-size: 16px;">
+                        <i class="fas fa-edit"></i>
+                        </a>
                     </div>
                 </opx-applet-item>
             </div>
@@ -68,4 +70,29 @@
     </div>
 </div>
 
+<style>
+.applet-item-container .applet-edit-btn {
+    visibility: hidden;
+}
 
+.applet-item-container:hover .applet-edit-btn {
+    visibility: visible !important;
+}
+
+/* 确保编辑和删除图标使用Free版本 */
+.applet-edit-btn i,
+.opx-btn-table i,
+.btn-danger i {
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important; /* Solid weight for Free */
+}
+
+/* 如果fa-trash不显示，显示备用图标 */
+.btn-danger i.fa-trash:empty::before {
+    content: "\f00d"; /* fa-times的unicode */
+}
+
+.opx-btn-table i.fa-trash:empty::before {
+    content: "\f00d"; /* fa-times的unicode */
+}
+</style>
