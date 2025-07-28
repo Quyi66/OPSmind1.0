@@ -122,14 +122,44 @@ import '@fortawesome/fontawesome-free/css/all.css';
 // 导入其他依赖
 import moment from 'moment';
 
-// 立即设置全局变量（兼容旧代码）
+// 设置全局变量（兼容旧代码，确保所有模块都可以全局访问）
 window.jQuery = window.$ = $;
-window.angular = angular; // 显式设置从加载器导入的 angular
-window._ = _;
+window.angular = angular;
+window._ = window.lodash = _;
 window.moment = moment;
 window.CodeMirror = CodeMirror;
 window.c3 = c3;
 window.FullCalendar = FullCalendar;
+
+// 导入并设置其他全局变量
+import numeral from 'numeral';
+import { saveAs } from 'file-saver';
+import ClipboardJS from 'clipboard';
+import jsyaml from 'js-yaml';
+import marked from 'marked';
+import echarts from 'echarts';
+import d3 from 'd3';
+import CryptoJS from 'crypto-js';
+import tinycolor from 'tinycolor2';
+import * as XLSX from 'xlsx';
+import { html as beautifyHtml } from 'js-beautify';
+import diff2html from 'diff2html';
+import Sortable from 'sortablejs';
+
+// 设置为全局变量
+window.numeral = numeral;
+window.saveAs = saveAs;
+window.ClipboardJS = ClipboardJS;
+window.yaml = window.jsyaml = jsyaml;
+window.marked = marked;
+window.echarts = echarts;
+window.d3 = d3;
+window.CryptoJS = CryptoJS;
+window.tinycolor = tinycolor;
+window.XLSX = XLSX;
+window.beautify = { html: beautifyHtml };
+window.diff2html = diff2html;
+window.Sortable = Sortable;
 
 // alertify 已在 index.html 中通过 script 标签加载，无需重复导入
 

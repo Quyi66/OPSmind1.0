@@ -319,15 +319,69 @@ module.exports = (env = {}, argv = {}) => {
                 cssOutputPath: 'dist/webapp/content/css' // 修改为 dist 目录，避免写入源码目录
             }),
             
-            // 提供全局 polyfills 和库
+            // 模块自动注入 - ProvidePlugin (默认注入所有常用模块)
             new webpack.ProvidePlugin({
+                // ========== 核心库 ==========
                 Buffer: ['buffer', 'Buffer'],
                 process: 'process/browser',
-                // jQuery 必须通过 ProvidePlugin 提供，因为 Bootstrap 等库需要
+
+                // jQuery 生态
                 $: 'jquery',
                 jQuery: 'jquery',
-                'window.jQuery': 'jquery'
-                // 注意：angular 和 lodash 由 vendors.js 显式设置到全局
+                'window.jQuery': 'jquery',
+
+                // ========== 工具库 ==========
+                // Lodash
+                '_': 'lodash',
+                'lodash': 'lodash',
+
+                // 时间处理
+                'moment': 'moment',
+                'numeral': 'numeral',
+
+                // ========== AngularJS 生态 ==========
+                'angular': 'angular',
+
+                // ========== 文件处理 ==========
+                'saveAs': ['file-saver', 'saveAs'],
+                'XLSX': 'xlsx',
+                'ClipboardJS': 'clipboard',
+
+                // ========== 数据处理 ==========
+                'yaml': 'js-yaml',
+                'marked': 'marked',
+                'jsyaml': 'js-yaml', // 别名
+
+                // ========== 图表库 ==========
+                'echarts': 'echarts',
+                'd3': 'd3',
+                'c3': 'c3',
+
+                // ========== 编辑器相关 ==========
+                'CodeMirror': 'codemirror',
+
+                // ========== 加密工具 ==========
+                'CryptoJS': 'crypto-js',
+
+                // ========== 颜色处理 ==========
+                'tinycolor': 'tinycolor2',
+
+                // ========== 其他常用库 ==========
+                'alertify': 'alertify.js',
+                'Select2': 'select2',
+                'Sortable': 'sortablejs',
+                'diff2html': 'diff2html',
+                'beautify': ['js-beautify', 'html'],
+                'OpenCC': 'opencc-js',
+
+                // ========== DataTables ==========
+                'DataTable': ['datatables.net', '$'],
+
+                // ========== 日历相关 ==========
+                'FullCalendar': 'fullcalendar',
+
+                // ========== 树形控件 ==========
+                'FancyTree': 'jquery.fancytree',
             }),
 
             // 静态资源复制 - 复制原 index.html 需要的所有资源

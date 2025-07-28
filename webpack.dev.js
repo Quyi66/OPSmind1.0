@@ -1,6 +1,7 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.config.js');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
     // 代理服务器配置
@@ -26,11 +27,13 @@ module.exports = (env, argv) => {
                     publicPath: '/'
                 }
             ],
-            port: 3000,
+            port: 'auto', // 自动寻找可用端口，从3000开始
             host: '0.0.0.0',
+            // 如果 'auto' 不支持，可以使用以下配置
+            // port: process.env.PORT || 3000,
             hot: true,
             liveReload: true,
-            open: false,
+            open: '/oplus/base/', // 默认打开路径
             // 完全禁用 historyApiFallback，因为这是传统的 AngularJS 应用
             historyApiFallback: false,
             // API代理配置 - 统一代理到后端服务器
@@ -135,8 +138,37 @@ module.exports = (env, argv) => {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
                 'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+            },
+
+            // 自定义服务器启动后的回调
+            onListening: function(devServer) {
+                if (!devServer) {
+                    throw new Error('webpack-dev-server is not defined');
+                }
+
+                const port = devServer.server.address().port;
+                const host = devServer.options.host === '0.0.0.0' ? 'localhost' : devServer.options.host;
+
+                console.log('\n🚀 开发服务器已启动:');
+                console.log(`   本地访问: http://${host}:${port}/oplus/base/`);
+                console.log(`   网络访问: http://10.1.8.185:${port}/oplus/base/`);
+                console.log('');
             }
         },
+
+        plugins: [
+            // 开发环境模块自动注入
+            new webpack.DefinePlugin({
+                '__DEV__': true,
+                '__PROD__': false,
+                '__DEBUG__': true,
+                'WEBPACK_DEV_SERVER': true,
+                'HOT_RELOAD': true,
+            }),
+
+            // 热模块替换
+            new webpack.HotModuleReplacementPlugin(),
+        ],
 
         optimization: {
             ...commonConfig.optimization,

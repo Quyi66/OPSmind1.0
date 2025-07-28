@@ -15,4 +15,4 @@ import "../webapp/app/modules/os/os.module.js";
 import "../webapp/app/modules/search/search.module.js";
 import "../webapp/app/modules/ssc/ssc.module.js";
 import "../webapp/app/modules/uaa/uaa.module.js";
-import "../webapp/app/modules/udp/udp.module.js"; 
+import "../webapp/app/modules/udp/udp.module.js";
