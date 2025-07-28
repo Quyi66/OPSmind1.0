@@ -15,12 +15,8 @@ module.exports = (env, argv) => {
         devServer: {
             static: [
                 {
-                    directory: path.join(__dirname, 'dist/webapp'),
+                    directory: path.join(__dirname, 'dist'),
                     publicPath: '/'
-                },
-                {
-                    directory: path.join(__dirname, 'node_modules'),
-                    publicPath: '/node_modules'
                 },
                 {
                     directory: path.join(__dirname, 'src/webapp'),

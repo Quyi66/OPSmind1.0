@@ -42,7 +42,7 @@ module.exports = (env = {}, argv = {}) => {
         },
 
         output: {
-            path: path.resolve(__dirname, 'dist/webapp'),
+            path: path.resolve(__dirname, 'dist'),
             filename: isProduction ? 'app/modules/[name].[contenthash:8].js' : 'app/modules/[name].js',
             chunkFilename: isProduction ? 'app/modules/[name].[contenthash:8].chunk.js' : 'app/modules/[name].chunk.js',
             publicPath: '/'
@@ -315,8 +315,8 @@ module.exports = (env = {}, argv = {}) => {
             // Flow 模块构建
             new FlowBuildPlugin({
                 flowModulePath: 'src/webapp/app/modules/flow',
-                outputPath: 'dist/webapp/app/modules',
-                cssOutputPath: 'dist/webapp/content/css' // 修改为 dist 目录，避免写入源码目录
+                outputPath: 'dist/app/modules',
+                cssOutputPath: 'dist/content/css'
             }),
             
             // 模块自动注入 - ProvidePlugin (默认注入所有常用模块)
@@ -415,87 +415,12 @@ module.exports = (env = {}, argv = {}) => {
                             ignore: ['**/test/**']
                         }
                     },
-                    // 所有库文件 - 包括 node_modules 的符号链接内容
+                    // 所有库文件
                     {
                         from: 'src/webapp/lib',
                         to: 'lib'
                     },
-                    // 复制 index.html 里用到的 node_modules 关键依赖
-                    { from: 'node_modules/jquery/dist/jquery.min.js', to: 'node_modules/jquery/dist/jquery.min.js' },
-                    { from: 'node_modules/bootstrap/dist/js/bootstrap.min.js', to: 'node_modules/bootstrap/dist/js/bootstrap.min.js' },
-                    { from: 'node_modules/lodash/lodash.min.js', to: 'node_modules/lodash/lodash.min.js' },
-                    { from: 'node_modules/angular/angular.js', to: 'node_modules/angular/angular.js' },
-                    { from: 'node_modules/angular-aria/angular-aria.js', to: 'node_modules/angular-aria/angular-aria.js' },
-                    { from: 'node_modules/angular-resource/angular-resource.js', to: 'node_modules/angular-resource/angular-resource.js' },
-                    { from: 'node_modules/angular-sanitize/angular-sanitize.min.js', to: 'node_modules/angular-sanitize/angular-sanitize.min.js' },
-                    { from: 'node_modules/angular-animate/angular-animate.min.js', to: 'node_modules/angular-animate/angular-animate.min.js' },
-                    { from: 'node_modules/ngstorage/ngStorage.js', to: 'node_modules/ngstorage/ngStorage.js' },
-                    { from: 'node_modules/angular-cache-buster/angular-cache-buster.js', to: 'node_modules/angular-cache-buster/angular-cache-buster.js' },
-                    { from: 'node_modules/angular-loading-bar/build/loading-bar.js', to: 'node_modules/angular-loading-bar/build/loading-bar.js' },
-                    { from: 'node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js', to: 'node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js' },
-                    { from: 'node_modules/jquery-ui/dist/jquery-ui.js', to: 'node_modules/jquery-ui/dist/jquery-ui.js' },
-                    { from: 'node_modules/angular-ui-sortable/dist/sortable.min.js', to: 'node_modules/angular-ui-sortable/dist/sortable.min.js' },
-                    { from: 'node_modules/sortablejs/Sortable.js', to: 'node_modules/sortablejs/Sortable.js' },
-                    { from: 'node_modules/angular-legacy-sortablejs-maintained/angular-legacy-sortable.js', to: 'node_modules/angular-legacy-sortablejs-maintained/angular-legacy-sortable.js' },
-                    { from: 'node_modules/angularjs-toaster/toaster.min.js', to: 'node_modules/angularjs-toaster/toaster.min.js' },
-                    { from: 'node_modules/alertify.js/dist/js/alertify.js', to: 'node_modules/alertify.js/dist/js/alertify.js' },
-                    { from: 'node_modules/select2/dist/js/select2.full.js', to: 'node_modules/select2/dist/js/select2.full.js' },
-                    { from: 'node_modules/lodash/lodash.min.js', to: 'node_modules/lodash/lodash.min.js' },
-                    { from: 'node_modules/js-yaml/dist/js-yaml.min.js', to: 'node_modules/js-yaml/dist/js-yaml.min.js' },
-                    { from: 'node_modules/xlsx/dist/xlsx.full.min.js', to: 'node_modules/xlsx/dist/xlsx.full.min.js' },
-                    { from: 'node_modules/html-docx-js/dist/html-docx.js', to: 'node_modules/html-docx-js/dist/html-docx.js' },
-                    { from: 'node_modules/marked/marked.min.js', to: 'node_modules/marked/marked.min.js' },
-                    { from: 'node_modules/echarts/dist/echarts.min.js', to: 'node_modules/echarts/dist/echarts.min.js' },
-                    { from: 'node_modules/d3/d3.js', to: 'node_modules/d3/d3.js' },
-                    { from: 'node_modules/c3/c3.js', to: 'node_modules/c3/c3.js' },
-                    { from: 'node_modules/leader-line/leader-line.min.js', to: 'node_modules/leader-line/leader-line.min.js' },
-                    { from: 'node_modules/moment/moment.js', to: 'node_modules/moment/moment.js' },
-                    { from: 'node_modules/moment/locale/zh-cn.js', to: 'node_modules/moment/locale/zh-cn.js' },
-                    { from: 'node_modules/moment/locale/zh-tw.js', to: 'node_modules/moment/locale/zh-tw.js' },
-                    { from: 'node_modules/numeral/numeral.js', to: 'node_modules/numeral/numeral.js' },
-                    { from: 'node_modules/clipboard/dist/clipboard.min.js', to: 'node_modules/clipboard/dist/clipboard.min.js' },
-                    { from: 'node_modules/ngclipboard/dist/ngclipboard.min.js', to: 'node_modules/ngclipboard/dist/ngclipboard.min.js' },
-                    { from: 'node_modules/file-saver/FileSaver.min.js', to: 'node_modules/file-saver/FileSaver.min.js' },
-                    { from: 'node_modules/angular-file-upload/dist/angular-file-upload.min.js', to: 'node_modules/angular-file-upload/dist/angular-file-upload.min.js' },
-                    { from: 'node_modules/ng-file-upload/dist/ng-file-upload.js', to: 'node_modules/ng-file-upload/dist/ng-file-upload.js' },
-                    { from: 'node_modules/codemirror/lib/codemirror.js', to: 'node_modules/codemirror/lib/codemirror.js' },
-                    { from: 'node_modules/codemirror/mode/meta.js', to: 'node_modules/codemirror/mode/meta.js' },
-                    { from: 'node_modules/codemirror/mode/css/css.js', to: 'node_modules/codemirror/mode/css/css.js' },
-                    { from: 'node_modules/codemirror/mode/htmlmixed/htmlmixed.js', to: 'node_modules/codemirror/mode/htmlmixed/htmlmixed.js' },
-                    { from: 'node_modules/codemirror/mode/javascript/javascript.js', to: 'node_modules/codemirror/mode/javascript/javascript.js' },
-                    { from: 'node_modules/codemirror/mode/markdown/markdown.js', to: 'node_modules/codemirror/mode/markdown/markdown.js' },
-                    { from: 'node_modules/codemirror/mode/perl/perl.js', to: 'node_modules/codemirror/mode/perl/perl.js' },
-                    { from: 'node_modules/codemirror/mode/powershell/powershell.js', to: 'node_modules/codemirror/mode/powershell/powershell.js' },
-                    { from: 'node_modules/codemirror/mode/properties/properties.js', to: 'node_modules/codemirror/mode/properties/properties.js' },
-                    { from: 'node_modules/codemirror/mode/python/python.js', to: 'node_modules/codemirror/mode/python/python.js' },
-                    { from: 'node_modules/codemirror/mode/shell/shell.js', to: 'node_modules/codemirror/mode/shell/shell.js' },
-                    { from: 'node_modules/codemirror/mode/sql/sql.js', to: 'node_modules/codemirror/mode/sql/sql.js' },
-                    { from: 'node_modules/codemirror/mode/vbscript/vbscript.js', to: 'node_modules/codemirror/mode/vbscript/vbscript.js' },
-                    { from: 'node_modules/codemirror/mode/xml/xml.js', to: 'node_modules/codemirror/mode/xml/xml.js' },
-                    { from: 'node_modules/codemirror/mode/yaml/yaml.js', to: 'node_modules/codemirror/mode/yaml/yaml.js' },
-                    { from: 'node_modules/codemirror/addon/mode/simple.js', to: 'node_modules/codemirror/addon/mode/simple.js' },
-                    { from: 'node_modules/codemirror/addon/edit/matchbrackets.js', to: 'node_modules/codemirror/addon/edit/matchbrackets.js' },
-                    { from: 'node_modules/codemirror/addon/edit/matchtags.js', to: 'node_modules/codemirror/addon/edit/matchtags.js' },
-                    { from: 'node_modules/codemirror/addon/fold/foldcode.js', to: 'node_modules/codemirror/addon/fold/foldcode.js' },
-                    { from: 'node_modules/codemirror/addon/fold/foldgutter.js', to: 'node_modules/codemirror/addon/fold/foldgutter.js' },
-                    { from: 'node_modules/codemirror/addon/fold/brace-fold.js', to: 'node_modules/codemirror/addon/fold/brace-fold.js' },
-                    { from: 'node_modules/codemirror/addon/fold/xml-fold.js', to: 'node_modules/codemirror/addon/fold/xml-fold.js' },
-                    { from: 'node_modules/codemirror/addon/fold/indent-fold.js', to: 'node_modules/codemirror/addon/fold/indent-fold.js' },
-                    { from: 'node_modules/codemirror/addon/fold/markdown-fold.js', to: 'node_modules/codemirror/addon/fold/markdown-fold.js' },
-                    { from: 'node_modules/codemirror/addon/fold/comment-fold.js', to: 'node_modules/codemirror/addon/fold/comment-fold.js' },
-                    { from: 'node_modules/codemirror/addon/display/autorefresh.js', to: 'node_modules/codemirror/addon/display/autorefresh.js' },
-                    { from: 'node_modules/codemirror/addon/display/panel.js', to: 'node_modules/codemirror/addon/display/panel.js' },
-                    { from: 'node_modules/codemirror/addon/search/searchcursor.js', to: 'node_modules/codemirror/addon/search/searchcursor.js' },
-                    { from: 'node_modules/codemirror/addon/search/jump-to-line.js', to: 'node_modules/codemirror/addon/search/jump-to-line.js' },
-                    { from: 'node_modules/codemirror/addon/search/match-highlighter.js', to: 'node_modules/codemirror/addon/search/match-highlighter.js' },
-                    { from: 'node_modules/angular-ui-codemirror/src/ui-codemirror.js', to: 'node_modules/angular-ui-codemirror/src/ui-codemirror.js' },
-                    { from: 'node_modules/js-beautify/js/lib/beautify-html.js', to: 'node_modules/js-beautify/js/lib/beautify-html.js' },
-                    { from: 'node_modules/diff2html/dist/diff2html.js', to: 'node_modules/diff2html/dist/diff2html.js' },
-                    { from: 'node_modules/opencc-js/dist/umd/full.js', to: 'node_modules/opencc-js/dist/umd/full.js' },
-                    { from: 'node_modules/datatables.net/js/jquery.dataTables.js', to: 'node_modules/datatables.net/js/jquery.dataTables.js' },
-                    { from: 'node_modules/datatables.net-buttons/js/dataTables.buttons.js', to: 'node_modules/datatables.net-buttons/js/dataTables.buttons.js' },
-                    { from: 'node_modules/datatables.net-buttons/js/buttons.colVis.js', to: 'node_modules/datatables.net-buttons/js/buttons.colVis.js' },
-                    { from: 'node_modules/datatables.net-select/js/dataTables.select.js', to: 'node_modules/datatables.net-select/js/dataTables.select.js' },
+                    // 注意：node_modules 依赖现在通过 webpack 模块自动注入处理，不再需要手动复制
                 ]
             })
         ],
