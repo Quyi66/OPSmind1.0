@@ -151,7 +151,9 @@ module.exports = (env, argv) => {
                     analyzerMode: 'static',
                     openAnalyzer: false,
                     reportFilename: 'bundle-analyzer-report.html',
-                    defaultSizes: 'gzip'
+                    defaultSizes: 'gzip',
+                    generateStatsFile: true,
+                    statsFilename: 'webpack-stats.json'
                 })
             ] : [])
         ],

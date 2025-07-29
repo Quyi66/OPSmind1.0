@@ -2,11 +2,13 @@
 
 /**
  * 构建分析器 - 分析webpack构建结果并提供优化建议
+ * 集成webpack-bundle-analyzer进行详细分析
  */
 
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 class BuildAnalyzer {
     constructor() {
@@ -23,19 +25,47 @@ class BuildAnalyzer {
         try {
             // 1. 检查构建产物
             this.analyzeBuildOutput();
-            
+
             // 2. 分析文件大小
             this.analyzeFileSize();
-            
+
             // 3. 检查重复依赖
             this.analyzeDuplicates();
-            
+
             // 4. 提供优化建议
             this.provideOptimizationSuggestions();
-            
+
         } catch (error) {
             console.error('❌ 分析失败:', error.message);
             process.exit(1);
+        }
+    }
+
+    /**
+     * 运行webpack-bundle-analyzer详细分析
+     */
+    async runBundleAnalyzer() {
+        console.log('📊 启动webpack-bundle-analyzer...\n');
+
+        try {
+            // 检查是否有webpack stats文件
+            if (fs.existsSync(this.statsPath)) {
+                console.log('📈 使用现有的webpack stats文件...');
+                execSync(`npx webpack-bundle-analyzer ${this.statsPath}`, {
+                    stdio: 'inherit',
+                    cwd: path.resolve(__dirname, '..')
+                });
+            } else {
+                console.log('🔨 重新构建并生成分析报告...');
+                // 运行带有bundle analyzer的构建
+                execSync('npm run build:analyze', {
+                    stdio: 'inherit',
+                    cwd: path.resolve(__dirname, '..')
+                });
+            }
+        } catch (error) {
+            console.error('❌ Bundle analyzer启动失败:', error.message);
+            console.log('💡 请确保已安装webpack-bundle-analyzer: npm install --save-dev webpack-bundle-analyzer');
         }
     }
 
@@ -266,7 +296,19 @@ class BuildAnalyzer {
 // 运行分析
 if (require.main === module) {
     const analyzer = new BuildAnalyzer();
-    analyzer.analyze().catch(console.error);
+    const args = process.argv.slice(2);
+
+    if (args.includes('--bundle') || args.includes('-b')) {
+        // 运行详细的bundle分析
+        analyzer.runBundleAnalyzer().catch(console.error);
+    } else {
+        // 运行基础分析
+        analyzer.analyze().catch(console.error);
+
+        console.log('💡 提示:');
+        console.log('   运行详细分析: node scripts/build-analyzer.js --bundle');
+        console.log('   或使用快捷命令: npm run analyze');
+    }
 }
 
 module.exports = BuildAnalyzer;
