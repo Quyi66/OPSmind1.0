@@ -52,7 +52,7 @@ module.exports = (env = {}, argv = {}) => {
             chunkFilename: isProduction
                 ? 'app/modules/[name].[contenthash:6].chunk.js'
                 : 'app/modules/[name].chunk.js',
-            publicPath: '/',
+            publicPath: '',  // 使用相对路径，支持子路径部署
             // 清理输出目录
             clean: isProduction
         },
@@ -419,7 +419,27 @@ module.exports = (env = {}, argv = {}) => {
                         from: 'src/webapp/lib',
                         to: 'lib'
                     },
-                    // 注意：node_modules 依赖现在通过 webpack 模块自动注入处理，不再需要手动复制
+                    // 应用模块文件 - 关键：复制所有app目录下的文件
+                    {
+                        from: 'src/webapp/app',
+                        to: 'app',
+                        globOptions: {
+                            ignore: [
+                                '**/test/**',
+                                '**/tests/**',
+                                '**/*.spec.js',
+                                '**/*.test.js',
+                                '**/node_modules/**', // 排除嵌套的node_modules
+                                // 注意：不排除 **/dist/** 因为flow模块需要其dist文件
+                                '**/.git/**',         // 排除git文件
+                                '**/coverage/**',     // 排除测试覆盖率
+                                '**/*.log',           // 排除日志文件
+                                '**/package-lock.json', // 排除锁文件
+                                '**/yarn.lock'        // 排除yarn锁文件
+                            ]
+                        }
+                    },
+                    // node_modules文件通过单独脚本复制
                 ]
             })
         ],

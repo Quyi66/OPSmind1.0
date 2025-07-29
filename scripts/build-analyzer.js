@@ -179,7 +179,26 @@ class BuildAnalyzer {
             });
         }
         
-        walkDir.call(this, this.distPath);
+        const self = this;
+        function walkDirBound(dir) {
+            const items = fs.readdirSync(dir);
+            items.forEach(item => {
+                const fullPath = path.join(dir, item);
+                const stat = fs.statSync(fullPath);
+
+                if (stat.isDirectory()) {
+                    walkDirBound(fullPath);
+                } else {
+                    files.push({
+                        name: path.relative(self.distPath, fullPath),
+                        size: stat.size,
+                        path: fullPath
+                    });
+                }
+            });
+        }
+
+        walkDirBound(this.distPath);
         return files;
     }
 

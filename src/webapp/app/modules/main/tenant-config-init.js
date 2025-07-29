@@ -104,16 +104,31 @@
         function detectRunningMode() {
             var result = {runningMode: '', tenantCode: ''};
             var pathname = window.location.pathname;
-            var match = pathname.match(/\/oplus\/(.*?)\//);
-            if (match) {
-                result.runningMode = NORMAL_MODE;
-                result.tenantCode = match[1];
-            } else {
-                match = pathname.match(/\/oplus-admin/);
+
+            // 临时修复：放宽URL匹配规则
+            console.log('%c[TenantConfigInit]%c Detecting running mode for path: %s', 'color:orange', '', pathname);
+
+            // 检查系统管理员模式
+            if (pathname.includes('oplus-admin')) {
+                result.runningMode = SYSADMIN_MODE;
+                console.log('%c[TenantConfigInit]%c SYSADMIN mode detected', 'color:orange', '');
+            }
+            // 检查普通模式 - 放宽匹配规则
+            else if (pathname.includes('/oplus/')) {
+                var match = pathname.match(/\/oplus\/([^\/]+)/);
                 if (match) {
-                    result.runningMode = SYSADMIN_MODE;
+                    result.runningMode = NORMAL_MODE;
+                    result.tenantCode = match[1];
+                    console.log('%c[TenantConfigInit]%c NORMAL mode detected, tenant: %s', 'color:orange', '', result.tenantCode);
                 }
             }
+            // 默认情况：如果没有匹配到任何模式，使用系统管理员模式
+            else {
+                result.runningMode = SYSADMIN_MODE;
+                result.tenantCode = '';
+                console.log('%c[TenantConfigInit]%c Default to SYSADMIN mode for path: %s', 'color:orange', '', pathname);
+            }
+
             return result;
         }
 

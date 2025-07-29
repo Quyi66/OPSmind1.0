@@ -41,8 +41,9 @@
                     var location = window.location;
                     if (!location.origin) {
                         apiServer = location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+                    } else {
+                        apiServer = location.origin;
                     }
-                    apiServer = location.origin;
                 }
                 return apiServer;
             }
