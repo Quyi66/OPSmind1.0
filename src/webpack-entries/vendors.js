@@ -2,11 +2,23 @@
 import $ from 'jquery';
 import _ from 'lodash';
 
-// Angular 1.x 正确导入方式 - 兼容 Webpack 5
-import angular from 'angular';
-window.angular = angular;  // 关键：让 AngularJS 全局可见
+// Angular 1.5.8 特殊处理 - 使用本地文件确保版本一致性
+import '../webapp/lib/angular/angular.js';
+// 注意：本地angular.js文件会自动设置window.angular
 
-// Angular 扩展
+// 验证Angular加载
+if (typeof window.angular === 'undefined') {
+    console.error('❌ Angular 1.5.8 failed to load from local file!');
+    // 备用方案：从npm包加载
+    import('angular').then(angular => {
+        window.angular = angular.default || angular;
+        console.log('✅ Angular loaded from npm as fallback');
+    });
+} else {
+    console.log('✅ Angular 1.5.8 loaded from local file');
+}
+
+// Angular 扩展 - 确保在Angular加载后导入
 import 'angular-animate';
 import 'angular-aria';
 import 'angular-cookies';

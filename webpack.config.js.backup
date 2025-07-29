@@ -32,16 +32,15 @@ module.exports = (env = {}, argv = {}) => {
     const isProduction = argv.mode === 'production';
     const isDevelopment = !isProduction;
 
-    // 传统模式提示
-    console.log('🔄 传统构建模式启动');
-    console.log('📄 使用传统script标签，webpack仅用于HTML服务');
-    console.log(`🔧 环境: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
-
     return {
         context: path.resolve(__dirname),
         
-        // 传统模式：禁用所有JS入口点
-        entry: {},
+        entry: {
+            'oplus-vendors': './src/webpack-entries/vendors.js',
+            'all-modules': './src/webpack-entries/all-modules.js',
+            'app-main': './src/webpack-entries/app-main.js',
+            'oplus-styles': './src/webapp/app/app.js'
+        },
 
         output: {
             path: path.resolve(__dirname, 'dist'),
@@ -284,11 +283,14 @@ module.exports = (env = {}, argv = {}) => {
                 'API_BASE_PATH': JSON.stringify(isProduction ? '/oplus-portal' : '/local-portal')
             }),
 
-            // HTML 模板处理 - 传统模式，不注入JS
+            // HTML 模板处理 - 完全webpack化，自动注入所有资源
             new HtmlWebpackPlugin({
                 template: './src/webapp/index.html',
                 filename: 'index.html',
-                inject: false, // 关键：禁用自动注入，使用传统script标签
+                inject: 'body', // 自动注入JS到body底部
+                scriptLoading: 'blocking', // 使用阻塞加载确保顺序
+                chunksSortMode: 'manual', // 手动排序chunks
+                chunks: ['oplus-vendors', 'all-modules', 'oplus-styles'], // 按顺序注入
                 templateParameters: {
                     BUILD_TIMESTAMP: timestamp,
                     VERSION: pkg.version,

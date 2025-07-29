@@ -10,56 +10,66 @@
     <link id="oplusAppIcon" rel="icon" type="image/png" href="content/images/logo-default.png"/>
     <link rel="apple-touch-icon" href="content/images/logo-default.png"/>
     
-    <!-- Webpack will inject CSS and JS files here -->
-    
-    <!-- 自定义样式 -->
+    <!-- 第三方库样式 - 必须手动引入的CSS -->
+    <!-- 表格编辑器 -->
     <link rel="stylesheet" href="lib/luckysheet/dist/plugins/css/pluginsCss.css" />
     <link rel="stylesheet" href="lib/luckysheet/dist/plugins/plugins.css" />
-    <link rel="stylesheet" href="lib/luckysheet/dist/css/luckysheet.css" type="text/css" />
-    <link rel="stylesheet" href="lib/luckysheet/dist/assets/iconfont/iconfont.css" type="text/css" />
-    <link rel="stylesheet" href="content/css/fontawesome-pro.css" type="text/css"/>
-    <link rel="stylesheet" href="app/modules/commons/editor/codemirror/dialog.css" type="text/css"/>
-    <link rel="stylesheet" href="lib/ng-password-meter/ng-password-meter.css"/>
-    <link rel="stylesheet" href="lib/mergely/mergely.css" type="text/css"/>
-    <link rel="stylesheet" href="lib/json-editor/jsoneditor.min.css" type="text/css" />
-    
-    <!-- Flow module CSS (conditional) -->
-    <link rel="stylesheet" ng-if="false" href="content/css/oplus-flow.css" type="text/css">
-    <link rel="stylesheet" href="app/modules/flow/dist/oplus-flow.css" type="text/css">
+    <link rel="stylesheet" href="lib/luckysheet/dist/css/luckysheet.css" />
+    <link rel="stylesheet" href="lib/luckysheet/dist/assets/iconfont/iconfont.css" />
+
+    <!-- 图标和字体 -->
+    <link rel="stylesheet" href="content/css/fontawesome-pro.css" />
+
+    <!-- 第三方组件样式 -->
+    <link rel="stylesheet" href="node_modules/fullcalendar/dist/fullcalendar.css" />
+    <link rel="stylesheet" href="node_modules/jquery-ui/themes/base/resizable.css" />
+    <link rel="stylesheet" href="node_modules/angularjs-toaster/toaster.min.css" />
+    <link rel="stylesheet" href="node_modules/animate.css/animate.min.css" />
+    <link rel="stylesheet" href="node_modules/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" href="node_modules/codemirror/addon/fold/foldgutter.css" />
+    <link rel="stylesheet" href="node_modules/diff2html/dist/diff2html.css" />
+    <link rel="stylesheet" href="node_modules/bootstrap-daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="node_modules/jquery.fancytree/dist/skin-awesome/ui.fancytree.css" />
+    <link rel="stylesheet" href="node_modules/jquery-contextmenu/dist/jquery.contextMenu.css" />
+
+    <!-- 编辑器相关 -->
+    <link rel="stylesheet" href="app/modules/commons/editor/codemirror/dialog.css" />
+    <link rel="stylesheet" href="lib/json-editor/jsoneditor.min.css" />
+    <link rel="stylesheet" href="lib/ng-password-meter/ng-password-meter.css" />
+    <link rel="stylesheet" href="lib/mergely/mergely.css" />
+
+    <!-- 应用样式 -->
+    <link rel="stylesheet" href="content/css/oplus-commons.css" />
+    <link rel="stylesheet" href="content/css/oplus-gfs.css" />
+    <link rel="stylesheet" href="content/css/oplus-udp.css" />
+    <link rel="stylesheet" href="content/css/oplus-dts.css" />
+    <link rel="stylesheet" href="content/css/oplus-jao.css" />
+    <link rel="stylesheet" href="content/css/oplus-cac.css" />
+    <link rel="stylesheet" href="content/css/oplus-cm.css" />
+    <link rel="stylesheet" href="content/css/oplus-search.css" />
+
+    <!-- Flow模块样式 -->
+    <link rel="stylesheet" href="app/modules/flow/dist/oplus-flow.css" />
+
+    <!-- Webpack 将在这里自动注入构建的CSS文件 -->
 </head>
 <body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl">
-<toaster-container toaster-options="$mainCtrl.toasterOptions"></toaster-container>
-<op-desktop
+    <toaster-container toaster-options="$mainCtrl.toasterOptions"></toaster-container>
+    <op-desktop
         ng-style="{'background-image':$mainCtrl.uiConfig.backgroundImage,'background-color':$mainCtrl.uiConfig.backgroundColor}"
         ng-if="!$root.$global.hideDesktop && !$root.$global.isAdminUI"></op-desktop>
-<div class="opx-layout-vflex">
-
-    <header id="opx-header" class="opx-header opx-layout-sticky"
-            ng-class="{'opx-header-collapsed': $mainCtrl.headerCollapsed, 'opx-header-hide-on-small-screen': $mainCtrl.sidebarMode==='over', 'admin-header': $root.$global.isAdminUI}">
-        <!-- 头部内容将由 Angular 模板渲染 -->
-    </header>
-
-    <div class="opx-layout-hflex">
-        <aside id="opx-sidebar" class="opx-sidebar"
-               ng-class="{'opx-sidebar-expanded': $mainCtrl.sidebarExpanded, 'opx-sidebar-mode-over': $mainCtrl.sidebarMode==='over', 'admin-sidebar': $root.$global.isAdminUI}">
-            <!-- 侧边栏内容将由 Angular 模板渲染 -->
-        </aside>
-
-        <main id="opx-main" class="opx-main opx-layout-flex"
-              ng-class="{'opx-main-margin-sidebar': $mainCtrl.sidebarMode!=='over' && $mainCtrl.sidebarExpanded, 'admin-main': $root.$global.isAdminUI}">
-            <div id="opx-main-container" class="opx-main-container opx-layout-vflex">
-                <!-- 主要内容区域 -->
-                <div ui-view class="opx-layout-flex opx-page"></div>
+    <div class="opx-layout-vflex">
+        <div id="master-header" ui-view="navbar" ng-if="!$root.$global.hideHeader"></div>
+        <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0"
+            ng-class="{'hidden':$root.$global.hideMasterContent}">
+            <div class="op-blank-slate bg-dark">
+                <div class="op-blank-slate-icon"><img src="content/images/preloader.svg" style="width:10rem;"></div>
+                <p>正在加载...</p>
             </div>
-        </main>
+        </div>
     </div>
-
-    <footer id="opx-footer" class="opx-footer"
-            ng-class="{'admin-footer': $root.$global.isAdminUI}">
-        <!-- 页脚内容将由 Angular 模板渲染 -->
-    </footer>
-
-</div>
 
 <!-- Loading indicator -->
 <div id="opx-loading" ng-show="$mainCtrl.loading" class="opx-loading">

@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
 
     return merge(commonConfig, {
         mode: 'development',
-        devtool: 'eval-source-map',
+        devtool: 'source-map', // 改为source-map避免eval相关的CSP问题
 
         devServer: {
             static: [
