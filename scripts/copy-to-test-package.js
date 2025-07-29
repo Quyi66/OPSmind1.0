@@ -113,73 +113,41 @@ class TestPackageCopier {
     }
 
     /**
-     * 创建README文件
+     * 检查build目录中是否有README，如果有则使用build中的
      */
-    createReadme() {
-        const readmeContent = `# OPLUS 测试包
+    handleReadme() {
+        const buildReadmePath = path.join(this.buildPath, 'README.md');
+        const testReadmePath = path.join(this.testPackagePath, 'README.md');
 
-这是OPLUS项目的测试部署包，包含了优化后的静态文件和部署配置。
+        if (fs.existsSync(buildReadmePath)) {
+            // 如果build目录中有README，直接复制（在copyBuildFiles中已经复制了）
+            console.log('📝 使用 build/README.md');
+        } else {
+            // 如果build目录中没有README，创建一个简单的
+            const readmeContent = `# OPLUS 测试包
 
-## 📁 文件说明
+## 🔧 修改后端服务器
 
-- \`dist/\` - 构建后的静态文件（已自动优化）
-- \`Dockerfile\` - Docker镜像构建文件
-- \`nginx.conf\` - Nginx配置文件
-- \`start-nginx.sh\` - 一键启动脚本
+编辑 \`nginx.conf\` 文件第8行：
 
-## 🚀 快速启动
-
-\`\`\`bash
-# 一键启动（推荐）
-chmod +x start-nginx.sh
-./start-nginx.sh
+\`\`\`nginx
+set $backend_server "10.1.40.112:8080";  # 改为你的后端服务器IP:端口
 \`\`\`
 
-## 🐳 手动Docker部署
+## 🚀 启动容器
 
 \`\`\`bash
-# 构建镜像
-docker build -t oplus-test .
-
-# 运行容器
-docker run -d --name oplus-test-container -p 8080:80 oplus-test
+./start-nginx.sh
 \`\`\`
 
 ## 🌐 访问地址
 
-- 普通模式: http://localhost:8080/oplus/base/
-- 管理员模式: http://localhost:8080/oplus-admin/
-
-## 📊 优化信息
-
-此包已自动优化：
-- 移除Source Maps文件
-- 移除测试数据文件
-- 移除重复文件
-- 通常可节省20-30%的空间
-
-## 🔄 更新测试包
-
-在主项目目录运行：
-\`\`\`bash
-npm run build
-\`\`\`
-
-构建完成后会自动优化并更新此测试包。
-
-## 📋 注意事项
-
-1. 确保Docker已安装并运行
-2. 端口8080需要可用
-3. 如有问题请检查防火墙设置
-
----
-*此测试包由构建流程自动生成和更新*
+- http://localhost:8080/oplus/base/
+- http://localhost:8080/oplus-admin/
 `;
-
-        const readmePath = path.join(this.testPackagePath, 'README.md');
-        fs.writeFileSync(readmePath, readmeContent);
-        console.log('📝 创建 README.md');
+            fs.writeFileSync(testReadmePath, readmeContent);
+            console.log('📝 创建默认 README.md');
+        }
     }
 
     /**
@@ -235,8 +203,8 @@ npm run build
             const distSuccess = this.copyDist();
             if (!distSuccess) return;
 
-            // 4. 创建README
-            this.createReadme();
+            // 4. 处理README（优先使用build中的）
+            this.handleReadme();
 
             // 5. 设置权限
             this.setPermissions();
