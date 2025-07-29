@@ -91,7 +91,7 @@
     "migrate:template": "node scripts/migrate-to-webpack-template.js",
     "watch": "npm run dev",
     "prebuild": "npm run clean",
-    "postbuild": "node scripts/copy-node-modules.js && echo '✅ Build completed successfully!' && node scripts/build-analyzer.js",
+    "postbuild": "node scripts/copy-node-modules.js && echo '✅ Build completed successfully!' && node scripts/build-analyzer.js && node scripts/optimize-dist.js && node scripts/copy-to-test-package.js",
     "test:config": "node scripts/test-webpack-config.js",
     "dist": "npm run build",
     "test": "echo \"No tests specified\" && exit 0",
