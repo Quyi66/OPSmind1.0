@@ -75,13 +75,13 @@
         },
         {
             profileId: 'prod',
-            name: "OPSMIND",
+            name: "OPSmind",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
                 homeType: 'default',
-                logo: "content/images/redhat/logo-redhat.png",
-                headerLogo: "content/images/redhat/logo-redhat-full.png"
+                logo: "content/images/opsmind/logo-opsmind.png",
+                headerLogo: "content/images/opsmind/logo-opsmind-full.png"
             }
         },
         {
