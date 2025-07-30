@@ -6,6 +6,6 @@
         // 强制使用当前服务器作为API网关，确保API请求通过代理
         API_GATEWAY_URL: window.location.origin,
         // The ID of distribution profile. Profiles defined in profiles.js.
-        DIST_PROFILE: 'prod'
+        DIST_PROFILE: 'csdc'
     };
 })();

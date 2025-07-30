@@ -1,0 +1,56 @@
+/*!
+ * FontAwesome Priority Fix
+ * Ensures Pro icons take precedence for application icons
+ * while allowing Free icons for other use cases
+ */
+
+/* Ensure Pro font families take precedence for custom OpsMind icons */
+.fa-oplus-cmd,
+.fa-oplus-acm,
+.fa-oplus-udp,
+.fa-oplus-udp-page,
+.fa-oplus-dts,
+.fa-oplus-dts-dataset,
+.fa-oplus-jao,
+.fa-oplus-jao-job,
+.fa-oplus-gfs,
+.fa-oplus-gfs-script,
+.fa-oplus-gfs-staticfs,
+.fa-oplus-applet {
+  font-family: 'Font Awesome 5 Pro', 'Font Awesome 5 Free' !important;
+}
+
+/* Ensure Duotone icons use Pro font family */
+.fad {
+  font-family: 'Font Awesome 5 Duotone' !important;
+  font-weight: 900 !important;
+}
+
+/* Ensure Light icons use Pro font family */
+.fal {
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 300 !important;
+}
+
+/* Override Free version for specific icons that need Pro features */
+.fa-user-shield,
+.fa-fingerprint,
+.fa-unlock-alt {
+  font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro' !important;
+}
+
+/* Ensure consistent icon rendering */
+.fa,
+.fas,
+.far,
+.fal,
+.fad,
+.fab {
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-font-smoothing: antialiased !important;
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+}

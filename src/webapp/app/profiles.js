@@ -108,7 +108,7 @@
         },
         {
             profileId: 'csdc',
-            name: "OPLUS",
+            name: "OPSmind",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
