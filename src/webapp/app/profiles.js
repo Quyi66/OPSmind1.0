@@ -6,7 +6,7 @@
         {
             // This is the default profile whose ID must be '$DEFAULT_PROFILE$'
             profileId: '$DEFAULT_PROFILE$',
-            name: "OPSMIND",
+            name: "OPSmind",
             apiBaseUrls: {
                 portal: '/local-portal',
                 com: '/oplus-portal/com',
@@ -86,7 +86,7 @@
         },
         {
             profileId: 'vivo',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -97,7 +97,7 @@
         },
         {
             profileId: 'migu',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -108,7 +108,7 @@
         },
         {
             profileId: 'csdc',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -119,7 +119,7 @@
         },
         {
             profileId: 'crc',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -130,7 +130,7 @@
         },
         {
             profileId: 'bcs',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -141,7 +141,7 @@
         },
         {
             profileId: 'kylin',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -154,7 +154,7 @@
         },
         {
             profileId: 'famessoft',
-            name: "OPSMIND",
+            name: "OPLUS",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
