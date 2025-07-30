@@ -9,23 +9,15 @@
     //任务管理主控制器
     cacModule.controller('cacCtrl', CacCtrl);
     cacModule.controller('cac3Ctrl', CacCtrl);
-    CacCtrl.$inject = ['$state', '$element', '$timeout', '$location','Param'];
+    CacCtrl.$inject = ['$state', '$element', '$timeout', '$location'];
 
 
-    function CacCtrl($state, $element, $timeout, $location,Param) {
+    function CacCtrl($state, $element, $timeout, $location) {
         var vm = this;
         vm.views = {
             chosed: "",
-            emailMenuEnabled:"",
+            emailMenuEnabled: "yes", // 默认启用邮件配置菜单，与现场版本保持一致
         };
-
-        //巡检邮件配置菜单-开关
-        Param.getByDomainAndName('cac', 'cac_mailbox_info').then(function (result) {
-            let jsonObject = JSON.parse(result.value);
-            vm.views.emailMenuEnabled = jsonObject.emailMenuEnabled;
-        }).catch(function (err) {
-            throw err;
-        });
 
         var pathUrl = $location.path();
 
