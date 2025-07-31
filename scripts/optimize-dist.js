@@ -97,14 +97,25 @@ class DistOptimizer {
         const testPatterns = [
             /testdata/i,
             /test-data/i,
-            /mock/i,
-            /demo/i,
+            /mock-.*\.js$/i,  // 只匹配mock开头的JS文件
+            /.*-demo\.js$/i,  // 只匹配以-demo.js结尾的文件，但排除jao-demo.js
             /example/i,
             /sample/i,
             /-test\./i,
             /\.test\./i
         ];
-        
+
+        // 排除特定的业务文件
+        const excludePatterns = [
+            /jao-demo\.js$/i,  // 排除jao-demo.js，这是业务文件
+            /.*-controller\.js$/i  // 排除controller文件
+        ];
+
+        // 先检查是否在排除列表中
+        if (excludePatterns.some(pattern => pattern.test(relativePath))) {
+            return false;
+        }
+
         return testPatterns.some(pattern => pattern.test(relativePath));
     }
 
@@ -178,6 +189,21 @@ class DistOptimizer {
                 files.forEach((file, index) => {
                     console.log(`   ${index + 1}. ${file.relativePath} (${(file.size / 1024).toFixed(2)} KB)`);
                 });
+
+                // 检查是否包含重要的业务文件，如果是则跳过
+                const hasImportantFiles = files.some(file => {
+                    const importantPatterns = [
+                        /.*-controller\.js$/i,  // 保留所有controller文件
+                        /jao-demo\.js$/i,       // 保留jao-demo.js
+                        /app\/modules\/.*\.js$/i // 保留app/modules下的JS文件
+                    ];
+                    return importantPatterns.some(pattern => pattern.test(file.relativePath));
+                });
+
+                if (hasImportantFiles) {
+                    console.log(`   ⚠️  跳过删除: 包含重要业务文件`);
+                    continue;
+                }
 
                 // 保留第一个，删除其他的
                 for (let i = 1; i < files.length; i++) {
