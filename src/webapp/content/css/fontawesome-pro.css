@@ -436,16 +436,70 @@
 .fa-toggle-off:before { content: "\f204"; }
 .fa-lightbulb:before { content: "\f0eb"; }
 
-/* Custom icons used in the project */
-.fa-oplus-cmd:before { content: "\f120"; }
-.fa-oplus-acm:before { content: "\f233"; }
-.fa-oplus-udp:before { content: "\f5c3"; }
-.fa-oplus-udp-page:before { content: "\f5c3"; }
-.fa-oplus-dts:before { content: "\f78a"; }
-.fa-oplus-dts-dataset:before { content: "\f78a"; }
-.fa-oplus-jao:before { content: "\f927"; }
-.fa-oplus-jao-job:before { content: "\f927"; }
-.fa-oplus-gfs:before { content: "\f64b"; }
-.fa-oplus-gfs-script:before { content: "\f387"; }
-.fa-oplus-gfs-staticfs:before { content: "\f187"; }
-.fa-oplus-applet:before { content: "\f867"; } 
+/* ==========================================================================
+   OpsMind Application Icons - Pro Version Only
+   ========================================================================== */
+
+/* Command Module */
+.fa-oplus-cmd:before {
+  content: "\f120";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* ACM Module */
+.fa-oplus-acm:before {
+  content: "\f233";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* UDP Module */
+.fa-oplus-udp:before,
+.fa-oplus-udp-page:before {
+  content: "\f5c3";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* DTS Module */
+.fa-oplus-dts:before,
+.fa-oplus-dts-dataset:before {
+  content: "\f78a";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* JAO Module */
+.fa-oplus-jao:before,
+.fa-oplus-jao-job:before {
+  content: "\f927";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* GFS Module */
+.fa-oplus-gfs:before {
+  content: "\f64b";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+.fa-oplus-gfs-script:before {
+  content: "\f387";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+.fa-oplus-gfs-staticfs:before {
+  content: "\f187";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* Applet */
+.fa-oplus-applet:before {
+  content: "\f867";
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}

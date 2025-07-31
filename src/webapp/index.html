@@ -16,12 +16,12 @@
     <link rel="stylesheet" href="lib/luckysheet/dist/css/luckysheet.css" type="text/css" />
     <link rel="stylesheet" href="lib/luckysheet/dist/assets/iconfont/iconfont.css" type="text/css" />
 
-    <!-- FontAwesome Pro for application icons -->
+    <!-- FontAwesome Free for standard icons (loaded first) -->
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css" type="text/css" />
+    <!-- FontAwesome Pro for application icons (loaded second, higher priority) -->
     <link rel="stylesheet" href="content/css/fontawesome-pro.css" type="text/css" />
-    <!-- FontAwesome Free for additional icons -->
-    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" />
-    <!-- FontAwesome priority fix -->
-    <link rel="stylesheet" href="content/css/fontawesome-priority-fix.css" type="text/css" />
+    <!-- FontAwesome integration fix -->
+    <link rel="stylesheet" href="content/css/fontawesome-integration.css" type="text/css" />
     <link rel="stylesheet" href="node_modules/fullcalendar/dist/fullcalendar.css" />
     <link rel="stylesheet" href="node_modules/jquery-ui/themes/base/resizable.css" />
     <link rel="stylesheet" href="node_modules/angularjs-toaster/toaster.min.css" type="text/css" />

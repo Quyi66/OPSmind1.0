@@ -1,0 +1,146 @@
+/*!
+ * FontAwesome Integration Strategy
+ * 应用相关图标使用Pro版本，其他图标使用Free版本
+ * Application icons use Pro, standard icons use Free
+ */
+
+/* ==========================================================================
+   应用模块图标 - 强制使用Pro版本
+   Application Module Icons - Force Pro Version
+   ========================================================================== */
+
+/* OpsMind自定义应用图标 - 必须使用Pro版本 */
+.fa-oplus-cmd,
+.fa-oplus-acm,
+.fa-oplus-udp,
+.fa-oplus-udp-page,
+.fa-oplus-dts,
+.fa-oplus-dts-dataset,
+.fa-oplus-jao,
+.fa-oplus-jao-job,
+.fa-oplus-gfs,
+.fa-oplus-gfs-script,
+.fa-oplus-gfs-staticfs,
+.fa-oplus-applet {
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 900 !important;
+}
+
+/* Pro版本专有的字体样式 */
+.fal {
+  font-family: 'Font Awesome 5 Pro' !important;
+  font-weight: 300 !important;
+}
+
+.fad {
+  font-family: 'Font Awesome 5 Duotone' !important;
+  font-weight: 900 !important;
+}
+
+/* ==========================================================================
+   标准图标 - 使用Free版本（默认行为）
+   Standard Icons - Use Free Version (Default)
+   ========================================================================== */
+
+/*
+ * 以下图标明确使用Free版本，确保一致性
+ * 这些是系统中常用的标准图标
+ */
+.fa-home,
+.fa-user,
+.fa-users,
+.fa-cog,
+.fa-cogs,
+.fa-search,
+.fa-plus,
+.fa-minus,
+.fa-edit,
+.fa-trash,
+.fa-trash-alt,
+.fa-save,
+.fa-download,
+.fa-upload,
+.fa-file,
+.fa-folder,
+.fa-folder-open,
+.fa-copy,
+.fa-cut,
+.fa-paste,
+.fa-print,
+.fa-refresh,
+.fa-sync,
+.fa-sync-alt,
+.fa-check,
+.fa-times,
+.fa-info,
+.fa-warning,
+.fa-exclamation,
+.fa-question,
+.fa-bell,
+.fa-envelope,
+.fa-calendar,
+.fa-clock,
+.fa-eye,
+.fa-eye-slash,
+.fa-lock,
+.fa-unlock,
+.fa-key,
+.fa-shield,
+.fa-user-shield,
+.fa-fingerprint,
+.fa-unlock-alt {
+  font-family: 'Font Awesome 5 Free' !important;
+}
+
+/* ==========================================================================
+   基础样式确保 - 保证图标正确渲染
+   Base Styles - Ensure Proper Icon Rendering
+   ========================================================================== */
+
+.fa,
+.fas,
+.far,
+.fal,
+.fad,
+.fab {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   降级策略 - Pro字体加载失败时的备选方案
+   Fallback Strategy - When Pro fonts fail to load
+   ========================================================================== */
+
+@supports not (font-family: 'Font Awesome 5 Pro') {
+  .fa-oplus-cmd,
+  .fa-oplus-acm,
+  .fa-oplus-udp,
+  .fa-oplus-udp-page,
+  .fa-oplus-dts,
+  .fa-oplus-dts-dataset,
+  .fa-oplus-jao,
+  .fa-oplus-jao-job,
+  .fa-oplus-gfs,
+  .fa-oplus-gfs-script,
+  .fa-oplus-gfs-staticfs,
+  .fa-oplus-applet {
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important;
+  }
+
+  .fal {
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 400 !important;
+  }
+
+  .fad {
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important;
+  }
+}
