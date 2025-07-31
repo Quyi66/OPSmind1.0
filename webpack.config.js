@@ -120,25 +120,7 @@ module.exports = (env = {}, argv = {}) => {
                                 ]
                             }
                         },
-                        {
-                            loader: 'string-replace-loader',
-                            options: {
-                                multiple: [
-                                    {
-                                        // 开发环境：将 /oplus-portal 替换为 /local-portal
-                                        search: '/oplus-portal',
-                                        replace: isProduction ? '/oplus-portal' : '/local-portal',
-                                        flags: 'g'
-                                    },
-                                    {
-                                        // 替换API基础路径
-                                        search: '/api/',
-                                        replace: isProduction ? '/oplus-portal/api/' : '/local-portal/api/',
-                                        flags: 'g'
-                                    }
-                                ]
-                            }
-                        }
+
                     ]
                 },
 
@@ -280,8 +262,8 @@ module.exports = (env = {}, argv = {}) => {
                 'VERSION': JSON.stringify(pkg.version),
                 'BUILD_TIMESTAMP': JSON.stringify(timestamp),
                 'VERSION_NUMBER': JSON.stringify(versionNumber),
-                // API路径配置 - 根据环境自动选择
-                'API_BASE_PATH': JSON.stringify(isProduction ? '/oplus-portal' : '/local-portal')
+                // API路径配置 - 统一使用oplus-portal
+                'API_BASE_PATH': JSON.stringify('/oplus-portal')
             }),
 
             // HTML 模板处理 - 传统模式，不注入JS
