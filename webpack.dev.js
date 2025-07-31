@@ -5,7 +5,7 @@ const webpack = require('webpack');
 
 module.exports = (env, argv) => {
     // 代理服务器配置
-    const PROXY_TARGET = 'http://10.1.40.112';
+    const PROXY_TARGET = 'http://10.1.40.197:18080';
     const commonConfig = common(env, { ...argv, mode: 'development' });
 
     return merge(commonConfig, {
@@ -33,49 +33,21 @@ module.exports = (env, argv) => {
             // 完全禁用 historyApiFallback，因为这是传统的 AngularJS 应用
             historyApiFallback: false,
             // API代理配置 - 统一代理到后端服务器
-            proxy: {
-                '/api/**': {
-                    target: PROXY_TARGET,
-                    changeOrigin: true,
-                    secure: false,
-                    logLevel: 'debug',
-                },
-                '/local-portal/**': {
-                    target: PROXY_TARGET,
-                    changeOrigin: true,
-                    secure: false,
-                    logLevel: 'debug',
-                    pathRewrite: function(path, req) {
-                        const newPath = path.replace(/^\/local-portal/, '/oplus-portal');
-                        console.log('🔄 Path rewrite:', path, '->', newPath);
-                        return newPath;
-                    },
-                },
-                '/oplus-portal/**': {
-                    target: PROXY_TARGET,
-                    changeOrigin: true,
-                    secure: false,
-                    logLevel: 'debug',
-                },
-                '/oplus-upload/**': {
-                    target: PROXY_TARGET,
-                    changeOrigin: true,
-                    secure: false,
-                    logLevel: 'debug',
-                },
-                '/oplus-njs/**': {
-                    target: PROXY_TARGET,
-                    changeOrigin: true,
-                    secure: false,
-                    logLevel: 'debug',
-                },
-                '/oplus-ws/**': {
+            proxy: [
+                {
+                    context: [
+                        '/api/**',           // API 接口
+                        '/oplus-portal/**',  // 主要服务
+                        '/oplus-upload/**',  // 文件上传
+                        '/oplus-njs/**',     // Node.js 服务
+                        '/oplus-ws/**'       // WebSocket
+                    ],
                     target: PROXY_TARGET,
                     changeOrigin: true,
                     secure: false,
                     logLevel: 'debug',
                 }
-            },
+            ],
             onBeforeSetupMiddleware: (devServer) => {
                 if (!devServer) {
                     throw new Error('webpack-dev-server is not defined');
@@ -87,7 +59,6 @@ module.exports = (env, argv) => {
 
                     // 跳过 API 请求，避免干扰代理
                     if (url.startsWith('/api/') ||
-                        url.startsWith('/local-portal/') ||
                         url.startsWith('/oplus-portal/') ||
                         url.startsWith('/oplus-upload/') ||
                         url.startsWith('/oplus-njs/') ||

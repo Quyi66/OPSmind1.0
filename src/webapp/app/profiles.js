@@ -8,7 +8,7 @@
             profileId: '$DEFAULT_PROFILE$',
             name: "OPSmind",
             apiBaseUrls: {
-                portal: '/local-portal',
+                portal: '/oplus-portal',
                 com: '/oplus-portal/com',
                 adm: '/oplus-portal/adm',
                 dts: '/oplus-portal/dts',
