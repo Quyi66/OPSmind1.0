@@ -401,6 +401,15 @@ module.exports = (env = {}, argv = {}) => {
                         from: 'src/webapp/lib',
                         to: 'lib'
                     },
+                    // FontAwesome Free CSS和字体文件
+                    {
+                        from: 'node_modules/@fortawesome/fontawesome-free/css',
+                        to: 'node_modules/@fortawesome/fontawesome-free/css'
+                    },
+                    {
+                        from: 'node_modules/@fortawesome/fontawesome-free/webfonts',
+                        to: 'node_modules/@fortawesome/fontawesome-free/webfonts'
+                    },
                     // 应用模块文件 - 关键：复制所有app目录下的文件
                     {
                         from: 'src/webapp/app',
