@@ -4,15 +4,15 @@
 <form name="loginForm" class="form" role="form" ng-submit="$ctrl.login($event)">
     <div class="form-group" ng-class="{'hasError':loginForm.username.$dirty && loginForm.username.$invalid}">
         <input type="text" class="form-control" name="username" id="username" placeholder="{{'jhi_login.form.username'|translate}}" maxlength="50" required
-               ng-model="$ctrl.username">
+               autocomplete="username" ng-model="$ctrl.username">
     </div>
     <div class="form-group" ng-class="{'hasError':loginForm.password.$dirty && loginForm.password.$invalid}">
         <input type="password" class="form-control" name="password" id="password" placeholder="{{'jhi_login.form.password'|translate}}" required
-               minlength="4" maxlength="100" ng-model="$ctrl.password">
+               minlength="4" maxlength="100" autocomplete="current-password" ng-model="$ctrl.password">
     </div>
     <div class="form-group" ng-class="{'hasError':loginForm.password.$dirty && loginForm.password.$invalid}" ng-if="$ctrl.showOTP">
         <input type="password" class="form-control" name="otpCode" id="otpCode" placeholder="{{'jhi_login.form.otp'|translate}}" required
-               minlength="6" maxlength="6" ng-model="$ctrl.otpCode">
+               minlength="6" maxlength="6" autocomplete="one-time-code" ng-model="$ctrl.otpCode">
     </div>
     <div class="form-group">
         <div class="checkbox checkbox-primary">
