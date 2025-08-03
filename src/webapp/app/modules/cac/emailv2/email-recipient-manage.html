@@ -1,0 +1,51 @@
+<div class="opx-layout-vflex">
+    <nav class="navbar navbar-light recipient-manage-header">
+        <div class="opx-navbar-title">
+            <span>{{'cac.common.recipient_list' | translate}}</span>
+            <span ng-if="vm.currentTemplate"> - {{vm.currentTemplate.template_name}}</span>
+        </div>
+        <div class="navbar-nav">
+            <button class="btn btn-primary" ng-click="vm.addRecipient()">
+                <i class="fa fa-plus"></i> 新增收件人
+            </button>
+        </div>
+    </nav>
+    
+    <div class="card-body">
+        <!-- 收件人列表 -->
+        <div class="table-responsive recipient-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>收件人邮箱</th>
+                        <th>收件人姓名</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="recipient in vm.recipients">
+                        <td>{{recipient.email}}</td>
+                        <td>{{recipient.name || '-'}}</td>
+                        <td>{{recipient.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-sm btn-outline-primary" ng-click="vm.editRecipient(recipient)">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" ng-click="vm.deleteRecipient(recipient)">
+                                    <i class="fa fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="vm.recipients.length === 0">
+                        <td colspan="4" class="text-center text-muted">
+                            <i class="fa fa-inbox"></i> 暂无收件人数据
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

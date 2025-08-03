@@ -1,0 +1,228 @@
+/* CAC 邮件收件人管理样式 */
+
+/* 模版列表样式 */
+.template-list-container {
+    padding: 20px;
+}
+
+.template-list-container .table {
+    margin-bottom: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.template-list-container .table-light th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+    padding: 12px;
+}
+
+.template-list-container .table td {
+    vertical-align: middle;
+    padding: 12px;
+    border-top: 1px solid #dee2e6;
+}
+
+.template-list-container .table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.template-list-container .badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+}
+
+/* 收件人管理页面样式 */
+.template-selection-container {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.template-selection-container .form-check {
+    margin-bottom: 8px;
+    padding: 4px 8px;
+}
+
+.template-selection-container .form-check:hover {
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+
+.template-selection-container .form-check-input:disabled + .form-check-label {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.recipient-manage-header {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.recipient-manage-header .opx-navbar-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.recipient-table {
+    margin-top: 20px;
+}
+
+.recipient-table th {
+    background-color: #f8f9fa;
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.recipient-table td {
+    vertical-align: middle;
+}
+
+.template-expansion-toggle {
+    transition: all 0.3s ease;
+}
+
+.template-expansion-toggle:hover {
+    background-color: #e9ecef;
+}
+
+.template-expansion-panel {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.recipient-dialog .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.recipient-dialog .form-group {
+    margin-bottom: 1rem;
+}
+
+.recipient-dialog .alert {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* 按钮组样式 */
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+/* 加载状态样式 */
+.loading-spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 空状态样式 */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .template-list-container {
+        padding: 10px;
+    }
+    
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn-group .btn {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    .btn-group .btn:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* 模态框样式增强 */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header .modal-title {
+    color: #495057;
+    font-weight: 600;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* 表单样式增强 */
+.form-group label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* 徽章样式 */
+.badge-primary {
+    background-color: #007bff;
+}
+
+.badge-info {
+    background-color: #17a2b8;
+}
+
+/* 动画效果 */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

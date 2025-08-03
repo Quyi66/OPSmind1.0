@@ -3,7 +3,6 @@
 
     CacEmailRecipientController.$inject = ['$scope', '$state', '$http', 'messageService', 'currentUser', '$translate', 'sscEmailService', '$uibModal'];
 
-
     function CacEmailRecipientController($scope, $state, $http, messageService, currentUser, $translate, sscEmailService, $uibModal) {
         var vm = this;
 
@@ -16,6 +15,23 @@
             vm.s.isTheEmailEnabled = vm.isTheEmailEnabled ? "yes" : "no";
             sscEmailService.saveCacEmailSwitch(vm.s);
         }
+
+        // 初始化时添加按钮拦截逻辑
+        $scope.$on('$viewContentLoaded', function() {
+            setTimeout(function() {
+                // 拦截"收件人列表"按钮点击事件
+                $(document).off('click', '[data-action="recipient-manage-v2"]').on('click', '[data-action="recipient-manage-v2"]', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    var templateId = $(this).data('template-id');
+                    if (templateId) {
+                        $state.go('app.cac.emailv2.recipient-manage', { templateId: templateId });
+                        $scope.$apply();
+                    }
+                });
+            }, 100);
+        });
 
         vm.customContent = function () {
             var instance = $uibModal.open({
@@ -41,10 +57,10 @@
                     that.save = save;
 
                     function cancel() {
-                        $uibModalInstance.close({action: "cancel"});
+                        $uibModalInstance.close({ action: "cancel" });
                     }
 
-                    function save(){
+                    function save() {
                         vm.s.customFileName = that.content;
                         sscEmailService.saveCacEmailSwitch(vm.s);
                         that.cancel();
@@ -58,5 +74,4 @@
         }
 
     }
-})
-();
+})();

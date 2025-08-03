@@ -1,0 +1,83 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <i class="fa fa-envelope"></i>
+      #{cac.index.template} V2
+    </h4>
+    <div class="panel-tools">
+      <button class="btn btn-sm btn-primary" ng-click="vm.refresh()" ng-disabled="vm.loading">
+        <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading}"></i>
+        #{common.action.refresh}
+      </button>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <!-- 搜索框 -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="#{common.action.search}" ng-model="vm.searchText">
+          <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 加载状态 -->
+    <div ng-if="vm.loading" class="text-center">
+      <i class="fa fa-spinner fa-spin fa-2x"></i>
+      <p>#{common.message.loading}</p>
+    </div>
+
+    <!-- 模版列表表格 -->
+    <div ng-if="!vm.loading" class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#{cac.white_list.template_name}</th>
+            <th>#{cac.template.detail.last_time}</th>
+            <th>#{common.action.action}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="template in vm.templates | filter:vm.searchText" ng-if="vm.templates.length > 0">
+            <td>
+              <strong>{{template.template_name}}</strong>
+              <br>
+              <small class="text-muted">ID: {{template.template_id}}</small>
+            </td>
+            <td>
+              <span class="text-info">{{vm.formatDate(template.executed_at)}}</span>
+              <br>
+              <small class="text-muted">
+                #{common.attr.created_at}: {{vm.formatDate(template.created_at)}}
+              </small>
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                <button class="btn btn-sm btn-outline-info" title="#{cac.common.recipient_list}"
+                  ng-click="vm.goToRecipientManage(template.template_id)">
+                  <i class="fa fa-envelope"></i>
+                  #{cac.common.recipient_list}
+                </button>
+                <button class="btn btn-sm btn-outline-primary" title="#{cac.common.custom_content}"
+                  ng-click="vm.goToCustomContent(template.template_id)">
+                  <i class="fa fa-hand-pointer"></i>
+                  #{cac.common.custom_content}
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr ng-if="vm.templates.length === 0">
+            <td colspan="3" class="text-center text-muted">
+              <i class="fa fa-inbox fa-2x"></i>
+              <p>#{common.message.no_data}</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
