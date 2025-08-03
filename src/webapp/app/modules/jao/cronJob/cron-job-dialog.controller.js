@@ -47,7 +47,9 @@
                     for (var key in vm.cron.jobParam) {
                         // 如果是团队信息，单独处理
                         if (key === 'teamIds' && vm.cron.jobType === 'cac') {
-                            vm.cron.teamIds = vm.cron.jobParam[key].split(',');
+                            // 改为单选，只取第一个团队ID
+                            var teamIds = vm.cron.jobParam[key].split(',');
+                            vm.cron.selectedTeamId = teamIds[0];
                         } else {
                             vm.params.push({
                                 'name': key,
@@ -298,9 +300,17 @@
                 jobParam: {}
             };
 
-            // 如果是巡检作业，添加团队信息到jobParam中
-            if (vm.cron.jobType === 'cac' && vm.cron.teamIds && vm.cron.teamIds.length > 0) {
-                cronRequest.jobParam.teamIds = vm.cron.teamIds.join(',');
+            // 如果是巡检作业，添加团队信息到jobParam中，并设置categoryName
+            if (vm.cron.jobType === 'cac' && vm.cron.selectedTeamId) {
+                cronRequest.jobParam.teamIds = vm.cron.selectedTeamId;
+                
+                // 根据选中的团队ID找到团队名称，设置到categoryName
+                var selectedTeam = vm.teamList.find(function(team) {
+                    return team.id === vm.cron.selectedTeamId;
+                });
+                if (selectedTeam) {
+                    cronRequest.categoryName = selectedTeam.name;
+                }
             }
 
             if (_jobConstant[2] === vm.cron.jobType && vm.params[0].defaultValue.length < 1) {
