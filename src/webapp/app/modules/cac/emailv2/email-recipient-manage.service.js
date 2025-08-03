@@ -31,8 +31,20 @@
         }
 
         // 获取指定模版的收件人列表
-        function getRecipients(templateId) {
-            return restUtils.callApi(module, 'GET', '/api/cac/templates/{templateId}/recipients', {templateId: templateId});
+        function getRecipients(params) {
+            if (typeof params === 'string') {
+                // 兼容旧版本调用方式
+                return restUtils.callApi(module, 'GET', '/api/cac/templates/{templateId}/recipients', {templateId: params});
+            } else {
+                // 新版本支持分页和搜索
+                var templateId = params.templateId;
+                var queryParams = {
+                    page: params.page || 1,
+                    size: params.size || 10,
+                    search: params.search || ''
+                };
+                return restUtils.callApi(module, 'GET', '/api/cac/templates/{templateId}/recipients', {templateId: templateId}, null, queryParams);
+            }
         }
 
         // 新增收件人

@@ -6,6 +6,20 @@
     function CacEmailRecipientController($scope, $state, $http, messageService, currentUser, $translate, sscEmailService, $uibModal) {
         var vm = this;
 
+        // 初始化数据
+        vm.templates = [];
+        vm.loading = false;
+        vm.searchText = '';
+        vm.error = null;
+        vm.lastUpdateTime = new Date();
+
+        // 方法定义
+        vm.loadTemplates = loadTemplates;
+        vm.openRecipientListDialog = openRecipientListDialog;
+        vm.goToCustomContent = goToCustomContent;
+        vm.formatDate = formatDate;
+        vm.refresh = refresh;
+
         sscEmailService.getCacEmailSwitch().then(function (data) {
             vm.s = data;
             vm.isTheEmailEnabled = data.isTheEmailEnabled === "yes";
@@ -16,22 +30,86 @@
             sscEmailService.saveCacEmailSwitch(vm.s);
         }
 
-        // 初始化时添加按钮拦截逻辑
-        $scope.$on('$viewContentLoaded', function() {
-            setTimeout(function() {
-                // 拦截"收件人列表"按钮点击事件
-                $(document).off('click', '[data-action="recipient-manage-v2"]').on('click', '[data-action="recipient-manage-v2"]', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    var templateId = $(this).data('template-id');
-                    if (templateId) {
-                        $state.go('app.cac.emailv2.recipient-manage', { templateId: templateId });
-                        $scope.$apply();
+        // 初始化加载模版列表
+        activate();
+
+        function activate() {
+            loadTemplates();
+        }
+
+        function loadTemplates() {
+            vm.loading = true;
+            vm.error = null;
+            
+            var apiUrl = '/oplus-portal/dts/api/dts/q/data/CAC_QUERY_TEMPLATE/';
+            var params = {
+                cacheBuster: new Date().getTime(),
+                tenantId: window.tenantId || 'ff808081727a047f017292d0d72e0004'
+            };
+
+            $http.get(apiUrl, { params: params })
+                .then(function(response) {
+                    if (response.data && response.data.records) {
+                        vm.templates = response.data.records;
+                        vm.lastUpdateTime = new Date();
+                        vm.error = null;
+                    } else {
+                        vm.templates = [];
+                        vm.error = '返回数据格式异常';
                     }
+                })
+                .catch(function(error) {
+                    console.error('加载模版列表失败:', error);
+                    vm.error = error.data && error.data.message ? error.data.message : '网络请求失败，请检查网络连接';
+                    vm.templates = [];
+                    messageService.alertError("danger", '加载模版列表失败: ' + vm.error);
+                })
+                .finally(function() {
+                    vm.loading = false;
                 });
-            }, 100);
-        });
+        }
+
+        function openRecipientListDialog(templateId) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/modules/cac/emailv2/email-recipient-list-dialog.html',
+                controller: 'CacEmailV2RecipientListDialogController',
+                controllerAs: 'vm',
+                size: 'lg',
+                backdrop: 'static',
+                resolve: {
+                    templateId: function() {
+                        return templateId;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(result) {
+                if (result && result.action === 'refresh') {
+                    refresh();
+                }
+            }).catch(function() {
+                // 用户取消对话框
+            });
+        }
+
+        function goToCustomContent(templateId) {
+            vm.customContent();
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-----';
+            try {
+                return $$.formatDate(dateStr, 'YYYY-MM-DD HH:mm:ss');
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function refresh() {
+            loadTemplates();
+        }
+
+
 
         vm.customContent = function () {
             var instance = $uibModal.open({

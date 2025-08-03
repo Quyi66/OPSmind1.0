@@ -101,7 +101,25 @@
         
         // 打开收件人管理页面
         vm.openRecipientManage = function(templateId) {
-            $state.go('app.cac.emailv2.recipient-manage', {templateId: templateId});
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/modules/cac/emailv2/email-recipient-list-dialog.html',
+                controller: 'CacEmailV2RecipientListDialogController',
+                controllerAs: 'vm',
+                size: 'lg',
+                backdrop: 'static',
+                resolve: {
+                    templateId: function() {
+                        return templateId;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(result) {
+                // 处理对话框关闭后的结果
+                if (result && result.action === 'refresh') {
+                    // 可以在这里刷新页面数据
+                }
+            });
         };
     }
 })();

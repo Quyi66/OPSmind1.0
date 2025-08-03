@@ -1,83 +1,132 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4 class="panel-title">
-      <i class="fa fa-envelope"></i>
-      #{cac.index.template} V2
-    </h4>
-    <div class="panel-tools">
-      <button class="btn btn-sm btn-primary" ng-click="vm.refresh()" ng-disabled="vm.loading">
-        <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading}"></i>
-        #{common.action.refresh}
-      </button>
-    </div>
-  </div>
-
-  <div class="panel-body">
-    <!-- 搜索框 -->
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="#{common.action.search}" ng-model="vm.searchText">
-          <span class="input-group-addon">
-            <i class="fa fa-search"></i>
-          </span>
+<!-- 邮件配置2 - 完全重新实现，模仿UDP页面样式 -->
+<div class="email-template-list">
+    <!-- 页面标题和开关 -->
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-6">
+            <h4 style="margin: 0; padding: 10px 0;">
+                <i class="fa fa-envelope"></i>
+                邮件配置
+            </h4>
         </div>
-      </div>
+        <div class="col-md-6 text-right" style="padding-top: 8px;">
+            <label class="switch" style="margin: 0;">
+                <input type="checkbox" ng-model="vm.isTheEmailEnabled" ng-change="on_off()">
+                <span class="slider round"></span>
+            </label>
+        </div>
     </div>
 
-    <!-- 加载状态 -->
-    <div ng-if="vm.loading" class="text-center">
-      <i class="fa fa-spinner fa-spin fa-2x"></i>
-      <p>#{common.message.loading}</p>
+    <!-- 搜索和刷新工具栏 -->
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-6">
+            <!-- 空白区域 -->
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                <div class="input-group" style="width: 250px; display: inline-table;">
+                    <input type="text" class="form-control input-sm" 
+                           placeholder="搜索..." 
+                           ng-model="vm.searchText">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <button class="btn btn-default btn-sm" ng-click="vm.refresh()" ng-disabled="vm.loading" style="margin-left: 5px;">
+                    <i class="fa fa-refresh" ng-class="{'fa-spin': vm.loading}"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- 模版列表表格 -->
-    <div ng-if="!vm.loading" class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>#{cac.white_list.template_name}</th>
-            <th>#{cac.template.detail.last_time}</th>
-            <th>#{common.action.action}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="template in vm.templates | filter:vm.searchText" ng-if="vm.templates.length > 0">
-            <td>
-              <strong>{{template.template_name}}</strong>
-              <br>
-              <small class="text-muted">ID: {{template.template_id}}</small>
-            </td>
-            <td>
-              <span class="text-info">{{vm.formatDate(template.executed_at)}}</span>
-              <br>
-              <small class="text-muted">
-                #{common.attr.created_at}: {{vm.formatDate(template.created_at)}}
-              </small>
-            </td>
-            <td>
-              <div class="btn-group" role="group">
-                <button class="btn btn-sm btn-outline-info" title="#{cac.common.recipient_list}"
-                  ng-click="vm.goToRecipientManage(template.template_id)">
-                  <i class="fa fa-envelope"></i>
-                  #{cac.common.recipient_list}
-                </button>
-                <button class="btn btn-sm btn-outline-primary" title="#{cac.common.custom_content}"
-                  ng-click="vm.goToCustomContent(template.template_id)">
-                  <i class="fa fa-hand-pointer"></i>
-                  #{cac.common.custom_content}
-                </button>
-              </div>
-            </td>
-          </tr>
-          <tr ng-if="vm.templates.length === 0">
-            <td colspan="3" class="text-center text-muted">
-              <i class="fa fa-inbox fa-2x"></i>
-              <p>#{common.message.no_data}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <!-- 加载状态 -->
+        <div ng-if="vm.loading" class="text-center" style="padding: 50px;">
+            <i class="fa fa-spinner fa-spin fa-3x text-primary"></i>
+            <p class="text-muted" style="margin-top: 15px;">正在加载模版列表...</p>
+        </div>
+
+    <!-- 模版列表 - 完全模仿UDP DataTable样式 -->
+    <div ng-if="!vm.loading" class="panel panel-default" style="margin-bottom: 0;">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" style="margin-bottom: 0;">
+                <thead style="background-color: #f5f5f5;">
+                    <tr>
+                        <th style="border-top: none; padding: 8px 12px; font-weight: normal; color: #666;">模版名称</th>
+                        <th style="border-top: none; padding: 8px 12px; font-weight: normal; color: #666;">上次检查时间</th>
+                        <th style="border-top: none; padding: 8px 12px; font-weight: normal; color: #666; width: 250px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="template in vm.filteredTemplates = (vm.templates | filter:vm.searchText)" 
+                        ng-if="vm.templates.length > 0">
+                        <td style="padding: 8px 12px; vertical-align: middle; border-top: 1px solid #ddd;">
+                            {{template.template_name}}
+                        </td>
+                        <td style="padding: 8px 12px; vertical-align: middle; border-top: 1px solid #ddd;">
+                            {{vm.formatDate(template.executed_at)}}
+                        </td>
+                        <td style="padding: 8px 12px; vertical-align: middle; border-top: 1px solid #ddd; white-space: nowrap;">
+                            <div style="display: inline-block;">
+                                <button class="btn btn-info btn-sm" 
+                                        ng-click="vm.openRecipientListDialog(template.template_id)"
+                                        style="margin-right: 8px;">
+                                    <i class="fa fa-envelope"></i>
+                                    收件人列表
+                                </button>
+                                <button class="btn btn-primary btn-sm" 
+                                        ng-click="vm.goToCustomContent(template.template_id)">
+                                    <i class="fa fa-hand-pointer"></i>
+                                    自定义内容
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="vm.templates.length === 0">
+                        <td colspan="3" class="text-center" style="padding: 30px; border-top: 1px solid #ddd;">
+                            <div class="text-muted">
+                                <i class="fa fa-inbox fa-2x" style="color: #ccc;"></i>
+                                <p style="margin-top: 10px;">暂无模版数据</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="vm.templates.length > 0 && vm.filteredTemplates.length === 0">
+                        <td colspan="3" class="text-center" style="padding: 30px; border-top: 1px solid #ddd;">
+                            <div class="text-muted">
+                                <i class="fa fa-search fa-2x" style="color: #ccc;"></i>
+                                <p style="margin-top: 10px;">未找到匹配的模版</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 底部分页信息 -->
+        <div style="background-color: #f9f9f9; border-top: 1px solid #ddd; padding: 8px 12px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <select class="form-control input-sm" style="width: 60px; display: inline-block;">
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                    </select>
+                    <span style="margin-left: 10px; color: #666; font-size: 12px;">
+                        1 - {{vm.filteredTemplates.length}} / {{vm.templates.length}}
+                    </span>
+                </div>
+                <div class="col-md-6 text-right">
+                    <!-- 分页控件可以在这里添加 -->
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- 错误状态 -->
+    <div ng-if="vm.error" class="alert alert-danger">
+        <i class="fa fa-exclamation-triangle"></i>
+        <strong>加载失败:</strong> {{vm.error}}
+        <button class="btn btn-sm btn-danger pull-right" ng-click="vm.refresh()">
+            <i class="fa fa-refresh"></i>
+            重试
+        </button>
+    </div>
 </div>

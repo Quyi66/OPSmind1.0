@@ -14,8 +14,7 @@ src/webapp/app/modules/cac/email/
 
 ### 邮件配置2 (`/cac/email/list2`)
 ```
-src/webapp/app/modules/cac/assets/udp/
-└── cac-email-v2.json                   # 邮件配置2的UDP配置
+完全重新实现，不使用UDP配置，直接使用emailv2模块
 ```
 
 ### EmailV2重写模块 (`emailv2/`)
@@ -44,9 +43,9 @@ src/webapp/content/css/
 
 ## 🔧 技术实现
 
-### 1. UDP页面配置
+### 1. 页面实现方式
 - **邮件配置**: 使用原始的UDP页面配置
-- **邮件配置2**: 使用UDP页面配置，但按钮点击被拦截跳转到emailv2实现
+- **邮件配置2**: 完全重新实现，不使用UDP，直接使用emailv2的AngularJS实现
 
 ### 2. 按钮拦截机制
 在原始控制器中添加jQuery事件监听：
@@ -81,12 +80,13 @@ $(document).off('click', '[data-action="recipient-manage-v2"]').on('click', '[da
 - 基础的模版列表显示
 - 基础的收件人管理功能
 
-### 邮件配置2 (增强版)
-- 使用UDP页面显示，保持与原版一致的外观
-- 点击"收件人列表"按钮跳转到emailv2的增强功能
+### 邮件配置2 (完全重写版)
+- 完全重新实现，不依赖UDP页面
+- 模仿UDP页面的外观和交互体验
+- 使用模态对话框进行收件人管理
 - 支持模版扩展功能
-- 更丰富的收件人管理功能
-- 正确的日期格式化显示
+- 完善的错误处理和用户反馈
+- 实时搜索和统计信息显示
 
 ### EmailV2模块特性
 - **模版列表管理**: 独立的模版列表页面，支持搜索和刷新
@@ -103,10 +103,15 @@ $(document).off('click', '[data-action="recipient-manage-v2"]').on('click', '[da
 
 ## 🔄 数据流
 
+### 邮件配置 (原版)
 1. UDP页面调用 `CAC_QUERY_TEMPLATE` 接口显示模版列表
-2. 用户点击"收件人列表"按钮
-3. 按钮事件被拦截，跳转到emailv2的收件人管理页面
-4. emailv2提供完整的收件人管理功能，包括模版扩展
+2. 用户点击按钮进行相应操作
+
+### 邮件配置2 (重写版)
+1. AngularJS控制器直接调用 `CAC_QUERY_TEMPLATE` 接口
+2. 重新渲染模版列表，模仿UDP样式
+3. 用户点击"收件人列表"按钮打开模态对话框
+4. 对话框内提供完整的收件人管理功能
 
 ## 🐛 修复内容
 

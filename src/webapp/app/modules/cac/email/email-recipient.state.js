@@ -28,8 +28,8 @@
                 url: '/list2',
                 views: {
                     'email-view': {
-                        templateUrl: 'app/modules/cac/emailv2/email-recipient-list.html',
-                        controller: 'CacEmailV2RecipientController',
+                        templateUrl: 'app/modules/cac/emailv2/email-template-list.html',
+                        controller: 'CacEmailRecipientController',
                         controllerAs: 'vm'
                     }
                 }
@@ -46,8 +46,8 @@
             })
 
 
-        ;
+            ;
     }])
-    ;
+        ;
 })
-();
+    ();
