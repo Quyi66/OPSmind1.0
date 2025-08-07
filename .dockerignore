@@ -11,9 +11,10 @@ yarn-error.log*
 
 # 排除构建产物
 output/
-dist/
 tmp/
-build/
+# 保留Docker构建需要的文件
+!dist/
+!nginx-config/production.conf
 
 # 排除IDE和编辑器文件
 .vscode/
