@@ -1,6 +1,7 @@
 /angulr2.2.1
 /dist/
 /dist/*
+/packages/
 dist/
 dist/*
 src/webapp/node_modules
