@@ -19,9 +19,12 @@ COPY nginx-config/production.conf /etc/nginx/conf.d/default.conf
 # 复制预构建的dist文件
 COPY dist /usr/share/nginx/html
 
-# 设置正确的文件权限
+# 设置正确的文件权限并清理所有扩展属性
 RUN chown -R nginx:nginx /usr/share/nginx/html \
-    && chmod -R 755 /usr/share/nginx/html
+    && chmod -R 755 /usr/share/nginx/html \
+    && find /usr/share/nginx/html -type f -exec sh -c 'setfattr -x user.com.apple.provenance "$1" 2>/dev/null || true' _ {} \; \
+    && find /usr/share/nginx/html -type f -exec sh -c 'setfattr -x user.com.apple.quarantine "$1" 2>/dev/null || true' _ {} \; \
+    && find /usr/share/nginx/html -type f -exec sh -c 'setfattr -x user.com.apple.metadata:kMDItemWhereFroms "$1" 2>/dev/null || true' _ {} \;
 
 # 创建nginx运行用户的目录
 RUN mkdir -p /var/cache/nginx/client_temp \
