@@ -3,6 +3,8 @@
 /dist/*
 /packages/
 dist/
+*.tar
+*.gz
 dist/*
 src/webapp/node_modules
 /node_modules

@@ -7,16 +7,51 @@ set -e
 
 # 配置变量
 IMAGE_NAME="oplus-web"
-IMAGE_VERSION="1.0"
-DOCKERFILE_PATH="test-package/Dockerfile"
+TAG="latest"
+BUILD_CONTEXT="."
 
-# 颜色输出
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-RED='\033[0;31m'
-NC='\033[0m'
+# 获取版本号
+VERSION=$(grep '"version"' package.json | sed 's/.*"version": *"\([^"]*\)".*/\1/')
+if [ -z "$VERSION" ]; then
+    VERSION="1.0.0"
+fi
 
-echo -e "${BLUE}开始构建 ${IMAGE_NAME}:${IMAGE_VERSION}${NC}"
+# 显示帮助信息
+show_help() {
+    echo "用法: $0 [选项]"
+    echo ""
+    echo "选项:"
+    echo "  -n, --name NAME     设置镜像名称 (默认: oplus-web)"
+    echo "  -t, --tag TAG       设置镜像标签 (默认: latest)"
+    echo "  -h, --help          显示此帮助信息"
+    echo ""
+    echo "示例:"
+    echo "  $0                           # 使用默认设置构建"
+    echo "  $0 -n myapp -t v1.0.0        # 构建名为myapp:v1.0.0的镜像"
+}
+
+# 解析命令行参数
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -n|--name)
+            IMAGE_NAME="$2"
+            shift 2
+            ;;
+        -t|--tag)
+            TAG="$2"
+            shift 2
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}错误: 未知参数 $1${NC}"
+            show_help
+            exit 1
+            ;;
+    esac
+done
 
 # 检查必要文件
 if [ ! -f "$DOCKERFILE_PATH" ]; then
@@ -34,41 +69,91 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
-# 先构建前端应用
-echo -e "${BLUE}构建前端应用...${NC}"
-if [ ! -d "dist" ] || [ -z "$(ls -A dist 2>/dev/null)" ]; then
-    echo -e "${BLUE}dist目录不存在或为空，开始构建...${NC}"
-    npm ci
-    npm run build
-
-    if [ ! -d "dist" ] || [ -z "$(ls -A dist)" ]; then
-        echo -e "${RED}错误: 前端构建失败，dist目录为空${NC}"
-        exit 1
-    fi
-    echo -e "${GREEN}✅ 前端构建完成${NC}"
-else
-    echo -e "${GREEN}✅ 发现已存在的dist目录，跳过构建${NC}"
-fi
-
-# 构建Docker镜像
-echo -e "${BLUE}构建Docker镜像...${NC}"
-docker build \
-    -f "$DOCKERFILE_PATH" \
-    -t "${IMAGE_NAME}:${IMAGE_VERSION}" \
-    -t "${IMAGE_NAME}:latest" \
-    .
-
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ Docker镜像构建成功${NC}"
-    echo -e "${BLUE}镜像信息:${NC}"
-    docker images | grep "${IMAGE_NAME}"
-    echo ""
-    echo -e "${BLUE}运行命令:${NC}"
-    echo "docker run -d -p 80:80 --name oplus-web ${IMAGE_NAME}:${IMAGE_VERSION}"
-    echo ""
-    echo -e "${BLUE}测试命令:${NC}"
-    echo "docker run -d -p 8080:80 --name oplus-web-test ${IMAGE_NAME}:${IMAGE_VERSION}"
-else
-    echo -e "${RED}❌ Docker镜像构建失败${NC}"
+# 检查Docker buildx
+echo -e "${YELLOW}检查Docker buildx支持...${NC}"
+if ! docker buildx version > /dev/null 2>&1; then
+    echo -e "${RED}错误: Docker buildx不可用！${NC}"
+    echo "请确保Docker版本支持buildx或启用实验性功能"
     exit 1
 fi
+
+# 创建并使用buildx构建器
+echo -e "${YELLOW}设置多架构构建器...${NC}"
+docker buildx create --name multiarch-builder --use --bootstrap > /dev/null 2>&1 || true
+
+# 显示构建信息
+echo -e "${GREEN}开始构建多架构Docker镜像...${NC}"
+echo "镜像名称: ${IMAGE_NAME}:${TAG}"
+echo "版本号: ${VERSION}"
+echo "支持架构: linux/amd64, linux/arm64"
+echo "构建上下文: ${BUILD_CONTEXT}"
+echo ""
+
+# 构建多架构镜像并导出
+echo -e "${YELLOW}构建AMD64架构镜像...${NC}"
+docker buildx build \
+    --platform linux/amd64 \
+    --tag "${IMAGE_NAME}:${TAG}" \
+    --tag "${IMAGE_NAME}:${VERSION}" \
+    --load \
+    "${BUILD_CONTEXT}"
+
+AMD64_SUCCESS=$?
+
+echo -e "${YELLOW}构建ARM64架构镜像...${NC}"
+docker buildx build \
+    --platform linux/arm64 \
+    --tag "${IMAGE_NAME}:${TAG}-arm64" \
+    --tag "${IMAGE_NAME}:${VERSION}-arm64" \
+    --load \
+    "${BUILD_CONTEXT}"
+
+ARM64_SUCCESS=$?
+
+# 检查构建结果
+if [ $AMD64_SUCCESS -ne 0 ] && [ $ARM64_SUCCESS -ne 0 ]; then
+    echo -e "${RED}❌ 所有架构镜像构建失败！${NC}"
+    exit 1
+elif [ $AMD64_SUCCESS -ne 0 ]; then
+    echo -e "${YELLOW}⚠️  AMD64镜像构建失败，仅构建ARM64镜像${NC}"
+    # 如果AMD64失败，将ARM64作为默认镜像
+    if [ $ARM64_SUCCESS -eq 0 ]; then
+        docker tag "${IMAGE_NAME}:${TAG}-arm64" "${IMAGE_NAME}:${TAG}"
+        echo "使用ARM64镜像作为默认标签"
+    fi
+elif [ $ARM64_SUCCESS -ne 0 ]; then
+    echo -e "${YELLOW}⚠️  ARM64镜像构建失败，仅构建AMD64镜像${NC}"
+fi
+
+echo ""
+echo -e "${GREEN}✅ 镜像构建完成！${NC}"
+
+# 导出镜像文件
+echo -e "${YELLOW}导出镜像文件...${NC}"
+
+if [ $AMD64_SUCCESS -eq 0 ]; then
+    echo "导出AMD64镜像..."
+    docker save "${IMAGE_NAME}:${TAG}" -o "${IMAGE_NAME}-${VERSION}.tar"
+    AMD64_SIZE=$(du -h "${IMAGE_NAME}-${VERSION}.tar" | cut -f1)
+fi
+
+if [ $ARM64_SUCCESS -eq 0 ]; then
+    echo "导出ARM64镜像..."
+    docker save "${IMAGE_NAME}:${TAG}-arm64" -o "${IMAGE_NAME}-${VERSION}-arm64.tar"
+    ARM64_SIZE=$(du -h "${IMAGE_NAME}-${VERSION}-arm64.tar" | cut -f1)
+fi
+
+echo ""
+echo -e "${GREEN}✅ 镜像导出完成！${NC}"
+echo "导出文件:"
+[ $AMD64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}-${VERSION}.tar (${AMD64_SIZE})"
+[ $ARM64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}-${VERSION}-arm64.tar (${ARM64_SIZE})"
+echo ""
+echo "本地镜像:"
+echo "  ${IMAGE_NAME}:${TAG} (默认 - AMD64)"
+echo "  ${IMAGE_NAME}:${VERSION} (版本标签 - AMD64)"
+[ $ARM64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}:${TAG}-arm64"
+[ $ARM64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}:${VERSION}-arm64"
+echo ""
+echo "运行容器 (挂载本地nginx配置):"
+echo "  docker run -d -p 80:80 -v \$(pwd)/nginx-config/oplus-web.conf:/etc/nginx/conf.d/default.conf:ro --name oplus-web ${IMAGE_NAME}:${TAG}"
