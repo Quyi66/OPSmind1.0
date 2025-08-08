@@ -131,23 +131,26 @@ echo -e "${GREEN}✅ 镜像构建完成！${NC}"
 # 导出镜像文件
 echo -e "${YELLOW}导出镜像文件...${NC}"
 
+# 确保build目录存在
+mkdir -p build
+
 if [ $AMD64_SUCCESS -eq 0 ]; then
     echo "导出AMD64镜像..."
-    docker save "${IMAGE_NAME}:${TAG}" -o "${IMAGE_NAME}-${VERSION}.tar"
-    AMD64_SIZE=$(du -h "${IMAGE_NAME}-${VERSION}.tar" | cut -f1)
+    docker save "${IMAGE_NAME}:${TAG}" -o "build/${IMAGE_NAME}-${VERSION}.tar"
+    AMD64_SIZE=$(du -h "build/${IMAGE_NAME}-${VERSION}.tar" | cut -f1)
 fi
 
 if [ $ARM64_SUCCESS -eq 0 ]; then
     echo "导出ARM64镜像..."
-    docker save "${IMAGE_NAME}:${TAG}-arm64" -o "${IMAGE_NAME}-${VERSION}-arm64.tar"
-    ARM64_SIZE=$(du -h "${IMAGE_NAME}-${VERSION}-arm64.tar" | cut -f1)
+    docker save "${IMAGE_NAME}:${TAG}-arm64" -o "build/${IMAGE_NAME}-${VERSION}-arm64.tar"
+    ARM64_SIZE=$(du -h "build/${IMAGE_NAME}-${VERSION}-arm64.tar" | cut -f1)
 fi
 
 echo ""
 echo -e "${GREEN}✅ 镜像导出完成！${NC}"
 echo "导出文件:"
-[ $AMD64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}-${VERSION}.tar (${AMD64_SIZE})"
-[ $ARM64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}-${VERSION}-arm64.tar (${ARM64_SIZE})"
+[ $AMD64_SUCCESS -eq 0 ] && echo "  build/${IMAGE_NAME}-${VERSION}.tar (${AMD64_SIZE})"
+[ $ARM64_SUCCESS -eq 0 ] && echo "  build/${IMAGE_NAME}-${VERSION}-arm64.tar (${ARM64_SIZE})"
 echo ""
 echo "本地镜像:"
 echo "  ${IMAGE_NAME}:${TAG} (默认 - AMD64)"
