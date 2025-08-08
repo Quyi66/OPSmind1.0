@@ -87,7 +87,7 @@ const requiredFiles = [
     'node_modules/fullcalendar/dist/fullcalendar.min.js',
     'node_modules/html-docx-js/dist/html-docx.js',
     'node_modules/jquery-contextmenu/dist/jquery.contextMenu.css',
-    'node_modules/jQuery-contextMenu/dist/jquery.contextMenu.js',
+    'node_modules/jquery-contextmenu/dist/jquery.contextMenu.js',
     'node_modules/jquery-ui/dist/jquery-ui.js',
     'node_modules/jquery-ui/themes/base/resizable.css',
     'node_modules/jquery.fancytree/dist/jquery.fancytree-all.js',

@@ -214,7 +214,7 @@
 <!-- tree view -->
 <script src="node_modules/jquery.fancytree/dist/jquery.fancytree-all.js"></script>
 <!-- contextMenu -->
-<script src="node_modules/jQuery-contextMenu/dist/jquery.contextMenu.js"></script>
+<script src="node_modules/jquery-contextmenu/dist/jquery.contextMenu.js"></script>
 <script src="app/modules/commons/tree/jquery.fancytree.contextMenu.js"></script>
 <!-- password -->
 <script src="lib/ng-password-meter/ng-password-meter.js"></script>
