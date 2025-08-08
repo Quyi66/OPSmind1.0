@@ -40,7 +40,8 @@
                 }
             }
 
-            tree.getRootNode().children.forEach(node => recursiveTraversal(node));
+            // 使用 tree.rootNode 替代已弃用的 tree.getRootNode()
+            tree.rootNode.children.forEach(node => recursiveTraversal(node));
             return result;
         }
 
@@ -56,7 +57,7 @@
                     }
                 }
             }
-            vm.udpAppletList.forEach(e => {e.scriptsDir=vm.scriptsPath});
+            vm.udpAppletList.forEach(e => { e.scriptsDir = vm.scriptsPath });
             appletManageService.importApplets(vm.importType, vm.udpAppletList).then(function (result) {
                 messageService.toast("success", $translate.instant("adm.content.data_import_success"));
                 $uibModalInstance.dismiss();
@@ -97,7 +98,7 @@
                 if (title.indexOf("#{") >= 0) {
                     title = $translate.instant(title.substring(2, title.length - 1));
                 }
-                if(rawNode.zipScriptPath){
+                if (rawNode.zipScriptPath) {
                     vm.scriptsPath = rawNode.zipScriptPath;
                 }
                 var node = {

@@ -9,12 +9,7 @@ set -e
 IMAGE_NAME="oplus-web"
 TAG="latest"
 BUILD_CONTEXT="."
-
-# 获取版本号
-VERSION=$(grep '"version"' package.json | sed 's/.*"version": *"\([^"]*\)".*/\1/')
-if [ -z "$VERSION" ]; then
-    VERSION="1.0.0"
-fi
+VERSION="1.0.1"
 
 # 显示帮助信息
 show_help() {

@@ -27,7 +27,7 @@ module.exports = (env, argv) => {
                             pure_funcs: ['console.log', 'console.info', 'console.debug']
                         },
                         mangle: {
-                            reserved: ['angular', 'jQuery', '$', 'window', 'document']
+                            reserved: ['angular', 'jQuery', '$', 'window', 'document', 'fancytree', 'ui']
                         },
                         format: {
                             comments: false,

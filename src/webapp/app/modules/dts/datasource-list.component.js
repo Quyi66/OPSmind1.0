@@ -300,7 +300,9 @@
 
             $('#dts-datasource-tree').fancytree(_.merge({}, window.$oplus.fancytreeDefault, $scope.options));
             //$("#dts-datasource-tree").fancytree("getTree").activateKey(activeKey);
-            $("#dts-datasource-tree").fancytree("getRootNode").visit(function (node) {
+            // 使用 tree.rootNode 替代已弃用的 getRootNode()
+            var tree = $("#dts-datasource-tree").fancytree("getTree");
+            tree.rootNode.visit(function (node) {
                 node.setExpanded(true);
             });
 
@@ -362,7 +364,8 @@
             tree.reload();
 
             tree.activateKey(activeKey + "");
-            $("#dts-datasource-tree").fancytree("getRootNode").visit(function (node) {
+            // 使用 tree.rootNode 替代已弃用的 getRootNode()
+            tree.rootNode.visit(function (node) {
                 node.setExpanded(true);
             });
         }
