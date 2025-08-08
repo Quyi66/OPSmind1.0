@@ -53,21 +53,6 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# 检查必要文件
-if [ ! -f "$DOCKERFILE_PATH" ]; then
-    echo -e "${RED}错误: Dockerfile不存在: $DOCKERFILE_PATH${NC}"
-    exit 1
-fi
-
-if [ ! -f "build/nginx.conf" ]; then
-    echo -e "${RED}错误: nginx.conf不存在: build/nginx.conf${NC}"
-    exit 1
-fi
-
-if [ ! -f "package.json" ]; then
-    echo -e "${RED}错误: package.json不存在${NC}"
-    exit 1
-fi
 
 # 检查Docker buildx
 echo -e "${YELLOW}检查Docker buildx支持...${NC}"
