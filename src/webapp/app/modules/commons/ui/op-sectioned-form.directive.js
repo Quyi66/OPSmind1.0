@@ -23,8 +23,8 @@
             link: function (scope, element, attrs) {
                 element.wrap('<div class="d-flex scroll-y h-100"></div>');
                 var parent = element.parent();
-                var navMode = 'tab';
-                var checkInterval = 500, checkTimes = 0, checkCount = 0;
+                var navMode = 'scroll';
+                var checkInterval = 500, checkTimes = 10, checkCount = 0;
                 // $timeout(function () {
                 //     buildElement();
                 // }, 2000);
@@ -40,14 +40,24 @@
                 parent.on('click', '.js-navitem', function () {
                     var link = $(this);
                     var linkId = link.data('id');
+                    // 更新导航项的激活状态
+                    parent.find('.js-navitem').removeClass('active');
+                    link.addClass('active');
+
                     if (navMode === 'scroll') {
-                        document.getElementById(linkId).scrollIntoView();
+                        var targetElement = document.getElementById(linkId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
                     } else if (navMode === 'tab') {
-                        parent.find('.js-navitem').removeClass('active');
-                        link.addClass('active');
                         var selector = '#' + linkId;
+                        // 隐藏所有顶级 fieldset 和组件内的 fieldset
                         $('fieldset', element).not(selector).hide();
-                        $(selector).show();
+                        // 显示目标 fieldset，如果在组件内，也要显示其父组件
+                        var targetFieldset = $(selector);
+                        targetFieldset.show();
+                        // 确保父级组件也是可见的
+                        targetFieldset.parents().show();
                     }
                 });
                 scope.$on('$destroy', function () {
@@ -57,12 +67,17 @@
                 function buildElement() {
                     // console.log('buildElement',element.prop('outerHTML'));
                     var navItems = [];
-                    var legends = $('fieldset>legend', element);
-                    if (legends.length === element.data('items')) {
+                    // 深度扫描所有 fieldset > legend，包括组件内部的
+                    var legends = $('fieldset legend', element);
+                    var currentCount = legends.length;
+                    var lastCount = element.data('items') || 0;
+
+                    // 如果数量没有变化且已经有菜单，则不重新构建
+                    if (currentCount === lastCount && currentCount > 0 && parent.find('>.js-navmenu').length > 0) {
                         return;
                     }
-                    element.data('items', legends.length);
-                    if (legends.length === 0) {
+                    element.data('items', currentCount);
+                    if (currentCount === 0) {
                         return;
                     }
                     legends.each(function (index, elem) {
