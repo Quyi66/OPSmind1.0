@@ -16,6 +16,7 @@
         'oplus.commons',
         'oplus.uaa',
         'oplus.app',
-        'oplus.udp'
+        'oplus.udp',
+        'oplus.gfs'
     ]);
 })();
