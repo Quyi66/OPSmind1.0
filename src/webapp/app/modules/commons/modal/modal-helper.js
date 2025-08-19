@@ -5,7 +5,7 @@
 (function () {
         'use strict';
 
-        angular.module('oplus.commons').service('modalHelper', ['$uibModal', '$timeout', '$uibModalStack', modalHelper]);
+        angular.module('oplus.commons').service('modalHelper', ['$uibModal', '$timeout', '$uibModalStack', '$rootScope', modalHelper]);
 
         /**
          * @ngdoc service
@@ -13,8 +13,9 @@
          * @param $uibModal
          * @param $timeout
          * @param $uibModalStack
+         * @param $rootScope
          */
-        function modalHelper($uibModal, $timeout, $uibModalStack) {
+        function modalHelper($uibModal, $timeout, $uibModalStack, $rootScope) {
             var MODALESS_CSS = 'opx-modaless';
             var MAX_CSS = 'maximized';
             var ENABLE_RESIZE_CSS = 'op-enable-resize';
@@ -131,11 +132,18 @@
 
             function calcMaxLayout(isModaless) {
                 var headerHeight = '40px';
+                var headerVisible = true;
+
+                // 检查是否隐藏了顶部导航栏
+                if (angular.isDefined($rootScope) && $rootScope.$global && $rootScope.$global.hideHeader) {
+                    headerVisible = false;
+                }
+
                 var styles = {
                     left: '0',
-                    top: isModaless ? headerHeight : '0',
+                    top: (isModaless && headerVisible) ? headerHeight : '0',
                     width: '100%',
-                    height: 'calc(100% - ' + headerHeight + ')'
+                    height: headerVisible ? 'calc(100% - ' + headerHeight + ')' : '100%'
                 };
                 return {styles: styles};
             }
@@ -443,6 +451,28 @@
                         return;
                     }
                     var result = {height: 0, width: 0, left: -1};
+
+                    // 检查是否为应用窗口的全屏设置
+                    var isAppletFullScreen = size.width === '100%' && size.height === '100%' &&
+                                           angular.isDefined(size.left) && angular.isDefined(size.top);
+
+                    if (isAppletFullScreen) {
+                        // 应用窗口全屏设置，考虑导航栏隐藏状态
+                        var headerVisible = true;
+                        if (angular.isDefined($rootScope) && $rootScope.$global && $rootScope.$global.hideHeader) {
+                            headerVisible = false;
+                        }
+
+                        var styles = {
+                            width: '100%',
+                            height: '100%',
+                            left: '0',
+                            top: headerVisible ? '40px' : '0'
+                        };
+                        target.css(styles);
+                        return;
+                    }
+
                     if (size.height) {
                         result.height = size.height;
                         target.css('height', result.height);

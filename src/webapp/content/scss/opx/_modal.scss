@@ -43,15 +43,28 @@ body .modal.opx-modaless.op-applet-window,
 .opx-modaless.modal.op-applet-window,
 html body .modal.opx-modaless.op-applet-window {
   position: fixed !important;
-  top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
   width: 100% !important;
-  height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   transform: none !important;
+
+  // 默认情况下，考虑导航栏高度
+  top: $op-navbar-height !important;
+  height: calc(100% - #{$op-navbar-height}) !important;
+}
+
+// 当隐藏导航栏时，应用窗口占满整个屏幕
+.opx-no-header .modal.opx-modaless.op-applet-window,
+.opx-no-header .modal.op-applet-window.opx-modaless,
+.opx-no-header .opx-modaless.op-applet-window.modal,
+body.opx-no-header .modal.opx-modaless.op-applet-window,
+.opx-no-header .opx-modaless.modal.op-applet-window,
+html body.opx-no-header .modal.opx-modaless.op-applet-window {
+  top: 0 !important;
+  height: 100% !important;
 
   // 重置模态框对话框
   > .modal-dialog {
