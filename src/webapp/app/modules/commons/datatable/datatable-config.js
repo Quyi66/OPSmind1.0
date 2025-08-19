@@ -31,8 +31,8 @@
                     // 'loadingRecords': '<div class="lds-ellipsis" style="opacity: 0.25"><div></div><div></div><div></div><div></div></div>',
                     'loadingRecords': '&nbsp;',
                     // Text that is displayed when the table is processing a user action (usually a sort command or similar).
-                    'processing': '<i class="fa fa-cog fa-spin"></i>',
-                    // 'processing': '&nbsp;',
+                    // 定制版本：移除加载动画，用于iframe嵌入第三方系统
+                    'processing': '&nbsp;',
                     'paginate': {
                         'first': '&laquo;',
                         'previous': '&lsaquo;',

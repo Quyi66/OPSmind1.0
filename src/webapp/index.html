@@ -59,16 +59,16 @@
     <!-- endbuild -->
 </head>
 
-<body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl">
+<body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl" style="background-color: white !important;">
     <toaster-container toaster-options="$mainCtrl.toasterOptions"></toaster-container>
     <op-desktop
-        ng-style="{'background-image':$mainCtrl.uiConfig.backgroundImage,'background-color':$mainCtrl.uiConfig.backgroundColor}"
+        ng-style="{'background-image':'none','background-color':'white'}"
         ng-if="!$root.$global.hideDesktop && !$root.$global.isAdminUI"></op-desktop>
     <div class="opx-layout-vflex" ng-class="{'opx-no-header': $root.$global.hideHeader}">
         <div id="master-header" ui-view="navbar" ng-if="!$root.$global.hideHeader"></div>
-        <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0"
+        <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0; background-color: white !important;"
             ng-class="{'hidden':$root.$global.hideMasterContent}"
-            ng-style="$root.$global.hideHeader ? {'position': 'fixed', 'top': '0', 'left': '0', 'width': '100vw', 'height': '100vh'} : {}">
+            ng-style="$root.$global.hideHeader ? {'position': 'fixed', 'top': '0', 'left': '0', 'width': '100vw', 'height': '100vh', 'background-color': 'white'} : {'background-color': 'white'}">
             <!-- 定制版本：移除加载动画，用于iframe嵌入第三方系统 -->
         </div>
 

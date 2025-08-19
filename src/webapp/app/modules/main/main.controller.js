@@ -30,24 +30,26 @@
         };
         this.uiConfig = {
             useWindowUI:window.$oplus.appConfig.useWindowUI,
-            backgroundColor: window.$oplus.appConfig.ui.backgroundColor,
+            // 定制版本：强制使用白色背景，用于iframe嵌入第三方系统
+            backgroundColor: 'white',
             backgroundImage: 'none'
         }
         this.$onInit = onInit;
 
         function onInit() {
             initGlobalEvent($scope);
-            if (window.$oplus.appConfig.ui.wallpaperEnabled) {
-                var wallpapers = [].concat(window.$oplus.appConfig.ui.wallpapers);
-                var pathPrefix = 'content/images/wallpaper/';
-                imageUrls = _.map(wallpapers, function (path) {
-                    return 'url(\'' + pathPrefix + path + '\')'
-                })
-                if (imageUrls) {
-                    wallpaperTimer = $interval(function () {
-                        changeWallpaper();
-                    }, window.$oplus.appConfig.ui.wallpaperChangeInterval * 1000);
-                }
+            // 定制版本：禁用壁纸功能，用于iframe嵌入第三方系统
+            // if (window.$oplus.appConfig.ui.wallpaperEnabled) {
+            //     var wallpapers = [].concat(window.$oplus.appConfig.ui.wallpapers);
+            //     var pathPrefix = 'content/images/wallpaper/';
+            //     imageUrls = _.map(wallpapers, function (path) {
+            //         return 'url(\'' + pathPrefix + path + '\')'
+            //     })
+            //     if (imageUrls) {
+            //         wallpaperTimer = $interval(function () {
+            //             changeWallpaper();
+            //         }, window.$oplus.appConfig.ui.wallpaperChangeInterval * 1000);
+            //     }
                 changeWallpaper();
             }
 
@@ -88,7 +90,9 @@
 
 
         function changeWallpaper() {
-            that.uiConfig.backgroundImage = imageUrls[_.random(0, imageUrls.length - 1)];
+            // 定制版本：移除背景图片，用于iframe嵌入第三方系统
+            that.uiConfig.backgroundImage = '';
+            that.uiConfig.backgroundColor = 'white';
         }
 
         //TODO: where to put global jquery event?

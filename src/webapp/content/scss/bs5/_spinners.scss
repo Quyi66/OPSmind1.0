@@ -9,15 +9,8 @@
 // scss-docs-end spinner-border-keyframes
 
 .spinner-border {
-  display: inline-block;
-  width: $spinner-width;
-  height: $spinner-height;
-  vertical-align: $spinner-vertical-align;
-  border: $spinner-border-width solid currentColor;
-  border-right-color: transparent;
-  // stylelint-disable-next-line property-disallowed-list
-  border-radius: 50%;
-  animation: $spinner-animation-speed linear infinite spinner-border;
+  /* 定制版本：隐藏spinner，用于iframe嵌入第三方系统 */
+  display: none;
 }
 
 .spinner-border-sm {
@@ -43,15 +36,8 @@
 // scss-docs-end spinner-grow-keyframes
 
 .spinner-grow {
-  display: inline-block;
-  width: $spinner-width;
-  height: $spinner-height;
-  vertical-align: $spinner-vertical-align;
-  background-color: currentColor;
-  // stylelint-disable-next-line property-disallowed-list
-  border-radius: 50%;
-  opacity: 0;
-  animation: $spinner-animation-speed linear infinite spinner-grow;
+  /* 定制版本：隐藏spinner，用于iframe嵌入第三方系统 */
+  display: none;
 }
 
 .spinner-grow-sm {

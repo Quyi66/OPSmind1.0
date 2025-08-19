@@ -2,6 +2,24 @@
   /* 定制版本：隐藏加载动画，用于iframe嵌入第三方系统 */
   display: none;
 }
+
+/* 定制版本：隐藏所有FontAwesome旋转动画 */
+.fa-spin, .fa-pulse {
+  display: none;
+}
+
+/* 定制版本：隐藏所有包含spinner的元素 */
+.fa-spinner {
+  display: none;
+}
+
+/* 定制版本：隐藏op-blank-slate中的加载图标 */
+.op-blank-slate .op-blank-slate-icon .fa-spin,
+.op-blank-slate .op-blank-slate-icon .fa-pulse,
+.op-blank-slate .op-blank-slate-icon .fa-spinner {
+  display: none;
+}
+
 //https://loading.io/css/
 .lds-ellipsis {
   /* 定制版本：隐藏加载动画 */

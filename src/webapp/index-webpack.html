@@ -55,14 +55,14 @@
 
     <!-- Webpack 将在这里自动注入构建的CSS文件 -->
 </head>
-<body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl">
+<body ng-strict-di ng-cloak ng-controller="MainCtrl as $mainCtrl" style="background-color: white !important;">
     <toaster-container toaster-options="$mainCtrl.toasterOptions"></toaster-container>
     <op-desktop
-        ng-style="{'background-image':$mainCtrl.uiConfig.backgroundImage,'background-color':$mainCtrl.uiConfig.backgroundColor}"
+        ng-style="{'background-image':'none','background-color':'white'}"
         ng-if="!$root.$global.hideDesktop && !$root.$global.isAdminUI"></op-desktop>
     <div class="opx-layout-vflex">
         <div id="master-header" ui-view="navbar" ng-if="!$root.$global.hideHeader"></div>
-        <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0"
+        <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0; background-color: white !important;"
             ng-class="{'hidden':$root.$global.hideMasterContent}">
             <!-- 定制版本：移除加载动画，用于iframe嵌入第三方系统 -->
         </div>

@@ -94,7 +94,8 @@ $op_applet_icon_font_size_sm: 2.8em;
 
 #opx-win-launcher {
   overflow-y: auto;
-  background-color: rgba($gray-900, .985);
+  /* 定制版本：使用白色背景，用于iframe嵌入第三方系统 */
+  background-color: white !important;
 }
 
 op-desktop {
@@ -102,8 +103,10 @@ op-desktop {
   left: 0;
   height: 100%;
   width: 100%;
-  padding-top: 40px;;
-  background-color: transparent;
+  padding-top: 40px;
+  /* 定制版本：移除背景图片，使用白色背景，用于iframe嵌入第三方系统 */
+  background-color: white !important;
+  background-image: none !important;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

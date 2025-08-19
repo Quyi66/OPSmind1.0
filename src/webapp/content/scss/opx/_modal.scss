@@ -1,8 +1,32 @@
 
 
+/* 定制版本：修改模态框背景，用于iframe嵌入第三方系统 */
+.modal-backdrop {
+  /* 移除深色背景，使用与模态框相同的白色背景 */
+  background-color: $white !important;
+  opacity: 1 !important;
+}
+
 .op-fixed-backdrop.modal-backdrop {
   // Disable dynamic z-index in uib-modal
   z-index: $zindex-modal-backdrop !important;
+  /* 确保背景色一致 */
+  background-color: $white !important;
+  opacity: 1 !important;
+}
+
+/* 定制版本：确保所有背景都是白色，移除深色间隔 */
+html, body {
+  background-color: $white !important;
+}
+
+.modal {
+  background-color: $white !important;
+}
+
+/* 移除任何可能的深色背景图片 */
+body, html, .modal, .modal-backdrop {
+  background-image: none !important;
 }
 
 .modal-dialog {
