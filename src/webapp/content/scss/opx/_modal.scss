@@ -35,19 +35,26 @@
   max-width: 100% !important;
 }
 
-// 应用窗口完全最大化样式 - 使用最高优先级
-.op-applet-window.opx-modaless.modal {
+// 应用窗口完全最大化样式 - 使用最高优先级覆盖 .opx-modaless.modal 的所有设置
+.modal.opx-modaless.op-applet-window,
+.modal.op-applet-window.opx-modaless,
+.opx-modaless.op-applet-window.modal,
+body .modal.opx-modaless.op-applet-window,
+.opx-modaless.modal.op-applet-window,
+html body .modal.opx-modaless.op-applet-window {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
+  transform: none !important;
 
   // 重置模态框对话框
   > .modal-dialog {
-    position: static !important;
     width: 100% !important;
     height: 100% !important;
     max-width: none !important;
@@ -62,6 +69,8 @@
       border: 0 !important;
       border-radius: 0 !important;
       box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
   }
 
@@ -92,7 +101,7 @@
   height: auto;
   max-height: 100%;
   //left: 10%;
-  top: $op-navbar-height;
+  top: 0;
   //right: auto;
   //bottom: auto;
   overflow: hidden;
@@ -176,13 +185,13 @@
 }
 
 .modal-dialog {
-  margin-top: $op-navbar-height;
+  margin-top: 0;
   // Full height minus 2*margin
   // 本来是希望通过max-height来限定modal高度不超过全屏，这个目标没达到
   // 但意外的是解决了iOS Safari上面modal太长无法滚动（滚动是背景滚动）的问题
   //https://github.com/twbs/bootstrap/issues/22311
   // bs3 modal-dialog has a 30px margin-top
-  max-height: calc(100vh - #{2 * $op-navbar-height});
+  max-height: 100vh;
 
   &.modal-sm {
     //height: $modal-sm * $op-modal-aspect-ratio;

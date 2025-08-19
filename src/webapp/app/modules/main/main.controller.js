@@ -56,6 +56,8 @@
                 userPref: userPref.load(),
                 currentUser: currentUser,
                 viewMode: devel.needMobileView() ? 'mobile' : '',
+                hideHeader: true, // 默认隐藏顶部导航栏，适用于iframe嵌入
+                hideDesktop: true, // 默认隐藏桌面背景，适用于iframe嵌入
                 settings: {
                     homeBg: '',
                     asideFolded: false,

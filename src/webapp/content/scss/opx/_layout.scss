@@ -195,6 +195,18 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  // 当隐藏头部时，让内容区域占满整个视口
+  &.opx-no-header {
+    #master-body {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 1 !important;
+    }
+  }
 }
 
 .opx-flex-fill {
