@@ -40,11 +40,11 @@
                    mData: 'status', title: $translate.instant('cac.common.result'),
                    render: function (data, type, row, meta) {
                        if (row.status == 'OK') {
-                           var actionHtml = '<span class="badge bg-success">{{\'cac.result.audit_result.pass\' | translate}}</span>';
+                           var actionHtml = '<span class="badge bg-success">' + $translate.instant('cac.result.audit_result.pass') + '</span>';
                        } else if (row.status == 'FAILED') {
-                           var actionHtml = '<span class="badge bg-danger">{{\'cac.result.audit_result.failed\' | translate}}</span>';
+                           var actionHtml = '<span class="badge bg-danger">' + $translate.instant('cac.result.audit_result.failed') + '</span>';
                        } else {
-                           var actionHtml = '<span class="label cac-bg-light-grey">{{\'common.messages.no_data\' | translate}}</span>';
+                           var actionHtml = '<span class="label cac-bg-light-grey">' + $translate.instant('common.messages.no_data') + '</span>';
                        }
                        return actionHtml;
                    }

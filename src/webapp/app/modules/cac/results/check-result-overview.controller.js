@@ -278,7 +278,8 @@
             var raw = elm[0];
             elm.bind('scroll', function () {
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight - 5) {
-                    scope.$apply(attr.whenScrolled);
+                    // 使用$evalAsync避免$digest already in progress错误
+                    scope.$evalAsync(attr.whenScrolled);
                 }
             });
         };

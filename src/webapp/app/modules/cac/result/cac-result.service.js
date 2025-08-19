@@ -7,12 +7,13 @@
 
     angular.module("oplus.cac").factory("cacResultService", cacResultService);
 
-    cacResultService.$inject = ["$uibModal", "cacDao"];
+    cacResultService.$inject = ["$uibModal", "cacDao", "restUtils"];
 
-    function cacResultService($uibModal, cacDao) {
+    function cacResultService($uibModal, cacDao, restUtils) {
 
         function getResultsByJobId(jobId, start, length) {
-            return cacDao.getResultsByJobId(jobId, start, length);
+            // 使用v3 API替代v2 API，避免404错误
+            return restUtils.callApi('cac', 'GET', '/api/cac/v3/check-item-result/map/{logId}?start=' + start + '&length=' + length, {logId: jobId});
         }
 
         function getJob(jobId) {

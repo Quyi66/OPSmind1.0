@@ -179,17 +179,21 @@
                     searchable: false,
                     orderable: false,
                     render: function (data, type, row, meta) {
-                        var id = "'" + row.id + "'";
                         var actionHtml = "";
                         if (row.output == null || row.output == "") {
-                            actionHtml = '<span ng-click="cacResultOutputListCtrlVm.views.getCheckItemById(' + id + ')">{{\'common.term.none\' | translate}}</span>';
+                            actionHtml = '<i class="fa fa-cog" style="cursor: pointer;" title="查看详情"></i>';
                         } else {
-                            actionHtml = '<span ng-click="cacResultOutputListCtrlVm.views.getCheckItemById(' + id + ')">' +
-                                (row.output || '').substr(0, 100) +
-                                '</span>';
+                            var outputText = (row.output || '').substr(0, 100);
+                            actionHtml = '<span style="cursor: pointer;" title="' + outputText + '">' + outputText + '</span>';
                         }
 
                         return actionHtml;
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        // 为单元格添加点击事件
+                        $(td).off('click').on('click', function() {
+                            vm.views.getCheckItemById(rowData.id);
+                        });
                     }
                 }
 

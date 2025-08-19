@@ -59,9 +59,9 @@
                     mData: 'fixPathIsNull', title: $translate.instant('cac3.title.fixScript'),
                     render: function (data, type, row, meta) {
                         if (row.fixPathIsNull) {
-                            var actionHtml = '<span class="badge bg-secondary">{{\'cac3.title.thing\' | translate}}</span>';
+                            var actionHtml = '<span class="badge bg-secondary">' + $translate.instant('cac3.title.thing') + '</span>';
                         } else  {
-                            var actionHtml = '<span class="badge bg-info">{{\'cac3.title.have\' | translate}}</span>';
+                            var actionHtml = '<span class="badge bg-info">' + $translate.instant('cac3.title.have') + '</span>';
                         }
                         return actionHtml;
                     }
@@ -70,13 +70,13 @@
                     mData: 'status', title: $translate.instant('cac.common.result'),
                     render: function (data, type, row, meta) {
                         if (row.status == 'OK') {
-                            var actionHtml = '<span class="badge bg-success">{{\'cac.result.audit_result.pass\' | translate}}</span>';
+                            var actionHtml = '<span class="badge bg-success">' + $translate.instant('cac.result.audit_result.pass') + '</span>';
                         } else if (row.status == 'FAILED') {
-                            var actionHtml = '<span class="badge bg-danger">{{\'cac.result.audit_result.failed\' | translate}}</span>';
+                            var actionHtml = '<span class="badge bg-danger">' + $translate.instant('cac.result.audit_result.failed') + '</span>';
                         } else if (row.status == 'CHECK') {
-                            var actionHtml = '<span class="badge bg-warning">{{\'cac.result.audit_result.check\' | translate}}</span>';
+                            var actionHtml = '<span class="badge bg-warning">' + $translate.instant('cac.result.audit_result.check') + '</span>';
                         } else {
-                            var actionHtml = '<span class="label cac-bg-light-grey">{{\'common.messages.no_data\' | translate}}</span>';
+                            var actionHtml = '<span class="label cac-bg-light-grey">' + $translate.instant('common.messages.no_data') + '</span>';
                         }
                         return actionHtml;
                     }
@@ -87,18 +87,21 @@
                     searchable: false,
                     orderable: false,
                     render: function (data, type, row, meta) {
-                        var id = "'" + row.id + "'";
-                        var itemName = "'" + row.itemName + "'";
                         var actionHtml = "";
                         if (row.output == null || row.output == "") {
-                            actionHtml = '<span ng-click="cacCheckResultOutputListCtrlVm.getCheckItemById(' + id + ',' + itemName + ')">{{\'common.term.none\' | translate}}</span>';
+                            actionHtml = '<i class="fa fa-cog" style="cursor: pointer;" title="查看详情"></i>';
                         } else {
-                            actionHtml = '<span ng-click="cacCheckResultOutputListCtrlVm.getCheckItemById(' + id + ',' + itemName + ')">' +
-                                (row.output || '').substr(0, 100) +
-                                '</span>';
+                            var outputText = (row.output || '').substr(0, 100);
+                            actionHtml = '<span style="cursor: pointer;" title="' + outputText + '">' + outputText + '</span>';
                         }
 
                         return actionHtml;
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        // 为单元格添加点击事件
+                        $(td).off('click').on('click', function() {
+                            vm.getCheckItemById(rowData.id, rowData.itemName);
+                        });
                     }
                 }
 
