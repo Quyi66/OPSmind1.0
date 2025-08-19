@@ -35,16 +35,42 @@
   max-width: 100% !important;
 }
 
+// 应用窗口完全最大化样式 - 使用最高优先级
 .op-applet-window.opx-modaless.modal {
-  height: 80%;
-  width: 80%;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  // 重置模态框对话框
+  > .modal-dialog {
+    position: static !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    .modal-content {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
 
   .modal-header {
     height: $op-navbar-height;
     min-height: $op-navbar-height;
     max-height: $op-navbar-height;
     border-bottom: 1px solid $border-color;
-    cursor: move;
+    cursor: default;
 
     &.bg-dark {
       border-bottom: 1px solid rgba(128, 128, 128, .25);
@@ -53,9 +79,8 @@
 
   .modal-body {
     padding: 0;
-    // Padding 0 will override the border-radius of .modal-content
-    border-bottom-left-radius: $modal-content-border-radius;
-    border-bottom-right-radius: $modal-content-border-radius;
+    flex: 1 1 auto;
+    overflow-y: auto;
   }
 }
 

@@ -362,6 +362,10 @@
                 return modalInstance;
 
                 function resetModalPosition(target) {
+                    // 跳过应用窗口的位置重置
+                    if (target.hasClass('op-applet-window')) {
+                        return;
+                    }
                     var pos = centerInContainer(target, $('body'), {top: 40});
                     target.css(pos);
 

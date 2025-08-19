@@ -147,13 +147,13 @@
             $stateProvider
                 .state('app.appman', {
                     url: '/applets/{appletCode}/mgmt',
-                    //TODO: If use as applet, udp page edit does not display properly
-                    __useAsApplet: {
+                    useAsApplet: {
                         type: 'PrivateTool',
                         code: 'appeditor',
                         title: 'Applet Editor',
                         icon: 'fa-magic',
-                        color: '#00739D'
+                        color: '#00739D',
+                        windowSize: 'full'
                     },
                     views: {
                         'mainView': {

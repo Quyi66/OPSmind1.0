@@ -38,8 +38,13 @@
         }
       };
       // console.log('....applet.windowSize', applet.windowSize);
-      // 统一设置为最大化
-      options.specSize = {width: '100%', height: '100%'};
+      // 统一设置为最大化并居中
+      options.specSize = {
+        width: '100%',
+        height: '100%',
+        left: 0,
+        top: 0
+      };
       // if (openWithMaxWindow) {
       //     options.specSize = 'FILL_CONTENT';
       // }

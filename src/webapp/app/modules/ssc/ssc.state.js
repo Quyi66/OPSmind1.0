@@ -13,7 +13,8 @@
                     code: 'ssc',
                     title: 'System Settings Center',
                     icon: 'fa-cog',
-                    color: '#333'
+                    color: '#333',
+                    windowSize: 'full'
                 },
                 views: {
                     'mainView': {
