@@ -280,26 +280,27 @@
                         // maximizeOrRestoreModal(target,true);
                     }
                     var targetEl = target.element;
-                    if (options.draggable) {
-                        targetEl.draggable({
-                            handle: '.modal-header:eq(0)',
-                            start: function (event, ui) {
-                                targetEl.removeClass(MAX_CSS);
-                                setMaxIconAndCss(targetEl, false);
-                            }
-                        });
-                    }
-                    if (options.resizable) {
-                        // targetEl.resizable({minHeight: 400, minWidth: 640, handles: 'all'});
-                        targetEl.resizable({
-                            minHeight: 160, minWidth: 200, handles: 'all',
-                            start: function (event, ui) {
-                                targetEl.removeClass(MAX_CSS);
-                                setMaxIconAndCss(targetEl, false);
-                            }
-                        });
-                        buildModalControlButtons(targetEl);
-                    }
+                    // 禁用拖拽和调整大小功能
+                    // if (options.draggable) {
+                    //     targetEl.draggable({
+                    //         handle: '.modal-header:eq(0)',
+                    //         start: function (event, ui) {
+                    //             targetEl.removeClass(MAX_CSS);
+                    //             setMaxIconAndCss(targetEl, false);
+                    //         }
+                    //     });
+                    // }
+                    // if (options.resizable) {
+                    //     // targetEl.resizable({minHeight: 400, minWidth: 640, handles: 'all'});
+                    //     targetEl.resizable({
+                    //         minHeight: 160, minWidth: 200, handles: 'all',
+                    //         start: function (event, ui) {
+                    //             targetEl.removeClass(MAX_CSS);
+                    //             setMaxIconAndCss(targetEl, false);
+                    //         }
+                    //     });
+                    //     buildModalControlButtons(targetEl);
+                    // }
                     if (config.modaless) {
                         // targetEl.on('click', '.modal-header', function activateModaless() {
                         targetEl.on('click', '.modal-content', function activateModaless() {
@@ -325,28 +326,29 @@
                         var existingMinButton = modalHeader.find('button[ng-click*="minimizeWindow"]');
                         var existingMaxButton = modalHeader.find('button[ng-click*="restoreOrMaxWindow"]');
                         
-                        if (options.minimizable && existingMinButton.length === 0) {
-                            var buttonMin = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-min" ng-click="$ctrl.minimizeWindow($event)"><i class="fas fa-minus"></i></button>');
-                            insertButton(buttonMin);
-                        }
-                        if (options.resizable && existingMaxButton.length === 0) {
-                            var buttonMax = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-maxrestore" ng-click="$ctrl.maximizeWindow($event)"><i class="far fa-square"></i></button>');
-                            buttonMax.on('click', function () {
-                                var modalElem = $(this).closest('.modal');
-                                var maximized = maximizeOrRestoreModal(modalElem);
-                                setMaxIconAndCss(modalElem, maximized);
-                            });
-                            insertButton(buttonMax);
-                        }
-                        
-                        // If buttons exist in template, bind click handlers for maximize button
-                        if (existingMaxButton.length > 0) {
-                            existingMaxButton.on('click', function () {
-                                var modalElem = $(this).closest('.modal');
-                                var maximized = maximizeOrRestoreModal(modalElem);
-                                setMaxIconAndCss(modalElem, maximized);
-                            });
-                        }
+                        // 禁用所有窗口控制按钮
+                        // if (options.minimizable && existingMinButton.length === 0) {
+                        //     var buttonMin = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-min" ng-click="$ctrl.minimizeWindow($event)"><i class="fas fa-minus"></i></button>');
+                        //     insertButton(buttonMin);
+                        // }
+                        // if (options.resizable && existingMaxButton.length === 0) {
+                        //     var buttonMax = $('<button type="button" class="btn btn-default opx-btn-flat opx-btn-icon js-maxrestore" ng-click="$ctrl.maximizeWindow($event)"><i class="far fa-square"></i></button>');
+                        //     buttonMax.on('click', function () {
+                        //         var modalElem = $(this).closest('.modal');
+                        //         var maximized = maximizeOrRestoreModal(modalElem);
+                        //         setMaxIconAndCss(modalElem, maximized);
+                        //     });
+                        //     insertButton(buttonMax);
+                        // }
+
+                        // 禁用已存在按钮的点击事件
+                        // if (existingMaxButton.length > 0) {
+                        //     existingMaxButton.on('click', function () {
+                        //         var modalElem = $(this).closest('.modal');
+                        //         var maximized = maximizeOrRestoreModal(modalElem);
+                        //         setMaxIconAndCss(modalElem, maximized);
+                        //     });
+                        // }
 
                         function insertButton(button) {
                             if (buttonClose.length > 0) {

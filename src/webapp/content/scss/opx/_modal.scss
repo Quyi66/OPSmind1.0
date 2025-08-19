@@ -17,6 +17,15 @@
   &.maximized {
     max-width: 100%;
   }
+
+  // 禁用模态框的用户交互
+  .modal-header {
+    cursor: default !important;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
 }
 
 .op-enable-resize.opx-modaless.modal,

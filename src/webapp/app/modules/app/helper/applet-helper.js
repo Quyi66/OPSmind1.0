@@ -27,7 +27,9 @@
 
     that.buildOptions = function (applet) {
       var options = {
-        resizable: true,
+        resizable: false,
+        draggable: false,
+        minimizable: false,
         onModalessActivated: function () {
           //LEO@20220105: activateRunningApplet will change URL
           $timeout(function () {

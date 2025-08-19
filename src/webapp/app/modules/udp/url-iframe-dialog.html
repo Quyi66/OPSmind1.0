@@ -1,9 +1,5 @@
-<div class="modal-header" ng-if="$ctrl.applet" ng-class="{'bg-dark':$ctrl.applet.theme==='dark'}" ng-dblclick="$ctrl.restoreOrMaxWindow()">
+<div class="modal-header" ng-if="$ctrl.applet" ng-class="{'bg-dark':$ctrl.applet.theme==='dark'}">
     <h4 class="modal-title"><i class="fad {{$ctrl.applet.icon}}"></i> {{$ctrl.applet.title}}</h4>
-    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon" ng-click="$ctrl.minimizeWindow($event)"><i
-            class="fas fa-minus"></i></button>
-    <button type="button" class="btn btn-default opx-btn-flat opx-btn-icon op-close-window"
-        ng-click="$ctrl.closeWindow($event)" data-dismiss="modal"><i class="fas fa-times"></i></button>
 </div>
 
 <div class="modal-header justify-content-end" ng-if="!$ctrl.applet">
