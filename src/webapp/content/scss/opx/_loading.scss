@@ -1,13 +1,11 @@
 [op-loading] {
-  text-align: center;
-  opacity: 0.25;
+  /* 定制版本：隐藏加载动画，用于iframe嵌入第三方系统 */
+  display: none;
 }
 //https://loading.io/css/
 .lds-ellipsis {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
+  /* 定制版本：隐藏加载动画 */
+  display: none;
 }
 
 .lds-ellipsis div {

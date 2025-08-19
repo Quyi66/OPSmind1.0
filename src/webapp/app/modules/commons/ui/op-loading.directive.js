@@ -21,16 +21,8 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var defaultConfig = {style: 'ellipsis'};
-                var config = angular.extend({}, defaultConfig, scope.$eval(attrs['opLoading']));
-                // console.log(config);
-                var html;
-                if (config.style === 'spinner') {
-                    html = '<i class="fa fa-3x fa-pulse fa-spinner"></i>';
-                } else {
-                    html = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
-                }
-                element.append(html);
+                // 定制版本：移除加载动画，用于iframe嵌入第三方系统
+                // 不添加任何加载指示器
             }
         }
     }

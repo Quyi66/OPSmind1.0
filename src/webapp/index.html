@@ -69,10 +69,7 @@
         <div id="master-body" ui-view="content" class="opx-flex-fill scroll-y js-spa-body bg-white" style="z-index: 0"
             ng-class="{'hidden':$root.$global.hideMasterContent}"
             ng-style="$root.$global.hideHeader ? {'position': 'fixed', 'top': '0', 'left': '0', 'width': '100vw', 'height': '100vh'} : {}">
-            <div class="op-blank-slate bg-dark">
-                <div class="op-blank-slate-icon"><img src="content/images/preloader.svg" style="width:10rem;"></div>
-                <p>正在加载...</p>
-            </div>
+            <!-- 定制版本：移除加载动画，用于iframe嵌入第三方系统 -->
         </div>
 
     </div>
