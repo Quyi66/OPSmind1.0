@@ -19,7 +19,9 @@
             findTemplate: findTemplate,
             run: run,
             dashboardSwitch: "",
-            teamsSwitch: ""
+            teamsSwitch: "",
+            templateList: null,  // 初始化为null以显示加载动画
+            templateSquareList: null
         };
 
         function init() {

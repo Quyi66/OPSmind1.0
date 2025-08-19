@@ -9,8 +9,16 @@
 // scss-docs-end spinner-border-keyframes
 
 .spinner-border {
-  /* 定制版本：隐藏spinner，用于iframe嵌入第三方系统 */
-  display: none;
+  display: inline-block;
+  width: $spinner-width;
+  height: $spinner-height;
+  vertical-align: $spinner-vertical-align;
+  border: $spinner-border-width solid currentColor;
+  border-right-color: transparent;
+  // scss-docs-start spinner-border-radius
+  border-radius: 50%;
+  // scss-docs-end spinner-border-radius
+  animation: .75s linear infinite spinner-border;
 }
 
 .spinner-border-sm {
@@ -36,8 +44,16 @@
 // scss-docs-end spinner-grow-keyframes
 
 .spinner-grow {
-  /* 定制版本：隐藏spinner，用于iframe嵌入第三方系统 */
-  display: none;
+  display: inline-block;
+  width: $spinner-width;
+  height: $spinner-height;
+  vertical-align: $spinner-vertical-align;
+  background-color: currentColor;
+  // scss-docs-start spinner-border-radius
+  border-radius: 50%;
+  // scss-docs-end spinner-border-radius
+  opacity: 0;
+  animation: .75s linear infinite spinner-grow;
 }
 
 .spinner-grow-sm {

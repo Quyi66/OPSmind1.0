@@ -50,8 +50,8 @@
             //             changeWallpaper();
             //         }, window.$oplus.appConfig.ui.wallpaperChangeInterval * 1000);
             //     }
-                changeWallpaper();
-            }
+            // }
+            changeWallpaper();
 
             $rootScope.$global = {
                 isAdminUI: tenantUtil.isOplusAdminUI(),
