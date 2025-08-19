@@ -36,26 +36,8 @@
         }
       };
       // console.log('....applet.windowSize', applet.windowSize);
-      // applet.windowSize = 'full';
-      // applet.windowSize = applet.windowSize || 'md';
-      options.specSize = 'FILL_CONTENT';
-      if (applet.windowSize) {
-          var body = $('body');
-          var headerHeight = 0;
-          var aspectRatio = body.width() / (body.height() - headerHeight);
-          // aspectRatio = 1.618;
-          options.specSize = {
-              width: '90%',
-              aspectRatio: aspectRatio,
-              // height: 'calc(100% - ' + headerHeight + 'px)'
-          };
-          if (applet.windowSize === 'md') {
-              options.specSize.width = '80%';
-              // options.specSize.height = '46rem'; // High enough to contain 10 rows table
-          } else if (applet.windowSize === 'full') {
-              options.specSize = {width: '100%', height: '100%'};
-          }
-      }
+      // 统一设置为最大化
+      options.specSize = {width: '100%', height: '100%'};
       // if (openWithMaxWindow) {
       //     options.specSize = 'FILL_CONTENT';
       // }

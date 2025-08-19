@@ -109,7 +109,7 @@
                         icon: 'fa-oplus-applet',
                         color: '#2196F3',
                         showIn: {desktop: 100},
-                        windowSize: 'md'
+                        windowSize: 'full'
                     }
                 })
                 // .state('app.applist.list', {

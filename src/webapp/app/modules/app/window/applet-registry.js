@@ -142,7 +142,7 @@
                     order: rec.order,
                     icon: setting.icon,
                     color: setting.color,
-                    windowSize: setting.windowSize,
+                    windowSize: 'full',
                     entry: {type: rec.entryType, value: rec.entry, params: rec.entryParams},
                     _user_applet: rec._user_applet,  // 传递 _user_applet 字段
                 };

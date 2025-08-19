@@ -856,12 +856,12 @@
                 var forceSelf = devel.needMobileView() && config.ignoreMobileView !== true;
                 forceSelf = false;
                 if (target === '_dialog') {
-                    openPageInDialog(config.size);
+                    openPageInDialog(config.size || 'xl');
                 } else if (target === '_self' || !target) {
                     openPageInSelf();
                 } else if (target === '_blank') {
                     if (devel.needMobileView()) {
-                        openPageInDialog(config.size);
+                        openPageInDialog(config.size || 'xl');
                     } else {
                         openPageInBlank();
                     }

@@ -23,8 +23,7 @@
                     title: 'app.nav.gfs',
                     icon: 'fa-oplus-gfs',
                     color: '#607D8B',
-                    showIn: {desktop: 2},
-                    windowSize: 'md'
+                    showIn: {desktop: 2}
                 }
             });
         $stateProvider
