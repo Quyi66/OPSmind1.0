@@ -36,8 +36,6 @@
          * @returns {Promise} 返回处理结果的Promise
          */
         function checkAndProcessToken() {
-            console.log(LOG_PREFIX + ' 开始检查URL中来自Vue主应用的token参数');
-
             var deferred = $q.defer();
 
             try {
@@ -56,18 +54,17 @@
                         return deferred.promise;
                     }
 
-                    console.log(LOG_PREFIX + ' 发现来自Vue主应用的token参数，长度:', token.length);
+                    console.log(LOG_PREFIX + ' 检测到Vue主应用token，开始处理');
                     processTokenLogin(token).then(function(result) {
-                        console.log(LOG_PREFIX + ' Vue主应用token处理成功');
+                        console.log(LOG_PREFIX + ' Token处理完成');
                         // 标记token为已处理
                         markTokenAsProcessed(token);
                         deferred.resolve(result);
                     }).catch(function(error) {
-                        console.error(LOG_PREFIX + ' Vue主应用token处理失败:', error);
+                        console.error(LOG_PREFIX + ' Token处理失败:', error);
                         deferred.reject(error);
                     });
                 } else {
-                    console.log(LOG_PREFIX + ' URL中未发现token参数，使用正常登录流程');
                     deferred.resolve({hasToken: false, message: 'No token found in URL, use normal login flow'});
                 }
             } catch (error) {
@@ -96,15 +93,7 @@
         function getTokenFromUrl() {
             var searchParams = $location.search();
             var token = searchParams && searchParams[TOKEN_PARAM_NAME] ? searchParams[TOKEN_PARAM_NAME] : null;
-            
-            if (token) {
-                console.log(LOG_PREFIX + ' 从URL获取到token，长度:', token.length);
-                // 不在日志中输出完整token，只输出前几位用于调试
-                console.log(LOG_PREFIX + ' Token前缀:', token.substring(0, 10) + '...');
-            } else {
-                console.log(LOG_PREFIX + ' URL中未找到token参数');
-            }
-            
+
             return token;
         }
 
@@ -113,13 +102,10 @@
          * 登录成功后清除URL中的敏感信息
          */
         function clearTokenFromUrl() {
-            console.log(LOG_PREFIX + ' 清除URL中的token参数');
-
             var searchParams = $location.search();
             if (searchParams && searchParams[TOKEN_PARAM_NAME]) {
                 delete searchParams[TOKEN_PARAM_NAME];
                 $location.search(searchParams);
-                console.log(LOG_PREFIX + ' Token参数已从URL中清除');
             }
         }
 
@@ -129,8 +115,6 @@
          * @returns {Promise} 处理结果Promise
          */
         function processTokenLogin(token) {
-            console.log(LOG_PREFIX + ' 开始处理来自Vue主应用的token');
-
             var deferred = $q.defer();
 
             if (!token || typeof token !== 'string' || token.trim().length === 0) {
@@ -142,20 +126,15 @@
 
             // 使用默认的rememberMe设置（通常为false，使用sessionStorage）
             var rememberMe = false;
-            console.log(LOG_PREFIX + ' 使用默认RememberMe设置:', rememberMe);
 
             // 检查用户是否已经登录
             if (currentUser.isAuthenticated) {
-                console.log(LOG_PREFIX + ' 用户已登录，检查是否为同一token');
-
                 // 检查是否为同一个token
                 if (currentUser.authToken === token.trim()) {
-                    console.log(LOG_PREFIX + ' 相同token，跳过处理');
                     clearTokenFromUrl();
                     deferred.resolve({hasToken: true, sameToken: true, message: 'Same token, no action needed'});
                     return deferred.promise;
                 } else {
-                    console.log(LOG_PREFIX + ' 不同token，更新认证信息');
                     // 设置默认rememberMe
                     currentUser.setRememberMe(rememberMe);
                     // 更新当前的认证token
@@ -168,28 +147,20 @@
                 }
             }
 
-            console.log(LOG_PREFIX + ' Vue主应用已登录，直接使用token作为认证凭据');
-
             try {
                 // 设置rememberMe，用于确定缓存策略
                 currentUser.setRememberMe(rememberMe);
-                console.log(LOG_PREFIX + ' 已设置rememberMe:', rememberMe);
 
                 // 直接设置认证token，不发送登录请求
                 currentUser.authToken = token.trim();
-                console.log(LOG_PREFIX + ' 已设置认证token');
 
                 // 使用$timeout确保token设置完成后再调用API
                 $timeout(function() {
-                    console.log(LOG_PREFIX + ' 使用token获取用户账户信息');
-                    console.log(LOG_PREFIX + ' 当前认证状态:', currentUser.isAuthenticated);
-                    console.log(LOG_PREFIX + ' 当前token长度:', currentUser.authToken ? currentUser.authToken.length : 'null');
 
                     // 直接调用Account服务获取用户信息
                     Account.get().$promise.then(function(result) {
                         // Account服务返回的是response对象，需要取.data
                         var account = result.data;
-                        console.log(LOG_PREFIX + ' 用户信息获取成功，用户:', account.login);
 
                         // 处理角色信息（与正常登录流程保持一致）
                         var roles = account.roles;
@@ -217,14 +188,10 @@
                         account.roles = roleNames;
                         account.permissions = permissions;
 
-                        console.log(LOG_PREFIX + ' 用户角色:', roleNames);
-                        console.log(LOG_PREFIX + ' 用户权限数量:', permissions.length);
-
                         // 获取JWT token的过期时间
                         var expireTimestamp = null;
                         try {
                             expireTimestamp = jwtAuthService.getExpireTimestamp();
-                            console.log(LOG_PREFIX + ' JWT过期时间:', new Date(expireTimestamp));
                         } catch (e) {
                             console.warn(LOG_PREFIX + ' 无法解析JWT过期时间:', e.message);
                         }
@@ -249,8 +216,6 @@
 
                 }).catch(function(error) {
                     console.error(LOG_PREFIX + ' 获取用户信息失败:', error);
-                    console.error(LOG_PREFIX + ' 错误详情:', error.status, error.statusText);
-                    console.error(LOG_PREFIX + ' 当前token:', currentUser.authToken ? 'exists' : 'missing');
 
                     // 如果获取用户信息失败，至少保持token认证状态
                     var basicUserInfo = {
@@ -271,8 +236,6 @@
 
                     // 设置基本用户信息并保存到缓存
                     currentUser.setUserInfoFromJhipster(basicUserInfo, expireTimestamp);
-
-                    console.log(LOG_PREFIX + ' 使用基本认证状态，已保存到缓存');
 
                     // 清除URL中的token参数
                     $timeout(function() {
@@ -311,7 +274,6 @@
             var tokenHash = generateTokenHash(token);
             var isProcessed = processedTokens.has(tokenHash);
 
-            console.log(LOG_PREFIX + ' 检查token处理状态，哈希:', tokenHash.substring(0, 8) + '...', '已处理:', isProcessed);
             return isProcessed;
         }
 
@@ -325,13 +287,10 @@
             var tokenHash = generateTokenHash(token);
             processedTokens.add(tokenHash);
 
-            console.log(LOG_PREFIX + ' 标记token为已处理，哈希:', tokenHash.substring(0, 8) + '...');
-
             // 限制缓存大小，避免内存泄漏
             if (processedTokens.size > 100) {
                 var firstItem = processedTokens.values().next().value;
                 processedTokens.delete(firstItem);
-                console.log(LOG_PREFIX + ' 清理最旧的token缓存记录');
             }
         }
 
