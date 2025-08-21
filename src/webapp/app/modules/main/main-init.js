@@ -3,7 +3,7 @@
  */
 (function () {
     'use strict';
-    angular.module('oplus.main').service('mainInit',['messageService', 'tenantConfigInit', 'windowInit', 'i18nService', 'currentUser', mainInit]);
+    angular.module('oplus.main').service('mainInit',['messageService', 'tenantConfigInit', 'windowInit', 'i18nService', 'currentUser', 'tokenUrlHandler', mainInit]);
 
     /**
      * @ngdoc service
@@ -15,8 +15,9 @@
      * @param {windowInit} windowInit
      * @param {i18nService} i18nService
      * @param {currentUser} currentUser
+     * @param {tokenUrlHandler} tokenUrlHandler
      */
-    function mainInit(messageService, tenantConfigInit, windowInit, i18nService, currentUser) {
+    function mainInit(messageService, tenantConfigInit, windowInit, i18nService, currentUser, tokenUrlHandler) {
         this.init = init;
 
         function init() {
@@ -29,6 +30,11 @@
                 });
                 currentUser.readLocalUserInfo();
                 console.log('%c[MainRunInit]%c Local User: %s', 'color:teal', '', currentUser.basicUserInfo().loginId);
+
+                // 检查并处理URL中的token参数
+                return tokenUrlHandler.checkAndProcessToken();
+            }).then(function (tokenResult) {
+                console.log('%c[MainRunInit]%c Token处理结果:', 'color:teal', '', tokenResult);
                 return i18nService.initLanguage();
             }).then(function (lang) {
                 console.log('%c[MainRunInit]%c User Language: %s', 'color:teal', '', lang);

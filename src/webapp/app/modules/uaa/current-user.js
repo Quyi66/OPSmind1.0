@@ -194,11 +194,14 @@
          * @param expTimestamp
          */
         function setUserInfoFromJhipster(account, expTimestamp) {
+            console.log('%c[CurrentUser]%c 设置用户信息，登录ID:', 'color:purple', '', account.login);
+            console.log('%c[CurrentUser]%c 用户显示名:', 'color:purple', '', account.fullName);
             var userInfo = new UserInfoRef(account);
             userInfo.loginId = account.login;
             userInfo.avatar = account.imageUrl;
             userInfo.displayName = account.fullName;
             setUserInfo(userInfo, expTimestamp);
+            console.log('%c[CurrentUser]%c 用户信息设置完成，认证状态:', 'color:purple', '', that.isAuthenticated);
         }
 
         /**

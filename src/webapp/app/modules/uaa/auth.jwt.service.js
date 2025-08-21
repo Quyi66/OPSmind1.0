@@ -62,12 +62,18 @@
                 otpCode: securityUtils.encrypt(credentials.otpCode)
             };
             var url = credentials.accessToken ? 'api/authenticate/accessToken' : (credentials.isSafe ? 'api/authenticate/safe' : 'api/authenticate');
-            // console.log('Login to tenant [' + credentials.tenantId + '] with URL: ' + url);
+            console.log('%c[JwtAuthService]%c 发送登录请求到:', 'color:green', '', url);
+            console.log('%c[JwtAuthService]%c 租户ID:', 'color:green', '', credentials.tenantId);
+            if (credentials.accessToken) {
+                console.log('%c[JwtAuthService]%c AccessToken长度:', 'color:green', '', credentials.accessToken.length);
+            }
             var promise = $http.post(url, data);
             promise.then(function successCallback(resp) {
+                console.log('%c[JwtAuthService]%c 登录请求成功，状态码:', 'color:green', '', resp.status);
                 saveAuthToken(resp.data, resp.status, resp.headers, credentials.rememberMe)
                 d.resolve();
             }, function errorCallback(resp) {
+                console.error('%c[JwtAuthService]%c 登录请求失败，状态码:', 'color:green', '', resp.status, resp.data);
                 d.reject(resp.data.error || resp.data);
             });
             return d.promise;

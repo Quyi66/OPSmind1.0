@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token登录测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .test-section h3 {
+            color: #555;
+            margin-top: 0;
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .test-link:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+        .test-link.secondary {
+            background-color: #6c757d;
+        }
+        .test-link.secondary:hover {
+            background-color: #545b62;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .note strong {
+            color: #856404;
+        }
+        .instructions {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .instructions strong {
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Token登录功能测试页面</h1>
+        
+        <div class="instructions">
+            <strong>测试说明：</strong>
+            <ol>
+                <li>本页面用于测试Angular应用接收Vue主应用传递的token功能</li>
+                <li>Vue主应用已登录成功，传递的token是已认证的凭据</li>
+                <li>Angular应用直接使用token作为认证凭据，获取用户信息和权限</li>
+                <li>不会重新发送登录请求，只获取用户账户信息</li>
+                <li>点击下方测试链接，观察浏览器控制台的日志输出</li>
+                <li>验证用户角色和权限是否正确加载，解决"无权访问"问题</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 测试场景1：Vue主应用Token处理</h3>
+            <p>模拟Vue主应用传递已登录token，直接使用token获取用户信息</p>
+            <div class="code-block">
+                URL格式: /login?token=YOUR_JWT_TOKEN
+            </div>
+            <a href="/login?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+               class="test-link">测试Token处理</a>
+            <div class="note">
+                <strong>注意：</strong> 不会发送登录请求，直接使用token获取用户信息和权限
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 测试场景2：无Token正常访问</h3>
+            <p>测试没有token参数时的正常登录流程</p>
+            <div class="code-block">
+                URL格式: /login
+            </div>
+            <a href="/login" class="test-link secondary">测试无Token访问</a>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 测试场景3：空Token处理</h3>
+            <p>测试token参数为空时的处理逻辑</p>
+            <div class="code-block">
+                URL格式: /login?token=
+            </div>
+            <a href="/login?token=" class="test-link secondary">测试空Token</a>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 测试场景5：重复Token处理</h3>
+            <p>测试同一个token重复访问时的处理逻辑（应跳过重复处理）</p>
+            <div class="code-block">
+                重复访问相同的token URL
+            </div>
+            <a href="/login?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+               class="test-link secondary">重复访问测试</a>
+            <div class="note">
+                <strong>提示：</strong> 多次点击此链接，观察日志中是否显示"Token已处理过，跳过重复处理"
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 测试场景4：主页面Token处理</h3>
+            <p>测试在主页面URL中包含Vue主应用token参数</p>
+            <div class="code-block">
+                URL格式: /home?token=YOUR_JWT_TOKEN
+            </div>
+            <a href="/home?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+               class="test-link">测试主页Token处理</a>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 调试信息查看</h3>
+            <p>在浏览器开发者工具中查看以下日志前缀：</p>
+            <div class="code-block">
+[TokenUrlHandler] - Token URL处理相关日志
+[Auth] - 认证服务相关日志  
+[JwtAuthService] - JWT认证服务相关日志
+[CurrentUser] - 用户信息设置相关日志
+[MainRunInit] - 应用初始化相关日志
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>⚙️ 功能特性</h3>
+            <ul>
+                <li>✅ 自动检测URL中来自Vue主应用的token参数</li>
+                <li>✅ 将token当作"登录成功确认"，触发标准登录流程</li>
+                <li>✅ 自动获取完整的用户信息、角色和权限</li>
+                <li>✅ 解决子页面"无权访问"问题</li>
+                <li>✅ 处理完成后自动清除URL中的token</li>
+                <li>✅ 兼容有token和无token的访问方式</li>
+                <li>✅ 完整的调试日志输出</li>
+                <li>✅ 错误处理和异常捕获</li>
+                <li>✅ 防止重复处理同一token</li>
+                <li>✅ 智能token缓存管理</li>
+            </ul>
+        </div>
+
+        <div class="note">
+            <strong>开发提示：</strong>
+            <ul>
+                <li>确保后端API支持 <code>/api/authenticate/accessToken</code> 接口</li>
+                <li>检查租户配置是否正确设置</li>
+                <li>验证JWT token的格式和有效性</li>
+                <li>观察网络请求和响应状态</li>
+                <li>确认后端返回完整的用户角色和权限信息</li>
+                <li>检查权限配置是否正确，避免"无权访问"问题</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 添加一些客户端调试功能
+        console.log('%c[TestPage]%c Token登录测试页面已加载', 'color:orange', '');
+        
+        // 检查当前URL是否包含token参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            console.log('%c[TestPage]%c 当前页面检测到token参数，长度:', 'color:orange', '', token.length);
+        } else {
+            console.log('%c[TestPage]%c 当前页面未检测到token参数', 'color:orange', '');
+        }
+    </script>
+</body>
+</html>

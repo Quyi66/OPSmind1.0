@@ -67,6 +67,8 @@
 
         /**
          * login by login name and access token
+         * 注意：此方法主要用于传统的accessToken登录流程
+         * 对于Vue主应用传递的已登录token，应直接使用tokenUrlHandler服务
          *
          * @param credentials
          * @param callback
@@ -74,6 +76,7 @@
          */
         function accessTokenLogin(credentials, callback) {
             var cb = callback || angular.noop;
+            console.log('%c[Auth]%c 开始accessToken登录，tenantId:', 'color:blue', '', credentials.tenantId);
             return login(credentials, cb);
         }
 
@@ -87,12 +90,16 @@
             var cb = callback || angular.noop;
             var d = $q.defer();
 
+            console.log('%c[Auth]%c 执行登录，类型:', 'color:blue', '', credentials.accessToken ? 'accessToken' : (credentials.isSafe ? 'safe' : 'normal'));
+
             currentUser.setRememberMe(credentials.rememberMe);
 
             jwtAuthService.doLogin(credentials).then(function () {
+                console.log('%c[Auth]%c JWT登录成功，开始获取账户信息', 'color:blue', '');
                 getAccountInfo(d);
                 cb();
             }).catch(function (err) {
+                console.error('%c[Auth]%c 登录失败:', 'color:blue', '', err);
                 d.reject(err);
                 return cb(err);
             });
