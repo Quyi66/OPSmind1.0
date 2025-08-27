@@ -24,16 +24,7 @@
                     }
                 }
             })
-            .state('app.cac.email.list2', {
-                url: '/list2',
-                views: {
-                    'email-view': {
-                        templateUrl: 'app/modules/cac/emailv2/email-template-list.html',
-                        controller: 'CacEmailRecipientController',
-                        controllerAs: 'vm'
-                    }
-                }
-            })
+
             .state('app.cac.email.manage', {
                 url: '/manage/:templateId',
                 views: {
