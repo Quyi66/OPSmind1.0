@@ -38,6 +38,7 @@ module.exports = (env, argv) => {
                     context: [
                         '/api/**',           // API 接口
                         '/oplus-portal/**',  // 主要服务
+                        '/oplus-jobadm/**',  // xxl-job
                         '/oplus-upload/**',  // 文件上传
                         '/oplus-njs/**',     // Node.js 服务
                         '/oplus-ws/**'       // WebSocket
@@ -60,6 +61,7 @@ module.exports = (env, argv) => {
                     // 跳过 API 请求，避免干扰代理
                     if (url.startsWith('/api/') ||
                         url.startsWith('/oplus-portal/') ||
+                        url.startsWith('/oplus-jobadm/') ||
                         url.startsWith('/oplus-upload/') ||
                         url.startsWith('/oplus-njs/') ||
                         url.startsWith('/oplus-ws/')) {
