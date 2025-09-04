@@ -46,14 +46,6 @@ src/webapp/app/modules/cac/email/
 - `/cac/email/demo` - 功能演示页面
 - `/cac/email/access-test` - 访问测试页面
 
-### 新版邮件配置V2 (emailv2目录)
-- `/cac/emailv2/list` - 新版邮件配置主页面（自定义实现，支持模版扩展）
-- `/cac/emailv2/manage/:templateId` - 收件人管理页面
-- `/cac/emailv2/test` - 功能测试页面
-
-### 兼容性路由
-- `/cac/email/list2` - 重定向到 `/cac/emailv2/list`
-
 ## API接口
 
 ### 服务方法
