@@ -9,7 +9,7 @@ set -e
 IMAGE_NAME="oplus-web"
 TAG="latest"
 BUILD_CONTEXT="."
-VERSION="1.0.5"
+VERSION="1.0.6"
 
 # 显示帮助信息
 show_help() {
