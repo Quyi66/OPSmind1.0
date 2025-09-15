@@ -348,7 +348,7 @@ module.exports = (env = {}, argv = {}) => {
                 'tinycolor': 'tinycolor2',
 
                 // ========== 其他常用库 ==========
-                'alertify': 'alertify.js',
+                'alertify': 'alertifyjs',
                 'Select2': 'select2',
                 'Sortable': 'sortablejs',
                 'diff2html': 'diff2html',

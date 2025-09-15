@@ -104,7 +104,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@uirouter/angularjs": "^1.1.1",
     "@uirouter/core": "^6.1.1",
-    "alertify.js": "^1.0.12",
+    "alertifyjs": "1.10.0",
     "angular": "1.5.8",
     "angular-animate": "1.5.8",
     "angular-aria": "1.5.8",
