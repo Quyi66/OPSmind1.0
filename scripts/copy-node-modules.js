@@ -112,7 +112,7 @@ const requiredFiles = [
     'node_modules/spectrum-colorpicker/i18n/jquery.spectrum-zh-cn.js',
     'node_modules/tinycolor2/tinycolor.js',
     'node_modules/xlsx/dist/xlsx.full.min.js',
-    'node_modules/alertify.js/dist/js/alertify.js'
+    'node_modules/alertifyjs/build/alertify.js'
 ];
 
 function ensureDir(filePath) {

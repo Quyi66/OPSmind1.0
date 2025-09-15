@@ -255,55 +255,54 @@
         }
 
         function callConfirm(style, title, message, okCallback, cancelCallback, okLabel) {
-            var setting = {
-                'title': title || '',
-                'message': formatMessage(style, message),
-                'onok': function () {
-                    $timeout(function () {
-                        okCallback && okCallback();
-                    })
-                },
-                'oncancel': function () {
-                    $timeout(function () {
-                        cancelCallback && cancelCallback();
-                    })
-                }
-            };
-            // if (okLabel) {
-            setting.labels = {
-                ok: okLabel ? okLabel : $translate.instant('common.action.ok'),
-                cancel: $translate.instant('common.action.cancel')
-            };
-            // }
-            if (style === 'danger') {
-                setting.defaultFocus = 'cancel';
-            }
-            if (typeof alertify !== 'undefined' && alertify && alertify.confirm) {
-                // 设置alertify的父容器为当前活动的模态框或主内容区域
-                var parentContainer = document.querySelector('.modal-content') ||
-                                    document.querySelector('.opx-layout-main') ||
-                                    document.body;
+            // 统一使用 $uibModal，避免 alertify API 差异导致的运行时错误
+            var isDanger = style === 'danger';
+            var okText = okLabel ? okLabel : $translate.instant('common.action.ok');
+            var cancelText = $translate.instant('common.action.cancel');
 
-                // 使用alertify.js 1.0.12的正确API - 链式调用
-                alertify.reset()
-                    .parent(parentContainer)
-                    .okBtn(setting.labels.ok)
-                    .cancelBtn(setting.labels.cancel)
-                    .confirm(setting.title, setting.message, setting.onok, setting.oncancel);
-            } else {
-                console.error('alertify is not available for confirm');
-            }
-            // return;
-            // alertify.confirm(title || '', formatMessage(style, message),
-            //     function () {
-            //         $timeout(function () {
-            //             okCallback && okCallback();
-            //         });
-            //     }, function () {
-            //         $timeout(function () {
-            //             cancelCallback && cancelCallback();
-            //         })
-            //     }).set('reverseButtons', true);
+            var okBtnStyle = isDanger
+                ? 'background-color: #dc3545; border-color: #dc3545; color: #fff;'
+                : 'background-color: #007bff; border-color: #007bff; color: #fff;';
+
+            return $uibModal.open({
+                template:
+                    '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
+                    '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
+                    '   <button type="button" ng-click="$ctrl.cancel()" aria-label="Close" style="background:none;border:none;font-size:1rem;color:#999;padding:0;line-height:1;">' +
+                    '       <span aria-hidden="true">×</span>' +
+                    '   </button>' +
+                    '</div>' +
+                    '<div class="modal-body" style="padding: 1rem 1.5rem; background-color: #f8f9fa;">' +
+                    '   <div ng-bind-html="$ctrl.body" style="color: #333; font-size: 14px; line-height: 1.4;"></div>' +
+                    '</div>' +
+                    '<div class="modal-footer border-0" style="padding: 0 1.5rem 1.5rem; background-color: #f8f9fa; justify-content: flex-end;">' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.cancel()" style="background-color: #e9ecef; border-color: #e9ecef; color: #333; padding: 0.5rem 1rem; margin-right: 0.5rem;">{{$ctrl.cancelLabel}}</button>' +
+                    '   <button type="button" class="btn" ng-click="$ctrl.ok()" style="' + okBtnStyle + ' padding: 0.5rem 1rem;">{{$ctrl.okLabel}}</button>' +
+                    '</div>',
+                controller: ['$uibModalInstance', function($uibModalInstance) {
+                    var ctrl = this;
+                    ctrl.title = title || '';
+                    ctrl.body = $sce.trustAsHtml(formatMessage(style, message));
+                    ctrl.okLabel = okText;
+                    ctrl.cancelLabel = cancelText;
+
+                    ctrl.ok = function() {
+                        $uibModalInstance.close('ok');
+                        $timeout(function () {
+                            okCallback && okCallback();
+                        });
+                    };
+                    ctrl.cancel = function() {
+                        $uibModalInstance.dismiss('cancel');
+                        $timeout(function () {
+                            cancelCallback && cancelCallback();
+                        });
+                    };
+                }],
+                controllerAs: '$ctrl',
+                size: 'sm',
+                backdrop: true
+            });
         }
 
         function callAlert(style, title, message, callback) {
