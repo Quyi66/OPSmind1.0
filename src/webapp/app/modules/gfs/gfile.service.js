@@ -26,6 +26,11 @@
      */
     function gfileService($q, restUtils, currentUser, modalHelper, $translate, Upload, OpDownload) {
         var USE_TENANT_REPO = true;
+        var DEFAULT_BUILTIN_INIT_PAYLOAD = {
+            src: '/opt/source/playbook.zip',
+            dest: ' ',
+            is_keep_folder: false
+        };
         var that = this;
         // this.STATUS_DEFS = {
         //     '': {
@@ -150,6 +155,7 @@
         this.checkFileExist = checkFileExist;
         this.shellCheck = shellCheck;
         this.initGitRepo = initGitRepo;
+        this.initBuiltinRepo = initBuiltinRepo;
         this.loadCurrentRepo = loadCurrentRepo;
         this.delExternalRepo = delExternalRepo;
         this.delBatchExternalRepo = delBatchExternalRepo;
@@ -203,6 +209,30 @@
                 }
             });
             return d.promise;
+        }
+
+        /**
+         * 初始化 Git 内置仓库（按租户ID）
+         * POST /api/gfs/v2/git/f/{tenantId}/init
+         * @param {string} tenantId 租户ID
+         * @param {{src:string,dest:string,is_keep_folder:boolean}} payload
+         * @returns {Promise}
+         */
+        function initBuiltinRepo(tenantId, payload) {
+            if (angular.isObject(tenantId) && !payload) {
+                payload = tenantId;
+                tenantId = null;
+            }
+            if (!tenantId) {
+                tenantId = currentUser.tenantId || (window.$oplus && window.$oplus.appConfig && window.$oplus.appConfig.tenantId);
+            }
+            if (!tenantId) {
+                return $q.reject(new Error('TenantIdNotFound: cannot initialize built-in repo without tenantId'));
+            }
+            var body = angular.extend({}, DEFAULT_BUILTIN_INIT_PAYLOAD, payload);
+            return restUtils.callApi('gfs', 'POST', '/api/gfs/v2/git/f/{tenantId}/init', {
+                tenantId: tenantId
+            }, body);
         }
 
         function loadCurrentRepo(repoType, repo) {
