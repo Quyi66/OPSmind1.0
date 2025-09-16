@@ -28,7 +28,7 @@
         var USE_TENANT_REPO = true;
         var DEFAULT_BUILTIN_INIT_PAYLOAD = {
             src: '/opt/source/playbook.zip',
-            dest: ' ',
+            dest: '',
             is_keep_folder: false
         };
         var that = this;
