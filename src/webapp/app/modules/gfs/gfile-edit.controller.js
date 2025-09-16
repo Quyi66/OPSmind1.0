@@ -381,7 +381,7 @@
         function resetSettingClose() {
             that.externalRepo = {"enableExternal": false}
             messageService.confirmDanger($translate.instant("gfs.settings.reset_repo_confirm"), $translate.instant("gfs.settings.reset_repo_confirm_info"), function () {
-                gfileService.initGitRepo(that.repo, that.externalRepo).then(function (data) {
+                gfileService.initBuiltinRepo().then(function (data) {
                     that.isSaving = false;
                     config.success && config.success(data);
                     refreshState();
