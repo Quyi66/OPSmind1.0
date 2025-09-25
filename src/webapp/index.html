@@ -146,6 +146,8 @@
 <script src="node_modules/numeral/numeral.js"></script>
 <!-- clipboard -->
 <script src="node_modules/clipboard/dist/clipboard.min.js"></script>
+<!-- Compatibility alias: ngclipboard@1.x expects window.Clipboard, but clipboard.js exposes window.ClipboardJS -->
+<script>(function(){ if (window.ClipboardJS) { window.Clipboard = window.ClipboardJS; } })();</script>
 <script src="node_modules/ngclipboard/dist/ngclipboard.min.js"></script>
 <!-- upload and download -->
 <script src="node_modules/file-saver/FileSaver.min.js"></script>
