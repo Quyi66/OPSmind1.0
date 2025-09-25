@@ -16,11 +16,11 @@
             // onSelect: '<'
         },
         templateUrl: 'app/modules/udp/widgets/flow-layout/flow-layout.html',
-        controller: ['$scope', 'messageService', '$rootScope', '$translate', '$state', 'dataEx', 'pageDataUtil', 'flowService', 'jaoFlowService', FlowLayoutCtrl]
+        controller: ['$scope', 'messageService', '$rootScope', '$translate', '$state', 'dataEx', 'pageDataUtil', 'jaoFlowService', FlowLayoutCtrl]
     });
 
 
-    function FlowLayoutCtrl($scope, messageService, $rootScope, $translate, $state, dataEx, pageDataUtil, flowService, jaoFlowService) {
+    function FlowLayoutCtrl($scope, messageService, $rootScope, $translate, $state, dataEx, pageDataUtil, jaoFlowService) {
 
 
         var that = this;
@@ -124,7 +124,7 @@
                 };
                 that.stepFoldList[0] = false;
             } else {
-                flowService.findFlowById(flowId).then(function (flow) {
+                jaoFlowService.findFlowById(flowId).then(function (flow) {
                     flow.steps.forEach(function (step) {
                         step.config = JSON.parse(step.configJson);
                         if (step.config) {
@@ -277,7 +277,7 @@
                 flow.globalParams = undefined;
                 flow.globalParamsJson = undefined;
             }
-            flowService.saveFlow(flow).then(function (result) {
+            jaoFlowService.saveFlow(flow).then(function (result) {
                 //Todo 刷新浏览器后会出现问题，BUG待修复
                 // set linke source.
                 // if ($rootScope.historyPageId.length >= 2) {

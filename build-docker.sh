@@ -7,7 +7,6 @@ set -e
 
 # 配置变量
 IMAGE_NAME="oplus-web"
-TAG="latest"
 BUILD_CONTEXT="."
 VERSION="1.0.3"
 
@@ -17,7 +16,7 @@ show_help() {
     echo ""
     echo "选项:"
     echo "  -n, --name NAME     设置镜像名称 (默认: oplus-web)"
-    echo "  -t, --tag TAG       设置镜像标签 (默认: latest)"
+    echo "  -t, --tag TAG       设置镜像标签 (默认: ${VERSION})"
     echo "  -h, --help          显示此帮助信息"
     echo ""
     echo "示例:"
