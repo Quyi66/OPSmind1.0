@@ -10,6 +10,8 @@
      */
     angular.module('oplus.ssc', [
         'oplus.commons',
-        'oplus.uaa'
+        'oplus.uaa',
+        // 复用 CAC 模块提供的模板与团队关联接口
+        'oplus.cac'
     ]);
 })();
