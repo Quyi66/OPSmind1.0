@@ -5,17 +5,14 @@
         .module('oplus.ssc')
         .controller('TeamDialogController', TeamDialogController);
 
-    TeamDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Team', 'currentUser', 'messageService', 'cacTemplateService'];
+    TeamDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Team', 'currentUser', 'messageService'];
 
-    function TeamDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Team, currentUser, messageService, cacTemplateService) {
+    function TeamDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Team, currentUser, messageService) {
         var vm = this;
         vm.team = entity;
         vm.clear = clear;
         vm.save = save;
         vm.users = [];
-        // CAC templates
-        vm.cacTemplates = [];
-        vm.selectedTemplateIds = [];
         var selectedUserMap = {};
 
         $timeout(function () {
@@ -26,7 +23,6 @@
 
         function init() {
             initUsers();
-            initTemplates();
             var selectedUsers = entity.users;
             for (var i in selectedUsers) {
                 var user = selectedUsers[i];
@@ -57,35 +53,6 @@
             });
         }
 
-        function initTemplates() {
-            cacTemplateService.getTemplates().then(function (templates) {
-                vm.cacTemplates = templates || [];
-                if (vm.team && vm.team.cacTemplateIds) {
-                    if (angular.isArray(vm.team.cacTemplateIds)) {
-                        vm.selectedTemplateIds = normalizeTemplateIdType(vm.team.cacTemplateIds);
-                    } else if (angular.isString(vm.team.cacTemplateIds)) {
-                        // support comma-separated values
-                        vm.selectedTemplateIds = normalizeTemplateIdType(vm.team.cacTemplateIds.split(','));
-                    }
-                }
-            }).catch(function () {
-                // Ignore template load error in team dialog; keep UI functional
-                vm.cacTemplates = [];
-            });
-        }
-
-        function normalizeTemplateIdType(idList) {
-            // Ensure the model type matches the option value type
-            var numeric = vm.cacTemplates.length > 0 && angular.isNumber(vm.cacTemplates[0].id);
-            if (!numeric) return idList;
-            var arr = [];
-            for (var i = 0; i < idList.length; i++) {
-                var n = parseInt(idList[i]);
-                if (!isNaN(n)) arr.push(n);
-            }
-            return arr;
-        }
-
 
         function clear() {
             $uibModalInstance.dismiss('cancel');
@@ -100,8 +67,6 @@
                 }
             }
             vm.team.users = selectedUsers;
-            // attach selected template ids to team payload
-            vm.team.cacTemplateIds = angular.copy(vm.selectedTemplateIds || []);
             Team.saveTeam(vm.team).then(function (result) {
                 onSaveSuccess(result);
             }).catch(function (err) {
