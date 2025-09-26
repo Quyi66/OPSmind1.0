@@ -24,7 +24,8 @@
         this.widgetGroups = [
             {group: 'layout', icon: 'fa-object-ungroup', text: 'Layout'},
             {group: 'text', icon: 'fa-font', text: 'Text'},
-            {group: 'control', icon: 'fa-window-alt', text: 'Control'},
+            // fa-window-alt 在我们加载的样式集中不包含 regular 版本，使用 regular 可用的 fa-window-restore 以保证显示
+            {group: 'control', icon: 'fa-window-restore', text: 'Control'},
             {group: 'data', icon: 'fa-analytics', text: 'Data'}
         ];
         this.widgetGroups.forEach(function (wg) {

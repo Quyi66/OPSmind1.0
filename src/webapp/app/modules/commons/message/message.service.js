@@ -81,9 +81,14 @@
          * @param {function} okCallback Callback when user clicks OK
          * @param {function} [cancelCallback] Callback when user clicks cancel
          */
+        var _confirmOpen = false;
         this.confirm = function (title, body, okCallback, cancelCallback) {
+            if (_confirmOpen) {
+                return { result: Promise.resolve('ignored') };
+            }
+            _confirmOpen = true;
             // 使用 $uibModal 替代 alertify，确保模态框在正确的层级显示，样式与alert保持一致
-            return $uibModal.open({
+            var modalRef = $uibModal.open({
                 template:
                     '<div class="modal-header border-0" style="padding: 1rem 1.5rem 0.5rem; background-color: #f8f9fa;">' +
                     '   <h5 class="modal-title" style="font-weight: normal; color: #333; margin: 0;">{{$ctrl.title}}</h5>' +
@@ -105,24 +110,40 @@
                     ctrl.okLabel = $translate.instant('common.action.ok');
                     ctrl.cancelLabel = $translate.instant('common.action.cancel');
 
+                    var handled = false;
                     ctrl.ok = function() {
-                        $uibModalInstance.close('ok');
-                        $timeout(function() {
-                            okCallback && okCallback();
-                        });
+                        if (handled) return; handled = true;
+                        // 优化体验：点击后稍作停留再关闭（避免“秒关”突兀），再执行回调
+                        var DELAY = 250; // 毫秒，和以往延迟感保持一致
+                        $timeout(function(){
+                            $uibModalInstance.close('ok');
+                        }, DELAY);
+                        $timeout(function () {
+                            try { okCallback && okCallback(); } catch (e) { /* swallow */ }
+                        }, DELAY + 10);
                     };
 
                     ctrl.cancel = function() {
-                        $uibModalInstance.dismiss('cancel');
-                        $timeout(function() {
-                            cancelCallback && cancelCallback();
-                        });
+                        if (handled) return; handled = true;
+                        try { cancelCallback && cancelCallback(); } finally {
+                            $uibModalInstance.dismiss('cancel');
+                        }
                     };
                 }],
                 controllerAs: '$ctrl',
                 size: 'sm',
-                backdrop: true
+                backdrop: 'static',
+                keyboard: true
             });
+            // 确保关闭后释放锁
+            var reset = function(){ _confirmOpen = false; };
+            if (modalRef && modalRef.result && modalRef.result.finally) {
+                modalRef.result.finally(reset);
+            } else {
+                // 兼容性：降级释放
+                $timeout(reset, 0);
+            }
+            return modalRef;
         };
         /**
          * Display a confirmation modal dialog using alertify (legacy method)
