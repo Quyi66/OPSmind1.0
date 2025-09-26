@@ -6,47 +6,56 @@
 
     angular.module('oplus.ssc').controller('PatrolAssignController', PatrolAssignController);
 
-    PatrolAssignController.$inject = ['$scope', '$q', '$translate', '$compile', 'cacTemplateService', 'messageService'];
+    PatrolAssignController.$inject = ['$scope', '$q', '$translate', '$compile', '$timeout', 'cacTemplateService', 'messageService', 'Team'];
 
-    function PatrolAssignController($scope, $q, $translate, $compile, cacTemplateService, messageService) {
+    function PatrolAssignController($scope, $q, $translate, $compile, $timeout, cacTemplateService, messageService, Team) {
         var vm = this;
         vm.teamOptions = [];
         vm.teamOptionsMap = {};
         vm.selectedTeam = {}; // { templateId: teamId }
         vm.onTeamChange = onTeamChange;
+        vm._saving = {}; // 防重复提交标记：{templateId: boolean}
 
-        // 预加载团队下拉选项（首项为空，表示清除关联；其后为不重复的团队名称）
-        var teamOptionsPromise = loadTeamOptions();
+        // 不在页面进入时加载团队列表；仅在用户点击下拉时加载
+        vm._teamsLoaded = false;
+        vm._teamsPromise = null;
+        // 页面打开即拉取团队信息，后续下拉点击仅展示
+        ensureTeamsLoaded();
         initTable();
 
-        function loadTeamOptions() {
-            return cacTemplateService.getTeamsInfo().then(function (map) {
-                vm.teamOptions = [{id: '', name: ''}];
+        function ensureTeamsLoaded() {
+            if (vm._teamsLoaded && vm.teamOptions && vm.teamOptions.length) {
+                return $q.when(vm.teamOptions);
+            }
+            if (vm._teamsPromise) return vm._teamsPromise;
+            vm._teamsPromise = Team.findTeams().then(function (teams) {
+                function clean(s) {
+                    return (s == null ? '' : ('' + s))
+                        .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                        .replace(/\u00A0/g, ' ')
+                        .trim()
+                        .replace(/\s+/g, ' ');
+                }
+                vm.teamOptions = [];
                 vm.teamOptionsMap = {};
-                vm.teamNameToId = {};
-                // 预置空白占位，后续忽略所有空白名称，避免出现多个空白选项
-                var usedNames = {'': true};
-                if (map) {
-                    Object.keys(map).forEach(function (id) {
-                        var raw = map[id];
-                        var name = (raw == null ? '' : ('' + raw)).trim().replace(/\s+/g, ' ');
-                        // 空白名称跳过（已添加了顶部空白项用于清除关联）
-                        if (!name) {
-                            vm.teamOptionsMap[id] = '';
-                            return;
-                        }
-                        // 跳过重复名称（保留第一个）
-                        if (!usedNames[name]) {
-                            usedNames[name] = true;
-                            vm.teamOptions.push({id: id, name: name});
-                            if (!vm.teamNameToId[name]) vm.teamNameToId[name] = id;
-                        }
-                        vm.teamOptionsMap[id] = name;
+                if (teams && teams.length) {
+                    teams.forEach(function (t) {
+                        var id = t.id;
+                        var rawName = clean(t.name);
+                        var code = clean(t.code);
+                        var label = code ? (rawName + ' (' + code + ')') : rawName;
+                        vm.teamOptions.push({ id: id, name: label });
+                        vm.teamOptionsMap[id] = rawName;
                     });
                 }
+                vm._teamsLoaded = true;
+                return vm.teamOptions;
             }).catch(function (err) {
                 messageService.toast('error', '加载团队列表失败', err && err.message ? err.message : '');
+            }).finally(function () {
+                vm._teamsPromise = null;
             });
+            return vm._teamsPromise;
         }
 
         function initTable() {
@@ -65,16 +74,63 @@
                     title: '关联团队',
                     render: function (data, type, row) {
                         var tid = row.templateId;
-                        var html = '' +
-                            '<select class="form-control form-control-sm" ' +
-                            'ng-model="vm.selectedTeam[\'' + tid + '\']" ' +
-                            'ng-change="vm.onTeamChange(\'' + tid + '\')" ' +
-                            'ng-options="opt.id as opt.name for opt in vm.teamOptions track by opt.id">' +
-                            '</select>';
-                        return html;
+                        // 不使用 ng-options，改为 createdCell 动态填充，避免重复编译导致的重复项
+                        return '<select class="form-control form-control-sm patrol-team-select" data-tid="' + tid + '"></select>';
                     },
                     createdCell: function (nTd) {
-                        $compile(nTd)($scope);
+                        var $cell = angular.element(nTd);
+                        var sel = $cell.find('select.patrol-team-select');
+                        var tid = sel.attr('data-tid');
+                        // 初始仅保留一个空白项
+                        sel.empty();
+                        sel.append(angular.element('<option value=""></option>'));
+                        // 聚焦/点击时再加载团队并填充选项
+                        var fillOnce = function () {
+                            if (sel.data('filled')) return;
+                            sel.data('filled', true);
+                            ensureTeamsLoaded().then(function (list) {
+                                // 先移除除第一个空白以外的所有选项，再填充
+                                var keep = sel.find('option').first();
+                                sel.empty();
+                                sel.append(keep);
+                                (list || []).forEach(function (o) {
+                                    var opt = angular.element('<option></option>');
+                                    opt.attr('value', o.id);
+                                    opt.text(o.name);
+                                    sel.append(opt);
+                                });
+                                // 调试：打印
+                                try {
+                                    var opts = sel.find('option');
+                                    var arr = [];
+                                    angular.forEach(opts, function (o) { arr.push({ value: o.value, text: o.text }); });
+                                    console.groupCollapsed('[PatrolAssign] select options (filled) for template', tid);
+                                    console.log('options count:', opts.length);
+                                    console.table(arr);
+                                    console.groupEnd();
+                                } catch (e) {}
+                            });
+                        };
+                        sel.on('focus', fillOnce);
+                        sel.on('click', fillOnce);
+                        // 变更事件：写入选中并保存
+                        sel.on('change', function () {
+                            var val = this.value;
+                            $scope.$applyAsync(function () {
+                                vm.selectedTeam[tid] = val;
+                                onTeamChange(tid);
+                            });
+                        });
+                        // 初次渲染时打印当前选项（仅空白）
+                        try {
+                            var opts = sel.find('option');
+                            var arr = [];
+                            angular.forEach(opts, function (o) { arr.push({ value: o.value, text: o.text }); });
+                            console.groupCollapsed('[PatrolAssign] select options (initial) for template', tid);
+                            console.log('options count:', opts.length);
+                            console.table(arr);
+                            console.groupEnd();
+                        } catch (e) {}
                     }
                 },
                 {
@@ -100,30 +156,17 @@
                         d.resolve([]);
                         return;
                     }
-                    var tasks = templates.map(function (tpl) {
-                        return cacTemplateService.getCacTeamConfig(tpl.id).then(function (teamMap) {
-                            var selectedId = '';
-                            if (teamMap && Object.keys(teamMap).length) {
-                                // 取第一个已关联团队作为默认选中
-                                selectedId = Object.keys(teamMap)[0] || '';
-                            }
-                            // 使用去重后的选项（按名称映射到保留的ID）；若未加载完选项或未命中则回退到原ID
-                            var mappedId = (vm.teamNameToId && teamMap && selectedId) ? (vm.teamNameToId[teamMap[selectedId]] || selectedId) : selectedId;
-                            vm.selectedTeam[tpl.id] = mappedId;
-                            return {
-                                templateId: tpl.id,
-                                templateName: tpl.templateName,
-                                description: tpl.description,
-                                updatedAt: tpl.updatedAt || tpl.executedAt || tpl.createdAt
-                            };
-                        });
+                    // 默认值空（不关联），不逐模板请求当前关联（简化实现）
+                    var rows = templates.map(function (tpl) {
+                        vm.selectedTeam[tpl.id] = '';
+                        return {
+                            templateId: tpl.id,
+                            templateName: tpl.templateName,
+                            description: tpl.description,
+                            updatedAt: tpl.updatedAt || tpl.executedAt || tpl.createdAt
+                        };
                     });
-                    $q.all(tasks).then(function (rows) {
-                        d.resolve(rows);
-                    }).catch(function (err) {
-                        messageService.toast('error', '加载巡检模版分配失败', err && err.message ? err.message : '');
-                        d.resolve([]);
-                    });
+                    d.resolve(rows);
                 }).catch(function (err) {
                     messageService.toast('error', '加载巡检模版失败', err && err.message ? err.message : '');
                     d.resolve([]);
@@ -136,12 +179,13 @@
 
         // 切换团队：保证单选（清空=取消所有关联；选择某一团队=移除其他、保留/添加该团队）
         function onTeamChange(templateId) {
+            if (vm._saving[templateId]) return; // 防抖
             var newTeamId = vm.selectedTeam[templateId] || '';
-            // 读取当前关联
+            vm._saving[templateId] = true;
+
             cacTemplateService.getCacTeamConfig(templateId).then(function (teamMap) {
                 teamMap = teamMap || {};
                 var currentIds = Object.keys(teamMap);
-
                 var ops = $q.when();
 
                 if (!newTeamId) {
@@ -164,13 +208,13 @@
                     }
                 }
 
-                ops.then(function () {
-                    messageService.toast('success', '保存成功');
-                }).catch(function (err) {
-                    messageService.toast('error', '保存失败', err && err.message ? err.message : '');
-                });
+                return ops;
+            }).then(function () {
+                messageService.toast('success', '保存成功');
             }).catch(function (err) {
-                messageService.toast('error', '获取当前关联失败', err && err.message ? err.message : '');
+                messageService.toast('error', '保存失败', err && err.message ? err.message : '');
+            }).finally(function () {
+                vm._saving[templateId] = false;
             });
         }
     }
