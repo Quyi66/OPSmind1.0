@@ -99,6 +99,10 @@
                                     opt.text(o.name);
                                     sel.append(opt);
                                 });
+                                // 如果已有选择，则设值并高亮
+                                var cur = vm.selectedTeam[tid] || '';
+                                sel.val(cur);
+                                if (cur) sel.addClass('bg-associated'); else sel.removeClass('bg-associated');
                                 // 调试：打印
                                 try {
                                     var opts = sel.find('option');
@@ -118,6 +122,7 @@
                             var val = this.value;
                             $scope.$applyAsync(function () {
                                 vm.selectedTeam[tid] = val;
+                                if (val) sel.addClass('bg-associated'); else sel.removeClass('bg-associated');
                                 onTeamChange(tid);
                             });
                         });

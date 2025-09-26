@@ -3,6 +3,12 @@
         <div class="opx-navbar-title">巡检模版分配</div>
     </nav>
     <div class="card-body">
+        <style>
+            /* 已关联团队时，高亮下拉的显示区域 */
+            select.patrol-team-select.bg-associated {
+                background-color: #f0f2f5; /* light gray */
+            }
+        </style>
         <opx-datatable table-config="tableConfig"></opx-datatable>
     </div>
     <!-- 说明：页面布局样式参照团队管理（team.html），仅调整表格列 -->
