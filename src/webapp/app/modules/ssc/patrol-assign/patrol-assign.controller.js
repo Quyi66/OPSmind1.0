@@ -12,6 +12,7 @@
         var vm = this;
         vm.teamOptions = [];
         vm.teamOptionsMap = {};
+        vm.teamLabelMap = {};
         vm.selectedTeam = {}; // { templateId: teamId }
         vm.onTeamChange = onTeamChange;
         vm._saving = {}; // 防重复提交标记：{templateId: boolean}
@@ -38,6 +39,7 @@
                 }
                 vm.teamOptions = [];
                 vm.teamOptionsMap = {};
+                vm.teamLabelMap = {};
                 if (teams && teams.length) {
                     teams.forEach(function (t) {
                         var id = t.id;
@@ -46,6 +48,7 @@
                         var label = code ? (rawName + ' (' + code + ')') : rawName;
                         vm.teamOptions.push({ id: id, name: label });
                         vm.teamOptionsMap[id] = rawName;
+                        vm.teamLabelMap[id] = label;
                     });
                 }
                 vm._teamsLoaded = true;
@@ -56,6 +59,36 @@
                 vm._teamsPromise = null;
             });
             return vm._teamsPromise;
+        }
+
+        function normalizeTeamId(raw) {
+            if (!raw) return '';
+            if (Array.isArray(raw)) {
+                return raw.length ? (raw[0] || '') : '';
+            }
+            var parts = ('' + raw).split(',').map(function (piece) {
+                return piece ? piece.trim() : '';
+            }).filter(function (piece) { return !!piece; });
+            return parts.length ? parts[0] : '';
+        }
+
+        function normalizeTeamName(raw, teamIdRaw) {
+            if (!raw) return '';
+            var targetId = normalizeTeamId(teamIdRaw);
+            if (!targetId) return raw;
+            var parts = ('' + raw).split(',').map(function (piece) { return piece ? piece.trim() : ''; }).filter(Boolean);
+            if (parts.length <= 1) {
+                return parts[0] || raw;
+            }
+            // 如果名称数量跟ID一样，可以尝试匹配同序元素
+            var idParts = ('' + (teamIdRaw || '')).split(',').map(function (piece) { return piece ? piece.trim() : ''; }).filter(Boolean);
+            if (idParts.length === parts.length) {
+                var index = idParts.findIndex(function (idPart) { return normalizeTeamId(idPart) === targetId; });
+                if (index > -1 && parts[index]) {
+                    return parts[index];
+                }
+            }
+            return parts[0] || '';
         }
 
         function initTable() {
@@ -81,61 +114,58 @@
                         var $cell = angular.element(nTd);
                         var sel = $cell.find('select.patrol-team-select');
                         var tid = sel.attr('data-tid');
-                        // 初始仅保留一个空白项
+                        var loadingPromise = null;
                         sel.empty();
                         sel.append(angular.element('<option value=""></option>'));
-                        // 聚焦/点击时再加载团队并填充选项
-                        var fillOnce = function () {
-                            if (sel.data('filled')) return;
-                            sel.data('filled', true);
-                            ensureTeamsLoaded().then(function (list) {
-                                // 先移除除第一个空白以外的所有选项，再填充
-                                var keep = sel.find('option').first();
+                        sel.data('loaded', false);
+
+                        function updateHighlight(val) {
+                            if (val) sel.addClass('bg-associated'); else sel.removeClass('bg-associated');
+                        }
+
+                        function populateOptions() {
+                            if (loadingPromise) {
+                                return loadingPromise;
+                            }
+                            loadingPromise = ensureTeamsLoaded().then(function (list) {
                                 sel.empty();
-                                sel.append(keep);
+                                sel.append(angular.element('<option value=""></option>'));
                                 (list || []).forEach(function (o) {
                                     var opt = angular.element('<option></option>');
                                     opt.attr('value', o.id);
                                     opt.text(o.name);
                                     sel.append(opt);
                                 });
-                                // 如果已有选择，则设值并高亮
                                 var cur = vm.selectedTeam[tid] || '';
                                 sel.val(cur);
-                                if (cur) sel.addClass('bg-associated'); else sel.removeClass('bg-associated');
-                                // 调试：打印
-                                try {
-                                    var opts = sel.find('option');
-                                    var arr = [];
-                                    angular.forEach(opts, function (o) { arr.push({ value: o.value, text: o.text }); });
-                                    console.groupCollapsed('[PatrolAssign] select options (filled) for template', tid);
-                                    console.log('options count:', opts.length);
-                                    console.table(arr);
-                                    console.groupEnd();
-                                } catch (e) {}
+                                updateHighlight(cur);
+                                sel.data('loaded', Array.isArray(list));
+                            }).finally(function () {
+                                loadingPromise = null;
                             });
-                        };
-                        sel.on('focus', fillOnce);
-                        sel.on('click', fillOnce);
+                            return loadingPromise;
+                        }
+
+                        populateOptions();
+                        sel.on('focus', function () {
+                            if (!sel.data('loaded')) {
+                                populateOptions();
+                            }
+                        });
+                        sel.on('click', function () {
+                            if (!sel.data('loaded')) {
+                                populateOptions();
+                            }
+                        });
                         // 变更事件：写入选中并保存
                         sel.on('change', function () {
                             var val = this.value;
                             $scope.$applyAsync(function () {
                                 vm.selectedTeam[tid] = val;
-                                if (val) sel.addClass('bg-associated'); else sel.removeClass('bg-associated');
+                                updateHighlight(val);
                                 onTeamChange(tid);
                             });
                         });
-                        // 初次渲染时打印当前选项（仅空白）
-                        try {
-                            var opts = sel.find('option');
-                            var arr = [];
-                            angular.forEach(opts, function (o) { arr.push({ value: o.value, text: o.text }); });
-                            console.groupCollapsed('[PatrolAssign] select options (initial) for template', tid);
-                            console.log('options count:', opts.length);
-                            console.table(arr);
-                            console.groupEnd();
-                        } catch (e) {}
                     }
                 },
                 {
@@ -156,22 +186,61 @@
 
             function getAssignments() {
                 var d = $q.defer();
-                cacTemplateService.getTemplates().then(function (templates) {
-                    if (!templates || !templates.length) {
+                $q.all([
+                    cacTemplateService.getTemplates(),
+                    ensureTeamsLoaded().catch(function () { return []; })
+                ]).then(function (results) {
+                    var templates = results[0] || [];
+                    if (!templates.length) {
                         d.resolve([]);
                         return;
                     }
-                    // 默认值空（不关联），不逐模板请求当前关联（简化实现）
-                    var rows = templates.map(function (tpl) {
-                        vm.selectedTeam[tpl.id] = '';
+
+                    function buildRow(tpl, teamId, explicitName) {
+                        var tid = teamId || '';
+                        vm.selectedTeam[tpl.id] = tid;
+                        var name = tid ? (explicitName || tpl.teamName || (vm.teamLabelMap && vm.teamLabelMap[tid]) || (vm.teamOptionsMap && vm.teamOptionsMap[tid]) || '') : '';
                         return {
                             templateId: tpl.id,
                             templateName: tpl.templateName,
                             description: tpl.description,
-                            updatedAt: tpl.updatedAt || tpl.executedAt || tpl.createdAt
+                            updatedAt: tpl.updatedAt || tpl.executedAt || tpl.createdAt,
+                            teamId: tid,
+                            teamName: name
                         };
+                    }
+
+                    var rowMap = {};
+                    var pending = [];
+
+                    templates.forEach(function (tpl) {
+                        var teamId = tpl.assignedToTeam ? normalizeTeamId(tpl.teamId) : '';
+                        if (tpl.assignedToTeam && !teamId) {
+                            pending.push(
+                                cacTemplateService.getCacTeamConfig(tpl.id).then(function (teamMap) {
+                                    teamMap = teamMap || {};
+                                    var ids = Object.keys(teamMap).sort();
+                                    var selectedId = ids.length ? ids[0] : '';
+                                    rowMap[tpl.id] = buildRow(tpl, selectedId, selectedId ? teamMap[selectedId] : '');
+                                }).catch(function () {
+                                    rowMap[tpl.id] = buildRow(tpl, '', '');
+                                })
+                            );
+                        } else {
+                            rowMap[tpl.id] = buildRow(tpl, teamId, normalizeTeamName(tpl.teamName, tpl.teamId));
+                        }
                     });
-                    d.resolve(rows);
+
+                    if (!pending.length) {
+                        var rows = templates.map(function (tpl) { return rowMap[tpl.id]; });
+                        d.resolve(rows);
+                        return;
+                    }
+
+                    $q.all(pending).finally(function () {
+                        var rows = templates.map(function (tpl) { return rowMap[tpl.id]; });
+                        d.resolve(rows);
+                    });
                 }).catch(function (err) {
                     messageService.toast('error', '加载巡检模版失败', err && err.message ? err.message : '');
                     d.resolve([]);
