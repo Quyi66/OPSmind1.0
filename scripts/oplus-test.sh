@@ -1,1 +1,0 @@
-docker run -d -p 8080:80 -v $(pwd)/nginx-config/oplus-web.conf:/etc/nginx/conf.d/default.conf:ro --name oplus-web oplus-web:latest

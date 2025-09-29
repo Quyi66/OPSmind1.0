@@ -8,7 +8,7 @@ set -e
 # 配置变量
 IMAGE_NAME="oplus-web"
 BUILD_CONTEXT="."
-VERSION="1.1.0"   # 配置的版本号
+VERSION="1.1.2"   # 配置的版本号
 # TAG 直接使用配置的 VERSION，而不是 latest
 TAG="$VERSION"
 
@@ -139,5 +139,5 @@ echo "  ${IMAGE_NAME}:${VERSION} (版本标签 - AMD64)"
 [ $ARM64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}:${TAG}-arm64"
 [ $ARM64_SUCCESS -eq 0 ] && echo "  ${IMAGE_NAME}:${VERSION}-arm64"
 echo ""
-echo "运行容器 (挂载本地nginx配置):"
-echo "  docker run -d -p 80:80 -v \$(pwd)/nginx-config/oplus-web.conf:/etc/nginx/conf.d/default.conf:ro --name oplus-web ${IMAGE_NAME}:${TAG}"
+echo "运行容器 (通过环境变量覆盖后端地址):"
+echo "  docker run -d -p 80:80 -e BACKEND_URL=http://backend.example.com:8080 --name oplus-web ${IMAGE_NAME}:${TAG}"

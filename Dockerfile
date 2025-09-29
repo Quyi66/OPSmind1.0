@@ -6,10 +6,17 @@ LABEL maintainer="oplus-team"
 LABEL description="Oplus Web Application with Nginx"
 
 # 删除默认的nginx配置文件
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf && \
+    mkdir -p /etc/nginx/templates && \
+    apk add --no-cache gettext
 
-# 复制自定义nginx配置文件
-COPY nginx-config/oplus-web.conf /etc/nginx/conf.d/
+# 复制自定义nginx配置模板和启动脚本
+COPY nginx-config/oplus-web.conf /etc/nginx/templates/oplus-web.conf.template
+COPY docker/nginx-backend-url.sh /docker-entrypoint.d/30-backend-url.sh
+RUN chmod 755 /docker-entrypoint.d/30-backend-url.sh
+
+# 后端服务默认地址，可通过环境变量覆盖
+ENV BACKEND_URL=http://10.1.40.228:18080
 
 # 复制预构建的dist包到nginx默认静态文件目录
 # 确保dist目录包含完整的构建产物和node_modules
