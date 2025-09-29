@@ -43,13 +43,16 @@
         // aap execution environment
         {
             Param.getByDomainAndName('jao', 'script_engine').then(function (result) {
-                that.scriptEngine = result.value;
-            });
-            sscEngineService.queryExecution_environments().then(function (result) {
-                console.log("========== app execution_environment ==========");
-                that.executionEnvironments = angular.fromJson(result).results;
+                var value = result && result.value;
+                that.scriptEngine = value;
+                if (value === 'aap') {
+                    return sscEngineService.queryExecution_environments().then(function (response) {
+                        console.log("========== app execution_environment ==========");
+                        that.executionEnvironments = angular.fromJson(response).results;
+                    });
                 }
-            );
+                that.executionEnvironments = [];
+            });
         }
 
 
