@@ -44,8 +44,8 @@
                 <div class="card mb-3" ng-repeat="group in $ctrl.groups track by $index"  ng-init="group_index = $index">
                     <div class="card-header d-flex p-2 bg-light border-bottom">
                         <input type="text" ng-model="group.group" class="form-control me-auto font-weight-bold">
-                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.openTextModal(group.host_vars, group_index, 'host_vars')" title="host_vars"><i class="far fa-comment-alt-edit"></i></button>
-                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.openTextModal(group.group_vars, group_index, 'group_vars')" title="group_vars"><i class="far fa-comment-alt-edit"></i></button>
+                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.openTextModal(group.host_vars, group_index, 'host_vars')" title="host_vars"><i class="fa fa-edit"></i></button>
+                        <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.openTextModal(group.group_vars, group_index, 'group_vars')" title="group_vars"><i class="fa fa-edit"></i></button>
                         <button class="ms-3 btn btn-default opx-btn-icon opx-btn-flat" ng-click="$ctrl.removeServerGroup(group_index)" title="{{'jao.job.process.delete_group' | translate}}"><i
                                 class="fa fa-trash-alt"></i>
                         </button>

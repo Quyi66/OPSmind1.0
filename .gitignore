@@ -15,6 +15,7 @@ src/webapp/node_modules
 /src/webapp/bower_components
 /build
 /tmp
+/tmp/*
 yarn-error.log
 yarn.lock
 /src/webapp/content/css/oplus-commons.css

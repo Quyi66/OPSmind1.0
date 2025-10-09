@@ -111,7 +111,7 @@
             $scope.$watch('$ctrl.fileList', function (newVal, oldVal) {
                 if (newVal === oldVal) return;
                 var keys = Object.keys(that.modelConverter);
-                if (keys.indexOf("groups") > 0) {
+                if (keys.indexOf("groups") > -1) {
                     that.theModel.scripts = convertModelFiles(newVal, true);
                     that.theModel.groups = that.groups;
                 } else {
@@ -125,7 +125,7 @@
                 buildSelectedFileList(selectedFiles);
             } else {
                 var keys = Object.keys(that.modelConverter);
-                if (keys.indexOf("groups") > 0) {
+                if (keys.indexOf("groups") > -1) {
                     that.theModel.scripts = convertModelFiles(selectedFiles, true);
                     that.theModel.groups = that.groups;
                 } else {
