@@ -5,7 +5,7 @@ set -euo pipefail
 IMAGE_NAME=${IMAGE_NAME:-oplus-web}
 CONTAINER_NAME=${CONTAINER_NAME:-oplus-web-test}
 HOST_PORT=${HOST_PORT:-8080}
-BACKEND_URL=${BACKEND_URL:-http://10.1.40.228:18030}
+BACKEND_URL=${BACKEND_URL:-http://10.1.40.228:18080}
 
 usage() {
     cat <<'USAGE'
