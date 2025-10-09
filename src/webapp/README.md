@@ -1,1 +1,1 @@
-# OpsMind
+# OPSmind

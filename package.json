@@ -1,7 +1,7 @@
 {
   "name": "oplus-modules",
   "version": "1.0.0",
-  "description": "OpsMind modules for development",
+  "description": "OPSmind modules for development",
   "private": true,
   "cacheDirectories": [
     "node_modules"
