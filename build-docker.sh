@@ -8,7 +8,7 @@ set -e
 # 配置变量
 IMAGE_NAME="oplus-web"
 BUILD_CONTEXT="."
-VERSION="1.0.3"
+VERSION="1.0.4"
 
 # 显示帮助信息
 show_help() {
