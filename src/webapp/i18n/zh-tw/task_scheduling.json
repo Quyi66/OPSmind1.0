@@ -21,7 +21,6 @@
   "task_scheduling.is_batch_start_stop_CRON": "批量啟停任務id【{{ id }}】",
   "task_scheduling.execution_job_type": "執行作業型別",
   "task_scheduling.select_execute_job": "選擇執行作業",
-  "task_scheduling.select_job_team": "選擇作業團隊",
   "task_scheduling.operating_param": "執行參數",
   "task_scheduling.title_desc_one": "CRON表示式生成",
   "task_scheduling.title_desc_two": "點選填寫作業執行參數",

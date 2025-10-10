@@ -313,7 +313,7 @@
                     var InterceptValue = saveFilename.substring(saveFilename.length - 4);
                     //TODO: why only xlsx?
                     if ('xlsx' === InterceptValue) {
-                        var url = restUtils.getApiUrl('gfs', '/api/gfs/{type}/r/$tnt/download/{path}', {
+                        var url = restUtils.getApiUrl('gfs', '/api/gfs/v2/{type}/r/$tnt/download/{path}', {
                             type: type,
                             path: path
                         });

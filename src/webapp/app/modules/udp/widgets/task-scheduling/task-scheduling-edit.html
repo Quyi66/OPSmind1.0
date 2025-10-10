@@ -119,21 +119,6 @@
 
         </div>
     </div>
-
-    <!-- 选择作业团队 - 仅在作业类型为'巡检作业'时显示 -->
-    <div class="form-group jao-cron-input-style" ng-show="vm.cron.jobType === 'cac'">
-        <label class="control-label">
-            选择作业团队 <span class="text-danger">*</span>
-        </label>
-        <div class="form-control-wrapper">
-            <select ng-model="vm.cron.selectedTeamId" class="form-select"
-                    op-select
-                    ng-options="team.id as team.name for team in vm.teamList">
-                <option value=""></option>
-            </select>
-        </div>
-    </div>
-
 </div>
 <div class="modal-footer">
     <div class="form-group w-100 m-b-sm">
