@@ -20,7 +20,6 @@
   "task_scheduling.is_batch_start_stop_CRON": "Batch start stop task ID",
   "task_scheduling.execution_job_type": "Execution Job Type",
   "task_scheduling.select_execute_job": "Select Execute Job",
-  "task_scheduling.select_job_team": "Select Job Team",
   "task_scheduling.operating_param": "Operating_param",
   "task_scheduling.title_desc_one": "CRON Expression Generation",
   "task_scheduling.title_desc_two": "Click to fill in job run parameters",
