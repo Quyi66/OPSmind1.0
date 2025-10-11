@@ -43,6 +43,11 @@
         this.buildQueryFilter = buildQueryFilter;
         this.moveDataset = moveDataset;
 
+        var SCRIPT_ENGINE_DATASET_CODE = 'ACM_GET_SCRIPT_ENGINE';
+        var SCRIPT_ENGINE_AAP = 'aap';
+        var AAP_INSTANCE_GROUP_DATASET_CODE = 'AAP_QUERY_INSTANCE_GROUP';
+        var scriptEngineCheckPromise;
+
         function moveDataset(datasetIds, appletCode) {
             return restUtils.callApi(module, 'PUT', '/api/dts/datasets/move/{appletCode}', {"appletCode": appletCode}, datasetIds);
         }
@@ -361,44 +366,76 @@
          * @returns {promise<{total:number,records:[]}>}
          */
         function queryDataset(dataset, params, queryConfig) {
-            var promise, d = $q.defer();
-            if (angular.isString(dataset)) {
-                promise = queryDatasetOfCode(dataset, params, queryConfig);
-            } else if (dataset._type === 'joinx') {
-                promise = queryDatasetOfJoinx(dataset.joinx, params);
-            } else if (dataset._type === 'datax') {
-                promise = queryDatasetOfDatax(dataset.datax, params);
-            } else if (dataset._type === 'datamodel') {
-                promise = queryDatasetOfDatamodel(dataset.id, params);
-            } else if (dataset.id) {
-                promise = queryDatasetOfCode(dataset.id, params, queryConfig);
-            } else {
-                throw new Error('Unknown dataset definition `' + JSON.stringify(dataset)) + '`';
-            }
-            promise.then(function (data) {
-                // console.log('promise.data',data);
-                if (dataset.trans) {
-                    var mode = dataset.trans.mode;
-                    var records;
-                    if (mode === 'valcol' && dataset.trans['valcol']) {
-                        var valcol = dataset.trans['valcol'];
-                        records = dataEx.transform(data.records, valcol.keyAs, valcol.colAs, valcol.valAs, valcol.descAs);
-                        return d.resolve({total: records.length, records: records});
-                    } else if (mode === 'rotate' && dataset.trans['rotate']) {
-                        var rotate = dataset.trans['rotate'];
-                        records = dataEx.transpose(data.records, rotate.oldKeyCol, rotate.newKeyCol);
-                        // console.log('transpose', data.records.length, rotate.newKeyCol, rotate.oldKeyCol, records);
-                        return d.resolve({total: records.length, records: records});
-                    }
-                    // console.log('trans',data);
-                    return d.resolve(data);
+            var d = $q.defer();
+            var guardPromise = shouldGuardAAPInstanceGroup(dataset) ? ensureAAPInstanceGroupAllowed() : $q.when(true);
+
+            guardPromise.then(function (allowQuery) {
+                if (!allowQuery) {
+                    return d.resolve({total: 0, records: []});
                 }
-                // console.log('data...',data);
-                return d.resolve(data);
+
+                var promise;
+                if (angular.isString(dataset)) {
+                    promise = queryDatasetOfCode(dataset, params, queryConfig);
+                } else if (dataset._type === 'joinx') {
+                    promise = queryDatasetOfJoinx(dataset.joinx, params);
+                } else if (dataset._type === 'datax') {
+                    promise = queryDatasetOfDatax(dataset.datax, params);
+                } else if (dataset._type === 'datamodel') {
+                    promise = queryDatasetOfDatamodel(dataset.id, params);
+                } else if (dataset.id) {
+                    promise = queryDatasetOfCode(dataset.id, params, queryConfig);
+                } else {
+                    throw new Error('Unknown dataset definition `' + JSON.stringify(dataset)) + '`';
+                }
+                promise.then(function (data) {
+                    if (dataset.trans) {
+                        var mode = dataset.trans.mode;
+                        var records;
+                        if (mode === 'valcol' && dataset.trans['valcol']) {
+                            var valcol = dataset.trans['valcol'];
+                            records = dataEx.transform(data.records, valcol.keyAs, valcol.colAs, valcol.valAs, valcol.descAs);
+                            return d.resolve({total: records.length, records: records});
+                        } else if (mode === 'rotate' && dataset.trans['rotate']) {
+                            var rotate = dataset.trans['rotate'];
+                            records = dataEx.transpose(data.records, rotate.oldKeyCol, rotate.newKeyCol);
+                            return d.resolve({total: records.length, records: records});
+                        }
+                        return d.resolve(data);
+                    }
+                    return d.resolve(data);
+                }).catch(function (err) {
+                    return d.reject(err);
+                });
             }).catch(function (err) {
                 return d.reject(err);
             });
             return d.promise;
+        }
+
+        function shouldGuardAAPInstanceGroup(dataset) {
+            if (!dataset) {
+                return false;
+            }
+            if (angular.isString(dataset)) {
+                return dataset === AAP_INSTANCE_GROUP_DATASET_CODE;
+            }
+            return dataset.id === AAP_INSTANCE_GROUP_DATASET_CODE;
+        }
+
+        function ensureAAPInstanceGroupAllowed() {
+            if (!scriptEngineCheckPromise) {
+                scriptEngineCheckPromise = datasetDao.queryDataset(SCRIPT_ENGINE_DATASET_CODE, null, null).then(function (data) {
+                    var engine = _.get(data, 'records[0].result');
+                    return engine === SCRIPT_ENGINE_AAP;
+                }).catch(function (err) {
+                    scriptEngineCheckPromise = null;
+                    return $q.reject(err);
+                });
+            }
+            return scriptEngineCheckPromise.then(function (isAAP) {
+                return isAAP;
+            });
         }
 
         /**
