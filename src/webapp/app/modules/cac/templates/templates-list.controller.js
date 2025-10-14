@@ -105,7 +105,7 @@
                     searchable: false,
                     orderable: false,
                     render: function (data, type, row, meta) {
-                        return '<a class="btn btn-default btn-sm opx-btn-icon opx-btn-flat" title="{{\'cac.template.run\' | translate}}" ng-click="vm.runTemplates(\'' + row.id +'\',\'' +row.name +'\')">' +
+                        return '<a class="btn btn-default btn-sm opx-btn-icon opx-btn-flat" title="' + $translate.instant('cac.common.run') + $translate.instant('cac.common.square') + '" ng-click="vm.runTemplates(\'' + row.id +'\',\'' +row.name +'\')">' +
                             '<i class="fa fa-caret-square-right"></i>' +
                             '</a>\n' +
                             '<a class="btn btn-default btn-sm opx-btn-icon opx-btn-flat" title="{{\'cac.template.edit\' | translate}}"  ui-sref="app.cac3.templates.edit({id:\'' + row.id + '\'})">' +

@@ -87,7 +87,7 @@
                 render: function (data, type, row, meta) {
                     var id = "'" + row.id + "'";
                     // var template = encodeURI(angular.toJson(row));
-                    return '<a class="btn btn-default btn-sm opx-btn-icon opx-btn-flat" title="{{\'cac.template.run\' | translate}}" ng-click="cacTemplateListCtrlVm.views.run(' + id + ')">' +
+                    return '<a class="btn btn-default btn-sm opx-btn-icon opx-btn-flat" title="' + $translate.instant('cac.common.run') + $translate.instant('cac.common.square') + '" ng-click="cacTemplateListCtrlVm.views.run(' + id + ')">' +
                         '<i class="fa fa-caret-square-right"></i>' +
                         '</a>\n' +
                         '<a class="btn btn-default btn-sm opx-btn-icon opx-btn-flat" title="{{\'cac.template.edit\' | translate}}"  ui-sref="app.cac.template_edit({templateId:\'' + row.id + '\'})">' +

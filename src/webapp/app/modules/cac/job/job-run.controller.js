@@ -66,7 +66,7 @@
                 } else if (arr.length == 0) {
                     vm.views.info = $translate.instant('cac.messages.pls_add_check');
                     messageService.toast("error", vm.views.info);
-                    angular.element('.cac-job-run-btn').html("<i class=\"fa fa-play\"></i> {{'cac.template.run' | translate}}");
+                    angular.element('.cac-job-run-btn').html("<i class=\"fa fa-play\"></i> " + $translate.instant('cac.common.run') + $translate.instant('cac.common.square'));
                     return;
                 }
             }
@@ -87,7 +87,7 @@
                 messageService.toast("success", $translate.instant('cac.messages.checking'));
                 $state.go("app.cac.job.list", {templateId: vm.views.job.templateId});
             }).catch(function (data) {
-                angular.element('.cac-job-run-btn').html("<i class=\"fa fa-play\"></i> {{'cac.template.run' | translate}}");
+                angular.element('.cac-job-run-btn').html("<i class=\"fa fa-play\"></i> " + $translate.instant('cac.common.run') + $translate.instant('cac.common.square'));
                 //data.message获取主要异常信息
                 //data.stack获取详细异常信息
                 messageService.toast("error", data.message);
