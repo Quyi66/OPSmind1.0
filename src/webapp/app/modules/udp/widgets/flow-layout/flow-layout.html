@@ -47,6 +47,68 @@
             </div>
         </fieldset>
 
+        <fieldset>
+            <legend class="d-flex align-items-center justify-content-between">
+                <span>{{'jao.job.detail.params' | translate}}<span op-help-info="{{'jao.job.detail.params_info' | translate}}"></span></span>
+                <button type="button" class="btn btn-link btn-sm px-0" ng-click="$ctrl.toggleParams()" aria-expanded="{{!$ctrl.isParamsCollapsed}}">
+                    <i class="fa" ng-class="{'fa-angle-double-down': $ctrl.isParamsCollapsed, 'fa-angle-double-up': !$ctrl.isParamsCollapsed}"></i>
+                </button>
+            </legend>
+            <div class="form-group" ng-show="!$ctrl.isParamsCollapsed">
+                <div class="d-flex align-items-center mb-3" ng-if="!$ctrl.isInstance">
+                    <button type="button" class="btn btn-outline-primary btn-sm"
+                            title="{{'jao.job.detail.analysis_param_info' | translate}}"
+                            ng-click="$ctrl.addParamAuto()">
+                        <i class="fa fa-brackets-curly"></i>
+                        {{'jao.job.detail.analysis_param' | translate}}
+                    </button>
+                    <button type="button" class="btn btn-sm btn-default opx-btn-icon ms-auto"
+                            title="{{'jao.job.detail.add_param' | translate}}"
+                            ng-click="$ctrl.addParam()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <table class="op-param-table table">
+                    <thead>
+                    <tr>
+                        <th>{{'jao.common.param' | translate}}</th>
+                        <th>{{'jao.job.detail.display_name' | translate}}</th>
+                        <th>{{'common.entity.detail.description' | translate}}</th>
+                        <th op-help-info="{{'jao.job.detail.default_info' | translate}}">{{'jao.job.detail.default' | translate}}</th>
+                        <th>{{'common.entity.detail.type' | translate}}</th>
+                        <th>{{'jao.common.secret' | translate}}</th>
+                        <th class="text-right" ng-if="!$ctrl.isInstance"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="param in $ctrl.theFlow.globalParams track by $index">
+                        <td><input class="form-control" ng-model="param.name" ng-disabled="$ctrl.isInstance" required="true"></td>
+                        <td><input class="form-control" ng-model="param.label" ng-disabled="$ctrl.isInstance"></td>
+                        <td><input class="form-control" ng-model="param.description" ng-disabled="$ctrl.isInstance"></td>
+                        <td><input class="form-control" ng-model="param.defaultValue" ng-disabled="$ctrl.isInstance"></td>
+                        <td>
+                            <select class="form-select" ng-model="param.type" ng-disabled="$ctrl.isInstance"
+                                    ng-options="def.type as def.title for def in $ctrl.paramTypeList"></select>
+                        </td>
+                        <td>
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox" ng-model="param.secret" id="je_flow_secret_{{$index}}" ng-disabled="$ctrl.isInstance">
+                                <label for="je_flow_secret_{{$index}}"></label>
+                            </div>
+                        </td>
+                        <td class="text-right" ng-if="!$ctrl.isInstance">
+                            <button type="button" class="btn btn-sm btn-default opx-btn-icon"
+                                    title="{{'jao.job.detail.delete_param' | translate}}"
+                                    ng-click="$ctrl.deleteParam(param)">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+
         <fieldset ng-disabled="$ctrl.isInstance">
             <legend>步骤设置</legend>
             <div class="form-group">
