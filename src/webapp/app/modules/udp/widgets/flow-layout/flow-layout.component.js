@@ -31,6 +31,10 @@
         that.removeTask = removeTask;
         that.removeStep = removeStep;
         that.changeStepFold = changeStepFold;
+        that.toggleParams = toggleParams;
+        that.addParam = addParam;
+        that.deleteParam = deleteParam;
+        that.addParamAuto = addParamAuto;
         that.parseFlowId = parseFlowId;
 
         that.startFlow = startFlow;
@@ -46,6 +50,7 @@
 
         that.stepFoldList = [];
         that.isFoldAllSteps = true;
+        that.isParamsCollapsed = false;
         that.fileSelectorConfig = {
             repoType: 'git',
             viewMode: 'dialog',
@@ -61,6 +66,15 @@
             },
             modelType: 'array'
         };
+        that.paramTypeList = [
+            {type: 'string', title: $translate.instant('common.entity.variable.string')},
+            {type: 'string_pwd', title: $translate.instant('common.entity.variable.string_pwd')},
+            {type: 'number', title: $translate.instant('common.entity.variable.number')},
+            {type: 'date', title: $translate.instant('common.entity.variable.date')},
+            {type: 'boolean', title: $translate.instant('common.entity.variable.boolean')},
+            {type: 'array', title: $translate.instant('common.entity.variable.array')},
+            {type: 'host', title: $translate.instant('common.entity.variable.host')}
+        ];
 
         $rootScope.historyPageId = $rootScope.historyPageId || [];
         $rootScope.$on('$stateChangeSuccess', function parseLastPage(event, toState, toParams, fromState, fromParams) {
@@ -123,6 +137,7 @@
                     hosts: []
                 };
                 that.stepFoldList[0] = false;
+                ensureGlobalParams();
             } else {
                 jaoFlowService.findFlowById(flowId).then(function (flow) {
                     flow.steps.forEach(function (step) {
@@ -141,6 +156,7 @@
                         flow.globalParamsJson = undefined;
                     }
                     that.theFlow = flow;
+                    ensureGlobalParams();
                 }).catch(function (err) {
                     messageService.toast('error', $translate.instant('jao.messages.cannot_get_flow'), err.message);
                 });
@@ -200,6 +216,114 @@
             for (var i = 0; i < that.stepFoldList.length; i++) {
                 that.stepFoldList[i] = that.isFoldAllSteps;
             }
+        }
+
+        function toggleParams() {
+            that.isParamsCollapsed = !that.isParamsCollapsed;
+        }
+
+        function ensureGlobalParams() {
+            if (!that.theFlow) {
+                that.theFlow = {};
+            }
+            if (!Array.isArray(that.theFlow.globalParams)) {
+                that.theFlow.globalParams = [];
+            }
+            that.theFlow.globalParams.forEach(function (param) {
+                if (!param) {
+                    return;
+                }
+                if (typeof param.secret === 'undefined') {
+                    param.secret = false;
+                }
+                if (typeof param.defaultValue === 'undefined') {
+                    param.defaultValue = '';
+                }
+                if (typeof param.label === 'undefined') {
+                    param.label = '';
+                }
+                if (typeof param.description === 'undefined') {
+                    param.description = '';
+                }
+                if (typeof param.type === 'undefined') {
+                    param.type = null;
+                }
+                if (typeof param.name === 'string') {
+                    param.name = param.name.trim();
+                }
+            });
+        }
+
+        function addParam() {
+            ensureGlobalParams();
+            that.theFlow.globalParams.push({name: '', label: '', description: '', defaultValue: '', type: null, secret: false});
+        }
+
+        function deleteParam(param) {
+            ensureGlobalParams();
+            var index = that.theFlow.globalParams.indexOf(param);
+            if (index > -1) {
+                that.theFlow.globalParams.splice(index, 1);
+            }
+        }
+
+        function addParamAuto() {
+            ensureGlobalParams();
+            var paramList = [];
+            if (Array.isArray(that.theFlow.steps)) {
+                that.theFlow.steps.forEach(function (step) {
+                    if (step && step.config && Array.isArray(step.config.tasks)) {
+                        step.config.tasks.forEach(function (task) {
+                            if (task && Array.isArray(task.scripts)) {
+                                task.scripts.forEach(function (script) {
+                                    var args = script ? script.argline : undefined;
+                                    if (!args && script && script.config) {
+                                        args = script.config;
+                                    }
+                                    getParamList(args).forEach(function (item) {
+                                        var name = (item || '').trim();
+                                        if (name && paramList.indexOf(name) === -1) {
+                                            paramList.push(name);
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            that.theFlow.globalParams.forEach(function (param) {
+                var existing = param && param.name ? ('' + param.name).trim() : '';
+                var idx = existing ? paramList.indexOf(existing) : -1;
+                if (idx > -1) {
+                    paramList.splice(idx, 1);
+                }
+            });
+            paramList.forEach(function (param) {
+                if (!param) {
+                    return;
+                }
+                that.theFlow.globalParams.push({name: param, label: '', description: '', defaultValue: '', type: null, secret: false});
+            });
+        }
+
+        function getParamList(source) {
+            var parsed = [];
+            var str = source;
+            while (str) {
+                var start = str.indexOf('${');
+                if (start < 0) {
+                    break;
+                }
+                str = str.substring(start + 2);
+                var endIndex = str.indexOf('}');
+                if (endIndex < 0) {
+                    break;
+                }
+                parsed.push(str.substring(0, endIndex));
+                str = str.substring(endIndex + 1);
+            }
+            return parsed;
         }
 
         function startFlow() {
