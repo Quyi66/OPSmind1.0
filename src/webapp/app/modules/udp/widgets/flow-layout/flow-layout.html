@@ -81,7 +81,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="param in $ctrl.theFlow.globalParams track by $index">
+                    <tr ng-repeat="param in $ctrl.theFlow.params track by $index">
                         <td><input class="form-control" ng-model="param.name" ng-disabled="$ctrl.isInstance" required="true"></td>
                         <td><input class="form-control" ng-model="param.label" ng-disabled="$ctrl.isInstance"></td>
                         <td><input class="form-control" ng-model="param.description" ng-disabled="$ctrl.isInstance"></td>
