@@ -69,17 +69,13 @@
             var core = props.core;
             if (core.rememberSelection) {
                 scope.flowSetp = widgetDataUtil.getWidgetCache(element) || {};
+                normalizeFlowParams(scope.flowSetp);
             }
             if (core.exportParam) {
                 scope.$watch('flowSetp', function (newVal, oldVal) {
                     var paramValue;
                     var flow = newVal;
-                    if (flow.globalParams) {
-                        flow.globalParamsJson = JSON.stringify(flow.globalParams);
-                    } else {
-                        flow.globalParams = undefined;
-                        flow.globalParamsJson = undefined;
-                    }
+                    normalizeFlowParams(flow);
                     paramValue = flow;
                     var changed = {};
                     changed[core.exportParam] = paramValue;
@@ -90,6 +86,46 @@
                 }, true);
             }
 
+        }
+
+        function normalizeFlowParams(flow) {
+            if (!flow) {
+                return [];
+            }
+            var params = flow.params;
+            if (!Array.isArray(params)) {
+                if (flow.globalParamsJson) {
+                    try {
+                        params = JSON.parse(flow.globalParamsJson) || [];
+                    } catch (err) {
+                        params = [];
+                    }
+                } else if (Array.isArray(flow.globalParams)) {
+                    params = flow.globalParams;
+                } else {
+                    params = [];
+                }
+            }
+            params = params.map(function (param) {
+                var normalized = _.assign({
+                    name: '',
+                    label: '',
+                    description: '',
+                    defaultValue: '',
+                    type: null,
+                    secret: false
+                }, param || {});
+                if (typeof normalized.name === 'string') {
+                    normalized.name = normalized.name.trim();
+                } else {
+                    normalized.name = '';
+                }
+                return normalized;
+            });
+            flow.params = params;
+            flow.globalParams = params;
+            flow.globalParamsJson = JSON.stringify(params || []);
+            return params;
         }
 
         function FlowLayoutConfigCtrl(scope, props) {

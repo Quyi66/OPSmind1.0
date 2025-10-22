@@ -42,6 +42,7 @@
         that.cancel = cancel;
 
         this.theFlow = this.theFlow ? this.theFlow : {};
+        normalizeParams(this.theFlow);
         that.isInstance = this.theFlow ? this.theFlow.runJob : false;
         //Todo 优化代码块，设定默认值，使代码可以直接引用组件
         that.hostScope = that._options.hostScope;
@@ -132,12 +133,12 @@
                 var step = newScriptStep(1);
                 that.theFlow = {
                     appletCode: that._options.appletCode,
-                    globalParams: [],
+                    params: [],
                     steps: [step],
                     hosts: []
                 };
                 that.stepFoldList[0] = false;
-                ensureGlobalParams();
+                normalizeParams(that.theFlow);
             } else {
                 jaoFlowService.findFlowById(flowId).then(function (flow) {
                     flow.steps.forEach(function (step) {
@@ -149,14 +150,8 @@
                         }
                         that.stepFoldList.push(!that.isInstance);
                     });
-                    if (flow.globalParams) {
-                        flow.globalParamsJson = JSON.stringify(flow.globalParams);
-                    } else {
-                        flow.globalParams = undefined;
-                        flow.globalParamsJson = undefined;
-                    }
                     that.theFlow = flow;
-                    ensureGlobalParams();
+                    normalizeParams(that.theFlow);
                 }).catch(function (err) {
                     messageService.toast('error', $translate.instant('jao.messages.cannot_get_flow'), err.message);
                 });
@@ -222,53 +217,23 @@
             that.isParamsCollapsed = !that.isParamsCollapsed;
         }
 
-        function ensureGlobalParams() {
-            if (!that.theFlow) {
-                that.theFlow = {};
-            }
-            if (!Array.isArray(that.theFlow.globalParams)) {
-                that.theFlow.globalParams = [];
-            }
-            that.theFlow.globalParams.forEach(function (param) {
-                if (!param) {
-                    return;
-                }
-                if (typeof param.secret === 'undefined') {
-                    param.secret = false;
-                }
-                if (typeof param.defaultValue === 'undefined') {
-                    param.defaultValue = '';
-                }
-                if (typeof param.label === 'undefined') {
-                    param.label = '';
-                }
-                if (typeof param.description === 'undefined') {
-                    param.description = '';
-                }
-                if (typeof param.type === 'undefined') {
-                    param.type = null;
-                }
-                if (typeof param.name === 'string') {
-                    param.name = param.name.trim();
-                }
-            });
-        }
-
         function addParam() {
-            ensureGlobalParams();
-            that.theFlow.globalParams.push({name: '', label: '', description: '', defaultValue: '', type: null, secret: false});
+            normalizeParams(that.theFlow);
+            that.theFlow.params.push({name: '', label: '', description: '', defaultValue: '', type: null, secret: false});
+            normalizeParams(that.theFlow);
         }
 
         function deleteParam(param) {
-            ensureGlobalParams();
-            var index = that.theFlow.globalParams.indexOf(param);
+            normalizeParams(that.theFlow);
+            var index = that.theFlow.params.indexOf(param);
             if (index > -1) {
-                that.theFlow.globalParams.splice(index, 1);
+                that.theFlow.params.splice(index, 1);
             }
+            normalizeParams(that.theFlow);
         }
 
         function addParamAuto() {
-            ensureGlobalParams();
+            normalizeParams(that.theFlow);
             var paramList = [];
             if (Array.isArray(that.theFlow.steps)) {
                 that.theFlow.steps.forEach(function (step) {
@@ -292,7 +257,7 @@
                     }
                 });
             }
-            that.theFlow.globalParams.forEach(function (param) {
+            that.theFlow.params.forEach(function (param) {
                 var existing = param && param.name ? ('' + param.name).trim() : '';
                 var idx = existing ? paramList.indexOf(existing) : -1;
                 if (idx > -1) {
@@ -303,8 +268,49 @@
                 if (!param) {
                     return;
                 }
-                that.theFlow.globalParams.push({name: param, label: '', description: '', defaultValue: '', type: null, secret: false});
+                that.theFlow.params.push({name: param, label: '', description: '', defaultValue: '', type: null, secret: false});
             });
+            normalizeParams(that.theFlow);
+        }
+
+        function normalizeParams(target) {
+            if (!target) {
+                target = {};
+            }
+            var params = target.params;
+            if (!Array.isArray(params)) {
+                if (Array.isArray(target.globalParams)) {
+                    params = target.globalParams;
+                } else if (target.globalParamsJson) {
+                    try {
+                        params = JSON.parse(target.globalParamsJson) || [];
+                    } catch (err) {
+                        params = [];
+                    }
+                } else {
+                    params = [];
+                }
+            }
+            params = params.map(function (param) {
+                var normalized = angular.extend({
+                    name: '',
+                    label: '',
+                    description: '',
+                    defaultValue: '',
+                    type: null,
+                    secret: false
+                }, param || {});
+                if (typeof normalized.name === 'string') {
+                    normalized.name = normalized.name.trim();
+                } else {
+                    normalized.name = '';
+                }
+                return normalized;
+            });
+            target.params = params;
+            target.globalParams = params;
+            target.globalParamsJson = JSON.stringify(params || []);
+            return params;
         }
 
         function getParamList(source) {
@@ -335,18 +341,15 @@
                 }
             }
             var instance = JSON.parse(JSON.stringify(that.theFlow));
+            normalizeParams(instance);
             instance.steps.forEach(function (step) {
                 var verbosity = step.config.verbosity;
                 step.config.verbosity = verbosity ? verbosity : "0";
                 step.id = undefined;
             });
 
-            if (instance.globalParams) {
-                instance.globalParamsJson = JSON.stringify(instance.globalParams);
-            } else {
-                instance.globalParams = undefined;
-                instance.globalParamsJson = undefined;
-            }
+            instance.globalParams = instance.params;
+            instance.globalParamsJson = JSON.stringify(instance.params || []);
 
             instance.jobFlowId = instance.id;
             instance.id = undefined;
@@ -389,18 +392,15 @@
                 }
             }
             var flow = JSON.parse(JSON.stringify(that.theFlow));
+            normalizeParams(flow);
             flow.steps.forEach(function (step) {
                 var verbosity = step.config.verbosity;
                 step.config.verbosity = verbosity ? verbosity : "0";
                 step.configJson = JSON.stringify(step.config);
                 step.config = undefined;
             });
-            if (flow.globalParams) {
-                flow.globalParamsJson = JSON.stringify(flow.globalParams);
-            } else {
-                flow.globalParams = undefined;
-                flow.globalParamsJson = undefined;
-            }
+            flow.globalParams = flow.params;
+            flow.globalParamsJson = JSON.stringify(flow.params || []);
             jaoFlowService.saveFlow(flow).then(function (result) {
                 //Todo 刷新浏览器后会出现问题，BUG待修复
                 // set linke source.
