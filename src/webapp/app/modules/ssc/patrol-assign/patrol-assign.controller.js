@@ -182,7 +182,7 @@
                 {
                     mData: 'sendSms',
                     title: '是否发送SMS',
-                    className: 'text-center',
+                    className: 'text-start',
                     render: function (data, type, row) {
                         var tid = row.templateId;
                         return '<div class="form-check form-switch">' +
