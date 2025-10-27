@@ -5,7 +5,7 @@ const webpack = require('webpack');
 
 module.exports = (env, argv) => {
     // 代理服务器配置
-    const PROXY_TARGET = 'http://localhost:18080';
+    const PROXY_TARGET = 'http://localhost:18030';
     const commonConfig = common(env, { ...argv, mode: 'development' });
 
     return merge(commonConfig, {

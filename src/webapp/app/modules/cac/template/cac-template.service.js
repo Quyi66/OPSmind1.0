@@ -24,6 +24,10 @@
             return cacDao.updateTemplate(template);
         }
 
+        function updateTemplateSendSms(templateId, sendSms) {
+            return cacDao.updateTemplateSendSms(templateId, sendSms);
+        }
+
         function addTemplate(template) {
             return cacDao.addTemplate(template);
         }
@@ -88,7 +92,8 @@
             getSquareTemplates: getSquareTemplates,
             getTeamsInfo: getTeamsInfo,
             saveTeamsInfo: saveTeamsInfo,
-            getCacTeamConfig: getCacTeamConfig
+            getCacTeamConfig: getCacTeamConfig,
+            updateTemplateSendSms: updateTemplateSendSms
         };
         return service;
 
