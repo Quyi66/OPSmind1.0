@@ -21,6 +21,7 @@
         vm._savingSms = {}; // 防重复提交标记（短信开关）：{templateId: boolean}
         vm._sendSmsPrev = {}; // 上次成功保存的sendSms值
         vm._sendSmsDefault = {}; // 模版默认sendSms（仅在有关联团队时应用）
+        vm._teamPrev = {}; // 上次成功保存的团队选择
 
         // 不在页面进入时加载团队列表；仅在用户点击下拉时加载
         vm._teamsLoaded = false;
@@ -151,19 +152,24 @@
                             return loadingPromise;
                         }
 
+                        // 防重复绑定：使用命名空间清理旧事件
+                        sel.off('.patrolTeam');
+
                         populateOptions();
-                        sel.on('focus', function () {
+                        sel.on('focus.patrolTeam', function () {
                             if (!sel.data('loaded')) {
                                 populateOptions();
                             }
                         });
-                        sel.on('click', function () {
+                        sel.on('click.patrolTeam', function () {
                             if (!sel.data('loaded')) {
                                 populateOptions();
                             }
                         });
                         // 变更事件：写入选中并保存
-                        sel.on('change', function () {
+                        sel.on('change.patrolTeam', function (e) {
+                            // 忽略非用户触发的变更，避免初始化或程序性设置触发
+                            if (!e || !e.originalEvent) return;
                             var val = this.value;
                             $scope.$applyAsync(function () {
                                 vm.selectedTeam[tid] = val;
@@ -234,6 +240,7 @@
                     function buildRow(tpl, teamId, explicitName) {
                         var tid = teamId || '';
                         vm.selectedTeam[tpl.id] = tid;
+                        vm._teamPrev[tpl.id] = tid;
                         var defaultSms = !!tpl.sendSms;
                         vm._sendSmsDefault[tpl.id] = defaultSms;
                         // 仅对已有关联团队的模版应用默认sendSms；无团队时默认关闭
@@ -297,35 +304,29 @@
         function onTeamChange(templateId) {
             if (vm._saving[templateId]) return; // 防抖
             var newTeamId = vm.selectedTeam[templateId] || '';
+            var prevTeamId = vm._teamPrev[templateId] || '';
+
+            // 若无变化则不调用接口
+            if ((prevTeamId || '') === (newTeamId || '')) {
+                return;
+            }
             vm._saving[templateId] = true;
 
-            cacTemplateService.getCacTeamConfig(templateId).then(function (teamMap) {
-                teamMap = teamMap || {};
-                var currentIds = Object.keys(teamMap);
-                var ops = $q.when();
-
-                if (!newTeamId) {
-                    // 清空：逐个移除已有关联
-                    currentIds.forEach(function (id) {
-                        var payload = { templateId: templateId, teamId: id, teamName: teamMap[id] };
-                        ops = ops.then(function () { return cacTemplateService.saveTeamsInfo(payload); });
-                    });
+            // 只发送一次：选择新团队 => 仅发送新团队；清空 => 仅发送上次团队（用于移除）
+            var singleOp;
+            if (!newTeamId) {
+                if (prevTeamId) {
+                    var prevName = vm.teamOptionsMap[prevTeamId] || '';
+                    singleOp = cacTemplateService.saveTeamsInfo({ templateId: templateId, teamId: prevTeamId, teamName: prevName });
                 } else {
-                    // 先移除除新选择外的所有关联
-                    currentIds.filter(function (id) { return id !== newTeamId; }).forEach(function (id) {
-                        var payload = { templateId: templateId, teamId: id, teamName: teamMap[id] };
-                        ops = ops.then(function () { return cacTemplateService.saveTeamsInfo(payload); });
-                    });
-                    // 如未关联所选团队，则添加
-                    if (currentIds.indexOf(newTeamId) === -1) {
-                        var name = vm.teamOptionsMap[newTeamId] || '';
-                        var addPayload = { templateId: templateId, teamId: newTeamId, teamName: name };
-                        ops = ops.then(function () { return cacTemplateService.saveTeamsInfo(addPayload); });
-                    }
+                    singleOp = $q.when();
                 }
+            } else {
+                var newName = vm.teamOptionsMap[newTeamId] || '';
+                singleOp = cacTemplateService.saveTeamsInfo({ templateId: templateId, teamId: newTeamId, teamName: newName });
+            }
 
-                return ops;
-            }).then(function () {
+            singleOp.then(function () {
                 messageService.toast('success', '保存成功');
                 // 根据是否已关联团队，启用/禁用短信开关，并设置该模版的默认值；不影响其他模版
                 var cb = angular.element(document.querySelector('input.patrol-sendSms-checkbox[data-tid="' + templateId + '"]'));
@@ -333,10 +334,12 @@
                     var defVal = !!vm._sendSmsDefault[templateId];
                     vm.sendSms[templateId] = defVal;
                     vm._sendSmsPrev[templateId] = defVal;
+                    vm._teamPrev[templateId] = newTeamId;
                     try { cb.prop('disabled', false); cb.prop('checked', defVal); } catch (e) {}
                 } else {
                     vm.sendSms[templateId] = false;
                     vm._sendSmsPrev[templateId] = false;
+                    vm._teamPrev[templateId] = '';
                     try { cb.prop('checked', false); cb.prop('disabled', true); } catch (e) {}
                 }
             }).catch(function (err) {
