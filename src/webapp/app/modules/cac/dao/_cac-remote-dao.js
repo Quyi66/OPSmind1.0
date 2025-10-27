@@ -226,7 +226,8 @@
         }
 
         function updateTemplateSendSms(templateId, sendSms) {
-            return restUtils.callApi(module, 'PUT', '/api/cac/v2/templates/{templateId}/send-sms', {templateId: templateId}, {sendSms: sendSms});
+            // Use query parameter instead of payload: ?sendSms=true|false
+            return restUtils.callApi(module, 'PUT', '/api/cac/v2/templates/{templateId}/send-sms', {templateId: templateId}, null, { params: { sendSms: sendSms } });
         }
 
         function getHosts() {
