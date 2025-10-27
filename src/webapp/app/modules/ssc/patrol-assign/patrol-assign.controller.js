@@ -181,7 +181,7 @@
                 },
                 {
                     mData: 'sendSms',
-                    title: '是否发送SMS',
+                    title: '是否发送告警通知',
                     className: 'text-start',
                     render: function (data, type, row) {
                         var tid = row.templateId;
