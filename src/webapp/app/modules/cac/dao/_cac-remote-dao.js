@@ -39,7 +39,9 @@
         this.deleteTemplate = deleteTemplate;
         this.addTemplate = addTemplate;
         this.getTemplateById = getTemplateById;
+        this.updateTemplate = updateTemplate;
         this.getTemplates = getTemplates;
+        this.updateTemplateSendSms = updateTemplateSendSms;
         this.getHosts = getHosts;
         this.getSquareTemplates = getSquareTemplates;
 
@@ -216,6 +218,15 @@
 
         function getTemplateById(id) {
             return restUtils.callApi(module, 'GET', '/api/cac/v2/templates/{id}', {id: id})
+        }
+
+        function updateTemplate(template) {
+            // 仅更新传入字段，后端按id处理
+            return restUtils.callApi(module, 'PUT', '/api/cac/v2/templates', null, template)
+        }
+
+        function updateTemplateSendSms(templateId, sendSms) {
+            return restUtils.callApi(module, 'PUT', '/api/cac/v2/templates/{templateId}/send-sms', {templateId: templateId}, {sendSms: sendSms});
         }
 
         function getHosts() {

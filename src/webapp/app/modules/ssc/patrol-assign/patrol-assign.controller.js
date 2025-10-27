@@ -14,8 +14,13 @@
         vm.teamOptionsMap = {};
         vm.teamLabelMap = {};
         vm.selectedTeam = {}; // { templateId: teamId }
+        vm.sendSms = {}; // { templateId: boolean }
         vm.onTeamChange = onTeamChange;
+        vm.onSendSmsToggle = onSendSmsToggle;
         vm._saving = {}; // 防重复提交标记：{templateId: boolean}
+        vm._savingSms = {}; // 防重复提交标记（短信开关）：{templateId: boolean}
+        vm._sendSmsPrev = {}; // 上次成功保存的sendSms值
+        vm._sendSmsDefault = {}; // 模版默认sendSms（仅在有关联团队时应用）
 
         // 不在页面进入时加载团队列表；仅在用户点击下拉时加载
         vm._teamsLoaded = false;
@@ -169,6 +174,36 @@
                     }
                 },
                 {
+                    mData: 'sendSms',
+                    title: '是否发送SMS',
+                    className: 'text-center',
+                    render: function (data, type, row) {
+                        var tid = row.templateId;
+                        return '<div class="form-check form-switch">' +
+                            '<input class="form-check-input patrol-sendSms-checkbox" style="width:4rem;height:1.4rem;cursor: pointer;" type="checkbox" data-tid="' + tid + '">' +
+                            '</div>';
+                    },
+                    createdCell: function (nTd) {
+                        var $cell = angular.element(nTd);
+                        var cb = $cell.find('input.patrol-sendSms-checkbox');
+                        var tid = cb.attr('data-tid');
+                        // 初始化勾选状态
+                        var checked = !!vm.sendSms[tid];
+                        cb.prop('checked', checked);
+                        // 未关联团队时，不允许开关，且默认关闭
+                        var hasTeam = !!(vm.selectedTeam[tid]);
+                        cb.prop('disabled', !hasTeam);
+
+                        cb.on('change', function () {
+                            var val = this.checked;
+                            $scope.$applyAsync(function () {
+                                vm.sendSms[tid] = val;
+                                onSendSmsToggle(tid, cb);
+                            });
+                        });
+                    }
+                },
+                {
                     mData: 'updatedAt',
                     title: $translate.instant('team.update_time'),
                     render: function (data) {
@@ -180,7 +215,7 @@
             $scope.tableConfig = {
                 data: [getAssignments, ''],
                 columns: columns,
-                order: [[2, 'desc']],
+                order: [[3, 'desc']],
                 buttons: ['reload']
             };
 
@@ -199,6 +234,12 @@
                     function buildRow(tpl, teamId, explicitName) {
                         var tid = teamId || '';
                         vm.selectedTeam[tpl.id] = tid;
+                        var defaultSms = !!tpl.sendSms;
+                        vm._sendSmsDefault[tpl.id] = defaultSms;
+                        // 仅对已有关联团队的模版应用默认sendSms；无团队时默认关闭
+                        var sms = (tpl.assignedToTeam && tid) ? defaultSms : false;
+                        vm.sendSms[tpl.id] = sms;
+                        vm._sendSmsPrev[tpl.id] = sms;
                         var name = tid ? (explicitName || tpl.teamName || (vm.teamLabelMap && vm.teamLabelMap[tid]) || (vm.teamOptionsMap && vm.teamOptionsMap[tid]) || '') : '';
                         return {
                             templateId: tpl.id,
@@ -206,7 +247,8 @@
                             description: tpl.description,
                             updatedAt: tpl.updatedAt || tpl.executedAt || tpl.createdAt,
                             teamId: tid,
-                            teamName: name
+                            teamName: name,
+                            sendSms: sms
                         };
                     }
 
@@ -285,10 +327,44 @@
                 return ops;
             }).then(function () {
                 messageService.toast('success', '保存成功');
+                // 根据是否已关联团队，启用/禁用短信开关，并设置该模版的默认值；不影响其他模版
+                var cb = angular.element(document.querySelector('input.patrol-sendSms-checkbox[data-tid="' + templateId + '"]'));
+                if (newTeamId) {
+                    var defVal = !!vm._sendSmsDefault[templateId];
+                    vm.sendSms[templateId] = defVal;
+                    vm._sendSmsPrev[templateId] = defVal;
+                    try { cb.prop('disabled', false); cb.prop('checked', defVal); } catch (e) {}
+                } else {
+                    vm.sendSms[templateId] = false;
+                    vm._sendSmsPrev[templateId] = false;
+                    try { cb.prop('checked', false); cb.prop('disabled', true); } catch (e) {}
+                }
             }).catch(function (err) {
                 messageService.toast('error', '保存失败', err && err.message ? err.message : '');
             }).finally(function () {
                 vm._saving[templateId] = false;
+            });
+        }
+
+        // 切换短信开关：调用模板更新接口，仅更新sendSms
+        function onSendSmsToggle(templateId, $checkboxEl) {
+            if (vm._savingSms[templateId]) return;
+            var newVal = !!vm.sendSms[templateId];
+            var prevVal = !!vm._sendSmsPrev[templateId];
+            vm._savingSms[templateId] = true;
+            try { if ($checkboxEl) { $checkboxEl.prop('disabled', true); } } catch (e) {}
+
+            cacTemplateService.updateTemplateSendSms(templateId, newVal).then(function () {
+                vm._sendSmsPrev[templateId] = newVal;
+                messageService.toast('success', '保存成功');
+            }).catch(function (err) {
+                // 失败则回滚UI
+                vm.sendSms[templateId] = prevVal;
+                try { if ($checkboxEl) { $checkboxEl.prop('checked', prevVal); } } catch (e) {}
+                messageService.toast('error', '保存失败', err && err.message ? err.message : '');
+            }).finally(function () {
+                vm._savingSms[templateId] = false;
+                try { if ($checkboxEl) { $checkboxEl.prop('disabled', false); } } catch (e) {}
             });
         }
     }
