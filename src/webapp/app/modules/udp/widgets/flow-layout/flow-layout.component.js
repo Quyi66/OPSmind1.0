@@ -223,12 +223,16 @@
             normalizeParams(that.theFlow);
         }
 
-        function deleteParam(param) {
-            normalizeParams(that.theFlow);
-            var index = that.theFlow.params.indexOf(param);
-            if (index > -1) {
-                that.theFlow.params.splice(index, 1);
+        function deleteParam(index) {
+            // 直接按索引删除，避免因 normalizeParams 产生新引用导致 indexOf 失效
+            if (!Array.isArray(that.theFlow.params)) {
+                return;
             }
+            if (typeof index !== 'number' || index < 0 || index >= that.theFlow.params.length) {
+                return;
+            }
+            that.theFlow.params.splice(index, 1);
+            // 删除后规范化，保持 globalParams/globalParamsJson 同步
             normalizeParams(that.theFlow);
         }
 
