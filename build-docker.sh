@@ -8,7 +8,7 @@ set -e
 # 配置变量
 IMAGE_NAME="oplus-web"
 BUILD_CONTEXT="."
-VERSION="1.1.12"   # 配置的版本号
+VERSION="1.1.13"   # 配置的版本号
 # TAG 直接使用配置的 VERSION，而不是 latest
 TAG="$VERSION"
 
