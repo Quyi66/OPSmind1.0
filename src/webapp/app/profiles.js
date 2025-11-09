@@ -6,7 +6,7 @@
         {
             // This is the default profile whose ID must be '$DEFAULT_PROFILE$'
             profileId: '$DEFAULT_PROFILE$',
-            name: "OPSmind",
+            name: "Oplus",
             apiBaseUrls: {
                 portal: '/oplus-portal',
                 com: '/oplus-portal/com',
@@ -75,7 +75,7 @@
         },
         {
             profileId: 'prod',
-            name: "OPSmind",
+            name: "Oplus",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",
@@ -108,7 +108,7 @@
         },
         {
             profileId: 'csdc',
-            name: "OPSmind",
+            name: "Oplus",
             ui: {
                 help: 'help/',
                 home: "app/modules/layout/home/home.html",

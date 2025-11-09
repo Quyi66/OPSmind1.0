@@ -1,4 +1,4 @@
-<p class="opx-doc-title" style="text-align:center;font-size:3rem;background-color:#eee; padding:0.25em 0.5em; font-weight:bold">OPSmind使用指南</p>
+<p class="opx-doc-title" style="text-align:center;font-size:3rem;background-color:#eee; padding:0.25em 0.5em; font-weight:bold">Oplus使用指南</p>
 
 <p class="opx-doc-version" style="text-align:right; padding-right:1em;">版本 3.0</p>
 
@@ -8,19 +8,19 @@
 
 [TOC]
 
-# OPSmind简介 
+# Oplus简介 
 
-![OPSmind Home](../src/webapp/help/_intro/images/README.png)
+![Oplus Home](../src/webapp/help/_intro/images/README.png)
 
-OPSmind是一个无代理模式的的自动化运维平台，可以助力完成系统巡检、漏洞扫描、软件包安装、用户权限管理、信息采集等运维工作的自动化。
+Oplus是一个无代理模式的的自动化运维平台，可以助力完成系统巡检、漏洞扫描、软件包安装、用户权限管理、信息采集等运维工作的自动化。
 
-OPSmind把IT运维长期经验，通过标准化功能场景提供给用户。同时OPSmind提供了强大的开发能力，用户可以通过低代码的开发方式进行功能定制，轻松打造符合自身特性的自动化功能。
+Oplus把IT运维长期经验，通过标准化功能场景提供给用户。同时Oplus提供了强大的开发能力，用户可以通过低代码的开发方式进行功能定制，轻松打造符合自身特性的自动化功能。
 
-OPSmind建立在业界领先的自动化运维工具Ansible之上，保留了Ansible开放、模块丰富、维护简便、扩展灵活的优势，又在上面进行了大量功能扩展，让Ansible使用更简便和规范，自动化操作更直观和场景化。OPSmind采用无代理、模块化的架构，可以适用不同规模的IT环境。这种非侵入式的架构，可以在不替换现有运维架构的情况下，广泛兼容现有的多种运维系统和工具，最大程度保护现有的IT投资。
+Oplus建立在业界领先的自动化运维工具Ansible之上，保留了Ansible开放、模块丰富、维护简便、扩展灵活的优势，又在上面进行了大量功能扩展，让Ansible使用更简便和规范，自动化操作更直观和场景化。Oplus采用无代理、模块化的架构，可以适用不同规模的IT环境。这种非侵入式的架构，可以在不替换现有运维架构的情况下，广泛兼容现有的多种运维系统和工具，最大程度保护现有的IT投资。
 
 ## 多类型设备接入
 
-依托Ansible强大的设备管理能力，OPSmind可以对物理机、虚拟机、网络设备等进行统一的自动化接入和管理。
+依托Ansible强大的设备管理能力，Oplus可以对物理机、虚拟机、网络设备等进行统一的自动化接入和管理。
 * 可以通过Excel等形式导入现有的设备信息，实现资产台账统一管理。
 * 提供标签、分组、动态条件等方式对设备进行多维度查询和管理。
 * 自动化采集设备信息，为企业CMDB或资产管理系统供准确可靠的数据。
@@ -28,7 +28,7 @@ OPSmind建立在业界领先的自动化运维工具Ansible之上，保留了Ans
 
 ## 统一的脚本和命令管理
 
-OPSmind可以对运维脚本和命令进行统一的规范化管理，提高复用率，降低维护成本，使得脚本、命令等成为IT资产的一部分。
+Oplus可以对运维脚本和命令进行统一的规范化管理，提高复用率，降低维护成本，使得脚本、命令等成为IT资产的一部分。
 * 为脚本扩展了目录、描述、参数等信息，方便脚本的管理和使用。
 * 支持脚本和命令的版本控制，记录所有的修改记录。
 * 支持审核发布流程，对脚本和命令进行上线管控，防止危险和恶意操作。
@@ -36,7 +36,7 @@ OPSmind可以对运维脚本和命令进行统一的规范化管理，提高复�
 
 ## 自动化作业
 
-OPSmind可以通过作业的形式来编排脚本、命令、Web Service等任务和流程，完成复杂的配置变更、数据采集、发布部署等自动化工作。
+Oplus可以通过作业的形式来编排脚本、命令、Web Service等任务和流程，完成复杂的配置变更、数据采集、发布部署等自动化工作。
 * 通过拖拽方式完成操作流程的编排。
 * 提供便利的工具查看执行进度和结果。
 * 支持作业的定时和自动运行。
@@ -44,7 +44,7 @@ OPSmind可以通过作业的形式来编排脚本、命令、Web Service等任�
 
 ## 低代码开发
 
-OPSmind提供强大的开发功能，以可视化的方式制作数据看板、报表、监视大屏、操作表单等常用的运维前端界面，解决运维中频繁的数据展示和用户交互需求。
+Oplus提供强大的开发功能，以可视化的方式制作数据看板、报表、监视大屏、操作表单等常用的运维前端界面，解决运维中频繁的数据展示和用户交互需求。
 * 可以从MySQL、Oracle、DB2、SQLServer、REST API等多种数据源获取数据并在页面展示。
 * 支持布局、表单输入、表格、图形、作业等40多种展示和操作组件。
 * 无需编程，采用所见即所得的可视化开发模式，运维人员经过简单培训可自行进行开发。
@@ -199,7 +199,7 @@ OPSmind提供强大的开发功能，以可视化的方式制作数据看板、�
 
 在左侧导航栏选择【自动化配置】，进入自动化配置界面，该页面分为自动化配置信息和`Ansilbe`连接配置。
 
-`Ansible`连接配置是针对`OPSmind`支持的自动化设备类型默认配置进行修改
+`Ansible`连接配置是针对`Oplus`支持的自动化设备类型默认配置进行修改
 ![](../src/webapp/help/acm/images/guide-acm-ansible.png)
 
 自动化配置是针对每一个自动化资产的默认连接配置进行修改
@@ -592,7 +592,7 @@ Playbook的主文件是`site.yml`，浏览到目录`demo/fetch-seclogs/site.yml`
 ### 特别变量
 
 在执行Playbook的时候，系统会增加以下特别变量：
-- `OPLUS_GFS_DIR`：文件库的目录路径，位于OPSmind主机的`/opt/oplus/assets/gfs/fs-repos/<tenant_id>`。
+- `OPLUS_GFS_DIR`：文件库的目录路径，位于Oplus主机的`/opt/oplus/assets/gfs/fs-repos/<tenant_id>`。
 - `OPLUS_SERVER`: oplus服务器ip
 - `OPLUS_TNT`: 租户ID
 - `OPLUS_RUN_ID`: 一键作业的runId
@@ -1261,7 +1261,7 @@ Tower的[Job Isolation](https://docs.ansible.com/ansible-tower/latest/html/userg
 # 系统巡检 
 
 巡检可以对远程主机进行安全合规、系统和应用健康等方面的检查。
-OPSmind通过在远程主机上执行脚本或命令完成巡检。巡检的主要功能包括：
+Oplus通过在远程主机上执行脚本或命令完成巡检。巡检的主要功能包括：
 
 - **定义巡检模板**：在哪些机器上，执行哪些脚本
 
@@ -4507,7 +4507,7 @@ A：基于和上一次扫描的结果进行比对，如果有变化则报警。
 
 ### 扫描频率
 Q：是类似监控吗？  
-A：OPSmind 底层执行engine基于aap（ansible），由于aap（ansible）采用SSH协议，所以不适合频繁扫描，建议扫描频率设置为每天一次。
+A：Oplus 底层执行engine基于aap（ansible），由于aap（ansible）采用SSH协议，所以不适合频繁扫描，建议扫描频率设置为每天一次。
 
 ### 系统性能
 Q：执行这些监测的时候，会不会影响系统性能？   
