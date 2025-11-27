@@ -1595,6 +1595,22 @@
                             //     result.push(f);
                             // });
                         });
+                        
+                        // 在纳管IP字段后面插入"是否需要重启"字段（仅ACM资产列表）
+                        var isAcmCiDataset = dataset && dataset.id && dataset.id.indexOf('ACM_CI') === 0;
+                        var ipIndex = _.findIndex(result, {field: 'IP'});
+                        if (isAcmCiDataset && ipIndex >= 0) {
+                            var hasNeedReboot = _.find(result, {field: 'needReboot'});
+                            if (!hasNeedReboot) {
+                                var needRebootField = {
+                                    field: 'needReboot',
+                                    label: '是否需要重启',
+                                    convertFn: "js:${needReboot} ? '<span class=\"text-danger\">是</span>' : '<span class=\"text-success\">否</span>'"
+                                };
+                                result.splice(ipIndex + 1, 0, needRebootField);
+                            }
+                        }
+                        
                         // console.log(JSON.stringify(result));
                         return result;
                     }
