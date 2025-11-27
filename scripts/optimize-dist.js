@@ -183,6 +183,18 @@ class DistOptimizer {
         let removedSize = 0;
         let removedCount = 0;
 
+        // 读取 index.html 获取所有被引用的脚本文件
+        const indexHtmlPath = path.join(this.distPath, 'index.html');
+        let referencedScripts = new Set();
+        if (fs.existsSync(indexHtmlPath)) {
+            const indexHtml = fs.readFileSync(indexHtmlPath, 'utf-8');
+            const scriptMatches = indexHtml.match(/src="([^"]+\.js)"/g) || [];
+            scriptMatches.forEach(match => {
+                const src = match.match(/src="([^"]+)"/)[1];
+                referencedScripts.add(src.replace(/^\//, '')); // 移除开头的斜杠
+            });
+        }
+
         for (const [hash, files] of this.duplicates) {
             if (files.length > 1) {
                 console.log(`\n📋 发现重复文件 (${files.length}个):`);
@@ -192,16 +204,20 @@ class DistOptimizer {
 
                 // 检查是否包含重要的业务文件，如果是则跳过
                 const hasImportantFiles = files.some(file => {
+                    // 检查是否被 index.html 引用
+                    const normalizedPath = file.relativePath.replace(/\\/g, '/');
+                    if (referencedScripts.has(normalizedPath)) {
+                        return true;
+                    }
+                    
                     const importantPatterns = [
-                        /.*-controller\.js$/i,  // 保留所有controller文件
                         /jao-demo\.js$/i,       // 保留jao-demo.js
-                        /app\/modules\/.*\.js$/i // 保留app/modules下的JS文件
                     ];
                     return importantPatterns.some(pattern => pattern.test(file.relativePath));
                 });
 
                 if (hasImportantFiles) {
-                    console.log(`   ⚠️  跳过删除: 包含重要业务文件`);
+                    console.log(`   ⚠️  跳过删除: 包含重要业务文件或被index.html引用`);
                     continue;
                 }
 

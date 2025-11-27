@@ -5,8 +5,9 @@ FROM nginx:alpine
 LABEL maintainer="oplus-team"
 LABEL description="Oplus Web Application with Nginx"
 
-# 删除默认的nginx配置文件
-RUN rm /etc/nginx/conf.d/default.conf
+# 删除默认的nginx配置文件，创建模板目录
+RUN rm /etc/nginx/conf.d/default.conf && \
+    mkdir -p /etc/nginx/templates
 
 # 复制自定义nginx配置文件
 COPY nginx-config/oplus-web.conf /etc/nginx/conf.d/
