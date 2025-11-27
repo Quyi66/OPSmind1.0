@@ -136,7 +136,7 @@
             {{ 'common.entity.action.back' | translate}}
         </button>
         <button class="btn btn-primary pull-right" style="margin-right: 6px;" ng-click="vm.save()"
-                ng-disabled="(!vm.cron.jobId && vm.ccfIds.length < 1) || !vm.cron.jobType || !vm.cron.scheduleConf || !vm.cron.jobDesc || !vm.cron.logOutput || !vm.cron.isEncrypt || (vm.cron.jobType === 'cac' && !vm.cron.selectedTeamId)">
+                ng-disabled="(!vm.cron.jobId && vm.ccfIds.length < 1) || !vm.cron.jobType || !vm.cron.scheduleConf || !vm.cron.jobDesc || !vm.cron.logOutput || !vm.cron.isEncrypt">
             <i class="fa fa-check"></i>
             {{ 'common.entity.action.save' | translate}}
         </button>

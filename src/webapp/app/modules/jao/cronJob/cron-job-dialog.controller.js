@@ -138,6 +138,7 @@
                 }
             });
             vm.cron.jobId = '';//清空
+            vm.ccfIds = [];//清空多选项
             getJobsData(vm.cron.jobType);
         };
 

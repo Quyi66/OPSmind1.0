@@ -12,4 +12,5 @@ if [ ! -f "$template" ]; then
     exit 1
 fi
 
-envsubst '$BACKEND_URL' < "$template" > "$output"
+# 使用 sed 替代 envsubst，避免依赖 gettext
+sed "s|\${BACKEND_URL}|${BACKEND_URL}|g" "$template" > "$output"
