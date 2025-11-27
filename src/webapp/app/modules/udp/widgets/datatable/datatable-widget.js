@@ -88,7 +88,7 @@
         // **There is no such issue in Edge and IE 11.**
         // After hours of investigation, I doubt there is some bug of DataTables in Chrome to calculate the table size.
         // Therefore, for the reason both of performance and UX, use responsive columns are needed.
-        var FORCE_RESPONSIVE_COLUMNS = 20;
+        var FORCE_RESPONSIVE_COLUMNS = 21;
 
         widgetFactory.defineWidget({
             type: 'datatable',
