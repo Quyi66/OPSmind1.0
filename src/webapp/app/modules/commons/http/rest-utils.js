@@ -364,7 +364,26 @@
                     // if ($state.current.name !== 'login_main') {
                     messageService.toast('error', $translate.instant('common.rest.no_access'), errMsg);
                     currentUser.clearUserInfo();
-                    $state.go('app.login_main');
+                    
+                    // 优先通知父级Vue应用处理登录，如果不在iframe中则跳转本地登录页
+                    if (window.parent && window.parent !== window) {
+                        try {
+                            window.parent.postMessage({
+                                type: 'OPLUS_AUTH_REQUIRED',
+                                source: 'angular-iframe',
+                                reason: resp.status === 401 ? 'token_expired' : 'invalid_license',
+                                status: resp.status,
+                                message: errMsg,
+                                timestamp: Date.now()
+                            }, '*');
+                            console.log('%c[Angular->Vue] 认证过期，已通知父级Vue应用', 'color:orange');
+                        } catch (e) {
+                            console.warn('[Angular->Vue] postMessage发送失败:', e);
+                            $state.go('app.login_main');
+                        }
+                    } else {
+                        $state.go('app.login_main');
+                    }
                     // }
                 }
                 return translateError(error);
