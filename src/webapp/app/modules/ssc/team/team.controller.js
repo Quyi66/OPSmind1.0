@@ -20,9 +20,9 @@
         function controlQuery() {
             var tableColumnConfig =
                 [
-                    {mData: 'name', title: $translate.instant('team.name')},
-                    {mData: 'code', title: $translate.instant('team.code')},
-                    {mData: 'description', title: $translate.instant('team.description')},
+                    { mData: 'name', title: $translate.instant('team.name') },
+                    { mData: 'code', title: $translate.instant('team.code') },
+                    { mData: 'description', title: $translate.instant('team.description') },
                     {
                         mData: 'updatedAt',
                         title: $translate.instant('team.update_time'),
@@ -42,9 +42,9 @@
                         // orderable: false,
                         render: function (data, type, row, meta) {
                             // var param = angular.toJson({id: row.id, tenant_id: row.tenantId, name: row.name});
-                            var id = angular.toJson({id: row.id});
+                            var id = angular.toJson({ id: row.id });
                             return ' <button type="submit" ui-sref=app.ssc.config.team.edit(' + id + ') class="btn btn-default btn-sm">' +
-                                '     <span class="hidden-sm-down" data-translate="common.action.edit"></span>' +
+                                '     <span class="hidden-sm-down">授权应用</span>' +
                                 ' </button>' +
                                 ' <button type="submit" ui-sref=app.ssc.config.team.delete(' + id + ') class="btn btn-danger btn-sm">' +
                                 '     <span class="hidden-sm-down" data-translate="common.action.delete"></span>' +
