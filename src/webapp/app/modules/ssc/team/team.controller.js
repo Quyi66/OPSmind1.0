@@ -44,7 +44,7 @@
                             // var param = angular.toJson({id: row.id, tenant_id: row.tenantId, name: row.name});
                             var id = angular.toJson({ id: row.id });
                             return ' <button type="submit" ui-sref=app.ssc.config.team.edit(' + id + ') class="btn btn-default btn-sm">' +
-                                '     <span class="hidden-sm-down">授权应用</span>' +
+                                '     <span class="hidden-sm-down">编辑</span>' +
                                 ' </button>' +
                                 ' <button type="submit" ui-sref=app.ssc.config.team.delete(' + id + ') class="btn btn-danger btn-sm">' +
                                 '     <span class="hidden-sm-down" data-translate="common.action.delete"></span>' +
