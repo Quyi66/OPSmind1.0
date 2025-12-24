@@ -38,7 +38,7 @@
          * @returns {*}
          */
         this.findByDatasource = function (datasource, params) {
-            return restUtils.callApi(module, 'GET', '/api/dts/datasets/datasource/{datasource}', {datasource: datasource}, params);
+            return restUtils.callApi(module, 'GET', '/api/dts/datasets/datasource/{datasource}', { datasource: datasource }, params);
         };
 
 
@@ -48,7 +48,7 @@
          * @returns {*}
          */
         this.findDataset = function (id) {
-            return restUtils.callApi(module, 'GET', '/api/dts/datasets/{id}', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/dts/datasets/{id}', { id: id });
         };
 
         /**
@@ -70,7 +70,7 @@
          * @returns {*}
          */
         this.deleteDataset = function (id) {
-            return restUtils.callApi(module, 'DELETE', '/api/dts/datasets/{id}', {id: id});
+            return restUtils.callApi(module, 'DELETE', '/api/dts/datasets/{id}', { id: id });
         };
 
         /**
@@ -79,7 +79,7 @@
          */
         this.copyDataset = function (id, code) {
 
-            return restUtils.callApi(module, 'GET', '/api/dts/datasets/copy/{id}', {id: id}, {
+            return restUtils.callApi(module, 'GET', '/api/dts/datasets/copy/{id}', { id: id }, {
                 code: code, userId: currentUser.loginId, userName: currentUser.displayName
             });
         };
@@ -101,7 +101,7 @@
          */
         this.queryDatasetMeta = function (code, params) {
             //TODO: remove GET?
-            if (!params) return restUtils.callApi(module, 'GET', '/api/dts/q/meta/{code}/', {code: code}); else return restUtils.callApi(module, 'POST', '/api/dts/q/meta/{code}/', {code: code}, {
+            if (!params) return restUtils.callApi(module, 'GET', '/api/dts/q/meta/{code}/', { code: code }); else return restUtils.callApi(module, 'POST', '/api/dts/q/meta/{code}/', { code: code }, {
                 params: params, page: 1, size: 10
             });
         };
@@ -116,11 +116,17 @@
         this.queryDataset = function (code, params, pagination) {
             /*params['tenant']  = currentUser.tenant;*/
             // Become a fuzzy search
-            if (pagination && pagination.filter && pagination.filter.indexOf(":") !== -1) {
-                pagination.filter = pagination.filter.replace(/([^:]+)$/, '*$1*');
+            if (pagination && pagination.filter) {
+                if (pagination.filter.indexOf(":") !== -1) {
+                    // 如果 filter 包含字段名（如 template_name:根据），添加模糊搜索通配符
+                    pagination.filter = pagination.filter.replace(/([^:]+)$/, '*$1*');
+                } else {
+                    // 如果 filter 是纯搜索值（没有字段名前缀），包装为模糊搜索格式
+                    pagination.filter = '*' + pagination.filter + '*';
+                }
             }
-            var obj = angular.extend({params: params}, pagination);
-            return restUtils.callApi(module, 'POST', '/api/dts/q/data/{code}/', {code: code}, obj);
+            var obj = angular.extend({ params: params }, pagination);
+            return restUtils.callApi(module, 'POST', '/api/dts/q/data/{code}/', { code: code }, obj);
         };
 
 
