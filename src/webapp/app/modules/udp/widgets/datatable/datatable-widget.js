@@ -176,7 +176,7 @@
             scope.uwProps.fields = scope.uwProps.fields || [];
             scope.uwProps.display = scope.uwProps.display || {};
             scope.rules = scope.uwProps.display.rules = scope.uwProps.display.rules || [];
-            scope.current = {index: 0};
+            scope.current = { index: 0 };
             // scope.cssList = [{css: 'pre', label: $translate.instant('udp.w.datatable.css_pre')}, {css: 'code', label: $translate.instant('udp.w.datatable.css_code')}];
             scope.previewFieldsData = previewFieldsData;
             scope.addField = addField;
@@ -248,7 +248,7 @@
             }
 
             function addField() {
-                scope.inserted = {field: '', label: undefined};
+                scope.inserted = { field: '', label: undefined };
                 scope.uwProps.fields.push(scope.inserted);
                 scope.current.index = scope.uwProps.fields.length - 1;
             }
@@ -263,7 +263,7 @@
                     if (!_.find(scope.uwProps.fields, function (f) {
                         return f['field'] === field.name;
                     })) {
-                        scope.uwProps.fields.push({field: field.name/*, alias: field.alias || undefined*/});
+                        scope.uwProps.fields.push({ field: field.name/*, alias: field.alias || undefined*/ });
                     }
                 });
             }
@@ -333,7 +333,7 @@
                     if (f.accum) {
                         th.attr({
                             'data-accum': f.accum,
-                            'data-format': JSON.stringify({type: f.type, formatter: f.formatter, scale: f.scale})
+                            'data-format': JSON.stringify({ type: f.type, formatter: f.formatter, scale: f.scale })
                         });
                     }
                     tfoot += th.prop('outerHTML');
@@ -452,7 +452,7 @@
                 var tbodyHeight = calcFlexBodyHeight(content, body, footer);
                 var display = {};
                 display.bodyHeight = tbodyHeight;
-                widgetUiHelper.upgradeWidgetProps(element, {display: display});
+                widgetUiHelper.upgradeWidgetProps(element, { display: display });
                 //https://datatables.net/forums/discussion/22810/dynamically-changing-the-height-of-the-sscrolly
                 $('.dataTables_scrollBody', element).outerHeight(display.bodyHeight).css('max-height', '');
             }
@@ -500,7 +500,7 @@
                 rules = display.rules;
             display.autoWidth = true;
             // pivot = props.pivot || {};
-            var mcheckField = _.find(props.fields, {mcheck: true});
+            var mcheckField = _.find(props.fields, { mcheck: true });
             scope.openCustomFilter = openCustomFilter;
             scope.refreshTable = refreshTable;
             scope.serverExport = serverExport;
@@ -567,9 +567,9 @@
 
 
             function checkShowFileColumn(columns) {
-               return !!_.find(columns, function (e) {
-                   return e.searchable;
-               });
+                return !!_.find(columns, function (e) {
+                    return e.searchable;
+                });
             }
 
             function toggleColumnFilter() {
@@ -593,7 +593,7 @@
                             if (!value && f.dataSsp) {
                                 value = '`' + f.dataSsp + '`';
                             }
-                            exportColumns.push({label: f.label || f.field, value: value || ''});
+                            exportColumns.push({ label: f.label || f.field, value: value || '' });
                         }
                     });
                     var columnSearchValues = {};
@@ -683,7 +683,7 @@
                             });
                         }
                     });
-                    this.filter = getTableSettings()._customFilter || {type: PRECISE};
+                    this.filter = getTableSettings()._customFilter || { type: PRECISE };
                     this.columns = columns;
                     this.cancel = function cancel() {
                         instance.dismiss('cancel');
@@ -785,7 +785,7 @@
                                 if (mcheckCIType) {
                                     //TODO: rename key to value, rename value to label
                                     //TODO: do not hard code assetType!
-                                    itemArray.push({"key": value, "value": label, "assetType": mcheckCIType});
+                                    itemArray.push({ "key": value, "value": label, "assetType": mcheckCIType });
                                     scope._selectedItems.push({
                                         "key": value,
                                         "value": label,
@@ -793,8 +793,8 @@
                                     });
 
                                 } else {
-                                    itemArray.push({"key": value, "value": label});
-                                    scope._selectedItems.push({"key": value, "value": label});
+                                    itemArray.push({ "key": value, "value": label });
+                                    scope._selectedItems.push({ "key": value, "value": label });
                                 }
 
 
@@ -839,7 +839,7 @@
                     pageParams[paramName + "_labels"] = labelVal;
                     // Do not use itemArray directly since it may share reference with pageParams
                     // scope.selectedItems = [].concat(itemArray);
-                    widgetInteraction.changePageParams(scope, {changeUrl: false, params: changed});
+                    widgetInteraction.changePageParams(scope, { changeUrl: false, params: changed });
                 }
             }
 
@@ -1086,12 +1086,12 @@
                     element.find('.uw-params').appendTo(element.find('.js-dt-custctrls'));
                     // Append dropdown list to custom filter
                     var $dtFilter = element.find('.dataTables_filter');
-                    var btnFilter = '', btnRefresh = '', btnServerExport = '', btnColumnFilter ='';
+                    var btnFilter = '', btnRefresh = '', btnServerExport = '', btnColumnFilter = '';
                     if (dataset.serverPage) {
-                        var colTitles = _.map(_.filter(columns, {searchable: true}), function (o) {
+                        var colTitles = _.map(_.filter(columns, { searchable: true }), function (o) {
                             return o._title;
                         });
-                        var searchHtml = '<input type="search" class="js-cust-global-search form-control __form-control-sm" title="' + $translate.instant('udp.w.datatable.search_desc', {fields: colTitles.join(', ')}) + '">';
+                        var searchHtml = '<input type="search" class="js-cust-global-search form-control __form-control-sm" title="' + $translate.instant('udp.w.datatable.search_desc', { fields: colTitles.join(', ') }) + '">';
 
                         $dtFilter.find('input').replaceWith(searchHtml);
                         // element.find('.js-dt-filter-zone').attr('disabled', 'disabled');
@@ -1106,7 +1106,7 @@
                     if (dataset.serverPage && display.showexport) {
                         btnServerExport = '<button type="button" class="btn btn-default opx-btn-icon opx-btn-flat" ng-click="serverExport()" title="{{\'udp.w.datatable.action.export\'|translate}}"><i class="far fa-file-export"></i></button>';
                     }
-                    if (display.exfilter){
+                    if (display.exfilter) {
                         // 字段设定中，若不存在可搜索字段则不显示字段搜索按钮
                         // btnColumnFilter = '<button type="button" ng-show="isColumnFilterButtonOpen" class="btn btn-default opx-btn-icon opx-btn-flat text-muted js-col-filter ms-0" title="{{udp.w.datatable.action.search_by_column|translate}}" ng-click="toggleColumnFilter()"><i ng-class="isColumnFilterOpen?\'text-primary fa fa-filter\':\'far fa-filter\'" style="font-size:12px;"></i></button>';
                         btnColumnFilter = '<button type="button" class="btn btn-default opx-btn-icon opx-btn-flat text-muted js-col-filter ms-0" title="{{udp.w.datatable.action.search_by_column|translate}}" ng-click="toggleColumnFilter()"><i ng-class="isColumnFilterOpen?\'text-primary fa fa-filter\':\'far fa-filter\'" style="font-size:12px;"></i></button>';
@@ -1266,14 +1266,14 @@
                                     var checkedArray = _.compact(_.map(scope._selectedItems, "key"));
                                     if (checkedArray.length > 0) {
                                         if (checkedArray.indexOf(dataValue) === -1) {
-                                            scope._selectedItems.push({"key": dataValue, "value": dataLabel});
+                                            scope._selectedItems.push({ "key": dataValue, "value": dataLabel });
                                             pageParams[mcheckField.mcheckParam + "_labels"] = _.map(scope._selectedItems, "key");
                                         }
                                     } else {
                                         if (scope._selectedItems.indexOf(dataValue) === -1) {
                                             // scope._selectedItems.push(dataValue);
                                             // pageParams[mcheckField.mcheckParam + "_labels"] = scope._selectedItems;
-                                            scope._selectedItems.push({"key": dataValue, "value": dataLabel});
+                                            scope._selectedItems.push({ "key": dataValue, "value": dataLabel });
                                             pageParams[mcheckField.mcheckParam + "_labels"] = _.map(scope._selectedItems, "key");
                                         }
                                     }
@@ -1290,7 +1290,7 @@
                                     return dataLabel;
                                 }, function () {
                                     return state;
-                                }, {isLegacy: true, checked: isChecked}
+                                }, { isLegacy: true, checked: isChecked }
                                 );
 
                                 // return '<div class="checkbox checkbox-inline" title="' + dataLabel + '">' +
@@ -1323,7 +1323,7 @@
                                         converted = widgetDataUtil.convertFields([row], [{
                                             source: f.field,
                                             convertFn: f.convertFn
-                                        }], null, {includeAllFields: false})[0];
+                                        }], null, { includeAllFields: false })[0];
                                         converted = _.values(converted)[0];
                                         if (f.formatter || f.scale) {
                                             converted = formatData(f, converted);
@@ -1455,11 +1455,11 @@
                 var dynamicField = getDynamicField(props);
                 if (dynamicField) {
                     // var ddRes = dataEx.evalVarExpr(dynamicField.dynamicDef, pageDataUtil.getPageScopeValues(scope));
-                    var ddRes = dataEx.evalVarExpr(dynamicField.dynamicDef, pageDataUtil.getPageScopeValues(scope), {errorForUnresolvedVar: true});
+                    var ddRes = dataEx.evalVarExpr(dynamicField.dynamicDef, pageDataUtil.getPageScopeValues(scope), { errorForUnresolvedVar: true });
                     if (!ddRes) {
-                        throw new Error($translate.instant('udp.w.datatable.error.dynamicdef_eval_failed', {def: dynamicField.dynamicDef}));
+                        throw new Error($translate.instant('udp.w.datatable.error.dynamicdef_eval_failed', { def: dynamicField.dynamicDef }));
                     } else if (ddRes instanceof UnresolvedVarError) {
-                        throw new Error($translate.instant('udp.w.datatable.error.dynamicdef_unresolved_var', {message: ddRes.message}));
+                        throw new Error($translate.instant('udp.w.datatable.error.dynamicdef_unresolved_var', { message: ddRes.message }));
                     } else if (angular.isFunction(ddRes.then)) {
                         // This is promise
                         ddRes.then(function (result) {
@@ -1487,7 +1487,7 @@
                  * @param defer
                  */
                 function calcDynamicFields(dfieldDefs, defer) {
-                    queryData({length: 10, start: 0}, []).then(function (data) {
+                    queryData({ length: 10, start: 0 }, []).then(function (data) {
                         dynamicInitData = data;
                         var records = data.data;
                         var sampleRecord;
@@ -1526,7 +1526,7 @@
                             }
                             // Iterate fields from dynamic data
                             var dfields = [], otherfields = [];
-                            var wildcard = _.find(dfieldDefs, {field: '*'}) || {};
+                            var wildcard = _.find(dfieldDefs, { field: '*' }) || {};
                             var recordProps = Object.keys(record);
                             dfieldDefs.forEach(function (df) {
                                 if (df.field === '*') {
@@ -1539,9 +1539,9 @@
                             if (!wildcard.hide) {
                                 recordProps.forEach(function (recField) {
                                     if (recField.indexOf(VFIELD) !== 0) {
-                                        var item = _.find(dfields, {field: recField});
+                                        var item = _.find(dfields, { field: recField });
                                         if (!item) {
-                                            otherfields.push({field: recField});
+                                            otherfields.push({ field: recField });
                                         }
                                     }
                                 });
@@ -1745,7 +1745,7 @@
                     _timer.$compile = (_timer.$compile || 0) + (Date.now() - begin);
                 } else {
                     if (rules && rules.length > 0) {
-                        conditionalFormat.evaluateRules(rules, data, {/*$row$: dataIndex + 1*/},
+                        conditionalFormat.evaluateRules(rules, data, {/*$row$: dataIndex + 1*/ },
                             function (itemIndex, rule) {
                                 if (rule.theme === '_CUSTOM') {
                                     $row.css('background-color', rule.backColor)
@@ -1796,7 +1796,7 @@
                         attr = attr.replace(/\n/g, '\\\\n');
                         attr = upgradeOldQuotedVars(attr);
                         try {
-                            config = dataEx.evalVarJson(attr, values, {toEvalObject: true});
+                            config = dataEx.evalVarJson(attr, values, { toEvalObject: true });
                             if (angular.isString(config)) {
                                 config = JSON.parse(config);
                             }
@@ -1806,13 +1806,13 @@
                             return;
                         }
                         // widgetInteraction.handleInteraction(scope, config, widgetDataUtil.getPageScopeValues(scope), {element: e.currentTarget});
-                        widgetInteraction.handleInteraction(scope, config, values, {element: e.currentTarget});
+                        widgetInteraction.handleInteraction(scope, config, values, { element: e.currentTarget });
                         return;
                     }
                     // For compatible with old setting
                     attr = elem.attr('udp-page-link');
                     if (attr) {
-                        widgetInteraction.openPage(JSON.parse(attr), {}, {current: e.currentTarget});
+                        widgetInteraction.openPage(JSON.parse(attr), {}, { current: e.currentTarget });
                     }
 
                     function upgradeOldQuotedVars(expr) {
@@ -1859,7 +1859,7 @@
                         if (config.click === 'param') {
                             widgetInteraction.changePageParams(scope, config, data);
                         } else if (config.click === 'page') {
-                            widgetInteraction.openPage(config, data, {current: e.currentTarget});
+                            widgetInteraction.openPage(config, data, { current: e.currentTarget });
                         }
                         e.stopPropagation();
                     });
@@ -1887,8 +1887,14 @@
                     queryData(dataToServer, allFields).then(function (data) {
                         processData(data);
                     }).catch(function (err) {
-                        // console.error(err);
-                        throw err;
+                        // 当数据加载失败时，需要调用 callback 传入空数据来关闭 processing 指示器
+                        callback({
+                            draw: dataToServer.draw,
+                            data: [],
+                            recordsTotal: 0,
+                            recordsFiltered: 0
+                        });
+                        console.error('DataTable ajax error:', err);
                     });
 
                 }
@@ -1942,7 +1948,13 @@
                         params: JSON.stringify(params),
                         message: e.message
                     });
-                    widgetUiHelper.showWidgetError(element, msg, $translate.instant('udp.wc.dataset.error_title', {dataset: dataset.id}));
+                    widgetUiHelper.showWidgetError(element, msg, $translate.instant('udp.wc.dataset.error_title', { dataset: dataset.id }));
+                    // 返回空数据结构以便 DataTable 能正确处理错误情况
+                    d.resolve({
+                        data: [],
+                        recordsTotal: 0,
+                        recordsFiltered: 0
+                    });
                 });
                 return d.promise;
 

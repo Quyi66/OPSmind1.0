@@ -17,9 +17,9 @@
             "job_id": $stateParams.jobId
         }
         vm.jobStatus = {
-            "OK": {title: $translate.instant('cac.result.status.ok'), style: 'success'},
-            "RUNNING": {title: $translate.instant('cac.result.status.running'), style: 'primary'},
-            "ERROR": {title: $translate.instant('cac.result.status.error'), style: 'danger'}
+            "OK": { title: $translate.instant('cac.result.status.ok'), style: 'success' },
+            "RUNNING": { title: $translate.instant('cac.result.status.running'), style: 'primary' },
+            "ERROR": { title: $translate.instant('cac.result.status.error'), style: 'danger' }
         };
 
         vm.views = {
@@ -62,21 +62,21 @@
                     that.deleteCheckWhiteList = deleteCheckWhiteList;
 
                     function cancel() {
-                        $uibModalInstance.close({action: "cancel"});
+                        $uibModalInstance.close({ action: "cancel" });
                     }
 
                     var tableColumnConfig = [
-                        {mData: 'templateName', title: $translate.instant('cac.white_list.template_name')},
-                        {mData: 'hostKey', title: $translate.instant('cac.white_list.host_name')},
-                        {mData: 'checkName', title: $translate.instant('cac.profile.check_item')},
-                        {mData: 'scriptPath', title: $translate.instant('cac.white_list.patrol_script_path')},
+                        { mData: 'templateName', title: $translate.instant('cac.white_list.template_name') },
+                        { mData: 'hostKey', title: $translate.instant('cac.white_list.host_name') },
+                        { mData: 'checkName', title: $translate.instant('cac.profile.check_item') },
+                        { mData: 'scriptPath', title: $translate.instant('cac.white_list.patrol_script_path') },
                         {
                             mData: 'id', title: $translate.instant('cac.white_list.operate'),
                             className: 'text-center',
                             searchable: false,
                             orderable: false,
                             render: function (data, type, row, meta) {
-                                var id = angular.toJson({id: row.id});
+                                var id = angular.toJson({ id: row.id });
                                 return '<div class="btn-group">' +
                                     ' <button type="button" class="btn btn-default btn-sm" ng-click=\'$ctrl.deleteCheckWhiteList(' + id + ')\' title="' + $translate.instant("cac.profile.remove_white_list") + '">' +
                                     '   <i class="fa fa-trash-alt"></i>' +
@@ -100,7 +100,7 @@
                     function deleteCheckWhiteList(id) {
                         messageService.confirm($translate.instant('common.entity.delete.title'), $translate.instant("cac.profile.remove_white_list"), function () {
                             cacService.deleteCheckWhiteList(id).then(function (data) {
-                                $uibModalInstance.close({action: "cancel"});
+                                $uibModalInstance.close({ action: "cancel" });
                                 $timeout(function () {
                                     vm.checkWhiteList();
                                 }, 100);
@@ -155,7 +155,7 @@
 
         function changeResultView() {
             if (vm.views.resultView === "list") {
-                $state.go("app.cac.result", {jobId: vm.views.job.id});
+                $state.go("app.cac.result", { jobId: vm.views.job.id });
                 vm.views.resultView = "outline";
             } else {
                 $state.go("app.cac.result.output", {
@@ -226,33 +226,33 @@
             event.preventDefault();//使a自带的方法失效，即无法调整到href中的URL（防止跳转页面）
 
             var instance = $uibModal.open({
-                template: '<div class="modal-header">'+
-                    '<button type="button" class="btn-close" data-dismiss="modal" title="'+$translate.instant('common.file.close_prompt')+'" ng-click="$ctrl.cancel()" style="margin-left: 95%;"></button>' +
+                template: '<div class="modal-header">' +
+                    '<button type="button" class="btn-close" data-dismiss="modal" title="' + $translate.instant('common.file.close_prompt') + '" ng-click="$ctrl.cancel()" style="margin-left: 95%;"></button>' +
                     '</div>' +
                     '<div class="modal-body">' +
                     '<div class="op-blank-slate">' +
                     '<div class="op-blank-slate-icon">' +
                     '<i class="fa fa-4x fa-pulse fa-spinner fa-fw"></i>' +
                     '</div>' +
-                    '<p class="op-flashing-text">'+$translate.instant('common.file.file_downloading')+'</p>' +
+                    '<p class="op-flashing-text">' + $translate.instant('common.file.file_downloading') + '</p>' +
                     '</div>' +
                     '</div>',
-                controller: ['$scope','$uibModalInstance',downloadExcel],
+                controller: ['$scope', '$uibModalInstance', downloadExcel],
                 controllerAs: '$ctrl',
                 size: 'sm',
                 backdrop: 'static'
             });
 
-            function downloadExcel($scope,$uibModalInstance){
+            function downloadExcel($scope, $uibModalInstance) {
                 var _downloadExcel = this;
 
                 _downloadExcel.$onInit = initDownloadExcel;
                 _downloadExcel.cancel = cancel;
                 function cancel() {
-                    $uibModalInstance.close({action: "cancel"});
+                    $uibModalInstance.close({ action: "cancel" });
                 }
 
-                function initDownloadExcel(){
+                function initDownloadExcel() {
                     var url = window.$oplus.appConfig.apiBaseUrls.cac + '/api/cac/v2/results/export/' + jobId;//请求的URl
                     var xhr = new XMLHttpRequest();//定义http请求对象
                     xhr.open("GET", url, true);
@@ -573,17 +573,25 @@
 
 
     //滚动指令
-    cacModule.directive('whenScrolled', function () {
+    cacModule.directive('whenScrolled', ['$timeout', function ($timeout) {
         return function (scope, elm, attr) {
             // 内层DIV的滚动加载
             var raw = elm[0];
+            var scrollPending = false; // 防止重复触发
             elm.bind('scroll', function () {
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight - 5) {
-                    scope.$apply(attr.whenScrolled);
+                    // 使用 $timeout 安全地触发 digest 循环，避免 $digest already in progress 错误
+                    if (!scrollPending) {
+                        scrollPending = true;
+                        $timeout(function () {
+                            scope.$eval(attr.whenScrolled);
+                            scrollPending = false;
+                        }, 0);
+                    }
                 }
             });
         };
-    });
+    }]);
 
 
 })();

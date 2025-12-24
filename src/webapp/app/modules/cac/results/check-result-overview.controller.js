@@ -7,9 +7,9 @@
 
     //主控制器
     cacModule.controller('CheckResultOverviewCtrl', CheckResultOverviewCtrl);
-    CheckResultOverviewCtrl.$inject = ['CheckResultService', '$http','currentUser', '$scope', 'cacService', '$timeout', '$state', '$stateParams', '$uibModal', '$translate','CacCheckLogService'];
+    CheckResultOverviewCtrl.$inject = ['CheckResultService', '$http', 'currentUser', '$scope', 'cacService', '$timeout', '$state', '$stateParams', '$uibModal', '$translate', 'CacCheckLogService'];
 
-    function CheckResultOverviewCtrl(CheckResultService, $http,currentUser, $scope, cacService, $timeout, $state, $stateParams, $uibModal, $translate,CacCheckLogService) {
+    function CheckResultOverviewCtrl(CheckResultService, $http, currentUser, $scope, cacService, $timeout, $state, $stateParams, $uibModal, $translate, CacCheckLogService) {
         var vm = this;
         var logId = $stateParams.logId;
 
@@ -18,10 +18,10 @@
         }
 
         vm.status = {
-            "OK": {title: $translate.instant('cac.result.status.ok'), style: 'success'},
-            "RUNNING": {title: $translate.instant('cac.result.status.running'), style: 'primary'},
-            "SUCCESS": {title: $translate.instant('cac.result.status.ok'), style: 'success'},
-            "ERROR": {title: $translate.instant('cac.result.status.error'), style: 'danger'}
+            "OK": { title: $translate.instant('cac.result.status.ok'), style: 'success' },
+            "RUNNING": { title: $translate.instant('cac.result.status.running'), style: 'primary' },
+            "SUCCESS": { title: $translate.instant('cac.result.status.ok'), style: 'success' },
+            "ERROR": { title: $translate.instant('cac.result.status.error'), style: 'danger' }
         };
 
         vm.views = {
@@ -37,8 +37,8 @@
             rules: [],
             auditParams: [
                 {
-                    hosts:[],
-                    items:[]
+                    hosts: [],
+                    items: []
                 }
             ],
             showLog: showLog,
@@ -54,10 +54,10 @@
         function getJob(logId) {
             CacCheckLogService.getCheckLog(logId).then(function (data) {
                 vm.views.checkLog = data;
-                vm.views.auditParams[0].hosts =angular.fromJson(vm.views.checkLog.hostJson);
-                vm.views.auditParams[0].items =angular.fromJson(vm.views.checkLog.itemJson);
-                if(null === vm.views.checkLog.templateId){
-                    vm.views.checkLog.templateId="inspection_all";
+                vm.views.auditParams[0].hosts = angular.fromJson(vm.views.checkLog.hostJson);
+                vm.views.auditParams[0].items = angular.fromJson(vm.views.checkLog.itemJson);
+                if (null === vm.views.checkLog.templateId) {
+                    vm.views.checkLog.templateId = "inspection_all";
                 }
                 if (vm.views.checkLog.status != 'ERROR') {
                     getResultsByJobId(logId);
@@ -156,7 +156,7 @@
 
                         var skipping = $translate.instant('cac.result.audit_result.skipping');
                         rule_obj.class = flag == 'true' ? 'bg-success' : (flag == 'false' ? 'bg-danger' : (flag == $translate.instant('cac3.title.manualJudgment') ? 'bg-warning' : (flag == $translate.instant('cac3.title.inapplicable') ? 'cac-bg-grey' : 'bg-light')));
-                        rule_obj.iconClass = flag == 'true' ? 'fa-check' : (flag == 'false' ? 'fa-times' : (flag == $translate.instant('cac3.title.manualJudgment') ? 'fa-exclamation' : (flag == $translate.instant('cac3.title.inapplicable') ? 'fa-minus' :  'fa-question')));
+                        rule_obj.iconClass = flag == 'true' ? 'fa-check' : (flag == 'false' ? 'fa-times' : (flag == $translate.instant('cac3.title.manualJudgment') ? 'fa-exclamation' : (flag == $translate.instant('cac3.title.inapplicable') ? 'fa-minus' : 'fa-question')));
                         rule_obj.title = rule_obj.itemName;
                         data_row.push(rule_obj);
                     }
@@ -170,10 +170,10 @@
 
         function changeResultView() {
             if (vm.views.resultView === "list") {
-                $state.go("app.cac3.check_result", {logId: vm.views.checkLog.id});
+                $state.go("app.cac3.check_result", { logId: vm.views.checkLog.id });
                 vm.views.resultView = "outline";
             } else {
-                $state.go("app.cac3.check_result.output", {logId: vm.views.checkLog.id});
+                $state.go("app.cac3.check_result.output", { logId: vm.views.checkLog.id });
                 vm.views.resultView = "list";
             }
         }
@@ -257,9 +257,9 @@
                     reader.readAsDataURL(blob);
                     $timeout(function () {
                         var d = new Date();
-                        var datetime=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + '_' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+                        var datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + '_' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
                         var a = document.createElement('a');
-                        a.download =vm.views.checkLog.name+datetime+".xlsx";
+                        a.download = vm.views.checkLog.name + datetime + ".xlsx";
                         a.href = reader.result;
                         $("body").append(a);
                         a.click();
@@ -272,17 +272,25 @@
     }
 
     //滚动指令
-    cacModule.directive('whenScrolled', function () {
+    cacModule.directive('whenScrolled', ['$timeout', function ($timeout) {
         return function (scope, elm, attr) {
             // 内层DIV的滚动加载
             var raw = elm[0];
+            var scrollPending = false; // 防止重复触发
             elm.bind('scroll', function () {
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight - 5) {
-                    scope.$apply(attr.whenScrolled);
+                    // 使用 $timeout 安全地触发 digest 循环，避免 $digest already in progress 错误
+                    if (!scrollPending) {
+                        scrollPending = true;
+                        $timeout(function () {
+                            scope.$eval(attr.whenScrolled);
+                            scrollPending = false;
+                        }, 0);
+                    }
                 }
             });
         };
-    });
+    }]);
 
 
 })();
