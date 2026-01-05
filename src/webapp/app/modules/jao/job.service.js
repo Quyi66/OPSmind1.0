@@ -99,7 +99,7 @@
         this.finAllAapTemplate = finAllAapTemplate;
         this.finAapTemplateById = finAapTemplateById;
 
-        this.jobType = {SCRIPT: 'script', COMMAND: 'command', REST: 'rest', PROCESS: 'process'};
+        this.jobType = { SCRIPT: 'script', COMMAND: 'command', REST: 'rest', PROCESS: 'process' };
 
         var JOB_STATUS = jaoUtil.jobStatusDefs;
 
@@ -121,7 +121,7 @@
             }
             var options = {
                 resizable: true,
-                specSize: {height: '60vh'}
+                specSize: { height: '60vh' }
             };
             var modalConfig = {
                 modaless: true,
@@ -164,15 +164,34 @@
 
         function getRunlogWebsocketUrl(runId) {
             var wsGateway = window.$oplus.appConfig.apiBaseUrls.ws;
-            // 如果是 https对应调用 wss
             var wsUrl = "";
-            if (wsGateway.match(/^https:\/\//)) {
+
+            // ============ 开发环境检测 ============
+            // 如果是本地开发环境，自动使用远程 WebSocket 服务器
+            // 可通过在浏览器控制台设置 window.__WS_DEV_SERVER__ = 'ws://your-server/oplus-ws' 来覆盖
+            var isLocalDev = window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1' ||
+                window.location.port === '3000' ||  // webpack-dev-server 默认端口
+                window.location.port === '8080';    // 另一个常用开发端口
+
+            // 开发环境使用的远程 WebSocket 服务器地址
+            var devWsServer = window.__WS_DEV_SERVER__ || 'ws://192.168.1.230/oplus-ws';
+
+            if (isLocalDev && wsGateway && !wsGateway.match(/^wss?:\/\//)) {
+                // 本地开发环境且 wsGateway 是相对路径，使用远程服务器
+                wsUrl = devWsServer;
+                console.log('[Dev] Using remote WebSocket server:', wsUrl);
+            } else if (wsGateway.match(/^https:\/\//)) {
+                // 如果是 https 对应调用 wss
                 wsUrl = _.replace(wsGateway, /^https/, "wss");
             } else if (wsGateway.match(/^http:\/\//)) {
                 wsUrl = _.replace(wsGateway, /^http/, "ws");
+            } else if (wsGateway.match(/^wss?:\/\//)) {
+                // 已经是完整的 WebSocket URL
+                wsUrl = wsGateway;
             } else {
-                // 如果没有网关，默认走ws协议
-                wsUrl = 'ws://' + window.location.hostname + _.replace(wsGateway, window.$oplus.appConfig.apiBaseUrls.url, "");
+                // 如果没有网关，默认走 ws 协议
+                wsUrl = 'ws://' + window.location.hostname + ':' + window.location.port + _.replace(wsGateway, window.$oplus.appConfig.apiBaseUrls.url, "");
             }
             return wsUrl + '/log/' + runId;
         }
@@ -225,19 +244,19 @@
         }
 
         function finAllAapTemplate(page, size) {
-            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{page}/{size}', {page: page, size: size});
+            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{page}/{size}', { page: page, size: size });
         }
 
         function finAapTemplateById(id) {
-            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{id}/', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{id}/', { id: id });
         }
 
         function findJobById(id) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{id}', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{id}', { id: id });
         }
 
         function deleteJob(id) {
-            return restUtils.callApi(module, 'DELETE', '/api/jao/jobs/{id}', {id: id});
+            return restUtils.callApi(module, 'DELETE', '/api/jao/jobs/{id}', { id: id });
         }
 
         function batchDeleteJob(ids) {
@@ -253,12 +272,12 @@
             if (!job.id) {
                 return restUtils.callApi(module, 'POST', '/api/jao/jobs', null, job);
             } else {
-                return restUtils.callApi(module, 'PUT', '/api/jao/jobs/{id}', {id: job.id}, job);
+                return restUtils.callApi(module, 'PUT', '/api/jao/jobs/{id}', { id: job.id }, job);
             }
         }
 
         function copyJob(id) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/clone/{id}', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/clone/{id}', { id: id });
         }
 
         function testScriptJob(hosts, filepath, argline, params, verbosity) {
@@ -324,7 +343,7 @@
             var d = $q.defer();
             restUtils.callApi(module, 'POST', '/api/jao/console-log/run', null, request).then(function (data) {
                 if (openConsole) {
-                    openRealtimeConsole({runId: data.runId});
+                    openRealtimeConsole({ runId: data.runId });
                 }
                 d.resolve(data);
             }).catch(function (err) {
@@ -340,7 +359,7 @@
          * @returns {Promise}
          */
         function runJobById(id, options) {
-            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{id}/run', {id: id}, options);
+            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{id}/run', { id: id }, options);
         }
 
         /**
@@ -349,7 +368,7 @@
          * @returns {Promise}
          */
         function cleanLogs(day) {
-            return restUtils.callApi(module, 'POST', '/api/jao/jobs/runlogs/clean/{day}', {day: day});
+            return restUtils.callApi(module, 'POST', '/api/jao/jobs/runlogs/clean/{day}', { day: day });
         }
 
         /**
@@ -359,7 +378,7 @@
          * @returns {Promise}
          */
         function runJobWithUpload(jobId, params) {
-            var url = restUtils.getApiUrl(module, '/api/jao/jobs/{jobId}/upload-to-run', {jobId: jobId});
+            var url = restUtils.getApiUrl(module, '/api/jao/jobs/{jobId}/upload-to-run', { jobId: jobId });
             return restUtils.callUpload(url, params);
         }
 
@@ -504,7 +523,7 @@
                         promise = runJobWithUpload(jobId, params);
                     } else {
                         // console.log('run.runJobById: jobId=%o', jobId);
-                        promise = runJobById(jobId, {params: params});
+                        promise = runJobById(jobId, { params: params });
                     }
                 } else {
                     promise = runJobByRequest(job);
@@ -618,10 +637,10 @@
             function repeatCheckAsyncJobRun(runId, fnHandleResult, checkElement) {
                 // To reduce load to server, use a ramp down plan to check result
                 var checkPlan = [
-                    {interval: 10, times: 6},
-                    {interval: 5, times: 10},
-                    {interval: 20, times: 10},
-                    {interval: 20, times: 0}
+                    { interval: 10, times: 6 },
+                    { interval: 5, times: 10 },
+                    { interval: 20, times: 10 },
+                    { interval: 20, times: 0 }
                 ];
 
                 doCheck(0, 0, runId, fnHandleResult, checkElement);
@@ -668,19 +687,19 @@
         }
 
         function checkAsyncRunStatus(runId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/check-result', {runId: runId});
+            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/check-result', { runId: runId });
         }
 
         function getRunResult(runId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/result', {runId: runId});
+            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/result', { runId: runId });
         }
 
         function getLastRunResult(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/lastrunresult', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/lastrunresult', { jobId: jobId });
         }
 
         function findBriefLogsByJobId(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/runlogs', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/runlogs', { jobId: jobId });
         }
 
         /**
@@ -699,7 +718,7 @@
                 }],
                 controllerAs: '$ctrl',
                 size: 'lg'
-            }, {resizable: true});
+            }, { resizable: true });
         }
 
         /**
@@ -757,7 +776,7 @@
                     console.log('resolved with waitJobCompleted=%o', waitJobCompletion)
                     d.resolve(result);
                 }
-                else if (!result.jobType) { 
+                else if (!result.jobType) {
                     d.notify(result);
                 }
                 // console.log('fnHandleResult', {runStyle: runStyle});
@@ -767,7 +786,7 @@
                     }
                     statusIcon.removeClassMatch(/^status-.*/).addClass('status-' + runStatusDef.name);
                 } else {
-                    jaoUtil.changeRunStatusStyle(element, status, {style: runStyle});
+                    jaoUtil.changeRunStatusStyle(element, status, { style: runStyle });
                 }
             }
         }
@@ -791,7 +810,7 @@
         }
 
         function checkNeedApprove(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/check/{jobId}', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/check/{jobId}', { jobId: jobId });
         }
 
         function submitApprove(data) {
@@ -799,7 +818,7 @@
         }
 
         function getScriptPath(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/get-script-path/{jobId}', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/get-script-path/{jobId}', { jobId: jobId });
         }
 
         // types :
@@ -819,11 +838,11 @@
         }
 
         function moveJob(jobIds, appletCode) {
-            return restUtils.callApi(module, 'PUT', '/api/jao/jobs/move/{appletCode}', {"appletCode": appletCode}, jobIds);
+            return restUtils.callApi(module, 'PUT', '/api/jao/jobs/move/{appletCode}', { "appletCode": appletCode }, jobIds);
         }
 
         function rerunJob(runId) {
-            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{runId}/rerun',{"runId": runId},null);
+            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{runId}/rerun', { "runId": runId }, null);
         }
     }
 })();

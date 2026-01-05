@@ -49,7 +49,7 @@
         //     $element.css('height', '20rem');
         // }
         this.cmInstance;
-        this.options = this.options || {readonly: false, syntax: ''};
+        this.options = this.options || { readonly: false, syntax: '' };
         this.cmOptions = {
             theme: this.options.theme ? this.options.theme : (this.options.readonly ? 'default' : 'opluscode'),
             lineNumbers: true,
@@ -97,6 +97,18 @@
             if (angular.isDefined(that.options.linewrap)) {
                 that.cmOptions.lineWrapping = that.options.linewrap;
             }
+
+            // ============ 性能优化选项 ============
+            // 减少视口外渲染的行数（默认10，减少可提升大文件性能）
+            that.cmOptions.viewportMargin = that.options.viewportMargin || 50;
+            // 限制单行语法高亮的最大字符数（避免超长行卡顿）
+            that.cmOptions.maxHighlightLength = that.options.maxHighlightLength || 1000;
+            // 增量解析的工作延迟（毫秒）
+            that.cmOptions.workDelay = 200;
+            // 每次增量解析的工作时间（毫秒）
+            that.cmOptions.workTime = 100;
+            // 污染标记更新的延迟
+            that.cmOptions.pollInterval = 100;
         }
     }
 })();
