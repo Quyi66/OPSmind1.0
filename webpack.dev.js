@@ -32,7 +32,7 @@ module.exports = (env, argv) => {
             open: '/oplus/base/', // 默认打开路径
             // 完全禁用 historyApiFallback，因为这是传统的 AngularJS 应用
             historyApiFallback: false,
-            // API代理配置 - 统一代理到后端服务器
+            // API代理配置 - 统一代理到后端服务器（网关）
             proxy: [
                 {
                     // ATA 服务 - Ansible 任务执行服务
@@ -45,7 +45,7 @@ module.exports = (env, argv) => {
                 {
                     context: [
                         '/api/**',           // API 接口
-                        '/oplus-portal/**',  // 主要服务
+                        '/oplus-portal/**',  // 主要服务（包括 DTS）
                         '/oplus-jobadm/**',  // xxl-job
                         '/oplus-upload/**',  // 文件上传
                         '/oplus-njs/**',     // Node.js 服务
@@ -118,7 +118,7 @@ module.exports = (env, argv) => {
             },
 
             // 自定义服务器启动后的回调
-            onListening: function(devServer) {
+            onListening: function (devServer) {
                 if (!devServer) {
                     throw new Error('webpack-dev-server is not defined');
                 }

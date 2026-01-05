@@ -165,15 +165,34 @@
 
         function getRunlogWebsocketUrl(runId) {
             var wsGateway = window.$oplus.appConfig.apiBaseUrls.ws;
-            // 如果是 https对应调用 wss
             var wsUrl = "";
-            if (wsGateway.match(/^https:\/\//)) {
+
+            // ============ 开发环境检测 ============
+            // 如果是本地开发环境，自动使用远程 WebSocket 服务器
+            // 可通过在浏览器控制台设置 window.__WS_DEV_SERVER__ = 'ws://your-server/oplus-ws' 来覆盖
+            var isLocalDev = window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1' ||
+                window.location.port === '3000' ||  // webpack-dev-server 默认端口
+                window.location.port === '8080';    // 另一个常用开发端口
+
+            // 开发环境使用的远程 WebSocket 服务器地址
+            var devWsServer = window.__WS_DEV_SERVER__ || 'ws://192.168.1.230/oplus-ws';
+
+            if (isLocalDev && wsGateway && !wsGateway.match(/^wss?:\/\//)) {
+                // 本地开发环境且 wsGateway 是相对路径，使用远程服务器
+                wsUrl = devWsServer;
+                console.log('[Dev] Using remote WebSocket server:', wsUrl);
+            } else if (wsGateway.match(/^https:\/\//)) {
+                // 如果是 https 对应调用 wss
                 wsUrl = _.replace(wsGateway, /^https/, "wss");
             } else if (wsGateway.match(/^http:\/\//)) {
                 wsUrl = _.replace(wsGateway, /^http/, "ws");
+            } else if (wsGateway.match(/^wss?:\/\//)) {
+                // 已经是完整的 WebSocket URL
+                wsUrl = wsGateway;
             } else {
-                // 如果没有网关，默认走ws协议
-                wsUrl = 'ws://' + window.location.hostname + _.replace(wsGateway, window.$oplus.appConfig.apiBaseUrls.url, "");
+                // 如果没有网关，默认走 ws 协议
+                wsUrl = 'ws://' + window.location.hostname + ':' + window.location.port + _.replace(wsGateway, window.$oplus.appConfig.apiBaseUrls.url, "");
             }
             return wsUrl + '/log/' + runId;
         }
@@ -325,7 +344,7 @@
             var d = $q.defer();
             restUtils.callApi(module, 'POST', '/api/jao/console-log/run', null, request).then(function (data) {
                 if (openConsole) {
-                    openRealtimeConsole({ runId: data.runId, ataUrl: data.ataUrl });
+                    openRealtimeConsole({ runId: data.runId });
                 }
                 d.resolve(data);
             }).catch(function (err) {
