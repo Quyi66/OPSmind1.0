@@ -1,14 +1,154 @@
-<op-code-editor the-model="$ctrl.content"
-                options="{theme: 'opluscode', syntax: 'ansiblelog', readonly: true, linewrap: false, toolbar: true}"
-                class="flex-fill"
-                __style="height:100%" on-loaded="$ctrl.editorLoaded">
-    <button type="button" class="me-2 btn opx-btn-icon" ng-click="$ctrl.toggleScroll()"
-            ng-class="$ctrl.autoScroll ? 'btn-default active' : 'btn-outline-default' "><i class="fa fa-arrows-alt-v"></i>
-    </button>
-    <a type="button" class="me-2 btn opx-btn-icon btn-outline-default" href="{{ $ctrl.download() }}">
-        <i class="fa fa-file-download"></i>
-    </a>
-    <button type="button" class="me-2 btn" ng-click="$ctrl.viewBatch(batch)" ng-repeat="batch in $ctrl.allBatches"
-            ng-class="$ctrl.activeBatch === batch ? 'btn-primary active' : 'btn-outline-default' "><span>{{batch}}</span>
-    </button>
-</op-code-editor>
+<div class="d-flex flex-column h-100">
+        <!-- 工具栏 -->
+        <div class="d-flex align-items-center justify-content-between bg-light px-2 py-1 border-bottom"
+                style="min-height: 38px;">
+                <!-- 左侧：功能按钮 -->
+                <div class="d-flex align-items-center">
+                        <!-- 自动滚动按钮 -->
+                        <button type="button" class="me-2 btn opx-btn-icon" ng-click="$ctrl.toggleScroll()"
+                                ng-class="$ctrl.autoScroll ? 'btn-default active' : 'btn-outline-default'"
+                                title="{{$ctrl.autoScroll ? '关闭自动滚动' : '开启自动滚动'}}">
+                                <i class="fa fa-arrows-alt-v"></i>
+                        </button>
+                        <!-- 下载按钮 -->
+                        <button type="button" class="me-2 btn opx-btn-icon btn-outline-default"
+                                ng-click="$ctrl.download()" title="下载原始日志">
+                                <i class="fa fa-file-download"></i>
+                        </button>
+                        <!-- 批次选择按钮 -->
+                        <button type="button" class="me-2 btn" ng-click="$ctrl.viewBatch(batch)"
+                                ng-repeat="batch in $ctrl.allBatches"
+                                ng-class="$ctrl.activeBatch === batch ? 'btn-primary active' : 'btn-outline-default'">
+                                <span>{{batch}}</span>
+                        </button>
+                </div>
+
+                <!-- 右侧：搜索框 -->
+                <div class="d-flex align-items-center">
+                        <div class="input-group input-group-sm" style="width: 280px;">
+                                <input type="text" class="form-control" placeholder="搜索日志 (Enter搜索)"
+                                        ng-model="$ctrl.searchText" ng-model-options="{ debounce: 300 }"
+                                        ng-change="$ctrl.onSearchChange()" ng-keydown="$ctrl.onSearchKeydown($event)">
+                                <button class="btn btn-outline-secondary" type="button" ng-click="$ctrl.prevResult()"
+                                        ng-disabled="$ctrl.searchResultCount === 0" title="上一个 (Shift+Enter)">
+                                        <i class="fa fa-chevron-up"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary" type="button" ng-click="$ctrl.nextResult()"
+                                        ng-disabled="$ctrl.searchResultCount === 0" title="下一个 (Enter)">
+                                        <i class="fa fa-chevron-down"></i>
+                                </button>
+                        </div>
+                        <span class="ms-2 small text-muted" ng-if="$ctrl.searchResultCount > 0"
+                                style="min-width: 60px;">
+                                {{$ctrl.currentResultIndex}} / {{$ctrl.searchResultCount}}
+                        </span>
+                </div>
+        </div>
+
+        <!-- 虚拟滚动日志容器 -->
+        <div class="virtual-log-container flex-fill"
+                style="overflow-y: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; background: #1e1e1e; color: #d4d4d4;">
+                <!-- 空状态 -->
+                <div ng-if="$ctrl.lines.length === 0" class="text-center py-5" style="color: #858585;">
+                        <i class="fa fa-file-alt fa-3x mb-3"></i>
+                        <p>等待日志数据...</p>
+                </div>
+
+                <!-- 虚拟滚动列表 -->
+                <div vs-repeat="{latch: false, size: 18, scrollParent: '.virtual-log-container'}"
+                        ng-if="$ctrl.lines.length > 0">
+                        <div ng-repeat="line in $ctrl.lines track by line.id" class="log-line"
+                                ng-class="$ctrl.getLineClass(line)" ng-dblclick="$ctrl.onLineDblClick(line)"
+                                title="双击查看详情">
+                                <span class="log-line-number">{{line.lineNum}}</span>
+                                <span class="log-line-text" ng-bind="line.text"></span>
+                        </div>
+                </div>
+        </div>
+</div>
+
+<style>
+        .virtual-log-container {
+                min-height: 200px;
+        }
+
+        .log-line {
+                display: flex;
+                padding: 0 8px;
+                line-height: 18px;
+                min-height: 18px;
+                white-space: pre;
+                cursor: default;
+        }
+
+        .log-line:hover {
+                background: rgba(255, 255, 255, 0.05);
+        }
+
+        .log-line-number {
+                flex-shrink: 0;
+                width: 50px;
+                text-align: right;
+                padding-right: 12px;
+                color: #858585;
+                user-select: none;
+                border-right: 1px solid #404040;
+                margin-right: 12px;
+        }
+
+        .log-line-text {
+                flex-grow: 1;
+                overflow: hidden;
+        }
+
+        /* Ansible 语法高亮 */
+        .log-ok .log-line-text {
+                color: #4ec9b0;
+        }
+
+        .log-changed .log-line-text {
+                color: #dcdcaa;
+        }
+
+        .log-fatal .log-line-text {
+                color: #f44747;
+                font-weight: bold;
+        }
+
+        .log-failed .log-line-text {
+                color: #f44747;
+        }
+
+        .log-skipping .log-line-text {
+                color: #569cd6;
+        }
+
+        .log-task .log-line-text {
+                color: #c586c0;
+                font-weight: bold;
+        }
+
+        .log-play .log-line-text {
+                color: #c586c0;
+                font-weight: bold;
+        }
+
+        .log-warning .log-line-text {
+                color: #ce9178;
+        }
+
+        .log-recap .log-line-text {
+                color: #9cdcfe;
+                font-weight: bold;
+        }
+
+        /* 搜索高亮 */
+        .log-search-match {
+                background: rgba(255, 200, 0, 0.15) !important;
+        }
+
+        .log-search-current {
+                background: rgba(255, 200, 0, 0.4) !important;
+                outline: 1px solid #ffc800;
+        }
+</style>

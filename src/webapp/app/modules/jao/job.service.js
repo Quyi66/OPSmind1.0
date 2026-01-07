@@ -99,7 +99,7 @@
         this.finAllAapTemplate = finAllAapTemplate;
         this.finAapTemplateById = finAapTemplateById;
 
-        this.jobType = {SCRIPT: 'script', COMMAND: 'command', REST: 'rest', PROCESS: 'process'};
+        this.jobType = { SCRIPT: 'script', COMMAND: 'command', REST: 'rest', PROCESS: 'process' };
 
         var JOB_STATUS = jaoUtil.jobStatusDefs;
 
@@ -121,7 +121,7 @@
             }
             var options = {
                 resizable: true,
-                specSize: {height: '60vh'}
+                specSize: { height: '60vh' }
             };
             var modalConfig = {
                 modaless: true,
@@ -132,12 +132,13 @@
                     '<button type="button" class="btn-default opx-btn-flat opx-btn-icon op-close-window" ng-click="$ctrl.close()" data-dismiss="modal"><i class="far fa-times"></i></button>' +
                     '</div>' +
                     '<div class="modal-body p-2">' +
-                    '<ansible-log-viewer run-id="$ctrl.runId" content="$ctrl.logContent" class="h-100"></ansible-log-viewer>' +
+                    '<ansible-log-viewer run-id="$ctrl.runId" content="$ctrl.logContent" ata-url="$ctrl.ataUrl" class="h-100"></ansible-log-viewer>' +
                     '</div>',
                 controller: ['$scope', '$timeout', function ($scope, $timeout) {
                     var that = this;
                     this.runId = config.runId;
                     this.logContent = config.content;
+                    this.ataUrl = config.ataUrl;
                     this.close = function () {
                         modalInstance.dismiss();
                     };
@@ -225,19 +226,19 @@
         }
 
         function finAllAapTemplate(page, size) {
-            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{page}/{size}', {page: page, size: size});
+            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{page}/{size}', { page: page, size: size });
         }
 
         function finAapTemplateById(id) {
-            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{id}/', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/jao/aap/unified_job_templates/{id}/', { id: id });
         }
 
         function findJobById(id) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{id}', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{id}', { id: id });
         }
 
         function deleteJob(id) {
-            return restUtils.callApi(module, 'DELETE', '/api/jao/jobs/{id}', {id: id});
+            return restUtils.callApi(module, 'DELETE', '/api/jao/jobs/{id}', { id: id });
         }
 
         function batchDeleteJob(ids) {
@@ -253,12 +254,12 @@
             if (!job.id) {
                 return restUtils.callApi(module, 'POST', '/api/jao/jobs', null, job);
             } else {
-                return restUtils.callApi(module, 'PUT', '/api/jao/jobs/{id}', {id: job.id}, job);
+                return restUtils.callApi(module, 'PUT', '/api/jao/jobs/{id}', { id: job.id }, job);
             }
         }
 
         function copyJob(id) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/clone/{id}', {id: id});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/clone/{id}', { id: id });
         }
 
         function testScriptJob(hosts, filepath, argline, params, verbosity) {
@@ -324,7 +325,7 @@
             var d = $q.defer();
             restUtils.callApi(module, 'POST', '/api/jao/console-log/run', null, request).then(function (data) {
                 if (openConsole) {
-                    openRealtimeConsole({runId: data.runId});
+                    openRealtimeConsole({ runId: data.runId, ataUrl: data.ataUrl });
                 }
                 d.resolve(data);
             }).catch(function (err) {
@@ -340,7 +341,7 @@
          * @returns {Promise}
          */
         function runJobById(id, options) {
-            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{id}/run', {id: id}, options);
+            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{id}/run', { id: id }, options);
         }
 
         /**
@@ -349,7 +350,7 @@
          * @returns {Promise}
          */
         function cleanLogs(day) {
-            return restUtils.callApi(module, 'POST', '/api/jao/jobs/runlogs/clean/{day}', {day: day});
+            return restUtils.callApi(module, 'POST', '/api/jao/jobs/runlogs/clean/{day}', { day: day });
         }
 
         /**
@@ -359,7 +360,7 @@
          * @returns {Promise}
          */
         function runJobWithUpload(jobId, params) {
-            var url = restUtils.getApiUrl(module, '/api/jao/jobs/{jobId}/upload-to-run', {jobId: jobId});
+            var url = restUtils.getApiUrl(module, '/api/jao/jobs/{jobId}/upload-to-run', { jobId: jobId });
             return restUtils.callUpload(url, params);
         }
 
@@ -504,7 +505,7 @@
                         promise = runJobWithUpload(jobId, params);
                     } else {
                         // console.log('run.runJobById: jobId=%o', jobId);
-                        promise = runJobById(jobId, {params: params});
+                        promise = runJobById(jobId, { params: params });
                     }
                 } else {
                     promise = runJobByRequest(job);
@@ -618,10 +619,10 @@
             function repeatCheckAsyncJobRun(runId, fnHandleResult, checkElement) {
                 // To reduce load to server, use a ramp down plan to check result
                 var checkPlan = [
-                    {interval: 10, times: 6},
-                    {interval: 5, times: 10},
-                    {interval: 20, times: 10},
-                    {interval: 20, times: 0}
+                    { interval: 10, times: 6 },
+                    { interval: 5, times: 10 },
+                    { interval: 20, times: 10 },
+                    { interval: 20, times: 0 }
                 ];
 
                 doCheck(0, 0, runId, fnHandleResult, checkElement);
@@ -668,19 +669,19 @@
         }
 
         function checkAsyncRunStatus(runId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/check-result', {runId: runId});
+            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/check-result', { runId: runId });
         }
 
         function getRunResult(runId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/result', {runId: runId});
+            return restUtils.callApi(module, 'GET', '/api/jao/runlogs/{runId}/result', { runId: runId });
         }
 
         function getLastRunResult(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/lastrunresult', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/lastrunresult', { jobId: jobId });
         }
 
         function findBriefLogsByJobId(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/runlogs', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/{jobId}/runlogs', { jobId: jobId });
         }
 
         /**
@@ -699,7 +700,7 @@
                 }],
                 controllerAs: '$ctrl',
                 size: 'lg'
-            }, {resizable: true});
+            }, { resizable: true });
         }
 
         /**
@@ -757,7 +758,7 @@
                     console.log('resolved with waitJobCompleted=%o', waitJobCompletion)
                     d.resolve(result);
                 }
-                else if (!result.jobType) { 
+                else if (!result.jobType) {
                     d.notify(result);
                 }
                 // console.log('fnHandleResult', {runStyle: runStyle});
@@ -767,7 +768,7 @@
                     }
                     statusIcon.removeClassMatch(/^status-.*/).addClass('status-' + runStatusDef.name);
                 } else {
-                    jaoUtil.changeRunStatusStyle(element, status, {style: runStyle});
+                    jaoUtil.changeRunStatusStyle(element, status, { style: runStyle });
                 }
             }
         }
@@ -791,7 +792,7 @@
         }
 
         function checkNeedApprove(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/check/{jobId}', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/check/{jobId}', { jobId: jobId });
         }
 
         function submitApprove(data) {
@@ -799,7 +800,7 @@
         }
 
         function getScriptPath(jobId) {
-            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/get-script-path/{jobId}', {jobId: jobId});
+            return restUtils.callApi(module, 'GET', '/api/jao/jobs/approve/get-script-path/{jobId}', { jobId: jobId });
         }
 
         // types :
@@ -819,11 +820,11 @@
         }
 
         function moveJob(jobIds, appletCode) {
-            return restUtils.callApi(module, 'PUT', '/api/jao/jobs/move/{appletCode}', {"appletCode": appletCode}, jobIds);
+            return restUtils.callApi(module, 'PUT', '/api/jao/jobs/move/{appletCode}', { "appletCode": appletCode }, jobIds);
         }
 
         function rerunJob(runId) {
-            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{runId}/rerun',{"runId": runId},null);
+            return restUtils.callApi(module, 'POST', '/api/jao/jobs/{runId}/rerun', { "runId": runId }, null);
         }
     }
 })();

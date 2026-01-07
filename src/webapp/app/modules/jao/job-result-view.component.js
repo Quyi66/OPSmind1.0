@@ -50,7 +50,7 @@
         this.intervals = [];
         this.refresh = refresh;
         this.toggleAutoRefresh = toggleAutoRefresh;
-        this.getDownloadURL = getDownloadURL;
+        this.downloadAnsibleOutput = downloadAnsibleOutput;
         this.$onInit = onInit;
         this.registerModeler = function ($modeler) {
             that.modeler = $modeler;
@@ -64,10 +64,10 @@
                 }
             });
             $scope.$watch('$ctrl.runId', function (newVal, oldVal) {
-                if (newVal) loadLog({runId: newVal});
+                if (newVal) loadLog({ runId: newVal });
             });
             $scope.$watch('$ctrl.jobId', function (newVal, oldVal) {
-                if (newVal) loadLog({jobId: newVal});
+                if (newVal) loadLog({ jobId: newVal });
             });
             $scope.$watch('$ctrl.resultData', function (newVal, oldVal) {
                 if (newVal) {
@@ -93,11 +93,29 @@
         }
 
         function refresh() {
-            loadLog({runId: that.runId});
+            loadLog({ runId: that.runId });
         }
 
-        function getDownloadURL() {
-            return window.$oplus.appConfig.apiBaseUrls.jao + "/api/jao/runlogs/ansible/" + that.runId;
+        function downloadAnsibleOutput() {
+            // 从作业运行结果中获取 ATA 服务器地址（完整 URL，如 http://192.168.1.155:3000）
+            var ataUrl = that.result && that.result.ataUrl;
+            var url;
+
+            if (ataUrl) {
+                // ataUrl 已经是完整的 URL（含端口），直接拼接 API 路径
+                url = ataUrl + '/api/ata/tasks/log/ansible/' + that.runId;
+            } else {
+                // 如果没有 ataUrl，使用默认的代理路径
+                url = '/api/ata/tasks/log/ansible/' + that.runId;
+            }
+
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'ansible_output_' + that.runId + '.txt';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         /**
@@ -231,11 +249,11 @@
                     content.plays.forEach(function (play) {
                         play.tasks.forEach(function (task, index, array) {
                             var taskName = task.task.name;
-                             if (taskName.startsWith("[HIDE]")) {
-                                 task.task = null;
-                             }
+                            if (taskName.startsWith("[HIDE]")) {
+                                task.task = null;
+                            }
                         })
-                        _.remove(play.tasks, {task: null});
+                        _.remove(play.tasks, { task: null });
                     });
                 });
             }
@@ -271,7 +289,7 @@
                             }
                         })
                         // console.log(JSON.stringify(play.tasks))
-                        _.remove(play.tasks, {task: null});
+                        _.remove(play.tasks, { task: null });
                     });
                 });
             }
@@ -307,7 +325,7 @@
         }
         function rerunJob(runId) {
             messageService.confirm($translate.instant('jao.log.rerun'), '', function () {
-                jaoJobService.rerunJob(runId).then(function(result){
+                jaoJobService.rerunJob(runId).then(function (result) {
                     var newRunId = result[0].runId;
                     that.runId = newRunId;
                 });
