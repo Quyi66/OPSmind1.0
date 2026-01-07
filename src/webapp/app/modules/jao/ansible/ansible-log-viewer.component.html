@@ -11,10 +11,10 @@
                                 <i class="fa fa-arrows-alt-v"></i>
                         </button>
                         <!-- 下载按钮 -->
-                        <a type="button" class="me-2 btn opx-btn-icon btn-outline-default" href="{{ $ctrl.download() }}"
-                                title="下载原始日志">
+                        <button type="button" class="me-2 btn opx-btn-icon btn-outline-default"
+                                ng-click="$ctrl.download()" title="下载原始日志">
                                 <i class="fa fa-file-download"></i>
-                        </a>
+                        </button>
                         <!-- 批次选择按钮 -->
                         <button type="button" class="me-2 btn" ng-click="$ctrl.viewBatch(batch)"
                                 ng-repeat="batch in $ctrl.allBatches"

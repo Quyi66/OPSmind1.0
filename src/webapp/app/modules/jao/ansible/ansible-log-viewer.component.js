@@ -19,7 +19,8 @@
     angular.module('oplus.commons').component('ansibleLogViewer', {
         bindings: {
             runId: '<',
-            content: '<'
+            content: '<',
+            ataUrl: '<'  // ATA 服务器地址，用于下载日志
         },
         templateUrl: 'app/modules/jao/ansible/ansible-log-viewer.component.html',
         controller: ['$scope', '$element', '$timeout', '$interval', 'messageService', 'jaoJobService', ansibleLogViewerCtrl]
@@ -546,7 +547,25 @@
         }
 
         that.download = function () {
-            return window.$oplus.appConfig.apiBaseUrls.jao + "/api/jao/runlogs/ansible/" + that.runId;
+            // 从绑定属性中获取 ATA 服务器地址（完整 URL，如 http://192.168.1.155:3000）
+            var ataUrl = that.ataUrl;
+            var url;
+
+            if (ataUrl) {
+                // ataUrl 已经是完整的 URL（含端口），直接拼接 API 路径
+                url = ataUrl + '/api/ata/tasks/log/ansible/' + that.runId;
+            } else {
+                // 如果没有 ataUrl，使用默认的代理路径
+                url = '/api/ata/tasks/log/ansible/' + that.runId;
+            }
+
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'ansible_log_' + that.runId + '.txt';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         };
     }
 })();
