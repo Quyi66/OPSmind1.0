@@ -35,6 +35,14 @@ module.exports = (env, argv) => {
             // API代理配置 - 统一代理到后端服务器
             proxy: [
                 {
+                    // ATA 服务 - Ansible 任务执行服务
+                    context: ['/api/ata/**'],
+                    target: 'http://192.168.1.155:3000',
+                    changeOrigin: true,
+                    secure: false,
+                    logLevel: 'debug',
+                },
+                {
                     context: [
                         '/api/**',           // API 接口
                         '/oplus-portal/**',  // 主要服务

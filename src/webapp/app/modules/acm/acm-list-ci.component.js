@@ -42,7 +42,7 @@
     function AcmListCiCtrl($scope, $timeout, acmUtil, acmService) {
         var that = this;
         this.selectModeDefs = {};
-        var defaultOptions = {selectMode: 'group,tag,input,recently', selector: 'multiple'};
+        var defaultOptions = { selectMode: 'group,tag,input,recently', selector: 'multiple' };
         this.options = _.merge({}, defaultOptions, this.options);
         this.ciTypeDefs = [];
         this.activeCiType = '';
@@ -62,11 +62,11 @@
         function removeItem(host, index) {
             that.theHostsByCiType.splice(index, 1);
             var type = undefined;
-            if(host.key.indexOf("/") === 0){
+            if (host.key.indexOf("/") === 0) {
                 type = "group";
-            }else if(host.key.indexOf("#") === 0){
+            } else if (host.key.indexOf("#") === 0) {
                 type = "tag";
-            }else {
+            } else {
                 type = "host";
             }
             $scope.$broadcast("theHostsByCiType", type, host);
@@ -105,33 +105,44 @@
             if (useAutomationTypes) {
                 acmService.tabTitleAuto('list').then(function (citMap) {
                     Object.keys(citMap).forEach(function (cit) {
-                        that.ciTypeDefs.push({code: cit, title: citMap[cit].title, icon: citMap[cit].icon});
+                        that.ciTypeDefs.push({ code: cit, title: citMap[cit].title, icon: citMap[cit].icon });
                     });
-                    that.activeCiType = that.ciTypeDefs[0].code;
-                    if (that.theModel) {
-                        that.theHostsByCiType = _.groupBy(that.theModel, "assetType")[that.activeCiType];
+                    if (that.ciTypeDefs.length > 0) {
+                        that.activeCiType = that.ciTypeDefs[0].code;
+                        if (that.theModel) {
+                            that.theHostsByCiType = _.groupBy(that.theModel, "assetType")[that.activeCiType];
+                        }
                     }
                 });
             } else {
                 acmService.tabTitle('list').then(function (citMap) {
                     if (useAllTypes) {
                         Object.keys(citMap).forEach(function (cit) {
-                            that.ciTypeDefs.push({code: cit, title: citMap[cit].title, icon: citMap[cit].icon});
+                            that.ciTypeDefs.push({ code: cit, title: citMap[cit].title, icon: citMap[cit].icon });
                         });
                     } else {
                         _.forIn(citMap, function (value, key) {
+                            // 使用不区分大小写的匹配
                             if (_.find(ciTypes, function (o) {
-                                return o === key;
+                                return o.toLowerCase() === key.toLowerCase();
                             })) {
                                 if (value) {
-                                    that.ciTypeDefs.push({code: key, title: value.title, icon: value.icon});
+                                    that.ciTypeDefs.push({ code: key, title: value.title, icon: value.icon });
                                 }
                             }
                         });
                     }
-                    that.activeCiType = that.ciTypeDefs[0].code;
-                    if (that.theModel) {
-                        that.theHostsByCiType = _.groupBy(that.theModel, "assetType")[that.activeCiType];
+                    // 如果 ciTypeDefs 为空，使用传入的 ciTypes 作为 fallback
+                    if (that.ciTypeDefs.length === 0 && ciTypes.length > 0) {
+                        ciTypes.forEach(function (type) {
+                            that.ciTypeDefs.push({ code: type, title: type, icon: 'fa-server' });
+                        });
+                    }
+                    if (that.ciTypeDefs.length > 0) {
+                        that.activeCiType = that.ciTypeDefs[0].code;
+                        if (that.theModel) {
+                            that.theHostsByCiType = _.groupBy(that.theModel, "assetType")[that.activeCiType];
+                        }
                     }
                 });
             }
