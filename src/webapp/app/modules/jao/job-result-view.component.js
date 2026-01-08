@@ -19,7 +19,7 @@
      */
     angular.module('oplus.jao').component('jaoJobResultView', {
         templateUrl: 'app/modules/jao/job-result-view.html',
-        controller: ['$scope', '$q', '$interval', '$timeout', 'messageService', 'jaoJobService', 'jaoUtil', '$translate', JobResultViewCtrl],
+        controller: ['$scope', '$q', '$interval', '$timeout', 'messageService', 'jaoJobService', 'jaoUtil', '$translate', 'currentUser', JobResultViewCtrl],
         bindings: {
             runId: '<',
             jobId: '<',
@@ -38,7 +38,7 @@
      * @param {jaoJobService} jaoJobService
      * @param {jaoUtil} jaoUtil
      */
-    function JobResultViewCtrl($scope, $q, $interval, $timeout, messageService, jaoJobService, jaoUtil, $translate) {
+    function JobResultViewCtrl($scope, $q, $interval, $timeout, messageService, jaoJobService, jaoUtil, $translate, currentUser) {
         var that = this;
         var REFRESH_MS = 5000;
         this.JOB_STATUS = jaoUtil.jobStatusDefs;
@@ -97,25 +97,37 @@
         }
 
         function downloadAnsibleOutput() {
-            // 从作业运行结果中获取 ATA 服务器地址（完整 URL，如 http://192.168.1.155:3000）
-            var ataUrl = that.result && that.result.ataUrl;
-            var url;
+            // 使用 JAO 服务代理接口下载，避免跨域问题
+            var url = '/oplus-portal/jao/api/jao/runlogs/ansible/' + that.runId;
+            var filename = 'ansible_output_' + that.runId + '.txt';
 
-            if (ataUrl) {
-                // ataUrl 已经是完整的 URL（含端口），直接拼接 API 路径
-                url = ataUrl + '/api/ata/tasks/log/ansible/' + that.runId;
-            } else {
-                // 如果没有 ataUrl，使用默认的代理路径
-                url = '/api/ata/tasks/log/ansible/' + that.runId;
-            }
-
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'ansible_output_' + that.runId + '.txt';
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            // 使用 fetch + Blob 下载，添加 Authorization header
+            fetch(url, {
+                headers: {
+                    'Authorization': 'Bearer ' + currentUser.authToken
+                }
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Download failed: ' + response.status);
+                    }
+                    return response.blob();
+                })
+                .then(function (blob) {
+                    var downloadUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = filename;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(downloadUrl);
+                })
+                .catch(function (error) {
+                    console.error('Download failed:', error);
+                    messageService.alert($translate.instant('common.error'), $translate.instant('jao.messages.download_failed') || 'Download failed');
+                });
         }
 
         /**

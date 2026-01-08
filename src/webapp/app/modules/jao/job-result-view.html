@@ -104,7 +104,7 @@
         <uib-tab
             ng-if="$ctrl.result.jobType==='script' || $ctrl.result.jobType==='command'|| $ctrl.result.jobType==='process'">
             <uib-tab-heading><i class="fa fa-list-alt"></i> Output</uib-tab-heading>
-            <ansible-log-viewer run-id="$ctrl.runId" ata-url="$ctrl.result.ataUrl"></ansible-log-viewer>
+            <ansible-log-viewer run-id="$ctrl.runId"></ansible-log-viewer>
         </uib-tab>
         <uib-tab ng-if="$ctrl.result.jobType==='rest'">
             <uib-tab-heading>{{'jao.result.detail.api_output' | translate}}</uib-tab-heading>

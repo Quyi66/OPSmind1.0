@@ -132,13 +132,12 @@
                     '<button type="button" class="btn-default opx-btn-flat opx-btn-icon op-close-window" ng-click="$ctrl.close()" data-dismiss="modal"><i class="far fa-times"></i></button>' +
                     '</div>' +
                     '<div class="modal-body p-2">' +
-                    '<ansible-log-viewer run-id="$ctrl.runId" content="$ctrl.logContent" ata-url="$ctrl.ataUrl" class="h-100"></ansible-log-viewer>' +
+                    '<ansible-log-viewer run-id="$ctrl.runId" content="$ctrl.logContent" class="h-100"></ansible-log-viewer>' +
                     '</div>',
                 controller: ['$scope', '$timeout', function ($scope, $timeout) {
                     var that = this;
                     this.runId = config.runId;
                     this.logContent = config.content;
-                    this.ataUrl = config.ataUrl;
                     this.close = function () {
                         modalInstance.dismiss();
                     };
@@ -344,7 +343,7 @@
             var d = $q.defer();
             restUtils.callApi(module, 'POST', '/api/jao/console-log/run', null, request).then(function (data) {
                 if (openConsole) {
-                    openRealtimeConsole({ runId: data.runId, ataUrl: data.ataUrl });
+                    openRealtimeConsole({ runId: data.runId });
                 }
                 d.resolve(data);
             }).catch(function (err) {

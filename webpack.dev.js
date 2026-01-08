@@ -5,7 +5,7 @@ const webpack = require('webpack');
 
 module.exports = (env, argv) => {
     // 代理服务器配置
-    const PROXY_TARGET = 'http://192.168.1.200';
+    const PROXY_TARGET = 'http://192.168.1.230';
     const commonConfig = common(env, { ...argv, mode: 'development' });
 
     return merge(commonConfig, {
@@ -34,14 +34,6 @@ module.exports = (env, argv) => {
             historyApiFallback: false,
             // API代理配置 - 统一代理到后端服务器（网关）
             proxy: [
-                {
-                    // ATA 服务 - Ansible 任务执行服务
-                    context: ['/api/ata/**'],
-                    target: 'http://192.168.1.155:3000',
-                    changeOrigin: true,
-                    secure: false,
-                    logLevel: 'debug',
-                },
                 {
                     context: [
                         '/api/**',           // API 接口

@@ -19,11 +19,10 @@
     angular.module('oplus.commons').component('ansibleLogViewer', {
         bindings: {
             runId: '<',
-            content: '<',
-            ataUrl: '<'  // ATA 服务器地址，用于下载日志
+            content: '<'
         },
         templateUrl: 'app/modules/jao/ansible/ansible-log-viewer.component.html',
-        controller: ['$scope', '$element', '$timeout', '$interval', 'messageService', 'jaoJobService', ansibleLogViewerCtrl]
+        controller: ['$scope', '$element', '$timeout', '$interval', 'messageService', 'jaoJobService', 'currentUser', ansibleLogViewerCtrl]
     });
 
     function throttle(func, wait) {
@@ -58,7 +57,7 @@
         };
     }
 
-    function ansibleLogViewerCtrl($scope, $element, $timeout, $interval, messageService, jaoJobService) {
+    function ansibleLogViewerCtrl($scope, $element, $timeout, $interval, messageService, jaoJobService, currentUser) {
         var that = this;
         var batchData = {};
         var ONLY_ONE_BATCH = 'default';
@@ -547,25 +546,37 @@
         }
 
         that.download = function () {
-            // 从绑定属性中获取 ATA 服务器地址（完整 URL，如 http://192.168.1.155:3000）
-            var ataUrl = that.ataUrl;
-            var url;
+            // 使用 JAO 服务代理接口下载，避免跨域问题
+            var url = '/oplus-portal/jao/api/jao/runlogs/ansible/' + that.runId;
+            var filename = 'ansible_log_' + that.runId + '.txt';
 
-            if (ataUrl) {
-                // ataUrl 已经是完整的 URL（含端口），直接拼接 API 路径
-                url = ataUrl + '/api/ata/tasks/log/ansible/' + that.runId;
-            } else {
-                // 如果没有 ataUrl，使用默认的代理路径
-                url = '/api/ata/tasks/log/ansible/' + that.runId;
-            }
-
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'ansible_log_' + that.runId + '.txt';
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            // 使用 fetch + Blob 下载，添加 Authorization header
+            fetch(url, {
+                headers: {
+                    'Authorization': 'Bearer ' + currentUser.authToken
+                }
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Download failed: ' + response.status);
+                    }
+                    return response.blob();
+                })
+                .then(function (blob) {
+                    var downloadUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = downloadUrl;
+                    a.download = filename;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(downloadUrl);
+                })
+                .catch(function (error) {
+                    console.error('Download failed:', error);
+                    messageService.alert('错误', '下载失败');
+                });
         };
     }
 })();
