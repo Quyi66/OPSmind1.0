@@ -120,13 +120,14 @@
                 if (pagination.filter.indexOf(":") !== -1) {
                     // 如果 filter 包含字段名（如 template_name:根据），添加模糊搜索通配符
                     pagination.filter = pagination.filter.replace(/([^:]+)$/, '*$1*');
-                } else {
-                    // 模糊查询ACM_GET_CI_BY_SELECTOR时不需要转换filter
-                    if (code !== 'ACM_GET_CI_BY_SELECTOR') {
-                        // 如果 filter 是纯搜索值（没有字段名前缀），包装为模糊搜索格式
-                        pagination.filter = '*' + pagination.filter + '*';
-                    }
                 }
+                // else {
+                //     // 模糊查询ACM_GET_CI_BY_SELECTOR和ACM_CI_BY_CIT时不需要转换filter
+                //     if (code !== 'ACM_GET_CI_BY_SELECTOR' && code !== 'ACM_CI_BY_CIT') {
+                //         // 如果 filter 是纯搜索值（没有字段名前缀），包装为模糊搜索格式
+                //         pagination.filter = '*' + pagination.filter + '*';
+                //     }
+                // }
             }
             var obj = angular.extend({ params: params }, pagination);
             return restUtils.callApi(module, 'POST', '/api/dts/q/data/{code}/', { code: code }, obj);
