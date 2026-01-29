@@ -53,8 +53,8 @@ npm run serve
 
 开发服务器启动后，可通过以下地址访问：
 
-- 根路径: `http://localhost:3000/`
-- 标准路径: `http://localhost:3000/oplus/base/` (推荐，匹配生产环境)
+- 根路径: `http://localhost:8080/`
+- 标准路径: `http://localhost:8080/oplus/base/` (推荐，匹配生产环境)
 
 ## 项目结构
 
@@ -131,7 +131,7 @@ nvm use 10.24.1
 
 ### /oplus/base 路径访问问题
 
-如果访问 `http://localhost:3000/oplus/base` 时遇到静态资源加载失败：
+如果访问 `http://localhost:8080/oplus/base/` 时遇到静态资源加载失败：
 
 1. 确保已重新构建项目：`npm run build-dev`
 2. 重新启动开发服务器：`npm run serve`
