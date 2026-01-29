@@ -85,7 +85,7 @@
                     var runCheck = row.status === 0 ? "" : "disabled";
                     var exitCheck = row.status === 3 ? "disabled" : "";
                     var disable = row.status === 1 || row.status === 2 ? "disabled" : "";
-                    var enableDef = row.status === 3 ? ['{{\'common.entity.action.enable\' | translate}}', 'fa-check-circle', 'default'] : ['{{\'common.entity.action.disable\' | translate}}', 'fa-minus-octagon', 'default'];
+                    var enableDef = row.status === 3 ? ['{{\'common.entity.action.enable\' | translate}}', 'fa-check-circle', 'default'] : ['{{\'common.entity.action.disable\' | translate}}', 'fa-ban', 'default'];
                     var param = angular.toJson({id: row.id});
                     var id = "'" + row.id + "'";
                     return ' <button ' + exitCheck + ' uaa-has-permission="cmd:edit:*" type="submit" ui-sref=app.jao_cmd.command_edit(' + param + ') class="btn btn-default opx-btn-icon opx-btn-flat" title="{{\'common.entity.action.edit\' | translate}}">' +
