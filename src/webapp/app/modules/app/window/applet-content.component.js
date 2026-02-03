@@ -43,7 +43,16 @@
 
         function onInit() {
             $element.addClass('js-applet-content').attr('data-applet-code', that.applet.code);
+            
+            // 针对 VAP 模块，强制开启导航栏并添加自定义菜单项
+            if (that.applet.code === 'vap') {
+                that.applet.showNav = true;
+                that.applet.navPos = 'left';
+                addVapCustomMenuItems();
+            }
+
             if (that.applet.entry.type === 'InternalState') {
+                detectIfShowMainEntry();
                 return;
             }
             for (let i = 0; i < that.applet.setting.nav.items.length; i++) {
@@ -65,7 +74,24 @@
                 that.menuItems.push(menu);
             }
 
+            // 非 VAP 模块的其他自定义菜单项可以在这里添加
+
             detectIfShowMainEntry();
+
+            /**
+             * 为 VAP 模块添加自定义菜单项
+             */
+            function addVapCustomMenuItems() {
+                var cveListState = appletRouter.getAppletState('vap', 'cve_list');
+                that.menuItems.push({
+                    icon: 'fa-bug',
+                    title: 'CVE 漏洞列表',
+                    entry: null,
+                    url: $state.href(cveListState),
+                    state: cveListState,
+                    isCustom: true  // 标记为自定义菜单项
+                });
+            }
 
             /**
              * If press F5 at open_menu or open_page state, it should not load main entry page defined in template.
@@ -88,7 +114,12 @@
                 o.active = false;
             });
             menuItem.active = true;
-            $state.go(menuItem.state, {pageId: menuItem.entry});
+            // 自定义菜单项直接跳转状态，不需要 pageId 参数
+            if (menuItem.isCustom) {
+                $state.go(menuItem.state);
+            } else {
+                $state.go(menuItem.state, {pageId: menuItem.entry});
+            }
         }
     }
 })();

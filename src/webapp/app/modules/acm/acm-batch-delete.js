@@ -2,8 +2,6 @@
 (function() {
     'use strict';
 
-    console.log('ACM批量删除扩展已加载 - UDP页面注入模式');
-
     var buttonsInjected = false;
 
     // 等待元素出现
@@ -17,7 +15,6 @@
                 callback(element);
             } else if (attempts >= maxAttempts) {
                 clearInterval(checkInterval);
-                console.warn('未找到元素:', selector);
             }
         }, 200);
     }
@@ -47,11 +44,8 @@
     function findDataManagementButtonContainer() {
         // 首先检查是否在数据管理页面
         if (!isDataManagementPage()) {
-            console.log('当前不在数据管理页面，跳过按钮注入');
             return null;
         }
-
-        console.log('确认在数据管理页面，查找按钮容器');
 
         var buttons = document.querySelectorAll('button, uwidget[uw-type="button"]');
 
@@ -63,7 +57,6 @@
                 // 找到父容器
                 var container = btn.closest('.op-pageheader-actions, .uw-include-container, .form-inline, div[class*="action"]');
                 if (container) {
-                    console.log('通过现有按钮找到容器:', container);
                     return container;
                 }
             }
@@ -74,7 +67,6 @@
         if (pageheader) {
             var actionsContainer = pageheader.querySelector('.op-pageheader-actions, .uw-include-container[data-uw-placeholder="actions"], .form-inline');
             if (actionsContainer) {
-                console.log('通过 pageheader 找到容器:', actionsContainer);
                 return actionsContainer;
             }
         }
@@ -84,7 +76,6 @@
         for (var j = 0; j < containers.length; j++) {
             var btns = containers[j].querySelectorAll('button, uwidget[uw-type="button"]');
             if (btns.length >= 2) {
-                console.log('通过按钮数量找到容器:', containers[j]);
                 return containers[j];
             }
         }
@@ -94,11 +85,8 @@
 
     // 创建批量删除按钮
     function injectBatchDeleteButtons() {
-        console.log('开始注入批量删除按钮...');
-
         // 先检查是否在数据管理页面
         if (!isDataManagementPage()) {
-            console.log('不在数据管理页面，取消注入');
             return;
         }
 
@@ -106,14 +94,12 @@
         setTimeout(function() {
             // 再次检查，因为页面可能已经切换
             if (!isDataManagementPage()) {
-                console.log('页面已切换，取消注入');
                 return;
             }
 
             var container = findDataManagementButtonContainer();
 
             if (!container) {
-                console.warn('未找到合适的按钮容器，尝试使用备用方案');
                 // 备用方案：查找任何 pageheader
                 waitForElement('uwidget[uw-type="pageheader"]', function(pageheader) {
                     var fallbackContainer = pageheader.querySelector('.form-inline, div[class*="ms-auto"]');
@@ -132,12 +118,9 @@
     function insertButtons(container) {
         // 检查按钮是否已存在
         if (container.querySelector('.acm-batch-delete-btn')) {
-            console.log('批量删除按钮已存在，跳过注入');
             buttonsInjected = true;
             return;
         }
-
-        console.log('找到按钮容器，开始插入按钮:', container);
 
         // 创建下载模板按钮
         var downloadBtn = document.createElement('button');
@@ -146,7 +129,6 @@
         downloadBtn.style.fontSize = '13px';
         downloadBtn.innerHTML = '<i class="fa fa-download"></i> 资产批量删除模版下载';
         downloadBtn.onclick = function() {
-            console.log('下载模板按钮被点击');
             var link = document.createElement('a');
             link.href = 'content/template/acm/批量删除资产模版.xlsx';
             link.download = '批量删除资产模板.xlsx';
@@ -162,7 +144,6 @@
         uploadBtn.style.fontSize = '13px';
         uploadBtn.innerHTML = '<i class="fa fa-upload"></i> 资产删除导入';
         uploadBtn.onclick = function() {
-            console.log('上传导入按钮被点击');
             var fileInput = document.getElementById('acmBatchDeleteFileInput');
             if (!fileInput) {
                 fileInput = document.createElement('input');
@@ -183,7 +164,6 @@
         container.appendChild(uploadBtn);
 
         buttonsInjected = true;
-        console.log('✅ 批量删除按钮注入成功');
     }
 
     // 显示消息提示
@@ -197,7 +177,7 @@
                     return;
                 }
             } catch (e) {
-                console.warn('messageService 不可用，使用备用方案');
+                // messageService 不可用
             }
 
             try {
@@ -207,7 +187,7 @@
                     return;
                 }
             } catch (e) {
-                console.warn('toaster 不可用');
+                // toaster 不可用
             }
         }
 
@@ -271,7 +251,6 @@
 
     // 处理文件上传
     function handleFileUpload(files) {
-        console.log('处理文件上传:', files);
 
         if (!files || files.length === 0) {
             showMessage('请选择要上传的文件', 'warning');
@@ -294,7 +273,6 @@
         var formData = new FormData();
         formData.append('file', file);
 
-        console.log('开始上传文件:', file.name);
         showMessage('正在上传文件，请稍候...', 'info');
 
         $http({
@@ -304,7 +282,6 @@
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity
         }).then(function(response) {
-            console.log('上传成功:', response.data);
             var data = response.data;
 
             // 显示简短提示
@@ -325,7 +302,6 @@
                 fileInput.value = '';
             }
         }).catch(function(error) {
-            console.error('上传失败:', error);
             var errorMsg = '上传失败: ' +
                 (error.data && error.data.message ? error.data.message :
                  error.statusText || '未知错误');
@@ -363,12 +339,9 @@
                                 // 延迟检查，确保内容已渲染，并且必须是数据管理页面
                                 setTimeout(function() {
                                     if (isDataManagementPage()) {
-                                        console.log('检测到数据管理页面的 pageheader');
-                                        shouldInject = true;
+                                                shouldInject = true;
                                         buttonsInjected = false;
                                         setTimeout(injectBatchDeleteButtons, 500);
-                                    } else {
-                                        console.log('检测到非数据管理页面的 pageheader，不注入按钮');
                                     }
                                 }, 300);
                             }
@@ -378,7 +351,6 @@
             });
 
             if (shouldInject) {
-                console.log('检测到数据管理页面内容变化，重新注入按钮');
                 buttonsInjected = false;
                 setTimeout(injectBatchDeleteButtons, 500);
             }
@@ -388,8 +360,6 @@
             childList: true,
             subtree: true
         });
-
-        console.log('MutationObserver 已启动，监听页面变化');
     }
 
     // 初始化
@@ -400,22 +370,17 @@
 
             // 监听路由变化
             $rootScope.$on('$stateChangeSuccess', function(event, toState) {
-                console.log('路由变化:', toState.name);
                 buttonsInjected = false;
                 // 延迟检查页面，只在数据管理页面注入
                 setTimeout(function() {
                     if (isDataManagementPage()) {
-                        console.log('路由切换到数据管理页面，准备注入按钮');
                         injectBatchDeleteButtons();
-                    } else {
-                        console.log('路由切换到非数据管理页面，不注入按钮');
                     }
                 }, 800);
             });
 
             // 监听 UDP 页面加载完成事件
             $rootScope.$on('udpPageLoaded', function() {
-                console.log('UDP 页面加载完成');
                 buttonsInjected = false;
                 setTimeout(injectBatchDeleteButtons, 500);
             });

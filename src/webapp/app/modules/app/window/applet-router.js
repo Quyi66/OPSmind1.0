@@ -101,8 +101,19 @@
                         url: '/apw/' + appletCode,
                         // Add sticky to root state only
                         sticky: useStickyForUdpApplet,
-                        onEnter: ['$rootScope', '$state', '$stateParams', 'appletRunman', function ($rootScope, $state, $stateParams, appletRunman) {
-                            // console.log('WaitWindowRendered:OpenAppletWithDynamicState: state=%s', $state.current.name);
+                        onEnter: ['$rootScope', '$state', '$stateParams', '$timeout', 'appletRunman', function ($rootScope, $state, $stateParams, $timeout, appletRunman) {
+                            // 针对 VAP 模块，如果是访问根路径，自动跳转到 CVE 列表
+                            if (appletCode === 'vap') {
+                                $timeout(function() {
+                                    // 检查当前状态是否是 VAP 根状态（没有子状态）
+                                    var currentName = $state.current.name;
+                                    var vapRootState = getAppletState('vap');
+                                    var vapCveListState = getAppletState('vap', 'cve_list');
+                                    if (currentName === vapRootState) {
+                                        $state.go(vapCveListState, $stateParams, { location: 'replace' });
+                                    }
+                                }, 0);
+                            }
                             return appletRunman.openAppletWindow(appletCode);
                         }]
                         // resolve: {
@@ -138,6 +149,20 @@
                     });
                     allStates.push(pageState);
                     allStates.push(menuState);
+
+                    // VAP 模块自定义页面状态
+                    if (appletCode === 'vap') {
+                        var cveListState = {
+                            name: getAppletState(appletCode, 'cve_list'),
+                            url: '/cve/list',
+                            views: {}
+                        };
+                        cveListState.views[getAppletWindowUiView(appletCode) + '@'] = {
+                            template: '<vap-cve-list></vap-cve-list>'
+                        };
+                        allStates.push(cveListState);
+                    }
+
                     allStates.forEach(function (state) {
                         if ($stateRegistry.get(state.name)) {
                             $stateRegistry.deregister(state.name);

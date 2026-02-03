@@ -38,7 +38,8 @@
         'oplus.mac',
         'oplus.search',
         'oplus.flow',
-        'oplus.os'
+        'oplus.os',
+        'oplus.vap'
     ]);
     angular.module('oplus.main').config(['commonsConfigProvider', function (commonsConfigProvider) {
         var value = _.get(window.$oplus.appConfig, 'modules.udp.dataEx.defaultUnresolvedVar');
