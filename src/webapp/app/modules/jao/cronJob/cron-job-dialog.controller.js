@@ -25,6 +25,11 @@
         if (vm.cron.id) {
             cronJobService.cronRestInterface("findId", vm.cron.id).then(function (result) {
                 vm.cron = result;
+                console.log('[CronJobDialogCtrl] cron loaded:', {
+                    id: vm.cron && vm.cron.id,
+                    jobType: vm.cron && vm.cron.jobType,
+                    jobId: vm.cron && vm.cron.jobId
+                });
                 vm.params = [];
                 vm.echoLabel = {};//回显运行参数的label
                 vm.echoDescription = {};//回显运行参数的description
@@ -33,7 +38,9 @@
 
                 if (_jobConstant.indexOf(vm.cron.jobType) <= -1) {
                     jaoJobService.findJobById(vm.cron.jobId).then(function (job) {
+                        console.log('[CronJobDialogCtrl] job params loaded:', job && job.params);
                         _.forEach(job.params, function (info) {
+                            console.log('回显参数 info:', info);
                             vm.echoLabel[info.name] = info.label;
                             vm.echoDescription[info.name] = info.description;
                             vm.echotype[info.name] = info.type;
@@ -60,6 +67,7 @@
                             });
                         }
                     }
+                    console.log('[CronJobDialogCtrl] params after echo:', vm.params);
                     if (_jobConstant.indexOf(vm.cron.jobType) > -1) {
                         vm.ccfIds = vm.cron.jobId.split(",");
                         vm.cron.jobId = '';
@@ -157,15 +165,28 @@
                     case 'script':
                     case 'rest':
                         jaoJobService.findAllJobs(value).then(function (jobs) {
+                            console.log('[CronJobDialogCtrl] cac job list loaded:', cac);
                             $scope.jobList = jobs;
                         }).catch(function (err) {
                             messageService.toast('error', $translate.instant("jao.messages.unable_obtain_job_info"), err.message);
                         });
                         break;
+                                        console.log('[CronJobDialogCtrl] annex_name translated:', {
+                                            label: param.label,
+                                            description: param.description
+                                        });
                     case 'cac':
                         cronJobService.getCacData().then(function (cac) {
                             $scope.jobList = cac;
-                            vm.params[0].label = $translate.instant("task_scheduling.custom_attachment_name");//回显时label是没有值的。
+                            console.log('[CronJobDialogCtrl] params after translation:', vm.params);
+                            if (angular.isArray(vm.params)) {
+                                vm.params.forEach(function (param) {
+                                    if (param && param.name === 'annex_name') {
+                                        param.label = $translate.instant("task_scheduling.custom_attachment_name");
+                                        // param.description = $translate.instant("task_scheduling.custom_attachment_name");
+                                    }
+                                });
+                            }
                         }).catch(function (err) {
                             throw err;
                         });
