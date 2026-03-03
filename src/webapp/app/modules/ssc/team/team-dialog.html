@@ -6,7 +6,7 @@
 <div class="modal-header">
     <h4 class="modal-title" id="myTeamLabel">
         <span data-translate="team.home.createTeam" ng-show="vm.team.id == null">Create Team</span>
-        <span ng-show="vm.team.id != null">授权应用</span>
+        <span data-translate="team.home.editTeam" ng-show="vm.team.id != null">Edit Team</span>
     </h4>
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">
         &times;
@@ -17,7 +17,7 @@
 <div class="modal-body">
     <form name="editForm" role="form" novalidate show-validation>
         <uib-tabset class="tab-container wrapper" type="mdc-op" active="vm.activeTab">
-            <uib-tab index="1" heading="{{'app.setting.basicInfo' | translate}}" ng-if="vm.team.id == null">
+            <uib-tab index="1" heading="{{'app.setting.basicInfo' | translate}}">
                 <div class="form-group">
                     <label class="control-label" data-translate="team.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name" required ng-minlength=1

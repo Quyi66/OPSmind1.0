@@ -14,7 +14,7 @@
         vm.save = save;
         vm.users = [];
         vm.applets = [];
-        vm.activeTab = entity.id ? 2 : 1; // 编辑时默认激活"用户"Tab，新建时激活"基本信息"Tab
+        vm.activeTab = 1; // 默认激活"基本信息"Tab
         var selectedUserMap = {};
 
         $timeout(function () {

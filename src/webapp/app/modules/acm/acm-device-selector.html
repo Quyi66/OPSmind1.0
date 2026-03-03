@@ -39,7 +39,7 @@
                     <span ng-if="host.runType.length>0"> [{{host.runType}}]</span>
                     <span ng-if="host.runType.length>0" style="color: #10d070;">({{host.total_hosts}})</span>
                     <!--<a ng-click="$ctrl.removeItem($index)" class="text-muted op-hover-to-show">&times;</a>-->
-                    <a ng-click="$ctrl.removeItem($index)" ng-show="!$ctrl.readonly">&times;</a>
+                    <a ng-click="$ctrl.removeItem(host)" ng-show="!$ctrl.readonly">&times;</a>
                 </div>
             </li>
         </ul>

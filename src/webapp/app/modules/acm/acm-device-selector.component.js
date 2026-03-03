@@ -135,8 +135,11 @@
             });
         }
 
-        function removeItem(index) {
-            that.theHosts.splice(index, 1);
+        function removeItem(host) {
+            var index = that.theHosts.indexOf(host);
+            if (index > -1) {
+                that.theHosts.splice(index, 1);
+            }
         }
     }
 })();
