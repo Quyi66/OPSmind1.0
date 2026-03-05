@@ -6,7 +6,14 @@ LABEL maintainer="oplus-team"
 LABEL description="Oplus Web Application with Nginx"
 
 # 删除默认的nginx配置文件，创建模板目录
-RUN rm /etc/nginx/conf.d/default.conf && \
+# 并在构建时生成一个临时自签名证书，用于HTTPS测试
+RUN apk add --no-cache openssl && \
+    mkdir -p /etc/nginx/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/server.key \
+    -out /etc/nginx/ssl/server.crt \
+    -subj "/C=CN/ST=Test/L=Test/O=Oplus/CN=localhost" && \
+    rm /etc/nginx/conf.d/default.conf && \
     mkdir -p /etc/nginx/templates
 
 # 复制自定义nginx配置模板和启动脚本
@@ -32,8 +39,8 @@ RUN mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/uwsgi_temp && \
     mkdir -p /var/cache/nginx/scgi_temp
 
-# 暴露80端口
-EXPOSE 80
+# 暴露80和443端口
+EXPOSE 80 443
 
 # 启动nginx
 CMD ["nginx", "-g", "daemon off;"]

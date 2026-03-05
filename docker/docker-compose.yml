@@ -1,0 +1,97 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 1qaz@WSX
+      MYSQL_USER: oplus
+      MYSQL_PASSWORD: Oplus@888!
+    ports:
+      - "3306:3306"
+    volumes:
+      - "oplus-mysql:/var/lib/mysql"
+    networks:
+      - internal
+  oplus:
+    restart: unless-stopped
+    container_name: oplus
+    image: oplus:1.14.1
+    networks:
+      - oplus
+      - internal
+    ports:
+      - "23:22"
+      # - "443:443"
+      - "8080:80"
+      - "3000:3000"
+      - "6379:6379"
+    #      - '5001:5001'  # oplus-svs 调试端口
+    #      - '5002:5002'  # oplus-portal 调试端口
+    #      - '5003:5003'  # oplus-dts 调试端口
+    #      - '5004:5004'  # oplus-ata-svs 调试端口
+    #      - '5005:5005'  # oplus-jobadm 调试端口
+    volumes:
+      # todo：根据具体纳管用户来修改 /root/.ssh 和 /root/.ansible, 例如纳管用户为ansible，则修改/root为/home/ansible
+      # todo："/root/.ssh:/root/.ssh"，是为了把宿主机的密钥映射到容器内。所以还是需要在宿主机执行"ssh-keygen -t rsa","cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys"
+      - "/root/.ssh:/root/.ssh"
+      - "/root/.ansible:/root/.ansible"
+      - "oplus-assets:/opt/oplus/assets"
+      - "oplus-logs:/var/log"
+      - "/tmp:/tmp"
+      #- "./start.sh:/opt/oplus/start.sh"
+      - "/opt/oplus/.oplus-env.yml:/opt/oplus/.oplus-env.yml"
+      #- "/opt/oplus/nginx-oplus.conf:/opt/oplus/conf/nginx-oplus.conf"
+    environment:
+      # todo: 若OPlus-DB信息有差异，请修改
+      - OPLUS_DB_IP=mariadb
+      - OPLUS_DB_PORT=3306
+      # todo: （单一docker节点不用填写）除本身节点外，请将其他OPlus节点写入进来，并附带ssh映射端口，例如192.168.0.1:2222,若不设置端口将默认23端口，映射端口请修改docker-compose文件中ports，暴露容器端口用以lsyncd同步文件，并且宿主机已经提前开启了root免密ssh登录
+      - OPLUS_CLUSTER_ADDRESS=
+      # todo: 一般从节点不进行数据库初始化
+      - INIT_MODULE_DATA=yes
+      - LICENSE_ENABLED=false
+      - OPLUS_DB_ROOT_USER=root
+      - OPLUS_DB_ROOT_PWD=1qaz@WSX
+      - LANG=en_US.UTF-8
+      - LC_ALL=en_US.UTF-8
+    privileged: true
+    tty: true
+    stdin_open: true
+    entrypoint: /bin/bash -c "chmod u+x /opt/scripts/main_install.sh && /opt/scripts/main_install.sh -d && monit && nginx -g 'daemon off;' "
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mariadb
+    links:
+      - "mariadb:mariadb"
+  opsmind-web:
+    restart: unless-stopped
+    container_name: oplus-web
+    image: oplus-web:1.1.27
+    networks:
+      - oplus
+      - internal
+    ports:
+      - "80:443"
+      - "443:443"
+    entrypoint: ["/docker-entrypoint.sh"]
+    command: ["nginx", "-g", "daemon off;"]
+    environment:
+      - BACKEND_URL=http://oplus:80
+      - BACKEND_HOST=oplus
+      - BACKEND_PORT=80
+      #- ATA_BACKEND_URL=http://192.168.1.155:3000
+networks:
+  oplus:
+    driver: bridge
+  internal:
+    driver: bridge
+
+volumes:
+  oplus-assets:
+    driver: local
+  oplus-logs:
+    driver: local
+  oplus-mysql:
+    driver: local
