@@ -35,3 +35,5 @@ yarn.lock
 /package-lock.json
 /.i18n
 .DS_Store
+/.opencode
+opencode.jsonc
