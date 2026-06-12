@@ -184,6 +184,7 @@
             that.selectedTaskNodes.push(index);
             var map = {
                 stepName: task.name,
+                stepId: task.id,
                 runId: task.runLogIds
             };
             $scope.$emit("that.selectedTaskNodes", map);

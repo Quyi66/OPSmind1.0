@@ -117,6 +117,9 @@
         $scope.$on("that.selectedTaskNodes", function (event, data) {
             that.selectedTasks = data;
             that.selectedTaskRunLogIds = [];
+            // 统一使用步骤聚合ID；后端对单任务步骤自动返回该任务的原始结果，无需前端区分
+            that.selectedTaskLogId = "step_" + data.stepId;
+
             var runId = angular.fromJson(data.runId);
             if (runId.length > 1) {
                 jaoFlowService.getRunLogsByRunIds(JSON.stringify(runId)).then(function (result) {
@@ -130,10 +133,14 @@
                     that.selectedTaskRunLogIds = _.reverse(_.sortBy(that.selectedTaskRunLogIds, function (o) {
                         return o.startTime;
                     }));
-                    that.selectedTaskLogId = that.selectedTaskRunLogIds[0].id;
+                    // 下拉框首项为"全部任务"聚合视图（当前默认选中项）
+                    that.selectedTaskRunLogIds.unshift({
+                        id: "step_" + data.stepId,
+                        startTime: "全部任务"
+                    });
                 });
             } else {
-                that.selectedTaskLogId = runId[0];
+                that.selectedTaskRunLogIds = [];
             }
         });
 

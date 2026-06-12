@@ -32,8 +32,8 @@
                         class="ps-3 pe-3"><i class="fa fa-long-arrow-right"></i></span> <span
                         class="text-muted">{{($ctrl.result.endTime) | date:'HH:mm:ss'}}</span>
                     <button class="btn js-op-button btn-secondary btn-sm ms-auto small"
-                        ng-if="'WAITING,RUNNING,CALLBACK'.indexOf($ctrl.result.status) === -1 && $ctrl.result.jobType === 'script' "
-                        ng-click="$ctrl.rerunJob($ctrl.runId)">
+                        ng-if="'WAITING,RUNNING,CALLBACK'.indexOf($ctrl.result.status) === -1 && $ctrl.result.jobType === 'script' && $ctrl.result.runId && $ctrl.result.runId.indexOf('step_') !== 0"
+                        ng-click="$ctrl.rerunJob($ctrl.result.runId)">
                         <i class="fa fa-rocket">&nbsp;{{'jao.log.rerun' | translate}}</i>
                     </button>
                 </div>
