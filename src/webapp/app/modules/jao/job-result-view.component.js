@@ -183,6 +183,7 @@
                             try {
                                 var parsed = JSON.parse(batch.output);
                                 parsed._batchId = batch.batchId;
+                                parsed._ataUrl = batch.ataUrl;
                                 contents.push(parsed);
                                 rawOutputs[batch.batchId] = JSON.stringify(parsed, null, 2);
                             } catch (err) {

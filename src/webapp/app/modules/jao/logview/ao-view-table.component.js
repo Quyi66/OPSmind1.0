@@ -147,6 +147,7 @@
             });
             list.forEach(function (item) {
                 var batchId = item._batchId;
+                var ataUrl = item._ataUrl || item.ataUrl;
                 item.plays.forEach(function (play) {
                     if (!_.find(plays, {name: play.play.name})) {
                         plays.push({name: play.play.name});
@@ -162,7 +163,7 @@
                                 play: play.play.name,
                                 task: task.task.name,
                                 hostKey: parsedHost.targetHost,
-                                delegateHost: parsedHost.delegateHost,
+                                delegateHost: ataUrl || parsedHost.delegateHost,
                                 cmd: determineCmd(host),
                                 status: jaoUtil.parseHostStatus(host),
                                 output: determineHostTaskOutput(host),

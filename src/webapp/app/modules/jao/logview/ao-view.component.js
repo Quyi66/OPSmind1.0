@@ -386,7 +386,7 @@
                                 status: status,
                                 output: output,
                                 order: hostNode.tasks.length,
-                                delegateHost: parsedHost.delegateHost,
+                                delegateHost: ao._ataUrl || ao.ataUrl || parsedHost.delegateHost,
                                 batchId: ao._batchId
                             });
                         });
