@@ -30,6 +30,15 @@
         <div ng-if="$ctrl.selectedNode.type==='host'" class="h-100 opx-layout-vflex">
             <div class="d-flex flex-row align-items-center mb-3">
                 <h4 class="me-3 mb-0">{{$ctrl.selectedNode.title}}</h4>
+                <div class="btn-group me-3" ng-if="$ctrl.hostBatchIds.length > 1">
+                    <button type="button" 
+                            class="btn btn-sm" 
+                            ng-repeat="batchId in $ctrl.hostBatchIds" 
+                            ng-class="$ctrl.selectedBatchId === batchId ? 'btn-primary' : 'btn-outline-primary'" 
+                            ng-click="$ctrl.changeBatch(batchId)">
+                        {{batchId}}
+                    </button>
+                </div>
                 <ul class="list-inline list-unstyled me-auto mb-0">
                     <li ng-repeat="(key,value) in $ctrl.nodeTasksStats">
                     <span class="op-cursor-hand"
@@ -41,7 +50,7 @@
                 <op-searchbox search-text="$ctrl.outputFilterText" style="width:8em;"></op-searchbox>
             </div>
             <div class="opx-flex-fill scroll-y __list-group">
-                <div ng-repeat="task in $ctrl.selectedNode.data.tasks | filter: {status:$ctrl.statusFilter}
+                <div ng-repeat="task in $ctrl.selectedNode.data.tasks | filter: {status:$ctrl.statusFilter} | filter: ($ctrl.hostBatchIds.length > 1 ? {batchId:$ctrl.selectedBatchId} : undefined)
                 | filterAny:'name,output':$ctrl.outputFilterText track by $index"
                      __class="list-group-item p-3"
                      class="card mb-3"

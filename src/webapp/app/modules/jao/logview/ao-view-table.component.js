@@ -39,6 +39,8 @@
         var statusDefs = jaoUtil.taskStatusDefs;
         var aoList;
         this.playFilter = '';
+        this.changeBatch = changeBatch;
+        this.reload = reload;
         this.$onInit = onInit;
 
         function onInit() {
@@ -50,12 +52,34 @@
             }, true);
         }
 
+        function changeBatch(batchId) {
+            that.selectedBatchId = batchId;
+            reload();
+        }
+
+        function reload() {
+            if (that.tableConfig) {
+                that.tableConfig.reloadData();
+            }
+        }
+
 
         /**
          *
          * @param {[string]} outputs Batches of Ansible output in JSON string
          */
         function generateTable(outputs) {
+            var batchIds = [];
+            outputs.forEach(function (item) {
+                if (item._batchId && batchIds.indexOf(item._batchId) === -1) {
+                    batchIds.push(item._batchId);
+                }
+            });
+            that.batchIds = batchIds;
+            if (batchIds.length > 0 && !that.selectedBatchId) {
+                that.selectedBatchId = batchIds[0];
+            }
+
             aoList = toAoList(outputs);
             that.plays = aoList.plays;
             if (that.plays.length === 1) {
@@ -87,7 +111,13 @@
                 ];
                 that.tableConfig = {
                     data: [function () {
-                        var data = that.playFilter ? _.filter(aoList.data, {play: that.playFilter}) : aoList.data;
+                        var data = aoList.data;
+                        if (that.playFilter) {
+                            data = _.filter(data, {play: that.playFilter});
+                        }
+                        if (that.selectedBatchId && that.batchIds.length > 1) {
+                            data = _.filter(data, {batchId: that.selectedBatchId});
+                        }
                         return $q.when(data);
                     }],
                     columns: columns,
@@ -116,6 +146,7 @@
                 }
             });
             list.forEach(function (item) {
+                var batchId = item._batchId;
                 item.plays.forEach(function (play) {
                     if (!_.find(plays, {name: play.play.name})) {
                         plays.push({name: play.play.name});
@@ -134,7 +165,8 @@
                                 delegateHost: parsedHost.delegateHost,
                                 cmd: determineCmd(host),
                                 status: jaoUtil.parseHostStatus(host),
-                                output: determineHostTaskOutput(host)
+                                output: determineHostTaskOutput(host),
+                                batchId: batchId
                             };
                             // if (parsedHost.delegateHost) {
                             //     taskRec.task = '(' + parsedHost.delegateHost + ') ' + taskRec.task;

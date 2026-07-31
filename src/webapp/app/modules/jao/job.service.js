@@ -260,7 +260,7 @@
         }
 
         function batchDeleteJob(ids) {
-            return restUtils.callApi(module, 'DELETE', '/api/jao/jobs/delete-batch?ids=' + ids);
+            return restUtils.callApi(module, 'DELETE', '/api/jao/jobs/delete-batch?ids=' + encodeURIComponent(ids));
         }
 
         /**

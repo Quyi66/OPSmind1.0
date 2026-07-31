@@ -1,3 +1,14 @@
+<div class="mb-3" ng-if="$ctrl.batchIds.length > 1">
+    <div class="btn-group">
+        <button type="button" 
+                class="btn btn-sm" 
+                ng-repeat="batchId in $ctrl.batchIds" 
+                ng-class="$ctrl.selectedBatchId === batchId ? 'btn-primary' : 'btn-outline-primary'" 
+                ng-click="$ctrl.changeBatch(batchId)">
+            {{batchId}}
+        </button>
+    </div>
+</div>
 <opx-datatable table-config="$ctrl.tableConfig">
     <div class="form-group">
         <div class="form-control-wrapper">

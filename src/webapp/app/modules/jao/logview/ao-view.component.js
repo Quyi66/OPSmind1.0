@@ -48,6 +48,7 @@
         this.isExpandedAll = false;
         this.showRawOutput = showRawOutput;
         this.toggleStatusFilter = toggleStatusFilter;
+        this.changeBatch = changeBatch;
         this.$onInit = function () {
             $scope.$watch('$ctrl.contents', function (newVal, oldVal) {
                 if (newVal) {
@@ -55,6 +56,24 @@
                 }
             }, true);
         };
+
+        function changeBatch(batchId) {
+            that.selectedBatchId = batchId;
+            // Update stats
+            var map = {};
+            if (that.selectedNode && that.selectedNode.data && that.selectedNode.data.tasks) {
+                that.selectedNode.data.tasks.forEach(function (task) {
+                    if (!batchId || task.batchId === batchId) {
+                        if (angular.isNumber(map[task.status])) {
+                            map[task.status]++;
+                        } else {
+                            map[task.status] = 1;
+                        }
+                    }
+                });
+            }
+            that.nodeTasksStats = map;
+        }
 
         function toggleStatusFilter(key) {
             if (that.statusFilter === key) {
@@ -151,6 +170,26 @@
                                 var existingHostNode = _.find(playNodeInAll.children, {title: hostNode.title});
                                 if (!existingHostNode) {
                                     playNodeInAll.children.push(hostNode);
+                                } else {
+                                    // 合并同一主机的任务列表
+                                    existingHostNode.tasks = existingHostNode.tasks.concat(hostNode.tasks);
+                                    // 重新生成任务的 order 序号
+                                    existingHostNode.tasks.forEach(function (t, idx) {
+                                        t.order = idx;
+                                    });
+                                    // 合并状态图标与状态数据
+                                    if (hostNode.data && hostNode.data.unreachable) {
+                                        existingHostNode.extraClasses = 'text-danger';
+                                        existingHostNode.icon = hostNode.icon;
+                                        existingHostNode.iconTooltip = hostNode.iconTooltip;
+                                        existingHostNode.data = existingHostNode.data || {};
+                                        existingHostNode.data.unreachable = true;
+                                    } else if (hostNode.icon && hostNode.icon.indexOf('fail') >= 0) {
+                                        if (!existingHostNode.data || !existingHostNode.data.unreachable) {
+                                            existingHostNode.icon = hostNode.icon;
+                                            existingHostNode.iconTooltip = hostNode.iconTooltip;
+                                        }
+                                    }
                                 }
                             });
                         }
@@ -203,12 +242,30 @@
                                 that.detailView = 'host';
                                 that.selectedNode = node;
                                 that.statusFilter = '';
+
+                                // 查找该主机下所有不重复的任务批次 ID
+                                var batchIds = [];
+                                node.data.tasks.forEach(function (task) {
+                                    if (task.batchId && batchIds.indexOf(task.batchId) === -1) {
+                                        batchIds.push(task.batchId);
+                                    }
+                                });
+                                that.hostBatchIds = batchIds;
+                                // 默认选中首个批次
+                                if (batchIds.length > 0) {
+                                    that.selectedBatchId = batchIds[0];
+                                } else {
+                                    that.selectedBatchId = undefined;
+                                }
+
                                 var map = {};
                                 node.data.tasks.forEach(function (task) {
-                                    if (angular.isNumber(map[task.status])) {
-                                        map[task.status]++;
-                                    } else {
-                                        map[task.status] = 1;
+                                    if (!that.selectedBatchId || task.batchId === that.selectedBatchId) {
+                                        if (angular.isNumber(map[task.status])) {
+                                            map[task.status]++;
+                                        } else {
+                                            map[task.status] = 1;
+                                        }
                                     }
                                 });
                                 // console.log('tasks',node.data.tasks);
@@ -329,7 +386,8 @@
                                 status: status,
                                 output: output,
                                 order: hostNode.tasks.length,
-                                delegateHost: parsedHost.delegateHost
+                                delegateHost: parsedHost.delegateHost,
+                                batchId: ao._batchId
                             });
                         });
                     });

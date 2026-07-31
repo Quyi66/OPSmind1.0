@@ -97,8 +97,19 @@
             ng-if="$ctrl.result.jobType==='script' || $ctrl.result.jobType==='command'|| $ctrl.result.jobType==='process'">
             <uib-tab-heading><i class="fa fa-brackets-curly"></i> {{'jao.result.detail.raw_output' | translate}}
             </uib-tab-heading>
-            <button ng-click="$ctrl.downloadAnsibleOutput()" class="btn btn-outline-default ms-auto"><i
-                    class="fa fa-file-export"></i> {{'jao.result.detail.download_ansible_output' | translate}}</button>
+            <div class="d-flex align-items-center mb-3">
+                <div class="btn-group" ng-if="$ctrl.batchIds.length > 1">
+                    <button type="button" 
+                            class="btn btn-sm" 
+                            ng-repeat="batchId in $ctrl.batchIds" 
+                            ng-class="$ctrl.selectedBatchId === batchId ? 'btn-primary' : 'btn-outline-primary'" 
+                            ng-click="$ctrl.changeRawOutputBatch(batchId)">
+                        {{batchId}}
+                    </button>
+                </div>
+                <button ng-click="$ctrl.downloadAnsibleOutput()" class="btn btn-outline-default ms-auto"><i
+                        class="fa fa-file-export"></i> {{'jao.result.detail.download_ansible_output' | translate}}</button>
+            </div>
             <pre>{{$ctrl.ansibleRawOutput}}</pre>
         </uib-tab>
         <uib-tab

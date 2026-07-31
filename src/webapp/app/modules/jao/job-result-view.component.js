@@ -56,6 +56,7 @@
             that.modeler = $modeler;
         };
         this.rerunJob = rerunJob;
+        this.changeRawOutputBatch = changeRawOutputBatch;
 
         function onInit() {
             $timeout(function () {
@@ -156,23 +157,47 @@
             if (that.result.status === 'RUNNING') {
                 that.result.endTime = Date.now();
             }
+            that.batchIds = [];
+            if (result.data) {
+                result.data.forEach(function (batch) {
+                    if (batch.batchId && that.batchIds.indexOf(batch.batchId) === -1) {
+                        that.batchIds.push(batch.batchId);
+                    }
+                });
+            }
+            if (that.batchIds.length > 0) {
+                that.selectedBatchId = that.batchIds[0];
+            } else {
+                that.selectedBatchId = undefined;
+            }
+
             if (result.jobType === jaoUtil.jobType.SCRIPT
                 || result.jobType === jaoUtil.jobType.COMMAND
                 || result.jobType === jaoUtil.jobType.PROCESS) {
+                var rawOutputs = {};
                 var contents = [];
                 if (result.data) {
                     var batches = result.data;
                     batches.forEach(function (batch) {
                         if (batch.output) {
                             try {
-                                contents.push(JSON.parse(batch.output));
+                                var parsed = JSON.parse(batch.output);
+                                parsed._batchId = batch.batchId;
+                                contents.push(parsed);
+                                rawOutputs[batch.batchId] = JSON.stringify(parsed, null, 2);
                             } catch (err) {
                                 console.warn("Cannot parse output {}", batch.output);
                             }
                         }
                     });
                 }
-                that.ansibleRawOutput = JSON.stringify(contents, null, 2);
+                that.rawOutputs = rawOutputs;
+                if (that.batchIds.length > 1) {
+                    that.ansibleRawOutput = rawOutputs[that.selectedBatchId];
+                } else {
+                    that.ansibleRawOutput = JSON.stringify(contents, null, 2);
+                }
+
                 if (result.jobType === jaoUtil.jobType.COMMAND) {
                     replaceCommandId(contents);
                 } else if (result.jobType === jaoUtil.jobType.PROCESS/* || result.configJson.indexOf('demo/容灾切换')>=0*/) {
@@ -342,6 +367,10 @@
                     that.runId = newRunId;
                 });
             });
+        }
+        function changeRawOutputBatch(batchId) {
+            that.selectedBatchId = batchId;
+            that.ansibleRawOutput = that.rawOutputs[batchId];
         }
     }
 })();
