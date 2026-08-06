@@ -16,12 +16,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="version in $ctrl.viewVersions track by $index">
-                        <td>{{version.module}}</td>
-                        <td>{{version.version}}</td>
-                        <td>{{version.build ? '#' + version.build : ''}}</td>
-                        <td></td>
-                    </tr>
                     <tr ng-repeat="version in $ctrl.serverVersions track by $index">
                         <td>{{version.projectName}}</td>
                         <td>{{version.projectVersion}}</td>

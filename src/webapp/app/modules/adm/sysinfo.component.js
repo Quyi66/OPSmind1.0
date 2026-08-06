@@ -41,23 +41,7 @@
         }
 
         function fetchVersion() {
-
-            fetchViewVersion();
-
             fetchServerVersion();
-
-            function fetchViewVersion() {
-                $http.get('app/modules/VERSION.json').then(function (res) {
-                    var version = res.data;
-                    var versions = version.versions;
-                    var builds = version.builds;
-                    var result = [];
-                    Object.keys(versions).forEach(function (module) {
-                        result.push({module: module, version: versions[module], build: builds[module]});
-                    });
-                    that.viewVersions = _.sortBy(result, ['module']);
-                });
-            }
 
             function fetchServerVersion() {
                 var result = [];
